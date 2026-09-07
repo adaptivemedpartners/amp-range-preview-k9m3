@@ -2,10 +2,10 @@
 (function () {
   "use strict";
 
-  /* Imagine timeline: new 4.5s swoop (Mike 2026-09-07). Settle ~4.30 end hold.
-     Bake + labels locked to that freeze. Desktop + phone same clip. */
-  var SETTLE = 4.30;
-  var FREEZE_END = 4.30; /* same as SETTLE: handoff frame == bake frame */
+  /* Imagine timeline: 4.5s swoop (Mike 2026-09-07). Pin settle to LAST frame
+     so end does not keep shifting; Mike places words on that final frame. */
+  var SETTLE = 4.45;
+  var FREEZE_END = 4.45; /* same as SETTLE: handoff frame == bake frame */
 
   var state = {
     moving: false,
@@ -128,7 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1914";
+    var v = "1915";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -992,7 +992,8 @@
       /* Full speed to SETTLE — no rate ease. */
       try { if (video.playbackRate !== 1) video.playbackRate = 1; } catch (e) {}
       /* Freeze+bake first, then land chrome — one clean settle. */
-      if (t >= FREEZE_END - 0.06) {
+      /* Pin near true last frame — do not trip 60ms early (that still shifts). */
+      if (t >= FREEZE_END - 0.01) {
         pauseFreeze(true);
         return;
       }
