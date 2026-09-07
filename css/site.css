@@ -3173,37 +3173,73 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK v4 (Mike 2026-09-07): EXACT wood-sign ROI frame via JS
-   (SIGN_ROI). Blur twin fills gutters. No manual % nudges. Chrome lock.
-   Fly-in stays cover until settle. */
+/* Phone trail fit LOCK v6 (Mike): CSS object-position on EVERY visible layer
+   (still + approach freeze/video). JS transforms were invisible after fly-in
+   because .shot is hidden and the hold canvas stayed 50% cover. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot {
     background: #0b1210;
     overflow: hidden;
   }
-  .view.funnel.trailhead.on.phone-sign-fit > .shot::before {
-    content: "";
-    position: absolute;
-    inset: -10%;
-    background-image: var(--trail-fill, none);
-    background-size: cover;
-    background-position: 50% 50%;
-    filter: blur(20px) saturate(1.06) brightness(0.76);
-    transform: scale(1.1);
-    z-index: 0;
+  /* Prove new CSS landed */
+  .view.funnel.trailhead.on::after {
+    content: "preview 1902";
+    position: fixed;
+    left: 10px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 500;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(13, 148, 136, 0.92);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .04em;
     pointer-events: none;
   }
-  .view.funnel.trailhead.on.phone-sign-fit > .shot img.still {
-    z-index: 1;
-    filter: none;
-    background: transparent;
+  .view.funnel.trailhead.on > .shot img.still,
+  body.amp-live-trailhead #approach-video-hold #home-video,
+  body.amp-live-trailhead #approach-video-hold video,
+  body.amp-live-trailhead #approach-video-hold canvas.approach-freeze,
+  body.amp-trail-settled #approach-video-hold #home-video,
+  body.amp-trail-settled #approach-video-hold video,
+  body.amp-trail-settled #approach-video-hold canvas.approach-freeze {
+    object-fit: cover !important;
+    /* Pull wood sign into frame — left letters were clipped at 50% */
+    object-position: 22% 48% !important;
+    transform: none !important;
+    inset: 0 !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
-  /* Live swoop: full-bleed cover. Settled: JS writes exact geometry. */
-  #approach-video-hold #home-video,
-  #approach-video-hold video,
-  #approach-video-hold canvas.approach-freeze {
-    object-fit: cover;
-    object-position: 50% 50%;
+  /* Reliable specialty taps on phone — wood hits were sliding */
+  .view.funnel.trailhead.on .trailhead-rail {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 12px 14px calc(56px + env(safe-area-inset-bottom, 0px));
+    margin-top: auto;
+    background: linear-gradient(to top, rgba(2,12,27,.88), rgba(2,12,27,0));
+    pointer-events: auto;
+    z-index: 450;
+    position: relative;
+  }
+  .view.funnel.trailhead.on .trailhead-rail button {
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid rgba(153,246,228,.45);
+    background: rgba(15,23,42,.82);
+    color: #ecfeff;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  /* Hide misaligned overlay hits on phone — rail is source of truth */
+  #trailhead-hit-layer.is-live {
+    display: none !important;
   }
 }
 
@@ -3540,12 +3576,5 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 @keyframes amp-guide-whisper { 0%, 100% { box-shadow: 0 0 0 5px rgba(13,148,136,.13), 0 0 26px rgba(45,212,191,.48), 0 14px 34px rgba(2,12,27,.42); } 50% { box-shadow: 0 0 0 9px rgba(45,212,191,.18), 0 0 34px rgba(94,234,212,.72), 0 14px 34px rgba(2,12,27,.42); } }
 @media (prefers-reduced-motion: reduce) { .amp-guide-launcher.is-whisper { animation: none; } }
 
-/* phone hit layer above nav — plank taps must win */
-@media (max-width: 520px) {
-  #trailhead-hit-layer.is-live {
-    z-index: 400 !important;
-  }
-  #trailhead-hit-layer .plank-hit-svg {
-    overflow: visible !important;
-  }
-}
+/* phone: hit overlay hidden — trailhead-rail is the tap surface */
+

@@ -121,7 +121,7 @@
 
 
   function trailheadBakeSrc(route) {
-    var v = "1901";
+    var v = "1902";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -367,6 +367,10 @@
     /* Keep legacy signpost from stealing taps while live. */
     $all(".sign-media-frame").forEach(function (fr) {
       fr.classList.add("hits-deferred");
+    });
+    /* Phone: keep specialty rail live — overlay hits were wrong (FM→Neuro). */
+    $all(".trailhead-rail").forEach(function (rail) {
+      rail.style.pointerEvents = "auto";
     });
 
     if (isPhoneTrailFit()) {
