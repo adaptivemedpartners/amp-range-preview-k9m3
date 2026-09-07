@@ -128,7 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1915";
+    var v = "1916";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -154,8 +154,8 @@
   }
 
   /* Cover-locked SVG plank hits (viewBox = bake 2560×1146, slice = object-fit:cover). */
-  var SPEC_PLANK_HITS = [['fm',480,195,920,100],['obg',520,305,840,95],['gi',550,410,800,95],['neuro',580,515,760,95],['dental',600,620,720,90],['other',520,725,860,110]];
-  var FAC_PLANK_HITS = [['fqhc',480,195,920,100],['cah',520,305,840,95],['bh',550,410,800,95],['group',580,515,760,95],['dental',600,620,720,90],['other',520,725,860,110]];
+  var SPEC_PLANK_HITS = [['fm',958,210,309,75],['obg',928,375,339,68],['gi',948,498,319,75],['neuro',963,652,299,68],['dental',963,722,299,72],['other',963,798,299,72]];
+  var FAC_PLANK_HITS = [['fqhc',958,210,309,75],['cah',928,375,339,68],['bh',948,498,319,75],['group',963,652,299,68],['dental',963,722,299,72],['other',963,798,299,72]];
 
   function ensureTrailheadHitLayer() {
     var layer = $("#trailhead-hit-layer");
