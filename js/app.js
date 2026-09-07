@@ -181,7 +181,7 @@
         mediaW = vw;
         mediaH = vw / aspect;
       }
-      left = (vw - mediaW) / 2 - vw * 0.13; /* match CSS translateX(-13%) */
+      left = (vw - mediaW) / 2; /* Chrome lock: contain centered, match transform:none */
       top = (vh - mediaH) / 2;
       svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     } else {
