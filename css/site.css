@@ -3173,22 +3173,11 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK v8 (Mike): pre-baked portrait still (full sign).
-   No live %/ROI crop. Version pill + specialty rail taps. */
+/* Phone trail LOCK v9: REVERT composite still / crop math.
+   Keep version pill + specialty rail taps. Trailhead media = same cover as desktop. */
 @media (max-width: 520px) {
-  .view.funnel.trailhead.on > .shot {
-    background: #0b1210;
-    overflow: hidden;
-  }
-  .view.funnel.trailhead.on.phone-sign-fit > .shot img.still {
-    object-fit: cover !important;
-    object-position: 50% 50% !important;
-    width: 100% !important;
-    height: 100% !important;
-    transform: none !important;
-  }
   .view.funnel.trailhead.on::after {
-    content: "preview 1904";
+    content: "preview 1905";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));

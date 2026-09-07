@@ -129,12 +129,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1904";
-    /* Phone LOCK: pre-baked portrait still with FULL wood sign — no live crop math. */
-    if (isPhoneTrailFit()) {
-      if (route === "client") return "assets/trailhead-facility-phone.png?v=" + v;
-      return "assets/trailhead-specialty-phone.png?v=" + v;
-    }
+    var v = "1905";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -203,45 +198,28 @@
   }
 
   function applyPhoneSignFrame() {
+    /* 1905: stop inventing phone crop math. Clear any leftover inline frame styles. */
     var live = document.querySelector(".view.funnel.trailhead.on");
     if (!live) return;
+    live.classList.remove("phone-sign-fit");
+    try { document.body.classList.remove("amp-phone-sign-fit"); } catch (e) {}
     var img = live.querySelector(".shot img.still");
-    var hold = document.getElementById("approach-video-hold");
-    if (!isPhoneTrailFit()) {
-      live.classList.remove("phone-sign-fit");
-      try { document.body.classList.remove("amp-phone-sign-fit"); } catch (e) {}
-      if (img) {
-        ["position","left","top","width","height","maxWidth","maxHeight","objectFit","transform","zIndex"].forEach(function (k) {
-          img.style[k] = "";
-        });
-      }
-      if (hold) {
-        var blur = hold.querySelector(".phone-trail-blur");
-        if (blur) blur.remove();
-        ["#home-video", "video", "canvas.approach-freeze"].forEach(function (sel) {
-          var el = hold.querySelector(sel);
-          if (!el) return;
-          ["position","left","top","width","height","maxWidth","maxHeight","objectFit","objectPosition","transform","inset","right","bottom","zIndex"].forEach(function (k) {
-            el.style[k] = "";
-          });
-        });
-      }
-      return;
-    }
-    live.classList.add("phone-sign-fit");
-    try { document.body.classList.add("amp-phone-sign-fit"); } catch (e) {}
-    /* Portrait phone still is already framed — full-bleed cover only. */
     if (img) {
-      img.style.position = "";
-      img.style.left = "";
-      img.style.top = "";
-      img.style.width = "";
-      img.style.height = "";
-      img.style.maxWidth = "";
-      img.style.maxHeight = "";
-      img.style.objectFit = "cover";
-      img.style.objectPosition = "50% 50%";
-      img.style.transform = "none";
+      ["position","left","top","width","height","maxWidth","maxHeight","objectFit","objectPosition","transform","zIndex"].forEach(function (k) {
+        img.style[k] = "";
+      });
+    }
+    var hold = document.getElementById("approach-video-hold");
+    if (hold) {
+      var blur = hold.querySelector(".phone-trail-blur");
+      if (blur) blur.remove();
+      ["#home-video", "video", "canvas.approach-freeze"].forEach(function (sel) {
+        var el = hold.querySelector(sel);
+        if (!el) return;
+        ["position","left","top","width","height","maxWidth","maxHeight","objectFit","objectPosition","transform","inset","right","bottom","zIndex"].forEach(function (k) {
+          el.style[k] = "";
+        });
+      });
     }
   }
 
@@ -719,34 +697,10 @@
        1) Freeze the paused video frame onto the hold canvas (same cover box).
        2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
        3) Crossfade the baked plank PNG onto that freeze (labels ease in).
-       Never hard-cut video→bake or fade to a second <img> (that jumped the planks).
-       PHONE: skip freeze math — swap to pre-baked portrait still + show .shot. */
+       Never hard-cut video→bake or fade to a second <img> (that jumped the planks). */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
-    }
-    if (isPhoneTrailFit()) {
-      var routeP = state._approachRoute || "physician";
-      var liveP = document.querySelector('.view.trailhead.on[data-route="' + routeP + '"]') ||
-        document.querySelector('.view.trailhead[data-route="' + routeP + '"]');
-      ensureBakedTrailheadLabels(routeP === "client" ? "client" : "physician");
-      try { document.body.classList.remove("amp-live-trailhead"); } catch (e) {}
-      try { document.body.classList.add("amp-trail-settled"); } catch (e) {}
-      if (hold) {
-        hold.hidden = true;
-        hold.setAttribute("hidden", "");
-      }
-      if (liveP) {
-        liveP.classList.remove("live-video-bg");
-        liveP.classList.add("signs-lit", "signs-frozen", "after-approach");
-      }
-      applyPhoneSignFrame();
-      if (routeP === "physician" || routeP === "physician-specialty") renderSpecialtyGrid();
-      else if (routeP === "client") renderFacilitySignpost();
-      state.approachHold = true;
-      mountTrailheadHits(routeP);
-      if (typeof done === "function") done();
-      return;
     }
     paintFreezeCanvas();
     /* Delay is-settling until bake is ready — one continuous soft end, no early fade race. */
