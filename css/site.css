@@ -3201,6 +3201,8 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     object-position: 50% 50% !important;
     filter: none;
     background: transparent;
+    /* Sign sits left-in-bake; nudge right so F/O/G aren’t kissing the bezel. */
+    transform: translateX(5%);
   }
   /* During live swoop, keep cover so home→trailhead doesn’t jump; after settle
      the baked still uses contain above. Video hold stays cover during flight. */
@@ -3215,6 +3217,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   body.amp-trail-settled #approach-video-hold canvas.approach-freeze {
     object-fit: contain !important;
     object-position: 50% 50% !important;
+    transform: translateX(5%);
   }
 }
 
