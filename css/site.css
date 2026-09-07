@@ -3184,16 +3184,16 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   }
   .view.funnel.trailhead.on > .shot img.still {
     object-fit: cover !important;
-    object-position: 50% 50% !important;
+    object-position: 28% 50% !important;
   }
   body.amp-trail-settled #approach-video-hold video,
   body.amp-trail-settled #approach-video-hold canvas.approach-freeze,
   body.amp-trail-settled #approach-video-hold #home-video {
     object-fit: cover !important;
-    object-position: 50% 50% !important;
+    object-position: 28% 50% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1913";
+    content: "preview 1914";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));

@@ -128,7 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1913";
+    var v = "1914";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -172,7 +172,7 @@
   var BAKE_W = 2560;
   var BAKE_H = 1146;
   /* Phone cover crop position — ONE nudge from 50% (Mike: whole words, not contain). */
-  var PHONE_TRAIL_POS_X = 0.50;
+  var PHONE_TRAIL_POS_X = 0.28;
   var PHONE_TRAIL_POS_Y = 0.50;
   function bakeContentRect(el, natW, natH) {
     natW = natW || BAKE_W;
