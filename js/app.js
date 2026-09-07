@@ -121,7 +121,7 @@
 
 
   function trailheadBakeSrc(route) {
-    var v = "1779";
+    var v = "1780";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -172,28 +172,28 @@
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
   var BAKE_H = 1096;
-  /* Phone frame LOCK (Mike): base on Obstetrics / Critical Access (2nd plank),
-     NOT Family Medicine / FQHC — FM is longer and pulled the crop left. */
+  /* Phone frame LOCK v5 (Mike / Chrome): fit FULL plank letter bounds with
+     real left margin so O/F/G never kiss the bezel. OBG stays the optical
+     reference width; left edge includes FM letter start. */
   var ANCHOR_PLANK = { x: 541, y: 303, w: 1228, h: 109 }; /* obg / cah */
   var SIGN_ROI = {
-    x: 500, /* OBG-based left (not FM) */
-    y: 105,
-    w: 1405, /* through widest tip */
-    h: 890
+    x: 390, /* left of FM letters — must clear bezel */
+    y: 120,
+    w: 1540, /* through widest arrow tip */
+    h: 860
   };
 
   function phoneSignLayout(vw, vh) {
-    var pad = 0.055;
-    var availW = vw * (1 - pad * 2);
-    var availH = vh * (1 - pad * 2);
-    /* Prefer fitting the Obstetrics plank fully (incl. leading O) with air. */
-    var fitW = Math.max(SIGN_ROI.w, ANCHOR_PLANK.w + 72);
-    var scale = Math.min(availW / fitW, availH / SIGN_ROI.h);
+    var padL = 0.08; /* hard left air — Chrome was still clipping at 3.5% */
+    var padR = 0.04;
+    var padY = 0.05;
+    var availW = vw * (1 - padL - padR);
+    var availH = vh * (1 - padY * 2);
+    var scale = Math.min(availW / SIGN_ROI.w, availH / SIGN_ROI.h);
     var mediaW = BAKE_W * scale;
     var mediaH = BAKE_H * scale;
-    /* Anchor on OBG, then a few nudges right so the leading O clears the bezel. */
-    var anchorCx = ANCHOR_PLANK.x + ANCHOR_PLANK.w / 2;
-    var left = vw / 2 - anchorCx * scale + vw * 0.035;
+    /* Pin ROI left edge at padL — guarantees leading letters clear. */
+    var left = vw * padL - SIGN_ROI.x * scale;
     var top = (vh - SIGN_ROI.h * scale) / 2 - SIGN_ROI.y * scale;
     return { mediaW: mediaW, mediaH: mediaH, left: left, top: top, scale: scale };
   }
