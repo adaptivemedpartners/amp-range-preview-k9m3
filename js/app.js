@@ -141,13 +141,96 @@
     }
   }
 
+  /* Exact phone frame: wood-sign ROI in the 2560×1096 bake (plank union + pad).
+     No manual % nudges — scale/translate so the whole sign fits with margin. */
+  var BAKE_W = 2560;
+  var BAKE_H = 1096;
+  var SIGN_ROI = { x: 369, y: 105, w: 1580, h: 890 }; /* from SPEC/FAC plank union + pad */
+
+  function phoneSignLayout(vw, vh) {
+    var pad = 0.045; /* ~4.5% margin around sign */
+    var availW = vw * (1 - pad * 2);
+    var availH = vh * (1 - pad * 2);
+    var scale = Math.min(availW / SIGN_ROI.w, availH / SIGN_ROI.h);
+    var mediaW = BAKE_W * scale;
+    var mediaH = BAKE_H * scale;
+    var left = (vw - SIGN_ROI.w * scale) / 2 - SIGN_ROI.x * scale;
+    var top = (vh - SIGN_ROI.h * scale) / 2 - SIGN_ROI.y * scale;
+    return { mediaW: mediaW, mediaH: mediaH, left: left, top: top, scale: scale };
+  }
+
+  function applyPhoneSignFrame() {
+    var live = document.querySelector(".view.funnel.trailhead.on");
+    if (!live) return;
+    var shot = live.querySelector(".shot");
+    var img = live.querySelector(".shot img.still");
+    var vw = window.innerWidth || document.documentElement.clientWidth || 1;
+    var vh = window.innerHeight || document.documentElement.clientHeight || 1;
+    if (!isPhoneTrailFit()) {
+      live.classList.remove("phone-sign-fit");
+      if (img) {
+        img.style.position = "";
+        img.style.left = "";
+        img.style.top = "";
+        img.style.width = "";
+        img.style.height = "";
+        img.style.maxWidth = "";
+        img.style.maxHeight = "";
+        img.style.objectFit = "";
+        img.style.transform = "";
+      }
+      if (shot) shot.style.removeProperty("--trail-fill");
+      /* settled video hold — clear phone overrides */
+      try {
+        document.body.classList.remove("amp-phone-sign-fit");
+      } catch (e) {}
+      return;
+    }
+    live.classList.add("phone-sign-fit");
+    try { document.body.classList.add("amp-phone-sign-fit"); } catch (e) {}
+    var L = phoneSignLayout(vw, vh);
+    if (img) {
+      img.style.position = "absolute";
+      img.style.left = L.left + "px";
+      img.style.top = L.top + "px";
+      img.style.width = L.mediaW + "px";
+      img.style.height = L.mediaH + "px";
+      img.style.maxWidth = "none";
+      img.style.maxHeight = "none";
+      img.style.objectFit = "fill";
+      img.style.transform = "none";
+      img.style.zIndex = "1";
+    }
+    if (shot) {
+      var src = img && (img.currentSrc || img.src);
+      if (src) shot.style.setProperty("--trail-fill", 'url("' + src + '")');
+    }
+    /* Settled approach hold: same geometry on freeze/video */
+    var hold = document.getElementById("approach-video-hold");
+    if (hold && document.body.classList.contains("amp-trail-settled")) {
+      ["#home-video", "video", "canvas.approach-freeze"].forEach(function (sel) {
+        var el = hold.querySelector(sel);
+        if (!el) return;
+        el.style.position = "absolute";
+        el.style.left = L.left + "px";
+        el.style.top = L.top + "px";
+        el.style.width = L.mediaW + "px";
+        el.style.height = L.mediaH + "px";
+        el.style.objectFit = "fill";
+        el.style.transform = "none";
+        el.style.inset = "auto";
+        el.style.right = "auto";
+        el.style.bottom = "auto";
+      });
+    }
+  }
+
   function buildPlankSvg(hits, attr) {
     var ns = "http://www.w3.org/2000/svg";
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("class", "plank-hit-svg");
     svg.setAttribute("viewBox", "0 0 2560 1096");
-    /* Phone contain = meet; desktop cover = slice. */
-    svg.setAttribute("preserveAspectRatio", isPhoneTrailFit() ? "xMidYMid meet" : "xMidYMid slice");
+    svg.setAttribute("preserveAspectRatio", "none");
     svg.setAttribute("aria-hidden", "true");
     hits.forEach(function (h) {
       var r = document.createElementNS(ns, "rect");
@@ -169,23 +252,16 @@
     if (!layer || !svg) return;
     var vw = window.innerWidth || document.documentElement.clientWidth || 1;
     var vh = window.innerHeight || document.documentElement.clientHeight || 1;
-    var aspect = SIGN_MEDIA_ASPECT; /* 2560/1096 */
-    var phone = isPhoneTrailFit();
     var mediaW, mediaH, left, top;
-    if (phone) {
-      /* contain / meet — full sign fits, letterbox */
-      if (vw / vh > aspect) {
-        mediaW = vh * aspect;
-        mediaH = vh;
-      } else {
-        mediaW = vw;
-        mediaH = vw / aspect;
-      }
-      left = (vw - mediaW) / 2; /* Chrome lock: contain centered, match transform:none */
-      top = (vh - mediaH) / 2;
-      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    if (isPhoneTrailFit()) {
+      var L = phoneSignLayout(vw, vh);
+      mediaW = L.mediaW;
+      mediaH = L.mediaH;
+      left = L.left;
+      top = L.top;
+      svg.setAttribute("preserveAspectRatio", "none");
     } else {
-      /* cover / slice */
+      var aspect = SIGN_MEDIA_ASPECT;
       if (vw / vh > aspect) {
         mediaW = vw;
         mediaH = vw / aspect;
@@ -195,7 +271,7 @@
       }
       left = (vw - mediaW) / 2;
       top = (vh - mediaH) / 2;
-      svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+      svg.setAttribute("preserveAspectRatio", "none");
     }
     svg.style.position = "absolute";
     svg.style.left = left + "px";
@@ -208,20 +284,24 @@
   }
 
   function syncTrailheadHitAlign() {
+    applyPhoneSignFrame();
     layoutTrailheadHitSvg();
   }
 
   function syncTrailFillFromStill() {
-    /* Blur twin behind contain still — fills gutters on phone. */
-    if (!isPhoneTrailFit()) return;
-    var live = document.querySelector(".view.funnel.trailhead.on");
-    if (!live) return;
-    var shot = live.querySelector(".shot");
-    var img = live.querySelector(".shot img.still");
-    if (!shot || !img) return;
-    var src = img.currentSrc || img.src;
-    if (src) shot.style.setProperty("--trail-fill", "url(\"" + src + "\")");
+    applyPhoneSignFrame();
   }
+
+  if (!window.__ampPhoneSignFitResize) {
+    window.__ampPhoneSignFitResize = true;
+    window.addEventListener("resize", function () {
+      syncTrailheadHitAlign();
+    });
+    window.addEventListener("orientationchange", function () {
+      setTimeout(syncTrailheadHitAlign, 50);
+    });
+  }
+
 
   function mountTrailheadHits(route) {
     route = route || state._approachRoute || "physician";

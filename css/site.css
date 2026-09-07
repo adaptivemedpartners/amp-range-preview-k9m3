@@ -3173,51 +3173,37 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK v3 (Mike 2026-09-07): contain so the FULL wood sign
-   fits; a blurred cover twin fills the gutters (no empty stamp / no side clip).
-   Hits use meet layout via JS to match the contain box. Desktop cover handoff
-   unchanged above 520px. */
+/* Phone trail fit LOCK v4 (Mike 2026-09-07): EXACT wood-sign ROI frame via JS
+   (SIGN_ROI). Blur twin fills gutters. No manual % nudges. Chrome lock.
+   Fly-in stays cover until settle. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot {
     background: #0b1210;
     overflow: hidden;
   }
-  .view.funnel.trailhead.on > .shot::before {
+  .view.funnel.trailhead.on.phone-sign-fit > .shot::before {
     content: "";
     position: absolute;
-    inset: -8%;
+    inset: -10%;
     background-image: var(--trail-fill, none);
     background-size: cover;
     background-position: 50% 50%;
-    filter: blur(18px) saturate(1.05) brightness(0.78);
-    transform: scale(1.08);
+    filter: blur(20px) saturate(1.06) brightness(0.76);
+    transform: scale(1.1);
     z-index: 0;
     pointer-events: none;
   }
-  .view.funnel.trailhead.on > .shot img.still {
-    position: relative;
+  .view.funnel.trailhead.on.phone-sign-fit > .shot img.still {
     z-index: 1;
-    object-fit: contain !important;
-    object-position: 50% 50% !important;
     filter: none;
     background: transparent;
-    /* Chrome lock (Mike 2026-09-07): contain centered — no X nudge. */
-    transform: none;
   }
-  /* During live swoop, keep cover so home→trailhead doesn’t jump; after settle
-     the baked still uses contain above. Video hold stays cover during flight. */
+  /* Live swoop: full-bleed cover. Settled: JS writes exact geometry. */
   #approach-video-hold #home-video,
   #approach-video-hold video,
   #approach-video-hold canvas.approach-freeze {
     object-fit: cover;
     object-position: 50% 50%;
-  }
-  body.amp-trail-settled #approach-video-hold #home-video,
-  body.amp-trail-settled #approach-video-hold video,
-  body.amp-trail-settled #approach-video-hold canvas.approach-freeze {
-    object-fit: contain !important;
-    object-position: 50% 50% !important;
-    transform: none;
   }
 }
 
