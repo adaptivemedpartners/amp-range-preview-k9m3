@@ -149,22 +149,24 @@
      NOT Family Medicine / FQHC — FM is longer and pulled the crop left. */
   var ANCHOR_PLANK = { x: 541, y: 303, w: 1228, h: 109 }; /* obg / cah */
   var SIGN_ROI = {
-    x: 505, /* OBG left - pad — do not use FM x=417 */
+    x: 500, /* OBG-based left (not FM) */
     y: 105,
-    w: 1396, /* through widest tip (~1901) */
+    w: 1405, /* through widest tip */
     h: 890
   };
 
   function phoneSignLayout(vw, vh) {
-    var pad = 0.05;
+    var pad = 0.055;
     var availW = vw * (1 - pad * 2);
     var availH = vh * (1 - pad * 2);
-    var scale = Math.min(availW / SIGN_ROI.w, availH / SIGN_ROI.h);
+    /* Prefer fitting the Obstetrics plank fully (incl. leading O) with air. */
+    var fitW = Math.max(SIGN_ROI.w, ANCHOR_PLANK.w + 72);
+    var scale = Math.min(availW / fitW, availH / SIGN_ROI.h);
     var mediaW = BAKE_W * scale;
     var mediaH = BAKE_H * scale;
-    /* Horizontal center on Obstetrics (not ROI mid / not FM). */
+    /* Anchor on OBG, then a few nudges right so the leading O clears the bezel. */
     var anchorCx = ANCHOR_PLANK.x + ANCHOR_PLANK.w / 2;
-    var left = vw / 2 - anchorCx * scale;
+    var left = vw / 2 - anchorCx * scale + vw * 0.035;
     var top = (vh - SIGN_ROI.h * scale) / 2 - SIGN_ROI.y * scale;
     return { mediaW: mediaW, mediaH: mediaH, left: left, top: top, scale: scale };
   }
