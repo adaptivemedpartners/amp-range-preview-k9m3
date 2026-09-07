@@ -2,10 +2,10 @@
 (function () {
   "use strict";
 
-  /* Imagine timeline: 0–1 aerial, 1–4 swoop, ~5.05 trailhead freeze.
-     Bake + labels locked to the 5.05 frame. Pause THERE — sharp stop + smooth bake. */
-  var SETTLE = 5.05;
-  var FREEZE_END = 5.05; /* same as SETTLE: handoff frame == bake frame */
+  /* Imagine timeline: new 4.5s swoop (Mike 2026-09-07). Settle ~4.30 end hold.
+     Bake + labels locked to that freeze. Desktop + phone same clip. */
+  var SETTLE = 4.30;
+  var FREEZE_END = 4.30; /* same as SETTLE: handoff frame == bake frame */
 
   var state = {
     moving: false,
@@ -128,7 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1912";
+    var v = "1913";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -154,8 +154,8 @@
   }
 
   /* Cover-locked SVG plank hits (viewBox = bake 2560×1096, slice = object-fit:cover). */
-  var SPEC_PLANK_HITS = [['fm',417,153,1484,150],['obg',541,303,1228,109],['gi',590,431,1126,109],['neuro',645,558,1024,109],['dental',675,690,972,98],['other',524,794,1280,153]];
-  var FAC_PLANK_HITS = [['fqhc',419,153,1484,153],['cah',541,306,1228,109],['bh',590,431,1126,109],['group',619,558,1075,109],['dental',675,690,972,98],['other',524,794,1280,153]];
+  var SPEC_PLANK_HITS = [['fm',480,195,920,100],['obg',520,305,840,95],['gi',550,410,800,95],['neuro',580,515,760,95],['dental',600,620,720,90],['other',520,725,860,110]];
+  var FAC_PLANK_HITS = [['fqhc',480,195,920,100],['cah',520,305,840,95],['bh',550,410,800,95],['group',580,515,760,95],['dental',600,620,720,90],['other',520,725,860,110]];
 
   function ensureTrailheadHitLayer() {
     var layer = $("#trailhead-hit-layer");
@@ -170,7 +170,7 @@
   /* Exact phone frame: wood-sign ROI in the 2560×1096 bake (plank union + pad).
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
-  var BAKE_H = 1096;
+  var BAKE_H = 1146;
   /* Phone cover crop position — ONE nudge from 50% (Mike: whole words, not contain). */
   var PHONE_TRAIL_POS_X = 0.50;
   var PHONE_TRAIL_POS_Y = 0.50;
@@ -198,10 +198,10 @@
      reference width; left edge includes FM letter start. */
   var ANCHOR_PLANK = { x: 541, y: 303, w: 1228, h: 109 }; /* obg / cah */
   var SIGN_ROI = {
-    x: 390, /* left of FM letters — must clear bezel */
-    y: 120,
-    w: 1540, /* through widest arrow tip */
-    h: 860
+    x: 460,
+    y: 180,
+    w: 1100,
+    h: 700
   };
 
   function phoneSignLayout(vw, vh) {
@@ -248,7 +248,7 @@
     var ns = "http://www.w3.org/2000/svg";
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("class", "plank-hit-svg");
-    svg.setAttribute("viewBox", "0 0 2560 1096");
+    svg.setAttribute("viewBox", "0 0 2560 1146");
     svg.setAttribute("preserveAspectRatio", "none");
     svg.setAttribute("aria-hidden", "true");
     hits.forEach(function (h) {
