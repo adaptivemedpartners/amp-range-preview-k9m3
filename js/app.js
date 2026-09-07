@@ -121,7 +121,7 @@
 
 
   function trailheadBakeSrc(route) {
-    var v = "1781";
+    var v = "1782";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -184,15 +184,14 @@
   };
 
   function phoneSignLayout(vw, vh) {
-    var padL = 0.08; /* hard left air — Chrome was still clipping at 3.5% */
-    var padR = 0.04;
-    var padY = 0.05;
+    var padL = 0.12; /* Chrome still clipped at 8% — more left air */
+    var padR = 0.06;
+    var padY = 0.06;
     var availW = vw * (1 - padL - padR);
     var availH = vh * (1 - padY * 2);
     var scale = Math.min(availW / SIGN_ROI.w, availH / SIGN_ROI.h);
     var mediaW = BAKE_W * scale;
     var mediaH = BAKE_H * scale;
-    /* Pin ROI left edge at padL — guarantees leading letters clear. */
     var left = vw * padL - SIGN_ROI.x * scale;
     var top = (vh - SIGN_ROI.h * scale) / 2 - SIGN_ROI.y * scale;
     return { mediaW: mediaW, mediaH: mediaH, left: left, top: top, scale: scale };
@@ -338,7 +337,8 @@
 
   function syncTrailheadHitAlign() {
     applyPhoneSignFrame();
-    layoutTrailheadHitSvg();
+    if (isPhoneTrailFit()) layoutPhoneHtmlHits();
+    else layoutTrailheadHitSvg();
   }
 
   function syncTrailFillFromStill() {
@@ -362,26 +362,68 @@
     layer.innerHTML = "";
     var attr = route === "client" ? "facility" : "specialty";
     var hits = route === "client" ? FAC_PLANK_HITS : SPEC_PLANK_HITS;
-    var svg = buildPlankSvg(hits, attr);
-    layer.appendChild(svg);
     layer.hidden = false;
     layer.classList.add("is-live");
-    layoutTrailheadHitSvg();
-    /* Keep legacy signpost in DOM for rails / a11y but don't let it steal taps while live. */
+    /* Keep legacy signpost from stealing taps while live. */
     $all(".sign-media-frame").forEach(function (fr) {
       fr.classList.add("hits-deferred");
     });
+
+    if (isPhoneTrailFit()) {
+      /* HTML hotspots mapped bake→screen — SVG was sliding (FM→Neuro). */
+      applyPhoneSignFrame();
+      var L = phoneSignLayout(
+        window.innerWidth || document.documentElement.clientWidth || 1,
+        window.innerHeight || document.documentElement.clientHeight || 1
+      );
+      var sx = L.mediaW / BAKE_W;
+      var sy = L.mediaH / BAKE_H;
+      var wrap = document.createElement("div");
+      wrap.className = "plank-hit-html";
+      wrap.style.cssText = "position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;";
+      hits.forEach(function (h) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "plank-hit-btn";
+        btn.setAttribute("data-" + attr, h[0]);
+        btn.setAttribute("aria-label", h[0]);
+        btn.style.cssText = [
+          "position:absolute",
+          "left:" + (L.left + h[1] * sx) + "px",
+          "top:" + (L.top + h[2] * sy) + "px",
+          "width:" + (h[3] * sx) + "px",
+          "height:" + (Math.max(h[4], 110) * sy) + "px",
+          "margin:0",
+          "padding:0",
+          "border:0",
+          "background:transparent",
+          "pointer-events:auto",
+          "cursor:pointer",
+          "-webkit-tap-highlight-color:transparent"
+        ].join(";");
+        wrap.appendChild(btn);
+      });
+      layer.appendChild(wrap);
+    } else {
+      var svg = buildPlankSvg(hits, attr);
+      layer.appendChild(svg);
+      layoutTrailheadHitSvg();
+    }
+
     if (route === "physician" || route === "physician-specialty") {
       wireOtherHot(layer, "specialty", openSpecialtyOtherPop);
     } else if (route === "client") {
       wireOtherHot(layer, "facility", openFacilityOtherPop);
     }
-    /* Direct rect taps — don't rely on Element.closest through SVG on mobile Chrome. */
     if (!layer.getAttribute("data-plank-click")) {
       layer.setAttribute("data-plank-click", "1");
       layer.addEventListener("click", function (ev) {
         var t = ev.target;
         if (!t || !t.getAttribute) return;
+        if (t.closest) {
+          var hot = t.closest("[data-specialty],[data-facility]");
+          if (hot) t = hot;
+        }
         var sid = (t.getAttribute("data-specialty") || "").trim();
         var fid = (t.getAttribute("data-facility") || "").trim();
         if (sid) {
@@ -403,12 +445,45 @@
         }
       }, true);
     }
-    /* Re-layout after image paints (src swap / decode). */
     var stillImg = document.querySelector(".view.funnel.trailhead.on .shot img.still");
     if (stillImg) {
-      stillImg.addEventListener("load", function () { layoutTrailheadHitSvg(); }, { once: true });
-      setTimeout(layoutTrailheadHitSvg, 50);
-      setTimeout(layoutTrailheadHitSvg, 250);
+      stillImg.addEventListener("load", function () {
+        if (isPhoneTrailFit()) mountTrailheadHits(route);
+        else layoutTrailheadHitSvg();
+      }, { once: true });
+      setTimeout(function () {
+        if (isPhoneTrailFit()) layoutPhoneHtmlHits(route);
+        else layoutTrailheadHitSvg();
+      }, 80);
+    }
+  }
+
+  function layoutPhoneHtmlHits(route) {
+    if (!isPhoneTrailFit()) return;
+    var layer = document.querySelector("#trailhead-hit-layer.is-live");
+    if (!layer) return;
+    applyPhoneSignFrame();
+    var wrap = layer.querySelector(".plank-hit-html");
+    if (!wrap) {
+      mountTrailheadHits(route || state._approachRoute || "physician");
+      return;
+    }
+    var attr = (route === "client" || (layer.querySelector("[data-facility]"))) ? "facility" : "specialty";
+    var hits = attr === "facility" ? FAC_PLANK_HITS : SPEC_PLANK_HITS;
+    var L = phoneSignLayout(
+      window.innerWidth || document.documentElement.clientWidth || 1,
+      window.innerHeight || document.documentElement.clientHeight || 1
+    );
+    var sx = L.mediaW / BAKE_W;
+    var sy = L.mediaH / BAKE_H;
+    var btns = wrap.querySelectorAll(".plank-hit-btn");
+    for (var i = 0; i < btns.length && i < hits.length; i++) {
+      var h = hits[i];
+      var btn = btns[i];
+      btn.style.left = (L.left + h[1] * sx) + "px";
+      btn.style.top = (L.top + h[2] * sy) + "px";
+      btn.style.width = (h[3] * sx) + "px";
+      btn.style.height = (Math.max(h[4], 110) * sy) + "px";
     }
   }
 
