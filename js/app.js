@@ -121,7 +121,7 @@
 
 
   function trailheadBakeSrc(route) {
-    var v = "1780";
+    var v = "1781";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -279,7 +279,9 @@
       r.setAttribute("y", h[2]);
       r.setAttribute("width", h[3]);
       r.setAttribute("height", h[4]);
-      r.setAttribute("fill", "rgba(0,0,0,0.001)");
+      r.setAttribute("fill", "#ffffff");
+      r.setAttribute("fill-opacity", "0");
+      r.setAttribute("pointer-events", "all");
       svg.appendChild(r);
     });
     return svg;
@@ -292,13 +294,24 @@
     var vw = window.innerWidth || document.documentElement.clientWidth || 1;
     var vh = window.innerHeight || document.documentElement.clientHeight || 1;
     var mediaW, mediaH, left, top;
+    svg.setAttribute("preserveAspectRatio", "none");
     if (isPhoneTrailFit()) {
-      var L = phoneSignLayout(vw, vh);
-      mediaW = L.mediaW;
-      mediaH = L.mediaH;
-      left = L.left;
-      top = L.top;
-      svg.setAttribute("preserveAspectRatio", "none");
+      applyPhoneSignFrame();
+      var img = document.querySelector(".view.funnel.trailhead.on .shot img.still");
+      if (img && img.getBoundingClientRect) {
+        var r = img.getBoundingClientRect();
+        /* Pin hits to the visible bake — same box the eye sees. */
+        left = r.left;
+        top = r.top;
+        mediaW = r.width;
+        mediaH = r.height;
+      } else {
+        var L = phoneSignLayout(vw, vh);
+        mediaW = L.mediaW;
+        mediaH = L.mediaH;
+        left = L.left;
+        top = L.top;
+      }
     } else {
       var aspect = SIGN_MEDIA_ASPECT;
       if (vw / vh > aspect) {
@@ -310,7 +323,6 @@
       }
       left = (vw - mediaW) / 2;
       top = (vh - mediaH) / 2;
-      svg.setAttribute("preserveAspectRatio", "none");
     }
     svg.style.position = "absolute";
     svg.style.left = left + "px";
@@ -320,6 +332,8 @@
     svg.style.right = "auto";
     svg.style.bottom = "auto";
     svg.style.inset = "auto";
+    svg.style.overflow = "visible";
+    svg.style.pointerEvents = "none";
   }
 
   function syncTrailheadHitAlign() {
@@ -361,6 +375,40 @@
       wireOtherHot(layer, "specialty", openSpecialtyOtherPop);
     } else if (route === "client") {
       wireOtherHot(layer, "facility", openFacilityOtherPop);
+    }
+    /* Direct rect taps — don't rely on Element.closest through SVG on mobile Chrome. */
+    if (!layer.getAttribute("data-plank-click")) {
+      layer.setAttribute("data-plank-click", "1");
+      layer.addEventListener("click", function (ev) {
+        var t = ev.target;
+        if (!t || !t.getAttribute) return;
+        var sid = (t.getAttribute("data-specialty") || "").trim();
+        var fid = (t.getAttribute("data-facility") || "").trim();
+        if (sid) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (sid === "other") { openSpecialtyOtherPop(); return; }
+          state.specialty = sid;
+          state.specialtyCustom = null;
+          closeSpecialtyOtherPop();
+          go("physician-rank", { trail: true });
+          return;
+        }
+        if (fid) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (fid === "other") { openFacilityOtherPop(); return; }
+          state.facility = fid;
+          go("client-specialty", { trail: true });
+        }
+      }, true);
+    }
+    /* Re-layout after image paints (src swap / decode). */
+    var stillImg = document.querySelector(".view.funnel.trailhead.on .shot img.still");
+    if (stillImg) {
+      stillImg.addEventListener("load", function () { layoutTrailheadHitSvg(); }, { once: true });
+      setTimeout(layoutTrailheadHitSvg, 50);
+      setTimeout(layoutTrailheadHitSvg, 250);
     }
   }
 

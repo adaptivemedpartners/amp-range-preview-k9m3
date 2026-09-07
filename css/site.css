@@ -3539,3 +3539,13 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .amp-guide-launcher.is-whisper { animation: amp-guide-whisper 2.8s ease-in-out 2; }
 @keyframes amp-guide-whisper { 0%, 100% { box-shadow: 0 0 0 5px rgba(13,148,136,.13), 0 0 26px rgba(45,212,191,.48), 0 14px 34px rgba(2,12,27,.42); } 50% { box-shadow: 0 0 0 9px rgba(45,212,191,.18), 0 0 34px rgba(94,234,212,.72), 0 14px 34px rgba(2,12,27,.42); } }
 @media (prefers-reduced-motion: reduce) { .amp-guide-launcher.is-whisper { animation: none; } }
+
+/* phone hit layer above nav — plank taps must win */
+@media (max-width: 520px) {
+  #trailhead-hit-layer.is-live {
+    z-index: 400 !important;
+  }
+  #trailhead-hit-layer .plank-hit-svg {
+    overflow: visible !important;
+  }
+}
