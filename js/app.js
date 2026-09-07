@@ -145,16 +145,26 @@
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
   var BAKE_H = 1096;
-  var SIGN_ROI = { x: 369, y: 105, w: 1580, h: 890 }; /* from SPEC/FAC plank union + pad */
+  /* Phone frame LOCK (Mike): base on Obstetrics / Critical Access (2nd plank),
+     NOT Family Medicine / FQHC — FM is longer and pulled the crop left. */
+  var ANCHOR_PLANK = { x: 541, y: 303, w: 1228, h: 109 }; /* obg / cah */
+  var SIGN_ROI = {
+    x: 505, /* OBG left - pad — do not use FM x=417 */
+    y: 105,
+    w: 1396, /* through widest tip (~1901) */
+    h: 890
+  };
 
   function phoneSignLayout(vw, vh) {
-    var pad = 0.045; /* ~4.5% margin around sign */
+    var pad = 0.05;
     var availW = vw * (1 - pad * 2);
     var availH = vh * (1 - pad * 2);
     var scale = Math.min(availW / SIGN_ROI.w, availH / SIGN_ROI.h);
     var mediaW = BAKE_W * scale;
     var mediaH = BAKE_H * scale;
-    var left = (vw - SIGN_ROI.w * scale) / 2 - SIGN_ROI.x * scale;
+    /* Horizontal center on Obstetrics (not ROI mid / not FM). */
+    var anchorCx = ANCHOR_PLANK.x + ANCHOR_PLANK.w / 2;
+    var left = vw / 2 - anchorCx * scale;
     var top = (vh - SIGN_ROI.h * scale) / 2 - SIGN_ROI.y * scale;
     return { mediaW: mediaW, mediaH: mediaH, left: left, top: top, scale: scale };
   }
