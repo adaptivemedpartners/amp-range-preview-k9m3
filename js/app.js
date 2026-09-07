@@ -129,7 +129,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1905";
+    var v = "1906";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -172,6 +172,24 @@
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
   var BAKE_H = 1096;
+  /* Visible letterboxed box for object-fit:contain (not the full element box). */
+  function bakeContentRect(el, natW, natH) {
+    natW = natW || BAKE_W;
+    natH = natH || BAKE_H;
+    if (!el || !el.getBoundingClientRect) {
+      return { left: 0, top: 0, width: 1, height: 1 };
+    }
+    var r = el.getBoundingClientRect();
+    var s = Math.min(r.width / natW, r.height / natH);
+    var w = natW * s;
+    var h = natH * s;
+    return {
+      left: r.left + (r.width - w) / 2,
+      top: r.top + (r.height - h) / 2,
+      width: w,
+      height: h
+    };
+  }
   /* Phone frame LOCK v5 (Mike / Chrome): fit FULL plank letter bounds with
      real left margin so O/F/G never kiss the bezel. OBG stays the optical
      reference width; left edge includes FM letter start. */
@@ -297,8 +315,15 @@
 
   function syncTrailheadHitAlign() {
     applyPhoneSignFrame();
-    if (isPhoneTrailFit()) layoutPhoneHtmlHits();
-    else layoutTrailheadHitSvg();
+    if (isPhoneTrailFit()) {
+      var live = document.querySelector(".view.funnel.trailhead.on");
+      if (live) {
+        var route = live.getAttribute("data-route") || "physician";
+        mountTrailheadHits(route);
+      }
+    } else {
+      layoutTrailheadHitSvg();
+    }
   }
 
   function syncTrailFillFromStill() {
@@ -328,25 +353,20 @@
     $all(".sign-media-frame").forEach(function (fr) {
       fr.classList.add("hits-deferred");
     });
-    /* Phone: keep specialty rail live — overlay hits were wrong (FM→Neuro). */
+    /* Phone: rail stays hidden — taps on wood planks only. */
     $all(".trailhead-rail").forEach(function (rail) {
-      rail.style.pointerEvents = "auto";
+      rail.style.pointerEvents = "";
     });
 
     if (isPhoneTrailFit()) {
-      /* HTML hotspots mapped bake→screen — SVG was sliding (FM→Neuro). */
+      /* HTML hotspots on the CONTAIN letterbox content box (whole planks). */
       applyPhoneSignFrame();
       var img = document.querySelector(".view.funnel.trailhead.on .shot img.still");
-      var box = img && img.getBoundingClientRect ? img.getBoundingClientRect() : null;
-      var L = phoneSignLayout(
-        window.innerWidth || document.documentElement.clientWidth || 1,
-        window.innerHeight || document.documentElement.clientHeight || 1
-      );
-      /* Origin = visible bake box (viewport). Never assume .shot is at 0,0. */
-      var ox = box ? box.left : L.left;
-      var oy = box ? box.top : L.top;
-      var bw = box && box.width ? box.width : L.mediaW;
-      var bh = box && box.height ? box.height : L.mediaH;
+      var box = bakeContentRect(img, BAKE_W, BAKE_H);
+      var ox = box.left;
+      var oy = box.top;
+      var bw = box.width;
+      var bh = box.height;
       var sx = bw / BAKE_W;
       var sy = bh / BAKE_H;
       var wrap = document.createElement("div");
@@ -697,10 +717,34 @@
        1) Freeze the paused video frame onto the hold canvas (same cover box).
        2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
        3) Crossfade the baked plank PNG onto that freeze (labels ease in).
-       Never hard-cut video→bake or fade to a second <img> (that jumped the planks). */
+       Never hard-cut video→bake or fade to a second <img> (that jumped the planks).
+       Phone: land on .shot with object-fit:contain so WHOLE planks fit (Mike 1906). */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
+    }
+    if (isPhoneTrailFit()) {
+      var routeP = state._approachRoute || "physician";
+      var liveP = document.querySelector('.view.trailhead.on[data-route="' + routeP + '"]') ||
+        document.querySelector('.view.trailhead[data-route="' + routeP + '"]');
+      ensureBakedTrailheadLabels(routeP === "client" ? "client" : "physician");
+      try { document.body.classList.remove("amp-live-trailhead"); } catch (e) {}
+      try { document.body.classList.add("amp-trail-settled"); } catch (e) {}
+      if (hold) {
+        hold.hidden = true;
+        hold.setAttribute("hidden", "");
+      }
+      if (liveP) {
+        liveP.classList.remove("live-video-bg");
+        liveP.classList.add("signs-lit", "signs-frozen", "after-approach");
+      }
+      applyPhoneSignFrame();
+      if (routeP === "physician" || routeP === "physician-specialty") renderSpecialtyGrid();
+      else if (routeP === "client") renderFacilitySignpost();
+      state.approachHold = true;
+      mountTrailheadHits(routeP);
+      if (typeof done === "function") done();
+      return;
     }
     paintFreezeCanvas();
     /* Delay is-settling until bake is ready — one continuous soft end, no early fade race. */

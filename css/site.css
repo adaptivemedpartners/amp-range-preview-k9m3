@@ -1941,7 +1941,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   /* The painted plank art is the phone UI too; do not duplicate labels as floating pills. */
   .trailhead-rail { display: none !important; }
   .view.funnel.trailhead > .shot img.still {
-    object-position: 50% 42%;
+    object-fit: contain;
+    object-position: 50% 50%;
   }
   /* Keep focal-point centers; widen hit only */
   .signpost .hot.slot-0,
@@ -3173,11 +3174,27 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail LOCK v9: REVERT composite still / crop math.
-   Keep version pill + specialty rail taps. Trailhead media = same cover as desktop. */
+/* Phone trail LOCK v10 (Mike): WHOLE planks in frame via object-fit:contain.
+   Dark letterbox (not blur composite). No overlay rail — taps on wood.
+   Version pill stays. */
 @media (max-width: 520px) {
+  .view.funnel.trailhead.on > .shot {
+    background: #0b1210;
+    overflow: hidden;
+  }
+  .view.funnel.trailhead.on > .shot img.still {
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
+  }
+  body.amp-trail-settled #approach-video-hold video,
+  body.amp-trail-settled #approach-video-hold canvas.approach-freeze,
+  body.amp-trail-settled #approach-video-hold #home-video {
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
+    background: #0b1210;
+  }
   .view.funnel.trailhead.on::after {
-    content: "preview 1905";
+    content: "preview 1906";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -3191,30 +3208,13 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     letter-spacing: .04em;
     pointer-events: none;
   }
+  /* Keep rail hidden — do not cover planks */
   .view.funnel.trailhead.on .trailhead-rail {
-    display: flex !important;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    padding: 12px 14px calc(56px + env(safe-area-inset-bottom, 0px));
-    margin-top: auto;
-    background: linear-gradient(to top, rgba(2,12,27,.88), rgba(2,12,27,0));
-    pointer-events: auto;
-    z-index: 450;
-    position: relative;
-  }
-  .view.funnel.trailhead.on .trailhead-rail button {
-    min-height: 44px;
-    padding: 10px 14px;
-    border: 1px solid rgba(153,246,228,.45);
-    background: rgba(15,23,42,.82);
-    color: #ecfeff;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 700;
+    display: none !important;
   }
   #trailhead-hit-layer.is-live {
-    display: none !important;
+    display: block !important;
+    z-index: 400 !important;
   }
 }
 
