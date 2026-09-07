@@ -133,15 +133,12 @@
     return layer;
   }
 
-  /* Phone trail crop focal — must match CSS object-position on trail stills. */
-  var TRAIL_COVER_FOCAL_X = 0.50; /* desktop */
-  function trailCoverFocalX() {
+  function isPhoneTrailFit() {
     try {
-      if (window.matchMedia && window.matchMedia("(max-width: 520px)").matches) {
-        return 0.42; /* match object-position: 42% 50% */
-      }
-    } catch (e) {}
-    return TRAIL_COVER_FOCAL_X;
+      return !!(window.matchMedia && window.matchMedia("(max-width: 520px)").matches);
+    } catch (e) {
+      return false;
+    }
   }
 
   function buildPlankSvg(hits, attr) {
@@ -149,8 +146,8 @@
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("class", "plank-hit-svg");
     svg.setAttribute("viewBox", "0 0 2560 1096");
-    /* meet not used — we size/position the SVG box to the cover crop with focal. */
-    svg.setAttribute("preserveAspectRatio", "none");
+    /* Phone contain = meet; desktop cover = slice. */
+    svg.setAttribute("preserveAspectRatio", isPhoneTrailFit() ? "xMidYMid meet" : "xMidYMid slice");
     svg.setAttribute("aria-hidden", "true");
     hits.forEach(function (h) {
       var r = document.createElementNS(ns, "rect");
@@ -173,17 +170,33 @@
     var vw = window.innerWidth || document.documentElement.clientWidth || 1;
     var vh = window.innerHeight || document.documentElement.clientHeight || 1;
     var aspect = SIGN_MEDIA_ASPECT; /* 2560/1096 */
-    var mediaW, mediaH;
-    if (vw / vh > aspect) {
-      mediaW = vw;
-      mediaH = vw / aspect;
+    var phone = isPhoneTrailFit();
+    var mediaW, mediaH, left, top;
+    if (phone) {
+      /* contain / meet — full sign fits, letterbox */
+      if (vw / vh > aspect) {
+        mediaW = vh * aspect;
+        mediaH = vh;
+      } else {
+        mediaW = vw;
+        mediaH = vw / aspect;
+      }
+      left = (vw - mediaW) / 2;
+      top = (vh - mediaH) / 2;
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     } else {
-      mediaH = vh;
-      mediaW = vh * aspect;
+      /* cover / slice */
+      if (vw / vh > aspect) {
+        mediaW = vw;
+        mediaH = vw / aspect;
+      } else {
+        mediaH = vh;
+        mediaW = vh * aspect;
+      }
+      left = (vw - mediaW) / 2;
+      top = (vh - mediaH) / 2;
+      svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
     }
-    var fx = trailCoverFocalX();
-    var left = (vw - mediaW) * fx;
-    var top = (vh - mediaH) * 0.5;
     svg.style.position = "absolute";
     svg.style.left = left + "px";
     svg.style.top = top + "px";
@@ -192,12 +205,22 @@
     svg.style.right = "auto";
     svg.style.bottom = "auto";
     svg.style.inset = "auto";
-    svg.removeAttribute("preserveAspectRatio");
-    svg.setAttribute("preserveAspectRatio", "none");
   }
 
   function syncTrailheadHitAlign() {
     layoutTrailheadHitSvg();
+  }
+
+  function syncTrailFillFromStill() {
+    /* Blur twin behind contain still — fills gutters on phone. */
+    if (!isPhoneTrailFit()) return;
+    var live = document.querySelector(".view.funnel.trailhead.on");
+    if (!live) return;
+    var shot = live.querySelector(".shot");
+    var img = live.querySelector(".shot img.still");
+    if (!shot || !img) return;
+    var src = img.currentSrc || img.src;
+    if (src) shot.style.setProperty("--trail-fill", "url(\"" + src + "\")");
   }
 
   function mountTrailheadHits(route) {
@@ -440,7 +463,11 @@
         v.classList.remove("signs-frozen");
       }
     });
+    try {
+      document.body.classList.toggle("amp-trail-settled", !!on);
+    } catch (e) {}
     if (on) layoutSignMediaFrames(); syncTrailheadHitAlign();
+    if (on) syncTrailFillFromStill();
   }
 
 

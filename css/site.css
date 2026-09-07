@@ -3173,17 +3173,48 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK v2 (Mike 2026-09-07): keep cover FULL BLEED (no empty
-   gutters). Shift crop toward the wood sign so plank letters aren’t clipped.
-   Hit SVG uses matching preserveAspectRatio via JS. */
+/* Phone trail fit LOCK v3 (Mike 2026-09-07): contain so the FULL wood sign
+   fits; a blurred cover twin fills the gutters (no empty stamp / no side clip).
+   Hits use meet layout via JS to match the contain box. Desktop cover handoff
+   unchanged above 520px. */
 @media (max-width: 520px) {
-  .view.funnel.trailhead.on > .shot img.still,
+  .view.funnel.trailhead.on > .shot {
+    background: #0b1210;
+    overflow: hidden;
+  }
+  .view.funnel.trailhead.on > .shot::before {
+    content: "";
+    position: absolute;
+    inset: -8%;
+    background-image: var(--trail-fill, none);
+    background-size: cover;
+    background-position: 50% 50%;
+    filter: blur(18px) saturate(1.05) brightness(0.78);
+    transform: scale(1.08);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .view.funnel.trailhead.on > .shot img.still {
+    position: relative;
+    z-index: 1;
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
+    filter: none;
+    background: transparent;
+  }
+  /* During live swoop, keep cover so home→trailhead doesn’t jump; after settle
+     the baked still uses contain above. Video hold stays cover during flight. */
   #approach-video-hold #home-video,
   #approach-video-hold video,
   #approach-video-hold canvas.approach-freeze {
     object-fit: cover;
-    /* Between center (left clip) and hard-left (sign off right). */
-    object-position: 42% 50%;
+    object-position: 50% 50%;
+  }
+  body.amp-trail-settled #approach-video-hold #home-video,
+  body.amp-trail-settled #approach-video-hold video,
+  body.amp-trail-settled #approach-video-hold canvas.approach-freeze {
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
   }
 }
 
