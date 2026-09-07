@@ -3173,35 +3173,22 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK v7 (Mike): version pill stays.
-   Cover/% crop CANNOT fit the wide wood sign — JS SIGN_ROI frame only.
-   Do NOT force left/top/width/height here (that killed framing).
-   Specialty taps = rail pills. Hit overlay hidden on phone. */
+/* Phone trail fit LOCK v8 (Mike): pre-baked portrait still (full sign).
+   No live %/ROI crop. Version pill + specialty rail taps. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot {
     background: #0b1210;
     overflow: hidden;
   }
-  .view.funnel.trailhead.on.phone-sign-fit > .shot::before {
-    content: "";
-    position: absolute;
-    inset: -12%;
-    background-image: var(--trail-fill, none);
-    background-size: cover;
-    background-position: 50% 50%;
-    filter: blur(22px) saturate(1.05) brightness(0.72);
-    transform: scale(1.12);
-    z-index: 0;
-    pointer-events: none;
-  }
   .view.funnel.trailhead.on.phone-sign-fit > .shot img.still {
-    z-index: 1;
-    filter: none;
-    background: transparent;
+    object-fit: cover !important;
+    object-position: 50% 50% !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
   }
-  /* Version stamp — Mike confirms next build */
   .view.funnel.trailhead.on::after {
-    content: "preview 1903";
+    content: "preview 1904";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -3214,12 +3201,6 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     font-weight: 800;
     letter-spacing: .04em;
     pointer-events: none;
-  }
-  /* Fly-in in motion: full-bleed cover. Settled geometry is JS. */
-  body.amp-live-trailhead:not(.amp-trail-settled) #approach-video-hold video,
-  body.amp-live-trailhead:not(.amp-trail-settled) #approach-video-hold canvas.approach-freeze {
-    object-fit: cover;
-    object-position: 50% 50%;
   }
   .view.funnel.trailhead.on .trailhead-rail {
     display: flex !important;

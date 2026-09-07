@@ -120,8 +120,21 @@
 
 
 
+  function isPhoneTrailFit() {
+    try {
+      return !!(window.matchMedia && window.matchMedia("(max-width: 520px)").matches);
+    } catch (e) {
+      return false;
+    }
+  }
+
   function trailheadBakeSrc(route) {
-    var v = "1903";
+    var v = "1904";
+    /* Phone LOCK: pre-baked portrait still with FULL wood sign — no live crop math. */
+    if (isPhoneTrailFit()) {
+      if (route === "client") return "assets/trailhead-facility-phone.png?v=" + v;
+      return "assets/trailhead-specialty-phone.png?v=" + v;
+    }
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -160,14 +173,6 @@
     return layer;
   }
 
-  function isPhoneTrailFit() {
-    try {
-      return !!(window.matchMedia && window.matchMedia("(max-width: 520px)").matches);
-    } catch (e) {
-      return false;
-    }
-  }
-
   /* Exact phone frame: wood-sign ROI in the 2560×1096 bake (plank union + pad).
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
@@ -200,85 +205,43 @@
   function applyPhoneSignFrame() {
     var live = document.querySelector(".view.funnel.trailhead.on");
     if (!live) return;
-    var shot = live.querySelector(".shot");
     var img = live.querySelector(".shot img.still");
-    var vw = window.innerWidth || document.documentElement.clientWidth || 1;
-    var vh = window.innerHeight || document.documentElement.clientHeight || 1;
+    var hold = document.getElementById("approach-video-hold");
     if (!isPhoneTrailFit()) {
       live.classList.remove("phone-sign-fit");
+      try { document.body.classList.remove("amp-phone-sign-fit"); } catch (e) {}
       if (img) {
-        img.style.position = "";
-        img.style.left = "";
-        img.style.top = "";
-        img.style.width = "";
-        img.style.height = "";
-        img.style.maxWidth = "";
-        img.style.maxHeight = "";
-        img.style.objectFit = "";
-        img.style.transform = "";
+        ["position","left","top","width","height","maxWidth","maxHeight","objectFit","transform","zIndex"].forEach(function (k) {
+          img.style[k] = "";
+        });
       }
-      if (shot) shot.style.removeProperty("--trail-fill");
-      /* settled video hold — clear phone overrides */
-      try {
-        document.body.classList.remove("amp-phone-sign-fit");
-      } catch (e) {}
+      if (hold) {
+        var blur = hold.querySelector(".phone-trail-blur");
+        if (blur) blur.remove();
+        ["#home-video", "video", "canvas.approach-freeze"].forEach(function (sel) {
+          var el = hold.querySelector(sel);
+          if (!el) return;
+          ["position","left","top","width","height","maxWidth","maxHeight","objectFit","objectPosition","transform","inset","right","bottom","zIndex"].forEach(function (k) {
+            el.style[k] = "";
+          });
+        });
+      }
       return;
     }
     live.classList.add("phone-sign-fit");
     try { document.body.classList.add("amp-phone-sign-fit"); } catch (e) {}
-    var L = phoneSignLayout(vw, vh);
+    /* Portrait phone still is already framed — full-bleed cover only. */
     if (img) {
-      img.style.position = "absolute";
-      img.style.left = L.left + "px";
-      img.style.top = L.top + "px";
-      img.style.width = L.mediaW + "px";
-      img.style.height = L.mediaH + "px";
-      img.style.maxWidth = "none";
-      img.style.maxHeight = "none";
-      img.style.objectFit = "fill";
+      img.style.position = "";
+      img.style.left = "";
+      img.style.top = "";
+      img.style.width = "";
+      img.style.height = "";
+      img.style.maxWidth = "";
+      img.style.maxHeight = "";
+      img.style.objectFit = "cover";
+      img.style.objectPosition = "50% 50%";
       img.style.transform = "none";
-      img.style.zIndex = "1";
-    }
-    if (shot) {
-      var src = img && (img.currentSrc || img.src);
-      if (src) shot.style.setProperty("--trail-fill", 'url("' + src + '")');
-    }
-    /* After fly-in settle (or direct land): frame freeze/video same as still.
-       During flight amp-trail-settled is off — leave cover alone. */
-    var hold = document.getElementById("approach-video-hold");
-    var settled = document.body.classList.contains("amp-trail-settled");
-    var liveTrail = document.body.classList.contains("amp-live-trailhead");
-    if (hold && (settled || !liveTrail)) {
-      ["#home-video", "video", "canvas.approach-freeze"].forEach(function (sel) {
-        var el = hold.querySelector(sel);
-        if (!el) return;
-        el.style.position = "absolute";
-        el.style.left = L.left + "px";
-        el.style.top = L.top + "px";
-        el.style.width = L.mediaW + "px";
-        el.style.height = L.mediaH + "px";
-        el.style.maxWidth = "none";
-        el.style.maxHeight = "none";
-        el.style.objectFit = "fill";
-        el.style.objectPosition = "50% 50%";
-        el.style.transform = "none";
-        el.style.inset = "auto";
-        el.style.right = "auto";
-        el.style.bottom = "auto";
-        el.style.zIndex = "1";
-      });
-      /* Blur twin behind hold so letterbox isn't a hard seam */
-      if (!hold.querySelector(".phone-trail-blur")) {
-        var blur = document.createElement("div");
-        blur.className = "phone-trail-blur";
-        blur.style.cssText = "position:absolute;inset:-12%;z-index:0;pointer-events:none;background-size:cover;background-position:50% 50%;filter:blur(22px) saturate(1.05) brightness(0.72);transform:scale(1.12);";
-        hold.insertBefore(blur, hold.firstChild);
-      }
-      var blurEl = hold.querySelector(".phone-trail-blur");
-      if (blurEl && img) {
-        var src2 = img.currentSrc || img.src;
-        if (src2) blurEl.style.backgroundImage = 'url("' + src2 + '")';
-      }
     }
   }
 
@@ -756,10 +719,34 @@
        1) Freeze the paused video frame onto the hold canvas (same cover box).
        2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
        3) Crossfade the baked plank PNG onto that freeze (labels ease in).
-       Never hard-cut video→bake or fade to a second <img> (that jumped the planks). */
+       Never hard-cut video→bake or fade to a second <img> (that jumped the planks).
+       PHONE: skip freeze math — swap to pre-baked portrait still + show .shot. */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
+    }
+    if (isPhoneTrailFit()) {
+      var routeP = state._approachRoute || "physician";
+      var liveP = document.querySelector('.view.trailhead.on[data-route="' + routeP + '"]') ||
+        document.querySelector('.view.trailhead[data-route="' + routeP + '"]');
+      ensureBakedTrailheadLabels(routeP === "client" ? "client" : "physician");
+      try { document.body.classList.remove("amp-live-trailhead"); } catch (e) {}
+      try { document.body.classList.add("amp-trail-settled"); } catch (e) {}
+      if (hold) {
+        hold.hidden = true;
+        hold.setAttribute("hidden", "");
+      }
+      if (liveP) {
+        liveP.classList.remove("live-video-bg");
+        liveP.classList.add("signs-lit", "signs-frozen", "after-approach");
+      }
+      applyPhoneSignFrame();
+      if (routeP === "physician" || routeP === "physician-specialty") renderSpecialtyGrid();
+      else if (routeP === "client") renderFacilitySignpost();
+      state.approachHold = true;
+      mountTrailheadHits(routeP);
+      if (typeof done === "function") done();
+      return;
     }
     paintFreezeCanvas();
     /* Delay is-settling until bake is ready — one continuous soft end, no early fade race. */
