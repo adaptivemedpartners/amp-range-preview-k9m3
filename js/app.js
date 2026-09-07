@@ -3,8 +3,7 @@
   "use strict";
 
   /* Imagine timeline: 0–1 aerial, 1–4 swoop, ~5.05 trailhead freeze.
-     Desktop: pause at 5.05 + bake (unchanged).
-     Phone: never pause mid-swoop (blur). Soft-fade onto sharp mid-zoom still ~4.0 FOV. */
+     Bake + labels locked to the 5.05 frame. Pause THERE — sharp stop + smooth bake. */
   var SETTLE = 5.05;
   var FREEZE_END = 5.05; /* same as SETTLE: handoff frame == bake frame */
 
@@ -129,12 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1911";
-    /* Phone: sharp mid-zoom still (FOV like Mike's example). Desktop: 5.05 bake. */
-    if (isPhoneTrailFit()) {
-      if (route === "client") return "assets/trailhead-facility-phone-settle.png?v=" + v;
-      return "assets/trailhead-specialty-phone-settle.png?v=" + v;
-    }
+    var v = "1912";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -162,8 +156,6 @@
   /* Cover-locked SVG plank hits (viewBox = bake 2560×1096, slice = object-fit:cover). */
   var SPEC_PLANK_HITS = [['fm',417,153,1484,150],['obg',541,303,1228,109],['gi',590,431,1126,109],['neuro',645,558,1024,109],['dental',675,690,972,98],['other',524,794,1280,153]];
   var FAC_PLANK_HITS = [['fqhc',419,153,1484,153],['cah',541,306,1228,109],['bh',590,431,1126,109],['group',619,558,1075,109],['dental',675,690,972,98],['other',524,794,1280,153]];
-  var SPEC_PLANK_HITS_PHONE = [['fm',411,153,1484,150],['obg',540,303,1228,109],['gi',590,431,1126,109],['neuro',626,558,1024,109],['dental',674,690,972,98],['other',475,794,1280,153]];
-  var FAC_PLANK_HITS_PHONE = [['fqhc',411,153,1484,153],['cah',540,306,1228,109],['bh',590,431,1126,109],['group',620,558,1075,109],['dental',674,690,972,98],['other',475,794,1280,153]];
 
   function ensureTrailheadHitLayer() {
     var layer = $("#trailhead-hit-layer");
@@ -357,9 +349,7 @@
     var layer = ensureTrailheadHitLayer();
     layer.innerHTML = "";
     var attr = route === "client" ? "facility" : "specialty";
-    var hits = route === "client"
-      ? (isPhoneTrailFit() ? FAC_PLANK_HITS_PHONE : FAC_PLANK_HITS)
-      : (isPhoneTrailFit() ? SPEC_PLANK_HITS_PHONE : SPEC_PLANK_HITS);
+    var hits = route === "client" ? FAC_PLANK_HITS : SPEC_PLANK_HITS;
     layer.hidden = false;
     layer.classList.add("is-live");
     /* Keep legacy signpost from stealing taps while live. */
@@ -946,7 +936,6 @@
     }
 
     function pauseFreeze(thenLand) {
-      /* Desktop sharp 5.05 path — unchanged. */
       if (freezePaused) {
         if (thenLand) landChrome();
         return;
@@ -954,100 +943,23 @@
       freezePaused = true;
       if (video) {
         try { video.playbackRate = 1; } catch (e) {}
+        /* Pause only — no canvas, no seek. Leave the decoded frame up. */
         try { video.pause(); } catch (e) {}
       }
       clearSettleWatch();
+      /* Bake onto freeze FIRST, then land chrome — avoids rough end pop. */
       showBakedTrailheadStill(function () {
         if (thenLand) landChrome();
       });
     }
 
-    /* Phone only: do NOT pause mid-swoop (blur). Soft-fade video onto a
-       pre-baked sharp mid-zoom still while video keeps playing underneath. */
-    function phoneSoftLand(thenLand) {
-      if (freezePaused) {
-        if (thenLand) landChrome();
-        return;
-      }
-      freezePaused = true;
-      clearSettleWatch();
-      var route = state._approachRoute || "physician";
-      var hold = ensureApproachHoldEl();
-      var src = trailheadBakeSrc(route === "client" ? "client" : "physician");
-      var img = new Image();
-      img.onload = function () {
-        if (!hold) {
-          if (thenLand) landChrome();
-          return;
-        }
-        var canvas = hold.querySelector("canvas.approach-freeze");
-        if (!canvas) {
-          canvas = document.createElement("canvas");
-          canvas.className = "approach-freeze";
-          canvas.setAttribute("aria-hidden", "true");
-          if (video && video.parentElement === hold) hold.insertBefore(canvas, video);
-          else hold.appendChild(canvas);
-        }
-        var cw = (video && video.videoWidth) || img.naturalWidth || 2560;
-        var ch = (video && video.videoHeight) || img.naturalHeight || 1096;
-        canvas.width = cw;
-        canvas.height = ch;
-        try {
-          var ctx = canvas.getContext("2d");
-          if (ctx) ctx.drawImage(img, 0, 0, cw, ch);
-        } catch (e) {}
-        /* Keep video playing during fade — never pause a moving frame into blur. */
-        if (video) {
-          try {
-            video.style.transition = "opacity 0.55s ease-out";
-            video.style.opacity = "0";
-          } catch (e2) {}
-        }
-        var live = document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
-          document.querySelector('.view.trailhead[data-route="' + route + '"]');
-        if (live) {
-          var still = live.querySelector(".shot img.still");
-          if (still) {
-            still.src = src;
-            still.setAttribute("data-baked", "1");
-          }
-        }
-        setTimeout(function () {
-          if (video) {
-            try { video.pause(); } catch (e3) {}
-            try {
-              video.style.visibility = "hidden";
-              video.style.opacity = "0";
-            } catch (e4) {}
-          }
-          try { document.body.classList.add("amp-trail-settled"); } catch (e5) {}
-          if (live) {
-            live.classList.add("signs-lit", "signs-frozen", "after-approach");
-          }
-          markSignsFrozen(true);
-          if (route === "physician" || route === "physician-specialty") renderSpecialtyGrid();
-          else if (route === "client") renderFacilitySignpost();
-          state.approachHold = true;
-          mountTrailheadHits(route);
-          if (thenLand) landChrome();
-        }, 580);
-      };
-      img.onerror = function () {
-        /* Fallback: desktop path rather than stuck. */
-        freezePaused = false;
-        pauseFreeze(thenLand);
-      };
-      img.src = src;
-    }
-
-    function endApproach(thenLand) {
-      if (isPhoneTrailFit()) phoneSoftLand(thenLand);
-      else pauseFreeze(thenLand);
-    }
-
     function finishHard() {
       if (chromeLanded && freezePaused) return;
-      endApproach(true);
+      if (video) {
+        try { video.playbackRate = 1; } catch (e) {}
+        try { video.pause(); } catch (e) {}
+      }
+      pauseFreeze(true);
     }
 
     window.__ampFinishApproach = finishHard;
@@ -1079,14 +991,9 @@
       var t = video.currentTime || 0;
       /* Full speed to SETTLE — no rate ease. */
       try { if (video.playbackRate !== 1) video.playbackRate = 1; } catch (e) {}
-      /* Desktop: sharp 5.05. Phone: soft-land mid-zoom still ~4.0 (video keeps moving under fade). */
-      if (isPhoneTrailFit()) {
-        if (t >= 4.0) {
-          endApproach(true);
-          return;
-        }
-      } else if (t >= FREEZE_END - 0.06) {
-        endApproach(true);
+      /* Freeze+bake first, then land chrome — one clean settle. */
+      if (t >= FREEZE_END - 0.06) {
+        pauseFreeze(true);
         return;
       }
       if (!freezePaused) {
@@ -1097,7 +1004,7 @@
     onSettleTime = function () { tickApproach(); };
     video.addEventListener("timeupdate", onSettleTime);
     video.addEventListener("ended", function () {
-      endApproach(true);
+      pauseFreeze(true);
     });
     try { video.__ampEaseRaf = requestAnimationFrame(tickApproach); } catch (e) {}
 
@@ -1107,12 +1014,12 @@
     }
 
     settleTimer = setTimeout(function () {
-      if (!freezePaused) endApproach(true);
+      if (!freezePaused) pauseFreeze(true);
       else if (!chromeLanded) landChrome();
-    }, Math.round((isPhoneTrailFit() ? 4.0 : SETTLE) * 1000) + 2500);
+    }, Math.round(SETTLE * 1000) + 2500);
     setTimeout(function () {
-      if (!freezePaused) endApproach(true);
-    }, Math.round((isPhoneTrailFit() ? 4.0 : FREEZE_END) * 1000) + 2500);
+      if (!freezePaused) pauseFreeze(true);
+    }, Math.round(FREEZE_END * 1000) + 2500);
   }
 
   function hideAllViews() {
