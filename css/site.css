@@ -1942,7 +1942,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   .trailhead-rail { display: none !important; }
   .view.funnel.trailhead > .shot img.still {
     object-fit: cover;
-    object-position: 34% 46%;
+    object-position: 50% 50%;
   }
   /* Keep focal-point centers; widen hit only */
   .signpost .hot.slot-0,
@@ -3175,7 +3175,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 }
 
 /* Phone trail LOCK v11 (Mike): back to full-bleed COVER (no contain letterbox).
-   One nudge: object-position 34% 46% to pull plank letter starts into frame.
+   Baseline object-position 50% 50% — nudge ONLY after Mike eyes this restore.
    No overlay rail. Version pill stays. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot {
@@ -3184,16 +3184,16 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   }
   .view.funnel.trailhead.on > .shot img.still {
     object-fit: cover !important;
-    object-position: 34% 46% !important;
+    object-position: 50% 50% !important;
   }
   body.amp-trail-settled #approach-video-hold video,
   body.amp-trail-settled #approach-video-hold canvas.approach-freeze,
   body.amp-trail-settled #approach-video-hold #home-video {
     object-fit: cover !important;
-    object-position: 34% 46% !important;
+    object-position: 50% 50% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1907";
+    content: "preview 1908";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));

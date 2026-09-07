@@ -129,7 +129,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1907";
+    var v = "1908";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -173,8 +173,8 @@
   var BAKE_W = 2560;
   var BAKE_H = 1096;
   /* Phone cover crop position — ONE nudge from 50% (Mike: whole words, not contain). */
-  var PHONE_TRAIL_POS_X = 0.34;
-  var PHONE_TRAIL_POS_Y = 0.46;
+  var PHONE_TRAIL_POS_X = 0.50;
+  var PHONE_TRAIL_POS_Y = 0.50;
   function bakeContentRect(el, natW, natH) {
     natW = natW || BAKE_W;
     natH = natH || BAKE_H;
