@@ -3173,19 +3173,20 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK (Mike 2026-09-07): keep cover handoff, scale frame down
-   a touch so the full wood sign fits. Still / video / freeze / plank hits share
-   the same scale + origin so taps stay locked. */
+/* Phone trail fit LOCK v2 (Mike 2026-09-07): keep cover FULL BLEED (no empty
+   gutters). Shift crop toward the wood sign so plank letters aren’t clipped.
+   Hit SVG uses matching preserveAspectRatio via JS. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot img.still,
   #approach-video-hold #home-video,
   #approach-video-hold video,
-  #approach-video-hold canvas.approach-freeze,
-  #trailhead-hit-layer.is-live .plank-hit-svg {
-    transform: scale(0.86);
-    transform-origin: center center;
+  #approach-video-hold canvas.approach-freeze {
+    object-fit: cover;
+    object-position: 28% 50%;
   }
 }
+
+
 
 #trailhead-hit-layer .plank-hit-svg {
   position: absolute;

@@ -133,12 +133,22 @@
     return layer;
   }
 
+  function trailheadCoverAlign() {
+    /* Match CSS object-position on phone trail stills (full-bleed, sign in frame). */
+    try {
+      if (window.matchMedia && window.matchMedia("(max-width: 520px)").matches) {
+        return "xMinYMid slice"; /* ~left — wood sign lives left-of-center in bake */
+      }
+    } catch (e) {}
+    return "xMidYMid slice";
+  }
+
   function buildPlankSvg(hits, attr) {
     var ns = "http://www.w3.org/2000/svg";
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("class", "plank-hit-svg");
     svg.setAttribute("viewBox", "0 0 2560 1096");
-    svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    svg.setAttribute("preserveAspectRatio", trailheadCoverAlign());
     svg.setAttribute("aria-hidden", "true");
     hits.forEach(function (h) {
       var r = document.createElementNS(ns, "rect");
@@ -152,6 +162,11 @@
       svg.appendChild(r);
     });
     return svg;
+  }
+
+  function syncTrailheadHitAlign() {
+    var svg = document.querySelector("#trailhead-hit-layer .plank-hit-svg");
+    if (svg) svg.setAttribute("preserveAspectRatio", trailheadCoverAlign());
   }
 
   function mountTrailheadHits(route) {
@@ -393,7 +408,7 @@
         v.classList.remove("signs-frozen");
       }
     });
-    if (on) layoutSignMediaFrames();
+    if (on) layoutSignMediaFrames(); syncTrailheadHitAlign();
   }
 
 
@@ -930,7 +945,7 @@
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
         next.classList.add("signs-lit", "signs-frozen");
-        layoutSignMediaFrames();
+        layoutSignMediaFrames(); syncTrailheadHitAlign();
       }
 
       if (route === "home") startHomeVideo();
