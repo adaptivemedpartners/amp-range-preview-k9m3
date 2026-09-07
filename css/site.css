@@ -3193,7 +3193,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     object-position: 28% 50% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1916";
+    content: "preview 1917";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -3551,3 +3551,12 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 
 /* phone: hit overlay hidden — trailhead-rail is the tap surface */
 
+
+
+/* About + Guides one chapter (Mike 2026-09-07) */
+.about-guides-chapter {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+.about-guides-chapter .guides-cta { margin-top: 22px; }
+.guides-careers-soft { opacity: .9; }

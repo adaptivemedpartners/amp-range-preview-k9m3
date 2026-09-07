@@ -128,7 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1916";
+    var v = "1917";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -1143,6 +1143,11 @@
   /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT). */
   function go(route, opts) {
     opts = opts || {};
+    /* Guides folded into About (Mike 2026-09-07). */
+    if (route === "guides" || route === "meet-your-guides") {
+      opts.hash = opts.hash || "meet-your-guides";
+      route = "about";
+    }
     if (route === "residents-fellows") route = "residents";
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
@@ -2867,6 +2872,10 @@
     var hash = (location.hash || "#home").replace(/^#/, "") || "home";
     if (hash === "residents-fellows") hash = "residents";
     if (hash === "market-intelligence" || hash === "mi") hash = "mi-lite";
+    if (hash === "guides" || hash === "meet-your-guides") {
+      go("about", { instant: true, hash: "meet-your-guides" });
+      return;
+    }
     if (hash.indexOf("job/") === 0) {
       go(hash, { instant: true });
       return;
