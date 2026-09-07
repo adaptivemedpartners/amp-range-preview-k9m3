@@ -133,14 +133,15 @@
     return layer;
   }
 
-  function trailheadCoverAlign() {
-    /* Match CSS object-position on phone trail stills (full-bleed, sign in frame). */
+  /* Phone trail crop focal — must match CSS object-position on trail stills. */
+  var TRAIL_COVER_FOCAL_X = 0.50; /* desktop */
+  function trailCoverFocalX() {
     try {
       if (window.matchMedia && window.matchMedia("(max-width: 520px)").matches) {
-        return "xMinYMid slice"; /* ~left — wood sign lives left-of-center in bake */
+        return 0.42; /* match object-position: 42% 50% */
       }
     } catch (e) {}
-    return "xMidYMid slice";
+    return TRAIL_COVER_FOCAL_X;
   }
 
   function buildPlankSvg(hits, attr) {
@@ -148,7 +149,8 @@
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("class", "plank-hit-svg");
     svg.setAttribute("viewBox", "0 0 2560 1096");
-    svg.setAttribute("preserveAspectRatio", trailheadCoverAlign());
+    /* meet not used — we size/position the SVG box to the cover crop with focal. */
+    svg.setAttribute("preserveAspectRatio", "none");
     svg.setAttribute("aria-hidden", "true");
     hits.forEach(function (h) {
       var r = document.createElementNS(ns, "rect");
@@ -164,9 +166,38 @@
     return svg;
   }
 
-  function syncTrailheadHitAlign() {
+  function layoutTrailheadHitSvg() {
+    var layer = document.querySelector("#trailhead-hit-layer.is-live");
     var svg = document.querySelector("#trailhead-hit-layer .plank-hit-svg");
-    if (svg) svg.setAttribute("preserveAspectRatio", trailheadCoverAlign());
+    if (!layer || !svg) return;
+    var vw = window.innerWidth || document.documentElement.clientWidth || 1;
+    var vh = window.innerHeight || document.documentElement.clientHeight || 1;
+    var aspect = SIGN_MEDIA_ASPECT; /* 2560/1096 */
+    var mediaW, mediaH;
+    if (vw / vh > aspect) {
+      mediaW = vw;
+      mediaH = vw / aspect;
+    } else {
+      mediaH = vh;
+      mediaW = vh * aspect;
+    }
+    var fx = trailCoverFocalX();
+    var left = (vw - mediaW) * fx;
+    var top = (vh - mediaH) * 0.5;
+    svg.style.position = "absolute";
+    svg.style.left = left + "px";
+    svg.style.top = top + "px";
+    svg.style.width = mediaW + "px";
+    svg.style.height = mediaH + "px";
+    svg.style.right = "auto";
+    svg.style.bottom = "auto";
+    svg.style.inset = "auto";
+    svg.removeAttribute("preserveAspectRatio");
+    svg.setAttribute("preserveAspectRatio", "none");
+  }
+
+  function syncTrailheadHitAlign() {
+    layoutTrailheadHitSvg();
   }
 
   function mountTrailheadHits(route) {
@@ -179,6 +210,7 @@
     layer.appendChild(svg);
     layer.hidden = false;
     layer.classList.add("is-live");
+    layoutTrailheadHitSvg();
     /* Keep legacy signpost in DOM for rails / a11y but don't let it steal taps while live. */
     $all(".sign-media-frame").forEach(function (fr) {
       fr.classList.add("hits-deferred");

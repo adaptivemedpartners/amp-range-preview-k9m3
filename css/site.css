@@ -3182,7 +3182,8 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   #approach-video-hold video,
   #approach-video-hold canvas.approach-freeze {
     object-fit: cover;
-    object-position: 28% 50%;
+    /* Between center (left clip) and hard-left (sign off right). */
+    object-position: 42% 50%;
   }
 }
 
