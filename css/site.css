@@ -1941,8 +1941,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   /* The painted plank art is the phone UI too; do not duplicate labels as floating pills. */
   .trailhead-rail { display: none !important; }
   .view.funnel.trailhead > .shot img.still {
-    object-fit: contain;
-    object-position: 50% 50%;
+    object-fit: cover;
+    object-position: 34% 46%;
   }
   /* Keep focal-point centers; widen hit only */
   .signpost .hot.slot-0,
@@ -3174,27 +3174,26 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail LOCK v10 (Mike): WHOLE planks in frame via object-fit:contain.
-   Dark letterbox (not blur composite). No overlay rail — taps on wood.
-   Version pill stays. */
+/* Phone trail LOCK v11 (Mike): back to full-bleed COVER (no contain letterbox).
+   One nudge: object-position 34% 46% to pull plank letter starts into frame.
+   No overlay rail. Version pill stays. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot {
     background: #0b1210;
     overflow: hidden;
   }
   .view.funnel.trailhead.on > .shot img.still {
-    object-fit: contain !important;
-    object-position: 50% 50% !important;
+    object-fit: cover !important;
+    object-position: 34% 46% !important;
   }
   body.amp-trail-settled #approach-video-hold video,
   body.amp-trail-settled #approach-video-hold canvas.approach-freeze,
   body.amp-trail-settled #approach-video-hold #home-video {
-    object-fit: contain !important;
-    object-position: 50% 50% !important;
-    background: #0b1210;
+    object-fit: cover !important;
+    object-position: 34% 46% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1906";
+    content: "preview 1907";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -3208,7 +3207,6 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     letter-spacing: .04em;
     pointer-events: none;
   }
-  /* Keep rail hidden — do not cover planks */
   .view.funnel.trailhead.on .trailhead-rail {
     display: none !important;
   }

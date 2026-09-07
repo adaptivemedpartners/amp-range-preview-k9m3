@@ -129,7 +129,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1906";
+    var v = "1907";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -172,7 +172,9 @@
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
   var BAKE_H = 1096;
-  /* Visible letterboxed box for object-fit:contain (not the full element box). */
+  /* Phone cover crop position — ONE nudge from 50% (Mike: whole words, not contain). */
+  var PHONE_TRAIL_POS_X = 0.34;
+  var PHONE_TRAIL_POS_Y = 0.46;
   function bakeContentRect(el, natW, natH) {
     natW = natW || BAKE_W;
     natH = natH || BAKE_H;
@@ -180,12 +182,14 @@
       return { left: 0, top: 0, width: 1, height: 1 };
     }
     var r = el.getBoundingClientRect();
-    var s = Math.min(r.width / natW, r.height / natH);
+    var s = Math.max(r.width / natW, r.height / natH); /* cover */
     var w = natW * s;
     var h = natH * s;
+    var ox = isPhoneTrailFit() ? PHONE_TRAIL_POS_X : 0.5;
+    var oy = isPhoneTrailFit() ? PHONE_TRAIL_POS_Y : 0.5;
     return {
-      left: r.left + (r.width - w) / 2,
-      top: r.top + (r.height - h) / 2,
+      left: r.left + (r.width - w) * ox,
+      top: r.top + (r.height - h) * oy,
       width: w,
       height: h
     };
