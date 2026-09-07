@@ -417,9 +417,9 @@
     var still = live ? live.querySelector(".shot img.still") : null;
     var src = null;
     if (route === "physician" || route === "physician-specialty") {
-      src = "assets/trailhead-specialty-baked.png?v=1759";
+      src = "assets/trailhead-specialty-baked.png?v=1765";
     } else if (route === "client") {
-      src = "assets/trailhead-facility-baked.png?v=1759";
+      src = "assets/trailhead-facility-baked.png?v=1765";
     }
 
     var VIDEO_FADE_MS = 480;

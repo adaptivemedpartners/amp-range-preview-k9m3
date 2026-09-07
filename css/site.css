@@ -64,13 +64,26 @@ button, input, select, textarea { font: inherit; }
 .hidden { display: none !important; }
 
 /* ——— Sticky nav ——— */
+/* Blur lives on ::before so CSS filter glow on the lockup does not paint a Safari rect box. */
 .site-nav {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 10px 18px;
-  background: rgba(11, 18, 32, 0.82);
-  backdrop-filter: blur(14px);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  isolation: isolate;
+}
+.site-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(11, 18, 32, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 /* Home glass — also used on funnel/trailhead photo pages (setNavMode is-home). */
 .site-nav.is-home {
@@ -83,14 +96,17 @@ button, input, select, textarea { font: inherit; }
   border-bottom: 0;
   box-shadow: none;
 }
+.site-nav.is-home::before { display: none; }
 .brand {
   display: flex; align-items: center; gap: 10px;
   color: #fff; cursor: pointer; border: 0; background: transparent; padding: 4px;
 }
 /* Full horizontal AMP lockup (Mess / Team Hub style) — not mark + text */
+/* lockup glow: no clip box */
 .brand.brand-lockup {
   gap: 0;
   padding: 2px 4px;
+  overflow: visible;
 }
 .brand.brand-lockup .brand-lockup-img {
   width: clamp(240px, 28vw, 320px);
@@ -98,6 +114,7 @@ button, input, select, textarea { font: inherit; }
   max-height: 84px;
   object-fit: contain;
   display: block;
+  overflow: visible;
 }
 .brand.brand-lockup .brand-lockup-img.is-black { display: none; }
 .brand.brand-lockup.brand-glow-black .brand-lockup-img.is-white { display: none; }
@@ -1921,7 +1938,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 }
 /* Phone: planks only — no duplicate rail overlapping the wood labels (430 QA). */
 @media (max-width: 720px), (max-aspect-ratio: 3/4) {
-  .trailhead-rail { display: flex !important; }
+  /* The painted plank art is the phone UI too; do not duplicate labels as floating pills. */
+  .trailhead-rail { display: none !important; }
   .view.funnel.trailhead > .shot img.still {
     object-position: 50% 42%;
   }
@@ -2056,7 +2074,7 @@ body.amp-live-trailhead .view.after-approach.live-video-bg .trailhead-stage {
   margin-top: auto;
 }
 @media (max-width: 720px), (max-aspect-ratio: 3/4) {
-  .trailhead-rail { display: flex !important; }
+  .trailhead-rail { display: none !important; }
 }
 .trailhead-rail button {
   pointer-events: auto !important;
@@ -2766,6 +2784,8 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
   text-align: center;
 }
 .rank-reset:hover { color: var(--teal-dark); }
+
+
 .rank-hint {
   margin: 12px 0 0;
   font-size: 12.5px;
@@ -2790,22 +2810,34 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
     min-width: 0;
   }
 }
+/* Phone: vertical stack (Mike 2026-09-07) — kill sideways scroll cards */
 @media (max-width: 720px) {
+  .rank-board {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
   .rank-track,
-  #rank-grid.rank-track {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-    padding-bottom: 4px;
+  #rank-grid.rank-track,
+  .rank-track.rank-grid {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    width: 100%;
+    gap: 10px;
   }
   .rank-card {
-    flex: 0 0 min(42vw, 160px);
-    scroll-snap-align: start;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    scroll-snap-align: unset;
   }
-}
-@media (max-width: 480px) {
-  .rank-card {
-    flex: 0 0 min(70vw, 200px);
+  .rank-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
