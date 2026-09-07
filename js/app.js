@@ -121,7 +121,7 @@
 
 
   function trailheadBakeSrc(route) {
-    var v = "1782";
+    var v = "1901";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -184,7 +184,7 @@
   };
 
   function phoneSignLayout(vw, vh) {
-    var padL = 0.12; /* Chrome still clipped at 8% — more left air */
+    var padL = 0.16; /* Chrome still clipped at 8% — more left air */
     var padR = 0.06;
     var padY = 0.06;
     var availW = vw * (1 - padL - padR);
@@ -372,12 +372,19 @@
     if (isPhoneTrailFit()) {
       /* HTML hotspots mapped bake→screen — SVG was sliding (FM→Neuro). */
       applyPhoneSignFrame();
+      var img = document.querySelector(".view.funnel.trailhead.on .shot img.still");
+      var box = img && img.getBoundingClientRect ? img.getBoundingClientRect() : null;
       var L = phoneSignLayout(
         window.innerWidth || document.documentElement.clientWidth || 1,
         window.innerHeight || document.documentElement.clientHeight || 1
       );
-      var sx = L.mediaW / BAKE_W;
-      var sy = L.mediaH / BAKE_H;
+      /* Origin = visible bake box (viewport). Never assume .shot is at 0,0. */
+      var ox = box ? box.left : L.left;
+      var oy = box ? box.top : L.top;
+      var bw = box && box.width ? box.width : L.mediaW;
+      var bh = box && box.height ? box.height : L.mediaH;
+      var sx = bw / BAKE_W;
+      var sy = bh / BAKE_H;
       var wrap = document.createElement("div");
       wrap.className = "plank-hit-html";
       wrap.style.cssText = "position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;";
@@ -388,17 +395,18 @@
         btn.setAttribute("data-" + attr, h[0]);
         btn.setAttribute("aria-label", h[0]);
         btn.style.cssText = [
-          "position:absolute",
-          "left:" + (L.left + h[1] * sx) + "px",
-          "top:" + (L.top + h[2] * sy) + "px",
+          "position:fixed",
+          "left:" + (ox + h[1] * sx) + "px",
+          "top:" + (oy + h[2] * sy) + "px",
           "width:" + (h[3] * sx) + "px",
-          "height:" + (Math.max(h[4], 110) * sy) + "px",
+          "height:" + (Math.max(h[4], 120) * sy) + "px",
           "margin:0",
           "padding:0",
           "border:0",
           "background:transparent",
           "pointer-events:auto",
           "cursor:pointer",
+          "z-index:401",
           "-webkit-tap-highlight-color:transparent"
         ].join(";");
         wrap.appendChild(btn);
@@ -470,20 +478,27 @@
     }
     var attr = (route === "client" || (layer.querySelector("[data-facility]"))) ? "facility" : "specialty";
     var hits = attr === "facility" ? FAC_PLANK_HITS : SPEC_PLANK_HITS;
+    var img = document.querySelector(".view.funnel.trailhead.on .shot img.still");
+    var box = img && img.getBoundingClientRect ? img.getBoundingClientRect() : null;
     var L = phoneSignLayout(
       window.innerWidth || document.documentElement.clientWidth || 1,
       window.innerHeight || document.documentElement.clientHeight || 1
     );
-    var sx = L.mediaW / BAKE_W;
-    var sy = L.mediaH / BAKE_H;
+    var ox = box ? box.left : L.left;
+    var oy = box ? box.top : L.top;
+    var bw = box && box.width ? box.width : L.mediaW;
+    var bh = box && box.height ? box.height : L.mediaH;
+    var sx = bw / BAKE_W;
+    var sy = bh / BAKE_H;
     var btns = wrap.querySelectorAll(".plank-hit-btn");
     for (var i = 0; i < btns.length && i < hits.length; i++) {
       var h = hits[i];
       var btn = btns[i];
-      btn.style.left = (L.left + h[1] * sx) + "px";
-      btn.style.top = (L.top + h[2] * sy) + "px";
+      btn.style.position = "fixed";
+      btn.style.left = (ox + h[1] * sx) + "px";
+      btn.style.top = (oy + h[2] * sy) + "px";
       btn.style.width = (h[3] * sx) + "px";
-      btn.style.height = (Math.max(h[4], 110) * sy) + "px";
+      btn.style.height = (Math.max(h[4], 120) * sy) + "px";
     }
   }
 
