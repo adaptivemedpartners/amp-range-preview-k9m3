@@ -119,6 +119,33 @@
 
 
 
+
+  function trailheadBakeSrc(route) {
+    var v = "1779";
+    if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
+    return "assets/trailhead-specialty-baked.png?v=" + v;
+  }
+
+  /* Direct Physicians/Hiring (no fly-in): always show labeled bake — never leave
+     the blank video-freeze still stuck from a prior swoop. */
+  function ensureBakedTrailheadLabels(route) {
+    route = route || "physician";
+    var sel = route === "client"
+      ? '.view.trailhead[data-route="client"] img.still'
+      : '.view.trailhead[data-route="physician"] img.still';
+    var img = document.querySelector(sel);
+    if (!img) return;
+    var want = trailheadBakeSrc(route);
+    img.removeAttribute("data-baked");
+    if ((img.getAttribute("src") || "").indexOf(want.split("?")[0]) === -1 ||
+        (img.getAttribute("src") || "").indexOf("hero-mountain-trailhead-freeze") !== -1 ||
+        (img.getAttribute("src") || "").indexOf("data:image") === 0) {
+      img.src = want;
+    } else if ((img.getAttribute("src") || "") !== want) {
+      img.src = want; /* refresh cache bust */
+    }
+  }
+
   /* Cover-locked SVG plank hits (viewBox = bake 2560×1096, slice = object-fit:cover). */
   var SPEC_PLANK_HITS = [['fm',417,153,1484,150],['obg',541,303,1228,109],['gi',590,431,1126,109],['neuro',645,558,1024,109],['dental',675,690,972,98],['other',524,794,1280,153]];
   var FAC_PLANK_HITS = [['fqhc',419,153,1484,153],['cah',541,306,1228,109],['bh',590,431,1126,109],['group',619,558,1075,109],['dental',675,690,972,98],['other',524,794,1280,153]];
@@ -582,10 +609,8 @@
       document.querySelector('.view.trailhead[data-route="' + route + '"]');
     var still = live ? live.querySelector(".shot img.still") : null;
     var src = null;
-    if (route === "physician" || route === "physician-specialty") {
-      src = "assets/trailhead-specialty-baked.png?v=1765";
-    } else if (route === "client") {
-      src = "assets/trailhead-facility-baked.png?v=1765";
+    if (route === "physician" || route === "physician-specialty" || route === "client") {
+      src = trailheadBakeSrc(route === "client" ? "client" : "physician");
     }
 
     var VIDEO_FADE_MS = 480;
@@ -1095,6 +1120,7 @@
       } catch (e) {}
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
+        ensureBakedTrailheadLabels(route);
         next.classList.add("signs-lit", "signs-frozen");
         layoutSignMediaFrames(); syncTrailheadHitAlign();
       }
