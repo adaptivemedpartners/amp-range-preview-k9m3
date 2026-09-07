@@ -3,10 +3,19 @@
   "use strict";
 
   /* Imagine timeline: 0–1 aerial, 1–4 swoop, ~5.05 trailhead freeze.
-     Bake + labels locked to the 5.05 frame. Pause THERE — do NOT play to clip
-     end (~6.02) then swap to the 5.05 still (planks jump under the cursor). */
+     Desktop: bake + labels locked to 5.05 — do NOT change.
+     Phone only: settle earlier (~4.2) to match Mike mid-zoom distance (full planks).
+     Phone bake is a separate asset so desktop 5.05 bake stays untouched. */
   var SETTLE = 5.05;
-  var FREEZE_END = 5.05; /* same as SETTLE: handoff frame == bake frame */
+  var FREEZE_END = 5.05;
+  var SETTLE_PHONE = 4.2;
+  var FREEZE_END_PHONE = 4.2;
+  function approachSettleTime() {
+    return isPhoneTrailFit() ? SETTLE_PHONE : SETTLE;
+  }
+  function approachFreezeEnd() {
+    return isPhoneTrailFit() ? FREEZE_END_PHONE : FREEZE_END;
+  }
 
   var state = {
     moving: false,
@@ -129,7 +138,12 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1908";
+    var v = "1909";
+    /* Phone-only settle still (4.2 distance). Desktop keeps 5.05 baked.png. */
+    if (isPhoneTrailFit()) {
+      if (route === "client") return "assets/trailhead-facility-phone-settle.png?v=" + v;
+      return "assets/trailhead-specialty-phone-settle.png?v=" + v;
+    }
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -157,6 +171,9 @@
   /* Cover-locked SVG plank hits (viewBox = bake 2560×1096, slice = object-fit:cover). */
   var SPEC_PLANK_HITS = [['fm',417,153,1484,150],['obg',541,303,1228,109],['gi',590,431,1126,109],['neuro',645,558,1024,109],['dental',675,690,972,98],['other',524,794,1280,153]];
   var FAC_PLANK_HITS = [['fqhc',419,153,1484,153],['cah',541,306,1228,109],['bh',590,431,1126,109],['group',619,558,1075,109],['dental',675,690,972,98],['other',524,794,1280,153]];
+  /* Phone settle frame 4.2 — desktop hits above stay 5.05. */
+  var SPEC_PLANK_HITS_PHONE = [['fm',411,153,1484,150],['obg',540,303,1228,109],['gi',590,431,1126,109],['neuro',626,558,1024,109],['dental',674,690,972,98],['other',475,794,1280,153]];
+  var FAC_PLANK_HITS_PHONE = [['fqhc',411,153,1484,153],['cah',540,306,1228,109],['bh',590,431,1126,109],['group',620,558,1075,109],['dental',674,690,972,98],['other',475,794,1280,153]];
 
   function ensureTrailheadHitLayer() {
     var layer = $("#trailhead-hit-layer");
@@ -350,7 +367,9 @@
     var layer = ensureTrailheadHitLayer();
     layer.innerHTML = "";
     var attr = route === "client" ? "facility" : "specialty";
-    var hits = route === "client" ? FAC_PLANK_HITS : SPEC_PLANK_HITS;
+    var hits = route === "client"
+      ? (isPhoneTrailFit() ? FAC_PLANK_HITS_PHONE : FAC_PLANK_HITS)
+      : (isPhoneTrailFit() ? SPEC_PLANK_HITS_PHONE : SPEC_PLANK_HITS);
     layer.hidden = false;
     layer.classList.add("is-live");
     /* Keep legacy signpost from stealing taps while live. */
@@ -722,33 +741,10 @@
        2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
        3) Crossfade the baked plank PNG onto that freeze (labels ease in).
        Never hard-cut video→bake or fade to a second <img> (that jumped the planks).
-       Phone: land on .shot with object-fit:contain so WHOLE planks fit (Mike 1906). */
+       Phone settle time + phone bake only — desktop SETTLE/bake untouched. */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
-    }
-    if (isPhoneTrailFit()) {
-      var routeP = state._approachRoute || "physician";
-      var liveP = document.querySelector('.view.trailhead.on[data-route="' + routeP + '"]') ||
-        document.querySelector('.view.trailhead[data-route="' + routeP + '"]');
-      ensureBakedTrailheadLabels(routeP === "client" ? "client" : "physician");
-      try { document.body.classList.remove("amp-live-trailhead"); } catch (e) {}
-      try { document.body.classList.add("amp-trail-settled"); } catch (e) {}
-      if (hold) {
-        hold.hidden = true;
-        hold.setAttribute("hidden", "");
-      }
-      if (liveP) {
-        liveP.classList.remove("live-video-bg");
-        liveP.classList.add("signs-lit", "signs-frozen", "after-approach");
-      }
-      applyPhoneSignFrame();
-      if (routeP === "physician" || routeP === "physician-specialty") renderSpecialtyGrid();
-      else if (routeP === "client") renderFacilitySignpost();
-      state.approachHold = true;
-      mountTrailheadHits(routeP);
-      if (typeof done === "function") done();
-      return;
     }
     paintFreezeCanvas();
     /* Delay is-settling until bake is ready — one continuous soft end, no early fade race. */
@@ -1016,7 +1012,7 @@
       /* Full speed to SETTLE — no rate ease. */
       try { if (video.playbackRate !== 1) video.playbackRate = 1; } catch (e) {}
       /* Freeze+bake first, then land chrome — one clean settle. */
-      if (t >= FREEZE_END - 0.06) {
+      if (t >= approachFreezeEnd() - 0.06) {
         pauseFreeze(true);
         return;
       }
@@ -1040,10 +1036,10 @@
     settleTimer = setTimeout(function () {
       if (!freezePaused) pauseFreeze(true);
       else if (!chromeLanded) landChrome();
-    }, Math.round(SETTLE * 1000) + 2500);
+    }, Math.round(approachSettleTime() * 1000) + 2500);
     setTimeout(function () {
       if (!freezePaused) pauseFreeze(true);
-    }, Math.round(FREEZE_END * 1000) + 2500);
+    }, Math.round(approachFreezeEnd() * 1000) + 2500);
   }
 
   function hideAllViews() {
