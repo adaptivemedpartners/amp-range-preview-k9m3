@@ -153,7 +153,7 @@
     }
   }
 
-  /* Cover-locked SVG plank hits (viewBox = bake 2560×1096, slice = object-fit:cover). */
+  /* Cover-locked SVG plank hits (viewBox = bake 2560×1146, slice = object-fit:cover). */
   var SPEC_PLANK_HITS = [['fm',480,195,920,100],['obg',520,305,840,95],['gi',550,410,800,95],['neuro',580,515,760,95],['dental',600,620,720,90],['other',520,725,860,110]];
   var FAC_PLANK_HITS = [['fqhc',480,195,920,100],['cah',520,305,840,95],['bh',550,410,800,95],['group',580,515,760,95],['dental',600,620,720,90],['other',520,725,860,110]];
 
@@ -167,7 +167,7 @@
     return layer;
   }
 
-  /* Exact phone frame: wood-sign ROI in the 2560×1096 bake (plank union + pad).
+  /* Exact phone frame: wood-sign ROI in the 2560×1146 bake (plank union + pad).
      No manual % nudges — scale/translate so the whole sign fits with margin. */
   var BAKE_W = 2560;
   var BAKE_H = 1146;
@@ -664,7 +664,7 @@
 
 
   /* Match focal-point % to object-fit:cover crop of the approach video / freeze still. */
-  var SIGN_MEDIA_ASPECT = 2560 / 1096; /* imagine-home native */
+  var SIGN_MEDIA_ASPECT = 2560 / 1146; /* imagine-home native */
 
   function layoutSignMediaFrames() {
     var frames = document.querySelectorAll(".sign-media-frame");
@@ -721,7 +721,7 @@
        2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
        3) Crossfade the baked plank PNG onto that freeze (labels ease in).
        Never hard-cut video→bake or fade to a second <img> (that jumped the planks).
-       Pause only at sharp 5.05 freeze — never mid-swoop. */
+       Pause at settle freeze — match bake frame. */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
