@@ -3173,17 +3173,35 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   display: block !important;
 }
 
-/* Phone trail fit LOCK v6 (Mike): CSS object-position on EVERY visible layer
-   (still + approach freeze/video). JS transforms were invisible after fly-in
-   because .shot is hidden and the hold canvas stayed 50% cover. */
+/* Phone trail fit LOCK v7 (Mike): version pill stays.
+   Cover/% crop CANNOT fit the wide wood sign — JS SIGN_ROI frame only.
+   Do NOT force left/top/width/height here (that killed framing).
+   Specialty taps = rail pills. Hit overlay hidden on phone. */
 @media (max-width: 520px) {
   .view.funnel.trailhead.on > .shot {
     background: #0b1210;
     overflow: hidden;
   }
-  /* Prove new CSS landed */
+  .view.funnel.trailhead.on.phone-sign-fit > .shot::before {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    background-image: var(--trail-fill, none);
+    background-size: cover;
+    background-position: 50% 50%;
+    filter: blur(22px) saturate(1.05) brightness(0.72);
+    transform: scale(1.12);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .view.funnel.trailhead.on.phone-sign-fit > .shot img.still {
+    z-index: 1;
+    filter: none;
+    background: transparent;
+  }
+  /* Version stamp — Mike confirms next build */
   .view.funnel.trailhead.on::after {
-    content: "preview 1902";
+    content: "preview 1903";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -3197,24 +3215,12 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     letter-spacing: .04em;
     pointer-events: none;
   }
-  .view.funnel.trailhead.on > .shot img.still,
-  body.amp-live-trailhead #approach-video-hold #home-video,
-  body.amp-live-trailhead #approach-video-hold video,
-  body.amp-live-trailhead #approach-video-hold canvas.approach-freeze,
-  body.amp-trail-settled #approach-video-hold #home-video,
-  body.amp-trail-settled #approach-video-hold video,
-  body.amp-trail-settled #approach-video-hold canvas.approach-freeze {
-    object-fit: cover !important;
-    /* Pull wood sign into frame — left letters were clipped at 50% */
-    object-position: 22% 48% !important;
-    transform: none !important;
-    inset: 0 !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
+  /* Fly-in in motion: full-bleed cover. Settled geometry is JS. */
+  body.amp-live-trailhead:not(.amp-trail-settled) #approach-video-hold video,
+  body.amp-live-trailhead:not(.amp-trail-settled) #approach-video-hold canvas.approach-freeze {
+    object-fit: cover;
+    object-position: 50% 50%;
   }
-  /* Reliable specialty taps on phone — wood hits were sliding */
   .view.funnel.trailhead.on .trailhead-rail {
     display: flex !important;
     flex-wrap: wrap;
@@ -3237,7 +3243,6 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     font-size: 13px;
     font-weight: 700;
   }
-  /* Hide misaligned overlay hits on phone — rail is source of truth */
   #trailhead-hit-layer.is-live {
     display: none !important;
   }

@@ -121,7 +121,7 @@
 
 
   function trailheadBakeSrc(route) {
-    var v = "1902";
+    var v = "1903";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
@@ -184,7 +184,7 @@
   };
 
   function phoneSignLayout(vw, vh) {
-    var padL = 0.16; /* Chrome still clipped at 8% — more left air */
+    var padL = 0.10; /* fit full sign; rail carries taps */
     var padR = 0.06;
     var padY = 0.06;
     var availW = vw * (1 - padL - padR);
@@ -243,9 +243,12 @@
       var src = img && (img.currentSrc || img.src);
       if (src) shot.style.setProperty("--trail-fill", 'url("' + src + '")');
     }
-    /* Settled approach hold: same geometry on freeze/video */
+    /* After fly-in settle (or direct land): frame freeze/video same as still.
+       During flight amp-trail-settled is off — leave cover alone. */
     var hold = document.getElementById("approach-video-hold");
-    if (hold && document.body.classList.contains("amp-trail-settled")) {
+    var settled = document.body.classList.contains("amp-trail-settled");
+    var liveTrail = document.body.classList.contains("amp-live-trailhead");
+    if (hold && (settled || !liveTrail)) {
       ["#home-video", "video", "canvas.approach-freeze"].forEach(function (sel) {
         var el = hold.querySelector(sel);
         if (!el) return;
@@ -254,12 +257,28 @@
         el.style.top = L.top + "px";
         el.style.width = L.mediaW + "px";
         el.style.height = L.mediaH + "px";
+        el.style.maxWidth = "none";
+        el.style.maxHeight = "none";
         el.style.objectFit = "fill";
+        el.style.objectPosition = "50% 50%";
         el.style.transform = "none";
         el.style.inset = "auto";
         el.style.right = "auto";
         el.style.bottom = "auto";
+        el.style.zIndex = "1";
       });
+      /* Blur twin behind hold so letterbox isn't a hard seam */
+      if (!hold.querySelector(".phone-trail-blur")) {
+        var blur = document.createElement("div");
+        blur.className = "phone-trail-blur";
+        blur.style.cssText = "position:absolute;inset:-12%;z-index:0;pointer-events:none;background-size:cover;background-position:50% 50%;filter:blur(22px) saturate(1.05) brightness(0.72);transform:scale(1.12);";
+        hold.insertBefore(blur, hold.firstChild);
+      }
+      var blurEl = hold.querySelector(".phone-trail-blur");
+      if (blurEl && img) {
+        var src2 = img.currentSrc || img.src;
+        if (src2) blurEl.style.backgroundImage = 'url("' + src2 + '")';
+      }
     }
   }
 
