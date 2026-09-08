@@ -1685,10 +1685,10 @@ window.AMP_CONTENT = {
     },
     {
       slug: "known-tough-trail",
-      title: "Known Tough Trail: ~100 Dials, Hundreds of Touches, One Placement",
-      meta: "For one placement, an illustrative search can take ~100 dials plus hundreds of marketing touches — emails, texts, DocCafe, boards, postcards — before ~2 interviews. Climb map, shock math, 90-day replacement.",
+      title: "Known Tough Trail: ~65,000 Touches on a Three-Cycle Hard Search",
+      meta: "Illustrative retained craft: ~65,000 named touches on a three-cycle hard search in 4–6 months — ~21,800/cycle (5k postcards, 6k emails, 2k texts, 2,400 dials + texts/VMs, ~1,600 online). Canceled-interview redo not in the 65k. Climb map, 90-day replacement.",
       tags: ["Guides", "Retained search", "Hospitals"],
-      mins: 8
+      mins: 9
     },
     {
       slug: "evaluate-obgyn-opportunities",

@@ -128,7 +128,7 @@
   }
 
   function trailheadBakeSrc(route) {
-    var v = "1922";
+    var v = "1923";
     if (route === "client") return "assets/trailhead-facility-baked.png?v=" + v;
     return "assets/trailhead-specialty-baked.png?v=" + v;
   }
