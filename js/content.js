@@ -1685,10 +1685,10 @@ window.AMP_CONTENT = {
     },
     {
       slug: "known-tough-trail",
-      title: "Known Tough Trail: What Retained Guides Actually Do",
-      meta: "What does retained physician search actually look like on the trail? An illustrative climb map of outreach, screens, submissions, interviews, placement — and the 90-day replacement promise.",
+      title: "Known Tough Trail: ~100 Dials, Hundreds of Touches, One Placement",
+      meta: "For one placement, an illustrative search can take ~100 dials plus hundreds of marketing touches — emails, texts, DocCafe, boards, postcards — before ~2 interviews. Climb map, shock math, 90-day replacement.",
       tags: ["Guides", "Retained search", "Hospitals"],
-      mins: 9
+      mins: 8
     },
     {
       slug: "evaluate-obgyn-opportunities",

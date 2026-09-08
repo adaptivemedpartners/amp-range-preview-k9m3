@@ -14,73 +14,96 @@ window.AMP_ARTICLES = {
 "two-year-test-before-you-sign": `<p>A contract can be accurate and still fail to answer the question that matters: can I live this job for two years? Before you sign, AMP recommends a simple audit. It is an education tool, not legal advice; have counsel review the document.</p><h2>Test the week</h2><p>Compare written hours, call, clinic volume, inpatient obligations, and coverage to the week described in interviews. Ask what happens during holidays, vacancies, and growth. If the schedule depends on everyone being fully staffed forever, you have found a risk worth naming.</p><h2>Test the economics</h2><p>Understand guarantee length, wRVU or other production mechanics, conversion points, bonuses, repayment language, and expenses. MGMA compensation benchmarks can be context for a conversation; they are not a promise for your specialty or place.</p><h2>Test the relationship</h2><p>Who answers when a contract question appears? Ask how leadership handles feedback, how physicians learn about change, and whether the team can describe practice longevity and affiliations. The AMA encourages physicians to ask retention questions when evaluating first jobs.</p><h2>Test the exit</h2><p>Read termination, notice, restrictive covenant, malpractice tail, and repayment sections slowly. A guide can help you build questions; counsel should advise you on rights and obligations.</p><h2>Keep your second climb visible</h2><p>Put a two-year check-in on your calendar before the first day. Score the week, support, contract reality, place, and energy. You are not planning to leave; you are keeping agency. If the first ridge needs a second climb, you will know why.</p><p>Ready to compare a role? AMP’s public pages stay tease-level. Tap to Talk when a practice earns the next conversation.</p>`,
 "mpc-when-location-leads": `<p>Sometimes location leads. A resident has a partner constraint, a family corridor, or a clear picture of the place they can call home before the practice is known. That is a real filter. It is also where the MPC contrast can be useful.</p><h2>Wilderness + telescope</h2><p>AMP uses MPC as a wilderness-and-telescope contrast: a candidate explores an unknown peak without a retained seat or guide, while a contingent client looks from the peak with a telescope. It is a different path, not a promise of live inventory.</p><h2>When the location filter helps</h2><p>Use place as a first cut when it protects a real household need. Then ask whether the practice can support the life you are protecting. A location can lead the conversation without becoming the entire decision.</p><h2>When a guide adds value</h2><p>Retained search is the guided path: you are searching for the peak, the client is waiting at the peak, and AMP does the climb work between them. A guide can translate vague place language into questions about schedule, affiliations, support, and longevity.</p><p>There is no need to expose client names, search IDs, or a full MI file to learn whether a path deserves attention. Start with a ridge snapshot, then contact a guide if the example raises a real question. Tease → contact is the right sequence.</p>`,
 "coordinator-share-pack-grads": `<p>Program coordinators can give graduating residents and fellows a short pack before the first job search. The goal is not to endorse a recruiter or a town. It is to help a new physician ask questions early.</p><h2>Share these five prompts</h2><ol><li>What does the ordinary week look like?</li><li>How does call work when the team is short?</li><li>What changes after the guarantee or first contract period?</li><li>How does the organization support practice longevity?</li><li>What would make this place sustainable for two years?</li></ol><h2>Point them to neutral context</h2><p>AMA reporting on early-career retention and contract literacy is a useful starting point. AAPPR 2025 benchmarking and MGMA association resources can add industry context; neither can choose a first job for an individual graduate.</p><h2>Keep the handoff human</h2><p>Encourage graduates to compare specialty, region, place, week, and contract. If they want help, a short conversation with a guide is more useful than a full public dossier. AMP’s residents hub offers rank, region, and an illustrative MI Lite peek before the next step.</p><p>Graduation is a summit, not the end of learning. Give each new physician a map, a checklist, and permission to ask one more question.</p>`,
-"known-tough-trail": `<p>You wait at the peak. AMP does the climb work. That sentence is easy to say and hard to feel — until you see the trail. This is the Known Tough Trail: a soft look at what retained guides actually do between your brief and a prepared summit meeting. Not a fee schedule. Not a competitor roast. Just the volume of work upstream of the conversation you see.</p>
-<p>Candidates are searching for the peak. Clients hold the peak. Guides rope the middle — outreach, screens, packets, presentations, submissions, interviews — and keep climbing when a ridge falls through.</p>
+"known-tough-trail": `<p>You are standing at the peak with a brief in your hand and an empty seat behind you. Somewhere on the far side of the ridge, physicians are searching. Between you and them is a trail most hiring leaders never see — until a guide walks you back down it and shows you the rope burns.</p>
+<p>Here is the part that usually lands with a quiet <em>wait — what?</em></p>
+<p>For <strong>one placement</strong>, an illustrative search can run <strong>~100 outreach dials</strong> <em>plus</em> a parallel marketing touchlayer — DocCafe, job boards, website teasers, email and matching text sequences, postcards, broader search phases — that often means <strong>hundreds of additional touches</strong> before a slate even appears. Not dials alone. Phone work and marketing, climbing the same ridge at the same time.</p>
+<p class="muted" style="font-size:13px"><strong>Illustrative / one-search example — not a guarantee.</strong> Real trails vary by specialty, corridor, and brief clarity. The shock is the volume retained craft is supposed to fund while you wait at the peak.</p>
 
-<h2>The climb map</h2>
-<p>Here is the recruiting work, stage by stage. On a wide screen it reads left to right; on a phone it stacks like switchbacks.</p>
+<div class="tough-trail-shock" aria-label="Shock math for one illustrative placement">
+  <div class="tts-shock-head">
+    <span class="tag">One placement · Shock math</span>
+    <strong>What it can take to put one physician on your peak</strong>
+  </div>
+  <div class="tts-shock-grid">
+    <div class="tts-shock-card is-dials">
+      <span class="tts-shock-n">~100</span>
+      <span class="tts-shock-l">Outreach dials</span>
+      <span class="tts-shock-sub">Phone / recruiting volume toward one search</span>
+    </div>
+    <div class="tts-shock-plus" aria-hidden="true">+</div>
+    <div class="tts-shock-card is-mkt">
+      <span class="tts-shock-n">Hundreds</span>
+      <span class="tts-shock-l">More touches in parallel</span>
+      <span class="tts-shock-sub">Emails · texts · DocCafe · boards · postcards · site teasers</span>
+    </div>
+    <div class="tts-shock-arrow" aria-hidden="true">→</div>
+    <div class="tts-shock-card is-narrow">
+      <span class="tts-shock-n">~2 → 1</span>
+      <span class="tts-shock-l">Interviews → placement</span>
+      <span class="tts-shock-sub">The thin ridge you actually see on a committee calendar</span>
+    </div>
+  </div>
+  <p class="tough-trail-caption muted">Clients fund the dials <em>and</em> the marketing stack. The slate is the tip of a much taller climb.</p>
+</div>
+
+<p>Picture the guide’s day after your brief lands. Someone is on DocCafe and the boards. Someone is cutting website teasers that stop a scroll without leaking the full map. Someone is running AMPlified-style email with matching texts — paid windows shaped like 30 / 60 / 90 days, which can mean 3 / 6 / 9 emails and texts in sequence — plus postcard and broader search phases when the corridor needs more oxygen. Meanwhile the phone keeps ringing outbound. Most of that never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
+
 <div class="tough-trail-flow" aria-label="Known Tough Trail recruiting flowchart">
   <div class="tough-trail-head">
-    <span class="tag">Visual chapter · Guide craft</span>
-    <strong>Trail stages retained funds</strong>
+    <span class="tag">Visual chapter · Climb map</span>
+    <strong>Stages retained funds while you wait</strong>
   </div>
   <div class="tough-trail-stages" role="list">
     <div class="tough-trail-stage" role="listitem"><span class="tts-num">01</span><span class="tts-label">Outreach</span><span class="tts-detail">DocCafe &amp; lists</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">02</span><span class="tts-label">Calls</span><span class="tts-detail">Outbound volume</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">02</span><span class="tts-label">Calls</span><span class="tts-detail">~100 dials</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">03</span><span class="tts-label">Phone screens</span><span class="tts-detail">First real talks</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">03</span><span class="tts-label">Phone screens</span><span class="tts-detail">10–15 talks</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">04</span><span class="tts-label">Light screens</span><span class="tts-detail">Profiles &amp; fit</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">04</span><span class="tts-label">Light screens</span><span class="tts-detail">4–5 ready</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">05</span><span class="tts-label">Presentations</span><span class="tts-detail">Story to candidate</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">05</span><span class="tts-label">Presentations</span><span class="tts-detail">~10 toward path</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">06</span><span class="tts-label">Submissions</span><span class="tts-detail">Summit-ready slate</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">06</span><span class="tts-label">Submissions</span><span class="tts-detail">3–4 slate</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">07</span><span class="tts-label">Interviews</span><span class="tts-detail">Prepared meetings</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">07</span><span class="tts-label">Interviews</span><span class="tts-detail">~2 meetings</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
     <div class="tough-trail-stage is-summit" role="listitem"><span class="tts-num">08</span><span class="tts-label">Placement</span><span class="tts-detail">You hold the peak</span></div>
   </div>
-  <div class="tough-trail-craft" aria-label="Parallel craft running alongside the stages">
-    <span class="tough-trail-craft-label">Parallel craft</span>
-    <span class="tough-trail-chip">Marketing teasers</span>
-    <span class="tough-trail-chip">Text / email sequences</span>
-    <span class="tough-trail-chip">Candidate profiles &amp; packets</span>
-    <span class="tough-trail-chip">DocCafe &amp; list work</span>
+  <div class="tough-trail-craft" aria-label="Parallel marketing touchlayer">
+    <span class="tough-trail-craft-label">Marketing touchlayer</span>
+    <span class="tough-trail-chip">DocCafe / boards</span>
+    <span class="tough-trail-chip">Website teasers</span>
+    <span class="tough-trail-chip">Email + text sequences</span>
+    <span class="tough-trail-chip">Postcards / search phases</span>
+    <span class="tough-trail-chip">Profiles &amp; packets</span>
   </div>
-  <p class="tough-trail-caption muted">You wait at the summit. The dense middle of this map is what retained search is supposed to fund.</p>
+  <p class="tough-trail-caption muted">On a wide screen the stages read left to right; on a phone they stack like switchbacks. The chips underneath are the parallel climb.</p>
 </div>
 
-<h2>Illustrative funnel math (one-search example)</h2>
-<p><strong>Illustrative only — not a guarantee.</strong> One search can look roughly like this: ~100 outreach calls → 10–15 phone conversations → a handful of deeper screens / presentation-ready candidates → ~10 presentation conversations per submission path → 3–4 submissions → ~2 interviews → placement. Mike’s spirit holds: the volume of work upstream of a summit meeting is huge. The stages you see on a committee calendar are a thin ridge of a much taller climb.</p>
-<div class="tough-trail-funnel" aria-label="Illustrative funnel numbers">
-  <div class="ttf-row"><span class="ttf-n">~100</span><span class="ttf-l">Outreach calls</span></div>
+<div class="tough-trail-funnel" aria-label="Illustrative narrowing funnel">
+  <div class="ttf-row ttf-hero"><span class="ttf-n">~100</span><span class="ttf-l">Outreach dials</span></div>
+  <div class="ttf-row ttf-hero is-mkt"><span class="ttf-n">100s+</span><span class="ttf-l">Marketing touches in parallel</span></div>
   <div class="ttf-row"><span class="ttf-n">10–15</span><span class="ttf-l">Phone conversations</span></div>
-  <div class="ttf-row"><span class="ttf-n">Handful</span><span class="ttf-l">Deeper screens / presentation-ready</span></div>
-  <div class="ttf-row"><span class="ttf-n">~10</span><span class="ttf-l">Presentation conversations / submission path</span></div>
+  <div class="ttf-row"><span class="ttf-n">4–5</span><span class="ttf-l">Light screens / presentation-ready</span></div>
+  <div class="ttf-row"><span class="ttf-n">~10</span><span class="ttf-l">Presentations toward a submission path</span></div>
   <div class="ttf-row"><span class="ttf-n">3–4</span><span class="ttf-l">Submissions</span></div>
   <div class="ttf-row"><span class="ttf-n">~2</span><span class="ttf-l">Interviews</span></div>
   <div class="ttf-row is-peak"><span class="ttf-n">1</span><span class="ttf-l">Placement</span></div>
 </div>
-<p class="muted" style="font-size:13px">Labeled illustrative / one-search example. Real trails vary by specialty, corridor, and brief clarity.</p>
+<p class="muted" style="font-size:13px">Illustrative / one-search example — not a guarantee. Some interviews fall apart after interest or pre-IV; the candidate backs out, or the client does. That is part of a known tough trail. Guides re-rope and keep climbing — more dials, more touches, another presentation path — without pretending the first summit attempt was the whole story.</p>
 
-<h2>When interviews fall through</h2>
-<p>Some interviews fall apart after interest or pre-IV — the candidate backs out, or the client does. That is part of a known tough trail. Guides keep climbing: more outreach, more screens, another presentation path. Retained craft is not a single rope; it is the willingness to re-ascend without pretending the first summit attempt was the whole story.</p>
+<p>When the cairn finally sticks, AMP’s public proofs are the quiet aftermath: <strong>1.7</strong> average interviews per successful placement, <strong>87%</strong> retention at three years, and a <strong>90-day replacement</strong> — if the placed physician leaves or is terminated within 90 days of start, AMP replaces at no additional search fee. Placement is reaching elevation. The 90-day beat is how we treat the first weeks there with gravity.</p>
 
-<h2>Protection on the peak: 90-day replacement</h2>
-<p>AMP’s serious promise: if the placed physician leaves or is terminated within <strong>90 days of start</strong>, AMP replaces at <strong>no additional search fee</strong>. That is not a legal MSA dump — it is the protection beat that says the climb was meant to stick. Placement is reaching the cairn; early replacement coverage is how we treat the first weeks at elevation with gravity.</p>
-
-<h2>Soft next step</h2>
-<p>If this map made the retained middle feel real, request a retained conversation. Compare models in our <a href="#blog/retained-vs-contingent-physician-search" data-go="blog/retained-vs-contingent-physician-search">retained vs contingent</a> piece, then take the client door — facility → specialty → Summit Clear / Shared Ascent tease → meeting request into <strong>BD Hub</strong> (with Mess intake in support). Destinations with owners beat vanishing inboxes.</p>
+<p>If this story made the middle of the mountain feel real, compare models in our <a href="#blog/retained-vs-contingent-physician-search" data-go="blog/retained-vs-contingent-physician-search">retained vs contingent</a> piece, then take the client door — facility → specialty → retained tease → meeting request into <strong>BD Hub</strong> (with Mess intake in support). Soft ask. One conversation. Destinations with owners beat vanishing inboxes.</p>
 <div class="faq">
-<details open><summary>Is the funnel math a promise for my specialty?</summary><p>No. It is an illustrative one-search example to show upstream volume. Your trail will differ; the point is the work retained funds before you see a slate.</p></details>
+<details open><summary>Is this funnel a promise for my specialty?</summary><p>No. It is an illustrative one-search example to show upstream volume — dials plus marketing touches. Your trail will differ; the point is what retained craft funds before you see a slate.</p></details>
+<details><summary>What counts as a “marketing touch”?</summary><p>The parallel layer beside the phone: DocCafe and boards, website teasers, email and matching text sequences (including 30/60/90-shaped packages), postcards, and broader search marketing phases — hundreds of touches that never look like a single dial.</p></details>
 <details><summary>Where do client meetings land?</summary><p>On this site, client meeting requests route toward <strong>BD Hub</strong> with Mess client intake support — so BD and delivery share one spine.</p></details>
-<details><summary>I want the model comparison next</summary><p>Read <button class="linkish" data-go="blog/retained-vs-contingent-physician-search">retained vs contingent</button>, then <button class="linkish" data-go="client" data-trail="1">open the client path</button>.</p></details>
 </div>
 <p><button class="btn btn-primary" data-go="client" data-trail="1">Request a retained conversation</button>
 <button class="btn btn-ghost" data-go="blog/retained-vs-contingent-physician-search">Retained vs contingent</button>
 <button class="btn btn-ghost" data-go="education">Education hub</button></p>
-<p>Education without a destination is altitude sickness. When you are ready, Adaptive Medical Partners meets you with a guide — and a trail you can actually see.</p>
 `
 
 };
