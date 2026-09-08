@@ -1,0 +1,54 @@
+{
+  "kind": "facilities",
+  "background": "trailhead-LIVE-freeze",
+  "items": [
+    {
+      "slot": 0,
+      "text": "Critical Access Hospital",
+      "leftPct": 45.15,
+      "topPct": 36.86,
+      "rotateDeg": 6,
+      "fontSizePx": 14
+    },
+    {
+      "slot": 1,
+      "text": "Dentistry",
+      "leftPct": 45.38,
+      "topPct": 63.41,
+      "rotateDeg": -5,
+      "fontSizePx": 23
+    },
+    {
+      "slot": 2,
+      "text": "Medical Group",
+      "leftPct": 45.21,
+      "topPct": 54.57,
+      "rotateDeg": -1,
+      "fontSizePx": 20
+    },
+    {
+      "slot": 3,
+      "text": "Behavioral Health",
+      "leftPct": 45.08,
+      "topPct": 45.72,
+      "rotateDeg": 1.5,
+      "fontSizePx": 18
+    },
+    {
+      "slot": 4,
+      "text": "FQHC",
+      "leftPct": 45.38,
+      "topPct": 28.01,
+      "rotateDeg": 6,
+      "fontSizePx": 23
+    },
+    {
+      "slot": 5,
+      "text": "Other",
+      "leftPct": 45.45,
+      "topPct": 71.38,
+      "rotateDeg": -6,
+      "fontSizePx": 23
+    }
+  ]
+}

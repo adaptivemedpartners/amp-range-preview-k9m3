@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<title>AMP · Explore the range</title>
+<link rel="preload" as="image" href="amp-path-visuals/grok-swoop-first.png" />
+<style>
+  :root {
+    --bg: #0b1210;
+    --charcoal: #141c1a;
+    --teal: #3ec9b0;
+    --teal-dim: #2a8f7d;
+    --teal-deep: #1a4a42;
+    --ink: #eef6f3;
+    --muted: #8aa39b;
+    --soft: #c5d6d0;
+    --line: #2a3d37;
+    --tap: 52px;
+    --warm: rgba(255, 176, 110, 0);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100%;
+  }
+  body { min-height: 100dvh; background: var(--bg); overflow-x: hidden; }
+
+  .app {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stage {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .screen {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .screen.on {
+    display: flex;
+    position: relative;
+    z-index: 2;
+  }
+  .screen.leaving {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Hike zoom: outgoing 1 → 1.15 fade ~700ms; incoming 1.12 → 1 fade ~800ms */
+  .hike {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: 50% 38%;
+    will-change: transform, opacity;
+  }
+  .screen.on .hike {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 800ms cubic-bezier(.22,.61,.36,1), transform 800ms cubic-bezier(.22,.61,.36,1);
+  }
+  .screen.entering .hike {
+    opacity: 0;
+    transform: scale(1.12);
+    transition: none;
+  }
+  .screen.leaving .hike {
+    opacity: 0;
+    transform: scale(1.15);
+    transition: opacity 700ms cubic-bezier(.4,0,.2,1), transform 700ms cubic-bezier(.4,0,.2,1);
+  }
+
+  .shot {
+    position: relative;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+    background: #101816;
+    line-height: 0;
+    overflow: hidden;
+  }
+  .shot img.still {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+
+  /* First five seconds: full viewport, one mountain, no preview card */
+  #sc-enter,
+  #sc-client,
+  #sc-specialty {
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  #sc-client .hike,
+  #sc-specialty .hike {
+    width: 100%;
+    height: 100%;
+  }
+  #sc-client .shot,
+  #sc-specialty .shot {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    margin: 0;
+  }
+  #sc-client .shot img.still,
+  #sc-specialty .shot img.still {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 42%;
+  }
+
+  /* Hop 1: flat full-bleed swoop video. No CSS 3D. */
+  #swoop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    z-index: 0;
+    pointer-events: none;
+    background: #111;
+    transform-origin: 50% 38%;
+    transform: translateZ(0) scale(1);
+    transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  #sc-enter.walk-forward {
+    perspective: 1000px;
+  }
+  #sc-enter.walk-forward #swoop {
+    transform: translateZ(400px) scale(1.2);
+    opacity: 1;
+  }
+  #sc-enter.playing .hot,
+  #sc-enter.playing .brand-lockup,
+  #sc-enter.playing .amp-cover,
+  #sc-enter.playing .enter-copy,
+  #sc-enter.playing .enter-stats,
+  #sc-enter.playing .enter-quiet {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #sc-enter.signs-lit .brand-lockup,
+  #sc-enter.signs-lit .amp-cover,
+  #sc-enter.signs-lit .enter-copy,
+  #sc-enter.signs-lit .enter-stats,
+  #sc-enter.signs-lit .enter-quiet,
+  #sc-enter.signs-lit #hs-phys,
+  #sc-enter.signs-lit #hs-client {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #sc-enter:not(.signs-lit) #hs-fm,
+  #sc-enter:not(.signs-lit) #hs-obg,
+  #sc-enter:not(.signs-lit) #hs-psych,
+  #sc-enter:not(.signs-lit) #hs-hosp,
+  #sc-enter:not(.signs-lit) #hs-other,
+  #sc-enter:not(.signs-lit) .summit-on,
+  #sc-enter:not(.signs-lit) > .rail {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .enter-quiet {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 46%;
+    background: linear-gradient(90deg, rgba(8, 12, 11, 0.58) 0%, rgba(8, 12, 11, 0.26) 62%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Hops 2-5: walk forward through the outgoing still. No fade. Not the aerial dive. */
+  .hike .shot img.still {
+    transform: translateZ(0) scale(1);
+    transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .screen.walk-forward {
+    pointer-events: none;
+  }
+  .screen.walk-forward .shot {
+    perspective: 1000px;
+  }
+  .screen.walk-forward .shot img.still {
+    transform: translateZ(400px) scale(1.2);
+    opacity: 1;
+  }
+  .screen.walk-forward .hot,
+  .screen.walk-forward .brand-lockup,
+  .screen.walk-forward .amp-cover,
+  .screen.walk-forward .summit-on,
+  .screen.walk-forward .rail {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms linear;
+  }
+
+  /* Journey brightness — same stills, a little more light each step */
+  #sc-enter .still { filter: brightness(1.00); }
+  #sc-client .still { filter: brightness(1.00); }
+  #sc-specialty .still { filter: brightness(1.00); }
+  #sc-southwest .still { filter: brightness(1.12) saturate(1.05); }
+  #sc-range .still { filter: brightness(1.18) saturate(1.06); }
+  #sc-peak .still { filter: brightness(1.24) saturate(1.07); }
+  #sc-connect .still { filter: brightness(1.24) saturate(1.08); }
+
+  .warm {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #sc-enter .warm { background: rgba(255, 176, 110, 0); }
+  #sc-client .warm { background: rgba(255, 176, 110, 0); }
+  #sc-specialty .warm { background: rgba(255, 176, 110, 0); }
+  #sc-southwest .warm { background: rgba(255, 176, 110, 0.07); }
+  #sc-range .warm { background: rgba(255, 176, 110, 0.095); }
+  #sc-peak .warm { background: rgba(255, 176, 110, 0.12); }
+  #sc-connect .warm { background: rgba(255, 176, 110, 0.12); }
+
+  /* Cover baked AMP letters in the PNGs; real mark sits on top */
+  .amp-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18%;
+    min-width: 110px;
+    height: 14%;
+    min-height: 56px;
+    background: linear-gradient(135deg, rgba(11, 18, 16, 0.72) 0%, rgba(11, 18, 16, 0.28) 55%, transparent 80%);
+    z-index: 4;
+    pointer-events: none;
+  }
+  /* Real AMP mark — Team Hub chrome radiation, exact pulse */
+  .brand-lockup {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    z-index: 6;
+    overflow: visible;
+    pointer-events: none;
+    padding-right: 22px;
+  }
+  #sc-enter .brand-lockup {
+    top: 18px;
+    left: 16px;
+    overflow: visible;
+    padding-right: 36px;
+  }
+  .brand-logo-header {
+    height: 48px;
+    width: auto;
+    display: block;
+    overflow: visible;
+    padding-left: 14px;
+    padding-right: 18px;
+    box-sizing: content-box;
+    filter:
+      drop-shadow(0 0 2px #3ec9b0)
+      drop-shadow(0 0 6px #3ec9b0)
+      drop-shadow(0 0 5px #3ec9b0)
+      drop-shadow(0 0 5px #3ec9b0);
+    animation: ampChromeLockupPulse 2.8s ease-in-out infinite;
+  }
+  #sc-enter .brand-logo-header {
+    height: 144px;
+    overflow: visible;
+    padding-left: 22px;
+    padding-right: 28px;
+    filter:
+      drop-shadow(0 0 1px #fff)
+      drop-shadow(0 0 4px rgba(255,255,255,0.35));
+    animation: ampEnterWhitePulse 2.8s ease-in-out infinite;
+  }
+  @keyframes ampChromeLockupPulse {
+    0%, 100% {
+      filter:
+        drop-shadow(0 0 2px #3ec9b0)
+        drop-shadow(0 0 6px #3ec9b0)
+        drop-shadow(0 0 5px #3ec9b0)
+        drop-shadow(0 0 5px #3ec9b0);
+    }
+    50% {
+      filter:
+        drop-shadow(0 0 2px #3ec9b0)
+        drop-shadow(0 0 6px #3ec9b0)
+        drop-shadow(0 0 14px #3ec9b0)
+        drop-shadow(0 0 24px #3ec9b0);
+    }
+  }
+  @keyframes ampEnterWhitePulse {
+    0%, 100% {
+      filter:
+        drop-shadow(0 0 1px #fff)
+        drop-shadow(0 0 4px rgba(255,255,255,0.35));
+    }
+    50% {
+      filter:
+        drop-shadow(0 0 1px #fff)
+        drop-shadow(0 0 6px rgba(255,255,255,0.5))
+        drop-shadow(0 0 10px rgba(255,255,255,0.22));
+    }
+  }
+
+  /* Invisible / translucent hit areas over the mock buttons */
+  .hot {
+    position: absolute;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: rgba(62, 201, 176, 0.06);
+    box-shadow: inset 0 0 0 1.5px rgba(62, 201, 176, 0.35);
+    cursor: pointer;
+    border-radius: 12px;
+    z-index: 3;
+  }
+  .hot:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+  @media (hover: hover) {
+    .hot:hover {
+      background: rgba(62, 201, 176, 0.14);
+      box-shadow: inset 0 0 0 1.5px rgba(62, 201, 176, 0.45);
+    }
+    /* Trail signs: hover glows the letters, not teal outline boxes */
+    #hs-fm:hover,
+    #hs-obg:hover,
+    #hs-psych:hover,
+    #hs-hosp:hover,
+    #hs-other:hover {
+      background: transparent;
+      box-shadow: none;
+    }
+    #hs-fm:hover .sign-words,
+    #hs-obg:hover .sign-words,
+    #hs-psych:hover .sign-words,
+    #hs-hosp:hover .sign-words,
+    #hs-other:hover .sign-words {
+      text-shadow:
+        0 0 2px #ffffff,
+        0 0 2px #3ec9b0,
+        0 0 6px #3ec9b0,
+        0 0 14px #3ec9b0,
+        0 0 24px #3ec9b0;
+    }
+  }
+  .hot:active { background: rgba(62, 201, 176, 0.22); }
+
+  .summit-on {
+    position: absolute;
+    left: 50%;
+    bottom: 3.2%;
+    transform: translateX(-50%);
+    appearance: none;
+    border: 0;
+    background: rgba(11, 18, 16, 0.55);
+    color: var(--teal);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 3;
+  }
+  .summit-on:focus-visible { outline: 2px solid var(--teal); }
+
+  .rail {
+    width: min(1200px, 100%);
+    padding: 10px 16px calc(18px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  #sc-enter .rail,
+  #sc-client .rail,
+  #sc-specialty .rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    z-index: 5;
+    padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
+    gap: 8px;
+    background: linear-gradient(180deg, transparent 0%, rgba(11, 18, 16, 0.55) 40%);
+  }
+  .skip {
+    appearance: none;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-size: 15px;
+    min-height: 44px;
+    padding: 8px 10px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+  .skip:focus-visible { outline: 2px solid var(--teal); }
+
+  .taps {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .taps button {
+    appearance: none;
+    font: inherit;
+    cursor: pointer;
+    min-height: var(--tap);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 17px;
+    font-weight: 650;
+    width: 100%;
+    border: 1px solid var(--line);
+    background: #172420;
+    color: var(--ink);
+    text-align: center;
+  }
+  .taps button.primary {
+    background: var(--teal);
+    color: #071210;
+    border-color: var(--teal);
+  }
+  .taps button.quiet {
+    background: #101a17;
+    color: var(--soft);
+  }
+  .taps.row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .taps.row button { flex: 1 1 140px; }
+
+  @media (hover: hover) {
+    .taps button[data-spec="Family Medicine"]:hover,
+    .taps button[data-spec="OB-GYN"]:hover,
+    .taps button[data-spec="Psychiatry"]:hover,
+    .taps button[data-spec="Hospitalist"]:hover {
+      box-shadow: 0 0 0 1px var(--teal), 0 0 18px rgba(62, 201, 176, 0.4);
+      border-color: var(--teal);
+    }
+  }
+
+  .other-box {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .other-box.on { display: flex; }
+  .other-box label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 0 4px;
+  }
+  .other-box input {
+    appearance: none;
+    width: 100%;
+    min-height: var(--tap);
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--charcoal);
+    color: var(--ink);
+    font: inherit;
+    font-size: 18px;
+    padding: 12px 14px;
+  }
+  .other-box input:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+  .other-box button {
+    appearance: none;
+    font: inherit;
+    cursor: pointer;
+    min-height: var(--tap);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 17px;
+    font-weight: 650;
+    width: 100%;
+    border: 1px solid var(--teal);
+    background: var(--teal);
+    color: #071210;
+  }
+
+  @media (max-width: 720px) {
+    .summit-on { font-size: 14px; padding: 7px 12px; }
+    .brand-logo-header { height: 40px; }
+    #sc-enter .brand-logo-header { height: 144px; }
+  }
+
+  @media (min-width: 900px) {
+    .shot img.still { object-fit: cover; }
+    .app { justify-content: flex-start; }
+  }
+
+  .stub {
+    position: absolute;
+    inset: 18% 12% 28%;
+    background: rgba(11, 18, 16, 0.82);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    line-height: 1.3;
+    z-index: 3;
+  }
+  .stub h1 {
+    margin: 0;
+    font-size: clamp(26px, 5vw, 36px);
+    letter-spacing: -0.03em;
+  }
+  .stub p {
+    margin: 0;
+    color: var(--soft);
+    font-size: 17px;
+  }
+  .stub button {
+    appearance: none;
+    font: inherit;
+    cursor: pointer;
+    min-height: var(--tap);
+    padding: 12px 28px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--soft);
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .connect-wrap {
+    position: relative;
+    width: min(1200px, 100%);
+    min-height: min(720px, calc(100dvh - 70px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #101816;
+  }
+  .connect-wrap > img.still {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+  }
+  .panel {
+    position: relative;
+    z-index: 2;
+    width: min(440px, calc(100% - 32px));
+    margin: 28px 16px;
+    padding: 28px 24px 22px;
+    background: rgba(11, 18, 16, 0.88);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+  }
+  .panel h1 {
+    margin: 0 0 8px;
+    font-size: clamp(26px, 5vw, 34px);
+    letter-spacing: -0.03em;
+  }
+  .panel .sub {
+    margin: 0 0 20px;
+    color: var(--soft);
+    font-size: 16px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 6px 4px;
+  }
+  input {
+    appearance: none;
+    width: 100%;
+    min-height: var(--tap);
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--charcoal);
+    color: var(--ink);
+    font: inherit;
+    font-size: 18px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  input:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+  .send {
+    appearance: none;
+    width: 100%;
+    min-height: var(--tap);
+    border: 0;
+    border-radius: 14px;
+    background: var(--teal);
+    color: #071210;
+    font: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .thanks {
+    display: none;
+    margin: 14px 0 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: var(--teal-deep);
+    border: 1px solid var(--teal-dim);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .thanks.on { display: block; }
+
+  /* Entrance copy — HTML over the clean range. Pills: letter glow, no teal boxes. */
+  .enter-copy {
+    position: absolute;
+    left: 4.5%;
+    top: 28%;
+    transform: none;
+    z-index: 5;
+    width: min(540px, 44%);
+    text-align: left;
+    pointer-events: none;
+  }
+  .enter-headline {
+    margin: 0;
+    color: #ffffff;
+    font: inherit;
+    font-size: clamp(36px, 4.6vw, 72px);
+    font-weight: 650;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .enter-sub {
+    margin: 1.35vw 0 0;
+    color: #eef6f3;
+    font: inherit;
+    font-size: clamp(18px, 2.2vw, 34px);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .enter-stats {
+    position: absolute;
+    left: 4.5%;
+    top: auto;
+    bottom: 7%;
+    transform: none;
+    z-index: 5;
+    margin: 0;
+    color: #ffffff;
+    font: inherit;
+    font-size: clamp(12px, 1.05vw, 16px);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: left;
+  }
+  #hs-phys,
+  #hs-client {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+  #hs-phys,
+  #hs-client { background: transparent; }
+  #hs-phys:active,
+  #hs-client:active { background: transparent; }
+  #hs-phys .pill-words,
+  #hs-client .pill-words {
+    display: block;
+    margin: 0;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: clamp(15px, 1.25vw, 22px);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+    white-space: nowrap;
+    pointer-events: none;
+    border-radius: 2px;
+    padding: 0 0.4em;
+    background: transparent;
+  }
+  @media (hover: hover) {
+    #hs-phys:hover,
+    #hs-client:hover {
+      box-shadow: none;
+    }
+    #hs-phys:hover,
+    #hs-client:hover { background: transparent; }
+    #hs-phys:hover .pill-words,
+    #hs-client:hover .pill-words {
+      text-shadow:
+        0 0 2px #ffffff,
+        0 0 2px #3ec9b0,
+        0 0 6px #3ec9b0,
+        0 0 14px #3ec9b0,
+        0 0 24px #3ec9b0;
+    }
+  }
+  /* Left of the dark range — no baked pills on this clip */
+  #hs-phys { left: 4.5%; top: 52%; width: 22%; height: 6.5%; }
+  #hs-client { left: 4.5%; top: 59%; width: 20%; height: 6.5%; }
+  @media (min-aspect-ratio: 3/2) {
+    .enter-copy { top: 30%; }
+    .enter-stats { top: auto; bottom: 7%; }
+    #hs-phys { left: 4.5%; top: 54%; width: 20%; height: 7%; }
+    #hs-client { left: 4.5%; top: 62%; width: 18%; height: 7%; }
+  }
+
+  /* Trail signs — grok-swoop-at4.png plank faces (1904x1072), object-fit cover 50% 50% */
+  #hs-fm { left: 42.4%; top: 26.0%; width: 11.6%; height: 6.4%; }
+  #hs-obg { left: 43.6%; top: 35.0%; width: 11.2%; height: 6.4%; }
+  #hs-psych { left: 43.2%; top: 43.8%; width: 12.6%; height: 6.6%; }
+  #hs-hosp { left: 44.2%; top: 52.6%; width: 12.0%; height: 6.4%; }
+  #hs-other { left: 42.6%; top: 61.6%; width: 12.4%; height: 6.6%; }
+  #hs-fm .sign-words { transform: rotate(6deg); font-size: clamp(10px, 0.95vw, 14px); }
+  #hs-obg .sign-words { transform: rotate(5deg); }
+  #hs-psych .sign-words { transform: rotate(-4deg); font-size: clamp(11px, 1.0vw, 15px); }
+  #hs-hosp .sign-words { transform: rotate(2deg); font-size: clamp(11px, 1.0vw, 15px); }
+  #hs-other .sign-words { transform: rotate(-4deg); }
+  #hs-fm,
+  #hs-obg,
+  #hs-psych,
+  #hs-hosp,
+  #hs-other {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+  #hs-fm:active,
+  #hs-obg:active,
+  #hs-psych:active,
+  #hs-hosp:active,
+  #hs-other:active {
+    background: transparent;
+  }
+  .sign-words {
+    display: block;
+    margin: 0;
+    color: transparent;
+    font-family: inherit;
+    font-size: clamp(11px, 1.05vw, 16px);
+    font-weight: 650;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    white-space: nowrap;
+    pointer-events: none;
+    transform-origin: center center;
+  }
+  #sc-enter.signs-lit .sign-words {
+    color: #ffffff;
+    animation: signLightUp 0.8s ease-out 0.12s forwards;
+    text-shadow: none;
+  }
+  @keyframes signLightUp {
+    to {
+      text-shadow:
+        0 0 2px #ffffff,
+        0 0 2px #3ec9b0,
+        0 0 6px #3ec9b0,
+        0 0 14px #3ec9b0,
+        0 0 24px #3ec9b0;
+    }
+  }
+  #sc-enter:not(.signs-lit) #hs-fm,
+  #sc-enter:not(.signs-lit) #hs-obg,
+  #sc-enter:not(.signs-lit) #hs-psych,
+  #sc-enter:not(.signs-lit) #hs-hosp,
+  #sc-enter:not(.signs-lit) #hs-other {
+    pointer-events: none;
+  }
+
+  /* Southwest metro cards */
+  #hs-allsw { left: 5.4%; top: 46.5%; width: 29.2%; height: 28.5%; }
+  #hs-ntx { left: 35.4%; top: 46.5%; width: 29.0%; height: 28.5%; }
+  #hs-ctx { left: 65.4%; top: 46.5%; width: 28.8%; height: 28.5%; }
+
+  /* Range peaks */
+  #hs-p1 { left: 8%; top: 30%; width: 20%; height: 42%; }
+  #hs-p2 { left: 30%; top: 24%; width: 20%; height: 48%; }
+  #hs-p3 { left: 52%; top: 26%; width: 20%; height: 46%; }
+  #hs-p4 { left: 74%; top: 30%; width: 20%; height: 42%; }
+  #hs-range-talk { left: 78%; top: 86%; width: 18%; height: 8%; }
+
+  /* Peak tease */
+  #hs-talk { left: 29.8%; top: 60.2%; width: 40.4%; height: 9.6%; }
+  #hs-not { left: 29.8%; top: 70.4%; width: 40.4%; height: 9.2%; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-logo-header { animation: none !important; }
+    .screen.on .hike,
+    .screen.entering .hike,
+    .screen.leaving .hike {
+      transform: none;
+    }
+    .screen.on .hike {
+      transition: opacity 400ms ease;
+    }
+    .screen.leaving .hike {
+      transition: opacity 400ms ease;
+    }
+    .hike .shot img.still,
+    .screen.walk-forward .shot img.still,
+    #swoop,
+    #sc-enter.walk-forward #swoop {
+      transform: none;
+      transition: none;
+    }
+    #sc-enter.signs-lit .sign-words {
+      animation: none;
+      text-shadow:
+        0 0 2px #ffffff,
+        0 0 2px #3ec9b0,
+        0 0 6px #3ec9b0,
+        0 0 14px #3ec9b0,
+        0 0 24px #3ec9b0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="stage">
+
+  <!-- 1 Entrance -->
+  <section id="sc-enter" class="screen on" aria-label="Entrance">
+    <video id="swoop" src="amp-path-visuals/grok-swoop.mp4" poster="amp-path-visuals/grok-swoop-first.png" playsinline muted preload="auto" width="1904" height="1072"></video>
+    <div class="warm" aria-hidden="true"></div>
+    <div class="enter-quiet" aria-hidden="true"></div>
+    <div class="brand-lockup">
+      <img class="brand-logo-header" src="amp-path-visuals/amp-logo-mark-white.png" alt="AMP" width="300" height="300" />
+    </div>
+    <div class="enter-copy">
+      <h1 class="enter-headline">Explore the range.</h1>
+      <p class="enter-sub">Known path or the wilderness.</p>
+    </div>
+    <button class="hot" id="hs-phys" type="button" data-go="specialty" aria-label="I am a physician."><span class="pill-words" aria-hidden="true">I am a physician.</span></button>
+    <button class="hot" id="hs-client" type="button" data-go="client" aria-label="I am a client."><span class="pill-words" aria-hidden="true">I am a client.</span></button>
+    <p class="enter-stats">15 years · 1.7 interviews per placement · 87% stay 3+ years</p>
+    <button class="hot" id="hs-fm" type="button" data-spec="Family Medicine" aria-label="Family Medicine"><span class="sign-words" aria-hidden="true">Family Medicine</span></button>
+    <button class="hot" id="hs-obg" type="button" data-spec="OB-GYN" aria-label="OB-GYN"><span class="sign-words" aria-hidden="true">OB-GYN</span></button>
+    <button class="hot" id="hs-psych" type="button" data-spec="Psychiatry" aria-label="Psychiatry"><span class="sign-words" aria-hidden="true">Psychiatry</span></button>
+    <button class="hot" id="hs-hosp" type="button" data-spec="Hospitalist" aria-label="Hospitalist"><span class="sign-words" aria-hidden="true">Hospitalist</span></button>
+    <button class="hot" id="hs-other" type="button" data-spec="Other" aria-label="Other"><span class="sign-words" aria-hidden="true">Other</span></button>
+    <button class="summit-on" type="button" data-skip>Get me to the summit</button>
+    <div class="rail">
+      <div class="taps row">
+        <button type="button" data-spec="Family Medicine">Family Medicine</button>
+        <button type="button" data-spec="OB-GYN">OB-GYN</button>
+        <button type="button" data-spec="Psychiatry">Psychiatry</button>
+        <button type="button" data-spec="Hospitalist">Hospitalist</button>
+        <button type="button" data-spec="Other">Other</button>
+      </div>
+      <form class="other-box" id="other-box" action="#" method="get">
+        <label for="other-spec">What's your specialty?</label>
+        <input id="other-spec" name="other-spec" type="text" autocomplete="off" />
+        <button type="submit">Continue</button>
+      </form>
+      <button class="skip" type="button" data-skip>Get me to the summit</button>
+    </div>
+  </section>
+
+  <!-- Client stub -->
+  <section id="sc-client" class="screen" aria-label="Client path">
+    <div class="hike">
+      <div class="shot">
+        <img class="still" src="amp-path-visuals/01-entrance.png" alt="" width="1536" height="1024" />
+        <div class="warm" aria-hidden="true"></div>
+        <div class="amp-cover" aria-hidden="true"></div>
+        <div class="brand-lockup">
+          <img class="brand-logo-header" src="amp-path-visuals/amp-logo-mark-white.png" alt="AMP" width="300" height="300" />
+        </div>
+        <div class="stub">
+          <h1>Client path coming.</h1>
+          <p>One line for now.</p>
+          <button type="button" data-go="enter">Back</button>
+        </div>
+        <div class="rail">
+          <div class="taps">
+            <button class="quiet" type="button" data-go="enter">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialty trailhead lives on #sc-enter (paused swoop at 4s). Placeholder keeps the screen map. -->
+  <section id="sc-specialty" class="screen" aria-hidden="true"></section>
+
+  <!-- 3 Southwest -->
+  <section id="sc-southwest" class="screen" aria-label="The Southwest">
+    <div class="hike">
+      <div class="shot">
+        <img class="still" src="amp-path-visuals/04-southwest.png" alt="The Southwest. All Southwest, North Texas, Central Texas." width="1536" height="1024" />
+        <div class="warm" aria-hidden="true"></div>
+        <div class="amp-cover" aria-hidden="true"></div>
+        <div class="brand-lockup">
+          <img class="brand-logo-header" src="amp-path-visuals/amp-logo-mark-white.png" alt="AMP" width="300" height="300" />
+        </div>
+        <button class="hot" id="hs-allsw" type="button" data-loc="All Southwest" aria-label="All Southwest"></button>
+        <button class="hot" id="hs-ntx" type="button" data-loc="North Texas" aria-label="North Texas"></button>
+        <button class="hot" id="hs-ctx" type="button" data-loc="Central Texas" aria-label="Central Texas"></button>
+        <button class="summit-on" type="button" data-skip>Get me to the summit</button>
+      </div>
+      <div class="rail">
+        <div class="taps">
+          <button type="button" data-loc="All Southwest">All Southwest</button>
+          <button type="button" data-loc="North Texas">North Texas</button>
+          <button type="button" data-loc="Central Texas">Central Texas</button>
+        </div>
+        <button class="skip" type="button" data-skip>Get me to the summit</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 Range -->
+  <section id="sc-range" class="screen" aria-label="The western range">
+    <div class="hike">
+      <div class="shot">
+        <img class="still" src="amp-path-visuals/05-range.png" alt="The western range. Peak 1, Peak 2, Peak 3, Peak 4." width="1536" height="1024" />
+        <div class="warm" aria-hidden="true"></div>
+        <div class="amp-cover" aria-hidden="true"></div>
+        <div class="brand-lockup">
+          <img class="brand-logo-header" src="amp-path-visuals/amp-logo-mark-white.png" alt="AMP" width="300" height="300" />
+        </div>
+        <button class="hot" id="hs-p1" type="button" data-peak="Peak 1" aria-label="Peak 1"></button>
+        <button class="hot" id="hs-p2" type="button" data-peak="Peak 2" aria-label="Peak 2"></button>
+        <button class="hot" id="hs-p3" type="button" data-peak="Peak 3" aria-label="Peak 3"></button>
+        <button class="hot" id="hs-p4" type="button" data-peak="Peak 4" aria-label="Peak 4"></button>
+        <button class="hot" id="hs-range-talk" type="button" data-skip aria-label="Talk to a recruiter"></button>
+        <button class="summit-on" type="button" data-skip>Get me to the summit</button>
+      </div>
+      <div class="rail">
+        <div class="taps row">
+          <button type="button" data-peak="Peak 1">Peak 1</button>
+          <button type="button" data-peak="Peak 2">Peak 2</button>
+          <button type="button" data-peak="Peak 3">Peak 3</button>
+          <button type="button" data-peak="Peak 4">Peak 4</button>
+        </div>
+        <button class="skip" type="button" data-skip>Get me to the summit</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Peak -->
+  <section id="sc-peak" class="screen" aria-label="Peak">
+    <div class="hike">
+      <div class="shot">
+        <img class="still" src="amp-path-visuals/06-peak.png" alt="Peak. Find your guide. Not this one." width="1536" height="1024" />
+        <div class="warm" aria-hidden="true"></div>
+        <div class="amp-cover" aria-hidden="true"></div>
+        <div class="brand-lockup">
+          <img class="brand-logo-header" src="amp-path-visuals/amp-logo-mark-white.png" alt="AMP" width="300" height="300" />
+        </div>
+        <button class="hot" id="hs-talk" type="button" data-go="connect" aria-label="Find your guide"></button>
+        <button class="hot" id="hs-not" type="button" data-go="range" aria-label="Not this one"></button>
+        <button class="summit-on" type="button" data-skip>Get me to the summit</button>
+      </div>
+      <div class="rail">
+        <div class="taps">
+          <button class="primary" type="button" data-go="connect">Find your guide</button>
+          <button class="quiet" type="button" data-go="range">Not this one</button>
+        </div>
+        <button class="skip" type="button" data-skip>Get me to the summit</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 Connect -->
+  <section id="sc-connect" class="screen" aria-label="Connect">
+    <div class="hike">
+      <div class="connect-wrap">
+        <img class="still" src="amp-path-visuals/06-peak.png" alt="" width="1536" height="1024" />
+        <div class="warm" aria-hidden="true"></div>
+        <div class="amp-cover" aria-hidden="true"></div>
+        <div class="brand-lockup">
+          <img class="brand-logo-header" src="amp-path-visuals/amp-logo-mark-white.png" alt="AMP" width="300" height="300" />
+        </div>
+        <div class="panel">
+          <h1 id="connect-h">Get me to the summit</h1>
+          <p class="sub">First name and cell. That is the whole note.</p>
+          <form id="connect-form" action="#" method="get" novalidate>
+            <label for="fn">First name</label>
+            <input id="fn" name="fn" type="text" autocomplete="given-name" inputmode="text" />
+            <label for="cell">Cell</label>
+            <input id="cell" name="cell" type="tel" autocomplete="tel" inputmode="tel" />
+            <button class="send" type="submit">Send</button>
+          </form>
+          <p class="thanks" id="thanks">Recruiter will reach out. Mock only.</p>
+        </div>
+      </div>
+      <div class="rail">
+        <button class="skip" type="button" data-go="enter">Back to entrance</button>
+      </div>
+    </div>
+  </section>
+
+  </div>
+</div>
+<script>
+(function () {
+  var screens = {
+    enter: document.getElementById("sc-enter"),
+    client: document.getElementById("sc-client"),
+    specialty: document.getElementById("sc-specialty"),
+    southwest: document.getElementById("sc-southwest"),
+    range: document.getElementById("sc-range"),
+    peak: document.getElementById("sc-peak"),
+    connect: document.getElementById("sc-connect")
+  };
+
+  var current = "enter";
+  var skipped = false;
+  var moving = false;
+  var otherBox = document.getElementById("other-box");
+
+  function reducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function setConnectHead() {
+    document.getElementById("connect-h").textContent =
+      skipped ? "Get me to the summit" : "Find your guide";
+  }
+
+  var swoop = document.getElementById("swoop");
+  var SETTLE = 4;
+  var settleTimer = null;
+  var onSettleTime = null;
+
+  function clearSettleWatch() {
+    if (settleTimer) { clearTimeout(settleTimer); settleTimer = null; }
+    if (swoop && onSettleTime) {
+      swoop.removeEventListener("timeupdate", onSettleTime);
+      onSettleTime = null;
+    }
+  }
+
+  function resetSwoop() {
+    clearSettleWatch();
+    if (!swoop) return;
+    try { swoop.pause(); } catch (e) {}
+    try { swoop.currentTime = 0; } catch (e) {}
+    screens.enter.classList.remove("playing", "signs-lit");
+  }
+
+  function settleSwoop() {
+    clearSettleWatch();
+    if (!swoop) return;
+    function seek() {
+      try { swoop.pause(); } catch (e) {}
+      try { swoop.currentTime = SETTLE; } catch (e) {}
+    }
+    if (swoop.readyState >= 1) seek();
+    else swoop.addEventListener("loadedmetadata", seek, { once: true });
+  }
+
+  function visualOf(name) {
+    return name === "specialty" ? screens.enter : screens[name];
+  }
+
+  function land(name) {
+    Object.keys(screens).forEach(function (k) {
+      screens[k].classList.remove("on", "leaving", "entering", "walking", "walk-inside", "walk-forward", "playing", "signs-lit");
+    });
+    if (name === "specialty") {
+      screens.enter.classList.add("on", "signs-lit");
+      settleSwoop();
+    } else if (name === "enter") {
+      screens.enter.classList.add("on");
+      resetSwoop();
+    } else if (screens[name]) {
+      screens[name].classList.add("on");
+    }
+  }
+
+  function show(name, mode) {
+    if (!screens[name]) return;
+    if (moving && mode !== "instant") return;
+    if (name === current && mode !== "instant") return;
+
+    if (mode === "skip") skipped = true;
+    if (name === "specialty" && current === "enter") skipped = false;
+    if (name !== "specialty") otherBox.classList.remove("on");
+
+    if (name === "connect") {
+      document.getElementById("thanks").classList.remove("on");
+      setConnectHead();
+    }
+
+    var fromEl = screens[current];
+    var toEl = screens[name];
+    var prev = current;
+    current = name;
+
+    try { history.replaceState(null, "", "#" + name); } catch (e) {}
+    window.scrollTo(0, 0);
+
+    if (mode === "instant" || !fromEl || fromEl === toEl) {
+      land(name);
+      return;
+    }
+
+    /* Physician tap: play muted swoop. Pause at 4.00. Same frame, signs-lit. No ended. No CSS 3D. No fade. */
+    if (prev === "enter" && name === "specialty") {
+      if (reducedMotion() || !swoop) {
+        land(name);
+        return;
+      }
+      moving = true;
+      fromEl.classList.remove("leaving", "entering", "signs-lit");
+      fromEl.classList.add("playing");
+      swoop.muted = true;
+      try { swoop.currentTime = 0; } catch (e) {}
+      var finished = false;
+      function finishSwoop() {
+        if (finished) return;
+        finished = true;
+        clearSettleWatch();
+        settleSwoop();
+        land("specialty");
+        moving = false;
+      }
+      onSettleTime = function () {
+        if (swoop.currentTime >= SETTLE) finishSwoop();
+      };
+      swoop.addEventListener("timeupdate", onSettleTime);
+      settleTimer = setTimeout(finishSwoop, 4000);
+      var playP = swoop.play();
+      if (playP && playP.catch) playP.catch(function () { finishSwoop(); });
+      return;
+    }
+
+    /* Hops 2-5: walk-forward on the outgoing still (3s, opacity 1), then instant land. */
+    var walkHop =
+      (prev === "specialty" && name === "southwest") ||
+      (prev === "southwest" && name === "range") ||
+      (prev === "range" && name === "peak") ||
+      (prev === "peak" && name === "connect");
+    if (walkHop) {
+      if (reducedMotion()) {
+        land(name);
+        return;
+      }
+      moving = true;
+      var walkEl = visualOf(prev) || fromEl;
+      walkEl.classList.remove("leaving", "entering");
+      walkEl.classList.add("on", "walk-forward");
+      void walkEl.offsetWidth;
+      setTimeout(function () {
+        land(name);
+        moving = false;
+      }, 3000);
+      return;
+    }
+
+    land(name);
+  }
+
+  document.querySelectorAll("[data-go]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      var dest = el.getAttribute("data-go");
+      show(dest, dest === "connect" ? "walk" : "walk");
+    });
+  });
+
+  document.querySelectorAll("[data-skip]").forEach(function (el) {
+    el.addEventListener("click", function () { show("connect", "skip"); });
+  });
+
+  document.querySelectorAll("[data-spec]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      var spec = el.getAttribute("data-spec");
+      if (spec === "Other") {
+        otherBox.classList.add("on");
+        var field = document.getElementById("other-spec");
+        if (field) field.focus();
+        return;
+      }
+      otherBox.classList.remove("on");
+      show("southwest", "walk");
+    });
+  });
+
+  otherBox.addEventListener("submit", function (e) {
+    e.preventDefault();
+    show("southwest", "walk");
+  });
+
+  document.querySelectorAll("[data-loc]").forEach(function (el) {
+    el.addEventListener("click", function () { show("range", "walk"); });
+  });
+
+  document.querySelectorAll("[data-peak]").forEach(function (el) {
+    el.addEventListener("click", function () { show("peak", "walk"); });
+  });
+
+  document.getElementById("connect-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    document.getElementById("thanks").classList.add("on");
+  });
+
+  var hash = (location.hash || "").replace("#", "");
+  if (screens[hash]) show(hash, "instant");
+})();
+</script>
+</body>
+</html>

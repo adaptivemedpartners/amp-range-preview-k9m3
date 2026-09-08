@@ -1,0 +1,42 @@
+{
+  "slots": {
+    "4": {
+      "dTopPct": 0.27,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 1.0
+    },
+    "0": {
+      "dTopPct": 0.27,
+      "dLeftPct": 0.0,
+      "fontScale": 0.92,
+      "dRotateDeg": -1.0
+    },
+    "3": {
+      "dTopPct": 0.0,
+      "dLeftPct": 0.0,
+      "fontScale": 0.92,
+      "dRotateDeg": 0.0
+    },
+    "2": {
+      "dTopPct": 0.28,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    },
+    "1": {
+      "dTopPct": 0.28,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    },
+    "5": {
+      "dTopPct": 0.0,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    }
+  },
+  "locked": true,
+  "note": "Facility bake locked 2026-09-06; Other unchanged from remapped placer"
+}

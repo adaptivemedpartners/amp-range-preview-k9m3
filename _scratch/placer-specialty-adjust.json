@@ -1,0 +1,42 @@
+{
+  "slots": {
+    "4": {
+      "dTopPct": 0.55,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    },
+    "0": {
+      "dTopPct": 0.0,
+      "dLeftPct": 0.0,
+      "fontScale": 0.88,
+      "dRotateDeg": 0.0
+    },
+    "3": {
+      "dTopPct": 0.14,
+      "dLeftPct": 0.0,
+      "fontScale": 0.96,
+      "dRotateDeg": -1.0
+    },
+    "2": {
+      "dTopPct": 0.0,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    },
+    "1": {
+      "dTopPct": 0.14,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    },
+    "5": {
+      "dTopPct": 0.0,
+      "dLeftPct": 0.0,
+      "fontScale": 1.0,
+      "dRotateDeg": 0.0
+    }
+  },
+  "locked": true,
+  "note": "Specialty bake locked 2026-09-06; Neurology + Other unchanged from remapped placer"
+}
