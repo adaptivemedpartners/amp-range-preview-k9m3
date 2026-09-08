@@ -1684,13 +1684,6 @@ window.AMP_CONTENT = {
       mins: 9
     },
     {
-      slug: "known-tough-trail",
-      title: "Known Tough Trail: ~27,000 Named Touches on a Hard Search",
-      meta: "Illustrative retained craft: ~27,000 named touches (≈26,900 exact) — Premium body line 15,500 (8k postcards / 5k emails / 2.5k texts) + ≈8,800 recruiter + ≈2,400 resident/fellow + 200 program coordinators. Canceled-interview redo not included. Climb map, video pre-IV, 90-day replacement.",
-      tags: ["Guides", "Retained search", "Hospitals"],
-      mins: 9
-    },
-    {
       slug: "evaluate-obgyn-opportunities",
       title: "How to Evaluate OB/GYN Opportunities Without Getting Lost in the Brochure",
       meta: "A physician-first checklist for evaluating OB/GYN jobs: schedule reality, call burden, income structure, and when to talk to a guide like AMP before deciding.",

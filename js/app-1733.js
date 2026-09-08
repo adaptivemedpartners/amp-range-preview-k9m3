@@ -24,12 +24,7 @@
     mpcFilterLooking: "",
     mpcMetroOnly: true,
     mpcAmenities: [],
-    mpcSelectedId: null,
-    miLitePlan: "monthly",
-    miLiteUnlocked: false,
-    jobViews: 0,
-    jobWhispered: false,
-    guidePathText: ""
+    mpcSelectedId: null
   ,
     browseGeo: null,
     softMatch: null,
@@ -51,9 +46,9 @@
       blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. BD Hub owns this lead."
     },
     "mpc": {
-      tag: "MPC · Candidate catch-all",
-      title: "MPC tailor-search",
-      blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Lands in The Mess Responses. Client telescope / pay-per-CV parked until CV bank."
+      tag: "MPC · Quiet catch-all",
+      title: "MPC contingent telescope",
+      blurb: "Buried contingent path. Still a client lead — BD Hub owns it. Wilderness candidates use The Mess Responses."
     }
   };
 
@@ -91,17 +86,7 @@
   function setNavMode(route) {
     var nav = $("#site-nav");
     if (!nav) return;
-    /* Match home glass anytime a full-bleed photo sits behind the bar. */
-    var view = document.querySelector('.view.on[data-route="' + route + '"]') ||
-      document.querySelector('.view[data-route="' + route + '"]');
-    var photoHint = /^(home|physician|client|physician-|client-|job|chat|contact|mpc|mi-lite|residents|guides|education|hiring)/.test(String(route || ""));
-    var overPhoto = route === "home" ||
-      (view && (view.classList.contains("funnel") || view.classList.contains("trailhead") ||
-        !!view.querySelector(":scope > .shot, .shot img.still, .hero-band .bg"))) ||
-      (!view && photoHint);
-    /* Prefer view classes when present; funnel/trailhead always glass. */
-    if (view && (view.classList.contains("funnel") || view.classList.contains("trailhead"))) overPhoto = true;
-    if (overPhoto) nav.classList.add("is-home");
+    if (route === "home") nav.classList.add("is-home");
     else nav.classList.remove("is-home");
   }
 
@@ -120,8 +105,8 @@
 
 
   /* Cover-locked SVG plank hits (viewBox = bake 2560×1096, slice = object-fit:cover). */
-  var SPEC_PLANK_HITS = [['fm',417,153,1484,150],['obg',541,303,1228,109],['gi',590,431,1126,109],['neuro',645,558,1024,109],['dental',675,690,972,98],['other',524,794,1280,153]];
-  var FAC_PLANK_HITS = [['fqhc',419,153,1484,153],['cah',541,306,1228,109],['bh',590,431,1126,109],['group',619,558,1075,109],['dental',675,690,972,98],['other',524,794,1280,153]];
+  var SPEC_PLANK_HITS = [['fm',417,153,1484,164],['obg',541,303,1228,109],['gi',590,431,1126,109],['neuro',645,558,1024,109],['dental',675,690,972,98],['other',524,794,1280,153]];
+  var FAC_PLANK_HITS = [['fqhc',419,153,1484,164],['cah',541,306,1228,109],['bh',590,431,1126,109],['group',619,558,1075,109],['dental',675,690,972,98],['other',524,794,1280,153]];
 
   function ensureTrailheadHitLayer() {
     var layer = $("#trailhead-hit-layer");
@@ -263,7 +248,6 @@
       var c = hold.querySelector("canvas.approach-freeze");
       if (c) c.remove();
       hold.classList.remove("is-fading-out");
-      hold.classList.remove("is-settling");
       hold.hidden = true;
       try { hold.style.opacity = ""; } catch (e) {}
     }
@@ -302,8 +286,7 @@
   /* After swoop: paint the exact paused video frame onto trailhead stills (same framing as home video). */
   function bakeFreezeToTrailheadStills(done) {
     video = video || $("#home-video");
-    /* Only the wood-sign trailheads — never paint the freeze onto later ridge steps. */
-    var imgs = $all('.view.trailhead[data-route="physician"] img.still, .view.trailhead[data-route="client"] img.still');
+    var imgs = $all(".view.trailhead img.still");
     function finishBake() {
       if (typeof done === "function") done();
     }
@@ -398,18 +381,18 @@
 
 
   function showBakedTrailheadStill(done) {
-    /* Zero-jump end:
-       1) Freeze the paused video frame onto the hold canvas (same cover box).
-       2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
-       3) Crossfade the baked plank PNG onto that freeze (labels ease in).
-       Never hard-cut video→bake or fade to a second <img> (that jumped the planks). */
+    /* Stay on the same cover surface as the swoop: freeze the last decoded frame on
+       the hold canvas, then paint the baked labels onto THAT canvas. Never fade to a
+       second <img> (contain vs cover / different frame = planks jump under the cursor). */
     var hold = $("#approach-video-hold");
+    paintFreezeCanvas();
     if (video) {
       try { video.pause(); } catch (e) {}
+      try { video.style.visibility = "hidden"; } catch (e) {}
     }
-    paintFreezeCanvas();
-    /* Delay is-settling until bake is ready — one continuous soft end, no early fade race. */
-
+    /* Bake-before-land: trust the door that started the swoop.
+       Client door → facility bake. Physician door → specialty bake.
+       Never fall back to physician DOM when client approached. */
     var route = state._approachRoute || "physician";
     var live = document.querySelector('.view.trailhead.on.live-video-bg[data-route="' + route + '"]') ||
       document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
@@ -417,19 +400,16 @@
     var still = live ? live.querySelector(".shot img.still") : null;
     var src = null;
     if (route === "physician" || route === "physician-specialty") {
-      src = "assets/trailhead-specialty-baked.png?v=1765";
+      src = "assets/trailhead-specialty-baked.png?v=1710";
     } else if (route === "client") {
-      src = "assets/trailhead-facility-baked.png?v=1765";
+      src = "assets/trailhead-facility-baked.png?v=1710";
     }
-
-    var VIDEO_FADE_MS = 480;
-    var BAKE_FADE_MS = 980;
-    var CHROME_HOLD_MS = 200;
 
     function lightSigns() {
       if (live) {
         live.classList.add("signs-lit", "signs-frozen");
       }
+      /* Paint hotspots before chrome land — FM/Other were dead on first tap. */
       if (route === "physician" || route === "physician-specialty") {
         renderSpecialtyGrid();
       } else if (route === "client") {
@@ -440,93 +420,41 @@
       if (typeof done === "function") done();
     }
 
-    function crossfadeBakeOntoFreeze(img, then) {
-      if (!hold) { if (then) then(); return; }
+    function paintBakeOntoFreeze(img) {
+      if (!hold) return;
       var canvas = hold.querySelector("canvas.approach-freeze");
       if (!canvas) {
         paintFreezeCanvas();
         canvas = hold.querySelector("canvas.approach-freeze");
       }
-      if (!canvas || !img || !img.naturalWidth) { if (then) then(); return; }
-
-      var base = document.createElement("canvas");
-      base.width = canvas.width || img.naturalWidth;
-      base.height = canvas.height || img.naturalHeight;
+      if (!canvas || !img || !img.naturalWidth) return;
       try {
-        var bctx = base.getContext("2d");
-        if (bctx) bctx.drawImage(canvas, 0, 0);
-      } catch (e) {}
-
-      if (!canvas.width || !canvas.height) {
-        canvas.width = base.width;
-        canvas.height = base.height;
-      }
-
-      var start = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
-      function tick(now) {
-        var t = Math.min(1, (now - start) / BAKE_FADE_MS);
-        /* ease-out sine — softest finish, no end pop */
-        var e = Math.sin((t * Math.PI) / 2);
-        try {
-          var ctx = canvas.getContext("2d");
-          if (ctx) {
-            ctx.globalAlpha = 1;
-            ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
-            ctx.globalAlpha = e;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            ctx.globalAlpha = 1;
-          }
-        } catch (err) {}
-        if (t < 1) {
-          try { requestAnimationFrame(tick); } catch (e2) { if (then) then(); }
-        } else if (then) {
-          setTimeout(then, CHROME_HOLD_MS);
+        var ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        if (!canvas.width || !canvas.height) {
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
         }
-      }
-      try { requestAnimationFrame(tick); } catch (e) {
-        try {
-          var ctx2 = canvas.getContext("2d");
-          if (ctx2) ctx2.drawImage(img, 0, 0, canvas.width, canvas.height);
-        } catch (e3) {}
-        if (then) then();
-      }
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      } catch (e) {}
     }
 
-    function afterVideoSoftHide(img) {
-      /* Video already faded; freeze is showing. Ease bake labels on. */
-      if (video) {
-        try { video.style.visibility = "hidden"; } catch (e) {}
-      }
+    function afterBake(img) {
+      if (img) paintBakeOntoFreeze(img);
       if (still && src) {
         still.removeAttribute("data-baked");
         still.src = src;
       }
-      if (img) {
-        crossfadeBakeOntoFreeze(img, lightSigns);
-      } else {
-        lightSigns();
-      }
-    }
-
-    function beginSoftEnd(img) {
-      /* Reveal freeze under video with a soft opacity fade (frames match → zero jump). */
-      if (hold) hold.classList.add("is-settling");
-      if (video) {
-        try {
-          video.style.transition = "opacity " + VIDEO_FADE_MS + "ms cubic-bezier(.25,.1,.25,1)";
-          video.style.opacity = "0";
-        } catch (e) {}
-      }
-      setTimeout(function () { afterVideoSoftHide(img); }, VIDEO_FADE_MS + 30);
+      lightSigns();
     }
 
     if (!src) {
-      beginSoftEnd(null);
+      lightSigns();
       return;
     }
     var img = new Image();
-    img.onload = function () { beginSoftEnd(img); };
-    img.onerror = function () { beginSoftEnd(null); };
+    img.onload = function () { afterBake(img); };
+    img.onerror = function () { lightSigns(); };
     img.src = src;
   }
 
@@ -675,7 +603,7 @@
       /* Full speed to SETTLE — no rate ease. */
       try { if (video.playbackRate !== 1) video.playbackRate = 1; } catch (e) {}
       /* Freeze+bake first, then land chrome — one clean settle. */
-      if (t >= FREEZE_END - 0.06) {
+      if (t >= FREEZE_END - 0.02) {
         pauseFreeze(true);
         return;
       }
@@ -731,82 +659,20 @@
     "mpc": true,
     "mpc-portal": true,
     "mpc-browse": true,
-    "mi-lite-portal": true,
-    "mi-lite-app": true,
     "about": true,
     "proof": true,
     "amp-score": true,
     "search": true,
     "contact": true,
     "for-physicians": true,
-    "for-organizations": true,
-    "residents": true,
-    "mi-lite": true,
-    "guides": true
+    "for-organizations": true
   };
 
   function isWalkRoute(route) {
     return !!WALK_ROUTES[route];
   }
 
-  function populateMIFields(selectId, regionsId) {
-    var spec = $(selectId), regions = $(regionsId);
-    if (!window.AMP_CONTENT || !spec || !regions) return;
-    if (!spec.options.length) spec.innerHTML = AMP_CONTENT.specialties.filter(function (s) { return s.id !== "other"; }).map(function (s) { return '<option value="' + s.id + '">' + s.label + '</option>'; }).join("");
-    if (!regions.innerHTML.trim()) regions.innerHTML = AMP_CONTENT.regions.filter(function (r) { return r.id !== "open"; }).map(function (r) { return '<label class="mi-region-option"><input type="checkbox" value="' + r.id + '"> <span>' + r.label + '</span></label>'; }).join("");
-  }
-
-  function renderMILite() {
-    populateMIFields("#mi-lite-specialty", "#mi-lite-regions");
-    populateMIFields("#mi-app-specialty", "#mi-app-regions");
-  }
-
-  function renderMILitePortal() {
-    try {
-      state.miLiteUnlocked = sessionStorage.getItem("amp-mi-lite-unlocked") === "1";
-      state.miLitePlan = sessionStorage.getItem("amp-mi-lite-plan") || state.miLitePlan;
-    } catch (e) {}
-    $all('input[name="mi-lite-plan"]').forEach(function (input) {
-      input.checked = input.value === state.miLitePlan;
-      var card = input.closest(".mi-price-card");
-      if (card) card.classList.toggle("is-selected", input.checked);
-    });
-  }
-
-  function updateMILiteDashboard() {
-    var spec = $("#mi-app-specialty"), title = $("#mi-app-title"), copy = $("#mi-app-copy");
-    if (!spec) return;
-    var label = spec.options[spec.selectedIndex] ? spec.options[spec.selectedIndex].text : "Your specialty";
-    var picks = $all("#mi-app-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; });
-    var score = 68 + ((label.length * 3 + picks.length * 5) % 24);
-    if (title) title.textContent = label + " · " + (picks.length ? picks.join(" + ") : "open region lens");
-    if (copy) copy.textContent = "Example signal for " + (picks.length ? picks.join(" + ") : "open region hints") + ". Directional planning only—not a forecast or client dossier.";
-    var scoreEl = $("#mi-app-score"), demand = $("#mi-app-demand"), breadth = $("#mi-app-breadth"), readiness = $("#mi-app-readiness");
-    if (scoreEl) scoreEl.textContent = score + " / 100";
-    if (demand) demand.style.width = Math.min(92, score + 5) + "%";
-    if (breadth) breadth.style.width = Math.min(88, 44 + picks.length * 14) + "%";
-    if (readiness) readiness.style.width = Math.min(86, 58 + picks.length * 6) + "%";
-    var demandLabel = $("#mi-app-demand-label"), breadthLabel = $("#mi-app-breadth-label"), readyLabel = $("#mi-app-readiness-label");
-    if (demandLabel) demandLabel.textContent = score > 80 ? "High" : "Moderate";
-    if (breadthLabel) breadthLabel.textContent = picks.length > 1 ? "Broad" : "Mixed";
-    if (readyLabel) readyLabel.textContent = picks.length ? "Framing" : "Early";
-    var chips = $("#mi-app-chip-row");
-    if (chips) chips.innerHTML = (picks.length ? picks : ["Open region lens"]).map(function (name) { return '<span class="mi-region-chip"><span class="dot"></span>' + name + '<b>EXAMPLE</b></span>'; }).join("");
-  }
-
-  function renderMILiteApp() {
-    try {
-      state.miLiteUnlocked = sessionStorage.getItem("amp-mi-lite-unlocked") === "1";
-      state.miLitePlan = sessionStorage.getItem("amp-mi-lite-plan") || state.miLitePlan;
-    } catch (e) {}
-    renderMILite();
-    updateMILiteDashboard();
-  }
-
   function renderDynamic(route, params) {
-    if (route === "mi-lite") renderMILite();
-    if (route === "mi-lite-portal") renderMILitePortal();
-    if (route === "mi-lite-app") renderMILiteApp();
     if (route === "physician" || route === "physician-specialty") renderSpecialtyGrid();
     if (route === "physician-rank") renderRankStep();
     if (route === "physician-region") renderRegionGrid();
@@ -825,7 +691,6 @@
   /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT). */
   function go(route, opts) {
     opts = opts || {};
-    if (route === "residents-fellows") route = "residents";
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
     var next = document.querySelector('.view[data-route="' + route + '"]');
@@ -842,7 +707,6 @@
 
     var current = document.querySelector(".view.on");
     var prevRoute = current ? current.getAttribute("data-route") : null;
-    if (prevRoute === "physician-jobs" && route !== "physician-jobs") { state.jobWhispered = false; clearJobsGuideWhisper(); }
 
     var params = opts.params || {};
     if (route.indexOf("job/") === 0) {
@@ -906,8 +770,7 @@
         bakeFreezeToTrailheadStills(function () {});
         clearApproachHold();
       }
-      setNavMode(route); /* keep glass nav over trailhead/funnel photos — never sticky "page" */
-      syncGuideRoute(route);
+      setNavMode(route === "home" ? "home" : "page");
       state.moving = false;
       renderDynamic(route, params);
       if (route === "physician" || route === "client") {
@@ -917,10 +780,6 @@
         if (!state.approachHold) unmountTrailheadHits();
       }
       window.scrollTo(0, 0);
-      if (opts.hash && opts.hash !== route) {
-        var anchor = document.getElementById(opts.hash);
-        if (anchor) setTimeout(function () { anchor.scrollIntoView({ block: "start" }); }, 0);
-      }
       try {
         var hash = opts.hash || route;
         if (params.id) hash = "job/" + params.id;
@@ -971,8 +830,8 @@
   }
 
   /* Physician specialty planks: priority board top-5 + Other (6 wood slots). Layout selection.. */
-  var SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
-  var SIGN_FACILITY_IDS = ["fqhc", "cah", "bh", "group", "dental", "other"];
+  var SIGN_SPEC_IDS = ["obg", "dental", "neuro", "gi", "fm", "other"];
+  var SIGN_FACILITY_IDS = ["cah", "dental", "group", "bh", "fqhc", "other"];
   /* Client hire specialty: same six wood slots as physician; Other opens search. */
   var CLIENT_SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
 
@@ -1092,7 +951,7 @@
       if (!btn) return;
       var id = btn.getAttribute("data-specialty-pick");
       if (id.indexOf("custom:") === 0) {
-        state.specialty = id;
+        state.specialty = "other";
         state.specialtyCustom = id.slice(7);
       } else {
         state.specialty = id;
@@ -1200,11 +1059,6 @@
 
   function renderClientSpecialty() {
     if (!window.AMP_CONTENT) return;
-    var still = document.querySelector('.view[data-route="client-specialty"] .shot img.still');
-    if (still) {
-      still.removeAttribute("data-baked");
-      if (still.getAttribute("src") !== "assets/mike-ridge-2.jpg") still.src = "assets/mike-ridge-2.jpg";
-    }
     var grid = $("#client-spec-grid");
     if (!grid) return;
     var facLabel = $("#client-spec-fac-label");
@@ -1218,7 +1072,7 @@
         : (fac && fac.label) || "your facility";
       facLabel.textContent = "Hiring for · " + name;
     }
-    var order = CLIENT_SIGN_SPEC_IDS;
+    var order = ["fm", "obg", "gi", "neuro", "dental", "np", "other"];
     var byId = {};
     AMP_CONTENT.specialties.forEach(function (s) { byId[s.id] = s; });
     var items = order.map(function (id) { return byId[id]; }).filter(Boolean);
@@ -1240,8 +1094,7 @@
     var list = $("#client-spec-other-list");
     var q = $("#client-spec-other-q");
     if (!pop || !list || !window.AMP_CONTENT) return;
-    var plankIds = {};
-    CLIENT_SIGN_SPEC_IDS.forEach(function (id) { if (id !== "other") plankIds[id] = true; });
+    var plankIds = { obg: 1, dental: 1, neuro: 1, gi: 1, fm: 1, np: 1 };
     function paint() {
       var needle = (q && q.value ? q.value : "").trim().toLowerCase();
       var rows = AMP_CONTENT.specialties.filter(function (s) {
@@ -1265,7 +1118,7 @@
       if (!btn) return;
       var id = btn.getAttribute("data-client-spec-pick");
       if (id.indexOf("custom:") === 0) {
-        state.clientSpecialty = id;
+        state.clientSpecialty = "other";
         state.clientSpecialtyCustom = id.slice(7);
       } else {
         state.clientSpecialty = id;
@@ -1408,45 +1261,6 @@
     return score;
   }
 
-  function guidePathStamp() {
-    var spec = specialtyLabel();
-    var picked = normalizeRegionState();
-    var labels = {};
-    (AMP_CONTENT.regions || []).forEach(function (r) { labels[r.id] = r.label; });
-    var regions = picked.length ? picked.map(function (id) { return labels[id] || id; }) : ["Open"];
-    return spec + " · " + regions.join(" · ");
-  }
-
-  function stampGuidePath() {
-    var text = guidePathStamp();
-    state.guidePathText = text;
-    var stamp = $("#amp-guide-path-stamp");
-    if (stamp) { stamp.textContent = "Your path: " + text; stamp.hidden = false; }
-    return text;
-  }
-
-  function clearJobsGuideWhisper() {
-    var launcher = $(".amp-guide-launcher");
-    if (launcher) launcher.classList.remove("is-whisper");
-  }
-
-  function whisperJobsGuide() {
-    if (state.jobWhispered) return;
-    state.jobWhispered = true;
-    stampGuidePath();
-    var launcher = $(".amp-guide-launcher");
-    if (launcher) launcher.classList.add("is-whisper");
-  }
-
-  function jobsSoftBench() {
-    return "<aside class=\"jobs-soft-bench\" aria-label=\"Beyond the posted trail\"><span class=\"tag\">Beyond the posted trail</span><p>These are the roles we post. Guides also hold matches we don’t list.</p><button type=\"button\" class=\"linkish jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a guide <span aria-hidden=\"true\">→</span></button></aside>";
-  }
-
-  function jobsMpcEmpty() {
-    var path = guidePathStamp();
-    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · candidate catch-all</span><h3>Nothing posted for this cut — tailor a search.</h3><p>Market Prime Candidate is the catch-all when posted roles don’t fit. Tailor a search with a guide; your note lands in The Mess Responses. Client pay-per-CV / telescope stays parked until CV bank.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Open the Mess</button></div></article>";
-  }
-
   function renderJobsList() {
     var root = $("#jobs-grid");
     if (!root) return;
@@ -1456,18 +1270,16 @@
       if (regions.length && regions.indexOf("open") === -1 && regions.indexOf(j.region) === -1) return false;
       return true;
     }).slice();
-    var sortLine = $("#jobs-sort-line");
-    if (!jobs.length && sortLine) { sortLine.textContent = ""; sortLine.hidden = true; }
     if (!jobs.length) {
-      root.innerHTML = jobsMpcEmpty();
-      whisperJobsGuide();
+      root.innerHTML = "<div class=\"panel\"><h3>No sample roles in this selection yet.</h3><p class=\"muted\">Try another region or choose Open.</p></div>";
       return;
     }
-    if (jobs.length && state.rankOrder && state.rankOrder.length) {
+    if (state.rankOrder && state.rankOrder.length) {
       jobs.sort(function (a, b) { return jobSummitScore(b) - jobSummitScore(a); });
     }
+    var sortLine = $("#jobs-sort-line");
     if (sortLine) {
-      if (jobs.length && state.rankOrder && state.rankOrder.length) {
+      if (state.rankOrder && state.rankOrder.length) {
         var pretty = state.rankOrder.map(function (r, i) {
           var soft = { practice: "Practice feel", life: "Life rhythm", location: "Place", income: "Income clarity" };
           return (i + 1) + ". " + (soft[r] || RANK_LABELS[r] || r);
@@ -1483,15 +1295,7 @@
       return '<button class="card" type="button" data-job="' + j.id + '">' +
         '<span class="tag">' + j.code + '</span><h3>' + j.title + '</h3><p>' + j.sub + '</p>' +
         '<div class="meta">View tease →</div></button>';
-    }).join("") + (jobs.length < 8 ? jobsSoftBench() : "");
-    if (jobs.length < 8 || state.jobViews >= 2) whisperJobsGuide();
-  }
-
-  
-  function recruiterFirstName(rec) {
-    var n = (rec && rec.name) ? String(rec.name).trim() : "";
-    if (!n) return "your guide";
-    return n.split(/\s+/)[0];
+    }).join("");
   }
 
   function jobById(id) {
@@ -1499,7 +1303,6 @@
   }
 
   function renderJob(id) {
-    state.jobViews = (state.jobViews || 0) + 1;
     state.jobId = id;
     var j = jobById(id);
     var root = $("#job-root");
@@ -1536,7 +1339,7 @@
           '<details class="seo-drawer"><summary>Page details · Meta / OG / JobPosting data</summary>' +
             '<pre>' +
               'Title: ' + j.title + '\n' +
-              'Meta description: Confidential ' + (j.specialtyLabel || 'physician') + ' opportunity tease — schedule, practice pace, and public income band. Full package with ' + j.recruiter.name + '.\n' +
+              'Meta description: Confidential OB/GYN opportunity tease — schedule, practice pace, and public income band. Full package with ' + j.recruiter.name + '.\n' +
               'OG:type=article · OG:title=' + j.title + '\n\n' +
               JSON.stringify(jsonLd, null, 2) +
             '</pre></details>' +
@@ -1546,7 +1349,7 @@
           '<p style="margin:0 0 4px;font-weight:700">' + j.recruiter.name + '</p>' +
           '<p class="muted" style="margin:0 0 12px;font-size:13px">Owner recruiter for ' + j.code + '</p>' +
           '<a class="btn btn-primary" style="width:100%;margin-bottom:8px" href="tel:+1' + j.recruiter.phone.replace(/-/g, "") + '">Call ' + j.recruiter.phone + '</a>' +
-          '<button class="btn btn-dark" type="button" style="width:100%;margin-bottom:8px" data-chat="text">Text ' + recruiterFirstName(j.recruiter) + '</button>' +
+          '<a class="btn btn-dark" style="width:100%;margin-bottom:8px" href="sms:+1' + j.recruiter.phone.replace(/-/g, "") + '">Text Amy</a>' +
           '<a class="btn btn-ghost" style="width:100%" href="mailto:' + j.recruiter.email + '?cc=' + encodeURIComponent(j.recruiter.cc) + '&subject=' + encodeURIComponent("Interest in " + j.code) + '">Email · CC inquire@</a>' +
           '<p class="muted mt-16" style="font-size:12px">CC always includes inquire@adaptivemedicalpartners.com so capture is never a dead end.</p>' +
         '</aside>' +
@@ -1564,10 +1367,7 @@
       phone.textContent = "Call " + j.recruiter.phone;
     }
     var sms = $("#contact-job-sms");
-    if (sms) { sms.removeAttribute("href"); sms.setAttribute("data-chat", "text"); sms.textContent = "Text " + recruiterFirstName(j.recruiter); }
-    var talkBtn = document.querySelector('.chat-actions [data-chat="talk"]');
-    if (talkBtn) talkBtn.textContent = "Talk to " + recruiterFirstName(j.recruiter) + " · " + j.code;
-
+    if (sms) sms.href = "sms:+1" + j.recruiter.phone.replace(/-/g, "");
     var mail = $("#contact-job-mail");
     if (mail) mail.href = "mailto:" + j.recruiter.email + "?cc=" + encodeURIComponent(j.recruiter.cc) + "&subject=" + encodeURIComponent("Interest · " + j.code);
     var crumb = $("#contact-job-crumb");
@@ -1585,7 +1385,7 @@
     var title = $("#blog-article-title");
     var meta = $("#blog-article-meta");
     if (title) title.textContent = post.title;
-    if (meta) meta.textContent = (post.byline ? "By " + post.byline + " · " : "") + "Meta description: " + post.meta;
+    if (meta) meta.textContent = "Meta description: " + post.meta;
     if (body) body.innerHTML = buildArticleHTML(post);
   }
 
@@ -2039,7 +1839,7 @@
     var el = kind === "client" ? $("#mess-client-mock") : $("#mess-response-mock");
     if (!el) return;
     var now = new Date();
-    var stamp = $("#amp-guide-path-stamp");
+    var stamp = now.toLocaleString("en-US", { timeZone: "America/Chicago", hour: "numeric", minute: "2-digit", month: "short", day: "numeric" }) + " CT";
     var en = sampleEnrich(kind);
     var rank = sampleRankLine();
     if (kind === "client") {
@@ -2078,70 +1878,12 @@
     }
   }
 
-
-  function closeGuideDock(immediate) {
-    var dock = $("#amp-guide-dock");
-    var toggle = $("[data-guide-toggle]");
-    var root = $("#amp-guide");
-    if (!dock) return;
-    dock.classList.remove("is-open");
-    if (toggle) toggle.setAttribute("aria-expanded", "false");
-    if (root) root.classList.remove("is-open");
-    if (immediate) {
-      dock.hidden = true;
-      return;
-    }
-    setTimeout(function () {
-      if (!dock.classList.contains("is-open")) dock.hidden = true;
-    }, 220);
-  }
-
-  function openGuideDock() {
-    clearJobsGuideWhisper();
-    var dock = $("#amp-guide-dock");
-    var toggle = $("[data-guide-toggle]");
-    var root = $("#amp-guide");
-    if (!dock || !root || root.hidden) return;
-    dock.hidden = false;
-    if (toggle) toggle.setAttribute("aria-expanded", "true");
-    root.classList.add("is-open");
-    window.requestAnimationFrame(function () { dock.classList.add("is-open"); });
-  }
-
-  function toggleGuideDock() {
-    var dock = $("#amp-guide-dock");
-    if (!dock || dock.hidden) openGuideDock();
-    else closeGuideDock();
-  }
-
-  function syncGuideRoute(route) {
-    var root = $("#amp-guide");
-    if (!root) return;
-    if (route === "chat") {
-      closeGuideDock(true);
-      root.hidden = true;
-    } else {
-      root.hidden = false;
-    }
-  }
-  function closeMobileNav() { var drawer = $("#mobile-nav-drawer"), backdrop = $(".mobile-nav-backdrop"), toggle = $("[data-mobile-nav-toggle]"); if (drawer) drawer.hidden = true; if (backdrop) backdrop.hidden = true; if (toggle) { toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); } }
-  function openMobileNav() { var drawer = $("#mobile-nav-drawer"), backdrop = $(".mobile-nav-backdrop"), toggle = $("[data-mobile-nav-toggle]"); if (!drawer) return; drawer.hidden = false; if (backdrop) backdrop.hidden = false; if (toggle) { toggle.setAttribute("aria-expanded", "true"); toggle.setAttribute("aria-label", "Close menu"); } var first = drawer.querySelector("button[data-go]"); if (first) window.setTimeout(function () { first.focus(); }, 0); }
-  function toggleMobileNav() { var drawer = $("#mobile-nav-drawer"); if (drawer && drawer.hidden) openMobileNav(); else closeMobileNav(); }
   function bind() {
     bindRankDnD();
     document.body.addEventListener("click", function (e) {
       var raw = e.target;
       if (raw && raw.nodeType === 3) raw = raw.parentElement;
       if (!raw || typeof raw.closest !== "function") return;
-      if (raw.closest("[data-mobile-nav-toggle]")) { toggleMobileNav(); return; }
-      if (raw.closest("[data-mobile-nav-close]")) { closeMobileNav(); return; }
-      if (raw.closest("[data-guide-toggle]")) { toggleGuideDock(); return; }
-      var guideWhisper = raw.closest("[data-guide-whisper]");
-      if (guideWhisper) { e.preventDefault(); stampGuidePath(); openGuideDock(); return; }
-      if (raw.closest("[data-guide-close]")) { closeGuideDock(); return; }
-      var guideRoot = $("#amp-guide");
-      var guideDock = $("#amp-guide-dock");
-      if (guideRoot && !guideRoot.hidden && guideDock && !guideDock.hidden && !raw.closest("#amp-guide")) closeGuideDock();
       var t = raw.closest("[data-go]");
       if (t) {
         e.preventDefault();
@@ -2150,11 +1892,9 @@
           state.agreement = agreeEl.getAttribute("data-agreement");
           syncPickedAgreement();
         }
-        if (t.closest("#mobile-nav-drawer")) closeMobileNav();
         var route = t.getAttribute("data-go");
         var trail = t.getAttribute("data-trail") === "1";
         var approach = t.getAttribute("data-approach") === "1";
-        var dataHash = t.getAttribute("data-hash") || null;
         state.moving = false;
         if (route === "mpc-browse") {
           var chosen = document.querySelector('input[name="mpc-access"]:checked');
@@ -2165,17 +1905,7 @@
         if (route === "mpc-portal") {
           state.agreement = state.agreement || "mpc";
         }
-        if (route === "mi-lite-app") {
-          var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-          state.miLitePlan = miPlan ? miPlan.value : (state.miLitePlan || "monthly");
-          state.miLiteUnlocked = true;
-          try {
-            sessionStorage.setItem("amp-mi-lite-unlocked", "1");
-            sessionStorage.setItem("amp-mi-lite-plan", state.miLitePlan);
-          } catch (err) {}
-          if (typeof stampMess === "function") stampMess("client", "MI Lite sample unlock · " + state.miLitePlan + " → BD Hub");
-        }
-        go(route, { trail: trail, approach: approach, hash: dataHash });
+        go(route, { trail: trail, approach: approach });
         return;
       }
       var agreeOnly = raw.closest("[data-agreement]");
@@ -2323,8 +2053,6 @@
       }
       var chatOpt = raw.closest("[data-chat]");
       if (chatOpt) {
-        if (chatOpt.closest(".jobs-mpc-empty")) stampGuidePath();
-        if (chatOpt.closest("#amp-guide")) closeGuideDock();
         handleChat(chatOpt.getAttribute("data-chat"));
         return;
       }
@@ -2439,7 +2167,7 @@
       mpcPitch.addEventListener("input", syncMpcSellEcho);
     }
     document.addEventListener("keydown", function (ev) {
-      if (ev.key === "Escape") { closeMpcDrawer(); closeGuideDock(); closeMobileNav(); }
+      if (ev.key === "Escape") closeMpcDrawer();
       var mapRegion = ev.target && typeof ev.target.closest === "function" ? ev.target.closest(".amp-region-map [data-region]") : null;
       if (mapRegion && (ev.key === "Enter" || ev.key === " ")) {
         ev.preventDefault();
@@ -2476,30 +2204,6 @@
     }
 
     var scoreForm = $("#score-form");
-    var miForm = $("#mi-lite-form");
-    if (miForm) miForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var spec = $("#mi-lite-specialty"), result = $("#mi-lite-result"), title = $("#mi-lite-result-title"), copy = $("#mi-lite-result-copy");
-      var picks = $all("#mi-lite-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; });
-      if (title) title.textContent = (spec && spec.options[spec.selectedIndex] ? spec.options[spec.selectedIndex].text : "Your specialty") + " · ridge snapshot";
-      if (copy) copy.textContent = "Example signal for " + (picks.length ? picks.join(" + ") : "open region hints") + ". Directional only—use a guide conversation to test the real week, place, and contract.";
-      if (result) result.hidden = false;
-    });
-    var miAppForm = $("#mi-lite-app-form");
-    if (miAppForm) miAppForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      updateMILiteDashboard();
-    });
-    $all('input[name="mi-lite-plan"]').forEach(function (input) {
-      input.addEventListener("change", function () {
-        state.miLitePlan = input.value;
-        $all('input[name="mi-lite-plan"]').forEach(function (other) {
-          var card = other.closest(".mi-price-card");
-          if (card) card.classList.toggle("is-selected", other.checked);
-        });
-      });
-    });
-
     if (scoreForm) {
       scoreForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -2515,11 +2219,9 @@
 
   function handleChat(opt) {
     var log = $("#chat-log");
-    var chatView = document.querySelector('.view.on[data-route="chat"]');
-    /* The SPA keeps chat markup mounted while hidden; route before handling dock actions. */
-    if (!log || !chatView) { go("chat", { instant: true }); setTimeout(function () { handleChat(opt); }, 0); return; }
+    if (!log) return;
     var labels = {
-      talk: state.guidePathText ? "I want to talk to a guide about " + state.guidePathText : "I want to talk to Amy about OBG-8449",
+      talk: "I want to talk to Amy about OBG-8449",
       text: "Text me about this role",
       email: "Email is better for me",
       other: "I have a different question"
@@ -2546,8 +2248,6 @@
 
   function bootFromHash() {
     var hash = (location.hash || "#home").replace(/^#/, "") || "home";
-    if (hash === "residents-fellows") hash = "residents";
-    if (hash === "market-intelligence" || hash === "mi") hash = "mi-lite";
     if (hash.indexOf("job/") === 0) {
       go(hash, { instant: true });
       return;
