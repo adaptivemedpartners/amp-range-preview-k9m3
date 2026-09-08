@@ -251,12 +251,20 @@ button, input, select, textarea { font: inherit; }
   color: var(--ink);
 }
 .view.funnel > .shot {
+  /* Pin to viewport — must NOT grow with details/FAQ or object-fit:cover recenters the mountain */
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
   z-index: 0;
   overflow: hidden;
   line-height: 0;
   background: #0b1210;
+  pointer-events: none;
 }
 .view.funnel > .shot img.still {
   display: block;
@@ -275,7 +283,7 @@ button, input, select, textarea { font: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 42%;
+  object-position: 50% 42%; /* locked — parent .shot is viewport-tall only */
 }
 /* Trailhead still must match #approach-video-hold video (cover 50% 50%).
    contain here was letterboxing vs video cover — planks jumped on handoff. */
