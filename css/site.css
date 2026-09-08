@@ -4071,6 +4071,29 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 }
 
 
+
+/* Solid readable numbers on light panels — no shimmer wash (Mike phone) */
+.tts-num-ink {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-weight: 800;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+.tts-math-list .tts-shock-ink,
+.tough-trail-caption .tts-shock-ink {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background-image: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  animation: none !important;
+}
+
 /* Shock ink — original glow vibe, BLACK text + shimmer (Mike phone) */
 .tts-shock-ink {
   display: inline;

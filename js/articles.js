@@ -71,7 +71,7 @@ window.AMP_ARTICLES = {
       <span class="tts-shock-sub">Canceled-interview redo not included</span>
     </div>
   </div>
-  <p class="tough-trail-caption muted"><strong class="tts-shock-ink">Headline anchor: ~27,000 named touches</strong> across the same-window outreach stack. Exact sum ≈ 26,900 (Premium body line 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
+  <p class="tough-trail-caption muted"><strong class="tts-num-ink">Headline anchor: ~27,000 named touches</strong> across the same-window outreach stack. Exact sum ≈ 26,900 (Premium body line 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
 </div>
 
 <div class="tough-trail-math" aria-label="Touch breakdown under the ~27k headline">
@@ -80,14 +80,14 @@ window.AMP_ARTICLES = {
     <strong>Honest arithmetic — touches only</strong>
   </div>
   <ul class="tts-math-list">
-    <li><strong>Premium marketing (one body line):</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-shock-ink">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
-    <li><strong>Cold calls:</strong> 150/week × 16 weeks = <strong class="tts-shock-ink">2,400</strong> dials</li>
-    <li><strong>Text + voicemail on every call:</strong> 2,400 + 2,400 = <strong class="tts-shock-ink">4,800</strong> call-side companions (separate touches)</li>
-    <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-shock-ink">1,600</strong></li>
-    <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-shock-ink">≈ 8,800</strong></li>
-    <li><strong>Resident &amp; fellow outreach:</strong> <strong class="tts-shock-ink">≈ 2,400</strong> — separate line; not bundled with coordinators</li>
-    <li><strong>Program coordinators:</strong> <strong class="tts-shock-ink">200</strong> — separate line after resident outreach</li>
-    <li class="is-total"><strong>Named touches:</strong> 15,500 + 8,800 + 2,400 + 200 = <strong class="tts-glow-num-ink">≈ 26,900</strong> → headline <strong class="tts-shock-ink">~27,000</strong></li>
+    <li><strong>Premium marketing (one body line):</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-num-ink">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
+    <li><strong>Cold calls:</strong> 150/week × 16 weeks = <strong class="tts-num-ink">2,400</strong> dials</li>
+    <li><strong>Text + voicemail on every call:</strong> 2,400 + 2,400 = <strong class="tts-num-ink">4,800</strong> call-side companions (separate touches)</li>
+    <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-num-ink">1,600</strong></li>
+    <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-num-ink">≈ 8,800</strong></li>
+    <li><strong>Resident &amp; fellow outreach:</strong> <strong class="tts-num-ink">≈ 2,400</strong> — separate line; not bundled with coordinators</li>
+    <li><strong>Program coordinators:</strong> <strong class="tts-num-ink">200</strong> — separate line after resident outreach</li>
+    <li class="is-total"><strong>Named touches:</strong> 15,500 + 8,800 + 2,400 + 200 = <strong class="tts-num-ink">≈ 26,900</strong> → headline <strong class="tts-num-ink">~27,000</strong></li>
   </ul>
   <p class="tough-trail-caption muted">The ~27,000 headline does <strong>not</strong> include canceled interviews that force the same kind of outreach again. When an interview falls through, guides re-rope toward another slate — those redo touches sit outside the stack above.</p>
 </div>
