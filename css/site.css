@@ -4009,6 +4009,18 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   color: #99f6e4;
   text-shadow: 0 0 8px rgba(45, 212, 191, 0.55), 0 0 16px rgba(13, 148, 136, 0.35);
 }
+/* Light article panels: never use pale teal ink */
+.blog-article-body .tts-inline-glow,
+#blog-article-body .tts-inline-glow,
+.tough-trail-beat .tts-inline-glow,
+.tough-trail-caption .tts-inline-glow,
+.tts-math-list .tts-inline-glow {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  text-shadow:
+    0 0 8px rgba(45, 212, 191, 0.45),
+    0 0 16px rgba(13, 148, 136, 0.3);
+}
 
 /* Ink-side (light panels / funnel / math) */
 .tts-glow-num-ink,

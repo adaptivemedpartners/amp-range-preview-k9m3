@@ -71,7 +71,7 @@ window.AMP_ARTICLES = {
       <span class="tts-shock-sub">Canceled-interview redo not included</span>
     </div>
   </div>
-  <p class="tough-trail-caption muted"><strong class="tts-inline-glow">Headline anchor: ~27,000 named touches</strong> across the same-window outreach stack. Exact sum ≈ 26,900 (Premium body line 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
+  <p class="tough-trail-caption muted"><strong class="tts-shock-ink">Headline anchor: ~27,000 named touches</strong> across the same-window outreach stack. Exact sum ≈ 26,900 (Premium body line 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
 </div>
 
 <div class="tough-trail-math" aria-label="Touch breakdown under the ~27k headline">
@@ -80,13 +80,13 @@ window.AMP_ARTICLES = {
     <strong>Honest arithmetic — touches only</strong>
   </div>
   <ul class="tts-math-list">
-    <li><strong>Premium marketing (one body line):</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-inline-glow">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
-    <li><strong>Cold calls:</strong> 150/week × 16 weeks = <strong class="tts-inline-glow">2,400</strong> dials</li>
-    <li><strong>Text + voicemail on every call:</strong> 2,400 + 2,400 = <strong class="tts-inline-glow">4,800</strong> call-side companions (separate touches)</li>
-    <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-inline-glow">1,600</strong></li>
-    <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-inline-glow">≈ 8,800</strong></li>
-    <li><strong>Resident &amp; fellow outreach:</strong> <strong class="tts-inline-glow">≈ 2,400</strong> — separate line; not bundled with coordinators</li>
-    <li><strong>Program coordinators:</strong> <strong class="tts-inline-glow">200</strong> — separate line after resident outreach</li>
+    <li><strong>Premium marketing (one body line):</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-shock-ink">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
+    <li><strong>Cold calls:</strong> 150/week × 16 weeks = <strong class="tts-shock-ink">2,400</strong> dials</li>
+    <li><strong>Text + voicemail on every call:</strong> 2,400 + 2,400 = <strong class="tts-shock-ink">4,800</strong> call-side companions (separate touches)</li>
+    <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-shock-ink">1,600</strong></li>
+    <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-shock-ink">≈ 8,800</strong></li>
+    <li><strong>Resident &amp; fellow outreach:</strong> <strong class="tts-shock-ink">≈ 2,400</strong> — separate line; not bundled with coordinators</li>
+    <li><strong>Program coordinators:</strong> <strong class="tts-shock-ink">200</strong> — separate line after resident outreach</li>
     <li class="is-total"><strong>Named touches:</strong> 15,500 + 8,800 + 2,400 + 200 = <strong class="tts-glow-num-ink">≈ 26,900</strong> → headline <strong class="tts-shock-ink">~27,000</strong></li>
   </ul>
   <p class="tough-trail-caption muted">The ~27,000 headline does <strong>not</strong> include canceled interviews that force the same kind of outreach again. When an interview falls through, guides re-rope toward another slate — those redo touches sit outside the stack above.</p>
@@ -111,7 +111,7 @@ window.AMP_ARTICLES = {
   </div>
   <p>Here is the part most hiring leaders never hear about until a guide names it out loud: before a physician is boots on the ground for the summit meeting, AMP runs a serious <strong>~1-hour pre-interview meeting</strong> — on video, like all of these meetings. Not a five-minute “you’re confirmed for Thursday.” The intent is sharper than calendar hygiene: <strong>get the physician ready to make a decision ASAP</strong> once they sit down with the client.</p>
   <p>The guide walks them back through the process. Introduces AMP — retained versus contingent, what the firm does, and why the model is different. Re-screens and re-presents so motivations and the opportunity still match. Runs trial closes so hesitation gets air before the ridge. Covers the interview process and practical tips. Then decision-making on the back end — what happens after the summit, how choices get made, what the window looks like — so they are not cold when your team is in the room.</p>
-  <p class="tough-trail-pull"><span class="tts-inline-glow tts-pulse-soft">Video first. Decision-ready before boots on the ground — so the summit can be about fit, not first contact.</span></p>
+  <p class="tough-trail-pull"><span class="tts-shock-ink tts-shock-ink-quote">Video first. Decision-ready before boots on the ground — so the summit can be about fit, not first contact.</span></p>
 </div>
 
 <div class="tough-trail-flow" aria-label="Known Tough Trail recruiting flowchart">
