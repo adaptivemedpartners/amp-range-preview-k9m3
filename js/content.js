@@ -1685,8 +1685,8 @@ window.AMP_CONTENT = {
     },
     {
       slug: "known-tough-trail",
-      title: "Known Tough Trail: ~65,000 Touches on a Three-Cycle Hard Search",
-      meta: "Illustrative retained craft: ~65,000 named touches on a three-cycle hard search in 4–6 months — ~21,800/cycle (5k postcards, 6k emails, 2k texts, 2,400 dials + texts/VMs, ~1,600 online). Canceled-interview redo not in the 65k. Climb map, 90-day replacement.",
+      title: "Known Tough Trail: ~27,000 Touches from One Premium Campaign",
+      meta: "Illustrative retained craft: ~27,000 named touches (≈26,900 exact) from one Premium campaign (8k postcards, 5k emails, 2.5k texts = 15,500) + ≈8,800 recruiter + ≈2,400 resident/fellow + 200 program coordinators. Canceled-interview redo not included. Climb map, 90-day replacement.",
       tags: ["Guides", "Retained search", "Hospitals"],
       mins: 9
     },

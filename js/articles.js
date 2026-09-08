@@ -16,29 +16,29 @@ window.AMP_ARTICLES = {
 "coordinator-share-pack-grads": `<p>Program coordinators can give graduating residents and fellows a short pack before the first job search. The goal is not to endorse a recruiter or a town. It is to help a new physician ask questions early.</p><h2>Share these five prompts</h2><ol><li>What does the ordinary week look like?</li><li>How does call work when the team is short?</li><li>What changes after the guarantee or first contract period?</li><li>How does the organization support practice longevity?</li><li>What would make this place sustainable for two years?</li></ol><h2>Point them to neutral context</h2><p>AMA reporting on early-career retention and contract literacy is a useful starting point. AAPPR 2025 benchmarking and MGMA association resources can add industry context; neither can choose a first job for an individual graduate.</p><h2>Keep the handoff human</h2><p>Encourage graduates to compare specialty, region, place, week, and contract. If they want help, a short conversation with a guide is more useful than a full public dossier. AMP’s residents hub offers rank, region, and an illustrative MI Lite peek before the next step.</p><p>Graduation is a summit, not the end of learning. Give each new physician a map, a checklist, and permission to ask one more question.</p>`,
 "known-tough-trail": `<p>You are standing at the peak with a brief in your hand and an empty seat behind you. Somewhere on the far side of the ridge, physicians are searching. Between you and them is a trail most hiring leaders never see — until a guide walks you back down it and shows you the rope burns.</p>
 <p>Here is the part that usually lands with a quiet <em>wait — what?</em></p>
-<p class="tough-trail-lead">On a hard search, retained craft can mean <span class="tts-shock-ink">~65,000 named touches</span> across a <strong>three-cycle climb in a 4–6 month window</strong> — before one physician holds your peak. Not a soft “we market a lot.” Real volume: postcards, emails, text campaigns, cold calls with a text and voicemail on every dial, online messaging, multi-state tracking, candidate scraping tools, and residency/fellowship relationships that market to residents, fellows, <em>and</em> residency coordinators.</p>
+<p class="tough-trail-lead">On a hard search, retained craft can mean <span class="tts-shock-ink">~27,000 named touches</span> from <strong>one Premium marketing campaign</strong> plus recruiter outreach, resident &amp; fellow outreach, and program-coordinator touches in the same window — before one physician holds your peak. Not a soft “we market a lot.” Real volume: postcards, emails, text campaigns, cold calls with a text and voicemail on every dial, online messaging, resident outreach, coordinator outreach, multi-state tracking, candidate scraping tools, and residency/fellowship relationships.</p>
 <p class="muted" style="font-size:13px"><strong>Illustrative of AMP retained craft / what a search can fund — not a personal guarantee.</strong> Real trails vary by specialty, corridor, and brief clarity. The shock is the volume retained is supposed to fund while you wait at the peak.</p>
 
-<div class="tough-trail-shock is-lit" aria-label="Shock math for one illustrative hard search">
+<div class="tough-trail-shock is-lit" aria-label="Shock math for one Premium campaign plus outreach stack">
   <div class="tts-shock-head">
-    <span class="tag">Three-cycle hard search · 4–6 months</span>
-    <strong class="tts-glow-hero tts-shimmer tts-pulse-soft">~65,000 touches toward placing one physician</strong>
+    <span class="tag">One Premium marketing campaign · same-window outreach stack</span>
+    <strong class="tts-glow-hero tts-shimmer tts-pulse-soft">~27,000 touches toward placing one physician</strong>
   </div>
   <div class="tts-shock-grid tts-shock-grid-dense">
     <div class="tts-shock-card is-dials is-glow">
-      <span class="tts-shock-n tts-glow-num">5,000</span>
+      <span class="tts-shock-n tts-glow-num">8,000</span>
       <span class="tts-shock-l">Postcards</span>
-      <span class="tts-shock-sub">Per cycle · direct campaign</span>
+      <span class="tts-shock-sub">One Premium campaign</span>
     </div>
     <div class="tts-shock-card is-mkt is-glow">
-      <span class="tts-shock-n tts-glow-num">6,000</span>
+      <span class="tts-shock-n tts-glow-num">5,000</span>
       <span class="tts-shock-l">Emails</span>
-      <span class="tts-shock-sub">Per cycle · direct campaign</span>
+      <span class="tts-shock-sub">One Premium campaign</span>
     </div>
     <div class="tts-shock-card is-mkt is-glow">
-      <span class="tts-shock-n tts-glow-num">2,000</span>
+      <span class="tts-shock-n tts-glow-num">2,500</span>
       <span class="tts-shock-l">Text campaigns</span>
-      <span class="tts-shock-sub">Per cycle · direct campaign</span>
+      <span class="tts-shock-sub">One Premium campaign</span>
     </div>
     <div class="tts-shock-card is-dials is-glow">
       <span class="tts-shock-n tts-glow-num">2,400</span>
@@ -55,30 +55,41 @@ window.AMP_ARTICLES = {
       <span class="tts-shock-l">Online messages</span>
       <span class="tts-shock-sub">~100/week × 16 weeks</span>
     </div>
+    <div class="tts-shock-card is-dials is-glow">
+      <span class="tts-shock-n tts-glow-num">~2,400</span>
+      <span class="tts-shock-l">Resident &amp; fellow outreach</span>
+      <span class="tts-shock-sub">Separate line · not bundled with coordinators</span>
+    </div>
+    <div class="tts-shock-card is-mkt is-glow">
+      <span class="tts-shock-n tts-glow-num">200</span>
+      <span class="tts-shock-l">Program coordinators</span>
+      <span class="tts-shock-sub">Separate line after resident outreach</span>
+    </div>
     <div class="tts-shock-card is-narrow is-glow-peak">
-      <span class="tts-shock-n tts-glow-hero tts-shimmer tts-pulse-soft">≈21,800 × 3 → ~65,000</span>
-      <span class="tts-shock-l">Three-cycle hard search · 4–6 months</span>
-      <span class="tts-shock-sub">Canceled-interview redo not included in the 65k</span>
+      <span class="tts-shock-n tts-glow-hero tts-shimmer tts-pulse-soft">≈26,900 → ~27,000</span>
+      <span class="tts-shock-l">One Premium + full outreach stack</span>
+      <span class="tts-shock-sub">Canceled-interview redo not included</span>
     </div>
   </div>
-  <p class="tough-trail-caption muted"><strong class="tts-inline-glow">Headline anchor: ~65,000 named touches</strong> on a three-cycle hard search. One cycle ≈ 21,800 (direct 13,000 + recruiter call-side + online ≈ 8,800); that process can run two to three times. <em>Canceled interviews are not in the 65k</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
+  <p class="tough-trail-caption muted"><strong class="tts-inline-glow">Headline anchor: ~27,000 named touches</strong> from one Premium marketing campaign plus the same-window outreach stack. Exact sum ≈ 26,900 (Premium 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
 </div>
 
-<div class="tough-trail-math" aria-label="Per-cycle touch breakdown under the 65k headline">
+<div class="tough-trail-math" aria-label="Touch breakdown under the ~27k headline">
   <div class="tts-math-head">
-    <span class="tag">Under the ~65k · Per cycle (~16 weeks ≈ 4 months)</span>
-    <strong>Honest arithmetic before you multiply by three</strong>
+    <span class="tag">Under the ~27k · One Premium + outreach stack</span>
+    <strong>Honest arithmetic — touches only</strong>
   </div>
   <ul class="tts-math-list">
-    <li><strong>Direct campaigns:</strong> 5,000 postcards + 6,000 emails + 2,000 text campaigns = <strong class="tts-inline-glow">13,000</strong> campaign pieces</li>
+    <li><strong>One Premium marketing campaign:</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-inline-glow">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
     <li><strong>Cold calls:</strong> 150/week × 16 weeks = <strong class="tts-inline-glow">2,400</strong> dials</li>
     <li><strong>Text + voicemail on every call:</strong> 2,400 + 2,400 = <strong class="tts-inline-glow">4,800</strong> call-side companions (separate touches)</li>
     <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-inline-glow">1,600</strong></li>
-    <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-inline-glow">8,800</strong></li>
-    <li class="is-total"><strong>One cycle:</strong> 13,000 + 8,800 = <strong class="tts-glow-num-ink">≈ 21,800</strong> named touches</li>
-    <li class="is-range is-lit"><strong>Three-cycle hard search (4–6 months):</strong> ≈ 21,800 × 3 → <strong class="tts-shock-ink">~65,000</strong> named touches</li>
+    <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-inline-glow">≈ 8,800</strong></li>
+    <li><strong>Resident &amp; fellow outreach:</strong> <strong class="tts-inline-glow">≈ 2,400</strong> — separate line; not bundled with coordinators</li>
+    <li><strong>Program coordinators:</strong> <strong class="tts-inline-glow">200</strong> — separate line after resident outreach</li>
+    <li class="is-total"><strong>Named touches:</strong> 15,500 + 8,800 + 2,400 + 200 = <strong class="tts-glow-num-ink">≈ 26,900</strong> → headline <strong class="tts-shock-ink">~27,000</strong></li>
   </ul>
-  <p class="tough-trail-caption muted">The ~65,000 headline does <strong>not</strong> include canceled interviews that force the same kind of outreach again. When an interview falls through, guides re-rope toward another slate — those redo touches sit outside the stack above.</p>
+  <p class="tough-trail-caption muted">The ~27,000 headline does <strong>not</strong> include canceled interviews that force the same kind of outreach again. When an interview falls through, guides re-rope toward another slate — those redo touches sit outside the stack above.</p>
 </div>
 
 <div class="tough-trail-beat" aria-label="Call intensity — keeping physicians on the phone">
@@ -91,7 +102,7 @@ window.AMP_ARTICLES = {
   <p class="tough-trail-pull"><span class="tts-shock-ink tts-shock-ink-quote">If you don’t keep them on the phone, you probably won’t talk to them again.</span></p>
 </div>
 
-<p>Picture the guide’s day after your brief lands. Direct campaigns go out in waves — thousands of postcards, emails, and text campaigns in a single cycle. Recruiters dial ~150 cold calls a week for sixteen weeks, and every call carries a text and a voicemail as its own touch. Online messaging runs ~100 a week beside the phone. Underneath that: a multi-state tracking system for each call, text, email, and postcard; candidate information scraping tools; residency and fellowship relationships that market to residents and fellows <em>and</em> residency coordinators. That ops stack is what retained craft funds while you wait at the peak. Most of it never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
+<p>Picture the guide’s day after your brief lands. One Premium direct campaign goes out — thousands of postcards, emails, and text campaigns in a single wave. Recruiters dial ~150 cold calls a week for sixteen weeks, and every call carries a text and a voicemail as its own touch. Online messaging runs ~100 a week beside the phone. Resident &amp; fellow outreach runs on its own line (~2,400). Program coordinators are a separate beat (200) — never folded into the resident number. Underneath that: a multi-state tracking system for each call, text, email, and postcard; candidate information scraping tools; residency and fellowship relationships. That ops stack is what retained craft funds while you wait at the peak. Most of it never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
 
 <div class="tough-trail-beat" aria-label="Pre-interview / pre-close call — winning candidates before boots on the ground">
   <div class="tough-trail-head">
@@ -109,52 +120,58 @@ window.AMP_ARTICLES = {
     <strong>Stages retained funds while you wait</strong>
   </div>
   <div class="tough-trail-stages" role="list">
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">01</span><span class="tts-label">Campaigns</span><span class="tts-detail">5k / 6k / 2k</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">01</span><span class="tts-label">Campaigns</span><span class="tts-detail">8k / 5k / 2.5k</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
     <div class="tough-trail-stage" role="listitem"><span class="tts-num">02</span><span class="tts-label">Outreach</span><span class="tts-detail">2,400 dials + texts/VMs</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
     <div class="tough-trail-stage" role="listitem"><span class="tts-num">03</span><span class="tts-label">Online</span><span class="tts-detail">~1,600 messages</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">04</span><span class="tts-label">Phone screens</span><span class="tts-detail">Real conversations</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">04</span><span class="tts-label">Residents</span><span class="tts-detail">~2,400 outreach</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">05</span><span class="tts-label">Presentations</span><span class="tts-detail">Toward a path</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">05</span><span class="tts-label">Coordinators</span><span class="tts-detail">200 separate</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">06</span><span class="tts-label">Submissions</span><span class="tts-detail">Slate builds</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">06</span><span class="tts-label">Phone screens</span><span class="tts-detail">Real conversations</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage" role="listitem"><span class="tts-num">07</span><span class="tts-label">Interviews</span><span class="tts-detail">Thin ridge you see</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">07</span><span class="tts-label">Presentations</span><span class="tts-detail">Toward a path</span></div>
     <div class="tough-trail-arrow" aria-hidden="true"></div>
-    <div class="tough-trail-stage is-summit" role="listitem"><span class="tts-num">08</span><span class="tts-label">Placement</span><span class="tts-detail">You hold the peak</span></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">08</span><span class="tts-label">Submissions</span><span class="tts-detail">Slate builds</span></div>
+    <div class="tough-trail-arrow" aria-hidden="true"></div>
+    <div class="tough-trail-stage" role="listitem"><span class="tts-num">09</span><span class="tts-label">Interviews</span><span class="tts-detail">Thin ridge you see</span></div>
+    <div class="tough-trail-arrow" aria-hidden="true"></div>
+    <div class="tough-trail-stage is-summit" role="listitem"><span class="tts-num">10</span><span class="tts-label">Placement</span><span class="tts-detail">You hold the peak</span></div>
   </div>
   <div class="tough-trail-craft" aria-label="Ops stack under the climb">
     <span class="tough-trail-craft-label">Ops stack</span>
     <span class="tough-trail-chip">Multi-state tracking</span>
     <span class="tough-trail-chip">Candidate scraping tools</span>
-    <span class="tough-trail-chip">Residency / fellowship marketing</span>
-    <span class="tough-trail-chip">Residents, fellows &amp; coordinators</span>
+    <span class="tough-trail-chip">Resident &amp; fellow outreach ~2,400</span>
+    <span class="tough-trail-chip">Program coordinators 200</span>
     <span class="tough-trail-chip">Call · text · email · postcard log</span>
   </div>
   <p class="tough-trail-caption muted">On a wide screen the stages read left to right; on a phone they stack like switchbacks. The chips underneath are the ops stack that makes the volume trackable — not a brochure line, the rope.</p>
 </div>
 
-<div class="tough-trail-funnel" aria-label="Illustrative cycle-to-placement narrowing">
-  <div class="ttf-row ttf-hero is-glow-peak"><span class="ttf-n tts-shock-ink">~65,000</span><span class="ttf-l">Named touches · three-cycle hard search</span></div>
-  <div class="ttf-row ttf-hero is-mkt"><span class="ttf-n tts-glow-num-ink">≈21,800</span><span class="ttf-l">Per ~16-week cycle · then ×3</span></div>
-  <div class="ttf-row"><span class="ttf-n">13k</span><span class="ttf-l">Direct: postcards + emails + text campaigns</span></div>
+<div class="tough-trail-funnel" aria-label="Illustrative touch-to-placement narrowing">
+  <div class="ttf-row ttf-hero is-glow-peak"><span class="ttf-n tts-shock-ink">~27,000</span><span class="ttf-l">Named touches · one Premium + full stack</span></div>
+  <div class="ttf-row ttf-hero is-mkt"><span class="ttf-n tts-glow-num-ink">≈26,900</span><span class="ttf-l">Exact sum · 15,500 + 8,800 + 2,400 + 200</span></div>
+  <div class="ttf-row"><span class="ttf-n">15.5k</span><span class="ttf-l">Premium: postcards + emails + text campaigns</span></div>
   <div class="ttf-row"><span class="ttf-n">8.8k</span><span class="ttf-l">Recruiter: dials + texts + VMs + online</span></div>
+  <div class="ttf-row"><span class="ttf-n">~2.4k</span><span class="ttf-l">Resident &amp; fellow outreach · separate line</span></div>
+  <div class="ttf-row"><span class="ttf-n">200</span><span class="ttf-l">Program coordinators · separate after residents</span></div>
   <div class="ttf-row"><span class="ttf-n">Screens</span><span class="ttf-l">Real conversations · presentation-ready</span></div>
   <div class="ttf-row"><span class="ttf-n">Slate</span><span class="ttf-l">Submissions toward interviews</span></div>
   <div class="ttf-row"><span class="ttf-n">IVs</span><span class="ttf-l">The thin ridge on your calendar</span></div>
   <div class="ttf-row is-peak"><span class="ttf-n">1</span><span class="ttf-l">Placement</span></div>
 </div>
-<p class="muted" style="font-size:13px">Illustrative of retained craft on a hard search — not a guarantee. Some interviews fall apart after interest or pre-IV; the candidate backs out, or the client does. That is part of a known tough trail. Guides re-rope and keep climbing — more dials, more campaigns, another presentation path — and those canceled-interview redo touches are <strong>not</strong> counted in the ~65,000 headline.</p>
+<p class="muted" style="font-size:13px">Illustrative of retained craft on a hard search — not a guarantee. Some interviews fall apart after interest or pre-IV; the candidate backs out, or the client does. That is part of a known tough trail. Guides re-rope and keep climbing — more dials, more campaigns, another presentation path — and those canceled-interview redo touches are <strong>not</strong> counted in the ~27,000 headline.</p>
 
 <p>When the cairn finally sticks, AMP’s public proofs are the quiet aftermath: <strong>1.7</strong> average interviews per successful placement, <strong>87%</strong> retention at three years, and a <strong>90-day replacement</strong> — if the placed physician leaves or is terminated within 90 days of start, AMP replaces at no additional search fee. Placement is reaching elevation. The 90-day beat is how we treat the first weeks there with gravity.</p>
 
 <p>If this story made the middle of the mountain feel real, compare models in our <a href="#blog/retained-vs-contingent-physician-search" data-go="blog/retained-vs-contingent-physician-search">retained vs contingent</a> piece, then take the client door — facility → specialty → retained tease → meeting request into <strong>BD Hub</strong> (with Mess intake in support). Soft ask. One conversation. Destinations with owners beat vanishing inboxes.</p>
 <div class="faq">
-<details open><summary>Is ~65,000 a promise for my specialty?</summary><p>No. It is illustrative of AMP retained craft / what a three-cycle hard search can fund in a 4–6 month window (~21,800 named touches per ~16-week cycle × 3). Your trail will differ; the point is the volume retained is supposed to fund before you see a slate.</p></details>
-<details><summary>What is in one cycle’s ~21,800 touches?</summary><p>Direct: 5,000 postcards + 6,000 emails + 2,000 text campaigns = 13,000. Recruiter: 2,400 cold calls + 2,400 texts on every call + 2,400 voicemails + ~1,600 online messages = 8,800. Together ≈ 21,800. Three cycles → ~65,000. Canceled-interview redo outreach is excluded from that headline.</p></details>
-<details><summary>What sits under the volume — the ops stack?</summary><p>Multi-state tracking for each call, text, email, and postcard; candidate information scraping tools; and residency/fellowship relationships that market to residents, fellows, and residency coordinators. Impressive infrastructure — not a feature dump.</p></details>
+<details open><summary>Is ~27,000 a promise for my specialty?</summary><p>No. It is illustrative of AMP retained craft / what one Premium marketing campaign plus the same-window outreach stack can fund (15,500 + ≈8,800 + ≈2,400 + 200 ≈ 26,900, rounded to ~27,000). Your trail will differ; the point is the volume retained is supposed to fund before you see a slate.</p></details>
+<details><summary>What is in the ~27,000 / ≈26,900 touches?</summary><p>One Premium campaign: 8,000 postcards + 5,000 emails + 2,500 text campaigns = 15,500. Recruiter: 2,400 cold calls + 2,400 texts on every call + 2,400 voicemails + ~1,600 online messages ≈ 8,800. Resident &amp; fellow outreach ≈ 2,400 on its own line. Program coordinators: 200 — separate after residents, never bundled into the resident number. Together ≈ 26,900 (headline ~27,000). Canceled-interview redo outreach is excluded from that headline.</p></details>
+<details><summary>What sits under the volume — the ops stack?</summary><p>Multi-state tracking for each call, text, email, and postcard; candidate information scraping tools; resident &amp; fellow outreach (~2,400) on its own line; and program coordinators (200) as a separate beat. Impressive infrastructure — not a feature dump.</p></details>
 <details><summary>Where do client meetings land?</summary><p>On this site, client meeting requests route toward <strong>BD Hub</strong> with Mess client intake support — so BD and delivery share one spine.</p></details>
 </div>
 <p><button class="btn btn-primary" data-go="client" data-trail="1">Request a retained conversation</button>
