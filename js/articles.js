@@ -16,7 +16,7 @@ window.AMP_ARTICLES = {
 "coordinator-share-pack-grads": `<p>Program coordinators can give graduating residents and fellows a short pack before the first job search. The goal is not to endorse a recruiter or a town. It is to help a new physician ask questions early.</p><h2>Share these five prompts</h2><ol><li>What does the ordinary week look like?</li><li>How does call work when the team is short?</li><li>What changes after the guarantee or first contract period?</li><li>How does the organization support practice longevity?</li><li>What would make this place sustainable for two years?</li></ol><h2>Point them to neutral context</h2><p>AMA reporting on early-career retention and contract literacy is a useful starting point. AAPPR 2025 benchmarking and MGMA association resources can add industry context; neither can choose a first job for an individual graduate.</p><h2>Keep the handoff human</h2><p>Encourage graduates to compare specialty, region, place, week, and contract. If they want help, a short conversation with a guide is more useful than a full public dossier. AMP’s residents hub offers rank, region, and an illustrative MI Lite peek before the next step.</p><p>Graduation is a summit, not the end of learning. Give each new physician a map, a checklist, and permission to ask one more question.</p>`,
 "known-tough-trail": `<p>You are standing at the peak with a brief in your hand and an empty seat behind you. Somewhere on the far side of the ridge, physicians are searching. Between you and them is a trail most hiring leaders never see — until a guide walks you back down it and shows you the rope burns.</p>
 <p>Here is the part that usually lands with a quiet <em>wait — what?</em></p>
-<p class="tough-trail-lead">On a hard search, retained craft can mean <span class="tts-glow-hero-ink tts-shimmer-ink tts-pulse-soft">~65,000 named touches</span> across a <strong>three-cycle climb in a 4–6 month window</strong> — before one physician holds your peak. Not a soft “we market a lot.” Real volume: postcards, emails, text campaigns, cold calls with a text and voicemail on every dial, online messaging, multi-state tracking, candidate scraping tools, and residency/fellowship relationships that market to residents, fellows, <em>and</em> residency coordinators.</p>
+<p class="tough-trail-lead">On a hard search, retained craft can mean <span class="tts-shock-ink">~65,000 named touches</span> across a <strong>three-cycle climb in a 4–6 month window</strong> — before one physician holds your peak. Not a soft “we market a lot.” Real volume: postcards, emails, text campaigns, cold calls with a text and voicemail on every dial, online messaging, multi-state tracking, candidate scraping tools, and residency/fellowship relationships that market to residents, fellows, <em>and</em> residency coordinators.</p>
 <p class="muted" style="font-size:13px"><strong>Illustrative of AMP retained craft / what a search can fund — not a personal guarantee.</strong> Real trails vary by specialty, corridor, and brief clarity. The shock is the volume retained is supposed to fund while you wait at the peak.</p>
 
 <div class="tough-trail-shock is-lit" aria-label="Shock math for one illustrative hard search">
@@ -76,7 +76,7 @@ window.AMP_ARTICLES = {
     <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-inline-glow">1,600</strong></li>
     <li><strong>Recruiter subtotal:</strong> 2,400 + 4,800 + 1,600 = <strong class="tts-inline-glow">8,800</strong></li>
     <li class="is-total"><strong>One cycle:</strong> 13,000 + 8,800 = <strong class="tts-glow-num-ink">≈ 21,800</strong> named touches</li>
-    <li class="is-range is-lit"><strong>Three-cycle hard search (4–6 months):</strong> ≈ 21,800 × 3 → <strong class="tts-glow-hero-ink tts-shimmer-ink tts-pulse-soft">~65,000</strong> named touches</li>
+    <li class="is-range is-lit"><strong>Three-cycle hard search (4–6 months):</strong> ≈ 21,800 × 3 → <strong class="tts-shock-ink">~65,000</strong> named touches</li>
   </ul>
   <p class="tough-trail-caption muted">The ~65,000 headline does <strong>not</strong> include canceled interviews that force the same kind of outreach again. When an interview falls through, guides re-rope toward another slate — those redo touches sit outside the stack above.</p>
 </div>
@@ -88,7 +88,7 @@ window.AMP_ARTICLES = {
   </div>
   <p>Hang-ups are real. Not a soft KPI — the click in your ear after three words, the silence that means they already decided you were spam before you finished your name. One hundred fifty cold calls a week is not a spreadsheet row. It is a human voice meeting a wall, over and over, until someone stays.</p>
   <p>The craft is not the dial count. The craft is keeping a physician on the phone long enough to <em>talk</em> — really talk — about their life, their family, their next peak. You have seconds. You earn minutes. You protect the conversation like rope on a ridge, because the alternative is brutal and simple:</p>
-  <p class="tough-trail-pull"><span class="tts-glow-hero-ink tts-shimmer-ink tts-pulse-soft">If you don’t keep them on the phone, you probably won’t talk to them again.</span></p>
+  <p class="tough-trail-pull"><span class="tts-shock-ink tts-shock-ink-quote">If you don’t keep them on the phone, you probably won’t talk to them again.</span></p>
 </div>
 
 <p>Picture the guide’s day after your brief lands. Direct campaigns go out in waves — thousands of postcards, emails, and text campaigns in a single cycle. Recruiters dial ~150 cold calls a week for sixteen weeks, and every call carries a text and a voicemail as its own touch. Online messaging runs ~100 a week beside the phone. Underneath that: a multi-state tracking system for each call, text, email, and postcard; candidate information scraping tools; residency and fellowship relationships that market to residents and fellows <em>and</em> residency coordinators. That ops stack is what retained craft funds while you wait at the peak. Most of it never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
@@ -137,7 +137,7 @@ window.AMP_ARTICLES = {
 </div>
 
 <div class="tough-trail-funnel" aria-label="Illustrative cycle-to-placement narrowing">
-  <div class="ttf-row ttf-hero is-glow-peak"><span class="ttf-n tts-glow-hero-ink tts-shimmer-ink tts-pulse-soft">~65,000</span><span class="ttf-l">Named touches · three-cycle hard search</span></div>
+  <div class="ttf-row ttf-hero is-glow-peak"><span class="ttf-n tts-shock-ink">~65,000</span><span class="ttf-l">Named touches · three-cycle hard search</span></div>
   <div class="ttf-row ttf-hero is-mkt"><span class="ttf-n tts-glow-num-ink">≈21,800</span><span class="ttf-l">Per ~16-week cycle · then ×3</span></div>
   <div class="ttf-row"><span class="ttf-n">13k</span><span class="ttf-l">Direct: postcards + emails + text campaigns</span></div>
   <div class="ttf-row"><span class="ttf-n">8.8k</span><span class="ttf-l">Recruiter: dials + texts + VMs + online</span></div>

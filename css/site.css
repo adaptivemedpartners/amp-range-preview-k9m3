@@ -3193,7 +3193,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     object-position: 28% 50% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1926";
+    content: "preview 1927";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -4044,33 +4044,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   animation: ttsShimmer 2.8s ease-in-out infinite, ttsScalePulse 2.6s ease-in-out infinite;
 }
 
-/* Phone-readable lead shock on light article panel (Mike 1925/1926) */
-.tough-trail-lead .tts-glow-hero-ink.tts-shimmer-ink,
-.tough-trail-lead .tts-glow-hero-ink,
-.tough-trail-lead .tts-shimmer-ink,
-.tough-trail-pull .tts-glow-hero-ink.tts-shimmer-ink,
-.tough-trail-pull .tts-shimmer-ink,
-.tts-math-list .tts-glow-hero-ink.tts-shimmer-ink,
-.ttf-row.ttf-hero .tts-glow-hero-ink.tts-shimmer-ink {
-  display: inline;
-  padding: 0.1em 0.28em;
-  border-radius: 0.4em;
-  color: #115e59 !important;
-  font-weight: 800;
-  -webkit-text-fill-color: #115e59 !important;
-  background-image: none !important;
-  background-color: rgba(153, 246, 228, 0.35);
-  -webkit-background-clip: border-box !important;
-  background-clip: border-box !important;
-  text-shadow:
-    0 0 8px rgba(45, 212, 191, 0.55),
-    0 0 18px rgba(13, 148, 136, 0.4);
-  filter: none !important;
-  box-shadow:
-    0 0 0 1px rgba(13, 148, 136, 0.28),
-    0 0 16px rgba(45, 212, 191, 0.4);
-  animation: ttsScalePulse 2.6s ease-in-out infinite;
-}
+
 
 .tts-math-list li.is-range.is-lit {
   box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.35), 0 0 22px rgba(45, 212, 191, 0.28);
@@ -4082,6 +4056,37 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 }
 .ttf-row.ttf-hero.is-glow-peak .ttf-n {
   font-size: clamp(26px, 5vw, 34px);
+}
+
+
+/* Shock ink on LIGHT panels — readable first, glow second (Mike phone) */
+.tts-shock-ink {
+  display: inline;
+  padding: 0.12em 0.32em;
+  border-radius: 0.45em;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-weight: 850;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: #ccfbf1 !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow:
+    0 0 0 2px rgba(13, 148, 136, 0.45),
+    0 0 14px rgba(45, 212, 191, 0.55),
+    0 0 28px rgba(13, 148, 136, 0.35);
+  animation: ttsScalePulse 2.8s ease-in-out infinite;
+}
+.tts-shock-ink-quote {
+  display: inline;
+  line-height: 1.35;
+}
+.tough-trail-lead .tts-shock-ink {
+  font-size: 1.12em;
 }
 
 /* Call-intensity pull-quote — slight amp of existing glow/pulse/shine */
