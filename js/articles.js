@@ -16,29 +16,29 @@ window.AMP_ARTICLES = {
 "coordinator-share-pack-grads": `<p>Program coordinators can give graduating residents and fellows a short pack before the first job search. The goal is not to endorse a recruiter or a town. It is to help a new physician ask questions early.</p><h2>Share these five prompts</h2><ol><li>What does the ordinary week look like?</li><li>How does call work when the team is short?</li><li>What changes after the guarantee or first contract period?</li><li>How does the organization support practice longevity?</li><li>What would make this place sustainable for two years?</li></ol><h2>Point them to neutral context</h2><p>AMA reporting on early-career retention and contract literacy is a useful starting point. AAPPR 2025 benchmarking and MGMA association resources can add industry context; neither can choose a first job for an individual graduate.</p><h2>Keep the handoff human</h2><p>Encourage graduates to compare specialty, region, place, week, and contract. If they want help, a short conversation with a guide is more useful than a full public dossier. AMP’s residents hub offers rank, region, and an illustrative MI Lite peek before the next step.</p><p>Graduation is a summit, not the end of learning. Give each new physician a map, a checklist, and permission to ask one more question.</p>`,
 "known-tough-trail": `<p>You are standing at the peak with a brief in your hand and an empty seat behind you. Somewhere on the far side of the ridge, physicians are searching. Between you and them is a trail most hiring leaders never see — until a guide walks you back down it and shows you the rope burns.</p>
 <p>Here is the part that usually lands with a quiet <em>wait — what?</em></p>
-<p class="tough-trail-lead">On a hard search, retained craft can mean <span class="tts-shock-ink">~27,000 named touches</span> from <strong>one Premium marketing campaign</strong> plus recruiter outreach, resident &amp; fellow outreach, and program-coordinator touches in the same window — before one physician holds your peak. Not a soft “we market a lot.” Real volume: postcards, emails, text campaigns, cold calls with a text and voicemail on every dial, online messaging, resident outreach, coordinator outreach, multi-state tracking, candidate scraping tools, and residency/fellowship relationships.</p>
+<p class="tough-trail-lead">On a hard search, retained craft can mean <span class="tts-shock-ink">~27,000 named touches</span> before one physician holds your peak — recruiter outreach, resident &amp; fellow outreach, program-coordinator touches, and a Premium marketing line in the same window. Not a soft “we market a lot.” Real volume: postcards, emails, text campaigns, cold calls with a text and voicemail on every dial, online messaging, resident outreach, coordinator outreach, multi-state tracking, candidate scraping tools, and residency/fellowship relationships.</p>
 <p class="muted" style="font-size:13px"><strong>Illustrative of AMP retained craft / what a search can fund — not a personal guarantee.</strong> Real trails vary by specialty, corridor, and brief clarity. The shock is the volume retained is supposed to fund while you wait at the peak.</p>
 
-<div class="tough-trail-shock is-lit" aria-label="Shock math for one Premium campaign plus outreach stack">
+<div class="tough-trail-shock is-lit" aria-label="Shock math for ~27,000 named touches across the outreach stack">
   <div class="tts-shock-head">
-    <span class="tag">One Premium marketing campaign · same-window outreach stack</span>
+    <span class="tag">Named touches · same-window outreach stack</span>
     <strong class="tts-glow-hero tts-shimmer tts-pulse-soft">~27,000 touches toward placing one physician</strong>
   </div>
   <div class="tts-shock-grid tts-shock-grid-dense">
     <div class="tts-shock-card is-dials is-glow">
       <span class="tts-shock-n tts-glow-num">8,000</span>
       <span class="tts-shock-l">Postcards</span>
-      <span class="tts-shock-sub">One Premium campaign</span>
+      <span class="tts-shock-sub">Campaign wave</span>
     </div>
     <div class="tts-shock-card is-mkt is-glow">
       <span class="tts-shock-n tts-glow-num">5,000</span>
       <span class="tts-shock-l">Emails</span>
-      <span class="tts-shock-sub">One Premium campaign</span>
+      <span class="tts-shock-sub">Campaign wave</span>
     </div>
     <div class="tts-shock-card is-mkt is-glow">
       <span class="tts-shock-n tts-glow-num">2,500</span>
       <span class="tts-shock-l">Text campaigns</span>
-      <span class="tts-shock-sub">One Premium campaign</span>
+      <span class="tts-shock-sub">Campaign wave</span>
     </div>
     <div class="tts-shock-card is-dials is-glow">
       <span class="tts-shock-n tts-glow-num">2,400</span>
@@ -67,20 +67,20 @@ window.AMP_ARTICLES = {
     </div>
     <div class="tts-shock-card is-narrow is-glow-peak">
       <span class="tts-shock-n tts-glow-hero tts-shimmer tts-pulse-soft">≈26,900 → ~27,000</span>
-      <span class="tts-shock-l">One Premium + full outreach stack</span>
+      <span class="tts-shock-l">Full outreach stack</span>
       <span class="tts-shock-sub">Canceled-interview redo not included</span>
     </div>
   </div>
-  <p class="tough-trail-caption muted"><strong class="tts-inline-glow">Headline anchor: ~27,000 named touches</strong> from one Premium marketing campaign plus the same-window outreach stack. Exact sum ≈ 26,900 (Premium 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
+  <p class="tough-trail-caption muted"><strong class="tts-inline-glow">Headline anchor: ~27,000 named touches</strong> across the same-window outreach stack. Exact sum ≈ 26,900 (Premium body line 15,500 + recruiter ≈ 8,800 + resident &amp; fellow ≈ 2,400 + program coordinators 200). <em>Canceled interviews are not in the total</em> — when an interview falls through, the climb resets toward another slate without counting those redo touches in the headline stack.</p>
 </div>
 
 <div class="tough-trail-math" aria-label="Touch breakdown under the ~27k headline">
   <div class="tts-math-head">
-    <span class="tag">Under the ~27k · One Premium + outreach stack</span>
+    <span class="tag">Under the ~27k · Full outreach stack</span>
     <strong>Honest arithmetic — touches only</strong>
   </div>
   <ul class="tts-math-list">
-    <li><strong>One Premium marketing campaign:</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-inline-glow">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
+    <li><strong>Premium marketing (one body line):</strong> 8,000 postcards + 5,000 emails + 2,500 text campaigns = <strong class="tts-inline-glow">15,500</strong> campaign touches <span class="muted">(60-day / 6 email + 6 text cadence shape)</span></li>
     <li><strong>Cold calls:</strong> 150/week × 16 weeks = <strong class="tts-inline-glow">2,400</strong> dials</li>
     <li><strong>Text + voicemail on every call:</strong> 2,400 + 2,400 = <strong class="tts-inline-glow">4,800</strong> call-side companions (separate touches)</li>
     <li><strong>Online messaging:</strong> ~100/week × 16 weeks ≈ <strong class="tts-inline-glow">1,600</strong></li>
@@ -102,16 +102,16 @@ window.AMP_ARTICLES = {
   <p class="tough-trail-pull"><span class="tts-shock-ink tts-shock-ink-quote">If you don’t keep them on the phone, you probably won’t talk to them again.</span></p>
 </div>
 
-<p>Picture the guide’s day after your brief lands. One Premium direct campaign goes out — thousands of postcards, emails, and text campaigns in a single wave. Recruiters dial ~150 cold calls a week for sixteen weeks, and every call carries a text and a voicemail as its own touch. Online messaging runs ~100 a week beside the phone. Resident &amp; fellow outreach runs on its own line (~2,400). Program coordinators are a separate beat (200) — never folded into the resident number. Underneath that: a multi-state tracking system for each call, text, email, and postcard; candidate information scraping tools; residency and fellowship relationships. That ops stack is what retained craft funds while you wait at the peak. Most of it never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
+<p>Picture the guide’s day after your brief lands. Campaign volume goes out in the same window — thousands of postcards, emails, and text campaigns as one Premium body line among others. Recruiters dial ~150 cold calls a week for sixteen weeks, and every call carries a text and a voicemail as its own touch. Online messaging runs ~100 a week beside the phone. Resident &amp; fellow outreach runs on its own line (~2,400). Program coordinators are a separate beat (200) — never folded into the resident number. Underneath that: a multi-state tracking system for each call, text, email, and postcard; candidate information scraping tools; residency and fellowship relationships. That ops stack is what retained craft funds while you wait at the peak. Most of it never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
 
-<div class="tough-trail-beat" aria-label="Pre-interview / pre-close call — winning candidates before boots on the ground">
+<div class="tough-trail-beat" aria-label="Pre-interview meeting — video call for decision-readiness before the summit">
   <div class="tough-trail-head">
     <span class="tag">Human chapter · Before boots on the ground</span>
-    <strong>The ~1-hour pre-interview / pre-close call</strong>
+    <strong>The ~1-hour pre-interview meeting (video)</strong>
   </div>
-  <p>Here is the part most hiring leaders never hear about until a guide names it out loud: before a physician is boots on the ground for the summit meeting, AMP runs a serious <strong>~1-hour pre-interview / pre-close call</strong> with them. Not a five-minute “you’re confirmed for Thursday.” A real conversation — prep, expectation-setting, objection-clearing — so the meeting on your ridge is not cold.</p>
-  <p>Think of it as warming the rope before the pitch. The physician walks into your interview already oriented to the community, the practice shape, the people they will meet, and the honest edges of the opportunity. Surprises get talked through early. Hesitations get air. By the time they are in the room with you, the guide has already done a quiet kind of winning-over work — so the summit can be about fit, not first contact.</p>
-  <p class="tough-trail-pull"><span class="tts-inline-glow tts-pulse-soft">Win them over before they are boots on the ground — so the summit meeting isn’t cold.</span></p>
+  <p>Here is the part most hiring leaders never hear about until a guide names it out loud: before a physician is boots on the ground for the summit meeting, AMP runs a serious <strong>~1-hour pre-interview meeting</strong> — on video, like all of these meetings. Not a five-minute “you’re confirmed for Thursday.” The intent is sharper than calendar hygiene: <strong>get the physician ready to make a decision ASAP</strong> once they sit down with the client.</p>
+  <p>The guide walks them back through the process. Introduces AMP — retained versus contingent, what the firm does, and why the model is different. Re-screens and re-presents so motivations and the opportunity still match. Runs trial closes so hesitation gets air before the ridge. Covers the interview process and practical tips. Then decision-making on the back end — what happens after the summit, how choices get made, what the window looks like — so they are not cold when your team is in the room.</p>
+  <p class="tough-trail-pull"><span class="tts-inline-glow tts-pulse-soft">Video first. Decision-ready before boots on the ground — so the summit can be about fit, not first contact.</span></p>
 </div>
 
 <div class="tough-trail-flow" aria-label="Known Tough Trail recruiting flowchart">
@@ -152,9 +152,9 @@ window.AMP_ARTICLES = {
 </div>
 
 <div class="tough-trail-funnel" aria-label="Illustrative touch-to-placement narrowing">
-  <div class="ttf-row ttf-hero is-glow-peak"><span class="ttf-n tts-shock-ink">~27,000</span><span class="ttf-l">Named touches · one Premium + full stack</span></div>
+  <div class="ttf-row ttf-hero is-glow-peak"><span class="ttf-n tts-shock-ink">~27,000</span><span class="ttf-l">Named touches · full outreach stack</span></div>
   <div class="ttf-row ttf-hero is-mkt"><span class="ttf-n tts-glow-num-ink">≈26,900</span><span class="ttf-l">Exact sum · 15,500 + 8,800 + 2,400 + 200</span></div>
-  <div class="ttf-row"><span class="ttf-n">15.5k</span><span class="ttf-l">Premium: postcards + emails + text campaigns</span></div>
+  <div class="ttf-row"><span class="ttf-n">15.5k</span><span class="ttf-l">Premium body line: 8k postcards / 5k emails / 2.5k texts</span></div>
   <div class="ttf-row"><span class="ttf-n">8.8k</span><span class="ttf-l">Recruiter: dials + texts + VMs + online</span></div>
   <div class="ttf-row"><span class="ttf-n">~2.4k</span><span class="ttf-l">Resident &amp; fellow outreach · separate line</span></div>
   <div class="ttf-row"><span class="ttf-n">200</span><span class="ttf-l">Program coordinators · separate after residents</span></div>
@@ -169,8 +169,8 @@ window.AMP_ARTICLES = {
 
 <p>If this story made the middle of the mountain feel real, compare models in our <a href="#blog/retained-vs-contingent-physician-search" data-go="blog/retained-vs-contingent-physician-search">retained vs contingent</a> piece, then take the client door — facility → specialty → retained tease → meeting request into <strong>BD Hub</strong> (with Mess intake in support). Soft ask. One conversation. Destinations with owners beat vanishing inboxes.</p>
 <div class="faq">
-<details open><summary>Is ~27,000 a promise for my specialty?</summary><p>No. It is illustrative of AMP retained craft / what one Premium marketing campaign plus the same-window outreach stack can fund (15,500 + ≈8,800 + ≈2,400 + 200 ≈ 26,900, rounded to ~27,000). Your trail will differ; the point is the volume retained is supposed to fund before you see a slate.</p></details>
-<details><summary>What is in the ~27,000 / ≈26,900 touches?</summary><p>One Premium campaign: 8,000 postcards + 5,000 emails + 2,500 text campaigns = 15,500. Recruiter: 2,400 cold calls + 2,400 texts on every call + 2,400 voicemails + ~1,600 online messages ≈ 8,800. Resident &amp; fellow outreach ≈ 2,400 on its own line. Program coordinators: 200 — separate after residents, never bundled into the resident number. Together ≈ 26,900 (headline ~27,000). Canceled-interview redo outreach is excluded from that headline.</p></details>
+<details open><summary>Is ~27,000 a promise for my specialty?</summary><p>No. It is illustrative of AMP retained craft / what the same-window outreach stack can fund (15,500 + ≈8,800 + ≈2,400 + 200 ≈ 26,900, rounded to ~27,000). Your trail will differ; the point is the volume retained is supposed to fund before you see a slate.</p></details>
+<details><summary>What is in the ~27,000 / ≈26,900 touches?</summary><p>Premium body line: 8,000 postcards + 5,000 emails + 2,500 text campaigns = 15,500. Recruiter: 2,400 cold calls + 2,400 texts on every call + 2,400 voicemails + ~1,600 online messages ≈ 8,800. Resident &amp; fellow outreach ≈ 2,400 on its own line. Program coordinators: 200 — separate after residents, never bundled into the resident number. Together ≈ 26,900 (headline ~27,000). Canceled-interview redo outreach is excluded from that headline.</p></details>
 <details><summary>What sits under the volume — the ops stack?</summary><p>Multi-state tracking for each call, text, email, and postcard; candidate information scraping tools; resident &amp; fellow outreach (~2,400) on its own line; and program coordinators (200) as a separate beat. Impressive infrastructure — not a feature dump.</p></details>
 <details><summary>Where do client meetings land?</summary><p>On this site, client meeting requests route toward <strong>BD Hub</strong> with Mess client intake support — so BD and delivery share one spine.</p></details>
 </div>
