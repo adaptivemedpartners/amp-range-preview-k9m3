@@ -1684,6 +1684,13 @@ window.AMP_CONTENT = {
       mins: 9
     },
     {
+      slug: "known-tough-trail",
+      title: "Known Tough Trail: What Retained Guides Actually Do",
+      meta: "What does retained physician search actually look like on the trail? An illustrative climb map of outreach, screens, submissions, interviews, placement — and the 90-day replacement promise.",
+      tags: ["Guides", "Retained search", "Hospitals"],
+      mins: 9
+    },
+    {
       slug: "evaluate-obgyn-opportunities",
       title: "How to Evaluate OB/GYN Opportunities Without Getting Lost in the Brochure",
       meta: "A physician-first checklist for evaluating OB/GYN jobs: schedule reality, call burden, income structure, and when to talk to a guide like AMP before deciding.",
