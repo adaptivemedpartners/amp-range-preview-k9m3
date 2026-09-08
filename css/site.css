@@ -3193,7 +3193,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     object-position: 28% 50% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1923";
+    content: "preview 1924";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -4055,6 +4055,23 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .ttf-row.ttf-hero.is-glow-peak .ttf-n {
   font-size: clamp(26px, 5vw, 34px);
 }
+
+/* Call-intensity pull-quote — slight amp of existing glow/pulse/shine */
+.tough-trail-pull {
+  margin: 1.1rem 0 1.35rem;
+  padding: 0.85rem 1.1rem;
+  border-left: 3px solid rgba(13, 148, 136, 0.55);
+  background: linear-gradient(90deg, rgba(13, 148, 136, 0.08), transparent 70%);
+  border-radius: 0 10px 10px 0;
+  font-size: clamp(1.05rem, 2.4vw, 1.22rem);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+.tough-trail-pull .tts-shimmer-ink.tts-pulse-soft {
+  display: inline;
+  filter: drop-shadow(0 0 6px rgba(13, 148, 136, 0.55)) drop-shadow(0 0 14px rgba(45, 212, 191, 0.35));
+}
+
 
 @keyframes ttsShimmer {
   0% { background-position: 100% 50%; }

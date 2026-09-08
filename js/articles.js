@@ -81,7 +81,27 @@ window.AMP_ARTICLES = {
   <p class="tough-trail-caption muted">The ~65,000 headline does <strong>not</strong> include canceled interviews that force the same kind of outreach again. When an interview falls through, guides re-rope toward another slate — those redo touches sit outside the stack above.</p>
 </div>
 
+<div class="tough-trail-beat" aria-label="Call intensity — keeping physicians on the phone">
+  <div class="tough-trail-head">
+    <span class="tag">Human chapter · Call intensity</span>
+    <strong>What the dials actually feel like</strong>
+  </div>
+  <p>Hang-ups are real. Not a soft KPI — the click in your ear after three words, the silence that means they already decided you were spam before you finished your name. One hundred fifty cold calls a week is not a spreadsheet row. It is a human voice meeting a wall, over and over, until someone stays.</p>
+  <p>The craft is not the dial count. The craft is keeping a physician on the phone long enough to <em>talk</em> — really talk — about their life, their family, their next peak. You have seconds. You earn minutes. You protect the conversation like rope on a ridge, because the alternative is brutal and simple:</p>
+  <p class="tough-trail-pull"><span class="tts-glow-hero-ink tts-shimmer-ink tts-pulse-soft">If you don’t keep them on the phone, you probably won’t talk to them again.</span></p>
+</div>
+
 <p>Picture the guide’s day after your brief lands. Direct campaigns go out in waves — thousands of postcards, emails, and text campaigns in a single cycle. Recruiters dial ~150 cold calls a week for sixteen weeks, and every call carries a text and a voicemail as its own touch. Online messaging runs ~100 a week beside the phone. Underneath that: a multi-state tracking system for each call, text, email, and postcard; candidate information scraping tools; residency and fellowship relationships that market to residents and fellows <em>and</em> residency coordinators. That ops stack is what retained craft funds while you wait at the peak. Most of it never shows up in your inbox. You see the summit meeting. The guide sees the switchbacks.</p>
+
+<div class="tough-trail-beat" aria-label="Pre-interview / pre-close call — winning candidates before boots on the ground">
+  <div class="tough-trail-head">
+    <span class="tag">Human chapter · Before boots on the ground</span>
+    <strong>The ~1-hour pre-interview / pre-close call</strong>
+  </div>
+  <p>Here is the part most hiring leaders never hear about until a guide names it out loud: before a physician is boots on the ground for the summit meeting, AMP runs a serious <strong>~1-hour pre-interview / pre-close call</strong> with them. Not a five-minute “you’re confirmed for Thursday.” A real conversation — prep, expectation-setting, objection-clearing — so the meeting on your ridge is not cold.</p>
+  <p>Think of it as warming the rope before the pitch. The physician walks into your interview already oriented to the community, the practice shape, the people they will meet, and the honest edges of the opportunity. Surprises get talked through early. Hesitations get air. By the time they are in the room with you, the guide has already done a quiet kind of winning-over work — so the summit can be about fit, not first contact.</p>
+  <p class="tough-trail-pull"><span class="tts-inline-glow tts-pulse-soft">Win them over before they are boots on the ground — so the summit meeting isn’t cold.</span></p>
+</div>
 
 <div class="tough-trail-flow" aria-label="Known Tough Trail recruiting flowchart">
   <div class="tough-trail-head">
