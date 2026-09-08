@@ -3193,7 +3193,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     object-position: 28% 50% !important;
   }
   .view.funnel.trailhead.on::after {
-    content: "preview 1927";
+    content: "preview 1928";
     position: fixed;
     left: 10px;
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -4059,34 +4059,48 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 }
 
 
-/* Shock ink on LIGHT panels — readable first, glow second (Mike phone) */
+/* Shock ink — original glow vibe, BLACK text + shimmer (Mike phone) */
 .tts-shock-ink {
   display: inline;
-  padding: 0.12em 0.32em;
-  border-radius: 0.45em;
-  color: #0f172a !important;
-  -webkit-text-fill-color: #0f172a !important;
-  font-weight: 850;
+  padding: 0;
+  border-radius: 0;
+  color: #0f172a;
   font-weight: 800;
   letter-spacing: -0.02em;
-  background: #ccfbf1 !important;
-  background-image: none !important;
-  -webkit-background-clip: border-box !important;
-  background-clip: border-box !important;
-  text-shadow: none !important;
-  filter: none !important;
-  box-shadow:
-    0 0 0 2px rgba(13, 148, 136, 0.45),
-    0 0 14px rgba(45, 212, 191, 0.55),
-    0 0 28px rgba(13, 148, 136, 0.35);
-  animation: ttsScalePulse 2.8s ease-in-out infinite;
+  background-image: linear-gradient(
+    100deg,
+    #0f172a 0%,
+    #0f172a 38%,
+    #0f766e 46%,
+    #2dd4bf 50%,
+    #0f766e 54%,
+    #0f172a 62%,
+    #0f172a 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 0 4px rgba(45, 212, 191, 0.55))
+    drop-shadow(0 0 12px rgba(13, 148, 136, 0.4));
+  animation: ttsShimmer 2.8s ease-in-out infinite;
+  box-shadow: none;
+  text-shadow: none;
 }
 .tts-shock-ink-quote {
   display: inline;
   line-height: 1.35;
 }
 .tough-trail-lead .tts-shock-ink {
-  font-size: 1.12em;
+  font-size: 1.14em;
+  white-space: nowrap;
+}
+@media (max-width: 420px) {
+  .tough-trail-lead .tts-shock-ink {
+    white-space: normal;
+  }
 }
 
 /* Call-intensity pull-quote — slight amp of existing glow/pulse/shine */
