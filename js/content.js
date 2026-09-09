@@ -208,11 +208,13 @@ window.AMP_CONTENT = {
     { id: "open", label: "Open", blurb: "Let AMP surface the right ridge for you.", states: [] }
   ],
   facilities: [
-    { id: "cah", label: "Critical Access Hospital", blurb: "Rural CAH retained search — AMP works the climb." },
-    { id: "dental", label: "Dentistry", blurb: "Dental and DSOs with clear package tease." },
-    { id: "group", label: "Medical Group", blurb: "Growth seats with marketing + placement support." },
+    { id: "fqhc", label: "FQHC / CHC", blurb: "Mission-aligned clinic seats with clear timelines." },
+    { id: "cah", label: "Critical Access", blurb: "Rural CAH retained search — you hold the summit." },
+    { id: "community", label: "Community / Rural hospital", blurb: "Community and rural hospital physician seats." },
+    { id: "system", label: "Health system", blurb: "Hard-to-fill roles across a health system." },
     { id: "bh", label: "Behavioral Health", blurb: "Behavioral and community behavioral health seats." },
-    { id: "fqhc", label: "FQHC", blurb: "Mission-aligned recruiting with clear timelines." },
+    { id: "group", label: "Multi-specialty / Group", blurb: "Multi-specialty and group practice growth seats." },
+    { id: "dental", label: "Dentistry", blurb: "Dental and DSOs with clear package tease." },
     { id: "other", label: "Other", blurb: "Tell us the summit you need staffed." },
     { id: "hospital", label: "Hospital / Health system", blurb: "Retained search for hard-to-fill physician roles." }
   ],

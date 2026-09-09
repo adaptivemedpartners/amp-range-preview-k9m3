@@ -1,12 +1,12 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1975-overlay2-noblink";
+  window.__AMP_BUILD = "1976-overlay15-client-sheet";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
-  var OVERLAY_AT = 2.0; /* Mike eye 1:24 CT: fade from 2.0s */
+  var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
 
   var state = {
     moving: false,
@@ -311,7 +311,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1975";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1976";
         }
       });
       finishBake();
@@ -588,7 +588,7 @@
         document.querySelector('.view.trailhead[data-route="' + route + '"]');
       if (live) {
         live.classList.add("picker-in", "after-approach", "live-video-bg", "signs-lit");
-        if (route === "client" && !live.querySelector(".hire-sheet")) {
+        if (route === "client" && live && !live.querySelector(".hire-sheet")) {
           try { renderFacilitySignpost(); } catch (e) {}
           mountTrailheadHits("client");
         }
@@ -934,7 +934,7 @@
 
   /* Physician specialty planks: priority board top-5 + Other (6 wood slots). Layout selection.. */
   var SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
-  var SIGN_FACILITY_IDS = ["fqhc", "cah", "bh", "group", "dental", "other"];
+  var SIGN_FACILITY_IDS = ["fqhc", "cah", "community", "system", "bh", "group"]; /* Mike stamp #2 Hospital-forward six — no Other */
   /* Client hire specialty: same six wood slots as physician; Other opens search. */
   var CLIENT_SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
 
@@ -1161,40 +1161,25 @@
   }
 
   function renderClientSpecialty() {
-    if (!window.AMP_CONTENT) return;
-    var still = document.querySelector('.view[data-route="client-specialty"] .shot img.still');
-    if (still) {
-      still.removeAttribute("data-baked");
-      if (still.getAttribute("src") !== "assets/mike-ridge-2.jpg") still.src = "assets/mike-ridge-2.jpg";
-    }
+    var label = $("#client-spec-fac-label");
+    var fac = null;
+    try {
+      fac = AMP_CONTENT.facilities.find(function (f) { return f.id === state.facility; });
+    } catch (e) {}
+    var name = (state.facility === "other" && state.facilityCustom)
+      ? state.facilityCustom
+      : (fac && fac.label) || "your facility";
+    if (label) label.textContent = "Facility · " + name;
     var grid = $("#client-spec-grid");
-    if (!grid) return;
-    var facLabel = $("#client-spec-fac-label");
-    if (facLabel) {
-      var fac = null;
-      if (window.AMP_CONTENT.facilities) {
-        fac = AMP_CONTENT.facilities.find(function (f) { return f.id === state.facility; });
-      }
-      var name = (state.facility === "other" && state.facilityCustom)
-        ? state.facilityCustom
-        : (fac && fac.label) || "your facility";
-      facLabel.textContent = "Hiring for · " + name;
+    if (grid) {
+      /* legacy grid path */
+      var specs = (AMP_CONTENT.specialties || []).slice(0, 6);
+      grid.innerHTML = specs.map(function (s) {
+        return '<button type="button" class="card client-spec-card" data-client-spec="' + s.id + '">' +
+          "<h3>" + s.label + "</h3><p>" + (s.blurb || "") + "</p></button>";
+      }).join("");
     }
-    var order = CLIENT_SIGN_SPEC_IDS;
-    var byId = {};
-    AMP_CONTENT.specialties.forEach(function (s) { byId[s.id] = s; });
-    var items = order.map(function (id) { return byId[id]; }).filter(Boolean);
-    grid.innerHTML = items.map(function (s) {
-      return '<button type="button" class="card client-spec-card" data-client-spec="' + s.id + '">' +
-        "<h3>" + s.label + "</h3>" +
-        "<p>" + (s.blurb || "") + "</p>" +
-        '<div class="meta">Select →</div></button>';
-    }).join("");
-  }
-
-  function closeClientSpecOtherPop() {
-    var pop = $("#client-spec-other-pop");
-    if (pop) pop.hidden = true;
+    /* hire-sheet path uses static data-client-spec cards in HTML */
   }
 
   function openClientSpecOtherPop() {

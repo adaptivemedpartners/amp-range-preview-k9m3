@@ -1,4 +1,4 @@
-/* amp-build:1975-overlay2-noblink */
+/* amp-build:1976-overlay15-client-sheet */
 /* AMP Mountain Site — world-class clickthrough · brand standard */
 :root {
   --teal: #0d9488;
@@ -3832,3 +3832,21 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   opacity: 0 !important;
   visibility: hidden !important;
 }
+
+
+/* amp-build:1976-overlay15-client-sheet — client facility+specialty hire-sheet (same translucent menu) */
+.view.funnel.trailhead[data-route="client"] .hire-sheet,
+.view.funnel.client-spec-sheet .hire-sheet {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.view.funnel.client-spec-sheet .hire-sheet {
+  animation: ampFunnelSheetUp 0.48s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+.view.funnel.trailhead[data-route="client"] .sign-media-frame,
+.view.funnel.trailhead[data-route="client"] .signpost,
+.view.funnel.trailhead[data-route="client"] .trailhead-rail {
+  display: none !important;
+}
+.hire-fac-line { color: #64748b; }
