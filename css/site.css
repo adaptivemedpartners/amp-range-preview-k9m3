@@ -1,4 +1,4 @@
-/* amp-build:1973-overlay3-settle6 */
+/* amp-build:1974-frame0-nozoom */
 /* AMP Mountain Site — world-class clickthrough · brand standard */
 :root {
   --teal: #0d9488;
@@ -3527,12 +3527,8 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 
 
 /* —— Imagine crop 2026-09-09: keep mountain PEAK in frame (phone cover) —— */
-.home-stage #home-video,
-.home-stage .home-poster,
-#home-video,
-#approach-video-hold #home-video,
-#approach-video-hold video,
-#approach-video-hold canvas.approach-freeze,
+/* peak-bias block neutralized — see frame0 nozoom lock */
+.home-stage .UNUSED-peak-bias,
 .view.funnel.trailhead > .shot img.still {
   object-fit: cover !important;
   object-position: 50% 40% !important;
@@ -3799,4 +3795,28 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   .view.funnel.trailhead .trailhead-sheet-stage {
     padding: 48px 10px 12px;
   }
+}
+
+
+/* amp-build:1974-frame0-nozoom — frame0 poster lock: no zoom jump on play */
+.home-stage #home-video,
+.home-stage .home-poster,
+#home-video,
+.home-poster,
+#approach-video-hold #home-video,
+#approach-video-hold video,
+#approach-video-hold canvas.approach-freeze {
+  object-fit: cover !important;
+  object-position: 50% 50% !important;
+  transform: none !important;
+  transform-origin: 50% 50% !important;
+  transition: opacity 0.35s ease !important;
+}
+.home-stage.playing #home-video,
+.home-stage.playing .home-poster,
+.home-stage.approach-ghost #home-video,
+.home-stage.approach-ghost .home-poster,
+.home-stage.playing.walk-forward #home-video,
+.home-stage.playing.walk-forward .home-poster {
+  transform: none !important;
 }
