@@ -3528,17 +3528,14 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 
 /* —— Imagine crop 2026-09-09: keep mountain PEAK in frame (phone cover) —— */
 /* peak-bias block neutralized — see frame0 nozoom lock */
-.home-stage .UNUSED-peak-bias,
 .view.funnel.trailhead > .shot img.still {
   object-fit: cover !important;
-  object-position: 50% 40% !important;
+  object-position: 50% 50% !important;
 }
 @media (max-width: 640px) {
-  .home-stage #home-video,
-  #approach-video-hold #home-video,
-  #approach-video-hold video,
+  /* home/approach framing locked 50% 50% in frame0-nozoom — do not re-bias */
   .view.funnel.trailhead > .shot img.still {
-    object-position: 50% 38% !important;
+    object-position: 50% 50% !important;
   }
 }
 
@@ -3648,7 +3645,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 /* sign hide moved to physician-only — client facility planks stay */
 .view.funnel.trailhead > .shot img.still {
   object-fit: cover !important;
-  object-position: 50% 40% !important;
+  object-position: 50% 50% !important;
   filter: blur(0px);
 }
 .view.funnel.trailhead.after-approach > .shot img.still,
