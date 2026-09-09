@@ -3648,9 +3648,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   font-weight: 750;
   color: #14787a;
 }
-.view.funnel.trailhead .sign-media-frame,
-.view.funnel.trailhead .trailhead-rail,
-.view.funnel.trailhead .signpost { display: none !important; }
+/* sign hide moved to physician-only — client facility planks stay */
 .view.funnel.trailhead > .shot img.still {
   object-fit: cover !important;
   object-position: 50% 40% !important;
@@ -3665,4 +3663,74 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   .trailhead-sheet-stage { padding: 64px 12px 18px; justify-content: flex-end; }
   .hire-sheet { max-height: 72vh; border-radius: 20px; padding: 14px 12px 16px; }
   .hire-title { font-size: 1.2rem; }
+}
+
+
+/* —— Imagine winner 2026-09-09: soft HTML picker over live video —— */
+.view.funnel.trailhead .trailhead-picker,
+.view.funnel.trailhead .hire-sheet.trailhead-picker {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 0.85s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.85s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.view.funnel.trailhead.picker-in .trailhead-picker,
+.view.funnel.trailhead.picker-in .hire-sheet.trailhead-picker,
+.view.funnel.trailhead.after-approach .trailhead-picker,
+.view.funnel.trailhead.after-approach .hire-sheet.trailhead-picker {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.view.funnel.trailhead .hire-sheet {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 48px rgba(2, 12, 27, 0.28);
+  /* kill hard sheet-up when soft overlay path is active */
+  animation: none;
+}
+.view.funnel.trailhead.picker-in .hire-sheet,
+.view.funnel.trailhead.after-approach .hire-sheet {
+  animation: none;
+}
+.view.funnel.trailhead .trailhead-top.trailhead-picker {
+  background: rgba(8, 18, 24, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 12px 14px 10px;
+  color: #f8fafc;
+  text-shadow: 0 1px 10px rgba(0,0,0,.35);
+}
+.view.funnel.trailhead .trailhead-rail.trailhead-picker {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 14px;
+}
+/* While live video under trailhead, keep shot dimmed not opaque white */
+.view.funnel.trailhead.live-video-bg > .shot img.still {
+  opacity: 0;
+}
+.view.funnel.trailhead.live-video-bg .sign-media-frame,
+.view.funnel.trailhead.live-video-bg .signpost {
+  display: block !important;
+}
+/* Physician hire-sheet path: hide plank frames if any leftover */
+.view.funnel.trailhead[data-route="physician"] .sign-media-frame,
+.view.funnel.trailhead[data-route="physician"] .trailhead-rail:not(.trailhead-picker),
+.view.funnel.trailhead[data-route="physician"] .signpost {
+  display: none !important;
+}
+/* Client facility: show sign frames again (undo prior hire-sheet hide-all) */
+.view.funnel.trailhead[data-route="client"] .sign-media-frame,
+.view.funnel.trailhead[data-route="client"] .trailhead-rail,
+.view.funnel.trailhead[data-route="client"] .signpost {
+  display: block !important;
+}
+.view.funnel.trailhead[data-route="client"] > .shot img.still {
+  object-fit: cover !important;
+  object-position: 50% 45% !important;
 }
