@@ -1,4 +1,4 @@
-/* amp-build:1976-overlay15-client-sheet */
+/* amp-build:1977-spec-click-radius */
 /* AMP Mountain Site — world-class clickthrough · brand standard */
 :root {
   --teal: #0d9488;
@@ -3850,3 +3850,31 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   display: none !important;
 }
 .hire-fac-line { color: #64748b; }
+
+
+/* amp-build:1977-spec-click-radius — full rounded hire-sheet + clickable specialty cards */
+.hire-sheet.funnel-panel,
+.view.funnel .hire-sheet.funnel-panel,
+.view.funnel.trailhead .hire-sheet.funnel-panel,
+.view.funnel.client-spec-sheet .hire-sheet.funnel-panel {
+  border-radius: 24px !important;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 18px 16px 20px;
+  overflow: visible;
+}
+.trailhead-sheet-stage {
+  pointer-events: none;
+}
+.trailhead-sheet-stage .hire-sheet,
+.trailhead-sheet-stage .hire-sheet *,
+.trailhead-sheet-stage .crumb,
+.trailhead-sheet-stage .crumb * {
+  pointer-events: auto !important;
+}
+.view.funnel.client-spec-sheet .hire-card,
+.view.funnel.trailhead .hire-card {
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}

@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1976-overlay15-client-sheet";
+  window.__AMP_BUILD = "1977-spec-click-radius";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -311,7 +311,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1976";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1977";
         }
       });
       finishBake();
@@ -1160,6 +1160,29 @@
     }
   }
 
+
+  function bindClientHireSheetClicks() {
+    document.querySelectorAll('[data-route="client-specialty"] [data-client-spec]').forEach(function (btn) {
+      if (btn.getAttribute("data-bound-hire") === "1") return;
+      btn.setAttribute("data-bound-hire", "1");
+      btn.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        var csid = (btn.getAttribute("data-client-spec") || "").trim();
+        if (!csid) return;
+        if (csid === "other") {
+          openClientSpecOtherPop();
+          return;
+        }
+        state.clientSpecialty = csid;
+        state.clientSpecialtyCustom = null;
+        if (!state.facility) state.facility = "fqhc";
+        try { closeClientSpecOtherPop(); } catch (err) {}
+        go("client-retained", { trail: true, instant: true });
+      }, true);
+    });
+  }
+
   function renderClientSpecialty() {
     var label = $("#client-spec-fac-label");
     var fac = null;
@@ -1180,6 +1203,7 @@
       }).join("");
     }
     /* hire-sheet path uses static data-client-spec cards in HTML */
+    bindClientHireSheetClicks();
   }
 
   function openClientSpecOtherPop() {
@@ -2252,7 +2276,10 @@
       }
       var cs = raw.closest("[data-client-spec]");
       if (cs) {
-        var csid = cs.getAttribute("data-client-spec");
+        e.preventDefault();
+        e.stopPropagation();
+        var csid = (cs.getAttribute("data-client-spec") || "").trim();
+        if (!csid) return;
         if (csid === "other") {
           openClientSpecOtherPop();
           return;
@@ -2260,8 +2287,9 @@
         state.clientSpecialty = csid;
         state.clientSpecialtyCustom = null;
         if (!state.facility) state.facility = "fqhc";
-        closeClientSpecOtherPop();
-        go("client-retained", { trail: true });
+        try { closeClientSpecOtherPop(); } catch (err) {}
+        /* Contract options next — Summit Clear / Shared Ascent */
+        go("client-retained", { trail: true, instant: true });
         return;
       }
       var blog = raw.closest("[data-blog]");
@@ -2572,6 +2600,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    try { bindClientHireSheetClicks(); } catch (e) {}
     window.addEventListener("resize", layoutSignMediaFrames);
     window.addEventListener("orientationchange", layoutSignMediaFrames);
     bind();
