@@ -263,7 +263,7 @@ button, input, select, textarea { font: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 45%;
+  object-position: 50% 28%; /* peak bias · Imagine crop 2026-09-09 */
   filter: brightness(0.78) saturate(1.05);
 }
 /* Full-bleed mountain on post-video funnel pages (not trailhead freeze) */
@@ -275,7 +275,7 @@ button, input, select, textarea { font: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 42%;
+  object-position: 50% 28%;
 }
 /* Trailhead still must match #approach-video-hold video (cover 50% 50%).
    contain here was letterboxing vs video cover — planks jumped on handoff. */
@@ -1941,7 +1941,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   /* The painted plank art is the phone UI too; do not duplicate labels as floating pills. */
   .trailhead-rail { display: none !important; }
   .view.funnel.trailhead > .shot img.still {
-    object-position: 50% 42%;
+    object-position: 50% 28%;
   }
   /* Keep focal-point centers; widen hit only */
   .signpost .hot.slot-0,
@@ -3502,3 +3502,68 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .amp-guide-launcher.is-whisper { animation: amp-guide-whisper 2.8s ease-in-out 2; }
 @keyframes amp-guide-whisper { 0%, 100% { box-shadow: 0 0 0 5px rgba(13,148,136,.13), 0 0 26px rgba(45,212,191,.48), 0 14px 34px rgba(2,12,27,.42); } 50% { box-shadow: 0 0 0 9px rgba(45,212,191,.18), 0 0 34px rgba(94,234,212,.72), 0 14px 34px rgba(2,12,27,.42); } }
 @media (prefers-reduced-motion: reduce) { .amp-guide-launcher.is-whisper { animation: none; } }
+
+
+/* #4 client form territory route preview */
+#client-meeting-form .field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .02em;
+  color: #5a6a7a;
+  margin-bottom: 2px;
+}
+#client-meeting-form .req { color: #b45309; margin-left: 2px; }
+#client-meeting-form select {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid #c5dde4;
+  padding: 10px 12px;
+  font: inherit;
+  background: #fff;
+}
+
+
+/* —— Imagine crop 2026-09-09: keep mountain PEAK in frame (phone cover) —— */
+.home-stage #home-video,
+.home-stage .home-poster,
+#home-video,
+#approach-video-hold #home-video,
+#approach-video-hold video,
+#approach-video-hold canvas.approach-freeze,
+.view.funnel.trailhead > .shot img.still {
+  object-fit: cover !important;
+  object-position: 50% 28% !important;
+}
+@media (max-width: 640px) {
+  .home-stage #home-video,
+  #approach-video-hold #home-video,
+  #approach-video-hold video,
+  .view.funnel.trailhead > .shot img.still {
+    object-position: 50% 24% !important;
+  }
+}
+
+/* David UX lock: SAME scroll/gate come-up for candidate + client funnels
+   (match hiring portal Shared Ascent / client-retained sheet). */
+@keyframes ampFunnelSheetUp {
+  from { transform: translateY(32px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.view.funnel.on .funnel-panel,
+.view.funnel.on .agreement-stage {
+  animation: ampFunnelSheetUp 0.48s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+.view.funnel[data-route="physician-rank"].on .funnel-panel,
+.view.funnel[data-route="physician-region"].on .funnel-panel,
+.view.funnel[data-route="physician-jobs"].on .funnel-panel,
+.view.funnel[data-route="client-specialty"].on .funnel-panel,
+.view.funnel[data-route="client-retained"].on .funnel-panel,
+.view.funnel[data-route="client-meeting"].on .funnel-panel {
+  border-radius: 18px 18px 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .view.funnel.on .funnel-panel,
+  .view.funnel.on .agreement-stage { animation: none !important; }
+}

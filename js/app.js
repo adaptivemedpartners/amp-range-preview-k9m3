@@ -2,11 +2,10 @@
 (function () {
   "use strict";
 
-  /* Imagine timeline: 0–1 aerial, 1–4 swoop, ~5.05 trailhead freeze.
-     Bake + labels locked to the 5.05 frame. Pause THERE — do NOT play to clip
-     end (~6.02) then swap to the 5.05 still (planks jump under the cursor). */
-  var SETTLE = 5.05;
-  var FREEZE_END = 5.05; /* same as SETTLE: handoff frame == bake frame */
+  /* Imagine timeline (Mike stamp 2026-09-09): ~4.5s clip, bottom-cropped for peak-in-frame.
+     Freeze near end — do NOT play past FREEZE_END then swap stills (planks jump). */
+  var SETTLE = 4.25;
+  var FREEZE_END = 4.25; /* same as SETTLE: handoff frame == bake frame */
 
   var state = {
     moving: false,
@@ -822,7 +821,9 @@
     if (route === "mpc-browse") renderMpcBrowse();
   }
 
-  /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT). */
+  /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT).
+     David UX lock 2026-09-09: BOTH candidate + client paths use the SAME scroll/gate
+     come-up as hiring portal Shared Ascent (client-retained second option) — funnel sheet. */
   function go(route, opts) {
     opts = opts || {};
     if (route === "residents-fellows") route = "residents";
@@ -943,7 +944,23 @@
       }
       if (route === "confirm-client") {
         var c = document.getElementById("mess-client-mock");
-        if (c && !c.innerHTML.trim()) stampMess("client", "Meeting request → BD Hub");
+        var bd = state.clientBd;
+        var ownerChip = document.getElementById("confirm-bd-owner-chip");
+        var routeNote = document.getElementById("confirm-bd-route-note");
+        if (ownerChip && bd && bd.ownerLabel) {
+          ownerChip.innerHTML = '<span class="dot"></span> BD Hub · ' + bd.ownerLabel;
+        }
+        if (routeNote) {
+          routeNote.textContent = bd && bd.state
+            ? (bd.state + " · owner " + bd.ownerName + " · CC Mike · David · Randy")
+            : "";
+        }
+        if (c && !c.innerHTML.trim()) {
+          var messLine = bd
+            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → BD Hub · CC Mike/David/Randy")
+            : "Meeting request → BD Hub";
+          stampMess("client", messLine);
+        }
       }
       if (route === "blog") renderBlogIndex();
     }
@@ -2387,8 +2404,50 @@
       });
     }
 
+
+  /* #4 Client form → BD Hub by territory (Mike 2026-09-09). Do not invent Midwest states. */
+  var BD_BRENTON_STATES = { AL:1, GA:1, TN:1, KY:1, WV:1 };
+  var BD_MIDWEST_STATES = {}; /* TBD — Mike has not listed; do not invent */
+  var BD_OWNER_META = {
+    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · Texas" },
+    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · Midwest" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · AL/GA/TN/KY/WV" },
+    kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · catch-all" }
+  };
+  function resolveBdOwner(stateCode) {
+    var st = String(stateCode || "").toUpperCase().trim();
+    if (!st) return null;
+    if (st === "TX") return BD_OWNER_META.aaron;
+    if (BD_BRENTON_STATES[st]) return BD_OWNER_META.brenton;
+    if (BD_MIDWEST_STATES[st]) return BD_OWNER_META.zach;
+    return BD_OWNER_META.kelley;
+  }
+  function syncClientBdRoutePreview() {
+    var sel = $("#client-meeting-state");
+    var chip = $("#client-bd-owner-chip");
+    var note = $("#client-bd-route-note");
+    if (!sel || !chip) return;
+    var owner = resolveBdOwner(sel.value);
+    if (!owner) {
+      chip.innerHTML = '<span class="dot"></span> Pick a state';
+      if (note) note.textContent = "Territory route · preview only (Playhouse). Midwest states TBD.";
+      return;
+    }
+    chip.innerHTML = '<span class="dot"></span> ' + owner.label;
+    if (note) {
+      note.textContent = owner.id === "kelley" && !BD_MIDWEST_STATES[String(sel.value).toUpperCase()]
+        ? "Catch-all until Midwest state list lands · always CC Mike · David · Randy"
+        : "BD Hub Responses · always CC Mike · David · Randy";
+    }
+  }
+
     var clientForm = $("#client-meeting-form");
     if (clientForm) {
+      var stateSel = $("#client-meeting-state");
+      if (stateSel) {
+        stateSel.addEventListener("change", syncClientBdRoutePreview);
+        syncClientBdRoutePreview();
+      }
       clientForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var fd = new FormData(clientForm);
@@ -2396,7 +2455,23 @@
         var agreeLabel = state.agreement && AGREEMENT_META[state.agreement]
           ? AGREEMENT_META[state.agreement].tag
           : "Client";
-        stampMess("client", (fd.get("name") || "Client") + " · " + (fd.get("role") || "Hiring") + " · " + agreeLabel + " → BD Hub");
+        var stCode = String(fd.get("state") || "").toUpperCase();
+        var owner = resolveBdOwner(stCode);
+        if (!owner) {
+          if (stateSel) stateSel.focus();
+          return;
+        }
+        state.clientBd = {
+          state: stCode,
+          ownerId: owner.id,
+          ownerName: owner.name,
+          ownerLabel: owner.label,
+          cc: ["Mike Freeman", "David Fontenot", "Randy Keeth"]
+        };
+        stampMess(
+          "client",
+          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → BD Hub · CC Mike/David/Randy"
+        );
         go("confirm-client", { trail: true });
       });
     }
