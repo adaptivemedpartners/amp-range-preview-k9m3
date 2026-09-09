@@ -5,7 +5,7 @@
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
-  var OVERLAY_AT = 4.8; /* late swoop: fade picker over live video */
+  var OVERLAY_AT = 2.0; /* Mike eye 12:57 CT: fade picker from ~2s */
 
   var state = {
     moving: false,
