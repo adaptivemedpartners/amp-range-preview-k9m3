@@ -1,12 +1,12 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1974-frame0-nozoom";
+  window.__AMP_BUILD = "1975-overlay2-noblink";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
-  var OVERLAY_AT = 3.0; /* Mike lock: fade picker from 3.0s */
+  var OVERLAY_AT = 2.0; /* Mike eye 1:24 CT: fade from 2.0s */
 
   var state = {
     moving: false,
@@ -311,7 +311,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1973";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1975";
         }
       });
       finishBake();
@@ -398,51 +398,45 @@
 
 
   function showBakedTrailheadStill(done) {
-    /* Winner lock 2026-09-09 ~12:49 CT: play WHOLE ~6s clip. Soft HTML picker fades
-       in late swoop ON TOP of live video (not Imagine-baked). Pause only at end. */
+    /* Mike eye 2026-09-09 ~1:24 CT: NO settle blink.
+       Pause on last decoded frame and leave <video> up under translucent picker.
+       No opacity fade, no visibility hide, no still/canvas swap flash. */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
-    }
-    paintFreezeCanvas();
-
-    var route = state._approachRoute || "physician";
-    var live = document.querySelector('.view.trailhead.on.live-video-bg[data-route="' + route + '"]') ||
-      document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
-      document.querySelector('.view.trailhead[data-route="' + route + '"]');
-    var VIDEO_FADE_MS = 280;
-
-    function landPicker() {
-      if (video) {
-        try { video.style.visibility = "hidden"; } catch (e) {}
-      }
-      bakeFreezeToTrailheadStills(function () {
-        if (live) {
-          live.classList.add("after-approach", "picker-in", "signs-lit");
-          live.classList.remove("live-video-bg");
-        }
-        state.approachHold = true;
-        if (live && live.querySelector(".hire-sheet")) {
-          /* Candidate specialty HTML sheet — no plank hits */
-        } else if (route === "client") {
-          try { renderFacilitySignpost(); } catch (e) {}
-          mountTrailheadHits("client");
-        } else if (route === "physician" || route === "physician-specialty") {
-          try { renderSpecialtyGrid(); } catch (e) {}
-          mountTrailheadHits(route);
-        }
-        if (typeof done === "function") done();
-      });
-    }
-
-    if (hold) hold.classList.add("is-settling");
-    if (video) {
       try {
-        video.style.transition = "opacity " + VIDEO_FADE_MS + "ms cubic-bezier(.25,.1,.25,1)";
-        video.style.opacity = "0";
+        video.style.transition = "none";
+        video.style.opacity = "1";
+        video.style.visibility = "visible";
       } catch (e) {}
     }
-    setTimeout(landPicker, VIDEO_FADE_MS + 20);
+    /* Optional safety canvas UNDER video — do not fade video onto it. */
+    try { paintFreezeCanvas(); } catch (e) {}
+    if (hold) {
+      hold.classList.remove("is-settling");
+      try { hold.style.opacity = "1"; } catch (e) {}
+    }
+
+    var route = state._approachRoute || "physician";
+    var live = document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
+      document.querySelector('.view.trailhead[data-route="' + route + '"]');
+    if (live) {
+      live.classList.add("after-approach", "picker-in", "signs-lit", "live-video-bg");
+      /* Keep live-video-bg — shot still stays hidden so last video frame remains solid. */
+    }
+    state.approachHold = true;
+    if (live && live.querySelector(".hire-sheet")) {
+      /* specialty HTML overlay */
+    } else if (route === "client") {
+      try { renderFacilitySignpost(); } catch (e) {}
+      mountTrailheadHits("client");
+    } else if (route === "physician" || route === "physician-specialty") {
+      try { renderSpecialtyGrid(); } catch (e) {}
+      mountTrailheadHits(route);
+    }
+    /* Quietly bake stills for later hops — do not reveal them yet. */
+    try { bakeFreezeToTrailheadStills(function () {}); } catch (e) {}
+    if (typeof done === "function") done();
   }
 
   function settleHome() {
@@ -818,9 +812,8 @@
         } catch (e) {}
         window.scrollTo(0, 0);
         playHomeApproach(function () {
-          /* End of whole clip: keep trailhead; ensure picker lit + freeze still under. */
-          next.classList.add("after-approach", "picker-in", "signs-lit", "signs-frozen");
-          next.classList.remove("live-video-bg");
+          /* End of whole clip: keep last video frame under picker — no live-video-bg strip (blink). */
+          next.classList.add("after-approach", "picker-in", "signs-lit", "signs-frozen", "live-video-bg");
           state.moving = false;
           if (route === "client" && !next.querySelector(".hire-sheet")) {
             try { renderFacilitySignpost(); } catch (e2) {}

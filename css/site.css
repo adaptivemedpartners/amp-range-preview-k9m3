@@ -1,4 +1,4 @@
-/* amp-build:1974-frame0-nozoom */
+/* amp-build:1975-overlay2-noblink */
 /* AMP Mountain Site — world-class clickthrough · brand standard */
 :root {
   --teal: #0d9488;
@@ -3211,8 +3211,8 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 
 /* Zero-jump swoop end: freeze under video, then soft-hide video.
    Must beat `#approach-video-hold #home-video { opacity:1 !important }`. */
-#approach-video-hold.is-settling #home-video,
-#approach-video-hold.is-settling video {
+#approach-video-hold.is-settling.UNUSED-hide-video #home-video,
+#approach-video-hold.is-settling.UNUSED-hide-video video {
   opacity: 0 !important;
   transition: opacity 480ms cubic-bezier(.25,.1,.25,1) !important;
 }
@@ -3816,4 +3816,19 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .home-stage.playing.walk-forward #home-video,
 .home-stage.playing.walk-forward .home-poster {
   transform: none !important;
+}
+
+
+/* amp-build:1975-overlay2-noblink — no settle blink: last video frame stays opaque under picker */
+#approach-video-hold.is-settling #home-video,
+#approach-video-hold.is-settling video {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+#approach-video-hold.is-settling {
+  opacity: 1 !important;
+}
+body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
