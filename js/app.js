@@ -874,7 +874,7 @@
         }
         if (c && !c.innerHTML.trim()) {
           var messLine = bd
-            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → BD Hub · CC Mike/David/Randy")
+            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → BD Hub · CC Randy/Mike/David")
             : "Meeting request → BD Hub";
           stampMess("client", messLine);
         }
@@ -2323,21 +2323,22 @@
     }
 
 
-  /* #4 Client form → BD Hub by territory (Mike 2026-09-09). Do not invent Midwest states. */
-  var BD_BRENTON_STATES = { AL:1, GA:1, TN:1, KY:1, WV:1 };
-  var BD_MIDWEST_STATES = {}; /* TBD — Mike has not listed; do not invent */
+  /* #4 Client form → BD Hub by territory (Randy official lock 2026-09-09). CC Randy on ALL BD leads (+ Mike + David). */
+  var BD_AARON_STATES = { TX:1, CA:1 };
+  var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 }; /* WV not in this lock */
+  var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
   var BD_OWNER_META = {
-    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · Texas" },
-    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · Midwest" },
-    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · AL/GA/TN/KY/WV" },
+    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA" },
+    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY" },
     kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · catch-all" }
   };
   function resolveBdOwner(stateCode) {
     var st = String(stateCode || "").toUpperCase().trim();
     if (!st) return null;
-    if (st === "TX") return BD_OWNER_META.aaron;
+    if (BD_AARON_STATES[st]) return BD_OWNER_META.aaron;
     if (BD_BRENTON_STATES[st]) return BD_OWNER_META.brenton;
-    if (BD_MIDWEST_STATES[st]) return BD_OWNER_META.zach;
+    if (BD_ZACH_STATES[st]) return BD_OWNER_META.zach;
     return BD_OWNER_META.kelley;
   }
   function syncClientBdRoutePreview() {
@@ -2348,16 +2349,17 @@
     var owner = resolveBdOwner(sel.value);
     if (!owner) {
       chip.innerHTML = '<span class="dot"></span> Pick a state';
-      if (note) note.textContent = "Territory route · preview only (Playhouse). Midwest states TBD.";
+      if (note) note.textContent = "Territory route · Randy lock · always CC Randy · Mike · David.";
       return;
     }
     chip.innerHTML = '<span class="dot"></span> ' + owner.label;
     if (note) {
-      note.textContent = owner.id === "kelley" && !BD_MIDWEST_STATES[String(sel.value).toUpperCase()]
-        ? "Catch-all until Midwest state list lands · always CC Mike · David · Randy"
-        : "BD Hub Responses · always CC Mike · David · Randy";
+      note.textContent = owner.id === "kelley"
+        ? "Catch-all (unowned state) · always CC Randy · Mike · David"
+        : "BD Hub Responses · always CC Randy · Mike · David";
     }
   }
+
 
     var clientForm = $("#client-meeting-form");
     if (clientForm) {
@@ -2384,11 +2386,11 @@
           ownerId: owner.id,
           ownerName: owner.name,
           ownerLabel: owner.label,
-          cc: ["Mike Freeman", "David Fontenot", "Randy Keeth"]
+          cc: ["Randy Keeth", "Mike Freeman", "David Fontenot"]
         };
         stampMess(
           "client",
-          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → BD Hub · CC Mike/David/Randy"
+          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → BD Hub · CC Randy/Mike/David"
         );
         go("confirm-client", { trail: true });
       });
