@@ -3534,14 +3534,14 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 #approach-video-hold canvas.approach-freeze,
 .view.funnel.trailhead > .shot img.still {
   object-fit: cover !important;
-  object-position: 50% 28% !important;
+  object-position: 50% 32% !important;
 }
 @media (max-width: 640px) {
   .home-stage #home-video,
   #approach-video-hold #home-video,
   #approach-video-hold video,
   .view.funnel.trailhead > .shot img.still {
-    object-position: 50% 24% !important;
+    object-position: 50% 30% !important;
   }
 }
 
