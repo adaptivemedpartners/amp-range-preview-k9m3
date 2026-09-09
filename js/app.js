@@ -2,10 +2,10 @@
 (function () {
   "use strict";
 
-  /* Imagine timeline (Mike stamp 2026-09-09): ~4.5s clip, bottom-cropped for peak-in-frame.
-     Freeze near end — do NOT play past FREEZE_END then swap stills (planks jump). */
-  var SETTLE = 4.25;
-  var FREEZE_END = 4.25; /* same as SETTLE: handoff frame == bake frame */
+  /* Imagine try-it (Mike stamp 2026-09-09): full clip light-crop, first-frame poster,
+     play → freeze LAST frame → white hiring sheet (no wood signs). */
+  var SETTLE = 4.45;
+  var FREEZE_END = 4.45; /* same as SETTLE: handoff frame == bake frame */
 
   var state = {
     moving: false,
@@ -310,7 +310,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1960";
         }
       });
       finishBake();
@@ -397,136 +397,52 @@
 
 
   function showBakedTrailheadStill(done) {
-    /* Zero-jump end:
-       1) Freeze the paused video frame onto the hold canvas (same cover box).
-       2) Soft-fade the <video> out so the freeze shows under it (identical → no pop).
-       3) Crossfade the baked plank PNG onto that freeze (labels ease in).
-       Never hard-cut video→bake or fade to a second <img> (that jumped the planks). */
+    /* Try-it (Mike stamp): freeze last decoded frame, soft-hide video, land white hire sheet.
+       No wood-plank bake / sign crossfade. */
     var hold = $("#approach-video-hold");
     if (video) {
       try { video.pause(); } catch (e) {}
     }
     paintFreezeCanvas();
-    /* Delay is-settling until bake is ready — one continuous soft end, no early fade race. */
 
     var route = state._approachRoute || "physician";
     var live = document.querySelector('.view.trailhead.on.live-video-bg[data-route="' + route + '"]') ||
       document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
       document.querySelector('.view.trailhead[data-route="' + route + '"]');
-    var still = live ? live.querySelector(".shot img.still") : null;
-    var src = null;
-    if (route === "physician" || route === "physician-specialty") {
-      src = "assets/trailhead-specialty-baked.png?v=1765";
-    } else if (route === "client") {
-      src = "assets/trailhead-facility-baked.png?v=1765";
-    }
+    var VIDEO_FADE_MS = 420;
 
-    var VIDEO_FADE_MS = 480;
-    var BAKE_FADE_MS = 980;
-    var CHROME_HOLD_MS = 200;
-
-    function lightSigns() {
-      if (live) {
-        live.classList.add("signs-lit", "signs-frozen");
-      }
-      if (route === "physician" || route === "physician-specialty") {
-        renderSpecialtyGrid();
-      } else if (route === "client") {
-        renderFacilitySignpost();
-      }
-      state.approachHold = true;
-      mountTrailheadHits(route);
-      if (typeof done === "function") done();
-    }
-
-    function crossfadeBakeOntoFreeze(img, then) {
-      if (!hold) { if (then) then(); return; }
-      var canvas = hold.querySelector("canvas.approach-freeze");
-      if (!canvas) {
-        paintFreezeCanvas();
-        canvas = hold.querySelector("canvas.approach-freeze");
-      }
-      if (!canvas || !img || !img.naturalWidth) { if (then) then(); return; }
-
-      var base = document.createElement("canvas");
-      base.width = canvas.width || img.naturalWidth;
-      base.height = canvas.height || img.naturalHeight;
-      try {
-        var bctx = base.getContext("2d");
-        if (bctx) bctx.drawImage(canvas, 0, 0);
-      } catch (e) {}
-
-      if (!canvas.width || !canvas.height) {
-        canvas.width = base.width;
-        canvas.height = base.height;
-      }
-
-      var start = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
-      function tick(now) {
-        var t = Math.min(1, (now - start) / BAKE_FADE_MS);
-        /* ease-out sine — softest finish, no end pop */
-        var e = Math.sin((t * Math.PI) / 2);
-        try {
-          var ctx = canvas.getContext("2d");
-          if (ctx) {
-            ctx.globalAlpha = 1;
-            ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
-            ctx.globalAlpha = e;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            ctx.globalAlpha = 1;
-          }
-        } catch (err) {}
-        if (t < 1) {
-          try { requestAnimationFrame(tick); } catch (e2) { if (then) then(); }
-        } else if (then) {
-          setTimeout(then, CHROME_HOLD_MS);
-        }
-      }
-      try { requestAnimationFrame(tick); } catch (e) {
-        try {
-          var ctx2 = canvas.getContext("2d");
-          if (ctx2) ctx2.drawImage(img, 0, 0, canvas.width, canvas.height);
-        } catch (e3) {}
-        if (then) then();
-      }
-    }
-
-    function afterVideoSoftHide(img) {
-      /* Video already faded; freeze is showing. Ease bake labels on. */
+    function landSheet() {
       if (video) {
         try { video.style.visibility = "hidden"; } catch (e) {}
       }
-      if (still && src) {
-        still.removeAttribute("data-baked");
-        still.src = src;
-      }
-      if (img) {
-        crossfadeBakeOntoFreeze(img, lightSigns);
-      } else {
-        lightSigns();
-      }
+      /* Paint exact pause frame onto trailhead stills so sheet sits on true last frame. */
+      bakeFreezeToTrailheadStills(function () {
+        if (live) {
+          live.classList.add("after-approach", "signs-lit");
+          live.classList.remove("live-video-bg");
+        }
+        state.approachHold = true;
+        /* Hire sheet path — never mount plank hit targets. */
+        if (live && !live.querySelector(".hire-sheet")) {
+          if (route === "physician" || route === "physician-specialty") {
+            try { renderSpecialtyGrid(); } catch (e) {}
+          } else if (route === "client") {
+            try { renderFacilitySignpost(); } catch (e) {}
+          }
+          mountTrailheadHits(route);
+        }
+        if (typeof done === "function") done();
+      });
     }
 
-    function beginSoftEnd(img) {
-      /* Reveal freeze under video with a soft opacity fade (frames match → zero jump). */
-      if (hold) hold.classList.add("is-settling");
-      if (video) {
-        try {
-          video.style.transition = "opacity " + VIDEO_FADE_MS + "ms cubic-bezier(.25,.1,.25,1)";
-          video.style.opacity = "0";
-        } catch (e) {}
-      }
-      setTimeout(function () { afterVideoSoftHide(img); }, VIDEO_FADE_MS + 30);
+    if (hold) hold.classList.add("is-settling");
+    if (video) {
+      try {
+        video.style.transition = "opacity " + VIDEO_FADE_MS + "ms cubic-bezier(.25,.1,.25,1)";
+        video.style.opacity = "0";
+      } catch (e) {}
     }
-
-    if (!src) {
-      beginSoftEnd(null);
-      return;
-    }
-    var img = new Image();
-    img.onload = function () { beginSoftEnd(img); };
-    img.onerror = function () { beginSoftEnd(null); };
-    img.src = src;
+    setTimeout(landSheet, VIDEO_FADE_MS + 30);
   }
 
   function settleHome() {
@@ -576,6 +492,7 @@
      playbackRate ease (that read as a soft cleanup / slowdown at the end). */
   function playHomeApproach(done, approachRoute) {
     state._approachRoute = approachRoute || "physician";
+    if (state._approachRoute === "client") { state.facility = state.facility || "fqhc"; }
     var stage = $("#home-stage");
     video = $("#home-video") || (function () {
       var hold = $("#approach-video-hold");
@@ -911,7 +828,7 @@
       syncGuideRoute(route);
       state.moving = false;
       renderDynamic(route, params);
-      if (route === "physician" || route === "client") {
+      if ((route === "physician" || route === "client") && !document.querySelector('.view[data-route="' + route + '"] .hire-sheet')) {
         mountTrailheadHits(route === "client" ? "client" : "physician");
       } else if (route !== "physician" && route !== "client") {
         /* Keep hits only on specialty/facility trailheads. */
@@ -2329,6 +2246,7 @@
         }
         state.clientSpecialty = csid;
         state.clientSpecialtyCustom = null;
+        if (!state.facility) state.facility = "fqhc";
         closeClientSpecOtherPop();
         go("client-retained", { trail: true });
         return;

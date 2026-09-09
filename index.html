@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark light" />
 <meta name="description" content="Adaptive Medical Partners — physician &amp; healthcare recruiting firm. Retained search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010." />
 <title>AMP · Physician &amp; healthcare recruiting · Adaptive Medical Partners</title>
-<link rel="stylesheet" href="css/site.css?v=1951" />
+<link rel="stylesheet" href="css/site.css?v=1960" />
 <link rel="preload" as="image" href="assets/hero-mountain-wide.png?v=1710" />
 </head>
 <body>
@@ -35,7 +35,7 @@
 <!-- ========== HOME: zoomed-OUT wide mountain + clean copy (no auto zoom-in) ========== -->
 <section class="view on home-stage settled" data-route="home" id="home-stage">
   <img class="home-poster" src="assets/hero-mountain-wide.png?v=1710" alt="" />
-  <video id="home-video" class="home-video" src="assets/imagine-home.mp4?v=1951" poster="assets/hero-mountain-wide.png?v=1710" playsinline muted preload="metadata"></video>
+  <video id="home-video" class="home-video" src="assets/imagine-home.mp4?v=1960" poster="assets/hero-mountain-wide.png?v=1960" playsinline muted preload="metadata"></video>
   <div class="home-mist" aria-hidden="true"></div>
   <button type="button" class="home-skip" data-play-approach hidden>Watch the approach</button>
   <div class="home-overlay">
@@ -85,23 +85,24 @@
 <!-- ========== PHYSICIAN FUNNEL ========== -->
 <section class="view page funnel trailhead" data-route="physician">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/trailhead-specialty-baked.png?v=1940" alt="" />
+    <img class="still" src="assets/hero-mountain-trailhead-freeze.png?v=1960" alt="" />
   </div>
-  <div class="trailhead-stage">
-    <div class="trailhead-top">
-      <div class="crumb"><button type="button" data-go="home">Home</button> / Candidate · searching for the peak</div>
-      <h1 class="trailhead-title">You’re searching for the peak.</h1>
-      <p class="trailhead-sub">Pick your specialty on the trail signs.</p>
-    </div>
-    <div class="sign-media-frame" id="specialty-media-frame" aria-hidden="true"><div class="signpost" id="specialty-signpost" aria-label="Specialty trail signs"></div></div>
-    <div class="trailhead-rail" id="specialty-rail" aria-label="Specialty shortcuts"></div>
+  <div class="trailhead-stage trailhead-sheet-stage">
+    <div class="crumb"><button type="button" data-go="home">Home</button> / Candidate · searching for the peak</div>
+    <div class="hire-sheet funnel-panel" role="region" aria-label="SEARCHING FOR THE PEAK">
+      <div class="hire-kicker">SEARCHING FOR THE PEAK</div>
+      <h1 class="hire-title">Pick your specialty.</h1>
+      <div class="hire-card-list">
+        <button type="button" class="hire-card" data-specialty="fm"><h3>Family Medicine</h3><p>Clinic-first weeks with room for life outside the trail.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-specialty="obg"><h3>Obstetrics & Gynecology</h3><p>Practice-first OB/GYN roles — schedule and package on a call.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-specialty="gi"><h3>Gastroenterology</h3><p>Procedure and clinic mix with clear schedule tease.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-specialty="neuro"><h3>Neurology</h3><p>Outpatient and hybrid neuro paths with guide support.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-specialty="dental"><h3>Dentistry</h3><p>Dental and DSOs with clear package tease.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-specialty="other"><h3>Other</h3><p>Tell us your trail — we route you to the right guide.</p><span class="hire-select">Select →</span></button>
+      </div>
+      
     <div class="spec-other-pop" id="spec-other-pop" hidden role="dialog" aria-label="Choose another specialty">
       <button type="button" class="spec-other-close" id="spec-other-close" aria-label="Close">×</button>
       <h3>Other specialty</h3>
       <input id="spec-other-q" type="search" placeholder="Type to filter specialties…" autocomplete="off" />
       <div class="spec-other-list" id="spec-other-list"></div>
     </div>
-    <p class="trailhead-foot muted">Prefer filters? <button class="linkish" data-go="search" type="button">Open Search UX</button></p>
+    </div>
   </div>
 </section>
 <section class="view page funnel rank-view" data-route="physician-rank">
@@ -299,22 +300,23 @@
 <!-- ========== CLIENT FUNNEL (same trail transition family) ========== -->
 <section class="view page funnel trailhead" data-route="client">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/trailhead-facility-baked.png?v=1940" alt="" />
+    <img class="still" src="assets/hero-mountain-trailhead-freeze.png?v=1960" alt="" />
   </div>
-  <div class="trailhead-stage">
-    <div class="trailhead-top">
-      <div class="crumb"><button type="button" data-go="home">Home</button> / Client · waiting at the peak</div>
-      <h1 class="trailhead-title">You wait at the peak.</h1>
-      <p class="trailhead-sub">Pick your facility on the trail signs — you hold the summit.</p>
-      <p class="trailhead-foot"><button type="button" class="linkish" data-go="mi-lite">Planning the ridge? Open Market Intelligence Lite →</button></p>
+  <div class="trailhead-stage trailhead-sheet-stage">
+    <div class="crumb"><button type="button" data-go="home">Home</button> / Client · own the mountain</div>
+    <div class="hire-sheet funnel-panel" role="region" aria-label="HIRING FOR · FQHC">
+      <div class="hire-kicker">HIRING FOR · FQHC</div>
+      <h1 class="hire-title">Which specialty are you hiring?</h1>
+      <div class="hire-card-list">
+        <button type="button" class="hire-card" data-client-spec="fm"><h3>Family Medicine</h3><p>Clinic-first weeks with room for life outside the trail.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-client-spec="obg"><h3>Obstetrics & Gynecology</h3><p>Practice-first OB/GYN roles — schedule and package on a call.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-client-spec="gi"><h3>Gastroenterology</h3><p>Procedure and clinic mix with clear schedule tease.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-client-spec="neuro"><h3>Neurology</h3><p>Outpatient and hybrid neuro paths with guide support.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-client-spec="dental"><h3>Dentistry</h3><p>Dental and DSOs with clear package tease.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-client-spec="other"><h3>Other</h3><p>Tell us your trail — we route you to the right guide.</p><span class="hire-select">Select →</span></button>
+      </div>
+      
+    <div class="spec-other-pop" id="client-spec-other-pop" hidden role="dialog" aria-label="Choose another specialty">
+      <button type="button" class="spec-other-close" id="client-spec-other-close" aria-label="Close">×</button>
+      <h3>Other specialty</h3>
+      <input id="client-spec-other-q" type="search" placeholder="Type to filter specialties…" autocomplete="off" />
+      <div class="spec-other-list" id="client-spec-other-list"></div>
     </div>
-    <div class="sign-media-frame" id="facility-media-frame" aria-hidden="true"><div class="signpost" id="facility-signpost" aria-label="Facility trail signs"></div></div>
-    <div class="trailhead-rail" id="facility-rail" aria-label="Facility shortcuts"></div>
-    <div class="spec-other-pop" id="fac-other-pop" hidden role="dialog" aria-label="Choose another facility type">
-      <button type="button" class="spec-other-close" id="fac-other-close" aria-label="Close">×</button>
-      <h3>Other facility</h3>
-      <input id="fac-other-q" type="search" placeholder="Type to filter facility types…" autocomplete="off" />
-      <div class="spec-other-list" id="fac-other-list"></div>
     </div>
   </div>
 </section>
@@ -1345,9 +1347,9 @@
 }
 </script>
 
-<script src="js/content.js?v=1951"></script>
-<script src="js/articles.js?v=1951"></script>
-<script src="js/app.js?v=1951"></script>
+<script src="js/content.js?v=1960"></script>
+<script src="js/articles.js?v=1960"></script>
+<script src="js/app.js?v=1960"></script>
 <template id="amp-region-map-template">
 <div class="region-map-shell">
   <div class="region-map-intro">
