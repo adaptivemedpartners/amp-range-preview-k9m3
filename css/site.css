@@ -1,4 +1,4 @@
-/* amp-build:1977-spec-click-radius */
+/* amp-build:1978-agree-cards-fullwidth */
 /* AMP Mountain Site — world-class clickthrough · brand standard */
 :root {
   --teal: #0d9488;
@@ -934,8 +934,10 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .agreement-layout {
   display: grid;
   gap: 20px;
-  grid-template-columns: 168px minmax(0, 1fr);
+  /* Rail removed from HTML — single full-width main (was 168px + 1fr crushing cards) */
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
+  width: 100%;
 }
 @media (max-width: 900px) {
   .agreement-layout { grid-template-columns: 1fr; }
@@ -3877,4 +3879,39 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   cursor: pointer;
   position: relative;
   z-index: 2;
+}
+
+
+/* amp-build:1978-agree-cards-fullwidth — agreement chooser full width (rail column removed from HTML) */
+.view.funnel[data-route="client-retained"] .agreement-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 20px;
+  width: 100%;
+  max-width: none;
+}
+.view.funnel[data-route="client-retained"] .agreement-main {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.view.funnel[data-route="client-retained"] .agreement-chooser {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px;
+  width: 100%;
+}
+.view.funnel[data-route="client-retained"] .agree-card {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.view.funnel[data-route="client-retained"] .agreement-stage.funnel-panel {
+  width: 100%;
+  max-width: none;
+}
+@media (max-width: 760px) {
+  .view.funnel[data-route="client-retained"] .agreement-chooser {
+    grid-template-columns: 1fr !important;
+  }
 }
