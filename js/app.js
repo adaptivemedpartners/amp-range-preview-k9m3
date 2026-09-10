@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1978-agree-cards-fullwidth";
+  window.__AMP_BUILD = "1979-other-pop-pushstate";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -808,7 +808,7 @@
         syncGuideRoute(route);
         renderDynamic(route, params);
         try {
-          history.replaceState(null, "", "#" + (opts.hash || route));
+          setRouteHash(opts.hash || route, { replace: true }); /* approach early-land: no Back stack spam */
         } catch (e) {}
         window.scrollTo(0, 0);
         playHomeApproach(function () {
@@ -871,7 +871,10 @@
         var hash = opts.hash || route;
         if (params.id) hash = "job/" + params.id;
         if (params.slug) hash = "blog/" + params.slug;
-        history.replaceState(null, "", "#" + hash);
+        setRouteHash(hash, {
+          fromHistory: !!opts.fromHistory,
+          replace: !!opts.replaceHash
+        });
       } catch (e) {}
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
@@ -1016,8 +1019,14 @@
       return;
     }
 
+    /* Hire-sheet path: show FULL specialty list (type-to-filter). Legacy planks:
+       exclude the five already on signs. */
+    var hireSheet = document.querySelector('.view[data-route="physician"].on .hire-sheet') ||
+      document.querySelector('.view.trailhead.on .hire-sheet');
     var plankIds = {};
-    SIGN_SPEC_IDS.forEach(function (id) { if (id !== "other") plankIds[id] = true; });
+    if (!hireSheet) {
+      SIGN_SPEC_IDS.forEach(function (id) { if (id !== "other") plankIds[id] = true; });
+    }
     function paint() {
       var needle = (q && q.value ? q.value : "").trim().toLowerCase();
       var rows = AMP_CONTENT.specialties.filter(function (s) {
@@ -1033,17 +1042,26 @@
         return '<button type="button" data-specialty-pick="' + s.id + '">' + s.label + '</button>';
       }).join("") || '<div class="muted" style="font-size:12px;padding:8px">No matches — type a specialty name.</div>';
     }
-    var layer = ensureTrailheadHitLayer();
-    if (pop.parentElement !== layer) layer.appendChild(pop);
-    pop.classList.add("on-hit-layer");
+    if (hireSheet) {
+      /* Keep pop inside hire-sheet — hit layer is hidden on hire-sheet trailhead. */
+      if (pop.parentElement !== hireSheet) hireSheet.appendChild(pop);
+      pop.classList.add("in-hire-sheet");
+      pop.classList.remove("on-hit-layer");
+    } else {
+      var layer = ensureTrailheadHitLayer();
+      layer.hidden = false;
+      layer.classList.add("is-live");
+      if (pop.parentElement !== layer) layer.appendChild(pop);
+      pop.classList.add("on-hit-layer");
+      pop.classList.remove("in-hire-sheet");
+      var sp = $("#specialty-signpost");
+      if (sp) sp.classList.add("hits-paused");
+      var svg = document.querySelector("#trailhead-hit-layer .plank-hit-svg");
+      if (svg) svg.classList.add("hits-paused");
+    }
     pop.hidden = false;
     try { pop.removeAttribute("hidden"); } catch (e) {}
     pop.style.display = "block";
-    /* Don't let plank hits steal taps while the picker is open. */
-    var sp = $("#specialty-signpost");
-    if (sp) sp.classList.add("hits-paused");
-    var svg = document.querySelector("#trailhead-hit-layer .plank-hit-svg");
-    if (svg) svg.classList.add("hits-paused");
     if (q) {
       q.value = "";
       try { q.focus({ preventScroll: true }); } catch (e) { /* no focus — avoids viewport jump */ }
@@ -2166,6 +2184,8 @@
 
       var spec = raw.closest("[data-specialty]");
       if (spec) {
+        e.preventDefault();
+        e.stopPropagation();
         var sid = (spec.getAttribute("data-specialty") || "").trim();
         if (!sid) return;
         if (sid === "other") {
@@ -2580,22 +2600,45 @@
     }).join("");
   }
 
-  function bootFromHash() {
+
+  function currentRouteHash() {
+    return (location.hash || "#home").replace(/^#/, "") || "home";
+  }
+
+  function setRouteHash(hash, opts) {
+    opts = opts || {};
+    var url = "#" + hash;
+    try {
+      if (opts.fromHistory || opts.replace) {
+        history.replaceState({ ampRoute: hash }, "", url);
+        return;
+      }
+      if (currentRouteHash() === hash) {
+        history.replaceState({ ampRoute: hash }, "", url);
+        return;
+      }
+      history.pushState({ ampRoute: hash }, "", url);
+    } catch (e) {}
+  }
+
+  function bootFromHash(opts) {
+    opts = opts || {};
     var hash = (location.hash || "#home").replace(/^#/, "") || "home";
     if (hash === "residents-fellows") hash = "residents";
     if (hash === "market-intelligence" || hash === "mi") hash = "mi-lite";
+    var nav = { instant: true, fromHistory: !!opts.fromHistory };
     if (hash.indexOf("job/") === 0) {
-      go(hash, { instant: true });
+      go(hash, nav);
       return;
     }
     if (hash.indexOf("blog/") === 0) {
-      go(hash, { instant: true });
+      go(hash, nav);
       return;
     }
     if (document.querySelector('.view[data-route="' + hash + '"]')) {
-      go(hash, { instant: true });
+      go(hash, nav);
     } else {
-      go("home", { instant: true });
+      go("home", nav);
     }
   }
 
@@ -2605,8 +2648,13 @@
     window.addEventListener("orientationchange", layoutSignMediaFrames);
     bind();
     renderBlogIndex();
-    bootFromHash();
-    window.addEventListener("hashchange", bootFromHash);
+    bootFromHash({ fromHistory: true });
+    window.addEventListener("hashchange", function () {
+      bootFromHash({ fromHistory: true });
+    });
+    window.addEventListener("popstate", function () {
+      bootFromHash({ fromHistory: true });
+    });
   });
 
   window.AMPRegionMap = { render: renderRegionMap, normalizeState: normalizeRegionState };
