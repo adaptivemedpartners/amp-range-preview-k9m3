@@ -939,6 +939,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   align-items: start;
   width: 100%;
 }
+.agreement-main, .agreement-chooser { min-width: 0; width: 100%; } /* amp-build:1978-agree-fullwidth */
+
 @media (max-width: 900px) {
   .agreement-layout { grid-template-columns: 1fr; }
   .agreement-rail {
