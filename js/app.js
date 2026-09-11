@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1992-bf-restore";
+  window.__AMP_BUILD = "1993-pills-postswoop";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -315,13 +315,21 @@
     resetTrailheadPickerChrome(null, { clearLive: true });
   }
 
-  /* Instant specialty/facility sheet for Back/Forward — never blank mountain. */
+  /* Post-swoop land: freeze still + specialty/facility sheet visible.
+     Used for Back/Forward, Physicians/Hiring nav, and any non-approach door. */
   function showTrailheadPickerSheet(view, snap) {
     if (!view) return;
     view.classList.remove("live-video-bg");
     var img = view.querySelector("img.still");
     if (img) {
-      try { img.style.opacity = ""; img.style.visibility = ""; } catch (e) {}
+      try {
+        img.style.opacity = "";
+        img.style.visibility = "";
+        /* Prefer baked freeze; else stock post-swoop PNG */
+        if (!img.getAttribute("data-baked")) {
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1993";
+        }
+      } catch (e) {}
     }
     if (snap) view.classList.add("picker-snap");
     view.classList.add("picker-in", "after-approach", "signs-lit", "signs-frozen");
@@ -346,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1992";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1993";
         }
       });
       finishBake();
@@ -924,11 +932,12 @@
       } catch (e) {}
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
-        /* Tear down video hold WITHOUT wiping picker classes mid-restore (that caused blank Back). */
-        if (state.approachHold || opts.fromHistory || opts.instant) {
+        /* Non-approach land = post-swoop menu on freeze (Physicians/Hiring nav, Back, crumbs).
+           Only Home Candidate/Client doors with data-approach play the swoop. */
+        if (state.approachHold || opts.fromHistory || opts.instant || !opts.approach) {
           teardownApproachVideo();
         }
-        showTrailheadPickerSheet(next, !!(opts.fromHistory || opts.instant));
+        showTrailheadPickerSheet(next, true);
       }
 
       if (route === "home") startHomeVideo();
