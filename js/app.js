@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1980-approach-push-home";
+  window.__AMP_BUILD = "1981-path-routing";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -311,7 +311,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1977";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1981";
         }
       });
       finishBake();
@@ -760,7 +760,7 @@
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
     var next = document.querySelector('.view[data-route="' + route + '"]');
-    if (!next && route.indexOf("blog/") === 0) {
+    if (!next && (route.indexOf("blog/") === 0 || route.indexOf("blog-posts/") === 0)) {
       next = document.querySelector('.view[data-route="blog-post"]');
     }
     if (route.indexOf("job/") === 0) {
@@ -780,6 +780,11 @@
       params.id = route.split("/")[1];
       route = "job";
       next = document.querySelector('.view[data-route="job"]');
+    }
+    if (route.indexOf("blog-posts/") === 0) {
+      params.slug = route.replace("blog-posts/", "");
+      route = "blog-post";
+      next = document.querySelector('.view[data-route="blog-post"]');
     }
     if (route.indexOf("blog/") === 0) {
       params.slug = route.replace("blog/", "");
@@ -868,10 +873,10 @@
         if (anchor) setTimeout(function () { anchor.scrollIntoView({ block: "start" }); }, 0);
       }
       try {
-        var hash = opts.hash || route;
-        if (params.id) hash = "job/" + params.id;
-        if (params.slug) hash = "blog/" + params.slug;
-        setRouteHash(hash, {
+        var routeKey = route;
+        if (params.id) routeKey = "job/" + params.id;
+        if (params.slug) routeKey = "blog/" + params.slug;
+        setRouteHash(routeKey, {
           fromHistory: !!opts.fromHistory,
           replace: !!opts.replaceHash
         });
@@ -2601,51 +2606,183 @@
   }
 
 
-  function currentRouteHash() {
-    return (location.hash || "#home").replace(/^#/, "") || "home";
+  /* ---- Path-based public routing (build 1981) ----
+     Public pathname ↔ internal route map:
+       /                         → home
+       /about                    → about
+       /blog                     → blog
+       /contact-us               → contact
+       /jobs                     → physician-jobs
+       /organizational-services  → for-organizations
+       /recruiting-services      → for-physicians
+       /forms                    → forms
+       /candidate-authorization  → form-candidate-authorization
+       /interview-expense-form   → form-interview-expense
+       /easy-pay-authorization   → form-easy-pay
+       /job/{slug}               → job/{slug}
+       /blog-posts/{slug}        → blog/{slug}
+     Other SPA views use /{data-route}. Old #hash links still boot, then upgrade to path.
+  */
+  var GH_PAGES_BASE = "/amp-range-preview-k9m3";
+
+  var PATH_TO_ROUTE = {
+    "": "home",
+    "/": "home",
+    "about": "about",
+    "blog": "blog",
+    "contact-us": "contact",
+    "contact": "contact",
+    "jobs": "physician-jobs",
+    "organizational-services": "for-organizations",
+    "recruiting-services": "for-physicians",
+    "forms": "forms",
+    "candidate-authorization": "form-candidate-authorization",
+    "interview-expense-form": "form-interview-expense",
+    "easy-pay-authorization": "form-easy-pay"
+  };
+
+  var ROUTE_TO_PATH = {
+    "home": "/",
+    "about": "/about",
+    "blog": "/blog",
+    "contact": "/contact-us",
+    "physician-jobs": "/jobs",
+    "for-organizations": "/organizational-services",
+    "for-physicians": "/recruiting-services",
+    "forms": "/forms",
+    "form-candidate-authorization": "/candidate-authorization",
+    "form-interview-expense": "/interview-expense-form",
+    "form-easy-pay": "/easy-pay-authorization"
+  };
+
+  function detectBasePath() {
+    var p = location.pathname || "/";
+    if (p === GH_PAGES_BASE || p.indexOf(GH_PAGES_BASE + "/") === 0) return GH_PAGES_BASE;
+    return "";
   }
 
-  function setRouteHash(hash, opts) {
+  function normalizeRouteAlias(key) {
+    if (key === "residents-fellows") return "residents";
+    if (key === "market-intelligence" || key === "mi") return "mi-lite";
+    return key;
+  }
+
+  function stripBasePath(pathname) {
+    var base = detectBasePath();
+    var p = pathname || "/";
+    if (base && (p === base || p.indexOf(base + "/") === 0)) {
+      p = p.slice(base.length) || "/";
+    }
+    /* index.html at root still means home */
+    if (p === "/index.html" || p === "index.html") return "/";
+    return p;
+  }
+
+  function routeToPathname(routeKey) {
+    routeKey = normalizeRouteAlias(String(routeKey || "home"));
+    if (routeKey.indexOf("job/") === 0) return "/job/" + routeKey.slice(4);
+    if (routeKey.indexOf("blog-posts/") === 0) return "/" + routeKey;
+    if (routeKey.indexOf("blog/") === 0) return "/blog-posts/" + routeKey.slice(5);
+    if (ROUTE_TO_PATH[routeKey]) return ROUTE_TO_PATH[routeKey];
+    if (routeKey === "home") return "/";
+    return "/" + routeKey;
+  }
+
+  function pathnameToRouteKey(pathname) {
+    var p = stripBasePath(pathname);
+    if (p.length > 1 && p.charAt(p.length - 1) === "/") p = p.slice(0, -1);
+    if (!p || p === "/") return "home";
+    if (p.charAt(0) === "/") p = p.slice(1);
+
+    if (p.indexOf("job/") === 0) return p;
+    if (p.indexOf("blog-posts/") === 0) return "blog/" + p.slice("blog-posts/".length);
+    if (p.indexOf("blog/") === 0) return p;
+
+    if (PATH_TO_ROUTE.hasOwnProperty(p)) return PATH_TO_ROUTE[p];
+
+    var top = p.split("/")[0];
+    if (document.querySelector('.view[data-route="' + top + '"]')) return top;
+    if (document.querySelector('.view[data-route="' + p + '"]')) return p;
+    return null;
+  }
+
+  function locationToRouteKey() {
+    var pathKey = pathnameToRouteKey(location.pathname);
+    var hash = (location.hash || "").replace(/^#/, "");
+    if (hash) hash = normalizeRouteAlias(hash);
+    var pathIsHome = !pathKey || pathKey === "home";
+    /* Prefer real path doors; only fall back to hash for old links on home/index. */
+    if (!pathIsHome) return pathKey;
+    if (hash) return hash;
+    return "home";
+  }
+
+  function currentRouteHash() {
+    return locationToRouteKey();
+  }
+
+  function setRouteHash(routeKey, opts) {
     opts = opts || {};
-    var url = "#" + hash;
+    routeKey = normalizeRouteAlias(String(routeKey || "home"));
+    /* file:// keeps hash routing so offline open still works */
+    if (location.protocol === "file:") {
+      var hurl = "#" + (routeKey.indexOf("blog-posts/") === 0 ? "blog/" + routeKey.slice(11) : routeKey);
+      try {
+        if (opts.fromHistory || opts.replace) {
+          history.replaceState({ ampRoute: routeKey }, "", hurl);
+        } else if (currentRouteHash() === routeKey && (location.hash || "#home").replace(/^#/, "") === routeKey.replace(/^blog-posts\//, "blog/")) {
+          history.replaceState({ ampRoute: routeKey }, "", hurl);
+        } else {
+          history.pushState({ ampRoute: routeKey }, "", hurl);
+        }
+        _ampLastBootHash = routeKey;
+      } catch (e) {}
+      return;
+    }
+
+    var base = detectBasePath();
+    var path = routeToPathname(routeKey);
+    var url = base + (path === "/" ? (base ? "/" : "/") : path);
+    /* Normalize: base + "/" for home on project pages → /amp-range-preview-k9m3/ */
+    if (path === "/") url = base ? base + "/" : "/";
+    var search = location.search || "";
+    var full = url + search;
+
     try {
       if (opts.fromHistory || opts.replace) {
-        history.replaceState({ ampRoute: hash }, "", url);
-        _ampLastBootHash = hash;
+        history.replaceState({ ampRoute: routeKey }, "", full);
+        _ampLastBootHash = routeKey;
         return;
       }
-      if (currentRouteHash() === hash) {
-        history.replaceState({ ampRoute: hash }, "", url);
-        _ampLastBootHash = hash;
+      if (_ampLastBootHash === routeKey && pathnameToRouteKey(location.pathname) === routeKey && !location.hash) {
+        history.replaceState({ ampRoute: routeKey }, "", full);
+        _ampLastBootHash = routeKey;
         return;
       }
-      history.pushState({ ampRoute: hash }, "", url);
-      _ampLastBootHash = hash;
+      history.pushState({ ampRoute: routeKey }, "", full);
+      _ampLastBootHash = routeKey;
     } catch (e) {}
   }
 
   var _ampLastBootHash = null;
   function bootFromHash(opts) {
     opts = opts || {};
-    var hash = (location.hash || "#home").replace(/^#/, "") || "home";
-    if (hash === "residents-fellows") hash = "residents";
-    if (hash === "market-intelligence" || hash === "mi") hash = "mi-lite";
+    var key = locationToRouteKey();
     /* Coalesce double hashchange+popstate on Back/Forward across pushState entries. */
-    if (opts.fromHistory && _ampLastBootHash === hash) return;
-    _ampLastBootHash = hash;
-    var nav = { instant: true, fromHistory: !!opts.fromHistory };
-    if (hash.indexOf("job/") === 0) {
-      go(hash, nav);
-      return;
-    }
-    if (hash.indexOf("blog/") === 0) {
-      go(hash, nav);
-      return;
-    }
-    if (document.querySelector('.view[data-route="' + hash + '"]')) {
-      go(hash, nav);
+    if (opts.fromHistory && _ampLastBootHash === key) return;
+    _ampLastBootHash = key;
+    var nav = { instant: true, fromHistory: !!opts.fromHistory, replaceHash: !opts.fromHistory };
+    if (key.indexOf("job/") === 0 || key.indexOf("blog/") === 0 || key.indexOf("blog-posts/") === 0) {
+      go(key, nav);
+    } else if (document.querySelector('.view[data-route="' + key + '"]')) {
+      go(key, nav);
     } else {
       go("home", nav);
+      key = "home";
+    }
+    /* Upgrade legacy #hash on home path to a real pathname (prefer path). */
+    if (location.protocol !== "file:" && location.hash) {
+      try { setRouteHash(key, { replace: true }); } catch (e2) {}
     }
   }
 
