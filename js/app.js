@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1988-rank-clarity";
+  window.__AMP_BUILD = "1989-back-specialty";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -325,7 +325,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1988";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1989";
         }
       });
       finishBake();
@@ -903,6 +903,10 @@
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
         next.classList.add("signs-lit", "signs-frozen");
+        /* Back/Forward (and any non-swoop land): hire-sheet stays opacity:0 without picker-in. */
+        if (!state.approachHold) {
+          next.classList.add("picker-in", "after-approach");
+        }
         layoutSignMediaFrames();
       }
 
