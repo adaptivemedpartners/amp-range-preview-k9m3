@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1979-other-pop-pushstate";
+  window.__AMP_BUILD = "1980-approach-push-home";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -808,7 +808,7 @@
         syncGuideRoute(route);
         renderDynamic(route, params);
         try {
-          setRouteHash(opts.hash || route, { replace: true }); /* approach early-land: no Back stack spam */
+          setRouteHash(opts.hash || route); /* approach early-land: PUSH so Back returns Home */
         } catch (e) {}
         window.scrollTo(0, 0);
         playHomeApproach(function () {
@@ -2611,21 +2611,28 @@
     try {
       if (opts.fromHistory || opts.replace) {
         history.replaceState({ ampRoute: hash }, "", url);
+        _ampLastBootHash = hash;
         return;
       }
       if (currentRouteHash() === hash) {
         history.replaceState({ ampRoute: hash }, "", url);
+        _ampLastBootHash = hash;
         return;
       }
       history.pushState({ ampRoute: hash }, "", url);
+      _ampLastBootHash = hash;
     } catch (e) {}
   }
 
+  var _ampLastBootHash = null;
   function bootFromHash(opts) {
     opts = opts || {};
     var hash = (location.hash || "#home").replace(/^#/, "") || "home";
     if (hash === "residents-fellows") hash = "residents";
     if (hash === "market-intelligence" || hash === "mi") hash = "mi-lite";
+    /* Coalesce double hashchange+popstate on Back/Forward across pushState entries. */
+    if (opts.fromHistory && _ampLastBootHash === hash) return;
+    _ampLastBootHash = hash;
     var nav = { instant: true, fromHistory: !!opts.fromHistory };
     if (hash.indexOf("job/") === 0) {
       go(hash, nav);
@@ -2649,6 +2656,7 @@
     bind();
     renderBlogIndex();
     bootFromHash({ fromHistory: true });
+    /* popstate is the BF spine; hashchange kept for deep-link/manual hash edits, guarded above. */
     window.addEventListener("hashchange", function () {
       bootFromHash({ fromHistory: true });
     });
