@@ -25,7 +25,7 @@
     mpcMetroOnly: true,
     mpcAmenities: [],
     mpcSelectedId: null,
-    miLitePlan: "monthly",
+    miLitePlan: "region",
     miLiteUnlocked: false,
     jobViews: 0,
     jobWhispered: false,
@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2005";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2006";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2005";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2006";
         }
       });
       finishBake();
@@ -726,13 +726,45 @@
     return !!WALK_ROUTES[route];
   }
 
+  var RIDGE_US_STATES = [
+    { abbr: "AL", name: "Alabama" }, { abbr: "AK", name: "Alaska" }, { abbr: "AZ", name: "Arizona" }, { abbr: "AR", name: "Arkansas" },
+    { abbr: "CA", name: "California" }, { abbr: "CO", name: "Colorado" }, { abbr: "CT", name: "Connecticut" }, { abbr: "DE", name: "Delaware" },
+    { abbr: "DC", name: "District of Columbia" }, { abbr: "FL", name: "Florida" }, { abbr: "GA", name: "Georgia" }, { abbr: "HI", name: "Hawaii" },
+    { abbr: "ID", name: "Idaho" }, { abbr: "IL", name: "Illinois" }, { abbr: "IN", name: "Indiana" }, { abbr: "IA", name: "Iowa" },
+    { abbr: "KS", name: "Kansas" }, { abbr: "KY", name: "Kentucky" }, { abbr: "LA", name: "Louisiana" }, { abbr: "ME", name: "Maine" },
+    { abbr: "MD", name: "Maryland" }, { abbr: "MA", name: "Massachusetts" }, { abbr: "MI", name: "Michigan" }, { abbr: "MN", name: "Minnesota" },
+    { abbr: "MS", name: "Mississippi" }, { abbr: "MO", name: "Missouri" }, { abbr: "MT", name: "Montana" }, { abbr: "NE", name: "Nebraska" },
+    { abbr: "NV", name: "Nevada" }, { abbr: "NH", name: "New Hampshire" }, { abbr: "NJ", name: "New Jersey" }, { abbr: "NM", name: "New Mexico" },
+    { abbr: "NY", name: "New York" }, { abbr: "NC", name: "North Carolina" }, { abbr: "ND", name: "North Dakota" }, { abbr: "OH", name: "Ohio" },
+    { abbr: "OK", name: "Oklahoma" }, { abbr: "OR", name: "Oregon" }, { abbr: "PA", name: "Pennsylvania" }, { abbr: "RI", name: "Rhode Island" },
+    { abbr: "SC", name: "South Carolina" }, { abbr: "SD", name: "South Dakota" }, { abbr: "TN", name: "Tennessee" }, { abbr: "TX", name: "Texas" },
+    { abbr: "UT", name: "Utah" }, { abbr: "VT", name: "Vermont" }, { abbr: "VA", name: "Virginia" }, { abbr: "WA", name: "Washington" },
+    { abbr: "WV", name: "West Virginia" }, { abbr: "WI", name: "Wisconsin" }, { abbr: "WY", name: "Wyoming" }
+  ];
+
+  /* EXAMPLE purchase regions for Ridge packages — refine later OK */
+  var RIDGE_PURCHASE_REGIONS = {
+    west: { label: "West", states: ["WA", "OR", "CA", "NV", "AK", "HI", "ID", "MT", "WY", "UT", "CO"] },
+    southwest: { label: "Southwest", states: ["AZ", "NM", "TX", "OK"] },
+    midwest: { label: "Midwest", states: ["ND", "SD", "NE", "KS", "MN", "IA", "MO", "WI", "IL", "MI", "IN", "OH"] },
+    northeast: { label: "Northeast", states: ["ME", "NH", "VT", "MA", "RI", "CT", "NY", "NJ", "PA", "DE", "MD", "DC"] },
+    southeast: { label: "Southeast", states: ["WV", "VA", "KY", "TN", "NC", "SC", "GA", "FL", "AL", "MS", "AR", "LA"] }
+  };
+
   var MI_UNLOCK_KEY = "amp_mi_lite_unlocked";
   var MI_PLAN_KEY = "amp_mi_lite_plan";
+
+  function normalizeMiLitePlan(plan) {
+    if (plan === "state" || plan === "region" || plan === "national" || plan === "demo") return plan;
+    /* legacy monthly/annual EXAMPLE doors → default Region package */
+    if (plan === "monthly" || plan === "annual") return "region";
+    return plan || "region";
+  }
 
   function readMiLiteUnlock() {
     try {
       state.miLiteUnlocked = localStorage.getItem(MI_UNLOCK_KEY) === "1";
-      state.miLitePlan = localStorage.getItem(MI_PLAN_KEY) || state.miLitePlan || "monthly";
+      state.miLitePlan = normalizeMiLitePlan(localStorage.getItem(MI_PLAN_KEY) || state.miLitePlan || "region");
     } catch (e) {
       state.miLiteUnlocked = !!state.miLiteUnlocked;
     }
@@ -744,7 +776,7 @@
     if (plan) state.miLitePlan = plan;
     try {
       localStorage.setItem(MI_UNLOCK_KEY, "1");
-      localStorage.setItem(MI_PLAN_KEY, state.miLitePlan || "monthly");
+      localStorage.setItem(MI_PLAN_KEY, state.miLitePlan || "region");
     } catch (e) {}
   }
 
@@ -774,13 +806,51 @@
     populateMIFields("#mi-app-specialty", "#mi-app-regions");
   }
 
+  function ensureMiLiteStateOptions() {
+    var sel = $("#mi-lite-state-select");
+    if (!sel || sel.options.length > 1) return;
+    RIDGE_US_STATES.forEach(function (st) {
+      var opt = document.createElement("option");
+      opt.value = st.abbr;
+      opt.textContent = st.name + " (" + st.abbr + ")";
+      sel.appendChild(opt);
+    });
+  }
+
+  function updateMiLiteRegionStates() {
+    var sel = $("#mi-lite-region-select");
+    var line = $("#mi-lite-region-states");
+    if (!sel || !line) return;
+    var key = sel.value;
+    var pack = RIDGE_PURCHASE_REGIONS[key];
+    if (!pack) {
+      line.hidden = true;
+      line.textContent = "";
+      return;
+    }
+    line.hidden = false;
+    line.textContent = pack.label + " includes: " + pack.states.join(", ");
+  }
+
+  function syncMiLitePlanPickers() {
+    var plan = normalizeMiLitePlan(state.miLitePlan);
+    var statePicker = $("#mi-lite-state-picker");
+    var regionPicker = $("#mi-lite-region-picker");
+    if (statePicker) statePicker.hidden = plan !== "state";
+    if (regionPicker) regionPicker.hidden = plan !== "region";
+    if (plan === "region") updateMiLiteRegionStates();
+  }
+
   function renderMILitePortal() {
     readMiLiteUnlock();
+    state.miLitePlan = normalizeMiLitePlan(state.miLitePlan);
+    ensureMiLiteStateOptions();
     $all('input[name="mi-lite-plan"]').forEach(function (input) {
       input.checked = input.value === state.miLitePlan;
       var card = input.closest(".mi-price-card");
       if (card) card.classList.toggle("is-selected", input.checked);
     });
+    syncMiLitePlanPickers();
   }
 
   function updateMILiteDashboard() {
@@ -2272,7 +2342,7 @@
         }
         if (route === "mi-lite-app" && (t.id === "mi-lite-subscribe" || t.getAttribute("data-mi-unlock") === "1")) {
           var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-          state.miLitePlan = miPlan ? miPlan.value : (state.miLitePlan || "monthly");
+          state.miLitePlan = normalizeMiLitePlan(miPlan ? miPlan.value : (state.miLitePlan || "region"));
           writeMiLiteUnlock(state.miLitePlan);
           if (typeof stampMess === "function") stampMess("client", "Ridge sample unlock · " + state.miLitePlan + " → BD Hub");
         }
@@ -2651,23 +2721,34 @@
     });
     $all('input[name="mi-lite-plan"]').forEach(function (input) {
       input.addEventListener("change", function () {
-        state.miLitePlan = input.value;
+        state.miLitePlan = normalizeMiLitePlan(input.value);
         $all('input[name="mi-lite-plan"]').forEach(function (other) {
           var card = other.closest(".mi-price-card");
           if (card) card.classList.toggle("is-selected", other.checked);
         });
+        syncMiLitePlanPickers();
       });
     });
+    var miRegionSelect = $("#mi-lite-region-select");
+    if (miRegionSelect && !miRegionSelect._ampWired) {
+      miRegionSelect._ampWired = true;
+      miRegionSelect.addEventListener("change", updateMiLiteRegionStates);
+    }
+    var miStateSelect = $("#mi-lite-state-select");
+    if (miStateSelect && !miStateSelect._ampWired) {
+      miStateSelect._ampWired = true;
+      ensureMiLiteStateOptions();
+    }
     function unlockRidgeAndGo(plan, note) {
       if (plan) state.miLitePlan = plan;
-      writeMiLiteUnlock(state.miLitePlan || "monthly");
+      writeMiLiteUnlock(state.miLitePlan || "region");
       if (typeof stampMess === "function") stampMess("client", note || ("Ridge unlock · " + state.miLitePlan));
       go("mi-lite-app", { trail: true });
     }
     var miLoginForm = $("#mi-lite-login-form");
     if (miLoginForm) miLoginForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      unlockRidgeAndGo(state.miLitePlan || "monthly", "Ridge fake login unlock");
+      unlockRidgeAndGo(state.miLitePlan || "region", "Ridge fake login unlock");
     });
     var miDemo = $("#mi-lite-demo-login");
     if (miDemo) miDemo.addEventListener("click", function () {
