@@ -3438,6 +3438,9 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .mi-price-intro, .mi-pricing { padding:24px; }
 .mi-seat-note { padding:12px 14px; border-left:3px solid var(--teal); background:#f0fdfa; color:#115e59 !important; }
 .mi-price-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0; }
+.mi-price-grid.mi-price-grid-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.mi-price-alt { display:block; margin-top:-2px; color:var(--muted); font-size:13px; font-weight:650; }
+@media (max-width:900px) { .mi-price-grid.mi-price-grid-3 { grid-template-columns:1fr; } }
 .mi-price-card { display:flex; flex-direction:column; gap:7px; padding:17px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.9); cursor:pointer; transition:.2s ease; }
 .mi-price-card:hover, .mi-price-card.is-selected { border-color:rgba(13,148,136,.65); box-shadow:0 0 0 2px rgba(13,148,136,.12),0 10px 22px rgba(15,118,110,.1); transform:translateY(-1px); }
 .mi-price-card input { position:absolute; opacity:0; pointer-events:none; }
