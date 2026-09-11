@@ -899,7 +899,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2004")
+    fetch("assets/ridge-usa-map.svg?v=2005")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -1018,9 +1018,9 @@
     var names = stateNames();
     var logo = (function () {
       try {
-        return new URL("assets/amp-lockup-nav.png?v=2004", window.location.href).href;
+        return new URL("assets/amp-lockup-nav.png?v=2005", window.location.href).href;
       } catch (e) {
-        return "assets/amp-lockup-nav.png?v=2004";
+        return "assets/amp-lockup-nav.png?v=2005";
       }
     })();
     var rows = picks.length ? picks : allStateCodes().slice(0, 12);
