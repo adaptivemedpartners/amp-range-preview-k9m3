@@ -1,4 +1,4 @@
-/* amp-build:1997 Ridge workbench — MI-weight analysis surface inside mountain chrome.
+/* amp-build:1998 Ridge workbench — Light MI full-bleed inside mountain chrome.
    No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -200,18 +200,73 @@
   }
 
   function lerpColor(t) {
-    /* dark teal → bright cyan (MI aesthetic) */
+    /* Light MI: soft slate → teal → deep teal */
     t = Math.max(0, Math.min(1, t));
-    var a = [18, 40, 58], b = [42, 155, 181], c = [126, 231, 242];
+    var a = [186, 210, 222], b = [45, 158, 168], c = [13, 148, 136];
     var rgb;
-    if (t < 0.5) {
-      var u = t / 0.5;
+    if (t < 0.55) {
+      var u = t / 0.55;
       rgb = [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u];
     } else {
-      var u2 = (t - 0.5) / 0.5;
+      var u2 = (t - 0.55) / 0.45;
       rgb = [b[0] + (c[0] - b[0]) * u2, b[1] + (c[1] - b[1]) * u2, b[2] + (c[2] - b[2]) * u2];
     }
     return "rgb(" + Math.round(rgb[0]) + "," + Math.round(rgb[1]) + "," + Math.round(rgb[2]) + ")";
+  }
+
+  function vacancyBreakdown(annual) {
+    if (annual == null || isNaN(annual)) return null;
+    return {
+      annual: annual,
+      quarterly: annual / 4,
+      monthly: annual / 12,
+      daily: annual / 365,
+      d30: annual / 365 * 30,
+      d90: annual / 365 * 90,
+      d180: annual / 365 * 180
+    };
+  }
+
+  function timeToFillFor(s) {
+    if (!s) return 118;
+    if (s.timeToFillDays != null) return s.timeToFillDays;
+    return 140;
+  }
+
+  function annualRevenueFor(s) {
+    if (!s) return null;
+    if (s.annualRevenue != null) return s.annualRevenue;
+    return null;
+  }
+
+  function redrawOutlines() {
+    var root = $("ridge-map-container");
+    if (!root) return;
+    var svg = root.querySelector("svg");
+    if (!svg) return;
+    var layer = svg.querySelector("#outline-layer");
+    if (!layer) {
+      layer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      layer.setAttribute("id", "outline-layer");
+      svg.appendChild(layer);
+    }
+    layer.innerHTML = "";
+    function cloneOutline(code, cls) {
+      var src = root.querySelector('[data-state="' + code + '"]');
+      if (!src) return;
+      var clone = src.cloneNode(true);
+      clone.removeAttribute("id");
+      clone.removeAttribute("class");
+      clone.setAttribute("class", cls);
+      clone.style.fill = "none";
+      clone.style.pointerEvents = "none";
+      clone.style.stroke = "";
+      clone.style.strokeWidth = "";
+      clone.style.filter = "";
+      layer.appendChild(clone);
+    }
+    selectedCodes().forEach(function (code) { cloneOutline(code, "outline-selected"); });
+    if (state.hover && !state.selected[state.hover]) cloneOutline(state.hover, "outline-hover");
   }
 
   function allStateCodes() {
@@ -249,6 +304,7 @@
         '<span class="ridge-legend-scale"><i class="hi"></i> Higher</span>' +
         '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>';
     }
+    redrawOutlines();
   }
 
   function pctCells(obj, fmt) {
@@ -275,7 +331,42 @@
     var wt = workforceTerms(s);
     var html = "";
 
-    html += '<div class="bench-card phys bench-featured"><div class="title">' + (wt.active || ("Active " + wt.title)) + '</div>';
+    /* Row 1 (Mike 1998): Compensation top-left, then pipeline, then workforce age.
+       Row 2: former top row — supply, postings, openings ratio. */
+    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation</div>';
+    html += '<div class="hero">' + show(fmtMoney(tc.p50), "n/a") + "<small>median</small></div>";
+    html += '<div class="pct-grid">' + pctCells(s.totalComp, fmtMoney) + "</div>";
+    if (tc.mean != null) html += '<div class="mean-line">Mean ' + fmtMoney(tc.mean) + " · MGMA · EXAMPLE</div>";
+    else html += '<div class="mean-line">MGMA national · EXAMPLE</div>';
+    if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
+      html += '<div class="bench-extra">';
+      if (ratio.p50 != null) html += '<span>Comp / wRVU <b>' + show(fmtNum(ratio.p50, 2), "n/a") + "</b></span>";
+      if (rvu && rvu.p50 != null) html += '<span>wRVU median <b>' + show(fmtNum(rvu.p50), "n/a") + "</b></span>";
+      html += "</div>";
+    }
+    html += "</div>";
+
+    html += '<div class="bench-card pipeline"><div class="title">Training pipeline (NRMP)</div>';
+    if (s.pipelineFilled != null) {
+      html += '<div class="hero">' + show(fmtNum(s.pipelineFilled), "n/a") + '<small>PGY-1 filled / year</small></div>';
+      html += '<div class="mean-line">' + show(fmtNum(s.pipelineOffered), "") + " offered · " +
+        (s.pipelineFillRate != null ? s.pipelineFillRate + "% fill" : "") + " · 2025 Match · EXAMPLE</div>";
+    } else {
+      html += '<div class="hero"><span class="na">n/a</span><small>no PGY-1 match breakout</small></div>';
+      html += '<div class="mean-line">Subspecialties often lack separate Match counts · EXAMPLE</div>';
+    }
+    html += '</div>';
+
+    html += '<div class="bench-card aging"><div class="title">Workforce age 55+</div>';
+    if (s.age55Pct != null) {
+      html += '<div class="hero">' + s.age55Pct.toFixed(1) + '%<small>national specialty signal</small></div>';
+      html += '<div class="mean-line">AAMC workforce reports · retirement pressure · EXAMPLE</div>';
+    } else {
+      html += '<div class="hero"><span class="na">n/a</span></div><div class="mean-line">EXAMPLE</div>';
+    }
+    html += '</div>';
+
+    html += '<div class="bench-card phys"><div class="title">' + (wt.active || ("Active " + wt.title)) + '</div>';
     if (s.physCategory || (s.physNational != null && s.physNational > 0)) {
       html += '<div class="hero">' + show(fmtNum(s.physNational), "n/a") + '<small>national · ' + (s.physCategory || s.label || wt.title) + '</small></div>';
       html += '<div class="mean-line">KFF May 2026 · EXAMPLE</div>';
@@ -306,40 +397,6 @@
     }
     html += '</div>';
 
-    html += '<div class="bench-card aging"><div class="title">Workforce age 55+</div>';
-    if (s.age55Pct != null) {
-      html += '<div class="hero">' + s.age55Pct.toFixed(1) + '%<small>national specialty signal</small></div>';
-      html += '<div class="mean-line">AAMC workforce reports · retirement pressure · EXAMPLE</div>';
-    } else {
-      html += '<div class="hero"><span class="na">n/a</span></div><div class="mean-line">EXAMPLE</div>';
-    }
-    html += '</div>';
-
-    html += '<div class="bench-card pipeline"><div class="title">Training pipeline (NRMP)</div>';
-    if (s.pipelineFilled != null) {
-      html += '<div class="hero">' + show(fmtNum(s.pipelineFilled), "n/a") + '<small>PGY-1 filled / year</small></div>';
-      html += '<div class="mean-line">' + show(fmtNum(s.pipelineOffered), "") + " offered · " +
-        (s.pipelineFillRate != null ? s.pipelineFillRate + "% fill" : "") + " · 2025 Match · EXAMPLE</div>";
-    } else {
-      html += '<div class="hero"><span class="na">n/a</span><small>no PGY-1 match breakout</small></div>';
-      html += '<div class="mean-line">Subspecialties often lack separate Match counts · EXAMPLE</div>';
-    }
-    html += '</div>';
-
-    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation</div>';
-    html += '<div class="hero">' + show(fmtMoney(tc.p50), "n/a") + "<small>median</small></div>";
-    html += '<div class="pct-grid">' + pctCells(s.totalComp, fmtMoney) + "</div>";
-    if (tc.mean != null) html += '<div class="mean-line">Mean ' + fmtMoney(tc.mean) + " · MGMA · EXAMPLE</div>";
-    else html += '<div class="mean-line">MGMA national · EXAMPLE</div>';
-    /* secondary strip: Comp/wRVU + work RVUs when present */
-    if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
-      html += '<div class="bench-extra">';
-      if (ratio.p50 != null) html += '<span>Comp / wRVU <b>' + show(fmtNum(ratio.p50, 2), "n/a") + "</b></span>";
-      if (rvu && rvu.p50 != null) html += '<span>wRVU median <b>' + show(fmtNum(rvu.p50), "n/a") + "</b></span>";
-      html += "</div>";
-    }
-    html += "</div>";
-
     host.innerHTML = html;
   }
 
@@ -355,43 +412,112 @@
     var s = currentSpec();
     var names = stateNames();
     var picks = selectedCodes();
-    if (headName) headName.textContent = picks.length === 1 ? (names[picks[0]] || picks[0].toUpperCase()) : (s ? s.label : "Specialty benchmarks");
+    var wt = workforceTerms(s || {});
+
+    if (headName) {
+      if (picks.length === 1) headName.textContent = names[picks[0]] || picks[0].toUpperCase();
+      else if (picks.length > 1) headName.textContent = picks.length + " states selected";
+      else headName.textContent = s ? s.label : "Specialty benchmarks";
+    }
     if (headSub) {
-      if (picks.length > 1) headSub.textContent = picks.length + " states selected · " + metricLabelForActive();
-      else if (picks.length === 1) headSub.textContent = picks[0].toUpperCase() + " · " + metricLabelForActive() + " · EXAMPLE";
-      else headSub.textContent = "MGMA / KFF / JAMA signals · EXAMPLE";
+      if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + picks[0].toUpperCase() + " · EXAMPLE";
+      else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + metricLabelForActive() + " · EXAMPLE";
+      else headSub.textContent = "MGMA / KFF / JAMA / AAPPR signals · EXAMPLE";
     }
 
     var html = "";
-    if (picks.length === 1) {
-      var code = picks[0];
-      html += '<div class="section-title">State read</div>';
-      [
-        ["Supply", fmtNum(physCountFor(code))],
-        ["Density / 100k", Number(densityFor(code)).toFixed(1)],
-        ["Approx. postings", fmtNum(postingsFor(code))],
-        ["Openings / 100", Number(ratioFor(code)).toFixed(2)],
-        ["Recruiting difficulty", Number(difficultyFor(code)).toFixed(1)],
-        ["COL index (RPP)", String(rppFor(code))],
-        ["Real pay value", fmtMoney(realPayFor(code))]
-      ].forEach(function (row) {
-        html += '<div class="row"><span class="k">' + row[0] + '</span><span class="v">' + show(row[1], "—") + "</span></div>";
+    html += '<div class="sel-block">';
+    html += '<div class="sel-title"><strong>Selected states</strong><span class="sel-hint">Multi-select · Cmd/Ctrl+click</span></div>';
+    if (picks.length) {
+      html += '<div class="sel-chips">';
+      picks.slice().sort(function (a, b) {
+        return (names[a] || a).localeCompare(names[b] || b);
+      }).forEach(function (code) {
+        html += '<span class="sel-chip">' + (names[code] || code.toUpperCase()) +
+          '<button type="button" data-remove-state="' + code + '" title="Remove" aria-label="Remove">×</button></span>';
       });
-      if (s && s.totalComp) {
-        html += '<div class="section-title">National compensation</div>';
-        html += '<div class="row"><span class="k">Median total comp</span><span class="v">' + show(fmtMoney(s.totalComp.p50), "—") + "</span></div>";
-        if (s.compRatio && s.compRatio.p50 != null)
-          html += '<div class="row"><span class="k">Comp / wRVU</span><span class="v">' + show(fmtNum(s.compRatio.p50, 2), "—") + "</span></div>";
+      html += "</div>";
+    } else {
+      html += '<div class="sel-hint">None selected — click states on the map</div>';
+    }
+    html += "</div>";
+
+    if (s && s.totalComp) {
+      html += '<div class="section-title">Total compensation · national</div>';
+      html += '<div class="row"><span class="k">Median total comp</span><span class="v"><strong>' + show(fmtMoney(s.totalComp.p50), "—") + "</strong></span></div>";
+      if (s.totalComp.mean != null)
+        html += '<div class="row"><span class="k">Mean total comp</span><span class="v">' + show(fmtMoney(s.totalComp.mean), "—") + "</span></div>";
+      if (s.compRatio && s.compRatio.p50 != null)
+        html += '<div class="row"><span class="k">Comp / wRVU</span><span class="v">' + show(fmtNum(s.compRatio.p50, 2), "—") + "</span></div>";
+      if (s.workRVUs && s.workRVUs.p50 != null)
+        html += '<div class="row"><span class="k">wRVU median</span><span class="v">' + show(fmtNum(s.workRVUs.p50), "—") + "</span></div>";
+    }
+
+    var ttfDays = timeToFillFor(s);
+    var annualRev = annualRevenueFor(s);
+    var vac = vacancyBreakdown(annualRev);
+    if (vac || ttfDays) {
+      html += '<div class="section-title">Time-to-fill &amp; cost of vacancy</div>';
+      html += '<div class="vacancy-box">';
+      html += '<div class="vac-title">Benchmark search length · AAPPR-aligned</div>';
+      html += '<div class="vac-hero">' + ttfDays + ' days<small>median time-to-fill for specialty family</small></div>';
+      if (vac) {
+        html += '<div class="row vac-daily"><span class="k">Daily cost they\u2019re losing</span><span class="v"><strong>' + fmtMoney(vac.daily) + "</strong></span></div>";
+        html += '<div class="row"><span class="k">Revenue at risk over TTF</span><span class="v"><strong>' + fmtMoney(vac.daily * ttfDays) + "</strong></span></div>";
+        html += '<div class="vacancy-grid">';
+        html += '<div class="cell"><div class="lbl">Daily</div><div class="val">' + fmtMoney(vac.daily) + "</div></div>";
+        html += '<div class="cell"><div class="lbl">Monthly</div><div class="val">' + fmtMoney(vac.monthly) + "</div></div>";
+        html += '<div class="cell"><div class="lbl">Quarterly</div><div class="val">' + fmtMoney(vac.quarterly) + "</div></div>";
+        html += '<div class="cell"><div class="lbl">Annual</div><div class="val">' + fmtMoney(vac.annual) + "</div></div>";
+        html += "</div>";
+        html += '<div class="vacancy-scenarios">';
+        html += '<div class="row"><span class="k">30-day vacancy</span><span class="v">' + fmtMoney(vac.d30) + "</span></div>";
+        html += '<div class="row"><span class="k">90-day vacancy</span><span class="v">' + fmtMoney(vac.d90) + "</span></div>";
+        html += '<div class="row"><span class="k">180-day vacancy</span><span class="v">' + fmtMoney(vac.d180) + "</span></div>";
+        html += "</div>";
       }
+      html += '<div class="note">TTF is a specialty benchmark. Revenue is directional professional medical revenue · EXAMPLE.</div>';
+      html += "</div>";
+    }
+
+    if (picks.length) {
+      html += '<div class="section-title">Selected states · supply &amp; openings</div>';
+      var sumPhys = 0, sumPost = 0, sumPop = 0;
+      var pop = statePop();
+      picks.slice().sort(function (a, b) {
+        return (names[a] || a).localeCompare(names[b] || b);
+      }).forEach(function (code) {
+        var n = physCountFor(code);
+        var p = postingsFor(code);
+        var d = densityFor(code);
+        var diff = difficultyFor(code);
+        sumPhys += n || 0;
+        sumPost += p || 0;
+        sumPop += pop[code] || 0;
+        html += '<div class="st-card">';
+        html += '<div class="st-name">' + (names[code] || code.toUpperCase()) + "</div>";
+        html += '<div class="st-metrics">';
+        html += '<div class="st-m"><span class="st-ml">' + wt.title + '</span><span class="st-mv">' + show(fmtNum(n), "—") + "</span></div>";
+        html += '<div class="st-m"><span class="st-ml">Per 100k</span><span class="st-mv">' + Number(d).toFixed(1) + "</span></div>";
+        html += '<div class="st-m"><span class="st-ml">~Jobs</span><span class="st-mv">' + show(fmtNum(p), "0") + "</span></div>";
+        html += '<div class="st-m"><span class="st-ml">Difficulty</span><span class="st-mv">' + Number(diff).toFixed(1) + "</span></div>";
+        html += "</div>";
+        html += '<div class="st-pay"><span>COL ' + rppFor(code) + '</span><span>Real pay ' + show(fmtMoney(realPayFor(code)), "—") + "</span></div>";
+        html += "</div>";
+      });
+      html += '<div class="row"><span class="k"><strong>Combined ' + wt.plural + '</strong></span><span class="v"><strong>' + show(fmtNum(sumPhys), "—") + "</strong></span></div>";
+      if (sumPop > 0)
+        html += '<div class="row"><span class="k"><strong>Combined density</strong></span><span class="v"><strong>' + (100000 * sumPhys / sumPop).toFixed(1) + " / 100k</strong></span></div>";
+      if (sumPhys > 0)
+        html += '<div class="row"><span class="k"><strong>Selected openings / 100</strong></span><span class="v"><strong>' + (100 * sumPost / sumPhys).toFixed(2) + "</strong></span></div>";
     } else if (s) {
       html += '<div class="section-title">National benchmarks</div>';
       html += '<div class="row"><span class="k">Active supply</span><span class="v">' + show(fmtNum(s.physNational), "—") + "</span></div>";
       html += '<div class="row"><span class="k">Approx. postings</span><span class="v">' + show(fmtNum(s.nationalPostings), "—") + "</span></div>";
       html += '<div class="row"><span class="k">Age 55+</span><span class="v">' + (s.age55Pct != null ? s.age55Pct.toFixed(1) + "%" : "—") + "</span></div>";
-      html += '<div class="row"><span class="k">Median comp</span><span class="v">' + show(fmtMoney(s.totalComp && s.totalComp.p50), "—") + "</span></div>";
     }
 
-    html += '<div class="section-title">States by ' + metricLabelForActive() + '</div>';
+    html += '<div class="section-title">States by ' + metricLabelForActive() + "</div>";
     html += '<div class="ridge-state-list">';
     var ranked = allStateCodes().map(function (code) {
       return { code: code, name: names[code] || code.toUpperCase(), v: metricValueFor(code) };
@@ -535,33 +661,80 @@
     tip.style.top = Math.min(y, rect.height - 60) + "px";
   }
 
+  function ensureMapGlow(host) {
+    if (!host) return;
+    var svg = host.querySelector("svg");
+    if (!svg) return;
+    if (!svg.querySelector("#ampStateGlow")) {
+      var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML =
+        '<filter id="ampStateGlow" x="-120%" y="-120%" width="340%" height="340%" color-interpolation-filters="sRGB">' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b1"/>' +
+        '<feFlood flood-color="#ffffff" flood-opacity="0.95" result="f1"/>' +
+        '<feComposite in="f1" in2="b1" operator="in" result="g1"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="8" result="b2"/>' +
+        '<feFlood flood-color="#0d9488" flood-opacity="0.95" result="f2"/>' +
+        '<feComposite in="f2" in2="b2" operator="in" result="g2"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="16" result="b3"/>' +
+        '<feFlood flood-color="#0d9488" flood-opacity="0.75" result="f3"/>' +
+        '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="26" result="b4"/>' +
+        '<feFlood flood-color="#14b8a6" flood-opacity="0.45" result="f4"/>' +
+        '<feComposite in="f4" in2="b4" operator="in" result="g4"/>' +
+        '<feMerge><feMergeNode in="g4"/><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+      svg.insertBefore(defs, svg.firstChild);
+    }
+    if (!svg.querySelector("#outline-layer")) {
+      var layer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      layer.setAttribute("id", "outline-layer");
+      svg.appendChild(layer);
+    }
+    svg.querySelectorAll("[data-state]").forEach(function (el) {
+      el.style.pointerEvents = "auto";
+      el.style.cursor = "pointer";
+    });
+    svg.querySelectorAll("g.borders path, path.separator1").forEach(function (el) {
+      el.style.pointerEvents = "none";
+    });
+  }
+
   function bindMap() {
     var root = $("ridge-map-container");
     if (!root || root.getAttribute("data-ridge-bound") === "1") return;
     root.setAttribute("data-ridge-bound", "1");
+    ensureMapGlow(root);
+
     root.addEventListener("pointerover", function (e) {
       var el = e.target.closest("[data-state]");
-      if (!el) return;
-      state.hover = el.getAttribute("data-state");
-      el.classList.add("is-hover");
+      if (!el || !root.contains(el)) return;
+      var code = el.getAttribute("data-state");
+      if (state.hover === code) return;
+      state.hover = code;
+      paintMap();
       showTooltip(e, state.hover);
     });
     root.addEventListener("pointermove", function (e) {
-      if (state.hover) showTooltip(e, state.hover);
-    });
-    root.addEventListener("pointerout", function (e) {
       var el = e.target.closest("[data-state]");
-      if (!el) return;
-      el.classList.remove("is-hover");
-      if (state.hover === el.getAttribute("data-state")) {
-        state.hover = null;
-        showTooltip(null, null);
+      if (el && root.contains(el)) {
+        var code = el.getAttribute("data-state");
+        if (state.hover !== code) {
+          state.hover = code;
+          paintMap();
+        }
+        showTooltip(e, state.hover);
       }
+    });
+    root.addEventListener("pointerleave", function () {
+      if (!state.hover) return;
+      state.hover = null;
+      paintMap();
+      showTooltip(null, null);
     });
     root.addEventListener("click", function (e) {
       var el = e.target.closest("[data-state]");
-      if (!el) return;
-      var additive = state.multi || e.metaKey || e.ctrlKey;
+      if (!el || !root.contains(el)) return;
+      e.preventDefault();
+      var additive = state.multi || e.metaKey || e.ctrlKey || e.shiftKey;
       toggleState(el.getAttribute("data-state"), additive);
     });
   }
@@ -571,15 +744,22 @@
     if (!host) { if (cb) cb(); return; }
     if (host.querySelector("svg")) {
       state.mapReady = true;
+      host.removeAttribute("data-ridge-bound");
+      ensureMapGlow(host);
       bindMap();
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=1997")
-      .then(function (r) { return r.text(); })
+    fetch("assets/ridge-usa-map.svg?v=1998")
+      .then(function (r) {
+        if (!r.ok) throw new Error("map " + r.status);
+        return r.text();
+      })
       .then(function (svg) {
         host.innerHTML = svg;
         state.mapReady = true;
+        host.removeAttribute("data-ridge-bound");
+        ensureMapGlow(host);
         bindMap();
         if (cb) cb();
       })
@@ -659,6 +839,18 @@
     var side = $("ridge-side-body");
     if (side) {
       side.addEventListener("click", function (e) {
+        var rem = e.target.closest("[data-remove-state]");
+        if (rem) {
+          e.preventDefault();
+          var code = rem.getAttribute("data-remove-state");
+          if (state.selected[code]) {
+            delete state.selected[code];
+            paintMap();
+            renderSidebar();
+            updateTitle();
+          }
+          return;
+        }
         var row = e.target.closest("[data-ridge-state]");
         if (!row) return;
         toggleState(row.getAttribute("data-ridge-state"), state.multi);
@@ -672,9 +864,9 @@
     var names = stateNames();
     var logo = (function () {
       try {
-        return new URL("assets/amp-lockup-nav.png?v=1997", window.location.href).href;
+        return new URL("assets/amp-lockup-nav.png?v=1998", window.location.href).href;
       } catch (e) {
-        return "assets/amp-lockup-nav.png?v=1997";
+        return "assets/amp-lockup-nav.png?v=1998";
       }
     })();
     var rows = picks.length ? picks : allStateCodes().slice(0, 12);

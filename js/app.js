@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1996-ridge-golive";
+  window.__AMP_BUILD = "1998-ridge-light-fullbleed";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1996";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1998";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1996";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1998";
         }
       });
       finishBake();
