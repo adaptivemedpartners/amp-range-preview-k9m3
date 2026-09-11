@@ -1,4 +1,4 @@
-/* amp-build:1998 Ridge workbench — Light MI full-bleed inside mountain chrome.
+/* amp-build:1999 Ridge workbench — Light MI full-bleed inside mountain chrome.
    No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -23,11 +23,34 @@
     sc: 93, sd: 90, tn: 92, tx: 97, ut: 98, vt: 101, va: 103, wa: 108, wv: 87, wi: 95, wy: 96
   };
 
+
+  /* Market intel seeds (EXAMPLE) — from AMP Market Intelligence for Ridge hover card */
+  var RETENTION_BY_STATE = {"al":52.3,"ak":70.3,"az":54.9,"ar":55.3,"ca":75.7,"co":58.2,"ct":46.7,"de":41.2,"dc":33.6,"fl":64.5,"ga":58.5,"hi":52.5,"id":66.0,"il":53.3,"in":55.4,"ia":46.7,"ks":52.8,"ky":50.8,"la":51.8,"me":60.9,"md":45.7,"ma":54.6,"mi":53.1,"mn":51.0,"ms":52.0,"mo":48.0,"mt":58.0,"ne":52.0,"nv":54.0,"nh":45.1,"nj":48.0,"nm":50.0,"ny":48.5,"nc":52.0,"nd":50.0,"oh":51.0,"ok":52.0,"or":55.0,"pa":48.5,"ri":44.9,"sc":54.0,"sd":50.0,"tn":53.0,"tx":64.9,"ut":51.5,"vt":48.9,"va":49.1,"wa":56.1,"wv":49.0,"wi":53.9,"wy":43.0};
+  var HPSA_BY_STATE = {"al":{"pctMet":67.0,"needed":239,"pop":2251179},"ak":{"pctMet":26.6,"needed":68,"pop":298176},"az":{"pctMet":42.2,"needed":776,"pop":4220172},"ar":{"pctMet":53.5,"needed":177,"pop":1123775},"ca":{"pctMet":53.6,"needed":1045,"pop":6905819},"co":{"pctMet":46.7,"needed":171,"pop":997473},"ct":{"pctMet":74.6,"needed":73,"pop":961480},"de":{"pctMet":11.2,"needed":122,"pop":394684},"dc":{"pctMet":0.2,"needed":96,"pop":286765},"fl":{"pctMet":39.6,"needed":1434,"pop":6966284},"ga":{"pctMet":39.0,"needed":563,"pop":2720812},"hi":{"pctMet":66.6,"needed":58,"pop":604780},"id":{"pctMet":47.1,"needed":85,"pop":509230},"il":{"pctMet":44.4,"needed":597,"pop":3343128},"in":{"pctMet":52.2,"needed":431,"pop":2822011},"ia":{"pctMet":37.2,"needed":197,"pop":979850},"ks":{"pctMet":41.2,"needed":122,"pop":652005},"ky":{"pctMet":31.4,"needed":388,"pop":1752671},"la":{"pctMet":72.5,"needed":220,"pop":2540625},"me":{"pctMet":60.1,"needed":26,"pop":209904},"md":{"pctMet":28.7,"needed":284,"pop":1170262},"ma":{"pctMet":58.5,"needed":81,"pop":599751},"mi":{"pctMet":47.5,"needed":464,"pop":2629221},"mn":{"pctMet":54.4,"needed":216,"pop":1503698},"ms":{"pctMet":34.9,"needed":303,"pop":1353860},"mo":{"pctMet":21.5,"needed":475,"pop":1837226},"mt":{"pctMet":42.3,"needed":57,"pop":334449},"ne":{"pctMet":49.2,"needed":36,"pop":257978},"nv":{"pctMet":43.7,"needed":180,"pop":957294},"nh":{"pctMet":78.9,"needed":14,"pop":192273},"nj":{"pctMet":70.2,"needed":24,"pop":243247},"nm":{"pctMet":43.7,"needed":182,"pop":1003706},"ny":{"pctMet":35.4,"needed":1036,"pop":4845088},"nc":{"pctMet":47.8,"needed":559,"pop":3203805},"nd":{"pctMet":37.7,"needed":37,"pop":195077},"oh":{"pctMet":48.5,"needed":686,"pop":4017969},"ok":{"pctMet":30.7,"needed":318,"pop":1279787},"or":{"pctMet":51.3,"needed":169,"pop":1022377},"pa":{"pctMet":51.6,"needed":91,"pop":461015},"ri":{"pctMet":74.3,"needed":22,"pop":257218},"sc":{"pctMet":78.5,"needed":189,"pop":2739889},"sd":{"pctMet":33.2,"needed":59,"pop":287405},"tn":{"pctMet":58.8,"needed":383,"pop":2816840},"tx":{"pctMet":51.0,"needed":1147,"pop":7346355},"ut":{"pctMet":65.4,"needed":79,"pop":703027},"vt":{"pctMet":84.2,"needed":2,"pop":43971},"va":{"pctMet":57.5,"needed":298,"pop":2221978},"wa":{"pctMet":45.4,"needed":685,"pop":4101131},"wv":{"pctMet":38.3,"needed":163,"pop":793019},"wi":{"pctMet":54.0,"needed":200,"pop":1500000},"wy":{"pctMet":40.0,"needed":40,"pop":200000}};
+  var GME_PROGRAMS = {fm:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:11,ak:1,az:17,ar:15,ca:84,co:14,ct:6,de:4,dc:1,fl:39,ga:20,hi:5,id:9,il:35,in:17,ia:8,ks:6,ky:10,la:13,me:4,md:7,ma:7,mi:40,mn:13,ms:9,mo:14,mt:2,ne:5,nv:7,nh:4,nj:24,nm:7,ny:43,nc:21,nd:6,oh:41,ok:13,or:9,pa:59,pr:5,ri:2,sc:18,sd:3,tn:13,tx:43,ut:5,vt:2,va:17,wa:27,wv:8,wi:21,wy:3,_national:817},im:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:12,ak:1,az:14,ar:11,ca:66,co:4,ct:14,de:2,dc:4,fl:55,ga:21,hi:4,id:2,il:25,in:8,ia:4,ks:4,ky:7,la:11,me:1,md:13,ma:15,mi:36,mn:4,ms:9,mo:14,mt:2,ne:2,nv:6,nh:2,nj:30,nm:3,ny:65,nc:15,nd:2,oh:34,ok:5,or:6,pa:37,pr:10,ri:4,sc:10,sd:1,tn:10,tx:46,ut:1,vt:1,va:14,wa:9,wv:6,wi:6,wy:0,_national:688},obg:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:2,ak:0,az:4,ar:1,ca:25,co:2,ct:6,de:1,dc:3,fl:17,ga:6,hi:2,id:0,il:13,in:3,ia:1,ks:3,ky:3,la:5,me:1,md:5,ma:6,mi:24,mn:2,ms:1,mo:5,mt:0,ne:2,nv:2,nh:1,nj:17,nm:1,ny:36,nc:9,nd:0,oh:15,ok:4,or:1,pa:16,pr:3,ri:1,sc:5,sd:0,tn:8,tx:23,ut:1,vt:1,va:7,wa:3,wv:3,wi:3,wy:0,_national:303},pd:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:2,ak:0,az:3,ar:1,ca:18,co:1,ct:2,de:1,dc:2,fl:15,ga:5,hi:2,id:1,il:10,in:2,ia:2,ks:1,ky:2,la:5,me:1,md:4,ma:4,mi:10,mn:2,ms:1,mo:4,mt:0,ne:1,nv:2,nh:1,nj:9,nm:1,ny:32,nc:5,nd:1,oh:9,ok:3,or:1,pa:8,pr:4,ri:1,sc:3,sd:1,tn:4,tx:13,ut:1,vt:1,va:6,wa:3,wv:3,wi:3,wy:0,_national:217},psych:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:8,ak:0,az:6,ar:3,ca:38,co:2,ct:6,de:2,dc:4,fl:28,ga:8,hi:2,id:2,il:13,in:5,ia:3,ks:2,ky:2,la:5,me:3,md:7,ma:12,mi:12,mn:3,ms:2,mo:5,mt:1,ne:2,nv:4,nh:2,nj:13,nm:1,ny:46,nc:10,nd:1,oh:11,ok:4,or:3,pa:17,pr:2,ri:1,sc:5,sd:1,tn:5,tx:22,ut:1,vt:1,va:7,wa:2,wv:4,wi:4,wy:0,_national:353},em:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:2,ak:0,az:6,ar:3,ca:26,co:1,ct:2,de:2,dc:2,fl:24,ga:5,hi:0,id:0,il:13,in:2,ia:2,ks:1,ky:2,la:4,me:1,md:2,ma:5,mi:27,mn:3,ms:3,mo:5,mt:0,ne:1,nv:4,nh:1,nj:12,nm:1,ny:32,nc:7,nd:0,oh:18,ok:5,or:1,pa:22,pr:2,ri:2,sc:5,sd:1,tn:5,tx:20,ut:1,vt:1,va:7,wa:2,wv:2,wi:2,wy:0,_national:297},ortho:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:3,ak:0,az:3,ar:1,ca:17,co:1,ct:2,de:0,dc:2,fl:11,ga:4,hi:2,id:0,il:7,in:1,ia:1,ks:2,ky:2,la:4,me:0,md:5,ma:4,mi:17,mn:2,ms:1,mo:5,mt:0,ne:1,nv:2,nh:1,nj:10,nm:1,ny:19,nc:5,nd:1,oh:16,ok:2,or:2,pa:16,pr:1,ri:1,sc:3,sd:0,tn:4,tx:15,ut:1,vt:1,va:4,wa:2,wv:2,wi:2,wy:0,_national:209},gs:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:3,ak:0,az:8,ar:1,ca:27,co:5,ct:6,de:2,dc:3,fl:29,ga:8,hi:2,id:0,il:13,in:3,ia:3,ks:3,ky:3,la:6,me:1,md:8,ma:10,mi:24,mn:3,ms:2,mo:5,mt:0,ne:2,nv:3,nh:1,nj:15,nm:1,ny:40,nc:9,nd:1,oh:20,ok:3,or:2,pa:23,pr:2,ri:1,sc:6,sd:1,tn:7,tx:26,ut:2,vt:1,va:8,wa:5,wv:4,wi:4,wy:0,_national:365},rad:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:3,ak:0,az:3,ar:1,ca:20,co:1,ct:6,de:1,dc:2,fl:11,ga:3,hi:1,id:0,il:10,in:2,ia:1,ks:2,ky:2,la:4,me:1,md:3,ma:10,mi:10,mn:2,ms:1,mo:4,mt:0,ne:2,nv:1,nh:1,nj:6,nm:1,ny:25,nc:3,nd:0,oh:8,ok:3,or:1,pa:12,pr:1,ri:1,sc:1,sd:0,tn:4,tx:12,ut:1,vt:1,va:4,wa:4,wv:1,wi:3,wy:0,_national:200},derm:{_type:"residency",_source:"ACGME Data Resource Book AY 2024-2025",al:1,ak:0,az:4,ar:1,ca:12,co:1,ct:2,de:0,dc:3,fl:11,ga:3,hi:0,id:0,il:7,in:1,ia:1,ks:1,ky:1,la:2,me:0,md:3,ma:4,mi:7,mn:3,ms:1,mo:5,mt:0,ne:1,nv:0,nh:1,nj:3,nm:1,ny:12,nc:4,nd:0,oh:7,ok:1,or:2,pa:8,pr:2,ri:1,sc:1,sd:0,tn:2,tx:13,ut:1,vt:1,va:5,wa:1,wv:1,wi:3,wy:0,_national:145},gi:{_type:"fellowship",_source:"ACGME Data Resource Book AY 2024-2025",_national:242},rheum:{_type:"fellowship",_source:"ACGME Data Resource Book AY 2024-2025",_national:138},endo:{_type:"fellowship",_source:"ACGME Data Resource Book AY 2024-2025",_national:163}};
+  var GME_SPEC_MAP = {
+    family_medicine_without_ob:"fm", family_medicine_with_ob:"fm", family_medicine_ambulatory_only_no_inpatient_work:"fm",
+    family_medicine_sports_medicine:"fm", hospitalist_family_medicine:"fm",
+    internal_medicine_general:"im", internal_medicine_ambulatory_only_no_inpatient_work:"im", hospitalist_internal_medicine:"im", hospitalist_nocturnist:"im",
+    ob_gyn_general:"obg", hospitalist_ob_gyn:"obg",
+    pediatrics_general:"pd",
+    psychiatry_general:"psych", psychiatry_child_and_adolescent:"psych", psychiatry_geriatric:"psych", psychiatry_addiction_medicine:"psych",
+    emergency_medicine:"em",
+    orthopedic_surgery_general:"ortho", orthopedic_surgery_sports_medicine:"ortho", orthopedic_surgery_spine:"ortho",
+    orthopedic_surgery_trauma:"ortho", orthopedic_surgery_hand:"ortho", orthopedic_surgery_hip_and_joint:"ortho",
+    surgery_general:"gs", surgery_trauma:"gs",
+    radiology_diagnostic:"rad", radiology_interventional:"rad",
+    dermatology:"derm", dermatology_mohs_surgery:"derm",
+    gastroenterology:"gi", gastroenterology_hepatology:"gi",
+    rheumatology:"rheum",
+    endocrinology_metabolism:"endo"
+  };
+
   var state = {
     specialtyKey: null,
     mapMetric: "difficulty",
     selected: {},
-    multi: true,
+    multi: false,
     groupFilter: "all",
     search: "",
     hover: null,
@@ -102,8 +125,7 @@
   }
   function fmtMoney(n) {
     if (n == null || isNaN(n)) return null;
-    if (Math.abs(n) >= 1000) return "$" + Math.round(n / 1000) + "k";
-    return "$" + Math.round(n);
+    return "$" + Math.round(Number(n)).toLocaleString("en-US");
   }
   function show(v, fallback) { return v == null || v === "" ? (fallback || "n/a") : v; }
 
@@ -151,6 +173,48 @@
     return Math.round(score * 10) / 10;
   }
   function rppFor(code) { return STATE_RPP[code] || 100; }
+
+  function hpsaFor(code) { return HPSA_BY_STATE[code] || null; }
+  function retentionFor(code) {
+    var v = RETENTION_BY_STATE[code];
+    return v != null ? v : null;
+  }
+  function gmeKeyForSpec(s) {
+    s = s || currentSpec();
+    if (!s) return null;
+    return GME_SPEC_MAP[s.key] || null;
+  }
+  function gmeProgramsFor(code, s) {
+    var gk = gmeKeyForSpec(s);
+    if (!gk || !GME_PROGRAMS[gk]) return null;
+    var g = GME_PROGRAMS[gk];
+    if (code) {
+      if (g[code] != null) return { count: g[code], type: g._type, national: g._national, state: code };
+      if (g._type === "fellowship") return { count: null, type: g._type, national: g._national, state: code, nationalOnly: true };
+      return { count: 0, type: g._type, national: g._national, state: code };
+    }
+    return { count: g._national, type: g._type, national: g._national };
+  }
+  function mgmaBarsHtml(tc, opts) {
+    opts = opts || {};
+    var cls = opts.className || "ridge-bars";
+    if (!tc) return "";
+    var maxComp = Math.max(tc.p90 || 0, tc.p75 || 0, tc.p50 || 0, tc.p25 || 0, 1);
+    var html = '<div class="' + cls + '">';
+    [["25th", tc.p25], ["50th", tc.p50], ["75th", tc.p75], ["90th", tc.p90]].forEach(function (pair) {
+      var pct = pair[1] != null ? Math.round(pair[1] / maxComp * 100) : 0;
+      html += '<div class="bar-row"><span class="bar-lbl">' + pair[0] + '</span><div class="bar"><i style="width:' + pct + '%"></i></div><span class="bar-val">' + show(fmtMoney(pair[1]), "—") + "</span></div>";
+    });
+    html += "</div>";
+    if (opts.mean !== false && tc.mean != null) {
+      html += '<div class="mean-line' + (opts.meanRow ? " mean-row" : "") + '">';
+      if (opts.meanRow) html += '<span class="k">Mean</span><span class="v"><strong>' + fmtMoney(tc.mean) + "</strong></span>";
+      else html += "Mean " + fmtMoney(tc.mean) + (opts.meanSuffix || " · MGMA · EXAMPLE");
+      html += "</div>";
+    }
+    return html;
+  }
+
   function realPayFor(code) {
     var s = currentSpec();
     var p50 = s && s.totalComp && s.totalComp.p50 != null ? s.totalComp.p50 : null;
@@ -228,9 +292,9 @@
   }
 
   function timeToFillFor(s) {
-    if (!s) return 118;
+    if (!s) return 110;
     if (s.timeToFillDays != null) return s.timeToFillDays;
-    return 140;
+    return 110;
   }
 
   function annualRevenueFor(s) {
@@ -252,17 +316,26 @@
     }
     layer.innerHTML = "";
     function cloneOutline(code, cls) {
-      var src = root.querySelector('[data-state="' + code + '"]');
-      if (!src) return;
-      var clone = src.cloneNode(true);
+      var srcEl = root.querySelector('.state [data-state="' + code + '"], circle[data-state="' + code + '"]');
+      if (!srcEl) srcEl = root.querySelector('[data-state="' + code + '"]');
+      if (!srcEl || (srcEl.closest && srcEl.closest("#outline-layer"))) return;
+      var clone = srcEl.cloneNode(true);
       clone.removeAttribute("id");
       clone.removeAttribute("class");
+      clone.removeAttribute("data-state");
       clone.setAttribute("class", cls);
       clone.style.fill = "none";
       clone.style.pointerEvents = "none";
       clone.style.stroke = "";
       clone.style.strokeWidth = "";
       clone.style.filter = "";
+      /* AK/HI multipaths glitch under heavy SVG filters — stroke-only glow */
+      if (code === "ak" || code === "hi") {
+        clone.style.filter = "none";
+        clone.style.stroke = "#0d9488";
+        clone.style.strokeWidth = "2.4px";
+        clone.style.strokeOpacity = "0.95";
+      }
       layer.appendChild(clone);
     }
     selectedCodes().forEach(function (code) { cloneOutline(code, "outline-selected"); });
@@ -286,8 +359,9 @@
     var root = $("ridge-map-container");
     if (!root) return;
     var ext = metricExtent();
-    var nodes = root.querySelectorAll("[data-state]");
+    var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
     nodes.forEach(function (el) {
+      if (el.closest && el.closest("#outline-layer")) return;
       var code = el.getAttribute("data-state");
       var v = metricValueFor(code);
       var t = (v - ext.min) / (ext.max - ext.min);
@@ -295,6 +369,12 @@
       el.style.fill = lerpColor(t);
       el.classList.toggle("selected", !!state.selected[code]);
       el.classList.toggle("is-hover", state.hover === code);
+      /* Avoid double-filter black blobs on AK/HI */
+      if (code === "ak" || code === "hi") {
+        el.style.filter = "none";
+      } else {
+        el.style.filter = "";
+      }
     });
     var legend = $("ridge-map-legend-dynamic");
     if (legend) {
@@ -310,10 +390,10 @@
   function pctCells(obj, fmt) {
     if (!obj) return "";
     return [
-      { l: "p25", k: "p25" },
-      { l: "p50", k: "p50" },
-      { l: "p75", k: "p75" },
-      { l: "p90", k: "p90" }
+      { l: "25th", k: "p25" },
+      { l: "50th", k: "p50" },
+      { l: "75th", k: "p75" },
+      { l: "90th", k: "p90" }
     ].map(function (x) {
       var v = obj[x.k];
       return '<div class="pct"><div class="l">' + x.l + '</div><div class="v">' + show(fmt(v), "—") + '</div></div>';
@@ -331,13 +411,11 @@
     var wt = workforceTerms(s);
     var html = "";
 
-    /* Row 1 (Mike 1998): Compensation top-left, then pipeline, then workforce age.
+    /* Row 1 (Mike 1999): Compensation top-left, then pipeline, then workforce age.
        Row 2: former top row — supply, postings, openings ratio. */
-    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation</div>';
+    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation (national MGMA)</div>';
     html += '<div class="hero">' + show(fmtMoney(tc.p50), "n/a") + "<small>median</small></div>";
-    html += '<div class="pct-grid">' + pctCells(s.totalComp, fmtMoney) + "</div>";
-    if (tc.mean != null) html += '<div class="mean-line">Mean ' + fmtMoney(tc.mean) + " · MGMA · EXAMPLE</div>";
-    else html += '<div class="mean-line">MGMA national · EXAMPLE</div>';
+    html += mgmaBarsHtml(tc, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · MGMA · EXAMPLE" });
     if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
       html += '<div class="bench-extra">';
       if (ratio.p50 != null) html += '<span>Comp / wRVU <b>' + show(fmtNum(ratio.p50, 2), "n/a") + "</b></span>";
@@ -417,17 +495,19 @@
     if (headName) {
       if (picks.length === 1) headName.textContent = names[picks[0]] || picks[0].toUpperCase();
       else if (picks.length > 1) headName.textContent = picks.length + " states selected";
-      else headName.textContent = s ? s.label : "Specialty benchmarks";
+      else headName.textContent = s ? s.label : "Market Insight";
     }
     if (headSub) {
       if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + picks[0].toUpperCase() + " · EXAMPLE";
       else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + metricLabelForActive() + " · EXAMPLE";
-      else headSub.textContent = "MGMA / KFF / JAMA / AAPPR signals · EXAMPLE";
+      else headSub.textContent = "Difficulty · speed-to-fill · Total Comp MGMA · EXAMPLE";
     }
 
     var html = "";
     html += '<div class="sel-block">';
-    html += '<div class="sel-title"><strong>Selected states</strong><span class="sel-hint">Multi-select · Cmd/Ctrl+click</span></div>';
+    html += '<div class="sel-title"><strong>Selected states</strong><span class="sel-hint">' +
+      (state.multi ? "Multi-select ON · click to add/remove" : "Click map · one state · Multi-select / Cmd-click to compare") +
+      "</span></div>";
     if (picks.length) {
       html += '<div class="sel-chips">';
       picks.slice().sort(function (a, b) {
@@ -438,50 +518,62 @@
       });
       html += "</div>";
     } else {
-      html += '<div class="sel-hint">None selected — click states on the map</div>';
+      html += '<div class="sel-hint">None selected — click a state on the map</div>';
     }
     html += "</div>";
 
+    html += '<div class="section-title">Market Insight</div>';
+    if (picks.length === 1) {
+      var code0 = picks[0];
+      html += '<div class="row"><span class="k">Recruiting difficulty</span><span class="v"><strong>' +
+        Number(difficultyFor(code0)).toFixed(1) + " / 100</strong></span></div>";
+    } else if (picks.length > 1) {
+      var sumDiff = 0;
+      picks.forEach(function (c) { sumDiff += difficultyFor(c) || 0; });
+      html += '<div class="row"><span class="k">Avg recruiting difficulty</span><span class="v"><strong>' +
+        (sumDiff / picks.length).toFixed(1) + " / 100</strong></span></div>";
+    } else if (s) {
+      var codes = allStateCodes();
+      var dsum = 0, dn = 0;
+      codes.forEach(function (c) { var d = difficultyFor(c); if (d) { dsum += d; dn++; } });
+      html += '<div class="row"><span class="k">Recruiting difficulty</span><span class="v"><strong>' +
+        (dn ? (dsum / dn).toFixed(1) : "—") + " / 100</strong></span></div>";
+    }
+
+    var ttfDays = timeToFillFor(s);
+    html += '<div class="row"><span class="k">Speed-to-fill</span><span class="v"><strong>~' + ttfDays +
+      " days</strong></span></div>";
+
     if (s && s.totalComp) {
-      html += '<div class="section-title">Total compensation · national</div>';
-      html += '<div class="row"><span class="k">Median total comp</span><span class="v"><strong>' + show(fmtMoney(s.totalComp.p50), "—") + "</strong></span></div>";
-      if (s.totalComp.mean != null)
-        html += '<div class="row"><span class="k">Mean total comp</span><span class="v">' + show(fmtMoney(s.totalComp.mean), "—") + "</span></div>";
+      html += '<div class="section-title">Total Compensation (national MGMA)</div>';
+      html += mgmaBarsHtml(s.totalComp, { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
       if (s.compRatio && s.compRatio.p50 != null)
         html += '<div class="row"><span class="k">Comp / wRVU</span><span class="v">' + show(fmtNum(s.compRatio.p50, 2), "—") + "</span></div>";
       if (s.workRVUs && s.workRVUs.p50 != null)
         html += '<div class="row"><span class="k">wRVU median</span><span class="v">' + show(fmtNum(s.workRVUs.p50), "—") + "</span></div>";
     }
 
-    var ttfDays = timeToFillFor(s);
     var annualRev = annualRevenueFor(s);
     var vac = vacancyBreakdown(annualRev);
-    if (vac || ttfDays) {
-      html += '<div class="section-title">Time-to-fill &amp; cost of vacancy</div>';
+    if (vac) {
+      html += '<div class="section-title">Cost of vacancy</div>';
       html += '<div class="vacancy-box">';
       html += '<div class="vac-title">Benchmark search length · AAPPR-aligned</div>';
       html += '<div class="vac-hero">' + ttfDays + ' days<small>median time-to-fill for specialty family</small></div>';
-      if (vac) {
-        html += '<div class="row vac-daily"><span class="k">Daily cost they\u2019re losing</span><span class="v"><strong>' + fmtMoney(vac.daily) + "</strong></span></div>";
-        html += '<div class="row"><span class="k">Revenue at risk over TTF</span><span class="v"><strong>' + fmtMoney(vac.daily * ttfDays) + "</strong></span></div>";
-        html += '<div class="vacancy-grid">';
-        html += '<div class="cell"><div class="lbl">Daily</div><div class="val">' + fmtMoney(vac.daily) + "</div></div>";
-        html += '<div class="cell"><div class="lbl">Monthly</div><div class="val">' + fmtMoney(vac.monthly) + "</div></div>";
-        html += '<div class="cell"><div class="lbl">Quarterly</div><div class="val">' + fmtMoney(vac.quarterly) + "</div></div>";
-        html += '<div class="cell"><div class="lbl">Annual</div><div class="val">' + fmtMoney(vac.annual) + "</div></div>";
-        html += "</div>";
-        html += '<div class="vacancy-scenarios">';
-        html += '<div class="row"><span class="k">30-day vacancy</span><span class="v">' + fmtMoney(vac.d30) + "</span></div>";
-        html += '<div class="row"><span class="k">90-day vacancy</span><span class="v">' + fmtMoney(vac.d90) + "</span></div>";
-        html += '<div class="row"><span class="k">180-day vacancy</span><span class="v">' + fmtMoney(vac.d180) + "</span></div>";
-        html += "</div>";
-      }
+      html += '<div class="row vac-daily"><span class="k">Daily cost they\u2019re losing</span><span class="v"><strong>' + fmtMoney(vac.daily) + "</strong></span></div>";
+      html += '<div class="row"><span class="k">Revenue at risk over TTF</span><span class="v"><strong>' + fmtMoney(vac.daily * ttfDays) + "</strong></span></div>";
+      html += '<div class="vacancy-grid">';
+      html += '<div class="cell"><div class="lbl">Daily</div><div class="val">' + fmtMoney(vac.daily) + "</div></div>";
+      html += '<div class="cell"><div class="lbl">Monthly</div><div class="val">' + fmtMoney(vac.monthly) + "</div></div>";
+      html += '<div class="cell"><div class="lbl">Quarterly</div><div class="val">' + fmtMoney(vac.quarterly) + "</div></div>";
+      html += '<div class="cell"><div class="lbl">Annual</div><div class="val">' + fmtMoney(vac.annual) + "</div></div>";
+      html += "</div>";
       html += '<div class="note">TTF is a specialty benchmark. Revenue is directional professional medical revenue · EXAMPLE.</div>';
       html += "</div>";
     }
 
     if (picks.length) {
-      html += '<div class="section-title">Selected states · supply &amp; openings</div>';
+      html += '<div class="section-title">Selected · supply &amp; openings</div>';
       var sumPhys = 0, sumPost = 0, sumPop = 0;
       var pop = statePop();
       picks.slice().sort(function (a, b) {
@@ -489,7 +581,7 @@
       }).forEach(function (code) {
         var n = physCountFor(code);
         var p = postingsFor(code);
-        var d = densityFor(code);
+        var dens = densityFor(code);
         var diff = difficultyFor(code);
         sumPhys += n || 0;
         sumPost += p || 0;
@@ -498,7 +590,7 @@
         html += '<div class="st-name">' + (names[code] || code.toUpperCase()) + "</div>";
         html += '<div class="st-metrics">';
         html += '<div class="st-m"><span class="st-ml">' + wt.title + '</span><span class="st-mv">' + show(fmtNum(n), "—") + "</span></div>";
-        html += '<div class="st-m"><span class="st-ml">Per 100k</span><span class="st-mv">' + Number(d).toFixed(1) + "</span></div>";
+        html += '<div class="st-m"><span class="st-ml">Per 100k</span><span class="st-mv">' + Number(dens).toFixed(1) + "</span></div>";
         html += '<div class="st-m"><span class="st-ml">~Jobs</span><span class="st-mv">' + show(fmtNum(p), "0") + "</span></div>";
         html += '<div class="st-m"><span class="st-ml">Difficulty</span><span class="st-mv">' + Number(diff).toFixed(1) + "</span></div>";
         html += "</div>";
@@ -517,18 +609,7 @@
       html += '<div class="row"><span class="k">Age 55+</span><span class="v">' + (s.age55Pct != null ? s.age55Pct.toFixed(1) + "%" : "—") + "</span></div>";
     }
 
-    html += '<div class="section-title">States by ' + metricLabelForActive() + "</div>";
-    html += '<div class="ridge-state-list">';
-    var ranked = allStateCodes().map(function (code) {
-      return { code: code, name: names[code] || code.toUpperCase(), v: metricValueFor(code) };
-    }).sort(function (a, b) { return (b.v || 0) - (a.v || 0); });
-    ranked.forEach(function (row) {
-      var on = !!state.selected[row.code];
-      html += '<button type="button" class="ridge-state-row' + (on ? " is-on" : "") + '" data-ridge-state="' + row.code + '">';
-      html += '<span class="nm">' + row.name + '</span><span class="sc">' + formatMetric(row.v) + "</span></button>";
-    });
-    html += "</div>";
-    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · Cmd/Ctrl+click or Multi-select to compare states. No client names, search IDs, or Outfitter guts.</p>';
+    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. No client names, search IDs, or Outfitter guts.</p>';
     body.innerHTML = html;
   }
 
@@ -625,13 +706,17 @@
 
   function toggleState(code, additive) {
     if (!code) return;
-    if (!additive && !state.multi) {
-      var was = !!state.selected[code];
-      state.selected = {};
-      if (!was) state.selected[code] = true;
-    } else {
+    var multi = !!additive || !!state.multi;
+    if (multi) {
       state.selected[code] = !state.selected[code];
       if (!state.selected[code]) delete state.selected[code];
+    } else {
+      var only = selectedCodes();
+      if (only.length === 1 && only[0] === code) state.selected = {};
+      else {
+        state.selected = {};
+        state.selected[code] = true;
+      }
     }
     paintMap();
     renderSidebar();
@@ -648,17 +733,65 @@
   function showTooltip(evt, code) {
     var tip = $("ridge-map-tooltip");
     if (!tip) return;
-    if (!code) { tip.hidden = true; return; }
+    if (!code) { tip.hidden = true; tip.innerHTML = ""; return; }
     var names = stateNames();
+    var s = currentSpec();
+    var wt = workforceTerms(s || {});
+    var n = physCountFor(code);
+    var p = postingsFor(code);
+    var r = ratioFor(code);
+    var dens = densityFor(code);
+    var diff = difficultyFor(code);
+    var h = hpsaFor(code);
+    var ret = retentionFor(code);
+    var rows = "";
+    function addRow(k, v) {
+      if (v == null || v === "") return;
+      rows += '<div class="tt-row"><span class="tt-k">' + k + '</span><span class="tt-v">' + v + "</span></div>";
+    }
+    addRow(wt.title, n ? Number(n).toLocaleString("en-US") : "0");
+    if (dens) addRow(wt.title + " density", Number(dens).toFixed(1) + " / 100k");
+    if (s && s.nationalPostings) addRow("Approx. postings", "~" + Math.round(p || 0).toLocaleString("en-US"));
+    if (r) addRow("Openings / 100 " + wt.plural, String(r));
+    if (diff) addRow("Difficulty", diff + " / 100");
+    var rpp = rppFor(code);
+    if (rpp != null) {
+      var vs = rpp - 100;
+      addRow("COL (BEA RPP)", Number(rpp).toFixed(1) + " (" + (vs >= 0 ? "+" : "") + Number(vs).toFixed(1) + "% vs U.S.)");
+      var realPay = realPayFor(code);
+      if (realPay) addRow("Real value of nat. median", fmtMoney(realPay));
+    }
+    var gme = gmeProgramsFor(code, s);
+    if (gme) {
+      if (gme.nationalOnly) addRow(gme.type === "fellowship" ? "Fellowships (U.S.)" : "Residencies (U.S.)", String(gme.national));
+      else if (gme.count != null) addRow(gme.type === "fellowship" ? "Fellowships in state" : "Residencies in state", String(gme.count) + " (U.S. " + gme.national + ")");
+    }
+    var extra = "";
+    if (h) {
+      extra += '<div class="tt-section"><div class="tt-section-label">Primary care HPSA</div>';
+      extra += '<div class="tt-row"><span class="tt-k">Need met</span><span class="tt-v">' + h.pctMet.toFixed(0) + "%</span></div>";
+      extra += '<div class="tt-row"><span class="tt-k">PC needed</span><span class="tt-v">' + Number(h.needed).toLocaleString("en-US") + "</span></div></div>";
+    }
+    if (ret != null) {
+      extra += '<div class="tt-section"><div class="tt-section-label">GME retention</div>';
+      extra += '<div class="tt-row"><span class="tt-k">Stay in-state</span><span class="tt-v">' + Number(ret).toFixed(1) + "%</span></div></div>";
+    }
+    var hint = state.multi
+      ? "Multi-select ON · click to add/remove"
+      : "Cmd/Ctrl · multi-select";
     tip.hidden = false;
-    tip.innerHTML = "<strong>" + (names[code] || code.toUpperCase()) + "</strong><span>" +
-      metricLabelForActive() + ": <b>" + formatMetric(metricValueFor(code)) + "</b></span>";
+    tip.innerHTML = '<div class="tt-head"><div class="tt-title">' + (names[code] || code.toUpperCase()) +
+      '</div><div class="tt-hint">' + hint + '</div></div><div class="tt-body">' + rows + extra + "</div>";
     var wrap = $("ridge-map-wrap") || tip.parentElement;
     var rect = wrap.getBoundingClientRect();
-    var x = evt.clientX - rect.left + 12;
-    var y = evt.clientY - rect.top + 12;
-    tip.style.left = Math.min(x, rect.width - 180) + "px";
-    tip.style.top = Math.min(y, rect.height - 60) + "px";
+    var tw = tip.offsetWidth || 260;
+    var th = tip.offsetHeight || 220;
+    var x = evt.clientX - rect.left + 14;
+    var y = evt.clientY - rect.top + 14;
+    if (x + tw > rect.width - 8) x = Math.max(8, rect.width - tw - 8);
+    if (y + th > rect.height - 8) y = Math.max(8, evt.clientY - rect.top - th - 12);
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
   }
 
   function ensureMapGlow(host) {
@@ -689,12 +822,19 @@
       layer.setAttribute("id", "outline-layer");
       svg.appendChild(layer);
     }
-    svg.querySelectorAll("[data-state]").forEach(function (el) {
+    svg.querySelectorAll(".state [data-state], circle[data-state]").forEach(function (el) {
       el.style.pointerEvents = "auto";
       el.style.cursor = "pointer";
     });
     svg.querySelectorAll("g.borders path, path.separator1").forEach(function (el) {
       el.style.pointerEvents = "none";
+      el.style.fill = "none";
+      el.setAttribute("fill", "none");
+      if (el.classList.contains("separator1") || (el.getAttribute("class") || "").indexOf("separator") >= 0) {
+        el.style.stroke = "#94a3b8";
+        el.style.strokeWidth = "1";
+        el.style.opacity = "0.55";
+      }
     });
   }
 
@@ -734,7 +874,7 @@
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
       e.preventDefault();
-      var additive = state.multi || e.metaKey || e.ctrlKey || e.shiftKey;
+      var additive = state.multi || e.metaKey || e.ctrlKey;
       toggleState(el.getAttribute("data-state"), additive);
     });
   }
@@ -750,7 +890,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=1998")
+    fetch("assets/ridge-usa-map.svg?v=1999")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -828,11 +968,16 @@
 
     var multiBtn = $("ridge-multi-toggle");
     if (multiBtn) {
-      multiBtn.classList.toggle("active", state.multi);
+      function syncMultiBtn() {
+        multiBtn.classList.toggle("active", !!state.multi);
+        multiBtn.setAttribute("aria-pressed", state.multi ? "true" : "false");
+        multiBtn.textContent = state.multi ? "Multi-select ON" : "Multi-select";
+      }
+      syncMultiBtn();
       multiBtn.addEventListener("click", function () {
         state.multi = !state.multi;
-        multiBtn.classList.toggle("active", state.multi);
-        multiBtn.setAttribute("aria-pressed", state.multi ? "true" : "false");
+        syncMultiBtn();
+        renderSidebar();
       });
     }
 
@@ -864,9 +1009,9 @@
     var names = stateNames();
     var logo = (function () {
       try {
-        return new URL("assets/amp-lockup-nav.png?v=1998", window.location.href).href;
+        return new URL("assets/amp-lockup-nav.png?v=1999", window.location.href).href;
       } catch (e) {
-        return "assets/amp-lockup-nav.png?v=1998";
+        return "assets/amp-lockup-nav.png?v=1999";
       }
     })();
     var rows = picks.length ? picks : allStateCodes().slice(0, 12);

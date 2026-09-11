@@ -274,7 +274,7 @@
 <circle class="state borders dccircle dc" cx="801.6" cy="252.1" r="5" data-state="dc">
 </circle>
 
-<path class="separator1" d="m 215,493 v 55 l 36,45 m -251,-168 h 147 l 68,68 h 85 l 54,54 v 46"/>
+<path class="separator1" fill="none" stroke="#94a3b8" stroke-width="1" pointer-events="none" d="m 215,493 v 55 l 36,45 m -251,-168 h 147 l 68,68 h 85 l 54,54 v 46"/>
 
 <defs>
   <filter id="ampStateGlow" x="-120%" y="-120%" width="340%" height="340%" color-interpolation-filters="sRGB">
