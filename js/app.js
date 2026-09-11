@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1991-logo-size";
+  window.__AMP_BUILD = "1992-bf-restore";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -271,7 +271,7 @@
     });
   }
 
-  function clearApproachHold() {
+  function teardownApproachVideo() {
     var hold = $("#approach-video-hold");
     var stage = $("#home-stage");
     video = (hold && hold.querySelector("video")) || $("#home-video");
@@ -293,7 +293,6 @@
         var saved = video.getAttribute("data-home-poster");
         if (saved && !video.getAttribute("poster")) video.setAttribute("poster", saved);
       } catch (e) {}
-      /* Critical: bake hide must not stick — second Enter was a black hold. */
       try {
         video.style.visibility = "";
         video.style.opacity = "";
@@ -308,8 +307,30 @@
     }
     unmountTrailheadHits();
     document.body.classList.remove("amp-live-trailhead");
-    resetTrailheadPickerChrome(null, { clearLive: true });
     state.approachHold = false;
+  }
+
+  function clearApproachHold() {
+    teardownApproachVideo();
+    resetTrailheadPickerChrome(null, { clearLive: true });
+  }
+
+  /* Instant specialty/facility sheet for Back/Forward — never blank mountain. */
+  function showTrailheadPickerSheet(view, snap) {
+    if (!view) return;
+    view.classList.remove("live-video-bg");
+    var img = view.querySelector("img.still");
+    if (img) {
+      try { img.style.opacity = ""; img.style.visibility = ""; } catch (e) {}
+    }
+    if (snap) view.classList.add("picker-snap");
+    view.classList.add("picker-in", "after-approach", "signs-lit", "signs-frozen");
+    if (snap) {
+      setTimeout(function () {
+        try { view.classList.remove("picker-snap"); } catch (e2) {}
+      }, 320);
+    }
+    layoutSignMediaFrames();
   }
 
 
@@ -325,7 +346,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1991";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1992";
         }
       });
       finishBake();
@@ -869,7 +890,8 @@
            live hold — otherwise the facility/specialty bake stays under the next
            trailhead and hire labels float on the wrong signs. */
         bakeFreezeToTrailheadStills(function () {});
-        clearApproachHold();
+        teardownApproachVideo();
+        resetTrailheadPickerChrome(null, { clearLive: true });
       }
       setNavMode(route); /* keep glass nav over trailhead/funnel photos — never sticky "page" */
       syncGuideRoute(route);
@@ -902,29 +924,11 @@
       } catch (e) {}
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
-        next.classList.add("signs-lit", "signs-frozen");
-        /* Non-swoop lands (Back/Forward, crumb, deep link): show hire-sheet immediately.
-           Without picker-in it stays opacity 0; with only picker-in it re-plays the 1.5s fade
-           and feels blank/weird. Snap for history/instant; keep fade for live approach only. */
-        if (!state.approachHold) {
-          clearApproachHold();
-          if (opts.fromHistory || opts.instant) {
-            next.classList.add("picker-snap");
-          }
-          next.classList.add("picker-in", "after-approach");
-          if (opts.fromHistory || opts.instant) {
-            try {
-              requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                  next.classList.remove("picker-snap");
-                });
-              });
-            } catch (eSnap) {
-              next.classList.remove("picker-snap");
-            }
-          }
+        /* Tear down video hold WITHOUT wiping picker classes mid-restore (that caused blank Back). */
+        if (state.approachHold || opts.fromHistory || opts.instant) {
+          teardownApproachVideo();
         }
-        layoutSignMediaFrames();
+        showTrailheadPickerSheet(next, !!(opts.fromHistory || opts.instant));
       }
 
       if (route === "home") startHomeVideo();
@@ -2812,7 +2816,12 @@
        a no-op leave could leave hire-sheet invisible after Back. */
     if (opts.fromHistory && _ampLastBootHash === key) {
       var trail = document.querySelector('.view.trailhead.on[data-route="' + key + '"]');
-      if (trail && trail.classList.contains("picker-in") && trail.classList.contains("after-approach")) {
+      if (trail && trail.classList.contains("picker-in") && trail.classList.contains("after-approach") && !trail.classList.contains("live-video-bg")) {
+        return;
+      }
+      if (trail && (key === "physician" || key === "client")) {
+        teardownApproachVideo();
+        showTrailheadPickerSheet(trail, true);
         return;
       }
       /* fall through and re-land */
