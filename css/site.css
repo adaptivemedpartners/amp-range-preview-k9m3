@@ -334,7 +334,7 @@ button, input, select, textarea { font: inherit; }
 .view.funnel[data-route="job-contact"] > .shot img.still,
 .view.funnel[data-route="chat"] > .shot img.still,
 .view.funnel[data-route="confirm-mess"] > .shot img.still { filter: brightness(1.24) saturate(1.08); }
-.view.funnel[data-route="client"] > .shot img.still { filter: brightness(1.06) saturate(1.05); }
+.view.funnel[data-route="client"] > .shot img.still { filter: brightness(1.00) saturate(1.04); } /* match physician trailhead */
 .view.funnel[data-route="client-specialty"] > .shot img.still { filter: brightness(1.14) saturate(1.06); }
 .view.funnel[data-route="client-retained"] > .shot img.still { filter: brightness(1.20) saturate(1.07); }
 .view.funnel[data-route="client-meeting"] > .shot img.still,
@@ -3850,7 +3850,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 }
 .view.funnel.trailhead[data-route="client"] > .shot img.still {
   object-fit: cover !important;
-  object-position: 50% 45% !important;
+  object-position: 50% 50% !important; /* match physician freeze — no jump when swapping paths */
 }
 
 /* Mike eye 12:57 CT: no scrollbar on specialty/facility picker; fit cards */
