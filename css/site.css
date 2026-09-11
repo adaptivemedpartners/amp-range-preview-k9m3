@@ -252,12 +252,17 @@ button, input, select, textarea { font: inherit; }
   color: var(--ink);
 }
 .view.funnel > .shot {
-  position: absolute;
+  /* Viewport-locked: FAQ/details expand must NOT stretch this layer and re-crop the mountain. */
+  position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
   z-index: 0;
   overflow: hidden;
   line-height: 0;
   background: #0b1210;
+  pointer-events: none;
 }
 .view.funnel > .shot img.still {
   display: block;
@@ -772,10 +777,11 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .article p, .article li { font-size: 16px; line-height: 1.7; color: #334155; }
 .article p { margin: 0 0 14px; }
 .article ul, .article ol { margin: 0 0 16px; padding-left: 22px; }
-.faq { margin-top: 28px; display: grid; gap: 10px; }
+.faq { margin-top: 28px; display: grid; gap: 10px; overflow-anchor: none; }
 .faq details {
   background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
 }
+.faq details, .seo-drawer { overflow-anchor: none; }
 .faq summary { font-weight: 700; cursor: pointer; color: var(--navy-2); }
 .faq p { margin: 10px 0 0; font-size: 14.5px; }
 
