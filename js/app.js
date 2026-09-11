@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1987-white-summit";
+  window.__AMP_BUILD = "1988-rank-clarity";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -325,7 +325,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1987";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1988";
         }
       });
       finishBake();
@@ -1309,10 +1309,10 @@
     var byId = {};
     RANK_DIMS.forEach(function (d) { byId[d.id] = d; });
     function metaFor(i) {
-      if (i === 0) return "Most important";
-      if (i === 1) return "#2";
-      if (i === 2) return "#3";
-      return "Least · #4";
+      if (i === 0) return "← Most important";
+      if (i === 1) return "2nd";
+      if (i === 2) return "3rd";
+      return "Least →";
     }
     root.innerHTML = order.map(function (id, i) {
       var d = byId[id];
