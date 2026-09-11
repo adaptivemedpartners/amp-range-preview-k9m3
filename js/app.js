@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1981-path-routing";
+  window.__AMP_BUILD = "1982-picker-reset";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -255,6 +255,22 @@
     } catch (e) {}
   }
 
+
+  /* Home / re-enter: strip lit picker chrome so the next climb can soft-fade again.
+     picker-in + after-approach both force opacity:1 — if either sticks, round 2 snaps. */
+  function resetTrailheadPickerChrome(view, opts) {
+    opts = opts || {};
+    var views = view ? [view] : $all(".view.trailhead");
+    views.forEach(function (v) {
+      if (!v) return;
+      v.classList.remove("picker-in", "after-approach", "signs-lit", "signs-frozen");
+      /* clearLive only when leaving the climb (Home) — keep live-video-bg mid-swoop. */
+      if (opts.clearLive) v.classList.remove("live-video-bg");
+      /* Force style recalc so the next picker-in transition actually runs. */
+      void v.offsetWidth;
+    });
+  }
+
   function clearApproachHold() {
     var hold = $("#approach-video-hold");
     var stage = $("#home-stage");
@@ -292,9 +308,7 @@
     }
     unmountTrailheadHits();
     document.body.classList.remove("amp-live-trailhead");
-    $all(".view.trailhead").forEach(function (v) {
-      v.classList.remove("live-video-bg", "after-approach");
-    });
+    resetTrailheadPickerChrome(null, { clearLive: true });
     state.approachHold = false;
   }
 
@@ -311,7 +325,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1981";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1982";
         }
       });
       finishBake();
@@ -486,6 +500,10 @@
      playbackRate ease (that read as a soft cleanup / slowdown at the end). */
   function playHomeApproach(done, approachRoute) {
     state._approachRoute = approachRoute || "physician";
+    /* Round-2 climb: start with picker hidden so OVERLAY_AT can fade it in again. */
+    resetTrailheadPickerChrome(
+      document.querySelector('.view.trailhead[data-route="' + state._approachRoute + '"]')
+    );
     var stage = $("#home-stage");
     video = $("#home-video") || (function () {
       var hold = $("#approach-video-hold");
@@ -636,7 +654,7 @@
 
   function hideAllViews() {
     $all(".view").forEach(function (v) {
-      v.classList.remove("on", "trail-out", "trail-in", "walk-forward", "soft-in", "after-approach", "live-video-bg");
+      v.classList.remove("on", "trail-out", "trail-in", "walk-forward", "soft-in", "after-approach", "live-video-bg", "picker-in", "signs-lit", "signs-frozen");
     });
   }
 
@@ -808,6 +826,7 @@
       } else {
         /* Land trailhead under live approach video NOW so late-swoop HTML picker can fade on top. */
         hideAllViews();
+        resetTrailheadPickerChrome(next);
         next.classList.add("on", "live-video-bg");
         setNavMode(route);
         syncGuideRoute(route);
