@@ -2599,10 +2599,14 @@ body.amp-live-trailhead .site-nav .brand {
   pointer-events: auto;
   position: relative;
   z-index: 320;
-  max-width: min(300px, 40vw);
+  /* Keep hit box on the lockup — do NOT shrink logo vs Home (Mike 2026-09-11). */
+  max-width: none;
 }
 body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
-  max-width: 100%;
+  /* Same size as default .brand-lockup-img — no trailhead downscale */
+  width: clamp(240px, 28vw, 320px);
+  max-width: none;
+  max-height: 84px;
   height: auto;
 }
 @media (prefers-reduced-motion: reduce) {
