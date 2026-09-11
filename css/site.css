@@ -4588,3 +4588,6 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .ridge-sidebar .ridge-bars { margin:4px 0 8px; }
 .ridge-sidebar .mean-line.mean-row { margin-bottom:4px; }
 
+
+/* Paid Ridge: never show region lens */
+.ridge-region-lens, .mi-lite-view .mi-lite-regions-field.ridge-region-lens, #mi-lite-app-form .ridge-region-lens { display:none !important; }
