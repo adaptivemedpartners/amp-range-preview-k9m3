@@ -402,34 +402,41 @@ button, input, select, textarea { font: inherit; }
   margin: 0;
   font-size: clamp(32px, 6vw, 56px);
   font-weight: 650; letter-spacing: -.03em; line-height: 1.08;
-  /* Same sparkShimmer as Mess Production / Outfitter EXPEDITIONS — green→gold→green */
-  background: linear-gradient(90deg, #22c55e, #fbbf24, #22c55e);
-  background-size: 200% auto;
+  /* Shimmer = Enter the Climb teal ↔ Own the Summit gold (door CTA colors) */
+  background: linear-gradient(
+    90deg,
+    #5eead4 0%,
+    #2dd4bf 22%,
+    #fcd34d 50%,
+    #f59e0b 72%,
+    #5eead4 100%
+  );
+  background-size: 220% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: sparkShimmer 3.2s linear infinite;
-  filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.5));
+  animation: exploreDoorShimmer 3.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.45))
+          drop-shadow(0 0 14px rgba(245, 158, 11, 0.28));
   text-shadow:
-    0 0 24px rgba(34, 197, 94, 0.45),
-    0 0 48px rgba(34, 197, 94, 0.25);
+    0 0 20px rgba(45, 212, 191, 0.4),
+    0 0 36px rgba(245, 158, 11, 0.22);
 }
-@keyframes sparkShimmer {
+@keyframes exploreDoorShimmer {
   0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  100% { background-position: 100% center; }
 }
 @media (prefers-reduced-motion: reduce) {
   .explore-title {
     animation: none;
-    background: none;
-    color: #fff;
-    -webkit-text-fill-color: #fff;
-    filter: none;
-    text-shadow:
-      0 0 8px rgba(34, 197, 94, 0.55),
-      0 0 18px rgba(251, 191, 36, 0.35),
-      0 2px 18px rgba(0,0,0,.5);
+    background: linear-gradient(90deg, #5eead4, #f59e0b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.4));
+    text-shadow: 0 2px 18px rgba(0,0,0,.5);
   }
 }
 .explore-sub {
