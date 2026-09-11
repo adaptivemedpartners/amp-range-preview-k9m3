@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1995-trailhead-freeze-match";
+  window.__AMP_BUILD = "1996-ridge-golive";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1995";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1996";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1995";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1996";
         }
       });
       finishBake();
@@ -708,6 +708,7 @@
     "mpc-portal": true,
     "mpc-browse": true,
     "mi-lite-portal": true,
+    "mi-lite-login": true,
     "mi-lite-app": true,
     "about": true,
     "proof": true,
@@ -725,6 +726,36 @@
     return !!WALK_ROUTES[route];
   }
 
+  var MI_UNLOCK_KEY = "amp_mi_lite_unlocked";
+  var MI_PLAN_KEY = "amp_mi_lite_plan";
+
+  function readMiLiteUnlock() {
+    try {
+      state.miLiteUnlocked = localStorage.getItem(MI_UNLOCK_KEY) === "1";
+      state.miLitePlan = localStorage.getItem(MI_PLAN_KEY) || state.miLitePlan || "monthly";
+    } catch (e) {
+      state.miLiteUnlocked = !!state.miLiteUnlocked;
+    }
+    return !!state.miLiteUnlocked;
+  }
+
+  function writeMiLiteUnlock(plan) {
+    state.miLiteUnlocked = true;
+    if (plan) state.miLitePlan = plan;
+    try {
+      localStorage.setItem(MI_UNLOCK_KEY, "1");
+      localStorage.setItem(MI_PLAN_KEY, state.miLitePlan || "monthly");
+    } catch (e) {}
+  }
+
+  function clearMiLiteUnlock() {
+    state.miLiteUnlocked = false;
+    try {
+      localStorage.removeItem(MI_UNLOCK_KEY);
+      localStorage.removeItem(MI_PLAN_KEY);
+    } catch (e) {}
+  }
+
   function populateMIFields(selectId, regionsId) {
     var spec = $(selectId), regions = $(regionsId);
     if (!window.AMP_CONTENT || !spec || !regions) return;
@@ -733,15 +764,11 @@
   }
 
   function renderMILite() {
-    populateMIFields("#mi-lite-specialty", "#mi-lite-regions");
     populateMIFields("#mi-app-specialty", "#mi-app-regions");
   }
 
   function renderMILitePortal() {
-    try {
-      state.miLiteUnlocked = sessionStorage.getItem("amp-mi-lite-unlocked") === "1";
-      state.miLitePlan = sessionStorage.getItem("amp-mi-lite-plan") || state.miLitePlan;
-    } catch (e) {}
+    readMiLiteUnlock();
     $all('input[name="mi-lite-plan"]').forEach(function (input) {
       input.checked = input.value === state.miLitePlan;
       var card = input.closest(".mi-price-card");
@@ -756,9 +783,15 @@
     var picks = $all("#mi-app-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; });
     var score = 68 + ((label.length * 3 + picks.length * 5) % 24);
     if (title) title.textContent = label + " · " + (picks.length ? picks.join(" + ") : "open region lens");
-    if (copy) copy.textContent = "Example signal for " + (picks.length ? picks.join(" + ") : "open region hints") + ". Directional planning only—not a forecast or client dossier.";
+    if (copy) copy.textContent = "Example Ridge signal for " + (picks.length ? picks.join(" + ") : "open region hints") + ". Directional planning only—not a forecast or client dossier.";
     var scoreEl = $("#mi-app-score"), demand = $("#mi-app-demand"), breadth = $("#mi-app-breadth"), readiness = $("#mi-app-readiness");
     if (scoreEl) scoreEl.textContent = score + " / 100";
+    var salary = $("#mi-app-salary");
+    if (salary) {
+      var lo = 240 + (score % 40);
+      var hi = lo + 55 + (picks.length * 5);
+      salary.textContent = "$" + lo + "k–$" + hi + "k";
+    }
     if (demand) demand.style.width = Math.min(92, score + 5) + "%";
     if (breadth) breadth.style.width = Math.min(88, 44 + picks.length * 14) + "%";
     if (readiness) readiness.style.width = Math.min(86, 58 + picks.length * 6) + "%";
@@ -770,18 +803,39 @@
     if (chips) chips.innerHTML = (picks.length ? picks : ["Open region lens"]).map(function (name) { return '<span class="mi-region-chip"><span class="dot"></span>' + name + '<b>EXAMPLE</b></span>'; }).join("");
   }
 
+  function applyMiLiteLockUI() {
+    var unlocked = readMiLiteUnlock();
+    var dash = $("#mi-lite-dashboard");
+    var meat = $("#mi-lite-dashboard-meat");
+    var blur = $("#mi-lite-blur-overlay");
+    var lockBanner = $("#mi-lite-lock-banner");
+    var openBanner = $("#mi-lite-open-banner");
+    var toolbar = $("#mi-lite-toolbar");
+    if (dash) {
+      dash.classList.toggle("is-locked", !unlocked);
+      dash.classList.toggle("mi-lite-dashboard", true);
+    }
+    if (blur) blur.hidden = unlocked;
+    if (lockBanner) lockBanner.hidden = unlocked;
+    if (openBanner) openBanner.hidden = !unlocked;
+    if (toolbar) toolbar.hidden = !unlocked;
+    if (meat) meat.setAttribute("aria-hidden", unlocked ? "false" : "true");
+  }
+
   function renderMILiteApp() {
-    try {
-      state.miLiteUnlocked = sessionStorage.getItem("amp-mi-lite-unlocked") === "1";
-      state.miLitePlan = sessionStorage.getItem("amp-mi-lite-plan") || state.miLitePlan;
-    } catch (e) {}
     renderMILite();
     updateMILiteDashboard();
+    applyMiLiteLockUI();
+  }
+
+  function renderMILiteLogin() {
+    readMiLiteUnlock();
   }
 
   function renderDynamic(route, params) {
     if (route === "mi-lite") renderMILite();
     if (route === "mi-lite-portal") renderMILitePortal();
+    if (route === "mi-lite-login") renderMILiteLogin();
     if (route === "mi-lite-app") renderMILiteApp();
     if (route === "physician" || route === "physician-specialty") renderSpecialtyGrid();
     if (route === "physician-rank") renderRankStep();
@@ -2212,15 +2266,11 @@
         if (route === "mpc-portal") {
           state.agreement = state.agreement || "mpc";
         }
-        if (route === "mi-lite-app") {
+        if (route === "mi-lite-app" && (t.id === "mi-lite-subscribe" || t.getAttribute("data-mi-unlock") === "1")) {
           var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
           state.miLitePlan = miPlan ? miPlan.value : (state.miLitePlan || "monthly");
-          state.miLiteUnlocked = true;
-          try {
-            sessionStorage.setItem("amp-mi-lite-unlocked", "1");
-            sessionStorage.setItem("amp-mi-lite-plan", state.miLitePlan);
-          } catch (err) {}
-          if (typeof stampMess === "function") stampMess("client", "MI Lite sample unlock · " + state.miLitePlan + " → BD Hub");
+          writeMiLiteUnlock(state.miLitePlan);
+          if (typeof stampMess === "function") stampMess("client", "Ridge sample unlock · " + state.miLitePlan + " → BD Hub");
         }
         go(route, { trail: trail, approach: approach, hash: dataHash });
         return;
@@ -2590,15 +2640,6 @@
     }
 
     var scoreForm = $("#score-form");
-    var miForm = $("#mi-lite-form");
-    if (miForm) miForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var spec = $("#mi-lite-specialty"), result = $("#mi-lite-result"), title = $("#mi-lite-result-title"), copy = $("#mi-lite-result-copy");
-      var picks = $all("#mi-lite-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; });
-      if (title) title.textContent = (spec && spec.options[spec.selectedIndex] ? spec.options[spec.selectedIndex].text : "Your specialty") + " · ridge snapshot";
-      if (copy) copy.textContent = "Example signal for " + (picks.length ? picks.join(" + ") : "open region hints") + ". Directional only—use a guide conversation to test the real week, place, and contract.";
-      if (result) result.hidden = false;
-    });
     var miAppForm = $("#mi-lite-app-form");
     if (miAppForm) miAppForm.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -2611,6 +2652,58 @@
           var card = other.closest(".mi-price-card");
           if (card) card.classList.toggle("is-selected", other.checked);
         });
+      });
+    });
+    function unlockRidgeAndGo(plan, note) {
+      if (plan) state.miLitePlan = plan;
+      writeMiLiteUnlock(state.miLitePlan || "monthly");
+      if (typeof stampMess === "function") stampMess("client", note || ("Ridge unlock · " + state.miLitePlan));
+      go("mi-lite-app", { trail: true });
+    }
+    var miLoginForm = $("#mi-lite-login-form");
+    if (miLoginForm) miLoginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      unlockRidgeAndGo(state.miLitePlan || "monthly", "Ridge fake login unlock");
+    });
+    var miDemo = $("#mi-lite-demo-login");
+    if (miDemo) miDemo.addEventListener("click", function () {
+      unlockRidgeAndGo("demo", "Ridge demo unlock");
+    });
+    var miLockAgain = $("#mi-lite-lock-again");
+    if (miLockAgain) miLockAgain.addEventListener("click", function () {
+      clearMiLiteUnlock();
+      applyMiLiteLockUI();
+    });
+    function showMiMockToast(msg) {
+      var toast = $("#mi-lite-mock-toast");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.hidden = false;
+      clearTimeout(showMiMockToast._t);
+      showMiMockToast._t = setTimeout(function () { toast.hidden = true; }, 2800);
+    }
+    var miSave = $("#mi-lite-save");
+    if (miSave) miSave.addEventListener("click", function () {
+      if (!readMiLiteUnlock()) return;
+      showMiMockToast("Saved · example snapshot held in this browser only.");
+    });
+    var miCompare = $("#mi-lite-compare");
+    if (miCompare) miCompare.addEventListener("click", function () {
+      if (!readMiLiteUnlock()) return;
+      showMiMockToast("Compare · mock region overlay — Ask AMP for a real side-by-side.");
+    });
+    var miDownload = $("#mi-lite-download");
+    if (miDownload) miDownload.addEventListener("click", function () {
+      if (!readMiLiteUnlock()) return;
+      showMiMockToast("Download report · mock PDF not generated. Ask AMP for a guided brief.");
+    });
+    /* Education / blog / home Ridge teasers use data-go already; make panel cards keyboard-activatable */
+    $all(".mi-education-card[data-go], .ridge-teaser[data-go]").forEach(function (card) {
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          card.click();
+        }
       });
     });
 
@@ -2716,7 +2809,7 @@
 
   function normalizeRouteAlias(key) {
     if (key === "residents-fellows") return "residents";
-    if (key === "market-intelligence" || key === "mi") return "mi-lite";
+    if (key === "market-intelligence" || key === "mi" || key === "ridge") return "mi-lite";
     return key;
   }
 
