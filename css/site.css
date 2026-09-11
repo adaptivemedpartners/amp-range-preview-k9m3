@@ -4342,24 +4342,30 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   transition:fill .15s ease; vector-effect:non-scaling-stroke;
   stroke-linejoin:round; stroke-linecap:round;
 }
+/* Filled states: white edge only — no SVG bloom (bloom on fills = boxy glow) */
 .ridge-map-container path[data-state].is-hover,
 .ridge-map-container circle[data-state].is-hover,
 .ridge-map-container path[data-state].selected,
-.ridge-map-container circle[data-state].selected,
-.ridge-map-container .outline-hover,
-.ridge-map-container .outline-selected {
+.ridge-map-container circle[data-state].selected {
   stroke:#ffffff !important; stroke-width:1.8px !important; stroke-opacity:.98;
-  filter:url(#ampStateGlow) !important; -webkit-filter:url(#ampStateGlow) !important;
+  filter:none !important; -webkit-filter:none !important;
   paint-order:stroke fill !important;
 }
 .ridge-map-container path[data-state].selected,
-.ridge-map-container circle[data-state].selected,
-.ridge-map-container .outline-selected {
+.ridge-map-container circle[data-state].selected {
   animation:ridgeStrokePulse 1.6s ease-in-out infinite;
 }
+/* Outline clones: path-hugging teal bloom (stroke alpha, not fill bbox) */
 .ridge-map-container .outline-hover,
 .ridge-map-container .outline-selected {
   fill:none !important; pointer-events:none !important;
+  stroke:#ffffff !important; stroke-width:2px !important; stroke-opacity:.95;
+  stroke-linejoin:round !important; stroke-linecap:round !important;
+  filter:url(#ampStateGlow) !important; -webkit-filter:url(#ampStateGlow) !important;
+  paint-order:stroke fill !important;
+}
+.ridge-map-container .outline-selected {
+  animation:ridgeStrokePulse 1.6s ease-in-out infinite;
 }
 @keyframes ridgeStrokePulse {
   0%,100% { stroke-width:1.6px; }

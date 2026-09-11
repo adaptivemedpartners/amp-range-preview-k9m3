@@ -326,10 +326,11 @@
       clone.setAttribute("class", cls);
       clone.style.fill = "none";
       clone.style.pointerEvents = "none";
-      clone.style.stroke = "";
-      clone.style.strokeWidth = "";
+      clone.style.stroke = "#ffffff";
+      clone.style.strokeWidth = "2px";
+      clone.style.strokeOpacity = "0.95";
       clone.style.filter = "";
-      /* AK/HI multipaths glitch under heavy SVG filters — stroke-only glow */
+      /* AK/HI multipaths: stroke ring only — no bloom filter */
       if (code === "ak" || code === "hi") {
         clone.style.filter = "none";
         clone.style.stroke = "#0d9488";
@@ -798,25 +799,33 @@
     if (!host) return;
     var svg = host.querySelector("svg");
     if (!svg) return;
-    if (!svg.querySelector("#ampStateGlow")) {
-      var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-      defs.innerHTML =
-        '<filter id="ampStateGlow" x="-120%" y="-120%" width="340%" height="340%" color-interpolation-filters="sRGB">' +
-        '<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b1"/>' +
-        '<feFlood flood-color="#ffffff" flood-opacity="0.95" result="f1"/>' +
-        '<feComposite in="f1" in2="b1" operator="in" result="g1"/>' +
-        '<feGaussianBlur in="SourceAlpha" stdDeviation="8" result="b2"/>' +
-        '<feFlood flood-color="#0d9488" flood-opacity="0.95" result="f2"/>' +
-        '<feComposite in="f2" in2="b2" operator="in" result="g2"/>' +
-        '<feGaussianBlur in="SourceAlpha" stdDeviation="16" result="b3"/>' +
-        '<feFlood flood-color="#0d9488" flood-opacity="0.75" result="f3"/>' +
-        '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
-        '<feGaussianBlur in="SourceAlpha" stdDeviation="26" result="b4"/>' +
-        '<feFlood flood-color="#14b8a6" flood-opacity="0.45" result="f4"/>' +
-        '<feComposite in="f4" in2="b4" operator="in" result="g4"/>' +
-        '<feMerge><feMergeNode in="g4"/><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+    /* Always refresh glow filter — old 340% / std26 bloom boxed the states */
+    var oldGlow = svg.querySelector("#ampStateGlow");
+    if (oldGlow && oldGlow.parentNode) oldGlow.parentNode.removeChild(oldGlow);
+    var defs = svg.querySelector("defs");
+    if (!defs) {
+      defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
       svg.insertBefore(defs, svg.firstChild);
     }
+    var glow = document.createElementNS("http://www.w3.org/2000/svg", "filter");
+    glow.setAttribute("id", "ampStateGlow");
+    glow.setAttribute("x", "-35%");
+    glow.setAttribute("y", "-35%");
+    glow.setAttribute("width", "170%");
+    glow.setAttribute("height", "170%");
+    glow.setAttribute("color-interpolation-filters", "sRGB");
+    glow.innerHTML =
+      '<feGaussianBlur in="SourceAlpha" stdDeviation="1.4" result="b1"/>' +
+      '<feFlood flood-color="#ffffff" flood-opacity="0.9" result="f1"/>' +
+      '<feComposite in="f1" in2="b1" operator="in" result="g1"/>' +
+      '<feGaussianBlur in="SourceAlpha" stdDeviation="2.8" result="b2"/>' +
+      '<feFlood flood-color="#0d9488" flood-opacity="0.85" result="f2"/>' +
+      '<feComposite in="f2" in2="b2" operator="in" result="g2"/>' +
+      '<feGaussianBlur in="SourceAlpha" stdDeviation="5" result="b3"/>' +
+      '<feFlood flood-color="#14b8a6" flood-opacity="0.45" result="f3"/>' +
+      '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
+      '<feMerge><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>';
+    defs.appendChild(glow);
     if (!svg.querySelector("#outline-layer")) {
       var layer = document.createElementNS("http://www.w3.org/2000/svg", "g");
       layer.setAttribute("id", "outline-layer");
@@ -890,7 +899,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=1999")
+    fetch("assets/ridge-usa-map.svg?v=2000")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -1009,9 +1018,9 @@
     var names = stateNames();
     var logo = (function () {
       try {
-        return new URL("assets/amp-lockup-nav.png?v=1999", window.location.href).href;
+        return new URL("assets/amp-lockup-nav.png?v=2000", window.location.href).href;
       } catch (e) {
-        return "assets/amp-lockup-nav.png?v=1999";
+        return "assets/amp-lockup-nav.png?v=2000";
       }
     })();
     var rows = picks.length ? picks : allStateCodes().slice(0, 12);
