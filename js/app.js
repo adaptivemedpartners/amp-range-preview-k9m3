@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2001";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2002";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2001";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2002";
         }
       });
       finishBake();
@@ -757,15 +757,15 @@
   }
 
   function populateMIFields(selectId, regionsId) {
-    var spec = $(selectId), regions = $(regionsId);
-    if (!spec || !regions) return;
-    /* Ridge app: full MI specialty universe via workbench; keep region lens from content.js */
+    var spec = $(selectId), regions = regionsId ? $(regionsId) : null;
+    if (!spec) return;
+    /* Paid Ridge: region lens removed — specialty + map select only */
     var useRidgeSpecs = selectId === "#mi-app-specialty" && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES && AMPRidgeMI.SPECIALTIES.length;
     if (!useRidgeSpecs) {
       if (!window.AMP_CONTENT) return;
       if (!spec.options.length) spec.innerHTML = AMP_CONTENT.specialties.filter(function (s) { return s.id !== "other"; }).map(function (s) { return '<option value="' + s.id + '">' + s.label + '</option>'; }).join("");
     }
-    if (window.AMP_CONTENT && !regions.innerHTML.trim()) {
+    if (regions && window.AMP_CONTENT && !regions.innerHTML.trim()) {
       regions.innerHTML = AMP_CONTENT.regions.filter(function (r) { return r.id !== "open"; }).map(function (r) { return '<label class="mi-region-option"><input type="checkbox" value="' + r.id + '"> <span>' + r.label + '</span></label>'; }).join("");
     }
   }
@@ -786,9 +786,10 @@
   function updateMILiteDashboard() {
     var spec = $("#mi-app-specialty");
     if (!spec) return;
-    var picks = $all("#mi-app-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; });
+    var regionRoot = $("#mi-app-regions");
+    var picks = regionRoot ? $all("#mi-app-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; }) : [];
     var chips = $("#mi-app-chip-row");
-    if (chips) chips.innerHTML = (picks.length ? picks : ["National lens"]).map(function (name) { return '<span class="mi-region-chip"><span class="dot"></span>' + name + '<b>EXAMPLE</b></span>'; }).join("");
+    if (chips) chips.innerHTML = (picks.length ? picks : ["Map select"]).map(function (name) { return '<span class="mi-region-chip"><span class="dot"></span>' + name + '<b>EXAMPLE</b></span>'; }).join("");
     if (window.AMPRidgeWorkbench && typeof AMPRidgeWorkbench.init === "function") {
       try {
         if (spec.value && typeof AMPRidgeWorkbench.setSpecialtyKey === "function") {
