@@ -1430,9 +1430,10 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   margin-bottom: 14px;
 }
 .door-path {
-  font-size: 10px;
+  /* David/Randy: Candidate path / Client path must read obvious — ~2× prior 10px */
+  font-size: 20px;
   font-weight: 780;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #5eead4;
 }
