@@ -3761,6 +3761,15 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   transform: translateY(0);
   pointer-events: auto;
 }
+/* History/instant restore: no 1.5s fade — sheet must be there immediately */
+.view.funnel.trailhead.picker-snap .trailhead-picker,
+.view.funnel.trailhead.picker-snap .hire-sheet.trailhead-picker,
+.view.funnel.trailhead.picker-snap .hire-sheet {
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
 .view.funnel.trailhead .hire-sheet {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(10px);

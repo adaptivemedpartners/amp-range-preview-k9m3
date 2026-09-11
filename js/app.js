@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "1989-back-specialty";
+  window.__AMP_BUILD = "1990-bf-snap";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -325,7 +325,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1989";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=1990";
         }
       });
       finishBake();
@@ -654,7 +654,7 @@
 
   function hideAllViews() {
     $all(".view").forEach(function (v) {
-      v.classList.remove("on", "trail-out", "trail-in", "walk-forward", "soft-in", "after-approach", "live-video-bg", "picker-in", "signs-lit", "signs-frozen");
+      v.classList.remove("on", "trail-out", "trail-in", "walk-forward", "soft-in", "after-approach", "live-video-bg", "picker-in", "picker-snap", "signs-lit", "signs-frozen");
     });
   }
 
@@ -903,9 +903,26 @@
 
       if ((route === "physician" || route === "client") && !opts.afterApproach) {
         next.classList.add("signs-lit", "signs-frozen");
-        /* Back/Forward (and any non-swoop land): hire-sheet stays opacity:0 without picker-in. */
+        /* Non-swoop lands (Back/Forward, crumb, deep link): show hire-sheet immediately.
+           Without picker-in it stays opacity 0; with only picker-in it re-plays the 1.5s fade
+           and feels blank/weird. Snap for history/instant; keep fade for live approach only. */
         if (!state.approachHold) {
+          clearApproachHold();
+          if (opts.fromHistory || opts.instant) {
+            next.classList.add("picker-snap");
+          }
           next.classList.add("picker-in", "after-approach");
+          if (opts.fromHistory || opts.instant) {
+            try {
+              requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                  next.classList.remove("picker-snap");
+                });
+              });
+            } catch (eSnap) {
+              next.classList.remove("picker-snap");
+            }
+          }
         }
         layoutSignMediaFrames();
       }
@@ -2791,8 +2808,15 @@
   function bootFromHash(opts) {
     opts = opts || {};
     var key = locationToRouteKey();
-    /* Coalesce double hashchange+popstate on Back/Forward across pushState entries. */
-    if (opts.fromHistory && _ampLastBootHash === key) return;
+    /* Coalesce double hashchange+popstate — but NEVER skip trailhead restores:
+       a no-op leave could leave hire-sheet invisible after Back. */
+    if (opts.fromHistory && _ampLastBootHash === key) {
+      var trail = document.querySelector('.view.trailhead.on[data-route="' + key + '"]');
+      if (trail && trail.classList.contains("picker-in") && trail.classList.contains("after-approach")) {
+        return;
+      }
+      /* fall through and re-land */
+    }
     _ampLastBootHash = key;
     var nav = { instant: true, fromHistory: !!opts.fromHistory, replaceHash: !opts.fromHistory };
     if (key.indexOf("job/") === 0 || key.indexOf("blog/") === 0 || key.indexOf("blog-posts/") === 0) {
