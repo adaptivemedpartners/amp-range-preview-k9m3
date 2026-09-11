@@ -758,9 +758,16 @@
 
   function populateMIFields(selectId, regionsId) {
     var spec = $(selectId), regions = $(regionsId);
-    if (!window.AMP_CONTENT || !spec || !regions) return;
-    if (!spec.options.length) spec.innerHTML = AMP_CONTENT.specialties.filter(function (s) { return s.id !== "other"; }).map(function (s) { return '<option value="' + s.id + '">' + s.label + '</option>'; }).join("");
-    if (!regions.innerHTML.trim()) regions.innerHTML = AMP_CONTENT.regions.filter(function (r) { return r.id !== "open"; }).map(function (r) { return '<label class="mi-region-option"><input type="checkbox" value="' + r.id + '"> <span>' + r.label + '</span></label>'; }).join("");
+    if (!spec || !regions) return;
+    /* Ridge app: full MI specialty universe via workbench; keep region lens from content.js */
+    var useRidgeSpecs = selectId === "#mi-app-specialty" && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES && AMPRidgeMI.SPECIALTIES.length;
+    if (!useRidgeSpecs) {
+      if (!window.AMP_CONTENT) return;
+      if (!spec.options.length) spec.innerHTML = AMP_CONTENT.specialties.filter(function (s) { return s.id !== "other"; }).map(function (s) { return '<option value="' + s.id + '">' + s.label + '</option>'; }).join("");
+    }
+    if (window.AMP_CONTENT && !regions.innerHTML.trim()) {
+      regions.innerHTML = AMP_CONTENT.regions.filter(function (r) { return r.id !== "open"; }).map(function (r) { return '<label class="mi-region-option"><input type="checkbox" value="' + r.id + '"> <span>' + r.label + '</span></label>'; }).join("");
+    }
   }
 
   function renderMILite() {
@@ -777,30 +784,26 @@
   }
 
   function updateMILiteDashboard() {
-    var spec = $("#mi-app-specialty"), title = $("#mi-app-title"), copy = $("#mi-app-copy");
+    var spec = $("#mi-app-specialty");
     if (!spec) return;
-    var label = spec.options[spec.selectedIndex] ? spec.options[spec.selectedIndex].text : "Your specialty";
     var picks = $all("#mi-app-regions input:checked").map(function (input) { return input.nextElementSibling ? input.nextElementSibling.textContent : input.value; });
-    var score = 68 + ((label.length * 3 + picks.length * 5) % 24);
-    if (title) title.textContent = label + " · " + (picks.length ? picks.join(" + ") : "open region lens");
-    if (copy) copy.textContent = "Example Ridge signal for " + (picks.length ? picks.join(" + ") : "open region hints") + ". Directional planning only—not a forecast or client dossier.";
-    var scoreEl = $("#mi-app-score"), demand = $("#mi-app-demand"), breadth = $("#mi-app-breadth"), readiness = $("#mi-app-readiness");
-    if (scoreEl) scoreEl.textContent = score + " / 100";
-    var salary = $("#mi-app-salary");
-    if (salary) {
-      var lo = 240 + (score % 40);
-      var hi = lo + 55 + (picks.length * 5);
-      salary.textContent = "$" + lo + "k–$" + hi + "k";
-    }
-    if (demand) demand.style.width = Math.min(92, score + 5) + "%";
-    if (breadth) breadth.style.width = Math.min(88, 44 + picks.length * 14) + "%";
-    if (readiness) readiness.style.width = Math.min(86, 58 + picks.length * 6) + "%";
-    var demandLabel = $("#mi-app-demand-label"), breadthLabel = $("#mi-app-breadth-label"), readyLabel = $("#mi-app-readiness-label");
-    if (demandLabel) demandLabel.textContent = score > 80 ? "High" : "Moderate";
-    if (breadthLabel) breadthLabel.textContent = picks.length > 1 ? "Broad" : "Mixed";
-    if (readyLabel) readyLabel.textContent = picks.length ? "Framing" : "Early";
     var chips = $("#mi-app-chip-row");
-    if (chips) chips.innerHTML = (picks.length ? picks : ["Open region lens"]).map(function (name) { return '<span class="mi-region-chip"><span class="dot"></span>' + name + '<b>EXAMPLE</b></span>'; }).join("");
+    if (chips) chips.innerHTML = (picks.length ? picks : ["National lens"]).map(function (name) { return '<span class="mi-region-chip"><span class="dot"></span>' + name + '<b>EXAMPLE</b></span>'; }).join("");
+    if (window.AMPRidgeWorkbench && typeof AMPRidgeWorkbench.init === "function") {
+      try {
+        if (spec.value && typeof AMPRidgeWorkbench.setSpecialtyKey === "function") {
+          /* keep workbench specialty in sync when form refreshes */
+        }
+        AMPRidgeWorkbench.init();
+        if (spec.value && AMPRidgeWorkbench.getSpecialtyKey && spec.value !== AMPRidgeWorkbench.getSpecialtyKey()) {
+          AMPRidgeWorkbench.setSpecialtyKey(spec.value);
+        } else if (typeof AMPRidgeWorkbench.refresh === "function") {
+          AMPRidgeWorkbench.refresh();
+        }
+      } catch (err) {
+        console.warn("Ridge workbench", err);
+      }
+    }
   }
 
   function applyMiLiteLockUI() {
@@ -2695,7 +2698,14 @@
     var miDownload = $("#mi-lite-download");
     if (miDownload) miDownload.addEventListener("click", function () {
       if (!readMiLiteUnlock()) return;
-      showMiMockToast("Download report · mock PDF not generated. Ask AMP for a guided brief.");
+      var opened = false;
+      try {
+        if (window.AMPRidgeWorkbench && typeof AMPRidgeWorkbench.downloadReport === "function") {
+          opened = !!AMPRidgeWorkbench.downloadReport();
+        }
+      } catch (err) { opened = false; }
+      if (opened) showMiMockToast("Report opened · AMP lockup on the print sheet. Save as PDF from the browser.");
+      else showMiMockToast("Download report · allow pop-ups to open the AMP-branded print sheet, or Ask AMP for a guided brief.");
     });
     /* Education / blog / home Ridge teasers use data-go already; make panel cards keyboard-activatable */
     $all(".mi-education-card[data-go], .ridge-teaser[data-go]").forEach(function (card) {
