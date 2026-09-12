@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2007";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2008";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2007";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2008";
         }
       });
       finishBake();
@@ -1775,10 +1775,6 @@
 
     var mail = $("#contact-job-mail");
     if (mail) mail.href = "mailto:" + j.recruiter.email + "?cc=" + encodeURIComponent(j.recruiter.cc) + "&subject=" + encodeURIComponent("Interest · " + j.code);
-    var crumb = $("#contact-job-crumb");
-    if (crumb) crumb.setAttribute("data-go", "job/" + j.id);
-    var chatCrumb = $("#chat-job-crumb");
-    if (chatCrumb) chatCrumb.setAttribute("data-go", "job/" + j.id);
     var ret = $("#confirm-return-job");
     if (ret) ret.setAttribute("data-go", "job/" + j.id);
   }

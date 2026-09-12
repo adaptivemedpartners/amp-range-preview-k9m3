@@ -1,4 +1,7 @@
 /* amp-build:1979-other-pop-pushstate */
+/* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
+.crumb { display: none !important; }
+
 /* AMP Mountain Site — world-class clickthrough · brand standard */
 :root {
   --teal: #0d9488;
