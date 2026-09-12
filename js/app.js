@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2006";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2007";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2006";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2007";
         }
       });
       finishBake();
@@ -1460,9 +1460,39 @@
     }
   }
 
+  function isRankTrackVertical() {
+    return !!(window.matchMedia && window.matchMedia("(max-width: 720px)").matches);
+  }
+
+  function updateRankOrientationCopy() {
+    var mobile = isRankTrackVertical();
+    var howto = $("#rank-howto");
+    var hint = $("#rank-hint");
+    var grid = $("#rank-grid");
+    if (howto) {
+      howto.innerHTML = mobile
+        ? "<strong>Do this:</strong> put your #1 on the top. Drag a card, or tap two to swap. Then hit Continue."
+        : "<strong>Do this:</strong> put your #1 on the left. Drag a card, or tap two to swap. Then hit Continue.";
+    }
+    if (hint) {
+      hint.textContent = mobile
+        ? "Top = most · Bottom = least · Glow shows where a card will land"
+        : "Left = what you care about most · Right = least · Glow shows where a card will land";
+    }
+    if (grid) {
+      grid.setAttribute(
+        "aria-label",
+        mobile
+          ? "Rank top to bottom — most important first"
+          : "Rank left to right — most important first"
+      );
+    }
+  }
+
   function renderRankStep() {
     var root = $("#rank-grid");
     if (!root) return;
+    updateRankOrientationCopy();
     var spec = (AMP_CONTENT.specialties.find(function (s) { return s.id === state.specialty; }) || {}).label || "Your specialty";
     var label = $("#rank-spec-label");
     if (label) label.textContent = spec;
@@ -2042,12 +2072,13 @@
     var rankDropTargetId = null;
     var rankDropMode = "insert"; /* insert | swap */
 
-    function rankHoverMeta(clientX) {
+    function rankHoverMeta(clientX, clientY) {
       var cards = Array.prototype.slice.call(root.querySelectorAll("[data-rank]"));
       var others = cards.filter(function (c) {
         return c.getAttribute("data-rank") !== rankDragId;
       });
       if (!others.length) return null;
+      var vertical = isRankTrackVertical();
 
       function pack(el, after, mode) {
         return {
@@ -2062,7 +2093,12 @@
       for (i = 0; i < others.length; i++) {
         el = others[i];
         r = el.getBoundingClientRect();
-        if (clientX >= r.left && clientX <= r.right) {
+        if (vertical) {
+          if (clientY >= r.top && clientY <= r.bottom) {
+            /* Mobile column: Y vs midY → insert before/after (top/bottom drop bars). */
+            return pack(el, clientY > ((r.top + r.bottom) / 2), "insert");
+          }
+        } else if (clientX >= r.left && clientX <= r.right) {
           return pack(el, false, "swap");
         }
       }
@@ -2071,6 +2107,22 @@
       var last = others[others.length - 1];
       var fr = first.getBoundingClientRect();
       var lr = last.getBoundingClientRect();
+      if (vertical) {
+        if (clientY < fr.top) return pack(first, false, "insert");
+        if (clientY > lr.bottom) return pack(last, true, "insert");
+        for (i = 0; i < others.length - 1; i++) {
+          var aV = others[i];
+          var bV = others[i + 1];
+          var arV = aV.getBoundingClientRect();
+          var brV = bV.getBoundingClientRect();
+          if (clientY > arV.bottom && clientY < brV.top) {
+            var midY = (arV.bottom + brV.top) / 2;
+            return clientY < midY ? pack(aV, true, "insert") : pack(bV, false, "insert");
+          }
+        }
+        return pack(last, true, "insert");
+      }
+
       if (clientX < fr.left) return pack(first, false, "insert");
       if (clientX > lr.right) return pack(last, true, "insert");
 
@@ -2092,7 +2144,7 @@
       try { e.dataTransfer.dropEffect = "move"; } catch (err) {}
       clearRankDropHints(root);
       if (!rankDragId) return;
-      var meta = rankHoverMeta(e.clientX);
+      var meta = rankHoverMeta(e.clientX, e.clientY);
       if (!meta) return;
       rankDropAfter = meta.after;
       rankDropTargetId = meta.id;
@@ -3040,6 +3092,9 @@
     try { bindClientHireSheetClicks(); } catch (e) {}
     window.addEventListener("resize", layoutSignMediaFrames);
     window.addEventListener("orientationchange", layoutSignMediaFrames);
+    window.addEventListener("resize", updateRankOrientationCopy);
+    window.addEventListener("orientationchange", updateRankOrientationCopy);
+    updateRankOrientationCopy();
     bind();
     renderBlogIndex();
     bootFromHash({ fromHistory: true });

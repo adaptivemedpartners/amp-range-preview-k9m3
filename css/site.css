@@ -2907,21 +2907,43 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
     min-width: 0;
   }
 }
-/* Phone: vertical stack (Mike 2026-09-07) — kill sideways scroll cards */
+/* Phone: vertical stack (Mike 2026-09-07 / 2026-09-12) — top→bottom, no sideways scroll */
 @media (max-width: 720px) {
+  .rank-axis {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin: 0 0 12px;
+  }
+  .rank-axis-most,
+  .rank-axis-least {
+    text-align: center;
+  }
+  .rank-axis-line {
+    width: 4px;
+    height: 48px;
+    flex: 0 0 auto;
+    align-self: center;
+    background: linear-gradient(180deg, #0d9488, #99f6e4 45%, #cbd5e1);
+  }
   .rank-board {
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   .rank-track,
   #rank-grid.rank-track,
   .rank-track.rank-grid {
     flex-direction: column !important;
     flex-wrap: nowrap !important;
-    overflow-x: visible;
+    overflow-x: hidden;
+    overflow-y: visible;
     scroll-snap-type: none;
     width: 100%;
+    max-width: 100%;
     gap: 10px;
   }
   .rank-card {
@@ -2930,6 +2952,29 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
     max-width: none !important;
     min-width: 0 !important;
     scroll-snap-align: unset;
+  }
+  /* Drop cues: horizontal bars at top/bottom (override desktop left/right) */
+  .rank-card.is-drop-before::before,
+  .rank-card.is-drop-after::after {
+    top: auto;
+    bottom: auto;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    height: 5px;
+    background: linear-gradient(90deg, #2dd4bf, #0d9488);
+  }
+  .rank-card.is-drop-before::before {
+    left: 10px;
+    right: 10px;
+    top: -3px;
+    bottom: auto;
+  }
+  .rank-card.is-drop-after::after {
+    left: 10px;
+    right: 10px;
+    bottom: -3px;
+    top: auto;
   }
   .rank-actions {
     width: 100%;
