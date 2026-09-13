@@ -5444,3 +5444,50 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   object-position: center top;
 }
 .guides-grid-small .guide-card h3 { font-size: 18px; }
+
+
+/* amp-build:2044-guide-full-story — card blurb + Full story expand */
+.guide-card .guide-blurb {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 0;
+  margin: 0 0 8px;
+}
+.guide-full {
+  margin: 0 0 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.28);
+  background: rgba(248,250,252,0.72);
+  padding: 0 12px;
+}
+.guide-full summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: var(--teal-dark);
+  padding: 10px 0;
+}
+.guide-full summary::-webkit-details-marker { display: none; }
+.guide-full summary::after {
+  content: " →";
+  font-weight: 800;
+}
+.guide-full[open] summary::after { content: " ↑"; }
+.guide-full-body {
+  padding: 0 0 12px;
+}
+.guide-full-body p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #334155;
+  min-height: 0 !important;
+}
+.guide-full-body p:last-child { margin-bottom: 0; }
+.guide-full.is-pending summary { color: #64748b; }
+.guides-view .funnel-panel,
+.view.funnel.guides-view .section-lite {
+  overflow-anchor: none;
+}
