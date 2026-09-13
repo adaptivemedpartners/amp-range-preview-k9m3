@@ -1644,7 +1644,7 @@
   }
 
   function jobsSoftBench() {
-    return "<aside class=\"jobs-soft-bench\" aria-label=\"Beyond the posted trail\"><span class=\"tag\">Beyond the posted trail</span><p>These are the roles we post. Guides also hold matches we don’t list.</p><button type=\"button\" class=\"linkish jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a guide <span aria-hidden=\"true\">→</span></button></aside>";
+    return "<aside class=\"jobs-soft-bench\" aria-label=\"Beyond the posted trail\"><span class=\"tag\">Beyond the posted trail</span><h3 class=\"jobs-soft-bench-title\">Posted roles are only part of the ridge.</h3><p><strong>These are the roles we post.</strong> Guides also hold matches we don’t list — quiet opportunities that never hit this shelf. If nothing here feels right, talk with a guide and keep climbing.</p><button type=\"button\" class=\"btn btn-ghost jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a guide <span aria-hidden=\"true\">→</span></button></aside>";
   }
 
   function jobsMpcEmpty() {

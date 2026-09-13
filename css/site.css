@@ -3720,10 +3720,32 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   .trailhead-rail { padding-bottom: 90px; }
   .trailhead-rail button { min-height: 44px; }
 }
-.jobs-soft-bench { grid-column: 1 / -1; margin-top: 4px; padding: 16px 2px 2px; border-top: 1px solid rgba(13,148,136,.26); background: linear-gradient(90deg, rgba(240,253,250,.48), transparent 72%); }
-.jobs-soft-bench .tag { color: var(--teal-dark); }
-.jobs-soft-bench p { display: inline; margin: 0 12px 0 8px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-.jobs-soft-bench-cta { padding: 0; border: 0; background: transparent; color: var(--teal-dark); font-size: 12.5px; font-weight: 800; cursor: pointer; }
+.jobs-soft-bench {
+  grid-column: 1 / -1;
+  margin-top: 14px;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(13,148,136,.32);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(240,253,250,.92), rgba(255,255,255,.98));
+  box-shadow: 0 10px 28px rgba(15, 118, 110, .08);
+}
+.jobs-soft-bench .tag { color: var(--teal-dark); font-weight: 750; }
+.jobs-soft-bench-title {
+  margin: 8px 0 6px;
+  font-size: 18px;
+  letter-spacing: -.02em;
+  font-weight: 750;
+  color: var(--ink, #0f172a);
+}
+.jobs-soft-bench p {
+  display: block;
+  margin: 0 0 14px;
+  max-width: 62ch;
+  color: var(--ink-soft, #334155);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.jobs-soft-bench-cta { margin-top: 2px; }
 .jobs-soft-bench-cta:hover { color: var(--teal); }
 .jobs-mpc-empty { max-width: 700px; margin: 0 auto; border-color: rgba(13,148,136,.34); background: linear-gradient(145deg, rgba(240,253,250,.92), rgba(255,255,255,.98)); }
 .jobs-mpc-empty h3 { margin: 10px 0 7px; font-size: 22px; letter-spacing: -.025em; }
