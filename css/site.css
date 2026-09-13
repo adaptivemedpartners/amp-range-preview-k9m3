@@ -5737,3 +5737,98 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     grid-column: 1;
   }
 }
+
+
+/* amp-build:2051 — exec photos zoomed out + Full story visible */
+.guides-roster .guide-row,
+.guides-roster .guide-card.guide-row {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  overflow: visible;
+}
+.guides-roster .guide-row > .guide-avatar {
+  grid-row: 1 / span 4;
+  align-self: start;
+}
+.guides-roster .guide-avatar.has-photo img {
+  object-fit: cover;
+  object-position: center 28%;
+}
+/* Leadership: taller frame = more of the portrait (zoomed out) */
+.guides-roster-lead .guide-row,
+.guides-roster-lead .guide-card.guide-row {
+  grid-template-columns: 128px minmax(0, 1fr);
+}
+.guides-roster-lead .guide-row > .guide-avatar {
+  width: 128px;
+  height: 168px;
+  border-radius: 22px;
+}
+.guides-roster-lead .guide-avatar.has-photo img {
+  object-fit: cover;
+  object-position: center 20%;
+  width: 100%;
+  height: 100%;
+}
+/* Full story: keep expandable and readable in roster */
+.guides-roster .guide-row .guide-full {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  margin: 4px 0 12px;
+  padding: 0 14px;
+  border: 1px solid rgba(13, 148, 136, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 12px;
+  grid-column: 2;
+}
+.guides-roster .guide-row .guide-full summary {
+  display: list-item;
+  cursor: pointer;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--teal-dark);
+  padding: 12px 0;
+}
+.guides-roster .guide-row .guide-full summary::-webkit-details-marker { display: none; }
+.guides-roster .guide-row .guide-full summary::after {
+  content: " →";
+  font-weight: 900;
+}
+.guides-roster .guide-row .guide-full[open] summary::after { content: " ↑"; }
+.guides-roster .guide-row .guide-full-body {
+  display: block;
+  padding: 0 0 14px;
+}
+.guides-roster .guide-row .guide-full-body p {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #334155;
+  min-height: 0 !important;
+}
+@media (max-width: 800px) {
+  .guides-roster-lead .guide-row,
+  .guides-roster-lead .guide-card.guide-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+  .guides-roster-lead .guide-row > .guide-avatar {
+    width: 112px;
+    height: 148px;
+  }
+}
+@media (max-width: 560px) {
+  .guides-roster-lead .guide-row,
+  .guides-roster-lead .guide-card.guide-row {
+    grid-template-columns: 1fr;
+  }
+  .guides-roster-lead .guide-row > .guide-avatar {
+    grid-row: auto;
+    width: 148px;
+    height: 196px;
+    margin: 0 auto 10px;
+  }
+  .guides-roster .guide-row .guide-full { grid-column: 1; }
+}
