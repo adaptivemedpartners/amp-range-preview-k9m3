@@ -360,12 +360,14 @@ button, input, select, textarea { font: inherit; }
 .home-stage {
   position: relative;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #0b1210;
   color: #fff;
 }
 #home-video, .home-poster {
-  position: absolute; inset: 0; width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0; right: 0;
+  width: 100%; height: 100dvh;
   object-fit: cover; object-position: 50% 50%;
   background: #0b1210;
   pointer-events: none;
@@ -387,8 +389,8 @@ button, input, select, textarea { font: inherit; }
 .home-overlay {
   position: relative; z-index: 3;
   min-height: 100dvh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 88px 20px 40px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding: 72px 20px 56px;
   transition: opacity .55s ease;
 }
 .explore-block {
@@ -1424,7 +1426,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .door-hero {
   position: relative;
   overflow: hidden;
-  min-height: 280px;
+  min-height: 320px;
   padding: 26px 26px 24px;
   display: flex;
   flex-direction: column;
@@ -1442,6 +1444,84 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   -webkit-backdrop-filter: blur(14px);
   transition: transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease, border-color .35s ease;
 }
+
+.door-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+  transform: scale(1.02);
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+}
+.door-photo-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2,8,18,0.55) 0%, rgba(2,8,18,0.28) 42%, rgba(2,8,18,0.78) 100%),
+    linear-gradient(115deg, rgba(8,15,28,0.55) 0%, rgba(8,15,28,0.18) 55%, rgba(2,12,27,0.45) 100%);
+}
+.door-hero:hover .door-photo,
+.door-hero:focus-visible .door-photo {
+  transform: scale(1.06);
+}
+.door-hero {
+  /* photo carries the scene; keep glass border/shadow */
+  background: rgba(8,15,28,0.35);
+}
+.home-trust {
+  width: min(880px, 100%);
+  margin: 28px auto 8px;
+  text-align: center;
+}
+.home-trust-kicker {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(226,232,240,0.82);
+  text-shadow: 0 1px 12px rgba(0,0,0,0.45);
+}
+.home-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.home-trust-card {
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: rgba(8,15,28,0.55);
+  border: 1px solid rgba(148,163,184,0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: left;
+}
+.home-trust-card strong {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  color: #5eead4;
+  margin-bottom: 4px;
+}
+.home-trust-card span {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: rgba(226,232,240,0.82);
+}
+@media (max-width: 640px) {
+  .home-trust-grid { grid-template-columns: 1fr; gap: 8px; }
+  .home-trust { margin-top: 18px; }
+  .door-hero { min-height: 300px; }
+}
+
 .door-hero .door-glow {
   position: absolute;
   inset: -40% -20% auto -20%;
