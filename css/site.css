@@ -5002,21 +5002,30 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   right: 0;
   bottom: auto;
   width: 100%;
-  height: 100dvh;
-  max-height: 100dvh;
+  /* --home-bg-vh locked in px on phone so URL-bar show/hide does not re-cover/zoom */
+  height: var(--home-bg-vh, 100vh);
+  max-height: none;
   z-index: 0;
   object-fit: cover;
   object-position: 50% 50%;
   pointer-events: none;
+  /* avoid iOS compositing reflow flicker */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .home-stage.on .home-mist {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
   width: 100%;
-  height: 100dvh;
-  max-height: 100dvh;
+  height: var(--home-bg-vh, 100vh);
+  max-height: none;
   z-index: 1;
   pointer-events: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .home-stage.on .home-skip {
   z-index: 4;
@@ -5346,4 +5355,15 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 @media (max-width: 430px) {
   .home-learn { margin-top: 80px; gap: 60px; }
+}
+
+
+/* amp-build:2039-home-bg-lock — phone: no mountain zoom on scroll (URL bar) */
+@media (max-width: 760px) {
+  .home-stage.on .home-poster,
+  .home-stage.on #home-video,
+  .home-stage.on .home-mist {
+    height: var(--home-bg-vh, 100vh) !important;
+    max-height: none !important;
+  }
 }

@@ -3351,3 +3351,26 @@ function syncGuideRoute(route) {
     bootHomeClimb();
   }
 })();
+
+/* amp-build:2039-home-bg-lock — lock home mountain height in px; ignore URL-bar resize */
+(function () {
+  var lastW = 0;
+  function applyHomeBgVh() {
+    var h = Math.max(window.innerHeight || 0, document.documentElement.clientHeight || 0);
+    if (!h) return;
+    /* slight overscan so chrome collapse does not expose edges / reflow object-fit */
+    document.documentElement.style.setProperty("--home-bg-vh", Math.ceil(h * 1.06) + "px");
+  }
+  function onResize() {
+    var w = window.innerWidth || 0;
+    if (lastW && Math.abs(w - lastW) < 8) return; /* height-only chrome change */
+    lastW = w;
+    applyHomeBgVh();
+  }
+  applyHomeBgVh();
+  lastW = window.innerWidth || 0;
+  window.addEventListener("orientationchange", function () {
+    setTimeout(applyHomeBgVh, 280);
+  });
+  window.addEventListener("resize", onResize, { passive: true });
+})();
