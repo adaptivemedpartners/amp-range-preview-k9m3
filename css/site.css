@@ -4962,3 +4962,105 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background: linear-gradient(135deg, #fcd34d, #f59e0b);
   border: 0;
 }
+
+
+/* amp-build:2036-home-fixed-mountain — mountain stays put; cards/sections scroll over it (desktop+mobile).
+   Mirror live-site air: more space between doors → partners → Job 2 → light extras. */
+.home-stage {
+  overflow-x: hidden;
+  overflow-y: visible; /* document scroll so position:fixed mountain sticks (esp. iOS) */
+}
+.home-stage.on .home-poster,
+.home-stage.on #home-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  z-index: 0;
+  object-fit: cover;
+  object-position: 50% 50%;
+  pointer-events: none;
+}
+.home-stage.on .home-mist {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  z-index: 1;
+  pointer-events: none;
+}
+.home-stage.on .home-skip {
+  z-index: 4;
+}
+.home-stage.on .home-overlay {
+  position: relative;
+  z-index: 3;
+  /* keep first screen tall so doors land in the hero before partners */
+  padding-bottom: 64px;
+}
+
+/* Section air — desktop */
+.home-partners {
+  margin: 56px auto 12px;
+}
+.home-job2 {
+  margin: 52px auto 20px;
+}
+.home-job2-title {
+  margin-bottom: 28px;
+}
+.home-extras {
+  margin-top: 36px;
+  padding-bottom: 12px;
+}
+
+@media (max-width: 640px) {
+  .home-overlay {
+    padding-bottom: 40px;
+  }
+  .doors-hero {
+    margin-bottom: 12px;
+  }
+  .home-partners {
+    margin: 72px auto 16px;
+    padding: 28px 16px 24px;
+  }
+  .home-partners-kicker {
+    margin-bottom: 22px;
+  }
+  .home-job2 {
+    margin: 68px auto 24px;
+  }
+  .home-job2-kicker {
+    margin-bottom: 10px;
+  }
+  .home-job2-title {
+    margin-bottom: 28px;
+  }
+  .home-job2-grid {
+    gap: 20px;
+  }
+  .home-extras {
+    margin-top: 40px;
+    margin-bottom: 28px;
+    opacity: 0.62;
+  }
+}
+
+@media (max-width: 430px) {
+  .home-partners {
+    margin: 80px auto 20px;
+  }
+  .home-job2 {
+    margin: 76px auto 28px;
+  }
+  .home-extras {
+    margin-top: 44px;
+    margin-bottom: 36px;
+  }
+}
