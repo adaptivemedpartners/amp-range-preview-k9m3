@@ -4081,7 +4081,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   font-size: 1.2rem;
 }
 .view.funnel.trailhead .trailhead-sheet-stage {
-  padding: 56px 12px 16px;
+  padding: 96px 12px 16px;
   justify-content: flex-end;
 }
 .view.funnel.trailhead .trailhead-rail {
@@ -4109,7 +4109,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
     font-size: 12px;
   }
   .view.funnel.trailhead .trailhead-sheet-stage {
-    padding: 48px 10px 12px;
+    padding: 108px 10px 12px;
   }
 }
 
