@@ -1687,7 +1687,7 @@
     root.innerHTML = jobs.map(function (j) {
       return '<button class="card" type="button" data-job="' + j.id + '">' +
         '<span class="tag">' + j.code + '</span><h3>' + j.title + '</h3><p>' + j.sub + '</p>' +
-        '<div class="meta">View tease →</div></button>';
+        '<div class="meta">View preview →</div></button>';
     }).join("") + (jobs.length < 8 ? jobsSoftBench() : "");
     if (jobs.length < 8 || state.jobViews >= 2) whisperJobsGuide();
   }
@@ -1741,7 +1741,7 @@
           '<details class="seo-drawer"><summary>Page details · Meta / OG / JobPosting data</summary>' +
             '<pre>' +
               'Title: ' + j.title + '\n' +
-              'Meta description: Confidential ' + (j.specialtyLabel || 'physician') + ' opportunity tease — schedule, practice pace, and public income band. Full package with ' + j.recruiter.name + '.\n' +
+              'Meta description: Confidential ' + (j.specialtyLabel || 'physician') + ' opportunity preview — schedule, practice pace, and public income band. Full package with ' + j.recruiter.name + '.\n' +
               'OG:type=article · OG:title=' + j.title + '\n\n' +
               JSON.stringify(jsonLd, null, 2) +
             '</pre></details>' +
@@ -2250,7 +2250,7 @@
         license: "License board · " + regionLabel + " · status unchecked (sample)",
         bio: "Public clinic bio / Healthgrades-style hit · sample",
         openPay: "OpenPayments · no pull yet · placeholder",
-        referrer: "Job tease OBG-8449 · utm_source=site · sample",
+        referrer: "Job preview OBG-8449 · utm_source=site · sample",
         device: "Mobile Safari · America/Chicago · sample",
         soft: spec + " · name+specialty public skim · phone not verified"
       };
@@ -2837,7 +2837,7 @@
       if (opened) showMiMockToast("Report opened · AMP lockup on the print sheet. Save as PDF from the browser.");
       else showMiMockToast("Download report · allow pop-ups to open the AMP-branded print sheet, or Ask AMP for a guided brief.");
     });
-    /* Education / blog / home Ridge teasers use data-go already; make panel cards keyboard-activatable */
+    /* Education / blog / home Ridge preview cards use data-go already; make panel cards keyboard-activatable */
     $all(".mi-education-card[data-go], .ridge-teaser[data-go]").forEach(function (card) {
       card.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") {
