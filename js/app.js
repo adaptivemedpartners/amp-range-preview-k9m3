@@ -43,17 +43,17 @@
     "summit-clear": {
       tag: "Summit Clear",
       title: "Summit Clear (All-In)",
-      blurb: "You hold the peak; AMP does the work — lump retainer + marketing + placement. BD Hub owns this lead."
+      blurb: "You hold the peak; AMP does the work — lump retainer + marketing + placement. A hiring guide owns the next step."
     },
     "shared-ascent": {
       tag: "Shared Ascent",
       title: "Shared Ascent (Partnership)",
-      blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. BD Hub owns this lead."
+      blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. A hiring guide owns the next step."
     },
     "mpc": {
       tag: "MPC · Candidate catch-all",
       title: "MPC tailor-search",
-      blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Lands in The Mess Responses. Client telescope / pay-per-CV parked until CV bank."
+      blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Reaches a recruiting guide. Client telescope / pay-per-CV parked until CV bank."
     }
   };
 
@@ -327,7 +327,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2009";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2010";
         }
       } catch (e) {}
     }
@@ -354,7 +354,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2009";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2010";
         }
       });
       finishBake();
@@ -1074,7 +1074,7 @@
       if (route === "confirm-mess") {
         var m = document.getElementById("mess-response-mock");
         /* Default markup already says "Captured" — use "When" row as freshness signal */
-        if (m && m.innerHTML.indexOf("When") === -1) stampMess("physician", "Switchboard / contact interest");
+        if (m && m.innerHTML.indexOf("When") === -1) stampMess("physician", "Ask a guide / contact interest");
       }
       if (route === "confirm-client") {
         var c = document.getElementById("mess-client-mock");
@@ -1082,7 +1082,7 @@
         var ownerChip = document.getElementById("confirm-bd-owner-chip");
         var routeNote = document.getElementById("confirm-bd-route-note");
         if (ownerChip && bd && bd.ownerLabel) {
-          ownerChip.innerHTML = '<span class="dot"></span> BD Hub · ' + bd.ownerLabel;
+          ownerChip.innerHTML = '<span class="dot"></span> hiring guide · ' + bd.ownerLabel;
         }
         if (routeNote) {
           routeNote.textContent = bd && bd.state
@@ -1091,8 +1091,8 @@
         }
         if (c && !c.innerHTML.trim()) {
           var messLine = bd
-            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → BD Hub · CC Randy/Mike/David")
-            : "Meeting request → BD Hub";
+            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → a hiring guide · CC Randy/Mike/David")
+            : "Meeting request → a hiring guide";
           stampMess("client", messLine);
         }
       }
@@ -1649,7 +1649,7 @@
 
   function jobsMpcEmpty() {
     var path = guidePathStamp();
-    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · candidate catch-all</span><h3>Nothing posted for this cut — tailor a search.</h3><p>Market Prime Candidate is the catch-all when posted roles don’t fit. Tailor a search with a guide; your note lands in The Mess Responses. Client pay-per-CV / telescope stays parked until CV bank.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Open the Mess</button></div></article>";
+    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · candidate catch-all</span><h3>Nothing posted for this cut — tailor a search.</h3><p>Market Prime Candidate is the catch-all when posted roles don’t fit. Tailor a search with a guide; your note reaches a recruiting guide. Client pay-per-CV / telescope stays parked until CV bank.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a guide</button></div></article>";
   }
 
   function renderJobsList() {
@@ -1734,9 +1734,9 @@
             '<p class="gate-note">Full package lives on a brief call — not dumped on this page on purpose. CME, commencement, PTO stacks, and named facility details stay gated.</p>' +
             '<div class="btn-row">' +
               '<button class="btn btn-primary" type="button" data-go="job-contact" data-trail="1">Tap to Talk / Text / Email</button>' +
-              '<button class="btn btn-dark" type="button" data-go="chat" data-trail="1">Open chatbot switchboard</button>' +
+              '<button class="btn btn-dark" type="button" data-go="chat" data-trail="1">Talk with AMP</button>' +
             '</div>' +
-            '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Lands in The Mess Responses</span></div>' +
+            '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Reaches a recruiting guide</span></div>' +
           '</div>' +
           '<details class="seo-drawer"><summary>Page details · Meta / OG / JobPosting data</summary>' +
             '<pre>' +
@@ -2392,7 +2392,7 @@
           var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
           state.miLitePlan = normalizeMiLitePlan(miPlan ? miPlan.value : (state.miLitePlan || "region"));
           writeMiLiteUnlock(state.miLitePlan);
-          if (typeof stampMess === "function") stampMess("client", "Ridge sample unlock · " + state.miLitePlan + " → BD Hub");
+          if (typeof stampMess === "function") stampMess("client", "Ridge sample unlock · " + state.miLitePlan + " → a hiring guide");
         }
         go(route, { trail: trail, approach: approach, hash: dataHash });
         return;
@@ -2614,7 +2614,7 @@
     }
 
 
-  /* #4 Client form → BD Hub by territory (Randy official lock 2026-09-09). CC Randy on ALL BD leads (+ Mike + David). */
+  /* #4 Client form → a hiring guide by territory (Randy official lock 2026-09-09). CC Randy on ALL BD leads (+ Mike + David). */
   var BD_AARON_STATES = { TX:1, CA:1 };
   var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 }; /* WV not in this lock */
   var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
@@ -2647,7 +2647,7 @@
     if (note) {
       note.textContent = owner.id === "kelley"
         ? "Catch-all (unowned state) · always CC Randy · Mike · David"
-        : "BD Hub Responses · always CC Randy · Mike · David";
+        : "Hiring guide responses · always CC Randy · Mike · David";
     }
   }
 
@@ -2681,7 +2681,7 @@
         };
         stampMess(
           "client",
-          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → BD Hub · CC Randy/Mike/David"
+          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → a hiring guide · CC Randy/Mike/David"
         );
         go("confirm-client", { trail: true });
       });
@@ -2741,10 +2741,10 @@
         var intent = String(fd.get("intent") || "physician");
         var who = fd.get("name") || "Contact";
         if (intent === "client") {
-          stampMess("client", who + " · general contact → BD Hub");
+          stampMess("client", who + " · general contact → a hiring guide");
           go("confirm-client", { trail: true });
         } else {
-          stampMess("physician", who + " · general contact → The Mess Responses");
+          stampMess("physician", who + " · general contact → a recruiting guide");
           go("confirm-mess", { trail: true });
         }
       });
@@ -2873,7 +2873,7 @@
     };
     log.innerHTML += '<div class="bubble me">' + (labels[opt] || opt) + "</div>";
     setTimeout(function () {
-      log.innerHTML += '<div class="bubble bot">Got it. Routing your interest to <strong>The Mess Responses</strong> for the owner recruiter. Prefer a form? Use Tap to Talk — same destination.</div>';
+      log.innerHTML += '<div class="bubble bot">Got it. Routing your interest to <strong>a recruiting guide</strong> for the owner recruiter. Prefer a form? Use Tap to Talk — same destination.</div>';
       log.scrollTop = log.scrollHeight;
       var row = $("#chat-confirm-row");
       if (row) row.classList.remove("hidden");

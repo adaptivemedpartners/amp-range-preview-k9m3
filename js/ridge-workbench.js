@@ -610,7 +610,7 @@
       html += '<div class="row"><span class="k">Age 55+</span><span class="v">' + (s.age55Pct != null ? s.age55Pct.toFixed(1) + "%" : "—") + "</span></div>";
     }
 
-    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. No client names, search IDs, or Outfitter guts.</p>';
+    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. No client names or search IDs. Ask AMP for deeper firm tools.</p>';
     body.innerHTML = html;
   }
 
@@ -623,7 +623,7 @@
     var lens = picks.length ? picks.map(function (c) { return names[c] || c.toUpperCase(); }).join(" · ") : "national lens";
     if (title) title.textContent = (s ? s.label : "Specialty") + " · " + lens;
     if (copy) copy.textContent = "Full Ridge market workbench for " + (s ? s.label : "specialty") +
-      " — map, HUD cards, and state rail. EXAMPLE signals for planning; Ask AMP for Live AMP / Bullhorn / MPC / Outfitter.";
+      " — map, HUD cards, and state rail. EXAMPLE signals for planning; Ask AMP for deeper firm tools.";
   }
 
   function updateMetricButtons() {
@@ -1048,7 +1048,7 @@
       "</div>" +
       "<table><thead><tr><th>State</th><th>Map metric</th><th>Supply</th><th>Difficulty</th></tr></thead><tbody>" +
       table + "</tbody></table>" +
-      "<p style='margin-top:24px;font-size:12px;color:#64748b'>Adaptive Medical Partners · Ridge sample. Not a live Outfitter export. Ask AMP for guided recruiting next steps.</p>" +
+      "<p style='margin-top:24px;font-size:12px;color:#64748b'>Adaptive Medical Partners · Ridge sample. Sample only. Ask AMP for guided recruiting next steps.</p>" +
       '<p class="no-print"><button onclick="window.print()">Print / Save PDF</button></p>' +
       "</body></html>";
   }
