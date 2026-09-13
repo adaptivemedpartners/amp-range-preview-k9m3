@@ -5783,7 +5783,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   grid-column: 2;
 }
 .guides-roster .guide-row .guide-full summary {
-  display: list-item;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   list-style: none;
   font-size: 14px;
@@ -5906,7 +5907,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 .guides-roster .guide-body .guide-full summary {
-  display: list-item;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   list-style: none;
   font-size: 14px;
@@ -6132,5 +6134,211 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     width: min(180px, 58vw) !important;
     height: min(225px, 72vw) !important;
     margin: 0 auto 12px !important;
+  }
+}
+
+
+/* amp-build:2055 — Full story iOS fix, BD=recruiting size, home roster, :target deep-link */
+.guides-view .guides-panel,
+.guides-roster,
+.guides-roster .guide-row,
+.guides-roster .guide-card.guide-row,
+.guides-roster .guide-body,
+.guides-roster .guide-full,
+.guides-roster .guide-full-body {
+  overflow: visible;
+}
+
+.guides-roster .guide-full,
+.guides-roster .guide-body .guide-full,
+.guides-roster .guide-row .guide-full {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+.guides-roster .guide-full-body,
+.guides-roster .guide-body .guide-full-body,
+.guides-roster .guide-row .guide-full-body {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* iOS/Safari: display:list-item + list-style:none on summary kills <details> */
+.guides-roster .guide-body .guide-full summary {
+  display: flex !important;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f766e;
+  padding: 12px 2px;
+}
+
+.guides-roster .guide-body .guide-full {
+  border: 1px solid rgba(13, 148, 136, 0.42);
+  background: rgba(204, 251, 241, 0.55);
+  padding: 0 14px;
+}
+
+.guides-roster .guide-body .guide-full summary::-webkit-details-marker { display: none; }
+.guides-roster .guide-body .guide-full summary::marker { content: ""; }
+.guides-roster .guide-body .guide-full summary::after {
+  content: " →";
+  font-weight: 900;
+  margin-left: 4px;
+}
+.guides-roster .guide-body .guide-full[open] summary::after { content: " ↑"; }
+
+/* BD / hiring: same portrait strip as recruiting (~120×150 cover) */
+.guides-roster-hire .guide-row,
+.guides-roster-hire .guide-card.guide-row,
+.guides-roster .guide-row-quiet {
+  gap: 18px;
+  padding: 18px 18px 18px 16px;
+  border-left-color: rgba(13, 148, 136, 0.55);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(240, 253, 250, 0.28) 42%, rgba(255, 255, 255, 0.18)),
+    rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 10px 28px rgba(2, 12, 27, 0.05);
+}
+
+.guides-roster-hire .guide-row > .guide-avatar,
+.guides-roster-hire .guide-card.guide-row > .guide-avatar,
+.guides-roster .guide-row-quiet > .guide-avatar {
+  width: 120px !important;
+  height: 150px !important;
+  border-radius: 20px !important;
+  flex: 0 0 120px;
+  flex-shrink: 0;
+  box-shadow: 0 10px 24px rgba(2, 12, 27, 0.16);
+}
+
+.guides-roster-hire .guide-avatar.has-photo img,
+.guides-roster .guide-row-quiet .guide-avatar.has-photo img {
+  object-fit: cover !important;
+  object-position: center 12% !important;
+}
+
+.guides-roster-hire .guide-body h3,
+.guides-roster .guide-row-quiet .guide-body h3 {
+  font-size: clamp(18px, 2.4vw, 22px);
+}
+
+.guides-roster-hire .guide-body .guide-blurb,
+.guides-roster .guide-row-quiet .guide-body .guide-blurb {
+  font-size: 14px;
+}
+
+.guides-roster .guide-row[id],
+.guides-roster .guide-card.guide-row[id] {
+  scroll-margin-top: 96px;
+}
+
+.guides-roster .guide-row:target,
+.guides-roster .guide-card.guide-row:target {
+  scroll-margin-top: 96px;
+  border-color: rgba(13, 148, 136, 0.55);
+  box-shadow:
+    0 0 0 3px rgba(45, 212, 191, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 14px 32px rgba(2, 12, 27, 0.08);
+}
+
+/* Home Meet-your-guides: same roster strips, not tiny chips */
+.home-guides-rail[hidden],
+.home-guides-roster[hidden],
+.home-guides-strip .guides-roster[hidden] {
+  display: none !important;
+}
+
+.home-guides-strip .home-guides-roster,
+.home-guides-strip .guides-roster {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px auto 18px;
+  max-width: 560px;
+  text-align: left;
+  grid-template-columns: none;
+}
+
+.home-guides-strip .guide-row,
+.home-guides-strip .guide-card.guide-row {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.home-guides-strip .guide-row > .guide-avatar,
+.home-guides-strip .guide-card.guide-row > .guide-avatar {
+  width: 120px !important;
+  height: 150px !important;
+  border-radius: 20px !important;
+  flex: 0 0 120px;
+  flex-shrink: 0;
+}
+
+.home-guides-strip .guide-body .home-guide-name {
+  display: block;
+  margin: 0;
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.home-guides-strip .guide-body .guide-role,
+.home-guides-strip .guide-body .home-guide-role {
+  display: block;
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--teal-dark);
+  line-height: 1.3;
+}
+
+@media (max-width: 800px) {
+  .guides-roster-hire .guide-row > .guide-avatar,
+  .guides-roster-hire .guide-card.guide-row > .guide-avatar,
+  .guides-roster .guide-row-quiet > .guide-avatar,
+  .home-guides-strip .guide-row > .guide-avatar {
+    width: 112px !important;
+    height: 140px !important;
+    flex-basis: 112px;
+  }
+}
+
+@media (max-width: 560px) {
+  .guides-roster-hire .guide-row,
+  .guides-roster-hire .guide-card.guide-row,
+  .guides-roster .guide-row-quiet,
+  .home-guides-strip .guide-row,
+  .home-guides-strip .guide-card.guide-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .guides-roster-hire .guide-row > .guide-avatar,
+  .guides-roster-hire .guide-card.guide-row > .guide-avatar,
+  .guides-roster .guide-row-quiet > .guide-avatar,
+  .home-guides-strip .guide-row > .guide-avatar {
+    width: min(180px, 58vw) !important;
+    height: min(225px, 72vw) !important;
+    margin: 0 auto 12px !important;
+    flex-basis: auto;
   }
 }

@@ -1045,9 +1045,14 @@
         if (!state.approachHold) unmountTrailheadHits();
       }
       window.scrollTo(0, 0);
-      if (opts.hash && opts.hash !== route) {
-        var anchor = document.getElementById(opts.hash);
-        if (anchor) setTimeout(function () { anchor.scrollIntoView({ block: "start" }); }, 0);
+      var personId = "";
+      if (route === "guides") {
+        personId = guidePersonIdFromHash(opts.hash) || guidePersonIdFromHash(location.hash);
+      } else if (opts.hash && opts.hash !== route) {
+        personId = opts.hash;
+      }
+      if (personId) {
+        setTimeout(function () { scrollGuidePerson(personId); }, 60);
       }
       try {
         var routeKey = route;
@@ -1055,7 +1060,8 @@
         if (params.slug) routeKey = "blog/" + params.slug;
         setRouteHash(routeKey, {
           fromHistory: !!opts.fromHistory,
-          replace: !!opts.replaceHash
+          replace: !!opts.replaceHash,
+          personHash: (route === "guides") ? (opts.hash || "") : undefined
         });
       } catch (e) {}
 
@@ -3160,13 +3166,33 @@ function syncGuideRoute(route) {
     return null;
   }
 
+  /* amp-build:2055-guide-deeplink
+     Person anchors are #guide-{slug} (DOM id on each guides article).
+     HTTP/GH Pages: path is the view (/guides); #guide-* is the person (not a route).
+     Home click: data-go="guides" + data-hash="guide-amy-myers" (existing data-hash scroll).
+     Direct load: /guides?v=2055#guide-amy-myers  or  /?v=2055#guide-amy-myers (home hash → guides).
+     file: hash is the route, so person id rides opts.hash only. */
+  function guidePersonIdFromHash(hash) {
+    var h = String(hash || "").replace(/^#/, "");
+    return /^guide-[a-z0-9-]+$/i.test(h) ? h : "";
+  }
+
+  function scrollGuidePerson(id) {
+    var el = id && document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function locationToRouteKey() {
     var pathKey = pathnameToRouteKey(location.pathname);
-    var hash = (location.hash || "").replace(/^#/, "");
-    if (hash) hash = normalizeRouteAlias(hash);
+    var rawHash = (location.hash || "").replace(/^#/, "");
+    var person = guidePersonIdFromHash(rawHash);
+    var hash = rawHash ? normalizeRouteAlias(rawHash) : "";
     var pathIsHome = !pathKey || pathKey === "home";
     /* Prefer real path doors; only fall back to hash for old links on home/index. */
     if (!pathIsHome) return pathKey;
+    /* #guide-amy-myers on home is a person deep-link, not a missing route. */
+    if (person) return "guides";
     if (hash) return hash;
     return "home";
   }
@@ -3200,7 +3226,15 @@ function syncGuideRoute(route) {
     /* Normalize: base + "/" for home on project pages → /amp-range-preview-k9m3/ */
     if (path === "/") url = base ? base + "/" : "/";
     var search = location.search || "";
-    var full = url + search;
+    var personHash = "";
+    if (routeKey === "guides") {
+      var pid = "";
+      if (opts.personHash) pid = guidePersonIdFromHash(opts.personHash);
+      else if (opts.personHash === "") pid = "";
+      else pid = guidePersonIdFromHash(location.hash);
+      if (pid) personHash = "#" + pid;
+    }
+    var full = url + search + personHash;
 
     try {
       if (opts.fromHistory || opts.replace) {
@@ -3238,6 +3272,8 @@ function syncGuideRoute(route) {
     }
     _ampLastBootHash = key;
     var nav = { instant: true, fromHistory: !!opts.fromHistory, replaceHash: !opts.fromHistory };
+    var bootPerson = guidePersonIdFromHash(location.hash);
+    if (bootPerson) nav.hash = bootPerson;
     if (key.indexOf("job/") === 0 || key.indexOf("blog/") === 0 || key.indexOf("blog-posts/") === 0) {
       go(key, nav);
     } else if (document.querySelector('.view[data-route="' + key + '"]')) {
