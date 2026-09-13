@@ -3285,3 +3285,69 @@ function syncGuideRoute(route) {
     el.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
+
+
+/* amp-build:2038-home-climb — interactive Candidate/Client climb under Job 2 */
+(function () {
+  function bindHomeClimb(root) {
+    if (!root || root.dataset.climbBound) return;
+    root.dataset.climbBound = "1";
+    var tabs = root.querySelectorAll("[data-climb-path]");
+    var panels = root.querySelectorAll("[data-climb-panel]");
+    var ctas = root.querySelectorAll("[data-climb-cta]");
+    function showPath(path) {
+      tabs.forEach(function (tab) {
+        var on = tab.getAttribute("data-climb-path") === path;
+        tab.classList.toggle("is-on", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach(function (panel) {
+        var on = panel.getAttribute("data-climb-panel") === path;
+        panel.classList.toggle("is-on", on);
+        if (on) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
+      });
+      ctas.forEach(function (cta) {
+        var on = cta.getAttribute("data-climb-cta") === path;
+        if (on) cta.removeAttribute("hidden");
+        else cta.setAttribute("hidden", "");
+      });
+    }
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        showPath(tab.getAttribute("data-climb-path"));
+      });
+    });
+    panels.forEach(function (panel) {
+      panel.querySelectorAll(".home-climb-step").forEach(function (step) {
+        step.addEventListener("click", function () {
+          var li = step.closest("li");
+          if (!li) return;
+          panel.querySelectorAll(".home-climb-step").forEach(function (s) {
+            s.classList.remove("is-on");
+            s.setAttribute("aria-expanded", "false");
+          });
+          panel.querySelectorAll(".home-climb-detail").forEach(function (d) {
+            d.classList.remove("is-on");
+            d.setAttribute("hidden", "");
+          });
+          step.classList.add("is-on");
+          step.setAttribute("aria-expanded", "true");
+          var detail = li.querySelector(".home-climb-detail");
+          if (detail) {
+            detail.classList.add("is-on");
+            detail.removeAttribute("hidden");
+          }
+        });
+      });
+    });
+  }
+  function bootHomeClimb() {
+    document.querySelectorAll("[data-home-climb]").forEach(bindHomeClimb);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootHomeClimb);
+  } else {
+    bootHomeClimb();
+  }
+})();

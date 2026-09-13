@@ -5088,3 +5088,262 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     margin-bottom: 36px;
   }
 }
+
+
+/* amp-build:2038-home-learn-interactive — climb toggle, guides rail, FAQ under Job 2 */
+.home-learn {
+  width: min(920px, 100%);
+  margin: 64px auto 8px;
+  display: grid;
+  gap: 48px;
+}
+.home-learn-kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #99f6e4;
+  text-align: center;
+}
+.home-learn-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #f8fafc;
+  text-align: center;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.35);
+}
+.home-learn-lede {
+  margin: 0 0 18px;
+  text-align: center;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: rgba(226,232,240,0.88);
+}
+
+.home-climb {
+  padding: 22px 18px 20px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(8,15,28,0.55) 0%, rgba(8,15,28,0.78) 100%);
+  border: 1px solid rgba(148,163,184,0.18);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.home-climb-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 16px 0 18px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.55);
+  border: 1px solid rgba(148,163,184,0.2);
+}
+.home-climb-tab {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  color: rgba(226,232,240,0.78);
+  background: transparent;
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.home-climb-tab.is-on {
+  color: #042f2e;
+  background: linear-gradient(135deg, #5eead4, #2dd4bf);
+  box-shadow: 0 8px 22px rgba(45,212,191,0.28);
+}
+.home-climb-tab[data-climb-path="client"].is-on {
+  color: #1c1917;
+  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  box-shadow: 0 8px 22px rgba(245,158,11,0.28);
+}
+.home-climb-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.home-climb-steps[hidden] { display: none !important; }
+.home-climb-step {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(153,246,228,0.18);
+  background: rgba(255,255,255,0.06);
+  color: #e6fffa;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+}
+.home-climb-step.is-on {
+  border-color: rgba(94,234,212,0.55);
+  background: rgba(13,148,136,0.22);
+}
+.home-climb-steps[data-climb-panel="client"] .home-climb-step.is-on {
+  border-color: rgba(252,211,77,0.55);
+  background: rgba(245,158,11,0.18);
+}
+.home-climb-num {
+  flex: 0 0 28px;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #042f2e;
+  background: #5eead4;
+}
+.home-climb-steps[data-climb-panel="client"] .home-climb-num {
+  color: #1c1917;
+  background: #fcd34d;
+}
+.home-climb-lab { flex: 1; line-height: 1.25; }
+.home-climb-detail {
+  margin: 0 4px 4px 40px;
+  padding: 0 2px 6px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: rgba(226,232,240,0.88);
+}
+.home-climb-detail[hidden] { display: none !important; }
+.home-climb-ctas {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+.home-climb-cta {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  color: #042f2e;
+  background: linear-gradient(135deg, #5eead4, #2dd4bf);
+}
+.home-climb-cta.client {
+  color: #1c1917;
+  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+}
+.home-climb-cta[hidden] { display: none !important; }
+
+.home-guides-strip { text-align: center; }
+.home-guides-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 8px 0 16px;
+}
+.home-guide-chip {
+  appearance: none;
+  border: 1px solid rgba(148,163,184,0.2);
+  border-radius: 18px;
+  padding: 14px 10px 12px;
+  background: rgba(8,15,28,0.62);
+  color: #f8fafc;
+  cursor: pointer;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.home-guide-chip:hover,
+.home-guide-chip:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(94,234,212,0.5);
+  background: rgba(13,148,136,0.18);
+  outline: none;
+}
+.home-guide-chip img {
+  width: 64px; height: 64px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(94,234,212,0.35);
+  box-shadow: 0 0 0 4px rgba(15,23,42,0.35);
+}
+.home-guide-name {
+  font-size: 13.5px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+.home-guide-role {
+  font-size: 11.5px;
+  color: rgba(226,232,240,0.72);
+}
+.home-guides-all {
+  border: 1px solid rgba(153,246,228,0.28);
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.06);
+  color: #99f6e4;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.home-faq {
+  padding: 22px 18px 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(8,15,28,0.55) 0%, rgba(8,15,28,0.78) 100%);
+  border: 1px solid rgba(148,163,184,0.18);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.home-faq-list {
+  margin-top: 14px;
+}
+.home-faq-list details {
+  border-radius: 14px;
+  border: 1px solid rgba(153,246,228,0.16);
+  background: rgba(255,255,255,0.05);
+  padding: 4px 14px 10px;
+}
+.home-faq-list summary {
+  color: #e6fffa;
+  font-size: 14.5px;
+  font-weight: 750;
+  padding: 12px 0;
+  list-style: none;
+}
+.home-faq-list summary::-webkit-details-marker { display: none; }
+.home-faq-list summary::after {
+  content: "+";
+  float: right;
+  color: #99f6e4;
+  font-weight: 800;
+}
+.home-faq-list details[open] summary::after { content: "–"; }
+.home-faq-list p {
+  color: rgba(226,232,240,0.88);
+  font-size: 13.5px;
+  line-height: 1.45;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 640px) {
+  .home-learn { margin-top: 72px; gap: 56px; }
+  .home-guides-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .home-climb-detail { margin-left: 14px; }
+}
+@media (max-width: 430px) {
+  .home-learn { margin-top: 80px; gap: 60px; }
+}
