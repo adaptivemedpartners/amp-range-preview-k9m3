@@ -3667,9 +3667,9 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .guide-card p:not(.guide-role) { color:var(--muted); font-size:13px; line-height:1.5; min-height:4.7em; }
 .guide-card .btn { margin-top:4px; }
 .guides-grid-small { grid-template-columns:repeat(4,1fr); }
-.guides-grid-small .guide-card { padding:14px; }
-.guides-grid-small .guide-avatar { width:42px; height:42px; font-size:12px; }
-.guides-grid-small h3 { font-size:15px; }
+.guides-grid-small .guide-card { padding:18px; }
+.guides-grid-small .guide-avatar { width:88px; height:88px; font-size:12px; } /* match recruiter/leadership photo size */
+.guides-grid-small h3 { font-size:18px; }
 .guides-grid-small .guide-role { margin-bottom:0; }
 @media (max-width:800px) { .learn-rails,.guides-grid,.recruiter-guides,.guides-grid-small { grid-template-columns:repeat(2,1fr); } .path-grid { grid-template-columns:1fr; } .residents-education-card,.guides-teaser,.guides-cta { display:block; } .residents-education-card .meta,.guides-teaser .btn,.guides-cta .btn { display:inline-block; margin-top:14px; } }
 @media (max-width:560px) { .learn-rails,.guides-grid,.recruiter-guides,.guides-grid-small { grid-template-columns:1fr; } .demand-row { grid-template-columns:1fr; gap:5px; } .mi-lite-disclaimer { display:block; } .mi-lite-disclaimer span { display:block; margin-top:6px; } .guide-section-label p { display:block; margin:7px 0 0; } }
@@ -5408,3 +5408,39 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   border-color: rgba(252,211,77,0.55);
   background: rgba(245,158,11,0.16);
 }
+
+
+/* amp-build:2043-guide-photo-size — home chips + BD grid match recruiter photo size */
+.home-guide-chip img {
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px;
+  min-height: 64px;
+  object-fit: cover;
+  object-position: center 28%;
+  border-radius: 999px;
+}
+/* Amy headshot framed high — pull down so shoulders stay in the chip */
+.home-guide-chip img[src*="amy-myers"] {
+  object-position: center 42%;
+  transform: scale(1.08);
+}
+.guides-grid-small {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.guides-grid-small .guide-card {
+  padding: 18px;
+}
+.guides-grid-small .guide-avatar,
+.guides-grid .guide-avatar {
+  width: 88px;
+  height: 88px;
+}
+.guides-grid-small .guide-avatar img,
+.guides-grid .guide-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.guides-grid-small .guide-card h3 { font-size: 18px; }
