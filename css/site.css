@@ -1430,8 +1430,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   padding: 26px 26px 24px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  align-items: flex-end;
+  text-align: right;
   background:
     linear-gradient(160deg, rgba(8,15,28,0.78) 0%, rgba(13,40,48,0.62) 55%, rgba(15,23,42,0.72) 100%);
   border: 1px solid rgba(94, 234, 212, 0.32);
@@ -1451,7 +1451,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: left center;
   z-index: 0;
   pointer-events: none;
   transform: scale(1.02);
@@ -1463,8 +1463,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(2,8,18,0.55) 0%, rgba(2,8,18,0.28) 42%, rgba(2,8,18,0.78) 100%),
-    linear-gradient(115deg, rgba(8,15,28,0.55) 0%, rgba(8,15,28,0.18) 55%, rgba(2,12,27,0.45) 100%);
+    linear-gradient(180deg, rgba(2,8,18,0.35) 0%, rgba(2,8,18,0.18) 42%, rgba(2,8,18,0.72) 100%),
+    linear-gradient(90deg, rgba(2,8,18,0.12) 0%, rgba(2,8,18,0.22) 38%, rgba(2,8,18,0.72) 100%);
 }
 .door-hero:hover .door-photo,
 .door-hero:focus-visible .door-photo {
@@ -1655,8 +1655,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 8px 14px;
   width: 100%;
   margin-bottom: 14px;
 }
@@ -1678,7 +1678,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .door-story {
   position: relative;
   z-index: 1;
-  margin: 0 0 12px;
+  margin: 0 0 12px auto;
+  max-width: 14ch;
   font-size: clamp(1.65rem, 3.2vw, 2.35rem);
   font-weight: 780;
   line-height: 1.08;
@@ -1689,7 +1690,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .door-line {
   position: relative;
   z-index: 1;
-  margin: 0 0 auto;
+  margin: 0 0 auto auto;
   font-size: 14.5px;
   line-height: 1.45;
   color: rgba(226,232,240,0.88);
