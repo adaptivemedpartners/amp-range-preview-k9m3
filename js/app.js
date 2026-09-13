@@ -53,7 +53,7 @@
     "mpc": {
       tag: "MPC · Candidate catch-all",
       title: "MPC tailor-search",
-      blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Reaches a recruiting guide. Client telescope / pay-per-CV parked until CV bank."
+      blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Reaches a recruiting guide."
     }
   };
 
@@ -1649,7 +1649,7 @@
 
   function jobsMpcEmpty() {
     var path = guidePathStamp();
-    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · candidate catch-all</span><h3>Nothing posted for this cut — tailor a search.</h3><p>Market Prime Candidate is the catch-all when posted roles don’t fit. Tailor a search with a guide; your note reaches a recruiting guide. Client pay-per-CV / telescope stays parked until CV bank.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a guide</button></div></article>";
+    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · candidate catch-all</span><h3>Nothing posted for this cut — tailor a search.</h3><p>Market Prime Candidate is the catch-all when posted roles don’t fit. Tailor a search with a guide; your note reaches a recruiting guide.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a guide</button></div></article>";
   }
 
   function renderJobsList() {
@@ -1719,7 +1719,7 @@
       identifier: j.code,
       hiringOrganization: { "@type": "Organization", name: "Adaptive Medical Partners" },
       jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressRegion: "Midwest", addressCountry: "US" } },
-      description: "Tease only. Full package on a confidential call with " + j.recruiter.name + ".",
+      description: "Practice-first overview. Full package on a confidential call with " + j.recruiter.name + ".",
       baseSalary: { "@type": "MonetaryAmount", currency: "USD", value: { "@type": "QuantitativeValue", minValue: 812000, unitText: "YEAR" } }
     };
     root.innerHTML =
@@ -1731,7 +1731,7 @@
             '<h2 style="margin:10px 0 6px;font-size:26px;letter-spacing:-.03em">' + j.title + '</h2>' +
             '<p class="muted" style="margin:0 0 8px">' + j.sub + '</p>' +
             '<ul class="bullets">' + bullets + '</ul>' +
-            '<p class="gate-note">Full package lives on a brief call — not dumped on this page on purpose. CME, commencement, PTO stacks, and named facility details stay gated.</p>' +
+            '<p class="gate-note">Full package lives on a brief call with your guide. CME, commencement, PTO stacks, and named facility details stay for that conversation.</p>' +
             '<div class="btn-row">' +
               '<button class="btn btn-primary" type="button" data-go="job-contact" data-trail="1">Tap to Talk / Text / Email</button>' +
               '<button class="btn btn-dark" type="button" data-go="chat" data-trail="1">Talk with AMP</button>' +
@@ -1854,8 +1854,8 @@
     var accessLabel = $("#mpc-browse-access-label");
     if (accessLabel) {
       accessLabel.textContent = state.mpcAccess === "per-cv"
-        ? "Sample unlock · pay-per-CV example ($49/view illustrative)"
-        : "Sample unlock · monthly example ($99–149/mo illustrative)";
+        ? "Sample unlock · pay-per-CV example ($49/view)"
+        : "Sample unlock · monthly example ($99–149/mo)";
     }
     var specSel = $("#mpc-filter-specialty");
     var lookSel = $("#mpc-filter-looking");
@@ -1917,7 +1917,7 @@
     }
     var parts = chips.slice();
     if (pitch.trim()) parts.push('"' + pitch.trim().slice(0, 80) + (pitch.trim().length > 80 ? "…" : "") + '"');
-    echo.textContent = "Your soft pitch: " + parts.join(" · ") + " — illustrative only, not sent.";
+    echo.textContent = "Your soft pitch: " + parts.join(" · ") + " — preview only, not sent.";
   }
 
   function openMpcDrawer(id) {
@@ -2237,18 +2237,18 @@
         geo: sampleBrowseGeo(),
         npi: "n/a · org lead",
         license: "n/a · facility path",
-        bio: "Public org site / leadership page · illustrative link",
+        bio: "Public org site / leadership page · sample link",
         openPay: "—",
         referrer: "amp.example / hiring door · sample UTM",
         device: "Desktop · America/Chicago · sample",
-        soft: "Org signals · public web hint · illustrative"
+        soft: "Org signals · public web hint · sample"
       };
     } else {
       state.enrichBundle = {
         geo: sampleBrowseGeo(),
-        npi: "Possible NPI match · " + spec + " · illustrative",
+        npi: "Possible NPI match · " + spec + " · sample",
         license: "License board · " + regionLabel + " · status unchecked (sample)",
-        bio: "Public clinic bio / Healthgrades-style hit · illustrative",
+        bio: "Public clinic bio / Healthgrades-style hit · sample",
         openPay: "OpenPayments · no pull yet · placeholder",
         referrer: "Job tease OBG-8449 · utm_source=site · sample",
         device: "Mobile Safari · America/Chicago · sample",
@@ -2582,7 +2582,7 @@
       var full = raw.closest("[data-mpc-full]");
       if (full) {
         var toast2 = $("#mpc-drawer-toast");
-        if (toast2) toast2.textContent = "Full access is illustrative — example monthly or per-CV pricing on the gate. Nothing is charged here.";
+        if (toast2) toast2.textContent = "Full access is a sample — example monthly or per-CV pricing on the gate. Nothing is charged here.";
         return;
       }
       var amenity = raw.closest("[data-amenity]");
@@ -2640,7 +2640,7 @@
     var owner = resolveBdOwner(sel.value);
     if (!owner) {
       chip.innerHTML = '<span class="dot"></span> Pick a state';
-      if (note) note.textContent = "Territory route · Randy lock · always CC Randy · Mike · David.";
+      if (note) note.textContent = "We’ll connect you with the right hiring guide for your state.";
       return;
     }
     chip.innerHTML = '<span class="dot"></span> ' + owner.label;
