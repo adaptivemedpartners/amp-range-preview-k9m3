@@ -394,7 +394,7 @@ button, input, select, textarea { font: inherit; }
 .explore-block {
   text-align: center;
   max-width: 720px;
-  margin: 0 auto 28px;
+  margin: 0 auto 12px;
   opacity: 0; transform: translateY(18px);
 }
 .home-stage.settled .explore-block {
@@ -477,7 +477,7 @@ button, input, select, textarea { font: inherit; }
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 6px 0 10px;
+  margin: 2px 0 8px;
 }
 .explore-range-invite {
   display: inline-flex;
@@ -1403,7 +1403,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .home-proof-subtle {
   justify-content: center;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 10px;
   opacity: 0.72;
 }
 .home-proof-subtle .proof-chip {
@@ -1670,7 +1670,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   .home-overlay { padding: 76px 14px 28px; }
   .explore-title { font-size: clamp(30px, 9vw, 40px); }
   .explore-sub { font-size: 14.5px; margin-top: 10px; }
-  .home-proof-subtle { gap: 6px; margin-top: 12px; }
+  .home-proof-subtle { gap: 6px; margin-top: 8px; }
   .home-proof-subtle .proof-chip { font-size: 10.5px; padding: 4px 8px; }
   .doors-hero { width: 100%; gap: 12px; }
   .door-hero { padding: 18px 16px 16px; border-radius: 18px; }
