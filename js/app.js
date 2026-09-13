@@ -2929,7 +2929,7 @@ function syncGuideRoute(route) {
 
     if (chatFunnel.stage === "earn") {
       var earn = chatFunnel.path === "client"
-        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You own the summit — AMP works the climb."
+        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You set the high camp — AMP works the climb."
         : "On the candidate path, we start with your story — why you’d move, what would make you happier — then walk the lit path with you. No spam. Your goals lead.";
       var me = chatFunnel.path === "client" ? "I’m hiring / holding the peak" : "I’m exploring roles";
       setLog(
@@ -2950,7 +2950,7 @@ function syncGuideRoute(route) {
     if (chatFunnel.stage === "contact" || chatFunnel.stage === "done") {
       var me2 = chatFunnel.path === "client" ? "I’m hiring / holding the peak" : "I’m exploring roles";
       var earn2 = chatFunnel.path === "client"
-        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You own the summit — AMP works the climb."
+        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You set the high camp — AMP works the climb."
         : "On the candidate path, we start with your story — why you’d move, what would make you happier — then walk the lit path with you. No spam. Your goals lead.";
       setLog(
         chatBubble("bot", chatFunnelOpenCopy()) +
