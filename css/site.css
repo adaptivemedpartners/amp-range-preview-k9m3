@@ -3880,7 +3880,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   align-items: center;
   justify-content: flex-end;
   min-height: 100%;
-  padding: 72px 16px 28px;
+  padding: 88px 16px 28px;
   pointer-events: none;
 }
 .trailhead-sheet-stage .crumb {
@@ -3964,7 +3964,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   filter: brightness(0.92);
 }
 @media (max-width: 640px) {
-  .trailhead-sheet-stage { padding: 64px 12px 18px; justify-content: flex-end; }
+  .trailhead-sheet-stage { padding: 102px 12px 18px; justify-content: flex-end; }
   .hire-sheet { max-height: none; overflow: visible; border-radius: 20px; padding: 12px 10px 12px; }
   .hire-title { font-size: 1.2rem; }
 }
