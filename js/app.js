@@ -3106,3 +3106,14 @@
   window.AMPRegionMap = { render: renderRegionMap, normalizeState: normalizeRegionState };
   window.AMP = { go: go, state: state, settleHome: settleHome };
 })();
+
+  document.addEventListener("click", function (e) {
+    var scrollBtn = e.target.closest("[data-scroll-to]");
+    if (!scrollBtn) return;
+    var id = scrollBtn.getAttribute("data-scroll-to");
+    var el = id && document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+

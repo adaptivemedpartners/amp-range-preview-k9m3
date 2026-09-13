@@ -473,6 +473,36 @@ button, input, select, textarea { font: inherit; }
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.explore-range-invite {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #99f6e4;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: .04em;
+  cursor: pointer;
+  text-shadow: 0 0 18px rgba(45, 212, 191, .35);
+}
+.explore-range-invite span[aria-hidden="true"] {
+  font-size: 15px;
+  line-height: 1;
+  animation: exploreRangeBob 1.8s ease-in-out infinite;
+}
+.explore-range-invite:hover { color: #ccfbf1; }
+@keyframes exploreRangeBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .explore-range-invite span[aria-hidden="true"] { animation: none; }
+}
+
 .home-stage.settled .explore-sub {
   animation: exploreSubTextShimmer 2.6s ease-in-out 0.8s infinite;
 }
