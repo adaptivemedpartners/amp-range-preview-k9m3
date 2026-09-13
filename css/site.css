@@ -6050,3 +6050,87 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     width: 100%;
   }
 }
+
+/* amp-build:2054 — bigger exec photos, no black-bar crop */
+.guides-roster .guide-avatar.has-photo {
+  overflow: hidden;
+  background: #e2e8f0 !important;
+  padding: 0 !important;
+  display: block !important;
+  place-items: unset !important;
+}
+.guides-roster .guide-avatar.has-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center 12% !important;
+  display: block !important;
+  margin: 0 !important;
+  vertical-align: top;
+}
+
+/* Leadership: larger portrait frames */
+.guides-roster-lead .guide-row > .guide-avatar,
+.guides-roster-lead .guide-card.guide-row > .guide-avatar {
+  width: 168px !important;
+  height: 210px !important;
+  border-radius: 22px !important;
+  flex-shrink: 0;
+}
+.guides-roster-lead .guide-avatar.has-photo img {
+  object-position: center 10% !important;
+}
+
+/* Recruiting / Amy etc — fill frame, no black bar */
+.guides-roster-recruit .guide-row > .guide-avatar,
+.guides-roster .recruiter-guides .guide-row > .guide-avatar,
+.guides-roster-recruit .guide-card.guide-row > .guide-avatar {
+  width: 120px !important;
+  height: 150px !important;
+  border-radius: 20px !important;
+  flex-shrink: 0;
+}
+.guides-roster-recruit .guide-avatar.has-photo img {
+  object-position: center 12% !important;
+}
+
+@media (max-width: 800px) {
+  .guides-roster-lead .guide-row > .guide-avatar,
+  .guides-roster-lead .guide-card.guide-row > .guide-avatar {
+    width: 148px !important;
+    height: 186px !important;
+  }
+  .guides-roster-recruit .guide-row > .guide-avatar,
+  .guides-roster-recruit .guide-card.guide-row > .guide-avatar {
+    width: 112px !important;
+    height: 140px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Mobile: big centered portrait, then text — faces readable */
+  .guides-roster-lead .guide-row,
+  .guides-roster-lead .guide-card.guide-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .guides-roster-lead .guide-row > .guide-avatar,
+  .guides-roster-lead .guide-card.guide-row > .guide-avatar {
+    width: min(220px, 72vw) !important;
+    height: min(275px, 90vw) !important;
+    margin: 0 auto 12px !important;
+  }
+  .guides-roster-recruit .guide-row,
+  .guides-roster-recruit .guide-card.guide-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .guides-roster-recruit .guide-row > .guide-avatar,
+  .guides-roster-recruit .guide-card.guide-row > .guide-avatar {
+    width: min(180px, 58vw) !important;
+    height: min(225px, 72vw) !important;
+    margin: 0 auto 12px !important;
+  }
+}
