@@ -5367,3 +5367,35 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     max-height: none !important;
   }
 }
+
+
+/* amp-build:2041-phone-logo-clearance — always leave air under absolute glass nav / AMP lockup */
+@media (max-width: 760px) {
+  :root {
+    --amp-phone-nav-clear: calc(64px + env(safe-area-inset-top, 0px) + 18px);
+  }
+  /* Funnel/guides/education/etc: nav is position:absolute (.is-home) over the hero */
+  .hero-band {
+    padding-top: var(--amp-phone-nav-clear) !important;
+  }
+  .home-overlay {
+    padding-top: var(--amp-phone-nav-clear) !important;
+  }
+  .trailhead-top {
+    padding-top: calc(var(--amp-phone-nav-clear) + 8px) !important;
+  }
+  .view.funnel.trailhead .trailhead-sheet-stage,
+  .trailhead-sheet-stage {
+    padding-top: max(112px, calc(var(--amp-phone-nav-clear) + 12px)) !important;
+  }
+  /* Confirm / thin heroes that only pad the band inline */
+  .confirm-band.hero-band,
+  .view.funnel .hero-band {
+    padding-top: var(--amp-phone-nav-clear) !important;
+  }
+}
+@media (max-width: 430px) {
+  :root {
+    --amp-phone-nav-clear: calc(60px + env(safe-area-inset-top, 0px) + 22px);
+  }
+}
