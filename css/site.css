@@ -4643,3 +4643,19 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 
 /* Paid Ridge: never show region lens */
 .ridge-region-lens, .mi-lite-view .mi-lite-regions-field.ridge-region-lens, #mi-lite-app-form .ridge-region-lens { display:none !important; }
+
+
+/* Below-fold education on client agreements + physician jobs */
+.belowfold {
+  margin-top: 28px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.belowfold .seo-pillars-head { margin-bottom: 4px; }
+.belowfold .seo-pillar-links { margin-top: 18px; }
+.belowfold .btn-row { margin-top: 18px; }
+.belowfold-client .panel h3,
+.belowfold-physician .panel h3 { font-weight: 700; }
+@media (max-width: 640px) {
+  .belowfold { margin-top: 22px; }
+}
