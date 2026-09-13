@@ -463,9 +463,10 @@
   }
 
   /* ---------- Entry fork ---------- */
+  /* amp-build:2059-welcome-dedupe — one welcome; askAudience skips “Welcome to the range” */
   function askAudience() {
     return addBot(
-      "Welcome to the range. Are you searching for the peak, or holding it for your organization?",
+      "Are you searching for the peak, or holding it for your organization?",
       500
     ).then(function () {
       showChips(
@@ -752,7 +753,7 @@
     state.owner = resolvedRecruiterOwner;
 
     return addBot(
-      "Hi — welcome to the range. <strong>Adaptive Medical Partners</strong> is your guide.",
+      "Hi — <strong>Adaptive Medical Partners</strong> is your guide.",
       isRestart ? 300 : 400
     ).then(function () {
       return askAudience();

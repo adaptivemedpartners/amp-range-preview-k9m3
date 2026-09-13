@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2000-ridge-mike-feedback";
+  window.__AMP_BUILD = "2059-other-pop-select-advance";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1260,9 +1260,16 @@
     }
     paint();
     list.onclick = function (e) {
-      var btn = e.target.closest("[data-specialty-pick]");
+      /* amp-build:2059 — pick must set specialty, close pop, advance (same as hire-card Select) */
+      var raw = e.target;
+      if (raw && raw.nodeType === 3) raw = raw.parentElement;
+      if (!raw || typeof raw.closest !== "function") return;
+      var btn = raw.closest("[data-specialty-pick]");
       if (!btn) return;
-      var id = btn.getAttribute("data-specialty-pick");
+      e.preventDefault();
+      e.stopPropagation();
+      var id = (btn.getAttribute("data-specialty-pick") || "").trim();
+      if (!id) return;
       if (id.indexOf("custom:") === 0) {
         state.specialty = id;
         state.specialtyCustom = id.slice(7);
@@ -1270,8 +1277,8 @@
         state.specialty = id;
         state.specialtyCustom = null;
       }
-      closeSpecialtyOtherPop();
-      go("physician-rank", { trail: true });
+      try { closeSpecialtyOtherPop(); } catch (err) {}
+      go("physician-rank", { trail: true, instant: true });
     };
     if (q && !q._ampWired) {
       q._ampWired = true;
@@ -1416,6 +1423,16 @@
     bindClientHireSheetClicks();
   }
 
+
+  /* amp-build:2059-other-pop-select-advance — close was missing; pick threw and funnel stuck */
+  function closeClientSpecOtherPop() {
+    var pop = $("#client-spec-other-pop");
+    if (!pop) return;
+    pop.hidden = true;
+    try { pop.setAttribute("hidden", ""); } catch (e) {}
+    pop.style.display = "";
+  }
+
   function openClientSpecOtherPop() {
     var pop = $("#client-spec-other-pop");
     var list = $("#client-spec-other-list");
@@ -1442,9 +1459,16 @@
     if (q) { q.value = ""; q.focus(); }
     paint();
     list.onclick = function (e) {
-      var btn = e.target.closest("[data-client-spec-pick]");
+      /* amp-build:2059 — restore advance after Other pick (closeClientSpecOtherPop was missing) */
+      var raw = e.target;
+      if (raw && raw.nodeType === 3) raw = raw.parentElement;
+      if (!raw || typeof raw.closest !== "function") return;
+      var btn = raw.closest("[data-client-spec-pick]");
       if (!btn) return;
-      var id = btn.getAttribute("data-client-spec-pick");
+      e.preventDefault();
+      e.stopPropagation();
+      var id = (btn.getAttribute("data-client-spec-pick") || "").trim();
+      if (!id) return;
       if (id.indexOf("custom:") === 0) {
         state.clientSpecialty = id;
         state.clientSpecialtyCustom = id.slice(7);
@@ -1452,8 +1476,9 @@
         state.clientSpecialty = id;
         state.clientSpecialtyCustom = null;
       }
-      closeClientSpecOtherPop();
-      go("client-retained", { trail: true });
+      if (!state.facility) state.facility = "fqhc";
+      try { closeClientSpecOtherPop(); } catch (err) {}
+      go("client-retained", { trail: true, instant: true });
     };
     if (q && !q._ampWired) {
       q._ampWired = true;
