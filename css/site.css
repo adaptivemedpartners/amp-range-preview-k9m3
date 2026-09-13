@@ -4914,3 +4914,51 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (max-width: 640px) {
   .belowfold { margin-top: 22px; }
 }
+
+
+/* —— Ask-a-guide earn funnel (dock mini-log) —— */
+.amp-guide-log {
+  padding: 12px 16px 4px;
+  display: grid;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.amp-guide-log .bubble {
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  max-width: 96%;
+}
+.amp-guide-log .bubble.bot {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(153, 246, 228, 0.16);
+  color: #e2e8f0;
+  justify-self: start;
+}
+.amp-guide-log .bubble.me {
+  background: rgba(13, 148, 136, 0.35);
+  border: 1px solid rgba(153, 246, 228, 0.28);
+  color: #f0fdfa;
+  justify-self: end;
+}
+.amp-guide-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 8px 16px 14px;
+}
+.amp-guide-actions.is-split {
+  grid-template-columns: 1fr 1fr;
+}
+.amp-guide-action.is-client {
+  color: #1c1917;
+  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  border-color: rgba(251, 191, 119, 0.45);
+}
+.chat-actions .btn[data-chat="door-client"] {
+  color: #1c1917;
+  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  border: 0;
+}

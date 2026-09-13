@@ -2325,6 +2325,7 @@
     var toggle = $("[data-guide-toggle]");
     var root = $("#amp-guide");
     if (!dock || !root || root.hidden) return;
+    resetChatFunnel();
     dock.hidden = false;
     if (toggle) toggle.setAttribute("aria-expanded", "true");
     root.classList.add("is-open");
@@ -2339,11 +2340,13 @@
 
   function syncGuideRoute(route) {
     var root = $("#amp-guide");
-    if (!root) return;
     if (route === "chat") {
-      closeGuideDock(true);
-      root.hidden = true;
-    } else {
+      if (root) {
+        closeGuideDock(true);
+        root.hidden = true;
+      }
+      resetChatFunnel();
+    } else if (root) {
       root.hidden = false;
     }
   }
@@ -2550,8 +2553,12 @@
       var chatOpt = raw.closest("[data-chat]");
       if (chatOpt) {
         if (chatOpt.closest(".jobs-mpc-empty")) stampGuidePath();
-        if (chatOpt.closest("#amp-guide")) closeGuideDock();
-        handleChat(chatOpt.getAttribute("data-chat"));
+        var chatVal = chatOpt.getAttribute("data-chat");
+        /* Keep dock open through door/earn steps; close only on final contact opts */
+        if (chatOpt.closest("#amp-guide") && (chatVal === "talk" || chatVal === "text" || chatVal === "email" || chatVal === "other")) {
+          /* close after handleChat decides */
+        }
+        handleChat(chatVal);
         return;
       }
 
@@ -2860,24 +2867,166 @@
     }
   }
 
-  function handleChat(opt) {
+  /* Earn-the-talk chat funnel: door → earn → contact (dock + full chat). */
+  var chatFunnel = { stage: "door", path: null }; /* door | earn | contact | done */
+
+  function chatBubble(who, html) {
+    return '<div class="bubble ' + who + '">' + html + "</div>";
+  }
+
+  function chatFunnelOpenCopy() {
+    return "Hi — I'm here to help you find the right guide. First: which path are you on?";
+  }
+
+  function paintChatFunnel() {
     var log = $("#chat-log");
-    var chatView = document.querySelector('.view.on[data-route="chat"]');
-    /* The SPA keeps chat markup mounted while hidden; route before handling dock actions. */
-    if (!log || !chatView) { go("chat", { instant: true }); setTimeout(function () { handleChat(opt); }, 0); return; }
+    var actions = $("#chat-actions");
+    var dockLog = $("#amp-guide-log");
+    var dockActions = $("#amp-guide-actions");
+    var confirm = $("#chat-confirm-row");
+    if (confirm) confirm.classList.add("hidden");
+
+    function setLog(html) {
+      if (log) { log.innerHTML = html; log.scrollTop = log.scrollHeight; }
+      if (dockLog) { dockLog.innerHTML = html; dockLog.scrollTop = dockLog.scrollHeight; }
+    }
+    function setActions(html, split) {
+      if (actions) actions.innerHTML = html;
+      if (dockActions) {
+        dockActions.innerHTML = html;
+        dockActions.classList.toggle("is-split", !!split);
+      }
+    }
+
+    if (chatFunnel.stage === "door") {
+      setLog(chatBubble("bot", chatFunnelOpenCopy()));
+      setActions(
+        '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="door-candidate">Candidate path</button>' +
+        '<button type="button" class="btn amp-guide-action is-client" data-chat="door-client" style="color:#1c1917;background:linear-gradient(135deg,#fcd34d,#f59e0b);border:0">Client path</button>',
+        true
+      );
+      return;
+    }
+
+    if (chatFunnel.stage === "earn") {
+      var earn = chatFunnel.path === "client"
+        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You own the summit — AMP works the climb."
+        : "On the candidate path, we start with your story — why you’d move, what would make you happier — then walk the lit path with you. No spam. Your goals lead.";
+      var me = chatFunnel.path === "client" ? "I’m hiring / holding the peak" : "I’m exploring roles";
+      setLog(
+        chatBubble("bot", chatFunnelOpenCopy()) +
+        chatBubble("me", me) +
+        chatBubble("bot", earn + " Want a named guide for the next step?")
+      );
+      setActions(
+        '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="earn-continue">Yes — connect me with a guide</button>' +
+        (chatFunnel.path === "client"
+          ? '<button type="button" class="btn btn-ghost amp-guide-action" data-chat="earn-explore" data-go="client">Explore the client path</button>'
+          : '<button type="button" class="btn btn-ghost amp-guide-action" data-chat="earn-explore" data-go="physician">Explore the candidate path</button>'),
+        false
+      );
+      return;
+    }
+
+    if (chatFunnel.stage === "contact" || chatFunnel.stage === "done") {
+      var me2 = chatFunnel.path === "client" ? "I’m hiring / holding the peak" : "I’m exploring roles";
+      var earn2 = chatFunnel.path === "client"
+        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You own the summit — AMP works the climb."
+        : "On the candidate path, we start with your story — why you’d move, what would make you happier — then walk the lit path with you. No spam. Your goals lead.";
+      setLog(
+        chatBubble("bot", chatFunnelOpenCopy()) +
+        chatBubble("me", me2) +
+        chatBubble("bot", earn2 + " Want a named guide for the next step?") +
+        chatBubble("me", "Yes — connect me with a guide") +
+        chatBubble("bot", "Great. How should we reach you? No package dumps — just a clear next step with a recruiting guide.")
+      );
+      setActions(
+        '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="talk">Talk</button>' +
+        '<button type="button" class="btn btn-dark amp-guide-action" data-chat="text">Text</button>' +
+        '<button type="button" class="btn btn-ghost amp-guide-action" data-chat="email">Email</button>' +
+        '<button type="button" class="btn btn-ghost amp-guide-action" data-chat="other">Something else</button>',
+        true
+      );
+    }
+  }
+
+  function resetChatFunnel() {
+    chatFunnel.stage = "door";
+    chatFunnel.path = null;
+    paintChatFunnel();
+  }
+
+  function handleChat(opt) {
+    /* Job-context shortcuts (already earned via job page) skip the door funnel. */
+    var jobSkip = !!(state.jobId || state.guidePathText) && (opt === "talk" || opt === "text" || opt === "email" || opt === "other");
+    var inDock = !!(document.querySelector("#amp-guide.is-open") || (function () {
+      var d = $("#amp-guide-dock");
+      return d && !d.hidden;
+    })());
+    var onChat = !!document.querySelector('.view.on[data-route="chat"]');
+
+    if (opt === "door-candidate" || opt === "door-client") {
+      chatFunnel.path = opt === "door-client" ? "client" : "candidate";
+      chatFunnel.stage = "earn";
+      paintChatFunnel();
+      return;
+    }
+    if (opt === "earn-continue") {
+      chatFunnel.stage = "contact";
+      paintChatFunnel();
+      return;
+    }
+    if (opt === "earn-explore") {
+      /* data-go on the same button handles navigation */
+      return;
+    }
+
+    if (!jobSkip && chatFunnel.stage === "door" && (opt === "talk" || opt === "text" || opt === "email" || opt === "other")) {
+      /* Someone hit contact before picking a door — nudge */
+      if (!onChat && !inDock) go("chat", { instant: true });
+      paintChatFunnel();
+      return;
+    }
+
+    if (!onChat && !inDock) {
+      go("chat", { instant: true });
+      setTimeout(function () { handleChat(opt); }, 0);
+      return;
+    }
+
+    /* Contact handoff */
+    var log = $("#chat-log");
+    var dockLog = $("#amp-guide-log");
     var labels = {
-      talk: state.guidePathText ? "I want to talk to a guide about " + state.guidePathText : "I want to talk to Amy about OBG-8449",
-      text: "Text me about this role",
+      talk: state.guidePathText ? "I want to talk to a guide about " + state.guidePathText : "I’d like to talk with a guide",
+      text: "Text me",
       email: "Email is better for me",
       other: "I have a different question"
     };
-    log.innerHTML += '<div class="bubble me">' + (labels[opt] || opt) + "</div>";
-    setTimeout(function () {
-      log.innerHTML += '<div class="bubble bot">Got it. Routing your interest to <strong>a recruiting guide</strong> for the owner recruiter. Prefer a form? Use Tap to Talk — same destination.</div>';
-      log.scrollTop = log.scrollHeight;
-      var row = $("#chat-confirm-row");
-      if (row) row.classList.remove("hidden");
-    }, 450);
+    var meHtml = chatBubble("me", labels[opt] || opt);
+    var botHtml = chatBubble("bot", "Got it. Routing your interest to <strong>a recruiting guide</strong>. Prefer a form? Use Tap to Talk — same destination.");
+    if (log) {
+      log.innerHTML += meHtml;
+      setTimeout(function () {
+        log.innerHTML += botHtml;
+        log.scrollTop = log.scrollHeight;
+        var row = $("#chat-confirm-row");
+        if (row) row.classList.remove("hidden");
+        var actions = $("#chat-actions");
+        if (actions) actions.innerHTML = "";
+      }, 400);
+    }
+    if (dockLog) {
+      dockLog.innerHTML += meHtml;
+      setTimeout(function () {
+        dockLog.innerHTML += botHtml;
+        dockLog.scrollTop = dockLog.scrollHeight;
+        var da = $("#amp-guide-actions");
+        if (da) da.innerHTML = '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-go="confirm-mess" data-trail="1">Confirm · view next step</button>';
+      }, 400);
+    }
+    chatFunnel.stage = "done";
+    if (inDock) closeGuideDock();
   }
 
   function renderBlogIndex() {
