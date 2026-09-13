@@ -2338,14 +2338,32 @@
     else closeGuideDock();
   }
 
-  function syncGuideRoute(route) {
+    function openAmpChat() {
+    function tryOpen() {
+      if (window.AMP_CHATBOT && typeof window.AMP_CHATBOT.open === "function") {
+        window.AMP_CHATBOT.open();
+        return true;
+      }
+      var launch = document.querySelector(".amp-chat-launcher");
+      if (launch) { launch.click(); return true; }
+      return false;
+    }
+    if (tryOpen()) return;
+    var n = 0;
+    var t = setInterval(function () {
+      n += 1;
+      if (tryOpen() || n > 40) clearInterval(t);
+    }, 100);
+  }
+
+function syncGuideRoute(route) {
     var root = $("#amp-guide");
     if (route === "chat") {
       if (root) {
         closeGuideDock(true);
         root.hidden = true;
       }
-      resetChatFunnel();
+      openAmpChat();
     } else if (root) {
       root.hidden = false;
     }
@@ -2363,7 +2381,8 @@
       if (raw.closest("[data-mobile-nav-close]")) { closeMobileNav(); return; }
       if (raw.closest("[data-guide-toggle]")) { toggleGuideDock(); return; }
       var guideWhisper = raw.closest("[data-guide-whisper]");
-      if (guideWhisper) { e.preventDefault(); stampGuidePath(); openGuideDock(); return; }
+      if (guideWhisper) { e.preventDefault(); stampGuidePath(); openAmpChat(); return; }
+      if (raw.closest("[data-open-amp-chat]")) { e.preventDefault(); openAmpChat(); return; }
       if (raw.closest("[data-guide-close]")) { closeGuideDock(); return; }
       var guideRoot = $("#amp-guide");
       var guideDock = $("#amp-guide-dock");
