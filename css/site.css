@@ -1667,11 +1667,22 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 
 /* Phone-clean @ 430 */
 @media (max-width: 430px) {
-  .home-overlay { padding: 76px 14px 28px; }
+  .home-overlay { padding: 76px 10px 28px; }
   .explore-title { font-size: clamp(30px, 9vw, 40px); }
   .explore-sub { font-size: 14.5px; margin-top: 10px; }
-  .home-proof-subtle { gap: 6px; margin-top: 8px; }
-  .home-proof-subtle .proof-chip { font-size: 10.5px; padding: 4px 8px; }
+  .home-proof-subtle {
+    flex-wrap: nowrap;
+    gap: 4px;
+    margin-top: 8px;
+    width: 100%;
+  }
+  .home-proof-subtle .proof-chip {
+    font-size: 9.5px;
+    padding: 4px 6px;
+    white-space: nowrap;
+    flex: 0 1 auto;
+  }
+  .home-proof-subtle .proof-chip strong { margin-right: 2px; }
   .doors-hero { width: 100%; gap: 12px; }
   .door-hero { padding: 18px 16px 16px; border-radius: 18px; }
   .door-story { font-size: 1.45rem; margin-bottom: 8px; }
@@ -1694,8 +1705,16 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   .home-overlay { padding: 76px 14px 28px; }
   .explore-title { font-size: clamp(30px, 9vw, 40px); }
   .explore-sub { font-size: 14px; }
-  .home-proof-subtle { gap: 6px; }
-  .home-proof-subtle .proof-chip { font-size: 10px; padding: 4px 8px; }
+  .home-proof-subtle {
+    flex-wrap: nowrap;
+    gap: 3px;
+  }
+  .home-proof-subtle .proof-chip {
+    font-size: 9px;
+    padding: 3px 5px;
+    white-space: nowrap;
+  }
+  .home-proof-subtle .proof-chip strong { margin-right: 2px; }
   .door-hero { padding: 18px 16px 16px; border-radius: 18px; }
   .door-story { font-size: clamp(1.4rem, 7.5vw, 1.75rem); }
   .door-line { font-size: 12.5px; }
