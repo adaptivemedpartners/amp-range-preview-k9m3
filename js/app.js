@@ -3312,6 +3312,22 @@ function syncGuideRoute(route) {
         if (on) cta.removeAttribute("hidden");
         else cta.setAttribute("hidden", "");
       });
+      var guides = document.querySelector("[data-home-guides]");
+      if (guides) {
+        guides.setAttribute("data-path", path);
+        var title = guides.querySelector("[data-guides-title]");
+        var lede = guides.querySelector("[data-guides-lede]");
+        if (title) title.textContent = path === "client" ? "Your hiring guides" : "Your recruiting guides";
+        if (lede) lede.textContent = path === "client"
+          ? "Tap one — they help you set the high camp and own the next step."
+          : "Tap one — they turn a preview into a real next step.";
+        guides.querySelectorAll("[data-guides-panel]").forEach(function (rail) {
+          var on = rail.getAttribute("data-guides-panel") === path;
+          rail.classList.toggle("is-on", on);
+          if (on) rail.removeAttribute("hidden");
+          else rail.setAttribute("hidden", "");
+        });
+      }
     }
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
@@ -3374,3 +3390,5 @@ function syncGuideRoute(route) {
   });
   window.addEventListener("resize", onResize, { passive: true });
 })();
+
+/* amp-build:2042-home-guides-path — climb toggle flips recruiting vs hiring guides */

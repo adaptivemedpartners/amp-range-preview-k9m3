@@ -5399,3 +5399,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     --amp-phone-nav-clear: calc(60px + env(safe-area-inset-top, 0px) + 22px);
   }
 }
+
+
+/* amp-build:2042-home-guides-path */
+.home-guides-rail[hidden] { display: none !important; }
+.home-guides-strip[data-path="client"] .home-guide-chip:hover,
+.home-guides-strip[data-path="client"] .home-guide-chip:focus-visible {
+  border-color: rgba(252,211,77,0.55);
+  background: rgba(245,158,11,0.16);
+}
