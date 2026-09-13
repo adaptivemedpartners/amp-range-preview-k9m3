@@ -5832,3 +5832,221 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .guides-roster .guide-row .guide-full { grid-column: 1; }
 }
+
+
+/* amp-build:2053-guide-body — flex row + body column; kill flat-grid child placement */
+.guides-roster .guide-row,
+.guides-roster .guide-card.guide-row {
+  display: flex !important;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 18px;
+  grid-template-columns: none !important;
+  overflow: visible;
+}
+
+.guides-roster .guide-row > .guide-avatar {
+  flex: 0 0 auto;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  margin: 0;
+}
+
+.guides-roster .guide-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+.guides-roster .guide-body h3 {
+  margin: 0 0 0;
+  padding: 0;
+  font-size: clamp(18px, 2.4vw, 22px);
+  letter-spacing: -0.03em;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.guides-roster .guide-body .guide-role {
+  margin: 0;
+  padding: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--teal-dark);
+  line-height: 1.3;
+}
+
+.guides-roster .guide-body .guide-blurb,
+.guides-roster .guide-body > p:not(.guide-role) {
+  min-height: 0;
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.guides-roster .guide-body .guide-full {
+  display: block;
+  width: 100%;
+  margin: 6px 0 4px;
+  padding: 0 14px;
+  border: 1px solid rgba(13, 148, 136, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 12px;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  visibility: visible;
+  opacity: 1;
+}
+
+.guides-roster .guide-body .guide-full summary {
+  display: list-item;
+  cursor: pointer;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--teal-dark);
+  padding: 12px 0;
+}
+
+.guides-roster .guide-body .guide-full summary::-webkit-details-marker { display: none; }
+.guides-roster .guide-body .guide-full summary::after {
+  content: " →";
+  font-weight: 900;
+}
+.guides-roster .guide-body .guide-full[open] summary::after { content: " ↑"; }
+
+.guides-roster .guide-body .guide-full-body {
+  display: block;
+  padding: 0 0 14px;
+}
+.guides-roster .guide-body .guide-full-body p {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #334155;
+  min-height: 0 !important;
+}
+
+.guides-roster .guide-body .btn {
+  margin-top: 6px;
+  align-self: flex-start;
+  justify-self: auto;
+}
+
+/* Kill leftover grid placement on any direct children of .guide-row */
+.guides-roster .guide-row > *,
+.guides-roster .guide-card.guide-row > * {
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+/* Leadership — taller zoomed-out portrait (~128×168) as in 2051 */
+.guides-roster-lead .guide-row,
+.guides-roster-lead .guide-card.guide-row {
+  grid-template-columns: none !important;
+}
+.guides-roster-lead .guide-row > .guide-avatar {
+  width: 128px;
+  height: 168px;
+  border-radius: 22px;
+  flex: 0 0 128px;
+}
+.guides-roster-lead .guide-avatar.has-photo img {
+  object-fit: cover;
+  object-position: center 20%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Recruiting — soft-rounded ~112–120 square photos, same flex body */
+.guides-roster-recruit .guide-row > .guide-avatar,
+.guides-roster .recruiter-guides .guide-row > .guide-avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 20px;
+  flex: 0 0 112px;
+}
+.guides-roster-recruit .guide-avatar.has-photo img {
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+/* Hiring — quieter/smaller, same body wrapper pattern */
+.guides-roster-hire .guide-row,
+.guides-roster-hire .guide-card.guide-row,
+.guides-roster .guide-row-quiet {
+  gap: 14px;
+  padding: 14px 14px 14px 12px;
+  grid-template-columns: none !important;
+}
+.guides-roster-hire .guide-row > .guide-avatar,
+.guides-roster .guide-row-quiet > .guide-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
+  flex: 0 0 96px;
+  box-shadow: 0 6px 16px rgba(2, 12, 27, 0.12);
+}
+.guides-roster-hire .guide-body h3,
+.guides-roster .guide-row-quiet .guide-body h3 {
+  font-size: 17px;
+}
+.guides-roster-hire .guide-body .guide-blurb,
+.guides-roster .guide-row-quiet .guide-body .guide-blurb {
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .guides-roster-lead .guide-row > .guide-avatar {
+    width: 112px;
+    height: 148px;
+    flex-basis: 112px;
+  }
+  .guides-roster-recruit .guide-row > .guide-avatar {
+    width: 104px;
+    height: 104px;
+    flex-basis: 104px;
+  }
+}
+
+@media (max-width: 560px) {
+  .guides-roster .guide-row,
+  .guides-roster .guide-card.guide-row,
+  .guides-roster-lead .guide-row,
+  .guides-roster-lead .guide-card.guide-row,
+  .guides-roster-hire .guide-row,
+  .guides-roster .guide-row-quiet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .guides-roster .guide-row > .guide-avatar,
+  .guides-roster-lead .guide-row > .guide-avatar,
+  .guides-roster-recruit .guide-row > .guide-avatar,
+  .guides-roster-hire .guide-row > .guide-avatar,
+  .guides-roster .guide-row-quiet > .guide-avatar {
+    flex-basis: auto;
+    margin: 0;
+  }
+  .guides-roster-lead .guide-row > .guide-avatar {
+    width: 148px;
+    height: 196px;
+    margin: 0 auto 4px;
+    align-self: center;
+  }
+  .guides-roster-recruit .guide-row > .guide-avatar {
+    width: 120px;
+    height: 120px;
+  }
+  .guides-roster .guide-body {
+    width: 100%;
+  }
+}
