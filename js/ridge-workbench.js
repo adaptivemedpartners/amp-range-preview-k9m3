@@ -847,33 +847,83 @@
     });
   }
 
+  function stateElFromPoint(root, x, y) {
+    var hit = document.elementFromPoint(x, y);
+    if (!hit) return null;
+    var el = hit.closest("[data-state]");
+    if (!el || !root.contains(el)) return null;
+    return el;
+  }
+
   function bindMap() {
     var root = $("ridge-map-container");
     if (!root || root.getAttribute("data-ridge-bound") === "1") return;
     root.setAttribute("data-ridge-bound", "1");
     ensureMapGlow(root);
+    /* Phone: finger-drag must sweep states, not scroll the page */
+    root.style.touchAction = "none";
+
+    var fingerDrag = false;
+
+    function applyHover(e, el) {
+      if (!el) {
+        if (!state.hover) return;
+        state.hover = null;
+        paintMap();
+        showTooltip(null, null);
+        return;
+      }
+      var code = el.getAttribute("data-state");
+      if (state.hover !== code) {
+        state.hover = code;
+        paintMap();
+      }
+      showTooltip(e, state.hover);
+    }
+
+    root.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
+      fingerDrag = true;
+      try { root.setPointerCapture(e.pointerId); } catch (err) {}
+      e.preventDefault();
+      var el = stateElFromPoint(root, e.clientX, e.clientY);
+      if (!el) {
+        el = e.target.closest("[data-state]");
+        if (el && !root.contains(el)) el = null;
+      }
+      applyHover(e, el);
+    }, { passive: false });
 
     root.addEventListener("pointerover", function (e) {
+      if (fingerDrag) return;
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
-      var code = el.getAttribute("data-state");
-      if (state.hover === code) return;
-      state.hover = code;
-      paintMap();
-      showTooltip(e, state.hover);
+      applyHover(e, el);
     });
+
     root.addEventListener("pointermove", function (e) {
-      var el = e.target.closest("[data-state]");
-      if (el && root.contains(el)) {
-        var code = el.getAttribute("data-state");
-        if (state.hover !== code) {
-          state.hover = code;
-          paintMap();
-        }
-        showTooltip(e, state.hover);
+      var el;
+      if (fingerDrag || e.pointerType === "touch" || e.pointerType === "pen") {
+        if (fingerDrag) e.preventDefault();
+        el = stateElFromPoint(root, e.clientX, e.clientY);
+      } else {
+        el = e.target.closest("[data-state]");
+        if (el && !root.contains(el)) el = null;
       }
-    });
+      if (el) applyHover(e, el);
+      else if (fingerDrag) applyHover(e, null);
+    }, { passive: false });
+
+    function endFinger(e) {
+      if (!fingerDrag) return;
+      fingerDrag = false;
+      try { if (e && e.pointerId != null) root.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    root.addEventListener("pointerup", endFinger);
+    root.addEventListener("pointercancel", endFinger);
+
     root.addEventListener("pointerleave", function () {
+      if (fingerDrag) return;
       if (!state.hover) return;
       state.hover = null;
       paintMap();
