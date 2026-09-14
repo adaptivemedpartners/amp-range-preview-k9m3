@@ -2327,7 +2327,7 @@
 
   function jobsMpcEmpty() {
     var path = guidePathStamp();
-    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · candidate catch-all</span><h3>Nothing posted for this cut — tailor a search.</h3><p>Market Prime Candidate is the catch-all when posted roles don’t fit. Tailor a search with a guide; your note reaches a recruiting guide.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a guide</button></div></article>";
+    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · tailored search</span><h3>Nothing posted for this cut — tailor a search.</h3><p>When nothing posted fits, a recruiting guide opens a tailored search with you.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a guide</button></div></article>";
   }
 
   function renderJobsList() {
