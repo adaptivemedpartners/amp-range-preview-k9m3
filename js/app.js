@@ -1402,6 +1402,35 @@
     }
   }
 
+
+  function isClientSpecMultiMode() {
+    var box = $("#client-spec-multi");
+    return !!(box && box.checked);
+  }
+
+  function wireClientSpecMultiToggle() {
+    var box = $("#client-spec-multi");
+    var hint = $("#client-spec-hint");
+    if (!box) return;
+    if (box.getAttribute("data-bound-hire") === "1") return;
+    box.setAttribute("data-bound-hire", "1");
+    function syncHint() {
+      var on = !!box.checked;
+      var sheet = document.querySelector('[data-route="client-specialty"]');
+      if (sheet) sheet.classList.toggle("is-multi", on);
+      if (hint) {
+        hint.textContent = on
+          ? "Tap specialties to select, then Continue below."
+          : "Tap a specialty to continue. Need more than one? Turn on multi-select first.";
+      }
+      var contWrap = document.querySelector(".client-spec-continue-wrap");
+      if (contWrap) contWrap.style.display = on ? "" : "none";
+      paintClientSpecSelection();
+    }
+    box.addEventListener("change", syncHint);
+    syncHint();
+  }
+
   function paintClientSpecSelection() {
     if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
     var set = {};
@@ -1423,7 +1452,7 @@
       btn.classList.toggle("is-selected", on);
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       var hs = btn.querySelector(".hire-select");
-      if (hs) hs.textContent = on ? "Selected ✓" : "Select";
+      if (hs) hs.textContent = on ? "Selected ✓" : (isClientSpecMultiMode() ? "Select" : "Select →");
     });
     var extra = $("#client-spec-extra");
     if (extra) {
@@ -1465,7 +1494,7 @@
     if (!state.clientSpecialties.length) return;
     if (!state.facility) state.facility = "fqhc";
     try { closeClientSpecOtherPop(); } catch (err) {}
-    go("client-retained", { trail: true, instant: true });
+    go("client-retained", { trail: true });
   }
 
   function bindClientHireSheetClicks() {
@@ -1481,7 +1510,16 @@
           openClientSpecOtherPop();
           return;
         }
-        toggleClientSpecialty(csid);
+        var multi = isClientSpecMultiMode();
+        if (multi) {
+          toggleClientSpecialty(csid);
+          return;
+        }
+        /* Smooth single-select: set this specialty and continue */
+        state.clientSpecialties = [csid];
+        syncClientSpecialtyCompat();
+        paintClientSpecSelection();
+        continueClientSpecialties();
       }, true);
     });
     var cont = $("#client-spec-continue");
@@ -1520,6 +1558,7 @@
       }).join("");
     }
     bindClientHireSheetClicks();
+    wireClientSpecMultiToggle();
     paintClientSpecSelection();
   }
 
@@ -1570,10 +1609,18 @@
       var id = (btn.getAttribute("data-client-spec-pick") || "").trim();
       if (!id) return;
       if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
-      if (state.clientSpecialties.indexOf(id) < 0) state.clientSpecialties.push(id);
-      syncClientSpecialtyCompat();
-      try { closeClientSpecOtherPop(); } catch (err) {}
-      paintClientSpecSelection();
+      if (isClientSpecMultiMode()) {
+        if (state.clientSpecialties.indexOf(id) < 0) state.clientSpecialties.push(id);
+        syncClientSpecialtyCompat();
+        try { closeClientSpecOtherPop(); } catch (err) {}
+        paintClientSpecSelection();
+      } else {
+        state.clientSpecialties = [id];
+        syncClientSpecialtyCompat();
+        try { closeClientSpecOtherPop(); } catch (err) {}
+        paintClientSpecSelection();
+        continueClientSpecialties();
+      }
     };
     if (q && !q._ampWired) {
       q._ampWired = true;
@@ -2810,7 +2857,14 @@ function syncGuideRoute(route) {
           openClientSpecOtherPop();
           return;
         }
-        toggleClientSpecialty(csid);
+        if (isClientSpecMultiMode()) {
+          toggleClientSpecialty(csid);
+          return;
+        }
+        state.clientSpecialties = [csid];
+        syncClientSpecialtyCompat();
+        paintClientSpecSelection();
+        continueClientSpecialties();
         return;
       }
       var blog = raw.closest("[data-blog]");

@@ -6556,3 +6556,30 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-weight: 700;
   font-size: 12px;
 }
+
+
+/* amp-build:2078 — client specialty smooth single-tap + multi toggle */
+.client-spec-multi-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(15, 118, 110, 0.08);
+  border: 1px solid rgba(13, 148, 136, 0.22);
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f766e;
+  cursor: pointer;
+  user-select: none;
+}
+.client-spec-multi-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: #0d9488;
+}
+.client-spec-hint { color: #64748b; }
+.view.funnel.client-spec-sheet.is-multi .client-spec-hint {
+  /* multi mode copy swapped in JS */
+}
