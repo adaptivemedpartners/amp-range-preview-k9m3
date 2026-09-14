@@ -53,9 +53,9 @@
       blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. A hiring guide owns the next step."
     },
     "mpc": {
-      tag: "MPC · Candidate catch-all",
+      tag: "MPC · tailored search",
       title: "MPC tailor-search",
-      blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Reaches a recruiting guide."
+      blurb: "When nothing posted fits, a recruiting guide opens a tailored search with you."
     },
     "market-analysis": {
       tag: "Free market analysis",
