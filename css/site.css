@@ -6196,7 +6196,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .guides-roster-hire .guide-body .guide-role,
   .guides-roster .guide-row-quiet .guide-body .guide-role,
   .home-guides-strip .guide-body .guide-role,
-  .home-guides-strip .guide-body .home-guide-role {
+  .home-guides-strip .guide-body .home-guide-role,
+  .guides-roster .guide-body .guide-territory {
     text-align: center;
     width: 100%;
   }
@@ -6494,4 +6495,64 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .guide-card h3 {
   font-size: 23.4px !important; /* was 18 */
+}
+
+
+/* amp-build:2077 — Full story open/close + BD territory + client multi-select */
+.guides-roster .guide-body .guide-full:not([open]) > .guide-full-body,
+.guides-roster .guide-row .guide-full:not([open]) > .guide-full-body {
+  display: none !important;
+}
+.guides-roster .guide-body .guide-full[open] > .guide-full-body,
+.guides-roster .guide-row .guide-full[open] > .guide-full-body {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.guides-roster .guide-body .guide-full summary,
+.guides-roster .guide-row .guide-full summary {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 44px;
+}
+.guides-roster .guide-territory {
+  margin: 2px 0 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  color: #0f766e;
+  line-height: 1.35;
+}
+.hire-card.is-selected {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 2px rgba(13,148,136,.18), 0 8px 24px rgba(20,120,122,.14);
+  background: linear-gradient(180deg, rgba(204,251,241,.45), #fff 48%);
+}
+.hire-card.is-selected .hire-select { color: #0f766e; }
+.client-spec-continue-wrap {
+  margin-top: 14px;
+  position: sticky;
+  bottom: 8px;
+  z-index: 3;
+}
+.client-spec-continue-wrap .btn[disabled] {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.client-spec-extra {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.client-spec-extra .chip {
+  display: inline-block;
+  margin: 2px 6px 2px 0;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(13,148,136,.12);
+  color: #0f766e;
+  font-weight: 700;
+  font-size: 12px;
 }

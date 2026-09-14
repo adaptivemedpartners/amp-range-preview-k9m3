@@ -5,12 +5,13 @@
 window.AMP_CONTENT = {
   specialties: [
     { id: "fm", label: "Family Medicine", blurb: "Clinic-first weeks with room for life outside the trail." },
+    { id: "cards", label: "Cardiology", blurb: "Hard-to-fill cardiology seats — noninvasive through interventional." },
     { id: "family_medicine_with_ob", label: "Family Medicine (with OB)" },
     { id: "obg", label: "Obstetrics & Gynecology", blurb: "Practice-first OB/GYN roles — schedule and package on a call." },
     { id: "internal_medicine_general", label: "Internal Medicine: General" },
-    { id: "emergency_medicine", label: "Emergency Medicine" },
-    { id: "psychiatry_general", label: "Psychiatry: General" },
-    { id: "hospitalist_internal_medicine", label: "Hospitalist: Internal Medicine" },
+    { id: "emergency_medicine", label: "Emergency Medicine", blurb: "ED coverage for community and critical access partners." },
+    { id: "psychiatry_general", label: "Psychiatry: General", blurb: "Behavioral health and general psychiatry retained searches." },
+    { id: "hospitalist_internal_medicine", label: "Hospitalist: Internal Medicine", blurb: "Hospitalist coverage with clear block and nocturnist options." },
     { id: "cardiology_noninvasive", label: "Cardiology: Noninvasive" },
     { id: "cardiology_invasive_interventional", label: "Cardiology: Invasive-Interventional" },
     { id: "anesthesiology", label: "Anesthesiology" },

@@ -17,6 +17,8 @@
     jobId: null,
     facility: null,
     clientSpecialty: null,
+    clientSpecialties: [],
+    clientSpecialtyCustom: null,
     agreement: null,
     mpcAccess: "monthly",
     mpcUnlocked: false,
@@ -1131,7 +1133,7 @@
   var SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
   var SIGN_FACILITY_IDS = ["fqhc", "cah", "community", "system", "bh", "group"]; /* Mike stamp #2 Hospital-forward six — no Other */
   /* Client hire specialty: same six wood slots as physician; Other opens search. */
-  var CLIENT_SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
+  var CLIENT_SIGN_SPEC_IDS = ["fm", "obg", "cards", "hospitalist_internal_medicine", "psychiatry_general", "emergency_medicine", "neuro", "gi", "other"];
 
   function plankLabel(raw) {
     if (!raw) return "";
@@ -1378,6 +1380,94 @@
   }
 
 
+  function clientSpecLabel(id) {
+    if (!id) return "";
+    if (String(id).indexOf("custom:") === 0) return String(id).slice(7);
+    try {
+      var hit = (AMP_CONTENT.specialties || []).find(function (s) { return s.id === id; });
+      if (hit) return hit.label;
+    } catch (e) {}
+    return id;
+  }
+
+  function syncClientSpecialtyCompat() {
+    var list = Array.isArray(state.clientSpecialties) ? state.clientSpecialties.slice() : [];
+    state.clientSpecialties = list;
+    var first = list[0] || null;
+    state.clientSpecialty = first;
+    if (first && String(first).indexOf("custom:") === 0) {
+      state.clientSpecialtyCustom = String(first).slice(7);
+    } else if (!list.some(function (x) { return String(x).indexOf("custom:") === 0; })) {
+      state.clientSpecialtyCustom = null;
+    }
+  }
+
+  function paintClientSpecSelection() {
+    if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
+    var set = {};
+    state.clientSpecialties.forEach(function (id) { set[id] = true; });
+    document.querySelectorAll('[data-route="client-specialty"] [data-client-spec]').forEach(function (btn) {
+      var id = (btn.getAttribute("data-client-spec") || "").trim();
+      if (id === "other") {
+        var extras = state.clientSpecialties.filter(function (x) {
+          return CLIENT_SIGN_SPEC_IDS.indexOf(x) < 0 || String(x).indexOf("custom:") === 0;
+        });
+        var on = extras.length > 0;
+        btn.classList.toggle("is-selected", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        var hs = btn.querySelector(".hire-select");
+        if (hs) hs.textContent = on ? ("Selected · " + extras.length) : "Browse more";
+        return;
+      }
+      var on = !!set[id];
+      btn.classList.toggle("is-selected", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      var hs = btn.querySelector(".hire-select");
+      if (hs) hs.textContent = on ? "Selected ✓" : "Select";
+    });
+    var extra = $("#client-spec-extra");
+    if (extra) {
+      var more = state.clientSpecialties.filter(function (x) {
+        return CLIENT_SIGN_SPEC_IDS.indexOf(x) < 0 || String(x).indexOf("custom:") === 0;
+      });
+      if (more.length) {
+        extra.hidden = false;
+        extra.innerHTML = "Also selected: " + more.map(function (id) {
+          return '<span class="chip">' + clientSpecLabel(id) + "</span>";
+        }).join("");
+      } else {
+        extra.hidden = true;
+        extra.innerHTML = "";
+      }
+    }
+    var cont = $("#client-spec-continue");
+    if (cont) {
+      var n = state.clientSpecialties.length;
+      cont.disabled = n < 1;
+      cont.textContent = n < 1
+        ? "Select at least one specialty"
+        : (n === 1 ? "Continue with 1 specialty →" : ("Continue with " + n + " specialties →"));
+    }
+  }
+
+  function toggleClientSpecialty(id) {
+    if (!id || id === "other") return;
+    if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
+    var i = state.clientSpecialties.indexOf(id);
+    if (i >= 0) state.clientSpecialties.splice(i, 1);
+    else state.clientSpecialties.push(id);
+    syncClientSpecialtyCompat();
+    paintClientSpecSelection();
+  }
+
+  function continueClientSpecialties() {
+    syncClientSpecialtyCompat();
+    if (!state.clientSpecialties.length) return;
+    if (!state.facility) state.facility = "fqhc";
+    try { closeClientSpecOtherPop(); } catch (err) {}
+    go("client-retained", { trail: true, instant: true });
+  }
+
   function bindClientHireSheetClicks() {
     document.querySelectorAll('[data-route="client-specialty"] [data-client-spec]').forEach(function (btn) {
       if (btn.getAttribute("data-bound-hire") === "1") return;
@@ -1391,13 +1481,17 @@
           openClientSpecOtherPop();
           return;
         }
-        state.clientSpecialty = csid;
-        state.clientSpecialtyCustom = null;
-        if (!state.facility) state.facility = "fqhc";
-        try { closeClientSpecOtherPop(); } catch (err) {}
-        go("client-retained", { trail: true, instant: true });
+        toggleClientSpecialty(csid);
       }, true);
     });
+    var cont = $("#client-spec-continue");
+    if (cont && cont.getAttribute("data-bound-hire") !== "1") {
+      cont.setAttribute("data-bound-hire", "1");
+      cont.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        continueClientSpecialties();
+      });
+    }
   }
 
   function renderClientSpecialty() {
@@ -1410,17 +1504,23 @@
       ? state.facilityCustom
       : (fac && fac.label) || "your facility";
     if (label) label.textContent = "Facility · " + name;
+    if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
+    if (state.clientSpecialty && state.clientSpecialties.indexOf(state.clientSpecialty) < 0) {
+      state.clientSpecialties = [state.clientSpecialty];
+    }
     var grid = $("#client-spec-grid");
     if (grid) {
-      /* legacy grid path */
-      var specs = (AMP_CONTENT.specialties || []).slice(0, 6);
+      /* legacy grid path — same high-likelihood set */
+      var specs = (AMP_CONTENT.specialties || []).filter(function (s) {
+        return CLIENT_SIGN_SPEC_IDS.indexOf(s.id) >= 0 && s.id !== "other";
+      });
       grid.innerHTML = specs.map(function (s) {
         return '<button type="button" class="card client-spec-card" data-client-spec="' + s.id + '">' +
           "<h3>" + s.label + "</h3><p>" + (s.blurb || "") + "</p></button>";
       }).join("");
     }
-    /* hire-sheet path uses static data-client-spec cards in HTML */
     bindClientHireSheetClicks();
+    paintClientSpecSelection();
   }
 
 
@@ -1469,16 +1569,11 @@
       e.stopPropagation();
       var id = (btn.getAttribute("data-client-spec-pick") || "").trim();
       if (!id) return;
-      if (id.indexOf("custom:") === 0) {
-        state.clientSpecialty = id;
-        state.clientSpecialtyCustom = id.slice(7);
-      } else {
-        state.clientSpecialty = id;
-        state.clientSpecialtyCustom = null;
-      }
-      if (!state.facility) state.facility = "fqhc";
+      if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
+      if (state.clientSpecialties.indexOf(id) < 0) state.clientSpecialties.push(id);
+      syncClientSpecialtyCompat();
       try { closeClientSpecOtherPop(); } catch (err) {}
-      go("client-retained", { trail: true, instant: true });
+      paintClientSpecSelection();
     };
     if (q && !q._ampWired) {
       q._ampWired = true;
@@ -2715,12 +2810,7 @@ function syncGuideRoute(route) {
           openClientSpecOtherPop();
           return;
         }
-        state.clientSpecialty = csid;
-        state.clientSpecialtyCustom = null;
-        if (!state.facility) state.facility = "fqhc";
-        try { closeClientSpecOtherPop(); } catch (err) {}
-        /* Contract options next — Summit Clear / Shared Ascent */
-        go("client-retained", { trail: true, instant: true });
+        toggleClientSpecialty(csid);
         return;
       }
       var blog = raw.closest("[data-blog]");
