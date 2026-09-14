@@ -6381,6 +6381,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 /* amp-build:2067 — guide titles: keep teal, readable contrast/size */
+/* amp-build:2069 — soft black glow so teal titles read on mountain glass */
 .guide-role,
 .guides-roster .guide-body .guide-role,
 .home-guides-strip .guide-body .guide-role,
@@ -6392,6 +6393,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   line-height: 1.35;
   opacity: 1 !important;
   -webkit-font-smoothing: antialiased;
+  text-shadow:
+    0 0 2px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.45),
+    0 0 8px rgba(0, 0, 0, 0.35),
+    0 0 14px rgba(0, 0, 0, 0.22);
 }
 @media (max-width: 560px) {
   .guide-role,
@@ -6399,6 +6405,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .home-guides-strip .guide-body .guide-role,
   .home-guides-strip .guide-body .home-guide-role {
     font-size: 15px !important;
+    text-shadow:
+      0 0 2px rgba(0, 0, 0, 0.65),
+      0 1px 3px rgba(0, 0, 0, 0.5),
+      0 0 10px rgba(0, 0, 0, 0.4),
+      0 0 16px rgba(0, 0, 0, 0.25);
   }
 }
 
