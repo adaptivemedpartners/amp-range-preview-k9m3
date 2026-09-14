@@ -6736,3 +6736,50 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (max-width: 720px) {
   .agree-soft-grid { grid-template-columns: 1fr; }
 }
+
+
+/* amp-build:2083 — calm client region map (less jumpy) */
+.region-picker.is-client-region .region-map-actions,
+.region-picker.is-client-region #region-continue,
+.region-picker.is-client-region #region-clear {
+  display: none !important;
+}
+.region-picker.is-client-region .amp-region-map .map-region {
+  transition: fill .18s ease, stroke .18s ease, filter .18s ease;
+  transform: none !important;
+}
+.region-picker.is-client-region .amp-region-map .map-region.is-selected {
+  transform: none !important;
+  filter: drop-shadow(0 2px 6px rgba(15, 118, 110, 0.28));
+}
+.client-region-states {
+  min-height: 118px;
+}
+.client-state-chips {
+  min-height: 72px;
+  align-content: flex-start;
+  transition: opacity .16s ease;
+}
+.client-state-chips.is-swapping {
+  opacity: 0.35;
+}
+.client-guide-reveal {
+  min-height: 132px;
+  transition: opacity .18s ease, border-color .18s ease;
+}
+.client-guide-reveal.is-empty {
+  opacity: 0.42;
+  border-style: dashed;
+}
+.client-guide-reveal.is-empty .client-guide-reveal-inner {
+  visibility: hidden;
+}
+.view[data-route="client-region"] .client-spec-continue-wrap {
+  position: sticky;
+  bottom: 10px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  z-index: 5;
+}
+.view[data-route="client-region"] .funnel-panel {
+  padding-bottom: 88px;
+}

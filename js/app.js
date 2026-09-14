@@ -1624,7 +1624,10 @@
     var cont = $("#client-region-continue");
     var owner = resolveBdOwner(stateCode);
     if (!reveal || !owner) {
-      if (reveal) reveal.hidden = true;
+      if (reveal) {
+        reveal.hidden = false;
+        reveal.classList.add("is-empty");
+      }
       if (cont) {
         cont.disabled = true;
         cont.textContent = "Pick a state to continue";
@@ -1632,6 +1635,7 @@
       return;
     }
     reveal.hidden = false;
+    reveal.classList.remove("is-empty");
     var img = $("#client-guide-photo");
     var nameEl = $("#client-guide-name");
     var terr = $("#client-guide-territory");
@@ -1698,16 +1702,23 @@
         all.sort();
         list = all;
       }
-      chips.innerHTML = list.map(function (st) {
-        var on = state.clientState === st ? " is-selected" : "";
-        return '<button type="button" class="client-state-chip' + on + '" data-client-state="' + st + '">' + st + "</button>";
-      }).join("");
+      chips.classList.add("is-swapping");
+      window.requestAnimationFrame(function () {
+        chips.innerHTML = list.map(function (st) {
+          var on = state.clientState === st ? " is-selected" : "";
+          return '<button type="button" class="client-state-chip' + on + '" data-client-state="' + st + '">' + st + "</button>";
+        }).join("");
+        chips.classList.remove("is-swapping");
+      });
       if (state.clientState && list.indexOf(state.clientState) < 0) {
         state.clientState = null;
       }
       if (state.clientState) paintClientGuideReveal(state.clientState);
       else {
-        if (reveal) reveal.hidden = true;
+        if (reveal) {
+          reveal.hidden = false;
+          reveal.classList.add("is-empty");
+        }
         if (cont) {
           cont.disabled = true;
           cont.textContent = "Pick a state to continue";
@@ -1718,11 +1729,20 @@
     if (root) {
       renderRegionMap(root, {
         selected: state.clientRegion ? [state.clientRegion] : [],
+        clientMode: true,
+        calm: true,
         onToggle: function (rid) {
+          if (rid === "open") {
+            /* Open = all states, still one territory pick */
+          }
+          if (state.clientRegion === rid) {
+            showStates(rid);
+            return;
+          }
           state.clientRegion = rid;
+          state.clientState = null; /* clear state when region changes */
           state.regions = [rid];
-          normalizeRegionState();
-          renderRegionMap(root, { selected: [rid] });
+          renderRegionMap(root, { selected: [rid], clientMode: true, calm: true });
           showStates(rid);
         }
       });
@@ -1730,8 +1750,14 @@
 
     if (state.clientRegion) showStates(state.clientRegion);
     else {
-      if (statesWrap) statesWrap.hidden = true;
-      if (reveal) reveal.hidden = true;
+      if (statesWrap) {
+        statesWrap.hidden = false; /* keep slot so layout does not jump */
+        if (chips) chips.innerHTML = '<span class="muted" style="font-size:13px">Tap a region on the map first.</span>';
+      }
+      if (reveal) {
+        reveal.hidden = false;
+        reveal.classList.add("is-empty");
+      }
       if (cont) {
         cont.disabled = true;
         cont.textContent = "Pick a state to continue";
@@ -1982,9 +2008,24 @@
     if (picked.indexOf("open") !== -1) picked = ["open"];
     var selected = {};
     picked.forEach(function (id) { selected[id] = true; });
-    /* Light lift: stack by target selection first, then toggle class next frame so translateY can ease. */
+    var calm = !!(opts && (opts.calm || opts.clientMode));
+    var clientMode = !!(opts && opts.clientMode);
+    if (clientMode) root.classList.add("is-client-region");
+    else root.classList.remove("is-client-region");
+
+    /* Client copy — hide physician Continue-to-roles chrome */
+    var kicker = root.querySelector(".region-map-kicker");
+    var help = root.querySelector(".region-map-help");
+    var h2 = root.querySelector(".region-map-intro h2");
+    if (clientMode) {
+      if (kicker) kicker.textContent = "Hiring path · territory";
+      if (h2) h2.textContent = "Where should we search?";
+      if (help) help.textContent = "Tap one region, then pick your state below.";
+    }
+
     var svg = root.querySelector(".amp-region-map");
-    if (svg) {
+    /* Plateau re-order causes jumpy maps — skip in calm/client mode */
+    if (svg && !calm) {
       var stack = svg.querySelector(".map-plateau-stack");
       if (stack) {
         while (stack.firstChild) svg.appendChild(stack.firstChild);
@@ -2007,20 +2048,28 @@
         region.setAttribute("aria-pressed", active ? "true" : "false");
       });
     };
-    if (svg) {
-      void svg.getBoundingClientRect();
-      requestAnimationFrame(function () { requestAnimationFrame(paint); });
-    } else {
-      paint();
-    }
+    paint();
     var labels = {};
     AMP_CONTENT.regions.forEach(function (r) { labels[r.id] = r.label; });
     var chips = root.querySelector("#region-chips");
-    if (chips) chips.innerHTML = picked.length
-      ? picked.map(function (id) { return '<span class="region-chip">' + (labels[id] || id) + '</span>'; }).join("")
-      : '<span class="region-chip empty">No regions yet</span>';
+    if (chips) {
+      if (clientMode) {
+        chips.innerHTML = picked.length
+          ? '<span class="region-chip">' + (labels[picked[0]] || picked[0]) + "</span>"
+          : '<span class="region-chip empty">Tap a region</span>';
+      } else {
+        chips.innerHTML = picked.length
+          ? picked.map(function (id) { return '<span class="region-chip">' + (labels[id] || id) + '</span>'; }).join("")
+          : '<span class="region-chip empty">No regions yet</span>';
+      }
+    }
     var cont = root.querySelector("#region-continue");
-    if (cont) cont.disabled = picked.length === 0;
+    if (cont) {
+      if (clientMode) cont.hidden = true;
+      else cont.disabled = picked.length === 0;
+    }
+    var clearBtn = root.querySelector("#region-clear");
+    if (clearBtn && clientMode) clearBtn.hidden = true;
   }
 
   function renderRegionGrid() {
