@@ -702,6 +702,7 @@
     "confirm-mess": true,
     "client": true,
     "client-specialty": true,
+    "client-region": true,
     "client-retained": true,
     "client-meeting": true,
     "confirm-client": true,
@@ -921,7 +922,15 @@
     if (route === "job-contact" || route === "chat") renderJobContact(params.id || state.jobId);
     if (route === "client") renderFacilitySignpost();
     if (route === "client-specialty") renderClientSpecialty();
-    if (route === "client-meeting") syncPickedAgreement();
+    if (route === "client-region") renderClientRegion();
+    if (route === "client-meeting") {
+      syncPickedAgreement();
+      if (state.clientState) {
+        var _cms = $("#client-meeting-state");
+        if (_cms && !_cms.value) _cms.value = state.clientState;
+      }
+      try { syncClientBdRoutePreview(); } catch (e) {}
+    }
     if (route === "blog-post") renderBlogPost(params.slug);
     if (route === "search") renderSearch();
     if (route === "mpc-portal") renderMpcPortal();
@@ -1398,6 +1407,44 @@
   }
 
 
+
+  /* #4 Hiring guide by territory (Randy official lock 2026-09-09). CC Randy on ALL BD leads. */
+  var BD_AARON_STATES = { TX:1, CA:1 };
+  var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 };
+  var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
+  var BD_OWNER_META = {
+    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg" },
+    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg" },
+    kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · all other states", territory: "Territory · all other states", photo: "assets/team/kelley-lobona.jpg" }
+  };
+  function resolveBdOwner(stateCode) {
+    var st = String(stateCode || "").toUpperCase().trim();
+    if (!st) return null;
+    if (BD_AARON_STATES[st]) return BD_OWNER_META.aaron;
+    if (BD_BRENTON_STATES[st]) return BD_OWNER_META.brenton;
+    if (BD_ZACH_STATES[st]) return BD_OWNER_META.zach;
+    return BD_OWNER_META.kelley;
+  }
+  function syncClientBdRoutePreview() {
+    var sel = $("#client-meeting-state");
+    var chip = $("#client-bd-owner-chip");
+    var note = $("#client-bd-route-note");
+    if (!sel || !chip) return;
+    var owner = resolveBdOwner(sel.value);
+    if (!owner) {
+      chip.innerHTML = '<span class="dot"></span> Pick a state';
+      if (note) note.textContent = "We will connect you with the right hiring guide for your state.";
+      return;
+    }
+    chip.innerHTML = '<span class="dot"></span> ' + owner.label;
+    if (note) {
+      note.textContent = owner.id === "kelley"
+        ? "Catch-all (unowned state) · always CC Randy · Mike · David"
+        : "Hiring guide responses · always CC Randy · Mike · David";
+    }
+  }
+
   function clientSpecLabel(id) {
     if (!id) return "";
     if (String(id).indexOf("custom:") === 0) return String(id).slice(7);
@@ -1513,7 +1560,7 @@
     if (!state.clientSpecialties.length) return;
     if (!state.facility) state.facility = "fqhc";
     try { closeClientSpecOtherPop(); } catch (err) {}
-    go("client-retained", { trail: true });
+    go("client-region", { trail: true });
   }
 
   function bindClientHireSheetClicks() {
@@ -1547,6 +1594,162 @@
       cont.addEventListener("click", function (ev) {
         ev.preventDefault();
         continueClientSpecialties();
+      });
+    }
+  }
+
+
+  function statesForRegionId(regionId) {
+    try {
+      var hit = (AMP_CONTENT.regions || []).find(function (r) { return r.id === regionId; });
+      return (hit && hit.states) ? hit.states.slice() : [];
+    } catch (e) { return []; }
+  }
+
+  function paintClientGuideReveal(stateCode) {
+    var reveal = $("#client-guide-reveal");
+    var cont = $("#client-region-continue");
+    var owner = resolveBdOwner(stateCode);
+    if (!reveal || !owner) {
+      if (reveal) reveal.hidden = true;
+      if (cont) {
+        cont.disabled = true;
+        cont.textContent = "Pick a state to continue";
+      }
+      return;
+    }
+    reveal.hidden = false;
+    var img = $("#client-guide-photo");
+    var nameEl = $("#client-guide-name");
+    var terr = $("#client-guide-territory");
+    var note = $("#client-guide-note");
+    var vMatch = (document.querySelector('link[href*="site.css?v="], script[src*="app.js?v="]') || {}).href ||
+      (document.querySelector('script[src*="app.js?v="]') || {}).src || "";
+    var v = (String(vMatch).match(/[?&]v=(\d+)/) || [])[1] || "";
+    if (img) {
+      img.src = owner.photo + (v ? ("?v=" + v) : "");
+      img.alt = owner.name;
+    }
+    if (nameEl) nameEl.textContent = owner.name;
+    if (terr) terr.textContent = owner.territory;
+    if (note) note.textContent = "Always CC Randy · Mike · David";
+    if (cont) {
+      cont.disabled = false;
+      cont.textContent = "Continue with " + owner.name.split(" ")[0] + " →";
+    }
+    state.clientBd = {
+      state: String(stateCode).toUpperCase(),
+      region: state.clientRegion || null,
+      ownerId: owner.id,
+      ownerName: owner.name,
+      ownerLabel: owner.label,
+      cc: ["Randy Keeth", "Mike Freeman", "David Fontenot"]
+    };
+    state.clientState = String(stateCode).toUpperCase();
+  }
+
+  function renderClientRegion() {
+    var facLine = $("#client-region-fac-line");
+    if (facLine) {
+      var bits = [];
+      try {
+        var fac = (AMP_CONTENT.facilities || []).find(function (f) { return f.id === state.facility; });
+        if (fac) bits.push(fac.label);
+      } catch (e) {}
+      if (state.clientSpecialties && state.clientSpecialties.length) {
+        bits.push(state.clientSpecialties.map(clientSpecLabel).filter(Boolean).join(", "));
+      } else if (state.clientSpecialty) {
+        bits.push(clientSpecLabel(state.clientSpecialty));
+      }
+      facLine.textContent = bits.length ? bits.join(" · ") : "";
+    }
+
+    var root = $("#client-region-grid");
+    var statesWrap = $("#client-region-states");
+    var chips = $("#client-state-chips");
+    var reveal = $("#client-guide-reveal");
+    var cont = $("#client-region-continue");
+
+    function showStates(regionId) {
+      state.clientRegion = regionId;
+      var list = regionId === "open" ? [] : statesForRegionId(regionId);
+      if (!statesWrap || !chips) return;
+      statesWrap.hidden = false;
+      if (!list.length) {
+        var all = [];
+        try {
+          (AMP_CONTENT.regions || []).forEach(function (r) {
+            (r.states || []).forEach(function (st) { if (all.indexOf(st) < 0) all.push(st); });
+          });
+        } catch (e) {}
+        all.sort();
+        list = all;
+      }
+      chips.innerHTML = list.map(function (st) {
+        var on = state.clientState === st ? " is-selected" : "";
+        return '<button type="button" class="client-state-chip' + on + '" data-client-state="' + st + '">' + st + "</button>";
+      }).join("");
+      if (state.clientState && list.indexOf(state.clientState) < 0) {
+        state.clientState = null;
+      }
+      if (state.clientState) paintClientGuideReveal(state.clientState);
+      else {
+        if (reveal) reveal.hidden = true;
+        if (cont) {
+          cont.disabled = true;
+          cont.textContent = "Pick a state to continue";
+        }
+      }
+    }
+
+    if (root) {
+      renderRegionMap(root, {
+        selected: state.clientRegion ? [state.clientRegion] : [],
+        onToggle: function (rid) {
+          state.clientRegion = rid;
+          state.regions = [rid];
+          normalizeRegionState();
+          renderRegionMap(root, { selected: [rid] });
+          showStates(rid);
+        }
+      });
+    }
+
+    if (state.clientRegion) showStates(state.clientRegion);
+    else {
+      if (statesWrap) statesWrap.hidden = true;
+      if (reveal) reveal.hidden = true;
+      if (cont) {
+        cont.disabled = true;
+        cont.textContent = "Pick a state to continue";
+      }
+    }
+
+    if (chips && chips.getAttribute("data-bound-client-region") !== "1") {
+      chips.setAttribute("data-bound-client-region", "1");
+      chips.addEventListener("click", function (ev) {
+        var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-state]") : null;
+        if (!btn) return;
+        var st = btn.getAttribute("data-client-state");
+        state.clientState = st;
+        chips.querySelectorAll("[data-client-state]").forEach(function (b) {
+          b.classList.toggle("is-selected", b.getAttribute("data-client-state") === st);
+        });
+        paintClientGuideReveal(st);
+      });
+    }
+
+    if (cont && cont.getAttribute("data-bound-client-region") !== "1") {
+      cont.setAttribute("data-bound-client-region", "1");
+      cont.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        if (!state.clientState || !state.clientBd) return;
+        var sel = $("#client-meeting-state");
+        if (sel) {
+          sel.value = state.clientState;
+          try { syncClientBdRoutePreview(); } catch (err) {}
+        }
+        go("client-retained", { trail: true });
       });
     }
   }
@@ -2985,42 +3188,6 @@ function syncGuideRoute(route) {
     }
 
 
-  /* #4 Client form → a hiring guide by territory (Randy official lock 2026-09-09). CC Randy on ALL BD leads (+ Mike + David). */
-  var BD_AARON_STATES = { TX:1, CA:1 };
-  var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 }; /* WV not in this lock */
-  var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
-  var BD_OWNER_META = {
-    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA" },
-    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE" },
-    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY" },
-    kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · catch-all" }
-  };
-  function resolveBdOwner(stateCode) {
-    var st = String(stateCode || "").toUpperCase().trim();
-    if (!st) return null;
-    if (BD_AARON_STATES[st]) return BD_OWNER_META.aaron;
-    if (BD_BRENTON_STATES[st]) return BD_OWNER_META.brenton;
-    if (BD_ZACH_STATES[st]) return BD_OWNER_META.zach;
-    return BD_OWNER_META.kelley;
-  }
-  function syncClientBdRoutePreview() {
-    var sel = $("#client-meeting-state");
-    var chip = $("#client-bd-owner-chip");
-    var note = $("#client-bd-route-note");
-    if (!sel || !chip) return;
-    var owner = resolveBdOwner(sel.value);
-    if (!owner) {
-      chip.innerHTML = '<span class="dot"></span> Pick a state';
-      if (note) note.textContent = "We’ll connect you with the right hiring guide for your state.";
-      return;
-    }
-    chip.innerHTML = '<span class="dot"></span> ' + owner.label;
-    if (note) {
-      note.textContent = owner.id === "kelley"
-        ? "Catch-all (unowned state) · always CC Randy · Mike · David"
-        : "Hiring guide responses · always CC Randy · Mike · David";
-    }
-  }
 
 
     var clientForm = $("#client-meeting-form");
