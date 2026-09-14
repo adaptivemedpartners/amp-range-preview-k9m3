@@ -1,0 +1,375 @@
+{
+  "fqhc": [
+    [
+      "fm",
+      "Family Medicine",
+      "Most common physician hire at FQHCs / CHCs."
+    ],
+    [
+      "pediatrics_general",
+      "Pediatrics",
+      "Core primary-care panel alongside family medicine."
+    ],
+    [
+      "internal_medicine_general",
+      "Internal Medicine",
+      "Adult primary care for FQHC panels."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "Women\u2019s health \u2014 often part-time or contracted."
+    ],
+    [
+      "psychiatry_general",
+      "Psychiatry",
+      "Adult psych / addiction \u2014 rising visit demand."
+    ],
+    [
+      "nurse_practitioner_family_medicine_without_ob",
+      "Family NP",
+      "Often the largest clinician group on site."
+    ],
+    [
+      "physician_assistant_primary_care",
+      "Physician Assistant",
+      "Family / primary care APP coverage."
+    ],
+    [
+      "nurse_practitioner_psychiatry",
+      "Psych NP (PMHNP)",
+      "Prescriber pool for mental health and SUD."
+    ]
+  ],
+  "cah": [
+    [
+      "fm",
+      "Family Medicine",
+      "Clinic + a lot of ED coverage in CAH markets."
+    ],
+    [
+      "hospitalist_internal_medicine",
+      "Hospitalist",
+      "Inpatient coverage for \u226425-bed CAHs."
+    ],
+    [
+      "emergency_medicine",
+      "Emergency Medicine",
+      "24/7 ED \u2014 employed, locums, or mixed FM/EM."
+    ],
+    [
+      "surgery_general",
+      "General Surgery",
+      "Breadth specialty for critical access."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "Only where they still deliver."
+    ],
+    [
+      "cards",
+      "Cardiology",
+      "Visiting / part-time specialist coverage."
+    ],
+    [
+      "nurse_practitioner_family_medicine_without_ob",
+      "Family NP / PA",
+      "Clinic or RHC advanced practice."
+    ],
+    [
+      "nurse_practitioner_emergency_medicine",
+      "ED NP / PA",
+      "ED advanced practice coverage."
+    ]
+  ],
+  "community": [
+    [
+      "fm",
+      "Family Medicine",
+      "Core for community / rural hospitals."
+    ],
+    [
+      "hospitalist_internal_medicine",
+      "Hospitalist / IM",
+      "Employed inpatient coverage."
+    ],
+    [
+      "emergency_medicine",
+      "Emergency Medicine",
+      "Consistent ED staffing need."
+    ],
+    [
+      "surgery_general",
+      "General Surgery",
+      "More consistent surgery than CAH."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "OB programs that stay open."
+    ],
+    [
+      "orthopedic_surgery_general",
+      "Orthopedics",
+      "High-demand specialty hire."
+    ],
+    [
+      "cards",
+      "Cardiology",
+      "Employed or visiting cardiology."
+    ],
+    [
+      "anesthesiology",
+      "Anesthesiology",
+      "OR and procedural support."
+    ],
+    [
+      "gi",
+      "Gastroenterology",
+      "Procedure-heavy community demand."
+    ]
+  ],
+  "system": [
+    [
+      "hospitalist_internal_medicine",
+      "Hospitalist / IM",
+      "Highest-volume employed hospital search."
+    ],
+    [
+      "fm",
+      "Family Medicine",
+      "Employed medical group primary care."
+    ],
+    [
+      "emergency_medicine",
+      "Emergency Medicine",
+      "System ED coverage."
+    ],
+    [
+      "cards",
+      "Cardiology",
+      "Hard-to-fill procedural specialty."
+    ],
+    [
+      "orthopedic_surgery_general",
+      "Orthopedic Surgery",
+      "High-volume surgical hire."
+    ],
+    [
+      "anesthesiology",
+      "Anesthesiology",
+      "Hospital-based anesthesia."
+    ],
+    [
+      "gi",
+      "Gastroenterology",
+      "Procedural demand across the system."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "Employed OB/GYN seats."
+    ],
+    [
+      "surgery_general",
+      "General Surgery",
+      "System surgical coverage."
+    ],
+    [
+      "psychiatry_general",
+      "Psychiatry",
+      "Behavioral health inside the system."
+    ]
+  ],
+  "bh": [
+    [
+      "psychiatry_general",
+      "Psychiatry (adult)",
+      "Hardest physician hire in BH settings."
+    ],
+    [
+      "psychiatry_child_and_adolescent",
+      "Child & Adolescent Psychiatry",
+      "High-need, short supply."
+    ],
+    [
+      "psychiatry_addiction_medicine",
+      "Addiction Medicine",
+      "Addiction programs and CCBHCs."
+    ],
+    [
+      "psychiatry_geriatric",
+      "Geriatric Psychiatry",
+      "Growing older-adult BH need."
+    ],
+    [
+      "fm",
+      "Family Medicine (integrated BH)",
+      "Integrated primary care + BH models."
+    ],
+    [
+      "nurse_practitioner_psychiatry",
+      "Psych NP (PMHNP)",
+      "Often the largest prescriber pool."
+    ],
+    [
+      "physician_assistant_psychiatry",
+      "PA \u2014 Psychiatry",
+      "Smaller share than PMHNPs."
+    ],
+    [
+      "nurse_practitioner_family_medicine_without_ob",
+      "Family NP (integrated)",
+      "Primary care + BH integration."
+    ]
+  ],
+  "group": [
+    [
+      "fm",
+      "Family Medicine",
+      "Outpatient multi-specialty core."
+    ],
+    [
+      "internal_medicine_general",
+      "Internal Medicine",
+      "Adult primary care feeders."
+    ],
+    [
+      "pediatrics_general",
+      "Pediatrics",
+      "Panel and referral base."
+    ],
+    [
+      "cards",
+      "Cardiology",
+      "Referral + procedure specialty."
+    ],
+    [
+      "orthopedic_surgery_general",
+      "Orthopedics",
+      "High outpatient procedural volume."
+    ],
+    [
+      "gi",
+      "Gastroenterology",
+      "Procedure and clinic mix."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "Women\u2019s health in the group."
+    ],
+    [
+      "dermatology",
+      "Dermatology",
+      "Outpatient specialty demand."
+    ],
+    [
+      "nurse_practitioner_family_medicine_without_ob",
+      "Family NP / PA",
+      "Largest APP cluster in groups."
+    ]
+  ],
+  "hospital": [
+    [
+      "hospitalist_internal_medicine",
+      "Hospitalist / IM",
+      "Highest-volume employed hospital search."
+    ],
+    [
+      "fm",
+      "Family Medicine",
+      "Employed medical group primary care."
+    ],
+    [
+      "emergency_medicine",
+      "Emergency Medicine",
+      "System ED coverage."
+    ],
+    [
+      "cards",
+      "Cardiology",
+      "Hard-to-fill procedural specialty."
+    ],
+    [
+      "orthopedic_surgery_general",
+      "Orthopedic Surgery",
+      "High-volume surgical hire."
+    ],
+    [
+      "anesthesiology",
+      "Anesthesiology",
+      "Hospital-based anesthesia."
+    ],
+    [
+      "gi",
+      "Gastroenterology",
+      "Procedural demand across the system."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "Employed OB/GYN seats."
+    ],
+    [
+      "surgery_general",
+      "General Surgery",
+      "System surgical coverage."
+    ],
+    [
+      "psychiatry_general",
+      "Psychiatry",
+      "Behavioral health inside the system."
+    ]
+  ],
+  "dental": [
+    [
+      "dental",
+      "Dentistry",
+      "Dental and DSO seats."
+    ],
+    [
+      "dental_hygienist",
+      "Dental Hygienist",
+      "Hygiene support roles."
+    ],
+    [
+      "oral_maxillofacial_surgery",
+      "Oral & Maxillofacial Surgery",
+      "Surgical dental specialty."
+    ]
+  ],
+  "other": [
+    [
+      "fm",
+      "Family Medicine",
+      "Most common starting point."
+    ],
+    [
+      "hospitalist_internal_medicine",
+      "Hospitalist",
+      "High-volume hospital search."
+    ],
+    [
+      "obg",
+      "Obstetrics & Gynecology",
+      "Hard-to-fill women\u2019s health."
+    ],
+    [
+      "psychiatry_general",
+      "Psychiatry",
+      "Behavioral health demand."
+    ],
+    [
+      "emergency_medicine",
+      "Emergency Medicine",
+      "ED coverage searches."
+    ],
+    [
+      "cards",
+      "Cardiology",
+      "Procedural specialty demand."
+    ]
+  ]
+}

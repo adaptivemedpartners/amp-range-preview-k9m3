@@ -6583,3 +6583,42 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view.funnel.client-spec-sheet.is-multi .client-spec-hint {
   /* multi mode copy swapped in JS */
 }
+
+
+/* amp-build:2079 — client specialty: top cards + More + Other (uncluttered) */
+.client-spec-more {
+  margin: 4px 0 10px;
+  border-radius: 14px;
+  border: 1px dashed rgba(13, 148, 136, 0.35);
+  background: rgba(240, 253, 250, 0.45);
+  padding: 0 12px;
+}
+.client-spec-more > summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0f766e;
+  padding: 12px 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.client-spec-more > summary::-webkit-details-marker { display: none; }
+.client-spec-more > summary::after {
+  content: " →";
+  font-weight: 900;
+  margin-left: auto;
+}
+.client-spec-more[open] > summary::after { content: " ↑"; }
+.client-spec-more-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 0 12px;
+}
+.hire-card-other {
+  border-style: dashed;
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}

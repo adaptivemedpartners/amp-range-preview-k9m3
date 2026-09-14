@@ -1133,7 +1133,25 @@
   var SIGN_SPEC_IDS = ["fm", "obg", "gi", "neuro", "dental", "other"];
   var SIGN_FACILITY_IDS = ["fqhc", "cah", "community", "system", "bh", "group"]; /* Mike stamp #2 Hospital-forward six — no Other */
   /* Client hire specialty: same six wood slots as physician; Other opens search. */
+  function clientSpecRanksForFacility(facId) {
+    var ranks = (window.AMP_CONTENT && AMP_CONTENT.facilitySpecialtyRanks) || {};
+    var id = facId || state.facility || "fqhc";
+    if (id === "hospital") id = "system";
+    var rows = ranks[id] || ranks.other || [];
+    return rows.slice();
+  }
+
+  function CLIENT_SIGN_SPEC_IDS_DYNAMIC() {
+    var ids = clientSpecRanksForFacility().map(function (r) { return r.id; });
+    if (ids.indexOf("other") < 0) ids.push("other");
+    return ids;
+  }
+
+  /* legacy name used by Other-pop exclude — always live from facility */
   var CLIENT_SIGN_SPEC_IDS = ["fm", "obg", "cards", "hospitalist_internal_medicine", "psychiatry_general", "emergency_medicine", "neuro", "gi", "other"];
+  function refreshClientSignSpecIds() {
+    CLIENT_SIGN_SPEC_IDS = CLIENT_SIGN_SPEC_IDS_DYNAMIC();
+  }
 
   function plankLabel(raw) {
     if (!raw) return "";
@@ -1432,6 +1450,7 @@
   }
 
   function paintClientSpecSelection() {
+    refreshClientSignSpecIds();
     if (!Array.isArray(state.clientSpecialties)) state.clientSpecialties = [];
     var set = {};
     state.clientSpecialties.forEach(function (id) { set[id] = true; });
@@ -1533,6 +1552,7 @@
   }
 
   function renderClientSpecialty() {
+    refreshClientSignSpecIds();
     var label = $("#client-spec-fac-label");
     var fac = null;
     try {
@@ -1546,13 +1566,34 @@
     if (state.clientSpecialty && state.clientSpecialties.indexOf(state.clientSpecialty) < 0) {
       state.clientSpecialties = [state.clientSpecialty];
     }
+    var ranks = clientSpecRanksForFacility();
+    var TOP_N = 4; /* keep sheet scannable — rest under More */
+    var top = ranks.slice(0, TOP_N);
+    var more = ranks.slice(TOP_N);
+    var list = $("#client-spec-cards");
+    if (list) {
+      function cardHtml(s) {
+        return '<button type="button" class="hire-card" data-client-spec="' + s.id + '" aria-pressed="false">' +
+          "<h3>" + s.label + "</h3><p>" + (s.blurb || "") + "</p>" +
+          '<span class="hire-select">Select →</span></button>';
+      }
+      var html = top.map(cardHtml).join("");
+      if (more.length) {
+        html += '<details class="client-spec-more">' +
+          "<summary>More common for this facility <span class=\"muted\">(" + more.length + ")</span></summary>" +
+          '<div class="client-spec-more-list">' + more.map(cardHtml).join("") + "</div></details>";
+      }
+      html += '<button type="button" class="hire-card hire-card-other" data-client-spec="other" aria-pressed="false">' +
+        "<h3>Other</h3><p>Search every specialty — or type your own.</p>" +
+        '<span class="hire-select">Browse all →</span></button>';
+      list.innerHTML = html;
+      list.querySelectorAll("[data-client-spec]").forEach(function (btn) {
+        btn.removeAttribute("data-bound-hire");
+      });
+    }
     var grid = $("#client-spec-grid");
     if (grid) {
-      /* legacy grid path — same high-likelihood set */
-      var specs = (AMP_CONTENT.specialties || []).filter(function (s) {
-        return CLIENT_SIGN_SPEC_IDS.indexOf(s.id) >= 0 && s.id !== "other";
-      });
-      grid.innerHTML = specs.map(function (s) {
+      grid.innerHTML = ranks.map(function (s) {
         return '<button type="button" class="card client-spec-card" data-client-spec="' + s.id + '">' +
           "<h3>" + s.label + "</h3><p>" + (s.blurb || "") + "</p></button>";
       }).join("");
@@ -1573,6 +1614,7 @@
   }
 
   function openClientSpecOtherPop() {
+    refreshClientSignSpecIds();
     var pop = $("#client-spec-other-pop");
     var list = $("#client-spec-other-list");
     var q = $("#client-spec-other-q");
