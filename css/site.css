@@ -6677,3 +6677,62 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (max-width: 560px) {
   .client-guide-reveal-inner { gap: 12px; }
 }
+
+
+/* amp-build:2082 — soft market analysis / Ridge under agreements */
+.agree-soft {
+  padding: 16px 16px 14px;
+  border-radius: 18px;
+  border: 1px dashed rgba(13, 148, 136, 0.35);
+  background: rgba(248, 250, 252, 0.92);
+}
+.agree-soft-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.agree-soft-card {
+  text-align: left;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.agree-soft-card:hover, .agree-soft-card:focus-visible {
+  border-color: #99f6e0;
+  box-shadow: 0 8px 24px rgba(20, 120, 122, 0.12);
+  transform: translateY(-1px);
+  outline: none;
+}
+.agree-soft-kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0f766e;
+  margin-bottom: 4px;
+}
+.agree-soft-card strong {
+  display: block;
+  font-size: 1.02rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+.agree-soft-card p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #64748b;
+}
+.agree-soft-cta {
+  font-size: 13px;
+  font-weight: 750;
+  color: #14787a;
+}
+@media (max-width: 720px) {
+  .agree-soft-grid { grid-template-columns: 1fr; }
+}

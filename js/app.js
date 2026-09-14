@@ -56,6 +56,11 @@
       tag: "MPC · Candidate catch-all",
       title: "MPC tailor-search",
       blurb: "Physician / candidate catch-all when posted roles don’t fit — tailor-search with a guide. Reaches a recruiting guide."
+    },
+    "market-analysis": {
+      tag: "Free market analysis",
+      title: "Free market analysis from your hiring guide",
+      blurb: "Soft start — leave your info and specialty/state context. Your hiring guide sends a free market read. No retainer to begin."
     }
   };
 
@@ -77,6 +82,14 @@
     if (tag) tag.textContent = meta.tag;
     if (title) title.textContent = meta.title;
     if (blurb) blurb.textContent = meta.blurb;
+    var note = document.querySelector("#client-meeting-form textarea[name=\"note\"]");
+    if (note && key === "market-analysis" && !note.value) {
+      note.placeholder = "Specialty · state · what you want to understand in the market";
+    }
+    var meetLede = document.querySelector('[data-route="client-meeting"] .lede');
+    if (meetLede && key === "market-analysis") {
+      meetLede.innerHTML = "Request a <strong>free market analysis</strong> from your hiring guide. Soft start — no retainer required.";
+    }
   }
 
   var video = null;
