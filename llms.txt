@@ -28,7 +28,6 @@ Key paths:
 - Education hub: #education
 - AMP Score (fit explainer): #amp-score
 - Blog / pillars: #blog
-- Sample tease (Midwest OB/GYN OBG-8449): #job/obg-8449
 - Contact: #contact
 
 ### Hospitals / medical groups / FQHCs (clients)

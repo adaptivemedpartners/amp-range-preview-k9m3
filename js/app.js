@@ -1749,9 +1749,8 @@
       title: j.title,
       identifier: j.code,
       hiringOrganization: { "@type": "Organization", name: "Adaptive Medical Partners" },
-      jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressRegion: "Midwest", addressCountry: "US" } },
-      description: "Practice-first overview. Full package on a confidential call with " + j.recruiter.name + ".",
-      baseSalary: { "@type": "MonetaryAmount", currency: "USD", value: { "@type": "QuantitativeValue", minValue: 812000, unitText: "YEAR" } }
+      jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressRegion: (j.stateAbbr || j.region || ""), addressCountry: "US" } },
+      description: "Practice-first overview. Full package on a confidential call with " + j.recruiter.name + "."
     };
     root.innerHTML =
       '<div class="job-layout">' +
@@ -2281,7 +2280,7 @@
         license: "License board · " + regionLabel + " · status unchecked (sample)",
         bio: "Public clinic bio / Healthgrades-style hit · sample",
         openPay: "OpenPayments · no pull yet · placeholder",
-        referrer: "Job preview OBG-8449 · utm_source=site · sample",
+        referrer: "Job preview · utm_source=site · sample",
         device: "Mobile Safari · America/Chicago · sample",
         soft: spec + " · name+specialty public skim · phone not verified"
       };

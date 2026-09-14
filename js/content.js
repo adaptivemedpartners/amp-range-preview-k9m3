@@ -1165,33 +1165,6 @@ window.AMP_CONTENT = {
       slug: "alabama-obstetrics-and-gynecology-obg-8422",
     },
     {
-      id: "obg-8449",
-      code: "OBG-8449",
-      specialty: "obg",
-      specialtyLabel: "Obstetrics and Gynecology",
-      region: "midwest",
-      state: "Missouri",
-      stateAbbr: "MO",
-      title: "From $812,000: OB/GYN in Midwest",
-      sub: "Obstetrics and Gynecology · OBG-8449 · Missouri",
-      bullets: [
-        { k: "Practice", v: "First-year package from $812,000 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
-      ],
-      recruiter: {
-        name: "Amy Myers",
-        phone: "972-301-2261",
-        email: "amyers@adaptivemedicalpartners.com",
-        cc: "inquire@adaptivemedicalpartners.com"
-      },
-      hero: "assets/mike-ridge-3.jpg",
-      summit: { practice: 6, life: 6, location: 6, income: 8 },
-      url: "https://www.adaptivemedicalpartners.com/job/midwest-obstetrics-and-gynecology-obg-8449",
-      slug: "midwest-obstetrics-and-gynecology-obg-8449",
-    },
-    {
       id: "od-8364",
       code: "OD-8364",
       specialty: "opt",
