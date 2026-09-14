@@ -18,7 +18,7 @@
  * Do NOT invent handoffUrl. When set → ONE POST JSON fans to owning recruiter triple-ping.
  * No Bullhorn create · no Instantly email wiring in this ship.
  *
- * Version: 1.3.3 — kill leftover “don’t list live openings” copy · acknowledge live opening
+ * Version: 1.3.4 — configure() for late job-page stamps (specialty · job · recruiter)
  */
 (function () {
   "use strict";
@@ -737,7 +737,48 @@
     composerEl.appendChild(row);
   }
 
+  function pullLiveConfig() {
+    /* Late stamps from SPA job routes (window.AMP_CHATBOT set by app.js). */
+    var w = window.AMP_CHATBOT || {};
+    if (w.specialty) paramSpecialty = String(w.specialty).trim();
+    if (w.region) paramRegion = String(w.region).trim();
+    if (w.job) paramJob = String(w.job).trim();
+    var rawRec = w.recruiter || w.recruiterTag;
+    if (rawRec) {
+      var t = normalizeRecruiterTag(rawRec);
+      if (t) {
+        resolvedRecruiterTag = t;
+        resolvedRecruiterOwner = RECRUITER_OWNER[t] || "mfreeman";
+      }
+    }
+  }
+
+  function configureChatbot(opts) {
+    opts = opts || {};
+    window.AMP_CHATBOT = window.AMP_CHATBOT || {};
+    if (opts.specialty != null) window.AMP_CHATBOT.specialty = opts.specialty;
+    if (opts.region != null) window.AMP_CHATBOT.region = opts.region;
+    if (opts.job != null) window.AMP_CHATBOT.job = opts.job;
+    if (opts.recruiter != null) window.AMP_CHATBOT.recruiter = opts.recruiter;
+    if (opts.recruiterTag != null) window.AMP_CHATBOT.recruiterTag = opts.recruiterTag;
+    if (opts.recruiter != null && !opts.recruiterTag) window.AMP_CHATBOT.recruiterTag = opts.recruiter;
+    pullLiveConfig();
+    state.specialty = normalizeSpecialty(paramSpecialty);
+    state.region = normalizeRegion(paramRegion);
+    state.jobLabel = paramJob || null;
+    state.recruiterTag = resolvedRecruiterTag;
+    state.recruiter = resolvedRecruiterTag;
+    state.owner = resolvedRecruiterOwner;
+    return {
+      specialty: state.specialty,
+      region: state.region,
+      job: state.jobLabel,
+      recruiter: state.recruiterTag
+    };
+  }
+
   function startConversation(isRestart) {
+    pullLiveConfig();
     messagesEl.innerHTML = "";
     clearComposer();
     state.audience = null;
@@ -763,7 +804,12 @@
   mount();
   try {
     window.AMP_CHATBOT = window.AMP_CHATBOT || {};
-    window.AMP_CHATBOT.open = function () { openPanel(); if (!started) { started = true; startConversation(false); } };
+    window.AMP_CHATBOT.open = function () {
+      pullLiveConfig();
+      openPanel();
+      if (!started) { started = true; startConversation(false); }
+    };
     window.AMP_CHATBOT.close = closePanel;
+    window.AMP_CHATBOT.configure = configureChatbot;
   } catch (e) {}
 })();

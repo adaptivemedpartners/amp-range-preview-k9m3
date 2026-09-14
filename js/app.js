@@ -1644,7 +1644,80 @@
     return score;
   }
 
+  /* Recruiter name → team photo + short blurb (from Guides page). Mike Freeman spelling locked. */
+  var GUIDE_BY_NAME = {
+    "Amy Myers": {
+      photo: "assets/team/amy-myers.jpg",
+      role: "Recruiting guide",
+      blurb: "Turns a job preview into a focused, personal conversation — durable matches over rapid placements.",
+      tag: "amy"
+    },
+    "Nate Smith": {
+      photo: "assets/team/nate-smith.jpg",
+      role: "Recruiting guide",
+      blurb: "Helps candidates compare practice, place, and the life between shifts — relationship-first, high standards.",
+      tag: "nate"
+    },
+    "Stephanie Youngblood": {
+      photo: "assets/team/stephanie-youngblood.jpg",
+      role: "Recruiting guide",
+      blurb: "Listens first, then builds a clear path — administrator-minded recruiting with a thoughtful pace.",
+      tag: "stephanie"
+    },
+    "Hadley Herrera": {
+      photo: "assets/team/hadley-herrera.jpg",
+      role: "Recruiting guide",
+      blurb: "Finds the signal in a crowded search and keeps the candidate experience warm.",
+      tag: "hadley"
+    },
+    "Mike Freeman": {
+      photo: "assets/team/mike-freeman.jpg",
+      role: "Managing Partner, Recruiting",
+      blurb: "Sixteen years of physician recruiting — practitioner context, cultural fit, and a drive to build the best firm possible.",
+      tag: "mike"
+    }
+  };
+
+  function guideProfileForRecruiter(rec) {
+    var name = (rec && rec.name) ? String(rec.name).trim() : "";
+    if (name === "Michael Freeman") name = "Mike Freeman";
+    var hit = GUIDE_BY_NAME[name] || null;
+    return {
+      name: name || "Your guide",
+      photo: hit ? hit.photo : null,
+      role: hit ? hit.role : "Recruiting guide",
+      blurb: hit ? hit.blurb : "",
+      tag: hit ? hit.tag : recruiterTagFromName(name)
+    };
+  }
+
+  function recruiterTagFromName(name) {
+    var n = String(name || "").trim().toLowerCase();
+    if (!n) return "mike";
+    if (n.indexOf("amy") === 0) return "amy";
+    if (n.indexOf("nate") === 0) return "nate";
+    if (n.indexOf("stephanie") === 0) return "stephanie";
+    if (n.indexOf("hadley") === 0) return "hadley";
+    if (n.indexOf("mike") === 0 || n.indexOf("michael") === 0) return "mike";
+    return "mike";
+  }
+
+  function guideInitials(name) {
+    var parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "?";
+    return parts.slice(0, 2).map(function (p) { return p.charAt(0).toUpperCase(); }).join("");
+  }
+
   function guidePathStamp() {
+    /* Job context wins — Concierge / Ask-a-guide trail carries specialty · code · guide */
+    if (state.jobId) {
+      var j = jobById(state.jobId);
+      if (j) {
+        var bits = [j.specialtyLabel || j.specialty, j.code];
+        if (j.recruiter && j.recruiter.name) bits.push(j.recruiter.name === "Michael Freeman" ? "Mike Freeman" : j.recruiter.name);
+        return bits.filter(Boolean).join(" · ");
+      }
+    }
     var spec = specialtyLabel();
     var picked = normalizeRegionState();
     var labels = {};
@@ -1659,6 +1732,72 @@
     var stamp = $("#amp-guide-path-stamp");
     if (stamp) { stamp.textContent = "Your path: " + text; stamp.hidden = false; }
     return text;
+  }
+
+  /* Stamp Concierge (AMP_CHATBOT) + path trail for job / job-contact / chat with a job id. */
+  function stampJobConcierge(j) {
+    if (!j) return;
+    var profile = guideProfileForRecruiter(j.recruiter);
+    var tag = profile.tag || "mike";
+    var spec = j.specialtyLabel || j.specialty || "";
+    var jobCode = j.code || "";
+    stampGuidePath();
+    window.AMP_CHATBOT = window.AMP_CHATBOT || {};
+    window.AMP_CHATBOT.specialty = spec;
+    window.AMP_CHATBOT.job = jobCode;
+    window.AMP_CHATBOT.recruiter = tag;
+    window.AMP_CHATBOT.recruiterTag = tag;
+    if (typeof window.AMP_CHATBOT.configure === "function") {
+      window.AMP_CHATBOT.configure({
+        specialty: spec,
+        job: jobCode,
+        recruiter: tag,
+        recruiterTag: tag
+      });
+    }
+  }
+
+  function injectJobJsonLd(jsonLd) {
+    var old = document.getElementById("job-jsonld");
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "job-jsonld";
+    script.textContent = JSON.stringify(jsonLd);
+    (document.head || document.documentElement).appendChild(script);
+  }
+
+  function renderJobGuideAside(j) {
+    var profile = guideProfileForRecruiter(j.recruiter);
+    var name = profile.name;
+    var avatarHtml;
+    if (profile.photo) {
+      avatarHtml = '<span class="guide-avatar has-photo job-guide-avatar"><img src="' + profile.photo + '?v=2075" alt="' + name + '" width="88" height="110" loading="lazy" /></span>';
+    } else {
+      avatarHtml = '<span class="guide-avatar job-guide-avatar" aria-hidden="true">' + guideInitials(name) + '</span>';
+    }
+    var blurbHtml = profile.blurb
+      ? '<p class="job-guide-blurb muted">' + profile.blurb + '</p>'
+      : '';
+    var roleHtml = profile.role
+      ? '<p class="job-guide-role muted">' + profile.role + '</p>'
+      : '';
+    return '<aside class="panel job-guide-aside">' +
+      '<h3 style="margin:0 0 12px">Your guide</h3>' +
+      '<div class="job-guide-card">' +
+        avatarHtml +
+        '<div class="job-guide-body">' +
+          '<p class="job-guide-name">' + name + '</p>' +
+          roleHtml +
+          blurbHtml +
+        '</div>' +
+      '</div>' +
+      '<p class="muted" style="margin:12px 0;font-size:13px">Your guide for ' + j.code + '</p>' +
+      '<a class="btn btn-primary" style="width:100%;margin-bottom:8px" href="tel:+1' + j.recruiter.phone.replace(/-/g, "") + '">Call ' + j.recruiter.phone + '</a>' +
+      '<button class="btn btn-dark" type="button" style="width:100%;margin-bottom:8px" data-chat="text">Text ' + recruiterFirstName(j.recruiter) + '</button>' +
+      '<a class="btn btn-ghost" style="width:100%" href="mailto:' + j.recruiter.email + '?cc=' + encodeURIComponent(j.recruiter.cc) + '&subject=' + encodeURIComponent("Interest in " + j.code) + '">Email · CC inquire@</a>' +
+      '<p class="muted mt-16" style="font-size:12px">CC always includes inquire@adaptivemedicalpartners.com so capture is never a dead end.</p>' +
+    '</aside>';
   }
 
   function clearJobsGuideWhisper() {
@@ -1743,6 +1882,7 @@
     var bullets = j.bullets.map(function (b) {
       return "<li><strong>" + b.k + ":</strong> " + b.v + "</li>";
     }).join("");
+    var recName = (j.recruiter && j.recruiter.name === "Michael Freeman") ? "Mike Freeman" : j.recruiter.name;
     var jsonLd = {
       "@context": "https://schema.org",
       "@type": "JobPosting",
@@ -1750,8 +1890,10 @@
       identifier: j.code,
       hiringOrganization: { "@type": "Organization", name: "Adaptive Medical Partners" },
       jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressRegion: (j.stateAbbr || j.region || ""), addressCountry: "US" } },
-      description: "Practice-first overview. Full package on a confidential call with " + j.recruiter.name + "."
+      description: "Practice-first overview. Full package on a confidential call with " + recName + "."
     };
+    injectJobJsonLd(jsonLd);
+    stampJobConcierge(j);
     root.innerHTML =
       '<div class="job-layout">' +
         '<div>' +
@@ -1768,31 +1910,18 @@
             '</div>' +
             '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Reaches a recruiting guide</span></div>' +
           '</div>' +
-          '<details class="seo-drawer"><summary>Page details · Meta / OG / JobPosting data</summary>' +
-            '<pre>' +
-              'Title: ' + j.title + '\n' +
-              'Meta description: Confidential ' + (j.specialtyLabel || 'physician') + ' opportunity preview — schedule, practice pace, and public income band. Full package with ' + j.recruiter.name + '.\n' +
-              'OG:type=article · OG:title=' + j.title + '\n\n' +
-              JSON.stringify(jsonLd, null, 2) +
-            '</pre></details>' +
         '</div>' +
-        '<aside class="panel">' +
-          '<h3 style="margin:0 0 8px">Your guide</h3>' +
-          '<p style="margin:0 0 4px;font-weight:700">' + j.recruiter.name + '</p>' +
-          '<p class="muted" style="margin:0 0 12px;font-size:13px">Owner recruiter for ' + j.code + '</p>' +
-          '<a class="btn btn-primary" style="width:100%;margin-bottom:8px" href="tel:+1' + j.recruiter.phone.replace(/-/g, "") + '">Call ' + j.recruiter.phone + '</a>' +
-          '<button class="btn btn-dark" type="button" style="width:100%;margin-bottom:8px" data-chat="text">Text ' + recruiterFirstName(j.recruiter) + '</button>' +
-          '<a class="btn btn-ghost" style="width:100%" href="mailto:' + j.recruiter.email + '?cc=' + encodeURIComponent(j.recruiter.cc) + '&subject=' + encodeURIComponent("Interest in " + j.code) + '">Email · CC inquire@</a>' +
-          '<p class="muted mt-16" style="font-size:12px">CC always includes inquire@adaptivemedicalpartners.com so capture is never a dead end.</p>' +
-        '</aside>' +
+        renderJobGuideAside(j) +
       '</div>';
   }
 
   function renderJobContact(id) {
     var j = jobById(id || state.jobId);
     state.jobId = j.id;
+    stampJobConcierge(j);
     var who = $("#contact-job-who");
-    if (who) who.textContent = j.recruiter.name + " · " + j.code;
+    var displayName = (j.recruiter && j.recruiter.name === "Michael Freeman") ? "Mike Freeman" : j.recruiter.name;
+    if (who) who.textContent = displayName + " · " + j.code;
     var phone = $("#contact-job-phone");
     if (phone) {
       phone.href = "tel:+1" + j.recruiter.phone.replace(/-/g, "");

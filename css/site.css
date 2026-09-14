@@ -795,6 +795,42 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   background: #f0fdfa; border: 1px dashed #5eead4;
   font-size: 13px; color: #115e59; font-style: italic;
 }
+.job-guide-aside .job-guide-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+.job-guide-aside .job-guide-avatar {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+.job-guide-aside .job-guide-avatar.has-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.job-guide-aside .job-guide-body { min-width: 0; flex: 1; }
+.job-guide-aside .job-guide-name {
+  margin: 0 0 2px;
+  font-weight: 750;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+.job-guide-aside .job-guide-role {
+  margin: 0 0 6px;
+  font-size: 12px;
+}
+.job-guide-aside .job-guide-blurb {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .seo-drawer {
   margin-top: 18px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
 }
