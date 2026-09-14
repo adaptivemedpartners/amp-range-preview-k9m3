@@ -6902,3 +6902,49 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .guides-roster .guide-row-quiet {
   grid-template-columns: 104px minmax(0, 1fr);
 }
+
+
+/* amp-build:2094-client-guide-pane-lock */
+/* Lock territory middle pane: state chips + guide card stop jumping guide-to-guide */
+.view[data-route="client-region"] .client-region-states {
+  min-height: 168px; /* title + ~2 chip rows */
+}
+.view[data-route="client-region"] .client-state-chips {
+  min-height: 112px; /* wrap room for Midwest 12 chips without collapsing small regions */
+  align-content: flex-start;
+}
+.view[data-route="client-region"] .client-guide-reveal {
+  min-height: 292px; /* tall enough for Randy (long title + territory + blurb + Full story + note + CTA) */
+}
+.view[data-route="client-region"] .client-guide-card {
+  min-height: 268px;
+  align-items: start;
+}
+.view[data-route="client-region"] .client-guide-card .guide-body {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+.view[data-route="client-region"] .client-guide-card .guide-role {
+  min-height: 1.35em;
+}
+.view[data-route="client-region"] .client-guide-card .guide-territory {
+  min-height: 1.35em;
+}
+.view[data-route="client-region"] .client-guide-card .guide-blurb {
+  min-height: 3.1em; /* ~2 lines reserved */
+  margin-bottom: 8px;
+}
+.view[data-route="client-region"] .client-guide-card .guide-full {
+  min-height: 42px; /* closed summary row reserved */
+}
+.view[data-route="client-region"] .client-guide-card #client-guide-note {
+  min-height: 1.2em;
+}
+.view[data-route="client-region"] .client-guide-card .btn {
+  margin-top: auto;
+}
+/* Empty state: keep same footprint as filled card */
+.view[data-route="client-region"] .client-guide-reveal.is-empty {
+  min-height: 292px;
+}
