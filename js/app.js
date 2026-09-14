@@ -1421,15 +1421,17 @@
 
 
 
-  /* #4 Hiring guide by territory (Randy official lock 2026-09-09). CC Randy on ALL BD leads. */
+  /* #4 Hiring guide by territory (Randy lock). Mike CC on ALL BD leads.
+     Aaron TX+CA · Brenton GA/AL/TN/KY · Zach IL/MO/IA/KS/NE · unassigned → Randy (not Kelley). */
   var BD_AARON_STATES = { TX:1, CA:1 };
   var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 };
   var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
+  var BD_CC_ALWAYS = ["Randy Keeth", "Mike Freeman", "David Fontenot"]; /* Randy = main CC; Mike + David always copied */
   var BD_OWNER_META = {
     aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Hiring guide", blurb: "Texas hiring guide who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
     zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the climb from both sides of the rope.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
     brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Brenton is single. Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
-    kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · all other states", territory: "Territory · all other states", photo: "assets/team/kelley-lobona.jpg", role: "Hiring guide", blurb: "Sales enablement + BD \u2014 helps hiring guides build territories, daily plans, and a sharper training path.", fullHtml: "<p>Kelley Lobona is a hiring guide and Business Consultant at Adaptive Medical Partners, based in the Dallas area. She first worked with AMP in business development (alongside teammates like Zach Hamann in an earlier chapter), gained outside experience\u2014including The Medicus Firm and earlier sales leadership roles\u2014and returned to AMP in a role she is especially excited about.</p><p>Kelley is the catch-all for BD states outside the named territories, plus sales enablement for the hiring-guide team.</p><p>Kelley still does business development, but her unique focus is sales enablement: helping other hiring guides build their territories, shape daily action plans and follow-ups, and rework the training program so the whole team climbs with clearer rhythm. She is deeply committed to AMP\u2019s success and growth.</p><p>Kelley is married. Outside work she values time with her husband.</p>" }
+    randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD · unassigned states", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
   function resolveBdOwner(stateCode) {
     var st = String(stateCode || "").toUpperCase().trim();
@@ -1437,7 +1439,7 @@
     if (BD_AARON_STATES[st]) return BD_OWNER_META.aaron;
     if (BD_BRENTON_STATES[st]) return BD_OWNER_META.brenton;
     if (BD_ZACH_STATES[st]) return BD_OWNER_META.zach;
-    return BD_OWNER_META.kelley;
+    return BD_OWNER_META.randy;
   }
   function syncClientBdRoutePreview() {
     var sel = $("#client-meeting-state");
@@ -1452,11 +1454,12 @@
     }
     chip.innerHTML = '<span class="dot"></span> ' + owner.label;
     if (note) {
-      note.textContent = owner.id === "kelley"
-        ? "Catch-all (unowned state) · always CC Randy · Mike · David"
-        : "Hiring guide responses · always CC Randy · Mike · David";
+      note.textContent = owner.id === "randy"
+        ? "Unassigned state · Randy owns · main CC Randy · also Mike · David"
+        : "Hiring guide · main CC Randy · also Mike · David";
     }
   }
+
 
   function clientSpecLabel(id) {
     if (!id) return "";
@@ -1657,7 +1660,7 @@
     if (blurb) blurb.textContent = owner.blurb || "";
     if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
     if (fullDet) fullDet.open = false;
-    if (note) note.textContent = "Always CC Randy · Mike · David";
+    if (note) note.textContent = "Main CC Randy · also Mike · David";
     if (talk) {
       talk.setAttribute("data-go", "client-meeting");
       talk.setAttribute("data-trail", "1");
@@ -1672,7 +1675,7 @@
       ownerId: owner.id,
       ownerName: owner.name,
       ownerLabel: owner.label,
-      cc: ["Randy Keeth", "Mike Freeman", "David Fontenot"]
+      cc: BD_CC_ALWAYS
     };
     state.clientState = String(stateCode).toUpperCase();
     try { stampConciergePath("client-region"); } catch (e) {}
@@ -3341,7 +3344,7 @@ function syncGuideRoute(route) {
           ownerId: owner.id,
           ownerName: owner.name,
           ownerLabel: owner.label,
-          cc: ["Randy Keeth", "Mike Freeman", "David Fontenot"]
+          cc: BD_CC_ALWAYS
         };
         stampMess(
           "client",
