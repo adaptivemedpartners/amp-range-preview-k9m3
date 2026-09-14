@@ -6948,3 +6948,25 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view[data-route="client-region"] .client-guide-reveal.is-empty {
   min-height: 292px;
 }
+
+
+/* amp-build:2095-physician-map-desktop-65 */
+/* Desktop only: candidate map 35% smaller (65% of full bleed). Phone keeps full-width. */
+@media (min-width: 721px) {
+  .view.funnel[data-route="physician-region"] .region-panel {
+    width: 65% !important;
+    max-width: 820px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .view.funnel[data-route="physician-region"] .region-map-wrap {
+    width: 100%;
+    margin-inline: auto;
+  }
+  .view.funnel[data-route="physician-region"] .amp-region-map {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-inline: auto;
+  }
+}
