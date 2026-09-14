@@ -1426,10 +1426,10 @@
   var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 };
   var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
   var BD_OWNER_META = {
-    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg" },
-    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg" },
-    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg" },
-    kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · all other states", territory: "Territory · all other states", photo: "assets/team/kelley-lobona.jpg" }
+    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Hiring guide", blurb: "Texas hiring guide who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
+    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the climb from both sides of the rope.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Brenton is single. Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
+    kelley: { id: "kelley", name: "Kelley Lobona", label: "Kelley Lobona · all other states", territory: "Territory · all other states", photo: "assets/team/kelley-lobona.jpg", role: "Hiring guide", blurb: "Sales enablement + BD \u2014 helps hiring guides build territories, daily plans, and a sharper training path.", fullHtml: "<p>Kelley Lobona is a hiring guide and Business Consultant at Adaptive Medical Partners, based in the Dallas area. She first worked with AMP in business development (alongside teammates like Zach Hamann in an earlier chapter), gained outside experience\u2014including The Medicus Firm and earlier sales leadership roles\u2014and returned to AMP in a role she is especially excited about.</p><p>Kelley is the catch-all for BD states outside the named territories, plus sales enablement for the hiring-guide team.</p><p>Kelley still does business development, but her unique focus is sales enablement: helping other hiring guides build their territories, shape daily action plans and follow-ups, and rework the training program so the whole team climbs with clearer rhythm. She is deeply committed to AMP\u2019s success and growth.</p><p>Kelley is married. Outside work she values time with her husband.</p>" }
   };
   function resolveBdOwner(stateCode) {
     var st = String(stateCode || "").toUpperCase().trim();
@@ -1638,18 +1638,30 @@
     reveal.classList.remove("is-empty");
     var img = $("#client-guide-photo");
     var nameEl = $("#client-guide-name");
+    var roleEl = $("#client-guide-role");
     var terr = $("#client-guide-territory");
+    var blurb = $("#client-guide-blurb");
+    var fullBody = $("#client-guide-full-body");
+    var fullDet = $("#client-guide-full");
     var note = $("#client-guide-note");
-    var vMatch = (document.querySelector('link[href*="site.css?v="], script[src*="app.js?v="]') || {}).href ||
-      (document.querySelector('script[src*="app.js?v="]') || {}).src || "";
-    var v = (String(vMatch).match(/[?&]v=(\d+)/) || [])[1] || "";
+    var talk = $("#client-guide-talk");
+    var scriptEl = document.querySelector('script[src*="app.js?v="]');
+    var v = scriptEl && (scriptEl.src.match(/[?&]v=(\d+)/) || [])[1] || "";
     if (img) {
       img.src = owner.photo + (v ? ("?v=" + v) : "");
       img.alt = owner.name;
     }
     if (nameEl) nameEl.textContent = owner.name;
-    if (terr) terr.textContent = owner.territory;
+    if (roleEl) roleEl.textContent = owner.role || "Hiring guide";
+    if (terr) terr.textContent = owner.territory || "";
+    if (blurb) blurb.textContent = owner.blurb || "";
+    if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
+    if (fullDet) fullDet.open = false;
     if (note) note.textContent = "Always CC Randy · Mike · David";
+    if (talk) {
+      talk.setAttribute("data-go", "client-meeting");
+      talk.setAttribute("data-trail", "1");
+    }
     if (cont) {
       cont.disabled = false;
       cont.textContent = "Continue with " + owner.name.split(" ")[0] + " →";
@@ -1663,6 +1675,7 @@
       cc: ["Randy Keeth", "Mike Freeman", "David Fontenot"]
     };
     state.clientState = String(stateCode).toUpperCase();
+    try { stampConciergePath("client-region"); } catch (e) {}
   }
 
   function renderClientRegion() {
@@ -2184,6 +2197,49 @@
   }
 
   /* Stamp Concierge (AMP_CHATBOT) + path trail for job / job-contact / chat with a job id. */
+
+  function isClientFunnelRoute(route) {
+    var r = String(route || "");
+    return r === "client" || r.indexOf("client-") === 0 || r === "mi-lite" || r === "mi-lite-portal" || r === "mi-lite-login" || r === "mi-lite-app";
+  }
+
+  function stampConciergePath(route) {
+    window.AMP_CHATBOT = window.AMP_CHATBOT || {};
+    var audience = isClientFunnelRoute(route) ? "client" : null;
+    if (!audience) {
+      var r = String(route || "");
+      if (r === "physician" || r.indexOf("physician-") === 0 || r.indexOf("job") === 0 || r === "mpc" || r === "residents") {
+        audience = "candidate";
+      }
+    }
+    if (!audience) return;
+    window.AMP_CHATBOT.path = audience;
+    window.AMP_CHATBOT.audience = audience;
+    if (audience === "client") {
+      if (state.clientSpecialty || (state.clientSpecialties && state.clientSpecialties[0])) {
+        try {
+          window.AMP_CHATBOT.specialty = clientSpecLabel(state.clientSpecialty || state.clientSpecialties[0]);
+        } catch (e) {}
+      }
+      if (state.clientState) window.AMP_CHATBOT.region = state.clientState;
+      else if (state.clientRegion) window.AMP_CHATBOT.region = state.clientRegion;
+      if (state.clientBd && state.clientBd.ownerId) {
+        window.AMP_CHATBOT.recruiter = state.clientBd.ownerId;
+        window.AMP_CHATBOT.recruiterTag = state.clientBd.ownerId;
+      }
+    }
+    if (typeof window.AMP_CHATBOT.configure === "function") {
+      window.AMP_CHATBOT.configure({
+        path: audience,
+        audience: audience,
+        specialty: window.AMP_CHATBOT.specialty || "",
+        region: window.AMP_CHATBOT.region || "",
+        recruiter: window.AMP_CHATBOT.recruiter || "",
+        recruiterTag: window.AMP_CHATBOT.recruiterTag || ""
+      });
+    }
+  }
+
   function stampJobConcierge(j) {
     if (!j) return;
     var profile = guideProfileForRecruiter(j.recruiter);
@@ -2965,6 +3021,14 @@
   }
 
 function syncGuideRoute(route) {
+    try { stampConciergePath(route); } catch (e) {}
+    try {
+      if (typeof chatFunnel !== "undefined" && typeof isClientFunnelRoute === "function" && isClientFunnelRoute(route)) {
+        chatFunnel.path = "client";
+      } else if (typeof chatFunnel !== "undefined" && (route === "physician" || String(route || "").indexOf("physician-") === 0 || String(route || "").indexOf("job") === 0)) {
+        chatFunnel.path = "candidate";
+      }
+    } catch (e2) {}
     var root = $("#amp-guide");
     if (route === "chat") {
       if (root) {
@@ -3492,6 +3556,14 @@ function syncGuideRoute(route) {
     }
 
     if (chatFunnel.stage === "door") {
+      var onView = document.querySelector(".view.on");
+      var routeNow = onView ? onView.getAttribute("data-route") : "";
+      if (isClientFunnelRoute(routeNow) && !chatFunnel.path) chatFunnel.path = "client";
+      if (chatFunnel.path === "client" || chatFunnel.path === "candidate") {
+        chatFunnel.stage = "earn";
+        paintChatFunnel();
+        return;
+      }
       setLog(chatBubble("bot", chatFunnelOpenCopy()));
       setActions(
         '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="door-candidate">Candidate path</button>' +

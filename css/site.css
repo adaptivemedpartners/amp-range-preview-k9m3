@@ -3354,11 +3354,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg.signs-frozen .signpost .si
 /* ——— Physician region map · reusable soft-extrude selector ——— */
 .view.funnel[data-route="physician-region"] .region-panel {
   flex: 0 0 auto;
-  width: min(1080px, calc(100% - 28px));
-  max-width: 1080px;
+  width: calc(100% - 16px);
+  max-width: none;
   margin: 6px auto 0;
-  padding: 20px 22px 22px;
-  border-radius: 24px;
+  padding: 16px 12px 18px;
+  border-radius: 20px;
   background: rgba(255,255,255,.97);
   box-shadow: 0 16px 46px rgba(2,12,27,.24), 0 0 0 1px rgba(15,23,42,.06);
 }
@@ -3457,7 +3457,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg.signs-frozen .signpost .si
 .region-actions { display: flex; align-items: center; gap: 14px; margin-top: 15px; }
 .region-actions .btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
 @media (max-width: 720px) {
-  .view.funnel[data-route="physician-region"] .region-panel { width: calc(100% - 20px); padding: 15px 12px 16px; border-radius: 19px; margin-bottom: 0; }
+  .view.funnel[data-route="physician-region"] .region-panel { width: calc(100% - 12px); max-width: none; padding: 12px 8px 14px; border-radius: 16px; margin-bottom: 0; }
   .region-map-intro { display: block; }
   .region-map-legend { margin-top: 10px; }
   .region-map-wrap { padding: 6px 3px 2px; border-radius: 14px; }
@@ -6739,9 +6739,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 
 
 /* amp-build:2083 — calm client region map (less jumpy) */
-.region-picker.is-client-region .region-map-actions,
+.region-picker.is-client-region .region-actions,
+.region-picker.is-client-region .region-selection,
+.region-picker.is-client-region .region-open-control,
 .region-picker.is-client-region #region-continue,
-.region-picker.is-client-region #region-clear {
+.region-picker.is-client-region #region-clear,
+.region-picker.is-client-region #region-chips {
   display: none !important;
 }
 .region-picker.is-client-region .amp-region-map .map-region {
@@ -6782,4 +6785,49 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .view[data-route="client-region"] .funnel-panel {
   padding-bottom: 88px;
+}
+
+
+/* amp-build:2084 — client map chrome scrub + BD guide card */
+.region-picker.is-client-region .region-map-kicker { /* set via JS */ }
+.client-guide-reveal .guide-card.client-guide-card {
+  margin: 0;
+}
+.client-guide-reveal.is-empty .client-guide-card {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.client-guide-reveal:not(.is-empty) .client-guide-empty-hint {
+  display: none;
+}
+
+
+/* amp-build:2085 — candidate region map full page width (match BD map) */
+.view.funnel[data-route="physician-region"] .region-panel {
+  width: calc(100% - 12px) !important;
+  max-width: none !important;
+}
+.view.funnel[data-route="physician-region"] .region-map-wrap {
+  width: 100%;
+  padding: 8px 2px 6px;
+}
+.view.funnel[data-route="physician-region"] .amp-region-map {
+  width: 100%;
+  max-width: none;
+  height: auto;
+}
+.view.funnel[data-route="physician-region"] .region-map-intro {
+  padding-inline: 4px;
+}
+@media (max-width: 720px) {
+  .view.funnel[data-route="physician-region"] .region-panel {
+    width: calc(100% - 8px) !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 6px 14px;
+  }
+  .view.funnel[data-route="physician-region"] .region-map-wrap {
+    padding: 4px 0 2px;
+    border-radius: 12px;
+  }
 }

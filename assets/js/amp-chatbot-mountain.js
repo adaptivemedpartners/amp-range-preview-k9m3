@@ -18,7 +18,8 @@
  * Do NOT invent handoffUrl. When set → ONE POST JSON fans to owning recruiter triple-ping.
  * No Bullhorn create · no Instantly email wiring in this ship.
  *
- * Version: 1.3.4 — configure() for late job-page stamps (specialty · job · recruiter)
+ * Version: 1.3.5 — path/audience stamp: client routes skip candidate fork
+ * AMP_CHATBOT keys also: path | audience (client|candidate)
  */
 (function () {
   "use strict";
@@ -522,8 +523,24 @@
   }
 
   function startClientPath() {
+    state.audience = "client";
+    if (state.specialty) {
+      return addBot(
+        "Thanks — we’ll route you to a hiring guide for this search." +
+          (contextStripHtml ? contextStripHtml() : ""),
+        500
+      ).then(function () {
+        if (!state.region) {
+          return addBot(
+            "Which <strong>region or state</strong> is this search focused on? (optional)",
+            500
+          ).then(askRegion);
+        }
+        return beginClientHandoff();
+      });
+    }
     return addBot(
-      "Thanks — we’ll route you to our business development team. What <strong>specialty or role</strong> are you looking to fill?",
+      "Thanks — we’ll route you to a hiring guide. What <strong>specialty or role</strong> are you looking to fill?",
       550
     ).then(function () {
       showSpecialtyChips(onSpecialtyPicked);
@@ -753,6 +770,13 @@
     }
   }
 
+  function resolveAudienceHint() {
+    var raw = (cfg.path || cfg.audience || resolve("path") || resolve("audience") || "").toString().trim().toLowerCase();
+    if (raw === "client" || raw === "hiring" || raw === "bd") return "client";
+    if (raw === "candidate" || raw === "physician" || raw === "doctor") return "candidate";
+    return null;
+  }
+
   function configureChatbot(opts) {
     opts = opts || {};
     window.AMP_CHATBOT = window.AMP_CHATBOT || {};
@@ -762,6 +786,10 @@
     if (opts.recruiter != null) window.AMP_CHATBOT.recruiter = opts.recruiter;
     if (opts.recruiterTag != null) window.AMP_CHATBOT.recruiterTag = opts.recruiterTag;
     if (opts.recruiter != null && !opts.recruiterTag) window.AMP_CHATBOT.recruiterTag = opts.recruiter;
+    if (opts.path != null) window.AMP_CHATBOT.path = opts.path;
+    if (opts.audience != null) window.AMP_CHATBOT.audience = opts.audience;
+    if (opts.path && !opts.audience) window.AMP_CHATBOT.audience = opts.path;
+    cfg = Object.assign({}, window.AMP_CHATBOT || {});
     pullLiveConfig();
     state.specialty = normalizeSpecialty(paramSpecialty);
     state.region = normalizeRegion(paramRegion);
@@ -769,26 +797,30 @@
     state.recruiterTag = resolvedRecruiterTag;
     state.recruiter = resolvedRecruiterTag;
     state.owner = resolvedRecruiterOwner;
+    var hint = resolveAudienceHint();
+    if (hint) state.audience = hint;
     return {
       specialty: state.specialty,
       region: state.region,
       job: state.jobLabel,
-      recruiter: state.recruiterTag
+      recruiter: state.recruiterTag,
+      audience: state.audience
     };
   }
 
   function startConversation(isRestart) {
     pullLiveConfig();
+    cfg = Object.assign({}, window.AMP_CHATBOT || {});
     messagesEl.innerHTML = "";
     clearComposer();
-    state.audience = null;
+    state.audience = resolveAudienceHint();
     state.name = null;
     state.phone = null;
     state.email = null;
     state.org = null;
-    state.specialty = normalizeSpecialty(paramSpecialty);
-    state.region = normalizeRegion(paramRegion);
-    state.jobLabel = paramJob || null;
+    state.specialty = normalizeSpecialty(paramSpecialty || (window.AMP_CHATBOT && AMP_CHATBOT.specialty) || "");
+    state.region = normalizeRegion(paramRegion || (window.AMP_CHATBOT && AMP_CHATBOT.region) || "");
+    state.jobLabel = paramJob || (window.AMP_CHATBOT && AMP_CHATBOT.job) || null;
     state.recruiterTag = resolvedRecruiterTag;
     state.recruiter = resolvedRecruiterTag;
     state.owner = resolvedRecruiterOwner;
@@ -797,6 +829,22 @@
       "Hi — <strong>Adaptive Medical Partners</strong> is your guide.",
       isRestart ? 300 : 400
     ).then(function () {
+      if (state.audience === "client") {
+        return addBot(
+          "You’re on the <strong>hiring path</strong> — we’ll connect you with a hiring guide.",
+          450
+        ).then(function () {
+          return startClientPath();
+        });
+      }
+      if (state.audience === "candidate") {
+        return addBot(
+          "You’re on the <strong>candidate path</strong> — we’ll connect you with a recruiting guide.",
+          450
+        ).then(function () {
+          return startCandidatePath();
+        });
+      }
       return askAudience();
     });
   }
