@@ -6379,3 +6379,25 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     flex-basis: auto;
   }
 }
+
+/* amp-build:2067 — guide titles: keep teal, readable contrast/size */
+.guide-role,
+.guides-roster .guide-body .guide-role,
+.home-guides-strip .guide-body .guide-role,
+.home-guides-strip .guide-body .home-guide-role {
+  color: #0f766e !important; /* teal-dark, stronger on white glass */
+  font-size: 14px !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  opacity: 1 !important;
+  -webkit-font-smoothing: antialiased;
+}
+@media (max-width: 560px) {
+  .guide-role,
+  .guides-roster .guide-body .guide-role,
+  .home-guides-strip .guide-body .guide-role,
+  .home-guides-strip .guide-body .home-guide-role {
+    font-size: 15px !important;
+  }
+}
