@@ -1625,10 +1625,10 @@ window.AMP_CONTENT = {
     }
   ],
   posts: [
-    { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first climb.", byline: "Michael Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
+    { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first climb.", byline: "Mike Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
     { slug: "place-first-without-regret", title: "Place First Without Regret: Choose the Life Around the Practice", meta: "How residents and fellows can evaluate place-first fit without inventing a town story or falling for a postcard.", byline: "Randy Keeth", tags: ["Residents", "Place", "Career"], mins: 7 },
-    { slug: "two-year-test-before-you-sign", title: "The Two-Year Test Before You Sign Your First Physician Contract", meta: "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your second-climb signal.", byline: "Michael Freeman", tags: ["Contracts", "Residents", "Education"], mins: 8 },
-    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A mountain-voice guide to MPC when place is the first filter—and when a retained guide makes the climb safer.", byline: "Michael Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
+    { slug: "two-year-test-before-you-sign", title: "The Two-Year Test Before You Sign Your First Physician Contract", meta: "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your second-climb signal.", byline: "Mike Freeman", tags: ["Contracts", "Residents", "Education"], mins: 8 },
+    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A mountain-voice guide to MPC when place is the first filter—and when a retained guide makes the climb safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
     { slug: "coordinator-share-pack-grads", title: "A Coordinator’s Share Pack for New Graduates", meta: "A short, practical share pack program coordinators can give graduating residents and fellows before the first job search.", byline: "Adaptive Medical Partners", tags: ["Coordinators", "Graduates", "Education"], mins: 5 },
     {
       slug: "physician-retention-3-year-kpi",
