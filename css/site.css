@@ -6140,6 +6140,41 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 
+/* amp-build:2066 — mobile stacked cards: center name + title under portrait */
+@media (max-width: 560px) {
+  .guides-roster-lead .guide-body,
+  .guides-roster-recruit .guide-body,
+  .guides-roster-hire .guide-body,
+  .guides-roster .guide-row-quiet .guide-body,
+  .home-guides-strip .guide-body {
+    align-items: center !important;
+    text-align: center;
+  }
+  .guides-roster-lead .guide-body h3,
+  .guides-roster-recruit .guide-body h3,
+  .guides-roster-hire .guide-body h3,
+  .guides-roster .guide-row-quiet .guide-body h3,
+  .home-guides-strip .guide-body .home-guide-name,
+  .guides-roster-lead .guide-body .guide-role,
+  .guides-roster-recruit .guide-body .guide-role,
+  .guides-roster-hire .guide-body .guide-role,
+  .guides-roster .guide-row-quiet .guide-body .guide-role,
+  .home-guides-strip .guide-body .guide-role,
+  .home-guides-strip .guide-body .home-guide-role {
+    text-align: center;
+    width: 100%;
+  }
+  /* Keep Full story / blurb readable left-aligned under the centered name */
+  .guides-roster .guide-body .guide-blurb,
+  .guides-roster .guide-body > p:not(.guide-role),
+  .guides-roster .guide-body .guide-full,
+  .guides-roster .guide-body .btn {
+    align-self: stretch;
+    text-align: left;
+  }
+}
+
+
 /* amp-build:2055 — Full story iOS fix, BD=recruiting size, home roster, :target deep-link */
 .guides-view .guides-panel,
 .guides-roster,
