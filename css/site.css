@@ -6831,3 +6831,74 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     border-radius: 12px;
   }
 }
+
+
+/* amp-build:2092-guide-photo-crisp */
+/* Frosted blur on the CARD was softening every face in Chromium/Safari compositing */
+.guides-roster .guide-row,
+.guides-roster .guide-card.guide-row,
+.home-guides-strip .guide-row,
+.home-guides-strip .guide-card.guide-row {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(240, 253, 250, 0.88) 55%, rgba(236, 253, 245, 0.9)),
+    #f8fafc !important;
+}
+.guides-roster .guide-avatar.has-photo,
+.home-guides-strip .guide-avatar.has-photo,
+.client-guide-reveal .guide-avatar.has-photo {
+  overflow: hidden;
+  isolation: isolate;
+  transform: translateZ(0);
+  background: #0b1220;
+  /* keep photos crisp — never inherit parent filters */
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.guides-roster .guide-avatar.has-photo img,
+.home-guides-strip .guide-avatar.has-photo img,
+.client-guide-reveal .guide-avatar.has-photo img,
+.guides-roster .guide-avatar img,
+.home-guides-strip .guide-avatar img {
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: none !important;
+}
+/* Home + roster: portrait frames (match 4:5 assets) */
+.home-guides-strip .guide-row > .guide-avatar,
+.home-guides-strip .guide-card.guide-row > .guide-avatar {
+  width: 128px !important;
+  height: 160px !important;
+  border-radius: 18px !important;
+}
+.guides-roster .guide-row > .guide-avatar {
+  width: 128px;
+  height: 160px;
+  border-radius: 18px;
+}
+.guides-roster-lead .guide-row > .guide-avatar {
+  width: 140px;
+  height: 175px;
+  border-radius: 20px;
+}
+.guides-roster-hire .guide-row > .guide-avatar,
+.guides-roster .guide-row-quiet > .guide-avatar {
+  width: 104px;
+  height: 130px;
+  border-radius: 16px;
+}
+.guides-roster .guide-row {
+  grid-template-columns: 128px minmax(0, 1fr);
+}
+.guides-roster-lead .guide-row {
+  grid-template-columns: 140px minmax(0, 1fr);
+}
+.guides-roster-hire .guide-row,
+.guides-roster .guide-row-quiet {
+  grid-template-columns: 104px minmax(0, 1fr);
+}
