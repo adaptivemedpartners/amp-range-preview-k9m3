@@ -6447,3 +6447,15 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
       0 1px 3px rgba(255, 255, 255, 0.65);
   }
 }
+
+/* amp-build:2073 — guide names +30% size */
+.guides-roster .guide-body h3,
+.home-guides-strip .guide-body .home-guide-name {
+  font-size: clamp(23.4px, 3.12vw, 28.6px) !important;
+}
+.home-guide-name {
+  font-size: 17.55px !important; /* was 13.5 in chip strip */
+}
+.guide-card h3 {
+  font-size: 23.4px !important; /* was 18 */
+}
