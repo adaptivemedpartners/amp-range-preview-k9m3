@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2104-evolution-2026";
+  window.__AMP_BUILD = "2105-image-alts";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2417,12 +2417,42 @@
     (document.head || document.documentElement).appendChild(script);
   }
 
+  function escapeAttr(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;");
+  }
+
+  function jobHeroAlt(j) {
+    var spec = firstJobField(j, ["specialtyLabel"]);
+    if (!spec) {
+      var sid = firstJobField(j, ["specialty"]);
+      if (sid && window.AMP_CONTENT && AMP_CONTENT.specialties) {
+        var hit = AMP_CONTENT.specialties.find(function (s) { return s.id === sid; });
+        if (hit && hit.label) spec = hit.label;
+      }
+      if (!spec && sid) spec = sid;
+    }
+    if (!spec) spec = "Physician role";
+    var place = firstJobField(j, ["state"]);
+    if (!place) {
+      var regionId = firstJobField(j, ["region"]);
+      if (regionId && window.AMP_CONTENT && AMP_CONTENT.regions) {
+        var rh = AMP_CONTENT.regions.find(function (r) { return r.id === regionId; });
+        if (rh && rh.label) place = rh.label;
+      }
+    }
+    if (place) return spec + " opening in " + place;
+    return spec + " opening";
+  }
+
   function renderJobGuideAside(j) {
     var profile = guideProfileForRecruiter(j.recruiter);
     var name = profile.name;
     var avatarHtml;
     if (profile.photo) {
-      avatarHtml = '<span class="guide-avatar has-photo job-guide-avatar"><img src="' + profile.photo + '?v=2075" alt="' + name + '" width="88" height="110" loading="lazy" /></span>';
+      avatarHtml = '<span class="guide-avatar has-photo job-guide-avatar"><img src="' + profile.photo + '?v=2105" alt="' + escapeAttr(name) + '" width="88" height="110" loading="lazy" /></span>';
     } else {
       avatarHtml = '<span class="guide-avatar job-guide-avatar" aria-hidden="true">' + guideInitials(name) + '</span>';
     }
@@ -2567,7 +2597,7 @@
     root.innerHTML =
       '<div class="job-layout">' +
         '<div>' +
-          '<div class="job-hero"><img src="' + j.hero + '" alt="Lifestyle / community hero"><div class="badge">Lifestyle hero · not a facility dump</div></div>' +
+          '<div class="job-hero"><img src="' + j.hero + '" alt="' + escapeAttr(jobHeroAlt(j)) + '"><div class="badge">Lifestyle hero · not a facility dump</div></div>' +
           '<div class="panel mt-16">' +
             '<span class="pill">' + j.code + '</span>' +
             '<h2 style="margin:10px 0 6px;font-size:26px;letter-spacing:-.03em">' + j.title + '</h2>' +
