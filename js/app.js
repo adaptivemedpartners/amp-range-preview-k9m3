@@ -4949,6 +4949,11 @@ function syncGuideRoute(route) {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    try {
+      var chip = document.getElementById("amp-build-chip");
+      if (chip && window.__AMP_BUILD) chip.textContent = "amp-build " + window.__AMP_BUILD;
+    } catch (eChip) {}
+    try { bindWhyAmpProofPairs(); } catch (ePair) {}
     try { bindClientHireSheetClicks(); } catch (e) {}
     window.addEventListener("resize", layoutSignMediaFrames);
     window.addEventListener("orientationchange", layoutSignMediaFrames);
