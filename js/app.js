@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2102-about-evolution";
+  window.__AMP_BUILD = "2103-job-jsonld";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2267,9 +2267,149 @@
     }
   }
 
+  var AMP_ORG_NAME = "Adaptive Medical Partners";
+  var AMP_ORG_URL = "https://adaptivemedicalpartners.com/";
+  var AMP_ORG_ID = AMP_ORG_URL + "#organization";
+
+  function jobFieldText(value) {
+    return value == null ? "" : String(value).trim();
+  }
+
+  function jobFieldIsPlaceholder(value) {
+    var t = jobFieldText(value);
+    if (!t) return true;
+    /* Live Webflow leftovers: [Rich Text Description Field Name], [Employment Type Field Name] */
+    if (/^\[[^\]]+\]$/.test(t)) return true;
+    if (/Field Name/i.test(t)) return true;
+    return false;
+  }
+
+  function firstJobField(job, keys) {
+    if (!job) return "";
+    for (var i = 0; i < keys.length; i++) {
+      var t = jobFieldText(job[keys[i]]);
+      if (t && !jobFieldIsPlaceholder(t)) return t;
+    }
+    return "";
+  }
+
+  function jobPostingDescription(j) {
+    var direct = firstJobField(j, ["description", "tease", "excerpt", "sub"]);
+    var parts = [];
+    if (direct) parts.push(direct);
+    if (j && j.bullets && j.bullets.length) {
+      j.bullets.forEach(function (b) {
+        if (!b) return;
+        var k = jobFieldText(b.k);
+        var v = jobFieldText(b.v);
+        if (k && jobFieldIsPlaceholder(k)) return;
+        if (v && jobFieldIsPlaceholder(v)) return;
+        if (k && v) parts.push(k + ": " + v);
+        else if (v) parts.push(v);
+      });
+    }
+    return parts.join("\n");
+  }
+
+  function jobPostingUrl(j) {
+    var url = firstJobField(j, ["url"]);
+    if (url) return url;
+    var slug = firstJobField(j, ["slug"]);
+    if (slug) return AMP_ORG_URL.replace(/\/$/, "") + "/job/" + slug;
+    return "";
+  }
+
+  function jobPostingSalary(j) {
+    /* Only structured bake fields — never parse dollar amounts from titles. */
+    var raw = j && (j.baseSalary || j.salary);
+    if (!raw || jobFieldIsPlaceholder(raw)) return null;
+    if (typeof raw === "number" && isFinite(raw)) {
+      return {
+        "@type": "MonetaryAmount",
+        currency: "USD",
+        value: { "@type": "QuantitativeValue", value: raw, unitText: "YEAR" }
+      };
+    }
+    if (typeof raw === "object") {
+      var value = raw.value != null ? raw.value : raw.minValue;
+      if (value == null || jobFieldIsPlaceholder(value)) return null;
+      var amount = {
+        "@type": "MonetaryAmount",
+        currency: jobFieldText(raw.currency) || "USD",
+        value: {
+          "@type": "QuantitativeValue",
+          unitText: jobFieldText(raw.unitText) || "YEAR"
+        }
+      };
+      if (raw.minValue != null && !jobFieldIsPlaceholder(raw.minValue)) amount.value.minValue = raw.minValue;
+      if (raw.maxValue != null && !jobFieldIsPlaceholder(raw.maxValue)) amount.value.maxValue = raw.maxValue;
+      if (raw.value != null && !jobFieldIsPlaceholder(raw.value)) amount.value.value = raw.value;
+      if (amount.value.value == null && amount.value.minValue == null && amount.value.maxValue == null) return null;
+      return amount;
+    }
+    return null;
+  }
+
+  function buildJobPostingJsonLd(j) {
+    var title = firstJobField(j, ["title"]);
+    if (!title) return null;
+
+    var data = {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      title: title,
+      hiringOrganization: {
+        "@type": "Organization",
+        "@id": AMP_ORG_ID,
+        name: AMP_ORG_NAME,
+        url: AMP_ORG_URL
+      }
+    };
+
+    var description = jobPostingDescription(j);
+    if (description) data.description = description;
+
+    var url = jobPostingUrl(j);
+    if (url) data.url = url;
+
+    var code = firstJobField(j, ["code", "id"]);
+    if (code) {
+      data.identifier = {
+        "@type": "PropertyValue",
+        name: AMP_ORG_NAME,
+        value: code
+      };
+    }
+
+    var datePosted = firstJobField(j, ["datePosted", "postedAt", "publishedAt"]);
+    if (datePosted) data.datePosted = datePosted;
+
+    var employmentType = firstJobField(j, ["employmentType"]);
+    if (employmentType) data.employmentType = employmentType;
+
+    var salary = jobPostingSalary(j);
+    if (salary) data.baseSalary = salary;
+
+    var spec = firstJobField(j, ["specialtyLabel", "specialty"]);
+    if (spec) data.occupationalCategory = spec;
+
+    var city = firstJobField(j, ["city"]);
+    var region = firstJobField(j, ["stateAbbr", "state"]);
+    if (city || region) {
+      var address = { "@type": "PostalAddress" };
+      if (city) address.addressLocality = city;
+      if (region) address.addressRegion = region;
+      address.addressCountry = "US";
+      data.jobLocation = { "@type": "Place", address: address };
+    }
+
+    return data;
+  }
+
   function injectJobJsonLd(jsonLd) {
     var old = document.getElementById("job-jsonld");
     if (old && old.parentNode) old.parentNode.removeChild(old);
+    if (!jsonLd) return;
     var script = document.createElement("script");
     script.type = "application/ld+json";
     script.id = "job-jsonld";
@@ -2422,17 +2562,7 @@
     var bullets = j.bullets.map(function (b) {
       return "<li><strong>" + b.k + ":</strong> " + b.v + "</li>";
     }).join("");
-    var recName = (j.recruiter && j.recruiter.name === "Michael Freeman") ? "Mike Freeman" : j.recruiter.name;
-    var jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      title: j.title,
-      identifier: j.code,
-      hiringOrganization: { "@type": "Organization", name: "Adaptive Medical Partners" },
-      jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressRegion: (j.stateAbbr || j.region || ""), addressCountry: "US" } },
-      description: "Practice-first overview. Full package on a confidential call with " + recName + "."
-    };
-    injectJobJsonLd(jsonLd);
+    injectJobJsonLd(buildJobPostingJsonLd(j));
     stampJobConcierge(j);
     root.innerHTML =
       '<div class="job-layout">' +
@@ -4103,11 +4233,13 @@ function syncGuideRoute(route) {
         description = "That opening isn’t on the site right now. Browse current physician openings from Adaptive Medical Partners.";
         robots = SEO_NOINDEX;
         h1 = "Role not found";
+        clearJobJsonLd();
       } else {
         title = jobDocumentTitle(job);
         description = jobDocumentDescription(job);
         robots = "index,follow";
         h1 = job.title || null;
+        injectJobJsonLd(buildJobPostingJsonLd(job));
       }
     } else if (viewRoute === "blog-post") {
       var slug = params.slug;
@@ -4116,12 +4248,14 @@ function syncGuideRoute(route) {
       description = blogDocumentDescription(post);
       robots = "index,follow";
       h1 = post && post.title ? post.title : null;
+      clearJobJsonLd();
     } else {
       var entry = SEO_MAP[viewRoute] || SEO_DEFAULT;
       title = entry.title || SEO_DEFAULT.title;
       description = entry.description || SEO_DEFAULT.description;
       robots = entry.robots || "index,follow";
       h1 = entry.h1 || null;
+      clearJobJsonLd();
     }
 
     document.title = title;
@@ -4290,7 +4424,7 @@ function syncGuideRoute(route) {
   });
 
   window.AMPRegionMap = { render: renderRegionMap, normalizeState: normalizeRegionState };
-  window.AMP = { go: go, state: state, settleHome: settleHome, href: routeToHref, seo: applyDocumentSeo };
+  window.AMP = { go: go, state: state, settleHome: settleHome, href: routeToHref, seo: applyDocumentSeo, jobJsonLd: buildJobPostingJsonLd };
 })();
 
   document.addEventListener("click", function (e) {
