@@ -1,7 +1,7 @@
 /* AMP Mountain Site — content packs (jobs and Education posts)
-   Jobs: 53 Active+Open matched Webflow postings (audit C+D) synced 2026-09-06.
-   Source: website-jobs.json + Bullhorn owner map. No invented towns/hospitals.
-   Bucket A stale (51) and Bucket B missing (54) excluded. */
+   Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
+   Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.
+   No invented towns/hospitals. Recruiter from live job copy (or Georgia 835x guide pattern). */
 window.AMP_CONTENT = {
   specialties: [
     { id: "fm", label: "Family Medicine", blurb: "Clinic-first weeks with room for life outside the trail." },
@@ -717,6 +717,33 @@ window.AMP_CONTENT = {
       slug: "oregon-family-medicine-obstetrics-fpob-8385",
     },
     {
+      id: "fpob-8462",
+      code: "FPOB-8462",
+      specialty: "obg",
+      specialtyLabel: "Family Medicine (with OB) & Residency Program Director",
+      region: "southeast",
+      state: "Alabama",
+      stateAbbr: "AL",
+      title: "From $415,000: Family Medicine (with OB) & Residency Program Director in Alabama",
+      sub: "Family Medicine (with OB) & Residency Program Director · FPOB-8462 · Alabama",
+      bullets: [
+        { k: "Practice", v: "First-year package from $415,000 — full details on a brief call with your recruiter" },
+        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Package", v: "Full compensation details on a short call with your guide" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+      ],
+      recruiter: {
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "assets/mike-ridge-1.jpg",
+      summit: { practice: 6, life: 6, location: 6, income: 8 },
+      url: "https://www.adaptivemedicalpartners.com/job/alabama-family-medicine-ob-residency-program-director-fpob-8462",
+      slug: "alabama-family-medicine-ob-residency-program-director-fpob-8462",
+    },
+    {
       id: "ge-8325",
       code: "GE-8325",
       specialty: "gi",
@@ -985,6 +1012,87 @@ window.AMP_CONTENT = {
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-ivc-8404",
       slug: "texas-interventional-cardiology-ivc-8404",
+    },
+    {
+      id: "lcsw-8451",
+      code: "LCSW-8451",
+      specialty: "licensed_clinical_social_worker",
+      specialtyLabel: "Licensed Clinical Social Worker",
+      region: "midwest",
+      state: "Missouri",
+      stateAbbr: "MO",
+      title: "From $108,625: Licensed Clinical Social Worker in Midwest / Heartland",
+      sub: "Licensed Clinical Social Worker · LCSW-8451 · Missouri",
+      bullets: [
+        { k: "Practice", v: "First-year package from $108,625 — full details on a brief call with your recruiter" },
+        { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
+        { k: "Package", v: "Full compensation details on a short call with your guide" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+      ],
+      recruiter: {
+        name: "Amy Myers",
+        phone: "972-301-2261",
+        email: "amyers@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "assets/mike-ridge-2.jpg",
+      summit: { practice: 8, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/midwest-licensed-clinical-social-worker-lcsw-8451",
+      slug: "midwest-licensed-clinical-social-worker-lcsw-8451",
+    },
+    {
+      id: "md-8459",
+      code: "MD-8459",
+      specialty: "fm",
+      specialtyLabel: "Medical Director / Primary Care Physician",
+      region: "west",
+      state: "Oregon",
+      stateAbbr: "OR",
+      title: "From $329,720: Medical Director/ Primary Care Physician in Oregon",
+      sub: "Medical Director / Primary Care Physician · MD-8459 · Oregon",
+      bullets: [
+        { k: "Practice", v: "First-year package from $329,720 — full details on a brief call with your recruiter" },
+        { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
+        { k: "Package", v: "Full compensation details on a short call with your guide" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+      ],
+      recruiter: {
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "assets/mike-ridge-3.jpg",
+      summit: { practice: 6, life: 6, location: 6, income: 8 },
+      url: "https://www.adaptivemedicalpartners.com/job/oregon-medical-director-primary-care-physician-md-8459",
+      slug: "oregon-medical-director-primary-care-physician-md-8459",
+    },
+    {
+      id: "mfm-8461",
+      code: "MFM-8461",
+      specialty: "obg",
+      specialtyLabel: "Maternal-Fetal Medicine",
+      region: "southeast",
+      state: "Alabama",
+      stateAbbr: "AL",
+      title: "Up to $665,000: MFM in Alabama",
+      sub: "Maternal-Fetal Medicine · MFM-8461 · Alabama",
+      bullets: [
+        { k: "Practice", v: "First-year package up to $665,000 — full details on a brief call with your recruiter" },
+        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Package", v: "Full compensation details on a short call with your guide" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+      ],
+      recruiter: {
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "assets/mike-ridge-1.jpg",
+      summit: { practice: 6, life: 6, location: 6, income: 8 },
+      url: "https://www.adaptivemedicalpartners.com/job/alabama-mfm-8461",
+      slug: "alabama-mfm-8461",
     },
     {
       id: "n-8347",
@@ -1257,6 +1365,33 @@ window.AMP_CONTENT = {
       slug: "alabama-obstetrics-and-gynecology-obg-8422",
     },
     {
+      id: "obg-8449",
+      code: "OBG-8449",
+      specialty: "obg",
+      specialtyLabel: "Obstetrics and Gynecology",
+      region: "midwest",
+      state: "Missouri",
+      stateAbbr: "MO",
+      title: "From $812,000: OB/GYN in Midwest",
+      sub: "Obstetrics and Gynecology · OBG-8449 · Missouri",
+      bullets: [
+        { k: "Practice", v: "Monday–Friday 7:30 am–4:00 pm" },
+        { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
+        { k: "Package", v: "Full compensation details on a short call with your guide" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+      ],
+      recruiter: {
+        name: "Amy Myers",
+        phone: "972-301-2261",
+        email: "amyers@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "assets/mike-ridge-3.jpg",
+      summit: { practice: 8, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/midwest-obstetrics-and-gynecology-obg-8449",
+      slug: "midwest-obstetrics-and-gynecology-obg-8449",
+    },
+    {
       id: "od-8364",
       code: "OD-8364",
       specialty: "opt",
@@ -1471,6 +1606,33 @@ window.AMP_CONTENT = {
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-pulmonology-pud-8348",
       slug: "alabama-pulmonology-pud-8348",
+    },
+    {
+      id: "pud-8355",
+      code: "PUD-8355",
+      specialty: "pulm",
+      specialtyLabel: "Pulmonology",
+      region: "southeast",
+      state: "Georgia",
+      stateAbbr: "GA",
+      title: "Earn $596,250 First Year — No Call + Half-Day Fridays in a Southern Gateway City",
+      sub: "Pulmonology · PUD-8355 · Georgia",
+      bullets: [
+        { k: "Practice", v: "No call plus a half-day Friday for true work-life balance" },
+        { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
+        { k: "Package", v: "Full compensation details on a short call with your guide" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "assets/mike-ridge-3.jpg",
+      summit: { practice: 6, life: 6, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/georgia-pulmonology-pud-8355",
+      slug: "georgia-pulmonology-pud-8355",
     },
     {
       id: "rad-8256",

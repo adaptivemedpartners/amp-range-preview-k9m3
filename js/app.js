@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2100-crawlable-nav-seo";
+  window.__AMP_BUILD = "2101-job-slug-sync";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2382,7 +2382,31 @@
 
   function jobById(id) {
     var key = String(id || "").trim();
-    return AMP_CONTENT.jobs.find(function (j) { return j.id === key || j.slug === key; }) || AMP_CONTENT.jobs[0];
+    if (!key || !window.AMP_CONTENT || !AMP_CONTENT.jobs) return null;
+    return AMP_CONTENT.jobs.find(function (j) { return j.id === key || j.slug === key; }) || null;
+  }
+
+  function clearJobJsonLd() {
+    var old = document.getElementById("job-jsonld");
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+  }
+
+  function renderJobNotFound() {
+    state.jobId = "";
+    clearJobJsonLd();
+    var root = $("#job-root");
+    if (!root) return;
+    var jobsHref = (typeof routeToHref === "function") ? routeToHref("physician-jobs") : "/jobs";
+    root.innerHTML =
+      '<article class="jobs-mpc-empty panel panel-glow job-missing" aria-live="polite">' +
+        '<span class="tag">Role not found</span>' +
+        '<h3>That opening isn’t posted right now.</h3>' +
+        '<p>The link may be outdated, or that role may have moved. Browse current openings, or talk with a guide about a tailored search.</p>' +
+        '<div class="btn-row">' +
+          '<a class="btn btn-primary" href="' + jobsHref + '" data-go="physician-jobs">Browse openings</a>' +
+          '<button type="button" class="btn btn-ghost" data-guide-whisper="1">Talk with a guide</button>' +
+        '</div>' +
+      '</article>';
   }
 
   function renderJob(id) {
@@ -2391,6 +2415,10 @@
     var j = jobById(id);
     var root = $("#job-root");
     if (!root) return;
+    if (!j) {
+      renderJobNotFound();
+      return;
+    }
     var bullets = j.bullets.map(function (b) {
       return "<li><strong>" + b.k + ":</strong> " + b.v + "</li>";
     }).join("");
@@ -2429,6 +2457,27 @@
 
   function renderJobContact(id) {
     var j = jobById(id || state.jobId);
+    if (!j) {
+      state.jobId = "";
+      var missingWho = $("#contact-job-who");
+      if (missingWho) missingWho.textContent = "That role isn’t posted";
+      var missingPhone = $("#contact-job-phone");
+      if (missingPhone) {
+        missingPhone.removeAttribute("href");
+        missingPhone.textContent = "Browse openings";
+        missingPhone.setAttribute("data-go", "physician-jobs");
+      }
+      var missingSms = $("#contact-job-sms");
+      if (missingSms) { missingSms.removeAttribute("data-chat"); missingSms.textContent = "Talk with a guide"; missingSms.setAttribute("data-guide-whisper", "1"); }
+      var missingMail = $("#contact-job-mail");
+      if (missingMail) { missingMail.removeAttribute("href"); missingMail.setAttribute("data-go", "physician-jobs"); missingMail.textContent = "Browse openings"; }
+      var missingRet = $("#confirm-return-job");
+      if (missingRet) {
+        missingRet.setAttribute("data-go", "physician-jobs");
+        if (missingRet.tagName === "A") missingRet.setAttribute("href", routeToHref("physician-jobs"));
+      }
+      return;
+    }
     state.jobId = j.id;
     stampJobConcierge(j);
     var who = $("#contact-job-who");
@@ -2436,16 +2485,25 @@
     if (who) who.textContent = displayName + " · " + j.code;
     var phone = $("#contact-job-phone");
     if (phone) {
+      phone.removeAttribute("data-go");
       phone.href = "tel:+1" + j.recruiter.phone.replace(/-/g, "");
       phone.textContent = "Call " + j.recruiter.phone;
     }
     var sms = $("#contact-job-sms");
-    if (sms) { sms.removeAttribute("href"); sms.setAttribute("data-chat", "text"); sms.textContent = "Text " + recruiterFirstName(j.recruiter); }
+    if (sms) {
+      sms.removeAttribute("href");
+      sms.removeAttribute("data-guide-whisper");
+      sms.setAttribute("data-chat", "text");
+      sms.textContent = "Text " + recruiterFirstName(j.recruiter);
+    }
     var talkBtn = document.querySelector('.chat-actions [data-chat="talk"]');
     if (talkBtn) talkBtn.textContent = "Talk to " + recruiterFirstName(j.recruiter) + " · " + j.code;
 
     var mail = $("#contact-job-mail");
-    if (mail) mail.href = "mailto:" + j.recruiter.email + "?cc=" + encodeURIComponent(j.recruiter.cc) + "&subject=" + encodeURIComponent("Interest · " + j.code);
+    if (mail) {
+      mail.removeAttribute("data-go");
+      mail.href = "mailto:" + j.recruiter.email + "?cc=" + encodeURIComponent(j.recruiter.cc) + "&subject=" + encodeURIComponent("Interest · " + j.code);
+    }
     var ret = $("#confirm-return-job");
     if (ret) {
       var retKey = "job/" + (j.slug || j.id);
@@ -4040,10 +4098,17 @@ function syncGuideRoute(route) {
 
     if (viewRoute === "job") {
       var job = jobById(params.id || state.jobId);
-      title = jobDocumentTitle(job);
-      description = jobDocumentDescription(job);
-      robots = "index,follow";
-      h1 = job && job.title ? job.title : null;
+      if (!job) {
+        title = "Role not found" + BRAND_SUFFIX;
+        description = "That opening isn’t on the site right now. Browse current physician openings from Adaptive Medical Partners.";
+        robots = SEO_NOINDEX;
+        h1 = "Role not found";
+      } else {
+        title = jobDocumentTitle(job);
+        description = jobDocumentDescription(job);
+        robots = "index,follow";
+        h1 = job.title || null;
+      }
     } else if (viewRoute === "blog-post") {
       var slug = params.slug;
       var post = (window.AMP_CONTENT && AMP_CONTENT.posts || []).find(function (p) { return p.slug === slug; }) || (window.AMP_CONTENT && AMP_CONTENT.posts && AMP_CONTENT.posts[0]);
