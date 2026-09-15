@@ -7197,6 +7197,41 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .form-live-frame { min-height: 640px; }
 }
 
+/* amp-build:2112-why-amp — large proof tiles on Why AMP hub */
+.why-amp-proof {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 28px;
+}
+.why-amp-proof-tile {
+  margin: 0;
+  text-align: center;
+  padding: 22px 14px 18px;
+}
+.why-amp-proof-tile strong {
+  display: block;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: #0f766e;
+  font-weight: 800;
+}
+.why-amp-proof-tile span {
+  display: block;
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.35;
+  font-weight: 650;
+  color: #334155;
+}
+@media (max-width: 860px) {
+  .why-amp-proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .why-amp-proof { grid-template-columns: 1fr; }
+}
+
 /* amp-build:2112-client-bd-consult — education + need cards (no fee chooser) */
 .view.funnel[data-route="client-retained"] .client-offers-stage {
   max-width: 920px;

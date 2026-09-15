@@ -4425,7 +4425,8 @@ function syncGuideRoute(route) {
     "interview-expense-form": "form-interview-expense",
     "easy-pay-authorization": "form-easy-pay",
     "ridge": "mi-lite",
-    "mi-lite": "mi-lite"
+    "mi-lite": "mi-lite",
+    "why-amp": "education"
   };
 
   var ROUTE_TO_PATH = {
@@ -4452,6 +4453,7 @@ function syncGuideRoute(route) {
   function normalizeRouteAlias(key) {
     if (key === "residents-fellows") return "residents";
     if (key === "market-intelligence" || key === "mi" || key === "ridge") return "mi-lite";
+    if (key === "why-amp") return "education";
     return key;
   }
 
@@ -4606,9 +4608,10 @@ function syncGuideRoute(route) {
       robots: "index,follow"
     },
     education: {
-      title: "Education" + BRAND_SUFFIX,
-      description: "Education from Adaptive Medical Partners — residents and fellows, Ridge, AMP Score, and healthcare recruiting guides.",
-      robots: "index,follow"
+      title: "Why AMP" + BRAND_SUFFIX,
+      description: "Why Adaptive Medical Partners — 87% retention at 3 years, 1.7 average interviews per successful placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+      robots: "index,follow",
+      h1: "Why AMP"
     },
     residents: {
       title: "Residents & Fellows" + BRAND_SUFFIX,
