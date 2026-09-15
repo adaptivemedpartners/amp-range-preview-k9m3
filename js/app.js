@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2108-sitemap";
+  window.__AMP_BUILD = "2109-canonical";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -4248,6 +4248,44 @@ function syncGuideRoute(route) {
     el.setAttribute("content", content);
   }
 
+  var PRODUCTION_ORIGIN = "https://www.adaptivemedicalpartners.com";
+
+  /* Flip production path only — never GH Pages base, ?v=, or #hash. */
+  function canonicalHrefForRoute(route, params) {
+    params = params || {};
+    var key = String(route || "home");
+    var path;
+    if (key === "job" || key.indexOf("job/") === 0) {
+      var id = params.id || (key.indexOf("job/") === 0 ? key.slice(4) : "");
+      path = id ? "/job/" + id : routeToPathname("physician-jobs");
+    } else if (key === "blog-post" || key.indexOf("blog/") === 0 || key.indexOf("blog-posts/") === 0) {
+      var slug = params.slug || "";
+      if (!slug && key.indexOf("blog-posts/") === 0) slug = key.slice("blog-posts/".length);
+      if (!slug && key.indexOf("blog/") === 0) slug = key.slice(5);
+      path = slug ? "/blog-posts/" + slug : routeToPathname("blog");
+    } else {
+      path = routeToPathname(key);
+    }
+    if (!path) path = "/";
+    if (path.charAt(0) !== "/") path = "/" + path;
+    return PRODUCTION_ORIGIN + path;
+  }
+
+  function setCanonicalLink(href) {
+    var el = document.getElementById("amp-canonical");
+    if (!el) el = document.querySelector('link[rel="canonical"]');
+    if (!el) {
+      el = document.createElement("link");
+      document.head.appendChild(el);
+    }
+    el.id = "amp-canonical";
+    el.setAttribute("rel", "canonical");
+    el.setAttribute("href", href);
+    document.querySelectorAll('link[rel="canonical"]').forEach(function (link) {
+      if (link !== el && link.parentNode) link.parentNode.removeChild(link);
+    });
+  }
+
   function applyDocumentSeo(route, params) {
     params = params || {};
     var viewRoute = route;
@@ -4295,6 +4333,7 @@ function syncGuideRoute(route) {
     document.title = title;
     setMetaTag("description", description);
     setMetaTag("robots", robots);
+    setCanonicalLink(canonicalHrefForRoute(route, params));
 
     if (h1) {
       var view = document.querySelector('.view[data-route="' + viewSel + '"]');
@@ -4458,7 +4497,7 @@ function syncGuideRoute(route) {
   });
 
   window.AMPRegionMap = { render: renderRegionMap, normalizeState: normalizeRegionState };
-  window.AMP = { go: go, state: state, settleHome: settleHome, href: routeToHref, seo: applyDocumentSeo, jobJsonLd: buildJobPostingJsonLd };
+  window.AMP = { go: go, state: state, settleHome: settleHome, href: routeToHref, seo: applyDocumentSeo, jobJsonLd: buildJobPostingJsonLd, canonical: canonicalHrefForRoute };
 })();
 
   document.addEventListener("click", function (e) {
