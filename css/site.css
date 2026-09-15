@@ -1,3 +1,4 @@
+/* amp-build:2115-copy-lock */
 /* amp-build:2114-why-amp-glow */
 /* amp-build:2113-why-amp-history */
 /* amp-build:2112-client-bd-consult */
@@ -2367,7 +2368,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   }
 }
 
-/* Phone ~430: tighten door stack + chips (single source; prior cascade rules retained) */
+/* Phone ~430: tighten door stack + chips (single source; prior cascade rules kept) */
 @media (max-width: 430px) {
   .guide-strip .btn-row .btn { width: 100%; justify-content: center; }
   .home-extras { flex-wrap: wrap; justify-content: center; row-gap: 2px; }
