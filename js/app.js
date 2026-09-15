@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2106-keep-forms-live";
+  window.__AMP_BUILD = "2107-nap-lock";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2362,7 +2362,9 @@
         "@type": "Organization",
         "@id": AMP_ORG_ID,
         name: AMP_ORG_NAME,
-        url: AMP_ORG_URL
+        url: AMP_ORG_URL,
+        email: "inquire@adaptivemedicalpartners.com",
+        telephone: "+1-972-441-2750"
       }
     };
 
@@ -4098,7 +4100,7 @@ function syncGuideRoute(route) {
     },
     contact: {
       title: "Contact Us" + BRAND_SUFFIX,
-      description: "Contact Adaptive Medical Partners in Irving, Texas. Talk with a recruiting guide or a hiring guide — inquire@adaptivemedicalpartners.com.",
+      description: "Contact Adaptive Medical Partners in Irving, Texas. Talk with a recruiting guide or a hiring guide — inquire@adaptivemedicalpartners.com · (972) 441-2750.",
       robots: "index,follow",
       h1: "Ready to Start a Conversation?"
     },

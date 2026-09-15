@@ -1,7 +1,7 @@
 # Adaptive Medical Partners (AMP)
 # llms.txt — guidance for AI systems and crawlers
 # Site: https://adaptivemedicalpartners.com/
-# Last updated: 2026-09-05
+# Last updated: 2026-09-15
 
 ## Who AMP is
 
@@ -62,6 +62,7 @@ Key paths:
 ## Contact
 
 Email: inquire@adaptivemedicalpartners.com
+Phone: (972) 441-2750
 Address: 3229 Premier Drive, Suite 200, Irving, TX 75063
 Web: https://adaptivemedicalpartners.com/
 
