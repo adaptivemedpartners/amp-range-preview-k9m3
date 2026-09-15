@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2109-canonical";
+  window.__AMP_BUILD = "2110-hero-lighten";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -342,7 +342,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2010";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2110";
         }
       } catch (e) {}
     }
@@ -369,7 +369,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2010";
+          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2110";
         }
       });
       finishBake();
@@ -511,6 +511,84 @@
     }
   }
 
+  /* Still-first LCP: do not put src on <video> until the page is usable (or the
+     visitor actually starts the approach). Warm only on the home view so deep
+     routes do not pull imagine-home.mp4. */
+  var HOME_VIDEO_SRC = "assets/imagine-home.mp4?v=2110";
+
+  function homeVideoSrcOf(el) {
+    if (!el) return "";
+    return el.getAttribute("src") || el.getAttribute("data-src") || HOME_VIDEO_SRC;
+  }
+
+  function attachHomeVideoSrc(el) {
+    el = el || video || $("#home-video");
+    if (!el) return el;
+    var src = homeVideoSrcOf(el);
+    if (!src) return el;
+    if (el.getAttribute("src") !== src) {
+      el.setAttribute("data-src", src);
+      el.setAttribute("src", src);
+      try { el.preload = "auto"; } catch (e) {}
+      try { el.load(); } catch (e2) {}
+    }
+    return el;
+  }
+
+  function whenHomeVideoReady(el, done) {
+    el = attachHomeVideoSrc(el);
+    if (!el) {
+      if (typeof done === "function") done(null);
+      return;
+    }
+    if (el.readyState >= 2) {
+      if (typeof done === "function") done(el);
+      return;
+    }
+    var settled = false;
+    function finish() {
+      if (settled) return;
+      settled = true;
+      if (typeof done === "function") done(el);
+    }
+    el.addEventListener("canplay", finish, { once: true });
+    el.addEventListener("loadeddata", finish, { once: true });
+    el.addEventListener("error", finish, { once: true });
+    setTimeout(finish, 10000);
+  }
+
+  var homeVideoWarmArmed = false;
+  function scheduleHomeVideoWarm() {
+    function warm() {
+      var stage = $("#home-stage");
+      if (!stage || !stage.classList.contains("on")) return;
+      attachHomeVideoSrc($("#home-video"));
+    }
+    function afterUsable() {
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(warm, { timeout: 2200 });
+      } else {
+        setTimeout(warm, 600);
+      }
+    }
+    if (document.readyState === "complete") {
+      afterUsable();
+      return;
+    }
+    if (homeVideoWarmArmed) return;
+    homeVideoWarmArmed = true;
+    window.addEventListener("load", afterUsable, { once: true });
+  }
+
+  function hydrateViewBackgrounds(view) {
+    if (!view) return;
+    view.querySelectorAll("[data-bg]").forEach(function (el) {
+      var url = el.getAttribute("data-bg");
+      if (!url || el.style.backgroundImage) return;
+      el.style.backgroundImage = "url(\"" + url.replace(/"/g, "") + "\")";
+    });
+  }
+
   function startHomeVideo() {
     /* Design note: first paint ZOOMED OUT (video t=0 / wide poster) — play only on door. */
     clearApproachHold();
@@ -537,6 +615,7 @@
     }
     var skipBtn = $(".home-skip");
     if (skipBtn) skipBtn.hidden = true;
+    scheduleHomeVideoWarm();
   }
 
   /* Play the imagine-home.mp4 (wide → trailhead), then continue to the chosen route.
@@ -629,71 +708,82 @@
       return;
     }
 
-    try { video.muted = true; } catch (e) {}
-    try { video.playbackRate = 1; } catch (e) {}
+    function beginApproachPlay() {
+      try { video.muted = true; } catch (e) {}
+      try { video.playbackRate = 1; } catch (e) {}
 
-    pinApproachVideo({ keepPlaying: true });
-    if (stage) {
-      stage.classList.remove("settled", "walk-forward", "handoff");
-      stage.classList.add("playing", "approach-ghost");
-    }
+      pinApproachVideo({ keepPlaying: true });
+      if (stage) {
+        stage.classList.remove("settled", "walk-forward", "handoff");
+        stage.classList.add("playing", "approach-ghost");
+      }
 
-    try { video.currentTime = 0; } catch (e) {}
+      try { video.currentTime = 0; } catch (e) {}
 
 
-    var overlayStarted = false;
-    function revealPickerOverlay() {
-      if (overlayStarted) return;
-      overlayStarted = true;
-      var route = state._approachRoute || "physician";
-      var live = document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
-        document.querySelector('.view.trailhead[data-route="' + route + '"]');
-      if (live) {
-        live.classList.add("picker-in", "after-approach", "live-video-bg", "signs-lit");
-        if (route === "client" && live && !live.querySelector(".hire-sheet")) {
-          try { renderFacilitySignpost(); } catch (e) {}
-          mountTrailheadHits("client");
+      var overlayStarted = false;
+      function revealPickerOverlay() {
+        if (overlayStarted) return;
+        overlayStarted = true;
+        var route = state._approachRoute || "physician";
+        var live = document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
+          document.querySelector('.view.trailhead[data-route="' + route + '"]');
+        if (live) {
+          live.classList.add("picker-in", "after-approach", "live-video-bg", "signs-lit");
+          if (route === "client" && live && !live.querySelector(".hire-sheet")) {
+            try { renderFacilitySignpost(); } catch (e2) {}
+            mountTrailheadHits("client");
+          }
+        }
+        state.approachHold = true;
+      }
+
+      function tickApproach() {
+        if (!video || freezePaused) return;
+        var t = video.currentTime || 0;
+        try { if (video.playbackRate !== 1) video.playbackRate = 1; } catch (e3) {}
+        /* Soft HTML picker during late swoop — video keeps playing to end. */
+        if (t >= OVERLAY_AT) revealPickerOverlay();
+        /* Freeze only at end of whole clip — do not freeze early. */
+        if (t >= FREEZE_END - 0.05 || (video.duration && t >= video.duration - 0.08)) {
+          pauseFreeze(true);
+          return;
+        }
+        if (!freezePaused) {
+          try { video.__ampEaseRaf = requestAnimationFrame(tickApproach); } catch (e4) {}
         }
       }
-      state.approachHold = true;
+
+      onSettleTime = function () { tickApproach(); };
+
+      video.addEventListener("timeupdate", onSettleTime);
+      video.addEventListener("ended", function () {
+        pauseFreeze(true);
+      });
+      try { video.__ampEaseRaf = requestAnimationFrame(tickApproach); } catch (e5) {}
+
+      var p = video.play();
+      if (p && p.catch) {
+        p.catch(function () { finishHard(); });
+      }
+
+      settleTimer = setTimeout(function () {
+        if (!freezePaused) pauseFreeze(true);
+        else if (!chromeLanded) landChrome();
+      }, Math.round(SETTLE * 1000) + 2500);
+      setTimeout(function () {
+        if (!freezePaused) pauseFreeze(true);
+      }, Math.round(FREEZE_END * 1000) + 2500);
     }
 
-    function tickApproach() {
-      if (!video || freezePaused) return;
-      var t = video.currentTime || 0;
-      try { if (video.playbackRate !== 1) video.playbackRate = 1; } catch (e) {}
-      /* Soft HTML picker during late swoop — video keeps playing to end. */
-      if (t >= OVERLAY_AT) revealPickerOverlay();
-      /* Freeze only at end of whole clip — do not freeze early. */
-      if (t >= FREEZE_END - 0.05 || (video.duration && t >= video.duration - 0.08)) {
-        pauseFreeze(true);
+    whenHomeVideoReady(video, function (ready) {
+      video = ready || video;
+      if (!video || !homeVideoSrcOf(video)) {
+        finishHard();
         return;
       }
-      if (!freezePaused) {
-        try { video.__ampEaseRaf = requestAnimationFrame(tickApproach); } catch (e) {}
-      }
-    }
-
-    onSettleTime = function () { tickApproach(); };
-
-    video.addEventListener("timeupdate", onSettleTime);
-    video.addEventListener("ended", function () {
-      pauseFreeze(true);
+      beginApproachPlay();
     });
-    try { video.__ampEaseRaf = requestAnimationFrame(tickApproach); } catch (e) {}
-
-    var p = video.play();
-    if (p && p.catch) {
-      p.catch(function () { finishHard(); });
-    }
-
-    settleTimer = setTimeout(function () {
-      if (!freezePaused) pauseFreeze(true);
-      else if (!chromeLanded) landChrome();
-    }, Math.round(SETTLE * 1000) + 2500);
-    setTimeout(function () {
-      if (!freezePaused) pauseFreeze(true);
-    }, Math.round(FREEZE_END * 1000) + 2500);
   }
 
   function hideAllViews() {
@@ -1037,6 +1127,7 @@
     function land(soft) {
       hideAllViews();
       next.classList.add("on");
+      try { hydrateViewBackgrounds(next); } catch (eBg) {}
       if (soft) next.classList.add("soft-in");
       if (opts.afterApproach) next.classList.add("after-approach");
       if (opts.afterApproach && state.approachHold && next.classList.contains("trailhead")) {
@@ -4487,6 +4578,7 @@ function syncGuideRoute(route) {
     bind();
     renderBlogIndex();
     bootFromHash({ fromHistory: true });
+    try { scheduleHomeVideoWarm(); } catch (eWarm) {}
     /* popstate is the BF spine; hashchange kept for deep-link/manual hash edits, guarded above. */
     window.addEventListener("hashchange", function () {
       bootFromHash({ fromHistory: true });
