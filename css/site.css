@@ -6916,10 +6916,15 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   visibility: hidden;
 }
 .view[data-route="client-region"] .client-spec-continue-wrap {
-  position: sticky;
-  bottom: 10px;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  z-index: 5;
+  position: static;
+}
+@media (max-width: 720px) {
+  .view[data-route="client-region"] .client-spec-continue-wrap {
+    position: sticky;
+    bottom: 10px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    z-index: 5;
+  }
 }
 .view[data-route="client-region"] .funnel-panel {
   padding-bottom: 88px;
@@ -7518,6 +7523,9 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-size: 12px;
   cursor: pointer;
 }
+.view[data-route="client-region"] .client-guide-reveal.is-empty .client-guide-card {
+  display: none;
+}
 
 .client-climb-band[data-climb-option="A"] {
   margin: 4px 0 20px;
@@ -7637,21 +7645,27 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .client-climb-trail {
     display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 8px;
-    padding: 2px 2px 8px;
-    -webkit-overflow-scrolling: touch;
+    flex-direction: column;
+    gap: 4px;
+    overflow: visible;
+    padding: 0;
   }
   .client-climb-trail > li {
-    flex: 0 0 128px;
-    scroll-snap-align: start;
+    flex: none;
+    width: 100%;
   }
   .client-climb-station {
-    padding: 8px 6px;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 10px;
+    padding: 6px 8px;
     border: 1px solid rgba(15, 23, 42, .08);
     background: #fff;
-    border-radius: 14px;
+    border-radius: 12px;
+  }
+  .client-climb-name {
+    font-size: 13px;
   }
   .client-climb-station.is-lit {
     border-color: rgba(13, 148, 136, .45);
