@@ -1,3 +1,4 @@
+/* amp-build:2116-why-amp-history */
 /* amp-build:2115-copy-lock */
 /* amp-build:2114-why-amp-glow */
 /* amp-build:2113-why-amp-history */
@@ -7269,7 +7270,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-size: 13.5px;
   line-height: 1.35;
   font-weight: 650;
-  color: #334155;
+  background-image: linear-gradient(100deg, #334155 0%, #0f766e 48%, #b45309 100%);
+  background-size: 180% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 @keyframes whyAmpProofShimmer {
   0% { background-position: 0% center; }
