@@ -1,4 +1,4 @@
-/* amp-build:1979-other-pop-pushstate */
+/* amp-build:2102-about-evolution */
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
 .crumb { display: none !important; }
 
@@ -3295,6 +3295,89 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
 }
 .geo-faq-panel .faq { margin-top: 8px; }
 .faq.mt-24, .mt-24.faq { margin-top: 24px; }
+
+/* About — Our Evolution (mountain vertical timeline, not a dark Webflow clone) */
+.about-evolution {
+  margin: 28px 0 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line, #e2e8f0);
+}
+.about-evolution-head { margin-bottom: 18px; }
+.about-evolution-head h2 {
+  margin: 8px 0 6px;
+  font-size: 20px;
+  letter-spacing: -.02em;
+}
+.about-evolution-head p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted, #64748b);
+}
+.evo-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.evo-item { position: relative; }
+.evo-card {
+  position: relative;
+  padding: 0 0 22px 22px;
+  border-left: 2px solid #99f6e4;
+}
+.evo-item:last-child .evo-card { padding-bottom: 4px; }
+.evo-card::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--teal-dark, #0f766e);
+  box-shadow: 0 0 0 3px #ccfbf1;
+}
+.evo-year {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .01em;
+  color: var(--teal-deep, #115e59);
+  background: var(--teal-soft, #f0fdfa);
+  border: 1px solid #99f6e4;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.evo-card h3 {
+  margin: 0 0 6px;
+  font-size: 15.5px;
+  letter-spacing: -.01em;
+  color: var(--navy-2, #0f172a);
+}
+.evo-card p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #475569;
+}
+.about-evolution-guides {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 14px;
+}
+.about-evolution-guides p {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #475569;
+}
+@media (max-width: 430px) {
+  .evo-card { padding: 0 0 20px 18px; }
+  .evo-card h3 { font-size: 15px; }
+}
 
 
 /* Facility planks: never show a stuck selected state */
