@@ -1,4 +1,4 @@
-/* amp-build:2109-canonical */
+/* amp-build:2110-hero-lighten */
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
 .crumb { display: none !important; }
 
@@ -373,8 +373,21 @@ button, input, select, textarea { font: inherit; }
   background: #0b1210;
   pointer-events: none;
 }
+.home-stage > picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  display: block;
+  pointer-events: none;
+}
 .home-poster { z-index: 0; transition: opacity .4s ease; }
 #home-video { z-index: 0; }
+.view .shot picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .home-stage.playing .home-poster { opacity: 0; pointer-events: none; }
 /* Settled = wide still — keep poster visible (no auto zoom-in to 4s frame) */
 .home-stage.settled:not(.playing) .home-poster { opacity: 1; }
