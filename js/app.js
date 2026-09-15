@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2118-climb-combine";
+  window.__AMP_BUILD = "2119-climb-swipe";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2098,12 +2098,12 @@
 
   var CLIMB_DEFAULT_LINE = "You set the high camp. We carry the work from the first profile through the close.";
   var CLIMB_STATION_LINES = {
-    "1": "We learn the week and the culture before anyone is briefed.",
-    "2": "A story candidates can trust — not a blast list.",
-    "3": "Only prepared people reach your leadership.",
-    "4": "A clean packet, ready for the table.",
-    "5": "We walk the candidate through the summit first.",
-    "6": "We stay on the rope through the yes."
+    "1": "We walk the clinic week and the culture before anyone is briefed.",
+    "2": "We write a story candidates can trust — not a blast list.",
+    "3": "Only prepared people reach your leadership table.",
+    "4": "A clean dossier and CV packet, ready for the committee.",
+    "5": "We walk the candidate through the summit before they meet you.",
+    "6": "We stay on the rope through the yes — and the first weeks after."
   };
 
   function lightClientClimbStation(id, persist) {
@@ -2147,6 +2147,16 @@
       var already = band.getAttribute("data-climb-lit") === id;
       lightClientClimbStation(already ? "" : id, true);
     });
+    var trail = band.querySelector(".client-climb-trail");
+    if (trail) {
+      var syncSwipe = function () {
+        var max = trail.scrollWidth - trail.clientWidth - 8;
+        var atEnd = max <= 0 || trail.scrollLeft >= max;
+        band.classList.toggle("is-climb-end", atEnd);
+      };
+      trail.addEventListener("scroll", syncSwipe, { passive: true });
+      syncSwipe();
+    }
   }
 
   function renderClientSpecialty() {
