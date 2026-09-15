@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- amp-build:2117-fqhc-spec-order -->
+<!-- amp-build:2118-climb-combine -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -21,7 +21,7 @@
   document.head.insertBefore(el, document.head.firstChild);
 })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=2117" />
+<link rel="stylesheet" href="css/site.css?v=2118" />
 <link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="assets/hero-imagine-frame0-1280.webp?v=2111 1280w, assets/hero-imagine-frame0.webp?v=2111 1920w" imagesizes="100vw" />
 </head>
 <body>
@@ -622,92 +622,87 @@
     <div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div>
     <div class="veil"></div>
     <div class="hero-inner">
-      <h1>Where is the search?</h1>
-      <p class="lede">Pick a region, then your state — we’ll show the hiring guide who owns that territory.</p>
+      <h1>Set the search · see the climb.</h1>
+      <p class="lede">You set the high camp. We carry the work from the first profile through the close.</p>
     </div>
   </div>
-  <div class="section section-lite funnel-panel">
-    <p class="muted" id="client-region-fac-line" style="margin:0 0 8px;font-size:12.5px"></p>
-    <div class="region-picker" id="client-region-grid" aria-label="Select a US region"></div>
-    <div class="client-region-states" id="client-region-states">
-      <h2 class="hire-title" style="font-size:1.15rem;margin:16px 0 8px">Which state?</h2>
-      <div class="client-state-chips" id="client-state-chips" role="group" aria-label="States in this region"><span class="muted" style="font-size:13px">Tap a region on the map first.</span></div>
-    </div>
-    <div class="client-guide-reveal mt-16 is-empty" id="client-guide-reveal">
-      <p class="muted client-guide-empty-hint" id="client-guide-empty-hint" style="font-size:13px;margin:0 0 8px">Pick a state to meet your hiring guide.</p>
-      <article class="guide-card guide-row client-guide-card" id="client-guide-card" aria-live="polite">
-        <div class="guide-avatar has-photo" id="client-guide-avatar-wrap">
-          <img id="client-guide-photo" src="assets/team/randy-keeth.jpg" alt="Randy Keeth" width="120" height="150" />
-        </div>
-        <div class="guide-body">
-          <span class="tag">Your hiring guide</span>
-          <h3 id="client-guide-name">Hiring guide</h3>
-          <p class="guide-role" id="client-guide-role">Hiring guide</p>
-          <p class="guide-territory" id="client-guide-territory"></p>
-          <p class="guide-blurb" id="client-guide-blurb"></p>
-          <details class="guide-full" id="client-guide-full">
-            <summary>Full story</summary>
-            <div class="guide-full-body" id="client-guide-full-body"></div>
-          </details>
-          <p class="muted" style="font-size:12px;margin:0 0 8px" id="client-guide-note">Main CC Randy · also Mike · David</p>
-          <button type="button" class="btn btn-ghost" id="client-guide-talk" data-go="client-retained" data-trail="1">See how AMP helps →</button>
-        </div>
-      </article>
-    </div>
-    <div class="client-spec-continue-wrap" style="margin-top:16px">
-      <button type="button" class="btn btn-primary" id="client-region-continue" disabled>Pick a state to continue</button>
-    </div>
-  </div>
-  </div>
-</section>
-<section class="view page funnel" data-route="client-retained">
-  <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
-  </div>
-  <div class="view-chrome">
-  <div class="hero-band">
-    <div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div>
-    <div class="veil"></div>
-    <div class="hero-inner">
-      <h1>How AMP helps hiring teams.</h1>
-      <p class="lede">A short read — then mark what you want to talk through. Your <strong>hiring guide</strong> listens first and recommends a path on the call.</p>
-    </div>
-  </div>
-  <div class="section section-lite funnel-panel client-offers-stage">
-    <p class="muted" id="client-offers-context" style="margin:0 0 14px;font-size:12.5px"></p>
+  <div class="section section-lite funnel-panel client-combined-stage">
+    <p class="muted" id="client-region-fac-line" style="margin:0 0 10px;font-size:12.5px"></p>
+    <p class="muted" id="client-offers-context" hidden></p>
 
-    <div class="client-offer-intro">
-      <span class="tag">What AMP offers organizations</span>
-      <h2 class="client-offer-title">Guides for the search — not a product menu.</h2>
-      <p class="muted mb-0">You set the high camp. AMP works the climb: a clearer brief, a story candidates can trust, interviews worth leadership time, and a process built so people stay.</p>
+    <div class="client-territory-band" id="client-territory-band">
+      <div class="client-territory-map">
+        <div class="region-picker" id="client-region-grid" aria-label="Select a US region"></div>
+      </div>
+      <div class="client-territory-controls">
+        <div class="client-region-states" id="client-region-states">
+          <h2 class="hire-title client-state-heading">Which state?</h2>
+          <div class="client-state-chips" id="client-state-chips" role="group" aria-label="States in this region"><span class="muted" style="font-size:13px">Tap a region on the map first.</span></div>
+        </div>
+        <div class="client-guide-reveal is-empty" id="client-guide-reveal">
+          <p class="muted client-guide-empty-hint" id="client-guide-empty-hint">Pick a state to meet your hiring guide.</p>
+          <article class="guide-card guide-row client-guide-card" id="client-guide-card" aria-live="polite">
+            <div class="guide-avatar has-photo" id="client-guide-avatar-wrap">
+              <img id="client-guide-photo" src="assets/team/randy-keeth.jpg" alt="Randy Keeth" width="88" height="110" />
+            </div>
+            <div class="guide-body">
+              <span class="tag">Your hiring guide</span>
+              <h3 id="client-guide-name">Hiring guide</h3>
+              <p class="guide-role" id="client-guide-role">Hiring guide</p>
+              <p class="guide-territory" id="client-guide-territory"></p>
+              <p class="guide-blurb" id="client-guide-blurb" hidden></p>
+              <details class="guide-full" id="client-guide-full">
+                <summary>Full story</summary>
+                <div class="guide-full-body" id="client-guide-full-body"></div>
+              </details>
+              <p class="muted client-guide-note" id="client-guide-note">Main CC Randy · also Mike · David</p>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
 
-    <div class="client-offer-grid" aria-label="How AMP helps organizations">
-      <article class="panel panel-glow client-offer-card">
-        <span class="tag">Search guidance</span>
-        <h3>A hiring guide on the rope</h3>
-        <p class="muted mb-0">Help setting the brief, prioritizing seats, and running a focused search — not a blast list.</p>
-      </article>
-      <article class="panel panel-glow client-offer-card">
-        <span class="tag">Candidate story</span>
-        <h3>Marketing &amp; preview craft</h3>
-        <p class="muted mb-0">We help you tell the opportunity so the right people lean in before they ever reach a committee.</p>
-      </article>
-      <article class="panel panel-glow client-offer-card">
-        <span class="tag">Interview readiness</span>
-        <h3>Prepared conversations</h3>
-        <p class="muted mb-0">Leadership meets people who are ready — fewer wasted cycles, fewer tourists at the peak.</p>
-      </article>
-      <article class="panel panel-glow client-offer-card">
-        <span class="tag">Stay, not just start</span>
-        <h3>Retention-minded process</h3>
-        <p class="muted mb-0">Fit and week-in-the-life matter as much as speed. The goal is someone who stays on the mountain.</p>
-      </article>
-      <article class="panel panel-glow client-offer-card client-offer-card-wide">
-        <span class="tag">Next step</span>
-        <h3>A consult with your hiring guide</h3>
-        <p class="muted mb-0">Mark what you need below. We’ll talk it through and recommend a path — no contract dump on this screen.</p>
-      </article>
+    <div class="client-climb-band" data-climb-option="A" id="client-climb-band">
+      <span class="tag">How we help</span>
+      <p class="client-climb-line" id="client-climb-line" aria-live="polite">You set the high camp. We carry the work from the first profile through the close.</p>
+      <ol class="client-climb-trail" id="client-climb-trail" aria-label="AMP climb stations">
+        <li>
+          <button type="button" class="client-climb-station" data-climb="1" aria-pressed="false">
+            <span class="client-climb-num" aria-hidden="true">1</span>
+            <span class="client-climb-name">On-site profile</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="client-climb-station" data-climb="2" aria-pressed="false">
+            <span class="client-climb-num" aria-hidden="true">2</span>
+            <span class="client-climb-name">Opportunity creation</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="client-climb-station" data-climb="3" aria-pressed="false">
+            <span class="client-climb-num" aria-hidden="true">3</span>
+            <span class="client-climb-name">Screen &amp; present</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="client-climb-station" data-climb="4" aria-pressed="false">
+            <span class="client-climb-num" aria-hidden="true">4</span>
+            <span class="client-climb-name">Dossier + CV packet</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="client-climb-station" data-climb="5" aria-pressed="false">
+            <span class="client-climb-num" aria-hidden="true">5</span>
+            <span class="client-climb-name">AMP pre-interview</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="client-climb-station" data-climb="6" aria-pressed="false">
+            <span class="client-climb-num" aria-hidden="true">6</span>
+            <span class="client-climb-name">Closing support</span>
+          </button>
+        </li>
+      </ol>
     </div>
 
     <div class="client-need-block">
@@ -762,12 +757,14 @@
         </label>
       </div>
       <div class="client-spec-continue-wrap" style="margin-top:16px">
-        <button type="button" class="btn btn-primary" id="client-offers-continue" disabled>Select at least one to continue</button>
+        <button type="button" class="btn btn-primary" id="client-offers-continue" disabled>Pick a state to continue</button>
       </div>
     </div>
   </div>
   </div>
 </section>
+<!-- Alias only: go() remaps client-retained → client-region. Kept so old URLs resolve. -->
+<section class="view page funnel" data-route="client-retained" hidden aria-hidden="true"></section>
 <section class="view page funnel" data-route="client-meeting">
   <div class="shot" aria-hidden="true">
     <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
@@ -966,7 +963,7 @@
           <div class="dest-row">
             <span class="dest-chip bd"><span class="dot"></span> hiring guide</span>
           </div>
-          <button type="button" class="btn btn-ghost" data-go="client-retained" data-trail="1">See how AMP helps organizations</button>
+          <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">See how AMP helps organizations</button>
         </div>
       </div>
       <div class="btn-row mt-16">
@@ -1000,7 +997,7 @@
       <p class="muted">Candidates should open an MPC tailored search; organizations talk with a hiring guide.</p>
       <div class="btn-row mt-16">
         <button type="button" class="btn btn-primary" data-go="mpc" data-trail="1">Candidate MPC · tailor-search</button>
-        <button type="button" class="btn btn-ghost" data-go="client-retained" data-trail="1">Talk with a hiring guide</button>
+        <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">Talk with a hiring guide</button>
       </div>
       <p class="muted proof-note mb-0">Talk with a hiring guide about what you need.</p>
     </div>
@@ -1027,7 +1024,7 @@
       <p class="muted">Candidates: open a tailored search with a guide. Organizations: talk with a hiring guide.</p>
       <div class="btn-row mt-16">
         <button type="button" class="btn btn-primary" data-go="mpc" data-trail="1">Candidate MPC · tailor-search</button>
-        <button type="button" class="btn btn-ghost" data-go="client-retained" data-trail="1">Talk with a hiring guide</button>
+        <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">Talk with a hiring guide</button>
       </div>
     </div>
   </div>
@@ -1670,7 +1667,7 @@
     <p>You <strong>wait at the peak</strong>. AMP does the climb work — a clearer brief, a story candidates can trust, interviews worth leadership time, and a process built so people stay. Economics live on a confidential call with a <strong>hiring guide</strong>, not on this page. <strong>MPC</strong> is candidate-only tailor-search.</p>
     <div class="btn-row">
       <button type="button" class="btn btn-primary btn-lg" data-go="client" data-trail="1">Set the high camp · client path</button>
-      <button type="button" class="btn btn-ghost" data-go="client-retained" data-trail="1">See how AMP helps organizations</button>
+      <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">See how AMP helps organizations</button>
     </div>
     </div>
   </div>
@@ -1929,7 +1926,7 @@
       <a href="mailto:inquire@adaptivemedicalpartners.com">inquire@adaptivemedicalpartners.com</a>
       <p style="margin:12px 0 0;font-size:12px">AMP = guide · Candidate = searching for the peak · Client = waiting at the peak · MPC = tailored search when posted roles don’t fit</p>
       <p style="margin:8px 0 0;font-size:12px;color:#64748b">87% @ 3 yrs · 1.7 interviews · 700+ rural/FQHC/CAH · 16 years since 2010</p>
-      <p class="amp-build-chip" id="amp-build-chip">amp-build 2117-fqhc-spec-order</p>
+      <p class="amp-build-chip" id="amp-build-chip">amp-build 2118-climb-combine</p>
     </div>
     <div>
       <h4>Doors</h4>
@@ -2087,11 +2084,11 @@
 }
 </script>
 
-<script src="js/content.js?v=2117"></script>
+<script src="js/content.js?v=2118"></script>
 <script src="js/articles.js?v=2113"></script>
 <script src="js/ridge-mi-data.js?v=2111"></script>
 <script src="js/ridge-workbench.js?v=2111"></script>
-<script src="js/app.js?v=2117"></script>
+<script src="js/app.js?v=2118"></script>
 <script src="https://embed.typeform.com/next/embed.js" defer data-amp-typeform="1"></script>
 <template id="amp-region-map-template">
 <div class="region-map-shell">

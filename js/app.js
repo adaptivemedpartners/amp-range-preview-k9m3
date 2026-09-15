@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2117-fqhc-spec-order";
+  window.__AMP_BUILD = "2118-climb-combine";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1130,8 +1130,11 @@
     if (route === "job-contact" || route === "chat") renderJobContact(params.id || state.jobId);
     if (route === "client") renderFacilitySignpost();
     if (route === "client-specialty") renderClientSpecialty();
-    if (route === "client-region") renderClientRegion();
-    if (route === "client-retained") renderClientOffers();
+    if (route === "client-region") {
+      renderClientRegion();
+      renderClientOffers();
+      bindClientClimbStations();
+    }
     if (route === "education") bindWhyAmpProofPairs();
     if (route === "client-meeting") {
       syncPickedNeeds();
@@ -1155,6 +1158,7 @@
   function go(route, opts) {
     opts = opts || {};
     if (route === "residents-fellows") route = "residents";
+    if (route === "client-retained") route = "client-region";
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
     var next = document.querySelector('.view[data-route="' + route + '"]');
@@ -1827,17 +1831,13 @@
 
   function paintClientGuideReveal(stateCode) {
     var reveal = $("#client-guide-reveal");
-    var cont = $("#client-region-continue");
     var owner = resolveBdOwner(stateCode);
     if (!reveal || !owner) {
       if (reveal) {
         reveal.hidden = false;
         reveal.classList.add("is-empty");
       }
-      if (cont) {
-        cont.disabled = true;
-        cont.textContent = "Pick a state to continue";
-      }
+      try { paintClientNeedSelection(); } catch (e0) {}
       return;
     }
     reveal.hidden = false;
@@ -1850,7 +1850,6 @@
     var fullBody = $("#client-guide-full-body");
     var fullDet = $("#client-guide-full");
     var note = $("#client-guide-note");
-    var talk = $("#client-guide-talk");
     var scriptEl = document.querySelector('script[src*="app.js?v="]');
     var v = scriptEl && (scriptEl.src.match(/[?&]v=(\d+)/) || [])[1] || "";
     if (img) {
@@ -1864,15 +1863,6 @@
     if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
     if (fullDet) fullDet.open = false;
     if (note) note.textContent = "Main CC Randy · also Mike · David";
-    if (talk) {
-      talk.setAttribute("data-go", "client-retained");
-      talk.setAttribute("data-trail", "1");
-      talk.removeAttribute("data-agreement");
-    }
-    if (cont) {
-      cont.disabled = false;
-      cont.textContent = "Continue with " + owner.name.split(" ")[0] + " →";
-    }
     state.clientBd = {
       state: String(stateCode).toUpperCase(),
       region: state.clientRegion || null,
@@ -1883,6 +1873,7 @@
     };
     state.clientState = String(stateCode).toUpperCase();
     try { stampConciergePath("client-region"); } catch (e) {}
+    try { paintClientNeedSelection(); } catch (e1) {}
   }
 
   function renderClientRegion() {
@@ -1905,7 +1896,6 @@
     var statesWrap = $("#client-region-states");
     var chips = $("#client-state-chips");
     var reveal = $("#client-guide-reveal");
-    var cont = $("#client-region-continue");
 
     function showStates(regionId) {
       state.clientRegion = regionId;
@@ -1939,10 +1929,7 @@
           reveal.hidden = false;
           reveal.classList.add("is-empty");
         }
-        if (cont) {
-          cont.disabled = true;
-          cont.textContent = "Pick a state to continue";
-        }
+        try { paintClientNeedSelection(); } catch (eShow) {}
       }
     }
 
@@ -1978,10 +1965,7 @@
         reveal.hidden = false;
         reveal.classList.add("is-empty");
       }
-      if (cont) {
-        cont.disabled = true;
-        cont.textContent = "Pick a state to continue";
-      }
+      try { paintClientNeedSelection(); } catch (eEmpty) {}
     }
 
     if (chips && chips.getAttribute("data-bound-client-region") !== "1") {
@@ -1998,19 +1982,6 @@
       });
     }
 
-    if (cont && cont.getAttribute("data-bound-client-region") !== "1") {
-      cont.setAttribute("data-bound-client-region", "1");
-      cont.addEventListener("click", function (ev) {
-        ev.preventDefault();
-        if (!state.clientState || !state.clientBd) return;
-        var sel = $("#client-meeting-state");
-        if (sel) {
-          sel.value = state.clientState;
-          try { syncClientBdRoutePreview(); } catch (err) {}
-        }
-        go("client-retained", { trail: true });
-      });
-    }
   }
 
   function paintClientNeedSelection() {
@@ -2030,9 +2001,13 @@
     if (otherWrap) otherWrap.hidden = selected.indexOf("other") < 0;
     var cont = $("#client-offers-continue");
     if (cont) {
-      var ready = selected.length > 0;
+      var hasState = !!(state.clientState && state.clientBd);
+      var hasNeeds = selected.length > 0;
+      var ready = hasState && hasNeeds;
       cont.disabled = !ready;
-      if (!ready) {
+      if (!hasState) {
+        cont.textContent = "Pick a state to continue";
+      } else if (!hasNeeds) {
         cont.textContent = "Select at least one to continue";
       } else if (state.clientBd && state.clientBd.ownerName) {
         cont.textContent = "Request a meeting with " + state.clientBd.ownerName.split(" ")[0] + " →";
@@ -2056,10 +2031,16 @@
     else state.clientNeeds.push(id);
     if (state.clientNeeds.indexOf("other") < 0) state.clientNeedNote = "";
     paintClientNeedSelection();
-    try { stampConciergePath("client-retained"); } catch (e) {}
+    try { stampConciergePath("client-region"); } catch (e) {}
   }
 
   function continueClientOffers() {
+    if (!state.clientState || !state.clientBd) {
+      paintClientNeedSelection();
+      var band = $("#client-territory-band") || $("#client-state-chips");
+      if (band && band.scrollIntoView) band.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     if (!state.clientNeeds || !state.clientNeeds.length) {
       paintClientNeedSelection();
       var first = document.querySelector("#client-need-cards [data-client-need]");
@@ -2112,7 +2093,60 @@
         continueClientOffers();
       });
     }
-    try { stampConciergePath("client-retained"); } catch (e2) {}
+    try { stampConciergePath("client-region"); } catch (e2) {}
+  }
+
+  var CLIMB_DEFAULT_LINE = "You set the high camp. We carry the work from the first profile through the close.";
+  var CLIMB_STATION_LINES = {
+    "1": "We learn the week and the culture before anyone is briefed.",
+    "2": "A story candidates can trust — not a blast list.",
+    "3": "Only prepared people reach your leadership.",
+    "4": "A clean packet, ready for the table.",
+    "5": "We walk the candidate through the summit first.",
+    "6": "We stay on the rope through the yes."
+  };
+
+  function lightClientClimbStation(id, persist) {
+    var band = $("#client-climb-band");
+    var line = $("#client-climb-line");
+    if (!band) return;
+    var stations = band.querySelectorAll(".client-climb-station");
+    stations.forEach(function (btn) {
+      var on = id && btn.getAttribute("data-climb") === String(id);
+      btn.classList.toggle("is-lit", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    if (line) line.textContent = (id && CLIMB_STATION_LINES[String(id)]) || CLIMB_DEFAULT_LINE;
+    if (persist) band.setAttribute("data-climb-lit", id ? String(id) : "");
+  }
+
+  function bindClientClimbStations() {
+    var band = $("#client-climb-band");
+    if (!band) return;
+    if (band.getAttribute("data-bound-climb") === "1") return;
+    band.setAttribute("data-bound-climb", "1");
+    band.addEventListener("mouseover", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+      if (!btn || !band.contains(btn)) return;
+      lightClientClimbStation(btn.getAttribute("data-climb"), false);
+    });
+    band.addEventListener("mouseleave", function () {
+      var kept = band.getAttribute("data-climb-lit") || "";
+      lightClientClimbStation(kept, false);
+    });
+    band.addEventListener("focusin", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+      if (!btn) return;
+      lightClientClimbStation(btn.getAttribute("data-climb"), false);
+    });
+    band.addEventListener("click", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+      if (!btn) return;
+      ev.preventDefault();
+      var id = btn.getAttribute("data-climb");
+      var already = band.getAttribute("data-climb-lit") === id;
+      lightClientClimbStation(already ? "" : id, true);
+    });
   }
 
   function renderClientSpecialty() {
@@ -2342,7 +2376,7 @@
     if (clientMode) {
       if (kicker) kicker.textContent = "Hiring path · territory";
       if (h2) h2.textContent = "Where should we search?";
-      if (help) help.textContent = "Tap one region, then pick your state below.";
+      if (help) help.textContent = "Tap a region, then your state.";
     }
 
     var svg = root.querySelector(".amp-region-map");
@@ -4453,7 +4487,8 @@ function syncGuideRoute(route) {
     "easy-pay-authorization": "form-easy-pay",
     "ridge": "mi-lite",
     "mi-lite": "mi-lite",
-    "why-amp": "education"
+    "why-amp": "education",
+    "client-retained": "client-region"
   };
 
   var ROUTE_TO_PATH = {
@@ -4481,6 +4516,7 @@ function syncGuideRoute(route) {
     if (key === "residents-fellows") return "residents";
     if (key === "market-intelligence" || key === "mi" || key === "ridge") return "mi-lite";
     if (key === "why-amp") return "education";
+    if (key === "client-retained") return "client-region";
     return key;
   }
 
@@ -4672,8 +4708,8 @@ function syncGuideRoute(route) {
     "confirm-mess": { title: "Interest Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "confirm-client": { title: "Meeting Request Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-specialty": { title: "Hiring Specialty" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-region": { title: "Search Location" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-retained": { title: "How AMP Helps Organizations" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-region": { title: "Set the Search · See the Climb" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-retained": { title: "Set the Search · See the Climb" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-meeting": { title: "Request a Meeting" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     mpc: { title: "Tailor a Search" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "mpc-portal": { title: "Client Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },

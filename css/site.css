@@ -347,6 +347,7 @@ button, input, select, textarea { font: inherit; }
 .view.funnel[data-route="confirm-mess"] > .shot img.still { filter: brightness(1.24) saturate(1.08); }
 .view.funnel[data-route="client"] > .shot img.still { filter: brightness(1.00) saturate(1.04); } /* match physician trailhead */
 .view.funnel[data-route="client-specialty"] > .shot img.still { filter: brightness(1.14) saturate(1.06); }
+.view.funnel[data-route="client-region"] > .shot img.still,
 .view.funnel[data-route="client-retained"] > .shot img.still { filter: brightness(1.20) saturate(1.07); }
 .view.funnel[data-route="client-meeting"] > .shot img.still,
 .view.funnel[data-route="confirm-client"] > .shot img.still { filter: brightness(1.24) saturate(1.08); }
@@ -7386,5 +7387,289 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .client-offer-grid,
   .client-need-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* amp-build:2118-climb-combine — one compact territory + climb + needs step */
+.view[data-route="client-region"] .hero-band {
+  padding: 22px 20px 14px;
+}
+.view[data-route="client-region"] .hero-inner h1 {
+  font-size: clamp(24px, 3.6vw, 34px);
+}
+.view[data-route="client-region"] .hero-inner .lede {
+  font-size: 14.5px;
+  max-width: 64ch;
+}
+.view[data-route="client-region"] .funnel-panel.client-combined-stage {
+  max-width: 1140px;
+  width: calc(100% - 24px);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 24px;
+  padding: 16px 20px 40px;
+}
+.view[data-route="client-region"] .funnel-panel {
+  padding-bottom: 72px;
+}
+
+/* Crush 2094 tall-pane locks — compact side-by-side territory */
+.view[data-route="client-region"] .client-region-states,
+.view[data-route="client-region"] .client-state-chips,
+.view[data-route="client-region"] .client-guide-reveal,
+.view[data-route="client-region"] .client-guide-reveal.is-empty,
+.view[data-route="client-region"] .client-guide-card,
+.view[data-route="client-region"] .client-guide-card .guide-body,
+.view[data-route="client-region"] .client-guide-card .guide-blurb,
+.view[data-route="client-region"] .client-guide-card .guide-full,
+.view[data-route="client-region"] .client-guide-card #client-guide-note {
+  min-height: 0 !important;
+}
+
+.client-territory-band {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.2fr) minmax(260px, 1fr);
+  gap: 14px 18px;
+  align-items: start;
+  margin: 0 0 16px;
+}
+.client-territory-map .region-map-intro {
+  margin-bottom: 6px;
+  align-items: center;
+  gap: 10px;
+}
+.client-territory-map .region-map-intro h2 {
+  font-size: 15px;
+  margin: 0;
+}
+.client-territory-map .region-map-help {
+  display: none;
+}
+.client-territory-map .region-map-wrap {
+  padding: 6px 6px 8px;
+  border-radius: 14px;
+}
+.client-territory-map .amp-region-map {
+  max-height: 240px;
+}
+.client-territory-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.client-state-heading {
+  font-size: 1rem !important;
+  margin: 0 0 6px !important;
+}
+.view[data-route="client-region"] .client-state-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.client-guide-reveal {
+  padding: 8px 10px;
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f8fafc, #fff);
+}
+.client-guide-empty-hint {
+  font-size: 13px;
+  margin: 0;
+}
+.view[data-route="client-region"] .client-guide-card {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 8px 4px 4px;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+  border: 0;
+}
+.view[data-route="client-region"] .client-guide-card .guide-avatar,
+.view[data-route="client-region"] .client-guide-card .guide-avatar.has-photo {
+  width: 72px !important;
+  height: 90px !important;
+  border-radius: 12px !important;
+  margin: 0;
+}
+.view[data-route="client-region"] .client-guide-card h3 {
+  font-size: 16px;
+  margin: 2px 0 0;
+}
+.view[data-route="client-region"] .client-guide-card .guide-role,
+.view[data-route="client-region"] .client-guide-card .guide-territory,
+.view[data-route="client-region"] .client-guide-card .guide-blurb,
+.view[data-route="client-region"] .client-guide-card p:not(.guide-role) {
+  min-height: 0 !important;
+  margin: 0 0 2px;
+  font-size: 12.5px;
+}
+.view[data-route="client-region"] .client-guide-card .client-guide-note {
+  font-size: 11px;
+  margin: 4px 0 0;
+}
+.view[data-route="client-region"] .client-guide-card .guide-full {
+  margin-top: 4px;
+}
+.view[data-route="client-region"] .client-guide-card .guide-full summary {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.client-climb-band[data-climb-option="A"] {
+  margin: 4px 0 20px;
+  padding: 12px 14px 14px;
+  border: 1px solid rgba(20, 184, 166, .18);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(240, 253, 250, .7), rgba(255, 255, 255, .96));
+}
+.client-climb-band .tag {
+  margin-bottom: 6px;
+}
+.client-climb-line {
+  margin: 0 0 10px;
+  min-height: 1.4em;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #0f766e;
+  font-weight: 600;
+}
+.client-climb-trail {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  position: relative;
+}
+.client-climb-trail::before {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 17px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(20, 184, 166, .12), rgba(13, 148, 136, .42), rgba(20, 184, 166, .12));
+  z-index: 0;
+  pointer-events: none;
+}
+.client-climb-trail > li {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+.client-climb-station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 2px 4px 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  text-align: center;
+  border-radius: 12px;
+}
+.client-climb-num {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1.5px solid rgba(15, 118, 110, .28);
+  color: #0f766e;
+  font-size: 13px;
+  font-weight: 750;
+  box-shadow: 0 2px 8px rgba(15, 118, 110, .08);
+}
+.client-climb-name {
+  font-size: 11.5px;
+  font-weight: 650;
+  line-height: 1.25;
+  color: #334155;
+  letter-spacing: -.01em;
+}
+.client-climb-station:hover .client-climb-num,
+.client-climb-station:focus-visible .client-climb-num,
+.client-climb-station.is-lit .client-climb-num {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, .18), 0 6px 14px rgba(15, 118, 110, .22);
+}
+.client-climb-station:hover .client-climb-name,
+.client-climb-station:focus-visible .client-climb-name,
+.client-climb-station.is-lit .client-climb-name {
+  color: #0f766e;
+  font-weight: 750;
+}
+.client-climb-station:focus-visible {
+  outline: 2px solid #14b8a6;
+  outline-offset: 2px;
+}
+
+.view[data-route="client-region"] .client-need-block {
+  margin-top: 4px;
+}
+.view[data-route="client-region"] .client-offer-title {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .client-territory-band {
+    grid-template-columns: 1fr;
+  }
+  .client-territory-map .amp-region-map {
+    max-height: none;
+  }
+  .client-climb-trail::before {
+    display: none;
+  }
+  .client-climb-trail {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    padding: 2px 2px 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .client-climb-trail > li {
+    flex: 0 0 128px;
+    scroll-snap-align: start;
+  }
+  .client-climb-station {
+    padding: 8px 6px;
+    border: 1px solid rgba(15, 23, 42, .08);
+    background: #fff;
+    border-radius: 14px;
+  }
+  .client-climb-station.is-lit {
+    border-color: rgba(13, 148, 136, .45);
+    background: #f0fdfa;
+  }
+}
+
+@media (max-width: 520px) {
+  .view[data-route="client-region"] .funnel-panel.client-combined-stage {
+    width: calc(100% - 8px);
+    padding: 14px 12px 36px;
+  }
+  .view[data-route="client-region"] .client-guide-card {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+  .view[data-route="client-region"] .client-guide-card .guide-avatar,
+  .view[data-route="client-region"] .client-guide-card .guide-avatar.has-photo {
+    width: 60px !important;
+    height: 76px !important;
   }
 }
