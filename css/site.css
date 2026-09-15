@@ -104,6 +104,7 @@ button, input, select, textarea { font: inherit; }
 .brand {
   display: flex; align-items: center; gap: 10px;
   color: #fff; cursor: pointer; border: 0; background: transparent; padding: 4px;
+  text-decoration: none;
 }
 /* Full horizontal AMP lockup (Mess / Team Hub style) — not mark + text */
 /* lockup glow: no clip box */
@@ -555,7 +556,10 @@ button, input, select, textarea { font: inherit; }
 }
 .door {
   position: relative;
+  display: block;
   text-align: left;
+  text-decoration: none;
+  font: inherit;
   border: 1px solid rgba(153,246,228,.22);
   background: linear-gradient(165deg, rgba(15,23,42,.72), rgba(17,94,89,.35));
   backdrop-filter: blur(10px);
@@ -683,6 +687,8 @@ button, input, select, textarea { font: inherit; }
   transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
   cursor: pointer;
   text-align: left; color: inherit; width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 .card:hover, .card:focus-visible {
   transform: translateY(-6px);
@@ -716,6 +722,8 @@ button, input, select, textarea { font: inherit; }
   border-radius: 999px; padding: 12px 18px;
   font-size: 14px; font-weight: 700; border: 0; cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 .btn:hover { transform: translateY(-2px); }
 .btn-primary {
@@ -1640,6 +1648,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   font-weight: 720;
   color: #042f2e;
   background: linear-gradient(135deg, #5eead4, #2dd4bf);
+  text-decoration: none;
 }
 .home-job2-cta.client {
   color: #1c1917;
@@ -3923,7 +3932,8 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   }
   .mobile-nav-toggle span { display: block; width: 24px; height: 2px; border-radius: 2px; background: currentColor; }
   .mobile-nav-toggle:focus-visible, .mobile-nav-close:focus-visible,
-  .mobile-nav-sheet-links button:focus-visible { outline: 2px solid #99f6e4; outline-offset: 3px; }
+  .mobile-nav-sheet-links button:focus-visible,
+  .mobile-nav-sheet-links a:focus-visible { outline: 2px solid #99f6e4; outline-offset: 3px; }
   .mobile-nav-backdrop:not([hidden]) {
     display: block; position: fixed; inset: 0; z-index: 1090; border: 0;
     background: rgba(2,12,27,.58); cursor: pointer;
@@ -3939,8 +3949,10 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   .mobile-nav-brand img { width: 34px; height: 34px; object-fit: contain; }
   .mobile-nav-close { min-width: 44px; min-height: 44px; padding: 8px; border: 1px solid rgba(226,232,240,.28); border-radius: 12px; color: #fff; background: rgba(255,255,255,.07); cursor: pointer; font-size: 13px; font-weight: 750; }
   .mobile-nav-sheet-links { display: grid; gap: 8px; padding-top: 18px; }
-  .mobile-nav-sheet-links button { min-height: 48px; padding: 12px 14px; border: 1px solid rgba(153,246,228,.18); border-radius: 12px; color: #e6fffa; background: rgba(255,255,255,.06); cursor: pointer; text-align: left; font-size: 15px; font-weight: 700; }
-  .mobile-nav-sheet-links button:hover, .mobile-nav-sheet-links button:active { border-color: rgba(153,246,228,.55); background: rgba(13,148,136,.24); }
+  .mobile-nav-sheet-links button,
+  .mobile-nav-sheet-links a { min-height: 48px; padding: 12px 14px; border: 1px solid rgba(153,246,228,.18); border-radius: 12px; color: #e6fffa; background: rgba(255,255,255,.06); cursor: pointer; text-align: left; font-size: 15px; font-weight: 700; text-decoration: none; box-sizing: border-box; }
+  .mobile-nav-sheet-links button:hover, .mobile-nav-sheet-links button:active,
+  .mobile-nav-sheet-links a:hover, .mobile-nav-sheet-links a:active { border-color: rgba(153,246,228,.55); background: rgba(13,148,136,.24); }
   .mobile-nav-sheet-links .mobile-nav-sheet-cta { border-color: rgba(94,234,212,.55); color: #042f2e; background: linear-gradient(135deg, #5eead4, #2dd4bf); }
 }
 
@@ -5282,6 +5294,10 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   cursor: pointer;
   color: #042f2e;
   background: linear-gradient(135deg, #5eead4, #2dd4bf);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .home-climb-cta.client {
   color: #1c1917;
@@ -5344,6 +5360,10 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-faq {
@@ -6354,6 +6374,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   color: inherit;
   text-align: left;
   cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .home-guides-strip .guide-row > .guide-avatar,

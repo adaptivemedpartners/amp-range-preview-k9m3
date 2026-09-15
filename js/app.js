@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2059-other-pop-select-advance";
+  window.__AMP_BUILD = "2100-crawlable-nav-seo";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1012,6 +1012,7 @@
         setNavMode(route);
         syncGuideRoute(route);
         renderDynamic(route, params);
+        try { applyDocumentSeo(route, params); } catch (eSeo) {}
         try {
           setRouteHash(opts.hash || route); /* approach early-land: PUSH so Back returns Home */
         } catch (e) {}
@@ -1057,6 +1058,7 @@
       syncGuideRoute(route);
       state.moving = false;
       renderDynamic(route, params);
+      try { applyDocumentSeo(route, params); } catch (eSeo) {}
       if ((route === "physician" || route === "client")) {
         var _v = document.querySelector('.view[data-route="' + route + '"]');
         if (_v && _v.querySelector(".hire-sheet")) {
@@ -2363,9 +2365,10 @@
       }
     }
     root.innerHTML = jobs.map(function (j) {
-      return '<button class="card" type="button" data-job="' + j.id + '">' +
+      var jobKey = "job/" + (j.slug || j.id);
+      return '<a class="card" href="' + routeToHref(jobKey) + '" data-go="' + jobKey + '" data-job="' + j.id + '">' +
         '<span class="tag">' + j.code + '</span><h3>' + j.title + '</h3><p>' + j.sub + '</p>' +
-        '<div class="meta">View preview →</div></button>';
+        '<div class="meta">View preview →</div></a>';
     }).join("") + (jobs.length < 8 ? jobsSoftBench() : "");
     if (jobs.length < 8 || state.jobViews >= 2) whisperJobsGuide();
   }
@@ -2378,7 +2381,8 @@
   }
 
   function jobById(id) {
-    return AMP_CONTENT.jobs.find(function (j) { return j.id === id; }) || AMP_CONTENT.jobs[0];
+    var key = String(id || "").trim();
+    return AMP_CONTENT.jobs.find(function (j) { return j.id === key || j.slug === key; }) || AMP_CONTENT.jobs[0];
   }
 
   function renderJob(id) {
@@ -2443,7 +2447,11 @@
     var mail = $("#contact-job-mail");
     if (mail) mail.href = "mailto:" + j.recruiter.email + "?cc=" + encodeURIComponent(j.recruiter.cc) + "&subject=" + encodeURIComponent("Interest · " + j.code);
     var ret = $("#confirm-return-job");
-    if (ret) ret.setAttribute("data-go", "job/" + j.id);
+    if (ret) {
+      var retKey = "job/" + (j.slug || j.id);
+      ret.setAttribute("data-go", retKey);
+      if (ret.tagName === "A") ret.setAttribute("href", routeToHref(retKey));
+    }
   }
 
   
@@ -3044,7 +3052,7 @@ function syncGuideRoute(route) {
     }
   }
   function closeMobileNav() { var drawer = $("#mobile-nav-drawer"), backdrop = $(".mobile-nav-backdrop"), toggle = $("[data-mobile-nav-toggle]"); if (drawer) drawer.hidden = true; if (backdrop) backdrop.hidden = true; if (toggle) { toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); } }
-  function openMobileNav() { var drawer = $("#mobile-nav-drawer"), backdrop = $(".mobile-nav-backdrop"), toggle = $("[data-mobile-nav-toggle]"); if (!drawer) return; drawer.hidden = false; if (backdrop) backdrop.hidden = false; if (toggle) { toggle.setAttribute("aria-expanded", "true"); toggle.setAttribute("aria-label", "Close menu"); } var first = drawer.querySelector("button[data-go]"); if (first) window.setTimeout(function () { first.focus(); }, 0); }
+  function openMobileNav() { var drawer = $("#mobile-nav-drawer"), backdrop = $(".mobile-nav-backdrop"), toggle = $("[data-mobile-nav-toggle]"); if (!drawer) return; drawer.hidden = false; if (backdrop) backdrop.hidden = false; if (toggle) { toggle.setAttribute("aria-expanded", "true"); toggle.setAttribute("aria-label", "Close menu"); } var first = drawer.querySelector("a[data-go], button[data-go]"); if (first) window.setTimeout(function () { first.focus(); }, 0); }
   function toggleMobileNav() { var drawer = $("#mobile-nav-drawer"); if (drawer && drawer.hidden) openMobileNav(); else closeMobileNav(); }
   function bind() {
     bindRankDnD();
@@ -3064,6 +3072,11 @@ function syncGuideRoute(route) {
       if (guideRoot && !guideRoot.hidden && guideDock && !guideDock.hidden && !raw.closest("#amp-guide")) closeGuideDock();
       var t = raw.closest("[data-go]");
       if (t) {
+        if (t.tagName === "A") {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          var tgt = t.getAttribute("target");
+          if (tgt && tgt !== "_self") return;
+        }
         e.preventDefault();
         var agreeEl = raw.closest("[data-agreement]");
         if (agreeEl) {
@@ -3701,10 +3714,11 @@ function syncGuideRoute(route) {
     var root = $("#blog-index-grid");
     if (!root) return;
     root.innerHTML = AMP_CONTENT.posts.map(function (p) {
-      return '<button class="card" type="button" data-blog="' + p.slug + '">' +
+      var blogKey = "blog/" + p.slug;
+      return '<a class="card" href="' + routeToHref(blogKey) + '" data-go="' + blogKey + '" data-blog="' + p.slug + '">' +
         '<span class="tag">' + p.mins + " min read</span>" +
         "<h3>" + p.title + "</h3><p>" + p.meta + "</p>" +
-        '<div class="meta">' + p.tags.join(" · ") + "</div></button>";
+        '<div class="meta">' + p.tags.join(" · ") + "</div></a>";
     }).join("");
   }
 
@@ -3724,9 +3738,11 @@ function syncGuideRoute(route) {
        /easy-pay-authorization   → form-easy-pay
        /job/{slug}               → job/{slug}
        /blog-posts/{slug}        → blog/{slug}
+       /ridge                    → mi-lite   (/mi-lite aliases here)
      Other SPA views use /{data-route}. Old #hash links still boot, then upgrade to path.
   */
   var GH_PAGES_BASE = "/amp-range-preview-k9m3";
+  var BRAND_SUFFIX = " | Adaptive Medical Partners";
 
   var PATH_TO_ROUTE = {
     "": "home",
@@ -3741,7 +3757,9 @@ function syncGuideRoute(route) {
     "forms": "forms",
     "candidate-authorization": "form-candidate-authorization",
     "interview-expense-form": "form-interview-expense",
-    "easy-pay-authorization": "form-easy-pay"
+    "easy-pay-authorization": "form-easy-pay",
+    "ridge": "mi-lite",
+    "mi-lite": "mi-lite"
   };
 
   var ROUTE_TO_PATH = {
@@ -3755,7 +3773,8 @@ function syncGuideRoute(route) {
     "forms": "/forms",
     "form-candidate-authorization": "/candidate-authorization",
     "form-interview-expense": "/interview-expense-form",
-    "form-easy-pay": "/easy-pay-authorization"
+    "form-easy-pay": "/easy-pay-authorization",
+    "mi-lite": "/ridge"
   };
 
   function detectBasePath() {
@@ -3807,6 +3826,250 @@ function syncGuideRoute(route) {
     if (document.querySelector('.view[data-route="' + top + '"]')) return top;
     if (document.querySelector('.view[data-route="' + p + '"]')) return p;
     return null;
+  }
+
+  function routeToHref(routeKey, personHash) {
+    routeKey = normalizeRouteAlias(String(routeKey || "home"));
+    if (location.protocol === "file:") {
+      var fileHash = "#" + (routeKey.indexOf("blog-posts/") === 0 ? "blog/" + routeKey.slice(11) : routeKey);
+      return fileHash;
+    }
+    var path = routeToPathname(routeKey);
+    var base = detectBasePath();
+    var url = path === "/" ? (base ? base + "/" : "/") : (base + path);
+    var pid = guidePersonIdFromHash(personHash);
+    if (pid) url += "#" + pid;
+    return url;
+  }
+
+  function rewriteGoHrefs() {
+    $all("a[data-go]").forEach(function (a) {
+      var route = a.getAttribute("data-go");
+      if (!route) return;
+      a.setAttribute("href", routeToHref(route, a.getAttribute("data-hash")));
+    });
+  }
+
+  /* Mike 2026-09-14 locked title / meta / H1 / robots. Do not re-litigate. */
+  var SEO_DEFAULT = {
+    title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
+    description: "Adaptive Medical Partners — physician & healthcare recruiting firm. Retained search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+    robots: "index,follow"
+  };
+
+  var SEO_NOINDEX = "noindex,follow";
+
+  var SEO_MAP = {
+    home: {
+      title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
+      description: SEO_DEFAULT.description,
+      robots: "index,follow",
+      h1: "Physician & Healthcare Recruiting"
+    },
+    about: {
+      title: "About" + BRAND_SUFFIX,
+      description: "About Adaptive Medical Partners — a retained physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
+      robots: "index,follow"
+    },
+    blog: {
+      title: "Blog — Healthcare Recruiting Insights" + BRAND_SUFFIX,
+      description: "Healthcare recruiting insights from Adaptive Medical Partners — retained search, physician retention, interview efficiency, and rural/FQHC recruiting.",
+      robots: "index,follow"
+    },
+    contact: {
+      title: "Contact Us" + BRAND_SUFFIX,
+      description: "Contact Adaptive Medical Partners in Irving, Texas. Talk with a recruiting guide or a hiring guide — inquire@adaptivemedicalpartners.com.",
+      robots: "index,follow",
+      h1: "Ready to Start a Conversation?"
+    },
+    "physician-jobs": {
+      title: "Physician & Healthcare Jobs" + BRAND_SUFFIX,
+      description: "Physician and healthcare jobs with Adaptive Medical Partners. Practice-first previews — talk with a named guide about opportunities that fit your goals.",
+      robots: "index,follow",
+      h1: "Opportunities That Actually Fit Your Goals"
+    },
+    "for-organizations": {
+      title: "Organizational Services — Retained Physician Search" + BRAND_SUFFIX,
+      description: "Organizational services from Adaptive Medical Partners — retained physician search for hospitals, groups, and FQHCs. You wait at the peak; AMP does the climb work.",
+      robots: "index,follow",
+      h1: "For Healthcare Organizations"
+    },
+    "for-physicians": {
+      title: "Recruiting Services for Physicians" + BRAND_SUFFIX,
+      description: "Recruiting services for physicians from Adaptive Medical Partners. Specialty and region filters, practice-first previews, and a named guide — not a blast.",
+      robots: "index,follow",
+      h1: "For Physicians"
+    },
+    forms: {
+      title: "Forms" + BRAND_SUFFIX,
+      description: "Candidate authorization, interview expense, and easy-pay forms from Adaptive Medical Partners.",
+      robots: "index,follow"
+    },
+    "form-candidate-authorization": {
+      title: "Candidate Authorization" + BRAND_SUFFIX,
+      description: "Candidate authorization form for Adaptive Medical Partners searches.",
+      robots: "index,follow"
+    },
+    "form-interview-expense": {
+      title: "Interview Expense Form" + BRAND_SUFFIX,
+      description: "Interview expense form for Adaptive Medical Partners candidates.",
+      robots: "index,follow"
+    },
+    "form-easy-pay": {
+      title: "Easy Pay Authorization" + BRAND_SUFFIX,
+      description: "Easy-pay authorization form for Adaptive Medical Partners.",
+      robots: "index,follow"
+    },
+    "mi-lite": {
+      title: "Ridge" + BRAND_SUFFIX,
+      description: "Ridge is Adaptive Medical Partners’ specialty × region market read — one snapshot for physicians and healthcare organizations.",
+      robots: "index,follow"
+    },
+    physician: {
+      title: "For Physicians" + BRAND_SUFFIX,
+      description: "Start the physician path with Adaptive Medical Partners. Choose your specialty and see practice-first roles with a recruiting guide.",
+      robots: "index,follow"
+    },
+    client: {
+      title: "For Healthcare Organizations" + BRAND_SUFFIX,
+      description: "Start the hiring path with Adaptive Medical Partners. Tell us about your facility and specialty — AMP guides retained physician search.",
+      robots: "index,follow"
+    },
+    education: {
+      title: "Education" + BRAND_SUFFIX,
+      description: "Education from Adaptive Medical Partners — residents and fellows, Ridge, AMP Score, and healthcare recruiting guides.",
+      robots: "index,follow"
+    },
+    residents: {
+      title: "Residents & Fellows" + BRAND_SUFFIX,
+      description: "Coming out of training? Adaptive Medical Partners helps residents and fellows choose a first job with clear weeks, place-first questions, and contract literacy.",
+      robots: "index,follow"
+    },
+    guides: {
+      title: "Meet Your Guides" + BRAND_SUFFIX,
+      description: "Meet the Adaptive Medical Partners guides — recruiting and hiring practitioners who stay until the summit meeting is prepared.",
+      robots: "index,follow"
+    },
+    search: {
+      title: "Search" + BRAND_SUFFIX,
+      description: "Search physician and healthcare opportunities with Adaptive Medical Partners by specialty and region.",
+      robots: "index,follow"
+    },
+    proof: {
+      title: "Proof & Stats" + BRAND_SUFFIX,
+      description: "AMP public proof: 87% retention at 3 years, 1.7 interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+      robots: "index,follow"
+    },
+    "amp-score": {
+      title: "AMP Score" + BRAND_SUFFIX,
+      description: "AMP Score lives at getampscore.com. This mountain-site page is a preview only — open the full product on getampscore.com.",
+      robots: SEO_NOINDEX
+    },
+    "physician-rank": { title: "What Matters Most" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "physician-region": { title: "Choose Your Region" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "job-contact": { title: "Tap to Talk" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    chat: { title: "Ask a Guide" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "confirm-mess": { title: "Interest Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "confirm-client": { title: "Meeting Request Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-specialty": { title: "Hiring Specialty" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-region": { title: "Search Location" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-retained": { title: "How AMP Works" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-meeting": { title: "Request a Meeting" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    mpc: { title: "Tailor a Search" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mpc-portal": { title: "Client Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mpc-browse": { title: "Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mi-lite-portal": { title: "Ridge Pricing" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mi-lite-login": { title: "Ridge Sign In" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mi-lite-app": { title: "Ridge Sample" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX }
+  };
+
+  function blogFallbackMeta(post) {
+    var title = post && post.title ? String(post.title).trim() : "Article";
+    return title + " — healthcare recruiting insights from Adaptive Medical Partners.";
+  }
+
+  function blogDocumentDescription(post) {
+    if (!post) return blogFallbackMeta(null);
+    var cms = String(post.meta || post.excerpt || "").trim();
+    return cms || blogFallbackMeta(post);
+  }
+
+  function jobPlace(j) {
+    if (!j) return "";
+    return String(j.city || j.state || "").trim();
+  }
+
+  function jobDocumentTitle(j) {
+    var title = String((j && j.title) || "Opportunity").trim();
+    var spec = String((j && j.specialtyLabel) || "").trim();
+    var city = jobPlace(j);
+    var mid = spec && city ? spec + " in " + city : (spec || (city ? "Role in " + city : ""));
+    return (mid ? title + " — " + mid : title) + BRAND_SUFFIX;
+  }
+
+  function jobDocumentDescription(j) {
+    if (!j) return SEO_DEFAULT.description;
+    var excerpt = String(j.excerpt || j.meta || j.sub || "").trim();
+    if (excerpt) return excerpt;
+    var spec = j.specialtyLabel || "Physician";
+    var city = jobPlace(j);
+    return spec + (city ? " in " + city : "") + " — practice-first preview from Adaptive Medical Partners. Full package on a confidential call with your guide.";
+  }
+
+  function setMetaTag(name, content) {
+    var el = document.querySelector('meta[name="' + name + '"]');
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute("name", name);
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", content);
+  }
+
+  function applyDocumentSeo(route, params) {
+    params = params || {};
+    var viewRoute = route;
+    if (String(route || "").indexOf("job/") === 0) viewRoute = "job";
+    if (String(route || "").indexOf("blog/") === 0 || String(route || "").indexOf("blog-posts/") === 0) viewRoute = "blog-post";
+
+    var title = SEO_DEFAULT.title;
+    var description = SEO_DEFAULT.description;
+    var robots = "index,follow";
+    var h1 = null;
+    var viewSel = viewRoute;
+
+    if (viewRoute === "job") {
+      var job = jobById(params.id || state.jobId);
+      title = jobDocumentTitle(job);
+      description = jobDocumentDescription(job);
+      robots = "index,follow";
+      h1 = job && job.title ? job.title : null;
+    } else if (viewRoute === "blog-post") {
+      var slug = params.slug;
+      var post = (window.AMP_CONTENT && AMP_CONTENT.posts || []).find(function (p) { return p.slug === slug; }) || (window.AMP_CONTENT && AMP_CONTENT.posts && AMP_CONTENT.posts[0]);
+      title = ((post && post.title) || "Article") + BRAND_SUFFIX;
+      description = blogDocumentDescription(post);
+      robots = "index,follow";
+      h1 = post && post.title ? post.title : null;
+    } else {
+      var entry = SEO_MAP[viewRoute] || SEO_DEFAULT;
+      title = entry.title || SEO_DEFAULT.title;
+      description = entry.description || SEO_DEFAULT.description;
+      robots = entry.robots || "index,follow";
+      h1 = entry.h1 || null;
+    }
+
+    document.title = title;
+    setMetaTag("description", description);
+    setMetaTag("robots", robots);
+
+    if (h1) {
+      var view = document.querySelector('.view[data-route="' + viewSel + '"]');
+      if (view) {
+        var heading = view.querySelector("h1");
+        if (heading) heading.textContent = h1;
+      }
+    }
   }
 
   /* amp-build:2055-guide-deeplink
@@ -3925,9 +4188,19 @@ function syncGuideRoute(route) {
       go("home", nav);
       key = "home";
     }
-    /* Upgrade legacy #hash on home path to a real pathname (prefer path). */
-    if (location.protocol !== "file:" && location.hash) {
-      try { setRouteHash(key, { replace: true }); } catch (e2) {}
+    /* Upgrade legacy #hash and aliases (/mi-lite → /ridge) to the canonical pathname. */
+    if (location.protocol !== "file:") {
+      if (location.hash) {
+        try { setRouteHash(key, { replace: true }); } catch (e2) {}
+      } else {
+        var want = routeToPathname(key);
+        var have = stripBasePath(location.pathname);
+        if (have.length > 1 && have.charAt(have.length - 1) === "/") have = have.slice(0, -1);
+        if (!have) have = "/";
+        if (have !== want) {
+          try { setRouteHash(key, { replace: true }); } catch (e3) {}
+        }
+      }
     }
   }
 
@@ -3938,6 +4211,7 @@ function syncGuideRoute(route) {
     window.addEventListener("resize", updateRankOrientationCopy);
     window.addEventListener("orientationchange", updateRankOrientationCopy);
     updateRankOrientationCopy();
+    try { rewriteGoHrefs(); } catch (eHref) {}
     bind();
     renderBlogIndex();
     bootFromHash({ fromHistory: true });
@@ -3951,7 +4225,7 @@ function syncGuideRoute(route) {
   });
 
   window.AMPRegionMap = { render: renderRegionMap, normalizeState: normalizeRegionState };
-  window.AMP = { go: go, state: state, settleHome: settleHome };
+  window.AMP = { go: go, state: state, settleHome: settleHome, href: routeToHref, seo: applyDocumentSeo };
 })();
 
   document.addEventListener("click", function (e) {
