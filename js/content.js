@@ -1946,6 +1946,38 @@ window.AMP_CONTENT = {
       meta: "How can physicians prep for interviews without leaking client-specific details? AMP’s no-leaks playbook for confident, ethical conversations.",
       tags: ["Candidates", "Interview", "Confidential"],
       mins: 8
+    },
+    {
+      slug: "virtual-interview-how-to",
+      title: "Virtual Interview How-To",
+      meta: "Essential checklists for both sides of the screen—so nothing falls through the cracks.",
+      byline: "David Fontenot",
+      tags: ["Interview", "Physicians", "Organizations"],
+      mins: 4
+    },
+    {
+      slug: "rural-recruiting-keeping-candidates-open-minded",
+      title: "Rural Recruiting - Keeping Candidates Open-Minded",
+      meta: "Stop asking about location—start asking about lifestyle (and watch resistance melt away).",
+      byline: "David Fontenot",
+      tags: ["Rural", "Recruiting", "Candidates"],
+      mins: 6
+    },
+    {
+      slug: "can-you-zoom-to-success-in-physician-recruiting",
+      title: "Can you Zoom to Success in Physician Recruiting?",
+      meta: "Should virtual interviews still be part of the standard physician recruiting process? AMP on when Zoom helps — and when it costs the hire.",
+      byline: "David Fontenot",
+      tags: ["Virtual interview", "Recruiting", "Organizations"],
+      mins: 9
+    },
+    {
+      slug: "how-does-your-physician-search-stack-up-against-the-competition",
+      title: "How does your physician search stack up against the competition?",
+      meta: "Free 5-minute assessment reveals how your physician opening ranks against regional and national competitors.",
+      byline: "David Fontenot",
+      tags: ["AMP Score", "Physician search", "Organizations"],
+      mins: 8
     }
   ],
   mpcInventory: {
