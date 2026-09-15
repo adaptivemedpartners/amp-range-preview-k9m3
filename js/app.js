@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2112-client-bd-consult";
+  window.__AMP_BUILD = "2113-why-amp-history";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1091,6 +1091,26 @@
     readMiLiteUnlock();
   }
 
+  function bindWhyAmpProofPairs() {
+    var root = document.querySelector('.view[data-route="education"]');
+    if (!root) return;
+    var nodes = root.querySelectorAll("[data-proof-pair]");
+    function setPair(id, on) {
+      root.querySelectorAll('[data-proof-pair="' + id + '"]').forEach(function (el) {
+        el.classList.toggle("is-paired", !!on);
+      });
+    }
+    nodes.forEach(function (el) {
+      if (el.getAttribute("data-proof-bound") === "1") return;
+      el.setAttribute("data-proof-bound", "1");
+      var id = el.getAttribute("data-proof-pair");
+      el.addEventListener("mouseenter", function () { setPair(id, true); });
+      el.addEventListener("mouseleave", function () { setPair(id, false); });
+      el.addEventListener("focusin", function () { setPair(id, true); });
+      el.addEventListener("focusout", function () { setPair(id, false); });
+    });
+  }
+
   function renderDynamic(route, params) {
     if (route === "mi-lite") renderMILite();
     if (route === "mi-lite-portal") renderMILitePortal();
@@ -1106,6 +1126,7 @@
     if (route === "client-specialty") renderClientSpecialty();
     if (route === "client-region") renderClientRegion();
     if (route === "client-retained") renderClientOffers();
+    if (route === "education") bindWhyAmpProofPairs();
     if (route === "client-meeting") {
       syncPickedNeeds();
       if (state.clientState) {
@@ -4521,7 +4542,7 @@ function syncGuideRoute(route) {
   /* Mike 2026-09-14 locked title / meta / H1 / robots. Do not re-litigate. */
   var SEO_DEFAULT = {
     title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
-    description: "Adaptive Medical Partners — physician & healthcare recruiting firm. Retained search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+    description: "Adaptive Medical Partners — physician & healthcare recruiting firm. Dedicated investment search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
     robots: "index,follow"
   };
 
@@ -4536,12 +4557,12 @@ function syncGuideRoute(route) {
     },
     about: {
       title: "About" + BRAND_SUFFIX,
-      description: "About Adaptive Medical Partners — a retained physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
+      description: "About Adaptive Medical Partners — a physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
       robots: "index,follow"
     },
     blog: {
       title: "Blog — Healthcare Recruiting Insights" + BRAND_SUFFIX,
-      description: "Healthcare recruiting insights from Adaptive Medical Partners — retained search, physician retention, interview efficiency, and rural/FQHC recruiting.",
+      description: "Healthcare recruiting insights from Adaptive Medical Partners — dedicated investment search, physician retention, interview efficiency, and rural/FQHC recruiting.",
       robots: "index,follow"
     },
     contact: {
@@ -4557,8 +4578,8 @@ function syncGuideRoute(route) {
       h1: "Opportunities That Actually Fit Your Goals"
     },
     "for-organizations": {
-      title: "Organizational Services — Retained Physician Search" + BRAND_SUFFIX,
-      description: "Organizational services from Adaptive Medical Partners — retained physician search for hospitals, groups, and FQHCs. You wait at the peak; AMP does the climb work.",
+      title: "Organizational Services — Dedicated Physician Search" + BRAND_SUFFIX,
+      description: "Organizational services from Adaptive Medical Partners — dedicated physician search for hospitals, groups, and FQHCs. You wait at the peak; AMP does the climb work.",
       robots: "index,follow",
       h1: "For Healthcare Organizations"
     },
