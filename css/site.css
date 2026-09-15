@@ -1,3 +1,4 @@
+/* amp-build:2114-why-amp-glow */
 /* amp-build:2113-why-amp-history */
 /* amp-build:2112-client-bd-consult */
 /* amp-build:2111-public-forms */
@@ -7231,6 +7232,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   cursor: default;
   pointer-events: auto;
   user-select: none;
+  position: relative;
   transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
 }
 .why-amp-proof-tile strong {
@@ -7240,21 +7242,25 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   letter-spacing: -.04em;
   font-weight: 800;
   background-image: linear-gradient(
-    105deg,
+    110deg,
     #d4a017 0%,
-    #fcd34d 22%,
-    #86efac 48%,
+    #fcd34d 16%,
+    #ffffff 38%,
+    #5eead4 50%,
     #14b8a6 68%,
-    #0f766e 86%,
-    #fcd34d 100%
+    #0f766e 88%,
+    #fde68a 100%
   );
-  background-size: 240% auto;
+  background-size: 260% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: whyAmpProofShimmer 4.2s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 8px rgba(13,148,136,.28)) drop-shadow(0 0 10px rgba(245,158,11,.22));
+  animation: whyAmpProofShimmer 3.8s ease-in-out infinite alternate;
+  filter:
+    drop-shadow(0 0 10px rgba(45,212,191,.55))
+    drop-shadow(0 0 22px rgba(20,184,166,.38))
+    drop-shadow(0 0 8px rgba(253,230,138,.28));
 }
 .why-amp-proof-tile span {
   display: block;
@@ -7262,22 +7268,30 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-size: 13.5px;
   line-height: 1.35;
   font-weight: 650;
-  background-image: linear-gradient(100deg, #334155 0%, #0f766e 46%, #b45309 100%);
-  background-size: 180% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: #334155;
 }
 @keyframes whyAmpProofShimmer {
   0% { background-position: 0% center; }
   100% { background-position: 100% center; }
 }
-.why-amp-proof-tile.is-paired,
+.why-amp-proof-tile.is-paired {
+  transform: translateY(-4px);
+  border-color: rgba(20,184,166,.45);
+  box-shadow: 0 10px 24px rgba(15,118,110,.12);
+}
+.why-amp-proof-tile.is-paired strong {
+  filter:
+    drop-shadow(0 0 14px rgba(45,212,191,.75))
+    drop-shadow(0 0 28px rgba(20,184,166,.5));
+}
 .seo-pillar-links .pillar-card.is-paired {
-  transform: translateY(-5px);
-  border-color: #0d9488;
-  box-shadow: 0 12px 28px rgba(15,118,110,.16), 0 0 0 1px rgba(13,148,136,.22);
+  transform: translateY(-8px);
+  border-color: #14b8a6;
+  box-shadow:
+    0 16px 32px rgba(15,118,110,.18),
+    0 0 0 1px rgba(20,184,166,.35),
+    0 0 28px rgba(45,212,191,.22);
+  z-index: 2;
 }
 .seo-pillar-links .pillar-card.is-paired .tag,
 .seo-pillar-links .pillar-card.is-paired h3 {
@@ -7291,7 +7305,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (prefers-reduced-motion: reduce) {
   .why-amp-proof-tile strong {
     animation: none;
-    background-image: linear-gradient(90deg, #d4a017, #0f766e);
+    background-image: linear-gradient(90deg, #d4a017, #14b8a6 55%, #0f766e);
   }
 }
 @media (max-width: 860px) {

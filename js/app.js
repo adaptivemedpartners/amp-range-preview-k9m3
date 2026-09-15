@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2113-why-amp-history";
+  window.__AMP_BUILD = "2114-why-amp-glow";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1108,6 +1108,12 @@
       el.addEventListener("mouseleave", function () { setPair(id, false); });
       el.addEventListener("focusin", function () { setPair(id, true); });
       el.addEventListener("focusout", function () { setPair(id, false); });
+      if (el.classList.contains("why-amp-proof-tile")) {
+        el.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        });
+      }
     });
   }
 
