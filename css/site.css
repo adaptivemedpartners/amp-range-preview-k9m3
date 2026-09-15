@@ -1,3 +1,4 @@
+/* amp-build:2112-client-bd-consult */
 /* amp-build:2111-public-forms */
 /* amp-build:2110-hero-lighten */
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
@@ -7194,4 +7195,70 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .form-live-frame-wrap,
   .form-live-frame { min-height: 640px; }
+}
+
+/* amp-build:2112-client-bd-consult — education + need cards (no fee chooser) */
+.view.funnel[data-route="client-retained"] .client-offers-stage {
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.client-offer-intro {
+  margin: 0 0 16px;
+}
+.client-offer-title {
+  margin: 8px 0 8px;
+  font-size: 1.35rem;
+  letter-spacing: -.02em;
+  color: #0f172a;
+}
+.client-offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 28px;
+}
+.client-offer-card {
+  margin: 0;
+}
+.client-offer-card h3 {
+  margin: 8px 0 6px;
+  font-size: 17px;
+  letter-spacing: -.02em;
+}
+.client-offer-card-wide {
+  grid-column: 1 / -1;
+}
+.client-need-block {
+  margin-top: 8px;
+}
+.client-need-hint {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+.client-need-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.client-need-card {
+  height: 100%;
+}
+.client-need-card.is-selected {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 2px rgba(13,148,136,.18), 0 8px 24px rgba(20,120,122,.14);
+  background: linear-gradient(180deg, rgba(204,251,241,.45), #fff 48%);
+  transform: translateY(-1px);
+}
+.client-need-other-wrap {
+  margin-top: 12px;
+}
+.client-need-other-wrap textarea {
+  min-height: 84px;
+}
+@media (max-width: 760px) {
+  .client-offer-grid,
+  .client-need-grid {
+    grid-template-columns: 1fr;
+  }
 }

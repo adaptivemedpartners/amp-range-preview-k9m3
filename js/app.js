@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2111-public-forms";
+  window.__AMP_BUILD = "2112-client-bd-consult";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -20,6 +20,8 @@
     clientSpecialties: [],
     clientSpecialtyCustom: null,
     agreement: null,
+    clientNeeds: [],
+    clientNeedNote: "",
     mpcAccess: "monthly",
     mpcUnlocked: false,
     mpcFilterSpecialty: "",
@@ -43,14 +45,14 @@
 
   var AGREEMENT_META = {
     "summit-clear": {
-      tag: "Summit Clear",
-      title: "Summit Clear (All-In)",
-      blurb: "You hold the peak; AMP does the work — lump retainer + marketing + placement. A hiring guide owns the next step."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "A hiring guide owns the next step."
     },
     "shared-ascent": {
-      tag: "Shared Ascent",
-      title: "Shared Ascent (Partnership)",
-      blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. A hiring guide owns the next step."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "A hiring guide owns the next step."
     },
     "mpc": {
       tag: "MPC · tailored search",
@@ -58,37 +60,114 @@
       blurb: "When nothing posted fits, a recruiting guide opens a tailored search with you."
     },
     "market-analysis": {
-      tag: "Free market analysis",
-      title: "Free market analysis from your hiring guide",
-      blurb: "Soft start — leave your info and specialty/state context. Your hiring guide sends a free market read. No retainer to begin."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "Leave a short note. Your hiring guide will follow up."
     }
   };
 
+  var CLIENT_NEED_META = {
+    volume: { id: "volume", label: "Difficulty getting candidate volume" },
+    convert: { id: "convert", label: "We get candidates but can’t close / convert" },
+    interviews: { id: "interviews", label: "Interviews take too many cycles / wrong people reach leadership" },
+    vacancy: { id: "vacancy", label: "Role stays open too long / vacancy burn" },
+    confidential: { id: "confidential", label: "Confidential / competitive search needs a quieter approach" },
+    story: { id: "story", label: "Need help telling the opportunity story (marketing/preview)" },
+    brief: { id: "brief", label: "Not sure which seats to prioritize / brief is fuzzy" },
+    other: { id: "other", label: "Something else" }
+  };
+
+  function clientNeedLabels() {
+    return (state.clientNeeds || []).map(function (id) {
+      var meta = CLIENT_NEED_META[id];
+      return meta ? meta.label : id;
+    }).filter(Boolean);
+  }
+
+  function clientNeedsStamp() {
+    var labels = clientNeedLabels();
+    var extra = String(state.clientNeedNote || "").trim();
+    var line = labels.join("; ");
+    if (extra) line += (line ? " — " : "") + extra;
+    return line;
+  }
+
+  function clientContextBits() {
+    var bits = [];
+    try {
+      var fac = (AMP_CONTENT.facilities || []).find(function (f) { return f.id === state.facility; });
+      if (fac) bits.push(fac.label);
+      else if (state.facility === "other" && state.facilityCustom) bits.push(state.facilityCustom);
+    } catch (e) {}
+    if (state.clientSpecialties && state.clientSpecialties.length) {
+      bits.push(state.clientSpecialties.map(clientSpecLabel).filter(Boolean).join(", "));
+    } else if (state.clientSpecialty) {
+      bits.push(clientSpecLabel(state.clientSpecialty));
+    }
+    if (state.clientState) bits.push(state.clientState);
+    if (state.clientBd && state.clientBd.ownerName) bits.push(state.clientBd.ownerName);
+    return bits;
+  }
+
+  function writeClientMeetingFields() {
+    var needsField = $("#meeting-needs");
+    var noteField = $("#meeting-need-note");
+    var regionField = $("#meeting-region");
+    var agreeField = $("#meeting-agreement");
+    if (needsField) needsField.value = (state.clientNeeds || []).join(",");
+    if (noteField) noteField.value = String(state.clientNeedNote || "").trim();
+    if (regionField) regionField.value = state.clientState || state.clientRegion || "";
+    if (agreeField) agreeField.value = "";
+    state.agreement = null;
+  }
+
+  function applyClientMeetingNote() {
+    var note = document.querySelector("#client-meeting-form textarea[name=\"note\"]");
+    if (!note) return;
+    var stamp = clientNeedsStamp();
+    var region = state.clientState || "";
+    var owner = state.clientBd && state.clientBd.ownerName ? state.clientBd.ownerName : "";
+    var lines = [];
+    if (stamp) lines.push("Hiring focus: " + stamp);
+    if (region) lines.push("Region: " + region + (owner ? " · " + owner : ""));
+    var prefix = lines.join("\n");
+    var current = String(note.value || "");
+    if (!current.trim()) {
+      note.value = prefix;
+      return;
+    }
+    if (current.indexOf("Hiring focus:") === 0 || current.indexOf("Region:") === 0) {
+      var rest = current.replace(/^(Hiring focus:.*\n?)?(Region:.*\n?)?/, "").replace(/^\n+/, "");
+      note.value = prefix + (rest ? "\n" + rest : "");
+    }
+  }
+
   function syncPickedAgreement() {
+    syncPickedNeeds();
+  }
+
+  function syncPickedNeeds() {
+    writeClientMeetingFields();
+    applyClientMeetingNote();
     var box = $("#picked-agreement");
     var tag = $("#picked-agreement-tag");
     var title = $("#picked-agreement-title");
     var blurb = $("#picked-agreement-blurb");
-    var field = $("#meeting-agreement");
-    var key = state.agreement;
-    var meta = key && AGREEMENT_META[key];
-    if (field) field.value = key || "";
+    var stamp = clientNeedsStamp();
+    var bits = clientContextBits();
     if (!box) return;
-    if (!meta) {
+    if (!stamp && !bits.length) {
       box.hidden = true;
       return;
     }
     box.hidden = false;
-    if (tag) tag.textContent = meta.tag;
-    if (title) title.textContent = meta.title;
-    if (blurb) blurb.textContent = meta.blurb;
-    var note = document.querySelector("#client-meeting-form textarea[name=\"note\"]");
-    if (note && key === "market-analysis" && !note.value) {
-      note.placeholder = "Specialty · state · what you want to understand in the market";
-    }
-    var meetLede = document.querySelector('[data-route="client-meeting"] .lede');
-    if (meetLede && key === "market-analysis") {
-      meetLede.innerHTML = "Request a <strong>free market analysis</strong> from your hiring guide. Soft start — no retainer required.";
+    if (tag) tag.textContent = "What you asked to talk through";
+    if (title) title.textContent = stamp ? "Hiring focus" : "Your search";
+    if (blurb) {
+      var parts = [];
+      if (stamp) parts.push(stamp);
+      if (bits.length) parts.push(bits.join(" · "));
+      blurb.textContent = parts.join(" · ");
     }
   }
 
@@ -1026,8 +1105,9 @@
     if (route === "client") renderFacilitySignpost();
     if (route === "client-specialty") renderClientSpecialty();
     if (route === "client-region") renderClientRegion();
+    if (route === "client-retained") renderClientOffers();
     if (route === "client-meeting") {
-      syncPickedAgreement();
+      syncPickedNeeds();
       if (state.clientState) {
         var _cms = $("#client-meeting-state");
         if (_cms && !_cms.value) _cms.value = state.clientState;
@@ -1215,8 +1295,9 @@
             : "";
         }
         if (c && !c.innerHTML.trim()) {
+          var needBit = clientNeedsStamp();
           var messLine = bd
-            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → a hiring guide · CC Randy/Mike/David")
+            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + (needBit ? " · " + needBit : "") + " → a hiring guide · CC Randy/Mike/David")
             : "Meeting request → a hiring guide";
           stampMess("client", messLine);
         }
@@ -1757,8 +1838,9 @@
     if (fullDet) fullDet.open = false;
     if (note) note.textContent = "Main CC Randy · also Mike · David";
     if (talk) {
-      talk.setAttribute("data-go", "client-meeting");
+      talk.setAttribute("data-go", "client-retained");
       talk.setAttribute("data-trail", "1");
+      talk.removeAttribute("data-agreement");
     }
     if (cont) {
       cont.disabled = false;
@@ -1902,6 +1984,108 @@
         go("client-retained", { trail: true });
       });
     }
+  }
+
+  function paintClientNeedSelection() {
+    var list = $("#client-need-cards");
+    var selected = state.clientNeeds || [];
+    if (list) {
+      list.querySelectorAll("[data-client-need]").forEach(function (btn) {
+        var id = (btn.getAttribute("data-client-need") || "").trim();
+        var on = selected.indexOf(id) >= 0;
+        btn.classList.toggle("is-selected", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        var sel = btn.querySelector(".hire-select");
+        if (sel) sel.textContent = on ? "Selected" : "Select";
+      });
+    }
+    var otherWrap = $("#client-need-other-wrap");
+    if (otherWrap) otherWrap.hidden = selected.indexOf("other") < 0;
+    var cont = $("#client-offers-continue");
+    if (cont) {
+      var ready = selected.length > 0;
+      cont.disabled = !ready;
+      if (!ready) {
+        cont.textContent = "Select at least one to continue";
+      } else if (state.clientBd && state.clientBd.ownerName) {
+        cont.textContent = "Request a meeting with " + state.clientBd.ownerName.split(" ")[0] + " →";
+      } else {
+        cont.textContent = "Request a meeting →";
+      }
+    }
+    var hint = $("#client-need-hint");
+    if (hint) {
+      hint.textContent = selected.length
+        ? (selected.length === 1 ? "1 selected — add more or continue." : selected.length + " selected — continue when you’re ready.")
+        : "Tap one or more. Multi-select is fine — pick anything that’s true right now.";
+    }
+  }
+
+  function toggleClientNeed(id) {
+    if (!id) return;
+    if (!Array.isArray(state.clientNeeds)) state.clientNeeds = [];
+    var idx = state.clientNeeds.indexOf(id);
+    if (idx >= 0) state.clientNeeds.splice(idx, 1);
+    else state.clientNeeds.push(id);
+    if (state.clientNeeds.indexOf("other") < 0) state.clientNeedNote = "";
+    paintClientNeedSelection();
+    try { stampConciergePath("client-retained"); } catch (e) {}
+  }
+
+  function continueClientOffers() {
+    if (!state.clientNeeds || !state.clientNeeds.length) {
+      paintClientNeedSelection();
+      var first = document.querySelector("#client-need-cards [data-client-need]");
+      if (first) first.focus();
+      return;
+    }
+    var otherNote = $("#client-need-other-note");
+    if (otherNote) state.clientNeedNote = String(otherNote.value || "").trim();
+    writeClientMeetingFields();
+    applyClientMeetingNote();
+    var sel = $("#client-meeting-state");
+    if (sel && state.clientState) {
+      sel.value = state.clientState;
+      try { syncClientBdRoutePreview(); } catch (err) {}
+    }
+    go("client-meeting", { trail: true });
+  }
+
+  function renderClientOffers() {
+    var ctx = $("#client-offers-context");
+    if (ctx) {
+      var bits = clientContextBits();
+      ctx.textContent = bits.length ? bits.join(" · ") : "";
+    }
+    if (!Array.isArray(state.clientNeeds)) state.clientNeeds = [];
+    var otherNote = $("#client-need-other-note");
+    if (otherNote && state.clientNeedNote && !otherNote.value) otherNote.value = state.clientNeedNote;
+    paintClientNeedSelection();
+    var list = $("#client-need-cards");
+    if (list && list.getAttribute("data-bound-client-needs") !== "1") {
+      list.setAttribute("data-bound-client-needs", "1");
+      list.addEventListener("click", function (ev) {
+        var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-need]") : null;
+        if (!btn) return;
+        ev.preventDefault();
+        toggleClientNeed((btn.getAttribute("data-client-need") || "").trim());
+      });
+    }
+    if (otherNote && otherNote.getAttribute("data-bound-client-needs") !== "1") {
+      otherNote.setAttribute("data-bound-client-needs", "1");
+      otherNote.addEventListener("input", function () {
+        state.clientNeedNote = String(otherNote.value || "").trim();
+      });
+    }
+    var cont = $("#client-offers-continue");
+    if (cont && cont.getAttribute("data-bound-client-needs") !== "1") {
+      cont.setAttribute("data-bound-client-needs", "1");
+      cont.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        continueClientOffers();
+      });
+    }
+    try { stampConciergePath("client-retained"); } catch (e2) {}
   }
 
   function renderClientSpecialty() {
@@ -2324,6 +2508,10 @@
       if (state.clientBd && state.clientBd.ownerId) {
         window.AMP_CHATBOT.recruiter = state.clientBd.ownerId;
         window.AMP_CHATBOT.recruiterTag = state.clientBd.ownerId;
+      }
+      if (state.clientNeeds && state.clientNeeds.length) {
+        window.AMP_CHATBOT.clientNeeds = clientNeedLabels().join("; ");
+        window.AMP_CHATBOT.note = clientNeedsStamp();
       }
     }
     if (typeof window.AMP_CHATBOT.configure === "function") {
@@ -3254,14 +3442,14 @@
     var en = sampleEnrich(kind);
     var rank = sampleRankLine();
     if (kind === "client") {
-      var agree = state.agreement && AGREEMENT_META[state.agreement]
-        ? AGREEMENT_META[state.agreement].title
-        : "Client meeting";
+      var needsLine = clientNeedsStamp() || "Hiring consult";
+      var regionLine = (state.clientState || "") + (state.clientBd && state.clientBd.ownerName ? " · " + state.clientBd.ownerName : "");
       el.innerHTML =
         '<div class="row"><span>Owner queue</span><span class="ok">Client lead · your team</span></div>' +
         '<div class="row"><span>Status</span><span class="ok">Captured · routed</span></div>' +
         '<div class="row"><span>When</span><span>' + stamp + '</span></div>' +
-        '<div class="row"><span>Agreement</span><span class="ok">' + agree + '</span></div>' +
+        '<div class="row"><span>Hiring focus</span><span class="ok">' + needsLine + '</span></div>' +
+        (regionLine ? '<div class="row"><span>Region / guide</span><span class="ok">' + regionLine + '</span></div>' : "") +
         '<div class="row"><span>Approx. browse location</span><span class="ok">' + en.geo + '</span></div>' +
         '<div class="row"><span>Referrer / UTM</span><span>' + en.referrer + '</span></div>' +
         '<div class="row"><span>Device / TZ</span><span>' + en.device + '</span></div>' +
@@ -3814,10 +4002,11 @@ function syncGuideRoute(route) {
       clientForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var fd = new FormData(clientForm);
-        if (fd.get("agreement")) state.agreement = String(fd.get("agreement"));
-        var agreeLabel = state.agreement && AGREEMENT_META[state.agreement]
-          ? AGREEMENT_META[state.agreement].tag
-          : "Client";
+        if (fd.get("needNote")) state.clientNeedNote = String(fd.get("needNote"));
+        if (fd.get("needs") && (!state.clientNeeds || !state.clientNeeds.length)) {
+          state.clientNeeds = String(fd.get("needs")).split(",").filter(Boolean);
+        }
+        var needsLabel = clientNeedsStamp() || "Hiring consult";
         var stCode = String(fd.get("state") || "").toUpperCase();
         var owner = resolveBdOwner(stCode);
         if (!owner) {
@@ -3831,9 +4020,10 @@ function syncGuideRoute(route) {
           ownerLabel: owner.label,
           cc: BD_CC_ALWAYS
         };
+        state.clientState = stCode;
         stampMess(
           "client",
-          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → a hiring guide · CC Randy/Mike/David"
+          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + needsLabel + " → a hiring guide · CC Randy/Mike/David"
         );
         go("confirm-client", { trail: true });
       });
@@ -4412,7 +4602,7 @@ function syncGuideRoute(route) {
     },
     client: {
       title: "For Healthcare Organizations" + BRAND_SUFFIX,
-      description: "Start the hiring path with Adaptive Medical Partners. Tell us about your facility and specialty — AMP guides retained physician search.",
+      description: "Start the hiring path with Adaptive Medical Partners. Tell us about your facility and specialty — AMP helps hospitals and groups find and keep physicians.",
       robots: "index,follow"
     },
     education: {
@@ -4453,7 +4643,7 @@ function syncGuideRoute(route) {
     "confirm-client": { title: "Meeting Request Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-specialty": { title: "Hiring Specialty" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-region": { title: "Search Location" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-retained": { title: "How AMP Works" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-retained": { title: "How AMP Helps Organizations" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-meeting": { title: "Request a Meeting" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     mpc: { title: "Tailor a Search" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "mpc-portal": { title: "Client Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },

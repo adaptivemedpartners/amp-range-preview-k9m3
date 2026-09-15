@@ -210,14 +210,14 @@ window.AMP_CONTENT = {
   ],
   facilities: [
     { id: "fqhc", label: "FQHC / CHC", blurb: "Mission-aligned clinic seats with clear timelines." },
-    { id: "cah", label: "Critical Access", blurb: "Rural CAH retained search — you hold the summit." },
+    { id: "cah", label: "Critical Access", blurb: "Rural CAH physician search — you hold the summit." },
     { id: "community", label: "Community / Rural hospital", blurb: "Community and rural hospital physician seats." },
     { id: "system", label: "Health system", blurb: "Hard-to-fill roles across a health system." },
     { id: "bh", label: "Behavioral Health", blurb: "Behavioral and community behavioral health seats." },
     { id: "group", label: "Multi-specialty / Group", blurb: "Multi-specialty and group practice growth seats." },
     { id: "dental", label: "Dentistry", blurb: "Dental and DSOs with clear package preview." },
     { id: "other", label: "Other", blurb: "Tell us the summit you need staffed." },
-    { id: "hospital", label: "Hospital / Health system", blurb: "Retained search for hard-to-fill physician roles." }
+    { id: "hospital", label: "Hospital / Health system", blurb: "Hard-to-fill physician roles across hospitals and systems." }
   ],
   facilitySpecialtyRanks: {
     "fqhc": [
