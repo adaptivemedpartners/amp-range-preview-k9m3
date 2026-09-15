@@ -7198,6 +7198,25 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .form-live-frame { min-height: 640px; }
 }
 
+.amp-build-chip {
+  margin: 8px 0 0;
+  font-size: 11px;
+  letter-spacing: .02em;
+  color: #94a3b8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.amp-build-chip::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #14b8a6;
+  box-shadow: 0 0 8px rgba(20,184,166,.7);
+  vertical-align: middle;
+}
+
 /* amp-build:2112-why-amp — large proof tiles on Why AMP hub */
 .why-amp-proof {
   display: grid;
