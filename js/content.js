@@ -1,3 +1,4 @@
+/* amp-build:2117-fqhc-spec-order */
 /* AMP Mountain Site — content packs (jobs and Education posts)
    Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
    Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.
@@ -223,11 +224,11 @@ window.AMP_CONTENT = {
     "fqhc": [
       { id: "fm", label: "Family Medicine", blurb: "Most common physician hire at FQHCs / CHCs." },
       { id: "pediatrics_general", label: "Pediatrics", blurb: "Core primary-care panel alongside family medicine." },
-      { id: "internal_medicine_general", label: "Internal Medicine", blurb: "Adult primary care for FQHC panels." },
+      { id: "dental", label: "Dentistry", blurb: "On-site dental is a frequent FQHC / CHC seat." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Women’s health — often part-time or contracted." },
+      { id: "internal_medicine_general", label: "Internal Medicine", blurb: "Adult primary care for FQHC panels." },
       { id: "psychiatry_general", label: "Psychiatry", blurb: "Adult psych / addiction — rising visit demand." },
       { id: "nurse_practitioner_family_medicine_without_ob", label: "Family NP", blurb: "Often the largest clinician group on site." },
-      { id: "physician_assistant_primary_care", label: "Physician Assistant", blurb: "Family / primary care APP coverage." },
       { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Prescriber pool for mental health and SUD." },
     ],
     "cah": [
