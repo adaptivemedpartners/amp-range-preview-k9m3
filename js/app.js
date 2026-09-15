@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2105-image-alts";
+  window.__AMP_BUILD = "2106-keep-forms-live";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -3954,6 +3954,8 @@ function syncGuideRoute(route) {
        /candidate-authorization  → form-candidate-authorization
        /interview-expense-form   → form-interview-expense
        /easy-pay-authorization   → form-easy-pay
+       KEEP public form paths stay; submit stays on live Webflow until mountain
+       can prove end-to-end submit. Do not invent form fields or stub “ready”.
        /job/{slug}               → job/{slug}
        /blog-posts/{slug}        → blog/{slug}
        /ridge                    → mi-lite   (/mi-lite aliases here)
