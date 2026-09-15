@@ -6,7 +6,7 @@
   Included (indexable KEEP + ranking only):
   - 19 public ranking/KEEP paths from PATH_TO_ROUTE + SEO_MAP index,follow
   - 58 live job slugs from AMP_CONTENT.jobs (js/content.js)
-  - 15 blog slugs from AMP_CONTENT.posts → /blog-posts/{slug}
+  - 19 blog slugs from AMP_CONTENT.posts → /blog-posts/{slug}
 
   Excluded on purpose (do not invent; do not re-add without map change):
   - SEO_MAP noindex mid-funnel doors: physician-rank, physician-region,
@@ -18,7 +18,6 @@
     /web-posting-request, /postcard-reqeust-form, /pto-request-form,
     /amplified-email-request
   - Aliases: /mi-lite → /ridge, /contact → /contact-us
-  - Live Webflow blog slugs not in AMP_CONTENT.posts
   - Guide person hashes, phone-crop.html
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -297,5 +296,17 @@
   </url>
   <url>
     <loc>https://www.adaptivemedicalpartners.com/blog-posts/candidate-interview-prep-without-leaks</loc>
+  </url>
+  <url>
+    <loc>https://www.adaptivemedicalpartners.com/blog-posts/virtual-interview-how-to</loc>
+  </url>
+  <url>
+    <loc>https://www.adaptivemedicalpartners.com/blog-posts/rural-recruiting-keeping-candidates-open-minded</loc>
+  </url>
+  <url>
+    <loc>https://www.adaptivemedicalpartners.com/blog-posts/can-you-zoom-to-success-in-physician-recruiting</loc>
+  </url>
+  <url>
+    <loc>https://www.adaptivemedicalpartners.com/blog-posts/how-does-your-physician-search-stack-up-against-the-competition</loc>
   </url>
 </urlset>
