@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2112-ridge-v1-lock";
+  window.__AMP_BUILD = "2113-ridge-walk-gate";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1010,6 +1010,7 @@
     if (toolbar) toolbar.hidden = false;
     if (meat) meat.setAttribute("aria-hidden", "false");
     renderRidgeAccessChrome(seat, paid);
+    applyRidgeWalkGate();
   }
 
   function renderRidgeAccessChrome(seat, paid) {
@@ -1081,6 +1082,12 @@
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
+    } else if (reason === "walkthrough") {
+      if (title) title.textContent = "Pick specialty, then state.";
+      if (body) body.textContent = "The workbench opens only after you commit one specialty × one state.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = true;
+      if (extra) extra.hidden = true;
     } else if (reason === "polls") {
       if (title) title.textContent = "No polls left this month.";
       if (body) body.textContent = "A poll is one specialty × state open. Extra poll $9, or upgrade the plan.";
@@ -1101,29 +1108,138 @@
     if (overlay) overlay.hidden = true;
   }
 
-  function populateRidgeDemoPickers() {
-    var spec = $("#ridge-demo-specialty");
-    var st = $("#ridge-demo-state");
+  function fillRidgeSpecSelect(sel) {
+    if (!sel || !window.AMPRidgeMI || !AMPRidgeMI.SPECIALTIES) return;
+    if (sel.options.length > 1) return;
+    if (!sel.options.length) {
+      var blank = document.createElement("option");
+      blank.value = "";
+      blank.textContent = "Select a specialty…";
+      sel.appendChild(blank);
+    }
+    AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+      var opt = document.createElement("option");
+      opt.value = s.key;
+      opt.textContent = s.label;
+      sel.appendChild(opt);
+    });
+  }
+
+  function fillRidgeStateSelect(sel) {
+    if (!sel || sel.options.length > 1) return;
+    RIDGE_US_STATES.forEach(function (row) {
+      var opt = document.createElement("option");
+      opt.value = row.abbr;
+      opt.textContent = row.name + " (" + row.abbr + ")";
+      sel.appendChild(opt);
+    });
+  }
+
+  function ridgeWalkPairs() {
+    return [
+      { spec: $("#ridge-demo-specialty"), state: $("#ridge-demo-state"), hint: $("#ridge-walk-hint"), open: $all(".ridge-demo-open") },
+      { spec: $("#ridge-app-walk-specialty"), state: $("#ridge-app-walk-state"), hint: $("#ridge-app-walk-hint"), open: $all(".ridge-app-walk-open") }
+    ];
+  }
+
+  function syncRidgeWalkthrough() {
     var api = ridgeAccess();
     var seat = api && api.getSeat();
-    if (spec && !spec.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
-      AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
-        var opt = document.createElement("option");
-        opt.value = s.key;
-        opt.textContent = s.label;
-        spec.appendChild(opt);
+    var committed = !!(api && api.isDemoCommitted && api.isDemoCommitted(seat));
+    ridgeWalkPairs().forEach(function (pair) {
+      var spec = pair.spec;
+      var st = pair.state;
+      if (spec) fillRidgeSpecSelect(spec);
+      if (st) fillRidgeStateSelect(st);
+      if (committed && seat) {
+        if (spec && seat.demoSpecialty) spec.value = seat.demoSpecialty;
+        if (st && seat.demoState) st.value = String(seat.demoState).toUpperCase();
+      } else {
+        if (spec && spec.value && seat && seat.demoSpecialty && spec.value === seat.demoSpecialty && !committed) {
+          /* keep in-progress pick */
+        }
+      }
+      var specVal = spec ? spec.value : "";
+      var stateVal = st ? st.value : "";
+      if (st) st.disabled = !specVal;
+      var stepSpec = spec && spec.closest(".ridge-walk-step");
+      var stepState = st && st.closest(".ridge-walk-step");
+      if (stepSpec) {
+        stepSpec.classList.toggle("is-done", !!specVal);
+        stepSpec.classList.toggle("is-current", !specVal);
+        stepSpec.classList.remove("is-locked");
+      }
+      if (stepState) {
+        stepState.classList.toggle("is-locked", !specVal);
+        stepState.classList.toggle("is-current", !!specVal && !stateVal);
+        stepState.classList.toggle("is-done", !!specVal && !!stateVal);
+      }
+      var ready = !!(specVal && stateVal);
+      pair.open.forEach(function (btn) {
+        btn.disabled = !ready;
+        btn.setAttribute("aria-disabled", ready ? "false" : "true");
       });
+      if (pair.hint) {
+        if (!specVal) pair.hint.textContent = "Step 1 · pick a specialty. The workbench stays closed.";
+        else if (!stateVal) pair.hint.textContent = "Step 2 · pick a state to unlock that 1×1.";
+        else pair.hint.textContent = "Step 3 · unlock the demo unit. Other specialties and states stay locked.";
+      }
+    });
+  }
+
+  function populateRidgeDemoPickers() {
+    syncRidgeWalkthrough();
+  }
+
+  function readRidgeWalkPicks() {
+    var spec = ($("#ridge-demo-specialty") && $("#ridge-demo-specialty").value)
+      || ($("#ridge-app-walk-specialty") && $("#ridge-app-walk-specialty").value)
+      || "";
+    var st = ($("#ridge-demo-state") && $("#ridge-demo-state").value)
+      || ($("#ridge-app-walk-state") && $("#ridge-app-walk-state").value)
+      || "";
+    return { specialty: spec, state: st };
+  }
+
+  function commitRidgeDemoAndOpen() {
+    var api = ridgeAccess();
+    var picks = readRidgeWalkPicks();
+    if (!picks.specialty || !picks.state) {
+      syncRidgeWalkthrough();
+      jumpToRidgeWalk();
+      return false;
     }
-    if (st && st.options.length <= 1) {
-      RIDGE_US_STATES.forEach(function (row) {
-        var opt = document.createElement("option");
-        opt.value = row.abbr;
-        opt.textContent = row.name + " (" + row.abbr + ")";
-        st.appendChild(opt);
-      });
+    if (api) api.startDemo(picks);
+    go("mi-lite-app", { trail: true });
+    return true;
+  }
+
+  function jumpToRidgeWalk() {
+    var door = $("#ridge-demo-door") || $("#ridge-walk-gate");
+    var onLanding = document.querySelector('[data-route="mi-lite"].on');
+    if (!onLanding) {
+      go("mi-lite", { trail: true });
+      setTimeout(function () {
+        var target = $("#ridge-demo-door");
+        if (target && target.scrollIntoView) target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 40);
+      return;
     }
-    if (spec && seat && seat.demoSpecialty) spec.value = seat.demoSpecialty;
-    if (st && seat && seat.demoState) st.value = String(seat.demoState).toUpperCase();
+    if (door && door.scrollIntoView) door.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function applyRidgeWalkGate() {
+    var api = ridgeAccess();
+    var ready = !!(api && api.isDemoCommitted && api.isDemoCommitted());
+    var gate = $("#ridge-walk-gate");
+    var dash = $("#mi-lite-dashboard");
+    var form = $("#mi-lite-app-form");
+    var banner = $("#mi-lite-open-banner");
+    if (gate) gate.hidden = ready;
+    if (dash) dash.hidden = !ready;
+    if (form) form.hidden = !ready;
+    if (banner) banner.hidden = !ready;
+    return ready;
   }
 
   function openRidgeCheckout(sku) {
@@ -1216,11 +1332,15 @@
 
   function renderMILiteApp() {
     var api = ridgeAccess();
-    if (api) {
-      var seat = api.getSeat();
-      if (!seat || seat.tier === "demo") api.startDemo();
-    }
+    var ready = applyRidgeWalkGate();
     renderMILite();
+    if (!ready) {
+      applyMiLiteLockUI();
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) {
+        try { AMPRidgeWorkbench.refresh(); } catch (eHold) {}
+      }
+      return;
+    }
     updateMILiteDashboard();
     applyMiLiteLockUI();
     try {
@@ -1274,6 +1394,12 @@
     if (route === "residents-fellows") route = "residents";
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
+    if (route === "mi-lite-app") {
+      var walkApi = ridgeAccess();
+      if (walkApi && walkApi.isDemoCommitted && !walkApi.isDemoCommitted()) {
+        route = "mi-lite";
+      }
+    }
     var next = document.querySelector('.view[data-route="' + route + '"]');
     if (!next && (route.indexOf("blog/") === 0 || route.indexOf("blog-posts/") === 0)) {
       next = document.querySelector('.view[data-route="blog-post"]');
@@ -4193,17 +4319,30 @@ function syncGuideRoute(route) {
       miStateSelect._ampWired = true;
       ensureMiLiteStateOptions();
     }
-    $all(".ridge-demo-open").forEach(function (ridgeDemoGo) {
+    $all(".ridge-demo-open, .ridge-app-walk-open").forEach(function (ridgeDemoGo) {
       ridgeDemoGo.addEventListener("click", function () {
-        var api = ridgeAccess();
-        if (api) {
-          api.startDemo({
-            specialty: ($("#ridge-demo-specialty") && $("#ridge-demo-specialty").value) || undefined,
-            state: ($("#ridge-demo-state") && $("#ridge-demo-state").value) || undefined
-          });
+        if (ridgeDemoGo.disabled) {
+          jumpToRidgeWalk();
+          return;
         }
-        go("mi-lite-app", { trail: true });
+        commitRidgeDemoAndOpen();
       });
+    });
+    $all(".ridge-walk-jump").forEach(function (jumpBtn) {
+      jumpBtn.addEventListener("click", function () {
+        var api = ridgeAccess();
+        if (api && api.isDemoCommitted && api.isDemoCommitted()) {
+          go("mi-lite-app", { trail: true });
+          return;
+        }
+        jumpToRidgeWalk();
+      });
+    });
+    ["ridge-demo-specialty", "ridge-demo-state", "ridge-app-walk-specialty", "ridge-app-walk-state"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el || el._ampWalkWired) return;
+      el._ampWalkWired = true;
+      el.addEventListener("change", syncRidgeWalkthrough);
     });
     var miLoginForm = $("#mi-lite-login-form");
     if (miLoginForm) miLoginForm.addEventListener("submit", function (e) {
@@ -4233,8 +4372,11 @@ function syncGuideRoute(route) {
     var miDemo = $("#mi-lite-demo-login");
     if (miDemo) miDemo.addEventListener("click", function () {
       var api = ridgeAccess();
-      if (api) api.startDemo();
-      go("mi-lite-app", { trail: true });
+      if (api && api.isDemoCommitted && api.isDemoCommitted()) {
+        go("mi-lite-app", { trail: true });
+        return;
+      }
+      jumpToRidgeWalk();
     });
     var miLockAgain = $("#mi-lite-lock-again");
     if (miLockAgain) miLockAgain.addEventListener("click", function () {
@@ -4243,8 +4385,11 @@ function syncGuideRoute(route) {
       clearMiLiteUnlock();
       hideRidgeDenial();
       applyMiLiteLockUI();
+      applyRidgeWalkGate();
+      syncRidgeWalkthrough();
       if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
-      showMiMockToast("Ridge seat reset to anonymous demo.");
+      showMiMockToast("Ridge seat reset. Pick specialty, then state, to reopen the demo.");
+      go("mi-lite", { trail: true });
     });
     var miSave = $("#mi-lite-save");
     if (miSave) miSave.addEventListener("click", function () {

@@ -29,8 +29,21 @@ function assert(cond, msg) {
 
 store = {};
 api.reset();
+var fresh = api.getSeat();
+assert(!fresh.demoCommitted, "fresh seat uncommitted");
+assert(!fresh.demoSpecialty, "no default specialty");
+assert(!fresh.demoState, "no default state");
+assert(!api.isDemoCommitted(), "walkthrough required before preview");
+assert(!api.startDemo({}).demoCommitted, "empty startDemo does not commit");
+assert(!api.startDemo({ specialty: "family_medicine_without_ob" }).demoCommitted, "specialty-only does not commit");
+assert(!api.trySpecialty("family_medicine_without_ob").ok, "specialty locked before commit");
+assert(api.lastDenial().reason === "walkthrough", "pre-commit denial is walkthrough");
+assert(!api.tryState("tx").ok, "state locked before commit");
+
 var seat = api.startDemo({ specialty: "family_medicine_without_ob", state: "TX" });
 assert(seat.tier === "demo", "demo tier");
+assert(seat.demoCommitted, "both picks commit the 1×1");
+assert(api.isDemoCommitted(), "committed after specialty + state");
 assert(api.trySpecialty("family_medicine_without_ob").ok, "demo same spec ok");
 assert(!api.trySpecialty("ob_gyn_general").ok, "demo other spec locked");
 assert(api.lastDenial().reason === "verify", "demo denial is verify");

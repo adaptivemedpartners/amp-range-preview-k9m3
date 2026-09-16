@@ -1,5 +1,5 @@
-/* amp-build:2112 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
-   Demo (1 state × 1 specialty) → verified (+2 specialties, 3 tastes) → paid geo + polls.
+/* amp-build:2113 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
+   Demo walkthrough (pick specialty → pick state) then 1×1 → verified (+2) → paid geo + polls.
    Stripe Checkout is stubbed (test-mode hooks). Public data only — no MGMA. */
 (function (w) {
   "use strict";
@@ -70,8 +70,9 @@
   function defaultSeat() {
     return {
       tier: "demo",
-      demoState: DEFAULT_STATE,
-      demoSpecialty: DEFAULT_SPEC,
+      demoState: "",
+      demoSpecialty: "",
+      demoCommitted: false,
       tastes: [],
       polls: [],
       extraPolls: 0,
@@ -116,12 +117,14 @@
         seat = migrateLegacy(seat);
       }
     } catch (e) {}
-    if (!seat.demoState) seat.demoState = DEFAULT_STATE;
-    if (!seat.demoSpecialty) seat.demoSpecialty = DEFAULT_SPEC;
     if (!Array.isArray(seat.tastes)) seat.tastes = [];
     if (!Array.isArray(seat.polls)) seat.polls = [];
     if (!Array.isArray(seat.oneOffs)) seat.oneOffs = [];
     if (!PLANS[seat.tier]) seat.tier = "demo";
+    if (seat.demoCommitted == null) {
+      /* Legacy demo seats without the flag must re-walk. Verified/paid stay open. */
+      seat.demoCommitted = (seat.tier === "verified" || isPaid(seat));
+    }
     seatCache = seat;
     return seat;
   }
@@ -151,6 +154,11 @@
   function isPaid(seat) {
     seat = seat || load();
     return seat.tier === "state" || seat.tier === "region" || seat.tier === "national";
+  }
+  function isDemoCommitted(seat) {
+    seat = seat || load();
+    if (isPaid(seat) || seat.tier === "verified") return true;
+    return !!(seat.demoCommitted && seat.demoSpecialty && seat.demoState);
   }
   function pollLimit(seat) {
     seat = seat || load();
@@ -196,7 +204,8 @@
     if (seat.tier === "state") {
       return seat.paidState ? [normState(seat.paidState)] : [normState(seat.demoState || DEFAULT_STATE)];
     }
-    return [normState(seat.demoState || DEFAULT_STATE)];
+    if (seat.tier === "demo" && !isDemoCommitted(seat)) return [];
+    return seat.demoState ? [normState(seat.demoState)] : [];
   }
 
   function canState(code, seat) {
@@ -217,7 +226,7 @@
         return AMPRidgeWorkbench.getSpecialtyKey();
       }
     } catch (e) {}
-    return load().demoSpecialty || DEFAULT_SPEC;
+    return load().demoSpecialty || "";
   }
 
   function canSpecialty(key, seat) {
@@ -225,7 +234,10 @@
     key = String(key || "");
     if (!key) return false;
     if (isPaid(seat)) return true;
-    if (seat.tier === "demo") return key === seat.demoSpecialty;
+    if (seat.tier === "demo") {
+      if (!isDemoCommitted(seat)) return false;
+      return key === seat.demoSpecialty;
+    }
     if (seat.tier === "verified") {
       var specs = tasteSpecialties(seat);
       if (specs.indexOf(key) !== -1) return true;
@@ -242,6 +254,7 @@
     if (!canState(st, seat)) return false;
     if (isPaid(seat)) return hasPoll(seat, spec, st) || pollsLeft(seat) > 0;
     if (seat.tier === "demo") {
+      if (!isDemoCommitted(seat)) return false;
       return spec === seat.demoSpecialty && st === normState(seat.demoState);
     }
     if (seat.tier === "verified") {
@@ -295,6 +308,9 @@
       }
       return { ok: true, seat: seat };
     }
+    if (seat.tier === "demo" && !isDemoCommitted(seat)) {
+      return deny("walkthrough", { specialty: key, state: seat.demoState });
+    }
     if (seat.tier === "demo" && key !== seat.demoSpecialty) {
       return deny("verify", { specialty: key, state: seat.demoState });
     }
@@ -326,6 +342,9 @@
     var st = normState(code);
     if (!st) return deny("missing_state");
     var spec = currentSpecialty() || seat.demoSpecialty;
+    if (seat.tier === "demo" && !isDemoCommitted(seat)) {
+      return deny("walkthrough", { specialty: spec, state: st });
+    }
     if (hasOneOff(seat, spec, st) && !isPaid(seat)) {
       return { ok: true, seat: seat, oneOff: true };
     }
@@ -352,12 +371,16 @@
     opts = opts || {};
     var seat = load();
     if (isPaid(seat) || seat.tier === "verified") return seat;
-    if (opts.state) seat.demoState = normState(opts.state);
-    if (opts.specialty) seat.demoSpecialty = String(opts.specialty);
+    var spec = opts.specialty ? String(opts.specialty) : "";
+    var st = opts.state ? normState(opts.state) : "";
+    if (!spec || !st) return seat;
+    seat.demoState = st;
+    seat.demoSpecialty = spec;
+    seat.demoCommitted = true;
+    seat.tier = "demo";
     if (!seat.tastes.length) {
       ensureTaste(seat, seat.demoSpecialty, seat.demoState);
     }
-    seat.tier = "demo";
     return save(seat);
   }
 
@@ -380,7 +403,9 @@
       phone: String(fields.phone).trim(),
       domain: orgDomain(email)
     };
-    ensureTaste(seat, seat.demoSpecialty, seat.demoState);
+    if (seat.demoSpecialty && seat.demoState) {
+      ensureTaste(seat, seat.demoSpecialty, seat.demoState);
+    }
     save(seat);
     return { ok: true, seat: seat };
   }
@@ -451,6 +476,13 @@
   function tierCopy(seat) {
     seat = seat || load();
     if (seat.tier === "demo") {
+      if (!isDemoCommitted(seat)) {
+        return {
+          tag: "Demo · pick 1×1",
+          title: "Choose specialty, then state",
+          body: "The workbench stays closed until you commit one specialty × one state. Then that unit is unlocked."
+        };
+      }
       return {
         tag: "Demo · free",
         title: specLabel(seat.demoSpecialty) + " × " + stateLabel(seat.demoState),
@@ -503,6 +535,7 @@
     trySpecialty: trySpecialty,
     tryState: tryState,
     startDemo: startDemo,
+    isDemoCommitted: isDemoCommitted,
     verify: verify,
     applyPaid: applyPaid,
     consumeCheckoutQuery: consumeCheckoutQuery,

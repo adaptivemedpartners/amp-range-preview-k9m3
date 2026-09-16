@@ -1,4 +1,4 @@
-/* amp-build:2110-hero-lighten */
+/* amp-build:2113-hero-lighten */
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
 .crumb { display: none !important; }
 
@@ -186,6 +186,19 @@ button, input, select, textarea { font: inherit; }
 .nav-cta {
   background: var(--teal) !important; color: #fff !important;
   box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 8px 24px rgba(13,148,136,.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: middle;
+}
+.nav-cta:hover,
+.nav-cta:focus,
+.nav-cta:active {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 @media (max-width: 760px) {
   .nav-links .hide-sm { display: none; }
@@ -4020,7 +4033,14 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
   body.amp-live-trailhead .site-nav { pointer-events: auto; z-index: 300; }
   body.amp-live-trailhead .mobile-nav-toggle { position: relative; z-index: 301; pointer-events: auto; }
   .site-nav .nav-links { gap: 4px; }
-  .site-nav .nav-links .nav-cta { min-height: 44px; padding-inline: 12px; }
+  .site-nav .nav-links .nav-cta {
+    min-height: 44px;
+    padding-inline: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
   .mobile-nav-toggle {
     display: grid; flex: 0 0 44px; width: 44px; height: 44px; padding: 9px 8px;
     place-content: center; gap: 5px; border: 1px solid rgba(153,246,228,.35);
@@ -5071,6 +5091,43 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 
 /* Ridge V1 access — unit gates, poll meter, checkout stub */
 .ridge-demo-pickers { margin: 14px 0 4px; }
+.ridge-walk-steps {
+  list-style: none;
+  margin: 16px 0 8px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.ridge-walk-step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(13,148,136,.22);
+  background: #fff;
+}
+.ridge-walk-step.is-current {
+  border-color: rgba(13,148,136,.55);
+  box-shadow: 0 0 0 3px rgba(13,148,136,.12);
+}
+.ridge-walk-step.is-done { opacity: .94; }
+.ridge-walk-step.is-locked { opacity: .5; }
+.ridge-walk-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--teal); color: #fff; font-size: 13px; font-weight: 800;
+  line-height: 1;
+}
+.ridge-walk-step.is-locked .ridge-walk-num { background: #94a3b8; }
+.ridge-walk-hint { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.ridge-demo-open[disabled],
+.ridge-app-walk-open[disabled] { opacity: .45; cursor: not-allowed; }
+#ridge-walk-gate[hidden],
+#mi-lite-app-form[hidden],
+#mi-lite-dashboard[hidden] { display: none !important; }
+.ridge-walk-gate { max-width: 720px; }
 .ridge-poll-meter {
   display: inline-block;
   margin: 10px 0 0;

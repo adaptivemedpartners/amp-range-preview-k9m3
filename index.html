@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- amp-build:2112-ridge-v1-lock -->
+<!-- amp-build:2113-ridge-walk-gate -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -21,7 +21,7 @@
   document.head.insertBefore(el, document.head.firstChild);
 })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=2112" />
+<link rel="stylesheet" href="css/site.css?v=2113" />
 <link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="assets/hero-imagine-frame0-1280.webp?v=2110 1280w, assets/hero-imagine-frame0.webp?v=2110 1920w" imagesizes="100vw" />
 </head>
 <body>
@@ -1271,18 +1271,25 @@
 <section class="view page funnel mi-lite-view" data-route="mi-lite">
   <div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" /></div>
   <div class="view-chrome">
-    <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>See the ridge before you choose a trail.</h1><p class="lede"><strong>Ridge</strong> is AMP’s public market read — specialty × state, unit-gated. Demo is free (1×1, full surface). Verify a work email for +2 specialties. Then paid geo + polls.</p><div class="btn-row"><button type="button" class="btn btn-primary ridge-demo-open">Open free demo →</button><button type="button" class="btn btn-ghost" data-go="mi-lite-portal" data-trail="1">View pricing</button></div></div></div>
+    <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>See the ridge before you choose a trail.</h1><p class="lede"><strong>Ridge</strong> is AMP’s public market read — specialty × state, unit-gated. Demo is free (1×1, full surface) after you pick both. Verify a work email for +2 specialties. Then paid geo + polls.</p><div class="btn-row"><button type="button" class="btn btn-primary ridge-walk-jump">Open free demo →</button><button type="button" class="btn btn-ghost" data-go="mi-lite-portal" data-trail="1">View pricing</button></div></div></div>
     <div class="section section-lite funnel-panel mi-lite-panel">
       <div class="mi-lite-disclaimer panel"><strong>PUBLIC DATA ONLY</strong><span>No MGMA. No live feed, client names, search IDs, towns, or hospitals. A poll is one specialty × state open inside the plan geography.</span></div>
       <div class="mi-lite-scope panel"><div><span class="tag">Stairs · locked 2026-09-15</span><h2>Demo → verify → paywall.</h2><p class="muted mb-0">Anonymous demo is 1 state × 1 specialty, full surface, printable AMP-branded PDF. Verified sample unlocks +2 specialties (3 tastes total), then a hard paywall. Paid plans unlock geo + monthly polls.</p></div><div class="mi-scope-grid"><div><strong>Included</strong><span>USA map + metric toggles</span><span>Six HUD / bench cards</span><span>AMP-branded printable PDF</span><span>Org / work-email seat (1 allotment)</span></div><div><strong>Not included</strong><span>No MGMA on the external product</span><span>No named towns or hospitals</span><span>No bulk CSV / API in V1</span><span>Ask AMP for deeper firm tools</span></div></div></div>
       <div class="mi-doors mi-doors-single">
-        <article class="mi-door panel panel-glow"><span class="tag">Free demo · pick your 1×1</span><h2>Start anonymous. Hard-lock after one taste.</h2><p>Choose one specialty and one state. The workbench is fully visible for that unit. Other specialties and states stay locked until you verify.</p>
-          <div class="form-grid two ridge-demo-pickers">
-            <label class="field">Demo specialty<select id="ridge-demo-specialty" aria-label="Demo specialty"></select></label>
-            <label class="field">Demo state<select id="ridge-demo-state" aria-label="Demo state"><option value="">Select a state…</option></select></label>
-          </div>
+        <article class="mi-door panel panel-glow" id="ridge-demo-door"><span class="tag">Free demo · walkthrough</span><h2>Pick specialty, then state. Then the 1×1 opens.</h2><p>No live market data until both are committed. After that, the workbench is fully visible for that one unit. Other specialties and states stay locked until you verify.</p>
+          <ol class="ridge-walk-steps" aria-label="Demo walkthrough">
+            <li class="ridge-walk-step is-current" data-walk-step="specialty">
+              <span class="ridge-walk-num" aria-hidden="true">1</span>
+              <label class="field">Specialty<select id="ridge-demo-specialty" aria-label="Demo specialty"><option value="">Select a specialty…</option></select></label>
+            </li>
+            <li class="ridge-walk-step is-locked" data-walk-step="state">
+              <span class="ridge-walk-num" aria-hidden="true">2</span>
+              <label class="field">State<select id="ridge-demo-state" aria-label="Demo state" disabled><option value="">Select a state…</option></select></label>
+            </li>
+          </ol>
+          <p class="ridge-walk-hint" id="ridge-walk-hint">Step 1 · pick a specialty. The workbench stays closed.</p>
           <ul class="mi-checks"><li>Demo: 1 state × 1 specialty · free</li><li>Verified: name, org, work email, phone → +2 specialties</li><li>Then State $99 / Region $149 / National $225</li></ul>
-          <div class="btn-row"><button type="button" class="btn btn-primary ridge-demo-open">Open free demo →</button><button type="button" class="btn btn-ghost" data-go="mi-lite-login" data-trail="1">Verify sample</button></div></article>
+          <div class="btn-row"><button type="button" class="btn btn-primary ridge-demo-open" disabled aria-disabled="true">Unlock 1×1 demo →</button><button type="button" class="btn btn-ghost" data-go="mi-lite-login" data-trail="1">Verify sample</button></div></article>
       </div>
     </div>
   </div>
@@ -1320,6 +1327,23 @@
     <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-3.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>Ridge workbench.</h1><p class="lede">Full surface for the units you have unlocked. Demo is 1 state × 1 specialty. Verify for +2 specialties. Paid plans meter polls and enforce geo. Public data only — no MGMA.</p></div></div>
     <div class="section section-lite funnel-panel mi-app-panel">
       <div class="mi-lite-disclaimer panel"><strong>PUBLIC DATA · NO MGMA</strong><span>No client names, search IDs, towns, or hospitals. One org seat · no bulk CSV / API in V1.</span></div>
+      <div class="ridge-walk-gate panel panel-glow" id="ridge-walk-gate" hidden>
+        <span class="tag">Free demo · walkthrough</span>
+        <h2>Pick specialty, then state. Then the 1×1 opens.</h2>
+        <p>No live market data until both are committed. Family Practice and every other specialty stay dark until you unlock one unit.</p>
+        <ol class="ridge-walk-steps" aria-label="Demo walkthrough">
+          <li class="ridge-walk-step is-current" data-walk-step="specialty">
+            <span class="ridge-walk-num" aria-hidden="true">1</span>
+            <label class="field">Specialty<select id="ridge-app-walk-specialty" aria-label="Demo specialty"><option value="">Select a specialty…</option></select></label>
+          </li>
+          <li class="ridge-walk-step is-locked" data-walk-step="state">
+            <span class="ridge-walk-num" aria-hidden="true">2</span>
+            <label class="field">State<select id="ridge-app-walk-state" aria-label="Demo state" disabled><option value="">Select a state…</option></select></label>
+          </li>
+        </ol>
+        <p class="ridge-walk-hint" id="ridge-app-walk-hint">Step 1 · pick a specialty. The workbench stays closed.</p>
+        <div class="btn-row"><button type="button" class="btn btn-primary ridge-app-walk-open" disabled aria-disabled="true">Unlock 1×1 demo →</button></div>
+      </div>
       <div class="mi-unlock-banner panel" id="mi-lite-lock-banner" hidden></div>
       <div class="mi-unlock-banner mi-unlock-banner-open panel" id="mi-lite-open-banner">
         <div>
@@ -2069,9 +2093,9 @@
 <script src="js/content.js?v=2110"></script>
 <script src="js/articles.js?v=2110"></script>
 <script src="js/ridge-mi-data.js?v=2110"></script>
-<script src="js/ridge-access.js?v=2112"></script>
-<script src="js/ridge-workbench.js?v=2112"></script>
-<script src="js/app.js?v=2112"></script>
+<script src="js/ridge-access.js?v=2113"></script>
+<script src="js/ridge-workbench.js?v=2113"></script>
+<script src="js/app.js?v=2113"></script>
 <template id="amp-region-map-template">
 <div class="region-map-shell">
   <div class="region-map-intro">

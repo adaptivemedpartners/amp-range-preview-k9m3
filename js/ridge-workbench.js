@@ -1,4 +1,4 @@
-/* amp-build:1999 Ridge workbench — Light MI full-bleed inside mountain chrome.
+/* amp-build:2113 Ridge workbench — Light MI full-bleed inside mountain chrome.
    No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -1003,6 +1003,11 @@
   }
 
   function refresh() {
+    if (!demoSurfaceReady() || !state.specialtyKey) {
+      var cards = $("ridge-bench-cards");
+      if (cards) cards.innerHTML = "";
+      return;
+    }
     updateMetricButtons();
     renderBenchCards();
     paintMap();
@@ -1147,16 +1152,27 @@
     return true;
   }
 
+  function demoSurfaceReady() {
+    var api = accessApi();
+    if (!api || typeof api.isDemoCommitted !== "function") return true;
+    return !!api.isDemoCommitted();
+  }
+
   function applyAccessDefaults() {
     var api = accessApi();
     var seat = api && api.getSeat ? api.getSeat() : null;
+    if (!demoSurfaceReady()) {
+      state.specialtyKey = null;
+      state.selected = {};
+      return;
+    }
     if (!state.specialtyKey) {
-      state.specialtyKey = (seat && seat.demoSpecialty) || data().SPECIALTIES[0].key;
+      state.specialtyKey = (seat && seat.demoSpecialty) || (data().SPECIALTIES[0] && data().SPECIALTIES[0].key) || null;
     }
     if (seat && !Object.keys(state.selected).length) {
       var st = null;
       if (seat.tier === "state" && seat.paidState) st = api.normState(seat.paidState);
-      else if (seat.tier === "demo" || seat.tier === "verified") st = api.normState(seat.demoState);
+      else if ((seat.tier === "demo" || seat.tier === "verified") && seat.demoState) st = api.normState(seat.demoState);
       if (st) state.selected[st] = true;
     }
   }
@@ -1164,9 +1180,13 @@
   function init() {
     if (!data().SPECIALTIES || !data().SPECIALTIES.length) return;
     applyAccessDefaults();
-    if (!state.specialtyKey) state.specialtyKey = data().SPECIALTIES[0].key;
-    populateSpecialtySelect();
     bindChrome();
+    if (!demoSurfaceReady() || !state.specialtyKey) {
+      var cards = $("ridge-bench-cards");
+      if (cards) cards.innerHTML = "";
+      return;
+    }
+    populateSpecialtySelect();
     loadMapSvg(function () { refresh(); });
   }
 
