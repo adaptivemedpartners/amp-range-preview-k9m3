@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2110-hero-lighten";
+  window.__AMP_BUILD = "2112-ridge-v1-lock";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -910,6 +910,7 @@
 
   function renderMILite() {
     populateMIFields("#mi-app-specialty", "#mi-app-regions");
+    populateRidgeDemoPickers();
   }
 
   function ensureMiLiteStateOptions() {
@@ -983,33 +984,258 @@
     }
   }
 
+  function ridgeAccess() {
+    return window.AMPRidgeAccess || null;
+  }
+
   function applyMiLiteLockUI() {
-    var unlocked = readMiLiteUnlock();
+    var api = ridgeAccess();
+    var seat = api ? api.getSeat() : { tier: "demo" };
     var dash = $("#mi-lite-dashboard");
     var meat = $("#mi-lite-dashboard-meat");
     var blur = $("#mi-lite-blur-overlay");
     var lockBanner = $("#mi-lite-lock-banner");
     var openBanner = $("#mi-lite-open-banner");
     var toolbar = $("#mi-lite-toolbar");
+    var paid = api ? api.isPaid(seat) : false;
     if (dash) {
-      dash.classList.toggle("is-locked", !unlocked);
-      dash.classList.toggle("mi-lite-dashboard", true);
+      dash.classList.remove("is-locked");
+      dash.classList.add("mi-lite-dashboard");
+      dash.setAttribute("data-ridge-tier", seat.tier || "demo");
     }
-    if (blur) blur.hidden = unlocked;
-    if (lockBanner) lockBanner.hidden = unlocked;
-    if (openBanner) openBanner.hidden = !unlocked;
-    if (toolbar) toolbar.hidden = !unlocked;
-    if (meat) meat.setAttribute("aria-hidden", unlocked ? "false" : "true");
+    /* Unit-gated surface stays visible; overlay is denial-only, not a whole-dash blur. */
+    if (blur) blur.hidden = true;
+    if (lockBanner) lockBanner.hidden = true;
+    if (openBanner) openBanner.hidden = false;
+    if (toolbar) toolbar.hidden = false;
+    if (meat) meat.setAttribute("aria-hidden", "false");
+    renderRidgeAccessChrome(seat, paid);
+  }
+
+  function renderRidgeAccessChrome(seat, paid) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    var copy = api && api.tierCopy ? api.tierCopy(seat) : { tag: "Ridge", title: "Demo", body: "" };
+    var tag = $("#ridge-access-tag");
+    var title = $("#ridge-access-title");
+    var body = $("#ridge-access-body");
+    var polls = $("#ridge-poll-meter");
+    var verifyBtn = $("#ridge-verify-cta");
+    var upgradeBtn = $("#ridge-upgrade-cta");
+    var extraBtn = $("#ridge-extra-poll-cta");
+    var oneoffBtn = $("#ridge-oneoff-cta");
+    if (tag) tag.textContent = copy.tag;
+    if (title) title.textContent = copy.title;
+    if (body) body.textContent = copy.body;
+    if (polls) {
+      if (paid && api) {
+        polls.hidden = false;
+        polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " left";
+        polls.classList.toggle("is-empty", api.pollsLeft(seat) <= 0);
+      } else {
+        polls.hidden = true;
+      }
+    }
+    if (verifyBtn) verifyBtn.hidden = !(seat && seat.tier === "demo");
+    if (upgradeBtn) upgradeBtn.hidden = !!(seat && (seat.tier === "national"));
+    if (extraBtn) extraBtn.hidden = !paid;
+    if (oneoffBtn) oneoffBtn.hidden = !!paid;
+    var seatLine = $("#ridge-seat-line");
+    if (seatLine) {
+      if (seat && seat.seat && seat.seat.email) {
+        seatLine.hidden = false;
+        seatLine.textContent = "Seat · " + seat.seat.org + " · " + seat.seat.email + " · 1 allotment / org seat · no CSV/API in V1";
+      } else {
+        seatLine.hidden = seat && seat.tier !== "demo";
+        if (seat && seat.tier === "demo") seatLine.textContent = "Anonymous demo · org / work email required to verify · 1 allotment per org seat";
+      }
+    }
+  }
+
+  function showRidgeDenial(denial) {
+    var overlay = $("#ridge-unit-overlay");
+    var title = $("#ridge-unit-title");
+    var body = $("#ridge-unit-body");
+    var verify = $("#ridge-unit-verify");
+    var upgrade = $("#ridge-unit-upgrade");
+    var extra = $("#ridge-unit-extra");
+    if (!overlay) return;
+    denial = denial || (ridgeAccess() && ridgeAccess().lastDenial && ridgeAccess().lastDenial());
+    var reason = denial && denial.reason;
+    overlay.hidden = false;
+    if (reason === "verify") {
+      if (title) title.textContent = "Demo is locked to 1 state × 1 specialty.";
+      if (body) body.textContent = "Verify with name, org, work email, and phone to unlock +2 specialty tastes (3 total). Then a hard paywall.";
+      if (verify) verify.hidden = false;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+    } else if (reason === "paywall") {
+      if (title) title.textContent = "Verified sample used — hard paywall.";
+      if (body) body.textContent = "Three specialty tastes are in. Subscribe for geo scope + monthly polls, or buy a $49 one-off report.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+    } else if (reason === "geo") {
+      if (title) title.textContent = "Outside your plan geography.";
+      if (body) body.textContent = "This state is outside the unlocked AMP region or state. Upgrade geo, or buy a $49 one-off report.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+    } else if (reason === "polls") {
+      if (title) title.textContent = "No polls left this month.";
+      if (body) body.textContent = "A poll is one specialty × state open. Extra poll $9, or upgrade the plan.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = false;
+    } else {
+      if (title) title.textContent = "Ridge gate";
+      if (body) body.textContent = "This unit is locked on the current stair.";
+      if (verify) verify.hidden = false;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+    }
+  }
+
+  function hideRidgeDenial() {
+    var overlay = $("#ridge-unit-overlay");
+    if (overlay) overlay.hidden = true;
+  }
+
+  function populateRidgeDemoPickers() {
+    var spec = $("#ridge-demo-specialty");
+    var st = $("#ridge-demo-state");
+    var api = ridgeAccess();
+    var seat = api && api.getSeat();
+    if (spec && !spec.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
+      AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+        var opt = document.createElement("option");
+        opt.value = s.key;
+        opt.textContent = s.label;
+        spec.appendChild(opt);
+      });
+    }
+    if (st && st.options.length <= 1) {
+      RIDGE_US_STATES.forEach(function (row) {
+        var opt = document.createElement("option");
+        opt.value = row.abbr;
+        opt.textContent = row.name + " (" + row.abbr + ")";
+        st.appendChild(opt);
+      });
+    }
+    if (spec && seat && seat.demoSpecialty) spec.value = seat.demoSpecialty;
+    if (st && seat && seat.demoState) st.value = String(seat.demoState).toUpperCase();
+  }
+
+  function openRidgeCheckout(sku) {
+    var api = ridgeAccess();
+    var meta = api && api.SKUS && (api.SKUS[sku] || api.SKUS[String(sku).replace(/^ridge_/, "")]);
+    var modal = $("#ridge-checkout-modal");
+    if (!modal || !meta) return;
+    modal.hidden = false;
+    modal.setAttribute("data-ridge-sku", meta.sku.replace(/^ridge_/, ""));
+    var title = $("#ridge-checkout-title");
+    var amount = $("#ridge-checkout-amount");
+    var note = $("#ridge-checkout-note");
+    if (title) title.textContent = meta.label;
+    if (amount) amount.textContent = meta.kind === "subscription" ? ("$" + meta.amount + " / month") : ("$" + meta.amount + " one-time");
+    if (note) {
+      note.textContent = "Stripe Checkout is stubbed in V1 (test-mode hook). Simulate success to grant the seat locally. No card is charged.";
+    }
+    var portalState = $("#mi-lite-state-select");
+    var portalRegion = $("#mi-lite-region-select");
+    var statePick = $("#ridge-checkout-state");
+    var regionPick = $("#ridge-checkout-region");
+    var specPick = $("#ridge-checkout-specialty");
+    var plan = String(meta.plan || sku);
+    if (statePick) {
+      if (statePick.options.length <= 1) {
+        RIDGE_US_STATES.forEach(function (row) {
+          var opt = document.createElement("option");
+          opt.value = row.abbr;
+          opt.textContent = row.name;
+          statePick.appendChild(opt);
+        });
+      }
+      var stateWrap = statePick.closest(".field");
+      if (stateWrap) stateWrap.hidden = !(plan === "state" || sku === "oneoff");
+      if (portalState && portalState.value) statePick.value = portalState.value;
+    }
+    if (regionPick) {
+      var regionWrap = regionPick.closest(".field");
+      if (regionWrap) regionWrap.hidden = plan !== "region";
+      if (portalRegion && portalRegion.value) regionPick.value = portalRegion.value;
+    }
+    if (specPick) {
+      if (!specPick.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
+        AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+          var opt = document.createElement("option");
+          opt.value = s.key;
+          opt.textContent = s.label;
+          specPick.appendChild(opt);
+        });
+      }
+      var specWrap = specPick.closest(".field");
+      if (specWrap) specWrap.hidden = sku !== "oneoff";
+    }
+  }
+
+  function closeRidgeCheckout() {
+    var modal = $("#ridge-checkout-modal");
+    if (modal) modal.hidden = true;
+  }
+
+  function completeRidgeCheckout() {
+    var api = ridgeAccess();
+    var modal = $("#ridge-checkout-modal");
+    if (!api || !modal) return;
+    var sku = modal.getAttribute("data-ridge-sku") || "state";
+    api.applyPaid({
+      sku: sku,
+      state: ($("#ridge-checkout-state") && $("#ridge-checkout-state").value) || ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || undefined,
+      region: ($("#ridge-checkout-region") && $("#ridge-checkout-region").value) || ($("#mi-lite-region-select") && $("#mi-lite-region-select").value) || undefined,
+      specialty: ($("#ridge-checkout-specialty") && $("#ridge-checkout-specialty").value) || undefined
+    });
+    closeRidgeCheckout();
+    hideRidgeDenial();
+    applyMiLiteLockUI();
+    if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    showMiMockToast("Checkout stub · " + sku + " granted in this browser (test mode, nothing charged).");
+    if (!document.querySelector('[data-route="mi-lite-app"].on')) {
+      go("mi-lite-app", { trail: true });
+    }
+  }
+
+  function showMiMockToast(msg) {
+    var toast = $("#mi-lite-mock-toast");
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.hidden = false;
+    clearTimeout(showMiMockToast._t);
+    showMiMockToast._t = setTimeout(function () { toast.hidden = true; }, 2800);
   }
 
   function renderMILiteApp() {
+    var api = ridgeAccess();
+    if (api) {
+      var seat = api.getSeat();
+      if (!seat || seat.tier === "demo") api.startDemo();
+    }
     renderMILite();
     updateMILiteDashboard();
     applyMiLiteLockUI();
+    try {
+      var seat2 = api && api.getSeat();
+      if (seat2 && window.AMPRidgeWorkbench) {
+        if (seat2.demoSpecialty && AMPRidgeWorkbench.getSpecialtyKey && AMPRidgeWorkbench.getSpecialtyKey() !== seat2.demoSpecialty) {
+          AMPRidgeWorkbench.setSpecialtyKey(seat2.demoSpecialty);
+        }
+      }
+    } catch (eSync) {}
   }
 
   function renderMILiteLogin() {
-    readMiLiteUnlock();
+    var api = ridgeAccess();
+    if (api) api.getSeat();
   }
 
   function renderDynamic(route, params) {
@@ -1520,6 +1746,16 @@
   var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 };
   var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
   var BD_CC_ALWAYS = ["Randy Keeth", "Mike Freeman", "David Fontenot"]; /* Randy = main CC; Mike + David always copied */
+  var BD_CC_ALWAYS_EMAILS = [
+    "rkeeth@adaptivemedicalpartners.com",
+    "mfreeman@adaptivemedicalpartners.com",
+    "david@adaptivemedicalpartners.com"
+  ];
+  var BD_CC_ALWAYS_MAP = [
+    { name: "Randy Keeth", email: "rkeeth@adaptivemedicalpartners.com" },
+    { name: "Mike Freeman", email: "mfreeman@adaptivemedicalpartners.com" },
+    { name: "David Fontenot", email: "david@adaptivemedicalpartners.com" }
+  ];
   var BD_OWNER_META = {
     aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Hiring guide", blurb: "Texas hiring guide who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
     zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the climb from both sides of the rope.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
@@ -3244,6 +3480,81 @@
     return state.enrichBundle;
   }
 
+  function conciergeHandoffUrl() {
+    try {
+      if (window.AMP_CHATBOT && window.AMP_CHATBOT.handoffUrl) {
+        return String(window.AMP_CHATBOT.handoffUrl).trim();
+      }
+    } catch (e) {}
+    var script = document.querySelector("script[data-amp-handoff-url], [data-amp-handoff-url]");
+    return script ? String(script.getAttribute("data-amp-handoff-url") || "").trim() : "";
+  }
+
+  function persistSpaLead(payload) {
+    try {
+      var isClient = payload.audience === "client";
+      var key = isClient ? "amp_chatbot_client_leads" : "amp_chatbot_leads";
+      var list = [];
+      try { list = JSON.parse(localStorage.getItem(key) || "[]"); } catch (e) { list = []; }
+      if (!Array.isArray(list)) list = [];
+      list.push(payload);
+      if (list.length > 50) list = list.slice(-50);
+      localStorage.setItem(key, JSON.stringify(list));
+      if (isClient) {
+        localStorage.setItem("amp_chatbot_last_client_lead", JSON.stringify(payload));
+        try {
+          var all = JSON.parse(localStorage.getItem("amp_chatbot_leads") || "[]");
+          if (!Array.isArray(all)) all = [];
+          all.push(payload);
+          if (all.length > 50) all = all.slice(-50);
+          localStorage.setItem("amp_chatbot_leads", JSON.stringify(all));
+        } catch (e2) {}
+      } else {
+        localStorage.setItem("amp_chatbot_last_lead", JSON.stringify(payload));
+      }
+    } catch (e) {
+      console.warn("[AMP forms] localStorage persist failed:", e);
+    }
+  }
+
+  function hiringGuideCcFields() {
+    return {
+      cc: BD_CC_ALWAYS.slice(),
+      ccEmails: BD_CC_ALWAYS_EMAILS.slice(),
+      ccPeople: BD_CC_ALWAYS_MAP.map(function (p) { return { name: p.name, email: p.email }; })
+    };
+  }
+
+  function postLeadHandoff(payload) {
+    persistSpaLead(payload);
+    var url = conciergeHandoffUrl();
+    console.log("[AMP forms] Handoff lead captured:", payload);
+    if (!url) return Promise.resolve({ ok: false, stub: true, persisted: true });
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+      mode: "cors",
+      credentials: "omit"
+    }).then(function (res) {
+      console.log("[AMP forms] Handoff POST status:", res.status);
+      return { ok: res.ok, status: res.status, persisted: true };
+    }).catch(function (err) {
+      console.warn("[AMP forms] Handoff POST failed (localStorage still OK):", err);
+      return { ok: false, error: String(err), persisted: true };
+    });
+  }
+
+  function setFormBusy(form, busy) {
+    if (!form) return;
+    var btn = form.querySelector('button[type="submit"]');
+    if (btn) {
+      if (busy && !btn.getAttribute("data-idle-label")) btn.setAttribute("data-idle-label", btn.textContent);
+      btn.disabled = !!busy;
+      btn.textContent = busy ? "Sending…" : (btn.getAttribute("data-idle-label") || btn.textContent);
+    }
+  }
+
   function stampMess(kind, payload) {
     var el = kind === "client" ? $("#mess-client-mock") : $("#mess-response-mock");
     if (!el) return;
@@ -3409,11 +3720,15 @@ function syncGuideRoute(route) {
         if (route === "mpc-portal") {
           state.agreement = state.agreement || "mpc";
         }
-        if (route === "mi-lite-app" && (t.id === "mi-lite-subscribe" || t.getAttribute("data-mi-unlock") === "1")) {
-          var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-          state.miLitePlan = normalizeMiLitePlan(miPlan ? miPlan.value : (state.miLitePlan || "region"));
-          writeMiLiteUnlock(state.miLitePlan);
-          if (typeof stampMess === "function") stampMess("client", "Ridge sample unlock · " + state.miLitePlan + " → a hiring guide");
+        if (t.id === "mi-lite-subscribe" || t.getAttribute("data-ridge-checkout")) {
+          e.preventDefault();
+          var sku = t.id === "mi-lite-subscribe" ? null : t.getAttribute("data-ridge-checkout");
+          if (!sku) {
+            var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
+            sku = miPlan ? miPlan.value : (state.miLitePlan || "region");
+          }
+          openRidgeCheckout(sku);
+          return;
         }
         go(route, { trail: trail, approach: approach, hash: dataHash });
         return;
@@ -3635,8 +3950,35 @@ function syncGuideRoute(route) {
       jobForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var fd = new FormData(jobForm);
-        stampMess("physician", (fd.get("name") || "Physician") + " · " + (fd.get("specialty") || state.specialty || "OB/GYN"));
-        go("confirm-mess", { trail: true });
+        var spec = String(fd.get("specialty") || state.specialty || "OB/GYN");
+        var payload = {
+          name: String(fd.get("name") || "").trim(),
+          phone: String(fd.get("phone") || "").trim(),
+          email: String(fd.get("email") || "").trim() || null,
+          specialty: spec,
+          region: state.region || (state.regions && state.regions[0]) || null,
+          jobLabel: state.jobId || null,
+          org: null,
+          interest: spec + (fd.get("note") ? " · " + fd.get("note") : ""),
+          note: String(fd.get("note") || ""),
+          source: "AMP website",
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString(),
+          audience: "candidate",
+          channel: "amp_job_interest_form",
+          routeTo: "recruiting_responses",
+          responsesFeedReady: true,
+          recruiterTag: "mike",
+          recruiter: "mike",
+          owner: "mfreeman",
+          formId: "job-interest-form"
+        };
+        setFormBusy(jobForm, true);
+        postLeadHandoff(payload).then(function () {
+          setFormBusy(jobForm, false);
+          stampMess("physician", (payload.name || "Physician") + " · " + spec);
+          go("confirm-mess", { trail: true });
+        });
       });
     }
 
@@ -3663,18 +4005,50 @@ function syncGuideRoute(route) {
           if (stateSel) stateSel.focus();
           return;
         }
+        var cc = hiringGuideCcFields();
         state.clientBd = {
           state: stCode,
           ownerId: owner.id,
           ownerName: owner.name,
           ownerLabel: owner.label,
-          cc: BD_CC_ALWAYS
+          cc: cc.cc,
+          ccEmails: cc.ccEmails
         };
-        stampMess(
-          "client",
-          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → a hiring guide · CC Randy/Mike/David"
-        );
-        go("confirm-client", { trail: true });
+        var payload = {
+          name: String(fd.get("name") || "").trim(),
+          phone: String(fd.get("phone") || "").trim(),
+          email: String(fd.get("email") || "").trim() || null,
+          specialty: clientSpecLabel(state.clientSpecialty || (state.clientSpecialties && state.clientSpecialties[0])) || null,
+          region: stCode,
+          jobLabel: null,
+          org: String(fd.get("role") || "").trim() || null,
+          role: String(fd.get("role") || "").trim() || null,
+          interest: agreeLabel + " · " + stCode + (fd.get("note") ? " · " + fd.get("note") : ""),
+          note: String(fd.get("note") || ""),
+          agreement: state.agreement || null,
+          source: "AMP website",
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString(),
+          audience: "client",
+          channel: "amp_client_meeting_form",
+          routeTo: "bd_hub_randy",
+          responsesFeedReady: true,
+          owner: owner.id,
+          ownerName: owner.name,
+          formId: "client-meeting-form",
+          cc: cc.cc,
+          ccEmails: cc.ccEmails,
+          ccPeople: cc.ccPeople
+        };
+        setFormBusy(clientForm, true);
+        postLeadHandoff(payload).then(function () {
+          setFormBusy(clientForm, false);
+          stampMess(
+            "client",
+            (payload.name || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → a hiring guide · CC Randy/Mike/David"
+          );
+          go("confirm-client", { trail: true });
+        });
       });
     }
 
@@ -3730,14 +4104,49 @@ function syncGuideRoute(route) {
         e.preventDefault();
         var fd = new FormData(contactForm);
         var intent = String(fd.get("intent") || "physician");
-        var who = fd.get("name") || "Contact";
-        if (intent === "client") {
-          stampMess("client", who + " · general contact → a hiring guide");
-          go("confirm-client", { trail: true });
+        var who = String(fd.get("name") || "Contact").trim();
+        var isClient = intent === "client";
+        var cc = isClient ? hiringGuideCcFields() : null;
+        var payload = {
+          name: who,
+          phone: String(fd.get("phone") || "").trim(),
+          email: String(fd.get("email") || "").trim() || null,
+          specialty: String(fd.get("role") || "").trim() || null,
+          region: null,
+          jobLabel: null,
+          org: isClient ? String(fd.get("role") || "").trim() || null : null,
+          interest: (isClient ? "Hiring / client contact" : "Physician / candidate contact") + (fd.get("note") ? " · " + fd.get("note") : ""),
+          note: String(fd.get("note") || ""),
+          source: "AMP website",
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString(),
+          audience: isClient ? "client" : "candidate",
+          channel: isClient ? "amp_site_contact_form" : "amp_site_contact_form",
+          routeTo: isClient ? "bd_hub_randy" : "recruiting_responses",
+          responsesFeedReady: true,
+          formId: "site-contact-form",
+          intent: intent
+        };
+        if (isClient && cc) {
+          payload.cc = cc.cc;
+          payload.ccEmails = cc.ccEmails;
+          payload.ccPeople = cc.ccPeople;
         } else {
-          stampMess("physician", who + " · general contact → a recruiting guide");
-          go("confirm-mess", { trail: true });
+          payload.recruiterTag = "mike";
+          payload.recruiter = "mike";
+          payload.owner = "mfreeman";
         }
+        setFormBusy(contactForm, true);
+        postLeadHandoff(payload).then(function () {
+          setFormBusy(contactForm, false);
+          if (isClient) {
+            stampMess("client", who + " · general contact → a hiring guide · CC Randy/Mike/David");
+            go("confirm-client", { trail: true });
+          } else {
+            stampMess("physician", who + " · general contact → a recruiting guide");
+            go("confirm-mess", { trail: true });
+          }
+        });
       });
     }
 
@@ -3778,56 +4187,111 @@ function syncGuideRoute(route) {
       miStateSelect._ampWired = true;
       ensureMiLiteStateOptions();
     }
-    function unlockRidgeAndGo(plan, note) {
-      if (plan) state.miLitePlan = plan;
-      writeMiLiteUnlock(state.miLitePlan || "region");
-      if (typeof stampMess === "function") stampMess("client", note || ("Ridge unlock · " + state.miLitePlan));
-      go("mi-lite-app", { trail: true });
-    }
+    $all(".ridge-demo-open").forEach(function (ridgeDemoGo) {
+      ridgeDemoGo.addEventListener("click", function () {
+        var api = ridgeAccess();
+        if (api) {
+          api.startDemo({
+            specialty: ($("#ridge-demo-specialty") && $("#ridge-demo-specialty").value) || undefined,
+            state: ($("#ridge-demo-state") && $("#ridge-demo-state").value) || undefined
+          });
+        }
+        go("mi-lite-app", { trail: true });
+      });
+    });
     var miLoginForm = $("#mi-lite-login-form");
     if (miLoginForm) miLoginForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      unlockRidgeAndGo(state.miLitePlan || "region", "Ridge fake login unlock");
+      var api = ridgeAccess();
+      if (!api) return;
+      var result = api.verify({
+        name: ($("#mi-lite-name") && $("#mi-lite-name").value) || ($("#ridge-verify-name") && $("#ridge-verify-name").value),
+        org: ($("#mi-lite-org") && $("#mi-lite-org").value) || ($("#ridge-verify-org") && $("#ridge-verify-org").value),
+        email: ($("#mi-lite-email") && $("#mi-lite-email").value) || ($("#ridge-verify-email") && $("#ridge-verify-email").value),
+        phone: ($("#mi-lite-phone") && $("#mi-lite-phone").value) || ($("#ridge-verify-phone") && $("#ridge-verify-phone").value)
+      });
+      var err = $("#ridge-verify-error");
+      if (!result.ok) {
+        if (err) {
+          err.hidden = false;
+          err.textContent = result.reason === "work_email"
+            ? "Use a verified work / org email — consumer inboxes (gmail, yahoo, outlook, icloud) stay locked."
+            : "Name, org, work email, and phone are required.";
+        }
+        return;
+      }
+      if (err) err.hidden = true;
+      hideRidgeDenial();
+      go("mi-lite-app", { trail: true });
     });
     var miDemo = $("#mi-lite-demo-login");
     if (miDemo) miDemo.addEventListener("click", function () {
-      unlockRidgeAndGo("demo", "Ridge demo unlock");
+      var api = ridgeAccess();
+      if (api) api.startDemo();
+      go("mi-lite-app", { trail: true });
     });
     var miLockAgain = $("#mi-lite-lock-again");
     if (miLockAgain) miLockAgain.addEventListener("click", function () {
+      var api = ridgeAccess();
+      if (api) api.reset();
       clearMiLiteUnlock();
+      hideRidgeDenial();
       applyMiLiteLockUI();
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+      showMiMockToast("Ridge seat reset to anonymous demo.");
     });
-    function showMiMockToast(msg) {
-      var toast = $("#mi-lite-mock-toast");
-      if (!toast) return;
-      toast.textContent = msg;
-      toast.hidden = false;
-      clearTimeout(showMiMockToast._t);
-      showMiMockToast._t = setTimeout(function () { toast.hidden = true; }, 2800);
-    }
     var miSave = $("#mi-lite-save");
     if (miSave) miSave.addEventListener("click", function () {
-      if (!readMiLiteUnlock()) return;
-      showMiMockToast("Saved · example snapshot held in this browser only.");
+      showMiMockToast("Saved · snapshot held in this browser only. No CSV / API export in V1.");
     });
     var miCompare = $("#mi-lite-compare");
     if (miCompare) miCompare.addEventListener("click", function () {
-      if (!readMiLiteUnlock()) return;
-      showMiMockToast("Compare · mock region overlay — Ask AMP for a real side-by-side.");
+      showMiMockToast("Compare · overlay is local only. A poll is one specialty × state.");
     });
     var miDownload = $("#mi-lite-download");
     if (miDownload) miDownload.addEventListener("click", function () {
-      if (!readMiLiteUnlock()) return;
       var opened = false;
       try {
         if (window.AMPRidgeWorkbench && typeof AMPRidgeWorkbench.downloadReport === "function") {
           opened = !!AMPRidgeWorkbench.downloadReport();
         }
       } catch (err) { opened = false; }
-      if (opened) showMiMockToast("Report opened · AMP lockup on the print sheet. Save as PDF from the browser.");
-      else showMiMockToast("Download report · allow pop-ups to open the AMP-branded print sheet, or Ask AMP for a guided brief.");
+      if (opened) showMiMockToast("AMP-branded report opened. Print / Save PDF from the browser.");
+      else showMiMockToast("Allow pop-ups to open the AMP-branded print sheet.");
     });
+    document.body.addEventListener("click", function (ev) {
+      var skuBtn = ev.target.closest("[data-ridge-checkout]");
+      if (skuBtn && !skuBtn.getAttribute("data-go")) {
+        ev.preventDefault();
+        openRidgeCheckout(skuBtn.getAttribute("data-ridge-checkout"));
+        return;
+      }
+      if (ev.target.closest("#ridge-checkout-confirm")) {
+        ev.preventDefault();
+        completeRidgeCheckout();
+        return;
+      }
+      if (ev.target.closest("[data-ridge-checkout-close]")) {
+        ev.preventDefault();
+        closeRidgeCheckout();
+        return;
+      }
+      if (ev.target.closest("[data-ridge-unit-close]")) {
+        ev.preventDefault();
+        hideRidgeDenial();
+      }
+    });
+    var api = ridgeAccess();
+    if (api && api.onChange) {
+      api.onChange(function () {
+        applyMiLiteLockUI();
+      });
+    }
+    if (api && api.onDenial) {
+      api.onDenial(function (denial) {
+        showRidgeDenial(denial);
+      });
+    }
     /* Education / blog / home Ridge preview cards use data-go already; make panel cards keyboard-activatable */
     $all(".mi-education-card[data-go], .ridge-teaser[data-go]").forEach(function (card) {
       card.addEventListener("keydown", function (e) {
@@ -4576,6 +5040,9 @@ function syncGuideRoute(route) {
     updateRankOrientationCopy();
     try { rewriteGoHrefs(); } catch (eHref) {}
     bind();
+    try {
+      if (window.AMPRidgeAccess && AMPRidgeAccess.consumeCheckoutQuery) AMPRidgeAccess.consumeCheckoutQuery();
+    } catch (eCheckout) {}
     renderBlogIndex();
     bootFromHash({ fromHistory: true });
     try { scheduleHomeVideoWarm(); } catch (eWarm) {}
