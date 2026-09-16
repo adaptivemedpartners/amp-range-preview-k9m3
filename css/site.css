@@ -5083,6 +5083,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-weight: 800;
   letter-spacing: .02em;
 }
+.ridge-poll-meter[hidden],
+.ridge-unit-overlay[hidden],
+#ridge-extra-poll-cta[hidden],
+#ridge-oneoff-cta[hidden],
+#ridge-verify-cta[hidden],
+#ridge-upgrade-cta[hidden] { display: none !important; }
 .ridge-poll-meter.is-empty { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
 .ridge-seat-line { margin: 8px 0 0; font-size: 12px; }
 .ridge-access-actions { flex-wrap: wrap; }

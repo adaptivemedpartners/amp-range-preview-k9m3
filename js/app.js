@@ -3692,6 +3692,12 @@ function syncGuideRoute(route) {
       var guideRoot = $("#amp-guide");
       var guideDock = $("#amp-guide-dock");
       if (guideRoot && !guideRoot.hidden && guideDock && !guideDock.hidden && !raw.closest("#amp-guide")) closeGuideDock();
+      if (raw.closest("#mi-lite-subscribe")) {
+        e.preventDefault();
+        var subPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
+        openRidgeCheckout(subPlan ? subPlan.value : (state.miLitePlan || "region"));
+        return;
+      }
       var t = raw.closest("[data-go]");
       if (t) {
         if (t.tagName === "A") {
@@ -4260,6 +4266,12 @@ function syncGuideRoute(route) {
       else showMiMockToast("Allow pop-ups to open the AMP-branded print sheet.");
     });
     document.body.addEventListener("click", function (ev) {
+      if (ev.target.closest("#mi-lite-subscribe")) {
+        ev.preventDefault();
+        var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
+        openRidgeCheckout(miPlan ? miPlan.value : (state.miLitePlan || "region"));
+        return;
+      }
       var skuBtn = ev.target.closest("[data-ridge-checkout]");
       if (skuBtn && !skuBtn.getAttribute("data-go")) {
         ev.preventDefault();

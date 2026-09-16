@@ -36,6 +36,7 @@ assert(!api.trySpecialty("ob_gyn_general").ok, "demo other spec locked");
 assert(api.lastDenial().reason === "verify", "demo denial is verify");
 assert(api.tryState("tx").ok, "demo TX ok");
 assert(!api.tryState("ca").ok, "demo CA locked");
+assert(api.lastDenial().reason === "verify", "demo out-of-state is verify, not geo");
 
 var bad = api.verify({ name: "Pat", org: "Clinic", email: "pat@gmail.com", phone: "555" });
 assert(!bad.ok && bad.reason === "work_email", "gmail rejected");

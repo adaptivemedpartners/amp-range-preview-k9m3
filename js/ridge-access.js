@@ -329,7 +329,12 @@
     if (hasOneOff(seat, spec, st) && !isPaid(seat)) {
       return { ok: true, seat: seat, oneOff: true };
     }
-    if (!canState(st, seat)) return deny("geo", { specialty: spec, state: st });
+    if (!canState(st, seat)) {
+      if (!isPaid(seat)) {
+        return deny(seat.tier === "verified" ? "paywall" : "verify", { specialty: spec, state: st });
+      }
+      return deny("geo", { specialty: spec, state: st });
+    }
     if (isPaid(seat)) {
       if (!canCombo(spec, st, seat)) return deny("polls", { specialty: spec, state: st });
       var used = consumePaidPoll(seat, spec, st);
