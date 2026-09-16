@@ -639,6 +639,19 @@
       /* Reserved fields for future Responses / Bullhorn / BD Hub wiring — no Bullhorn/Instantly invent */
       responsesFeedReady: true
     };
+    if (isClient) {
+      payload.cc = ["Randy Keeth", "Mike Freeman", "David Fontenot"];
+      payload.ccEmails = [
+        "rkeeth@adaptivemedicalpartners.com",
+        "mfreeman@adaptivemedicalpartners.com",
+        "david@adaptivemedicalpartners.com"
+      ];
+      payload.ccPeople = [
+        { name: "Randy Keeth", email: "rkeeth@adaptivemedicalpartners.com" },
+        { name: "Mike Freeman", email: "mfreeman@adaptivemedicalpartners.com" },
+        { name: "David Fontenot", email: "david@adaptivemedicalpartners.com" }
+      ];
+    }
     if (!isClient) {
       var tag = state.recruiterTag || state.recruiter || "mike";
       payload.recruiterTag = tag; /* owning recruiter tag for Mess Responses Overnight */

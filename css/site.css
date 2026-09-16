@@ -5069,6 +5069,42 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 /* Paid Ridge: never show region lens */
 .ridge-region-lens, .mi-lite-view .mi-lite-regions-field.ridge-region-lens, #mi-lite-app-form .ridge-region-lens { display:none !important; }
 
+/* Ridge V1 access — unit gates, poll meter, checkout stub */
+.ridge-demo-pickers { margin: 14px 0 4px; }
+.ridge-poll-meter {
+  display: inline-block;
+  margin: 10px 0 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #115e59;
+  border: 1px solid rgba(13,148,136,.35);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+.ridge-poll-meter.is-empty { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+.ridge-seat-line { margin: 8px 0 0; font-size: 12px; }
+.ridge-access-actions { flex-wrap: wrap; }
+.ridge-unit-overlay { z-index: 5; }
+.ridge-geo-locked { opacity: .38; cursor: not-allowed !important; }
+.mi-price-grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.ridge-add-on-grid { margin-top: 8px; }
+.ridge-add-on-grid .btn { margin-top: 8px; }
+.ridge-checkout-modal[hidden] { display: none !important; }
+.ridge-checkout-modal {
+  position: fixed; inset: 0; z-index: 1200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background: rgba(15,23,42,.45);
+}
+.ridge-checkout-card { max-width: 520px; width: 100%; padding: 24px; background: #fff; }
+.ridge-checkout-amount { font-size: 28px; font-weight: 800; letter-spacing: -.03em; margin: 6px 0 10px; }
+@media (max-width: 560px) {
+  .mi-price-grid-2 { grid-template-columns: 1fr; }
+  .ridge-access-actions { display: grid; grid-template-columns: 1fr; }
+}
+
 
 /* Below-fold education on client agreements + physician jobs */
 .belowfold {

@@ -209,7 +209,7 @@
     if (opts.mean !== false && tc.mean != null) {
       html += '<div class="mean-line' + (opts.meanRow ? " mean-row" : "") + '">';
       if (opts.meanRow) html += '<span class="k">Mean</span><span class="v"><strong>' + fmtMoney(tc.mean) + "</strong></span>";
-      else html += "Mean " + fmtMoney(tc.mean) + (opts.meanSuffix || " · MGMA · EXAMPLE");
+      else html += "Mean " + fmtMoney(tc.mean) + (opts.meanSuffix || " · public · EXAMPLE");
       html += "</div>";
     }
     return html;
@@ -370,6 +370,7 @@
       el.style.fill = lerpColor(t);
       el.classList.toggle("selected", !!state.selected[code]);
       el.classList.toggle("is-hover", state.hover === code);
+      el.classList.toggle("ridge-geo-locked", !accessAllowsState(code));
       /* Avoid double-filter black blobs on AK/HI */
       if (code === "ak" || code === "hi") {
         el.style.filter = "none";
@@ -414,9 +415,9 @@
 
     /* Row 1 (Mike 1999): Compensation top-left, then pipeline, then workforce age.
        Row 2: former top row — supply, postings, openings ratio. */
-    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation (national MGMA)</div>';
+    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation (national public)</div>';
     html += '<div class="hero">' + show(fmtMoney(tc.p50), "n/a") + "<small>median</small></div>";
-    html += mgmaBarsHtml(tc, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · MGMA · EXAMPLE" });
+    html += mgmaBarsHtml(tc, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · public · EXAMPLE" });
     if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
       html += '<div class="bench-extra">';
       if (ratio.p50 != null) html += '<span>Comp / wRVU <b>' + show(fmtNum(ratio.p50, 2), "n/a") + "</b></span>";
@@ -501,7 +502,7 @@
     if (headSub) {
       if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + picks[0].toUpperCase() + " · EXAMPLE";
       else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + metricLabelForActive() + " · EXAMPLE";
-      else headSub.textContent = "Difficulty · speed-to-fill · Total Comp MGMA · EXAMPLE";
+      else headSub.textContent = "Difficulty · speed-to-fill · Total Comp · public · EXAMPLE";
     }
 
     var html = "";
@@ -546,7 +547,7 @@
       " days</strong></span></div>";
 
     if (s && s.totalComp) {
-      html += '<div class="section-title">Total Compensation (national MGMA)</div>';
+      html += '<div class="section-title">Total Compensation (national public)</div>';
       html += mgmaBarsHtml(s.totalComp, { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
       if (s.compRatio && s.compRatio.p50 != null)
         html += '<div class="row"><span class="k">Comp / wRVU</span><span class="v">' + show(fmtNum(s.compRatio.p50, 2), "—") + "</span></div>";
@@ -700,13 +701,46 @@
     }
   }
 
+  function accessApi() {
+    return w.AMPRidgeAccess || null;
+  }
+  function accessAllowsState(code) {
+    var api = accessApi();
+    if (!api || typeof api.canState !== "function") return true;
+    return !!api.canState(code);
+  }
+  function gateSpecialty(key) {
+    var api = accessApi();
+    if (!api || typeof api.trySpecialty !== "function") return { ok: true };
+    return api.trySpecialty(key);
+  }
+  function gateState(code) {
+    var api = accessApi();
+    if (!api || typeof api.tryState !== "function") return { ok: true };
+    return api.tryState(code);
+  }
+
   function setSpecialty(key) {
+    if (!key) return;
+    var gate = gateSpecialty(key);
+    if (!gate.ok) {
+      var sel = $("mi-app-specialty");
+      if (sel && state.specialtyKey) sel.value = state.specialtyKey;
+      return;
+    }
     state.specialtyKey = key;
     refresh();
   }
 
   function toggleState(code, additive) {
     if (!code) return;
+    var willSelect = true;
+    if (state.selected[code] && (additive || state.multi)) willSelect = false;
+    else if (!additive && !state.multi && state.selected[code] && selectedCodes().length === 1) willSelect = false;
+    if (willSelect) {
+      var gate = gateState(code);
+      if (!gate.ok) return;
+    }
     var multi = !!additive || !!state.multi;
     if (multi) {
       state.selected[code] = !state.selected[code];
@@ -999,8 +1033,8 @@
         });
         populateSpecialtySelect();
         var sel = $("mi-app-specialty");
-        if (sel && sel.value) state.specialtyKey = sel.value;
-        refresh();
+        if (sel && sel.value) setSpecialty(sel.value);
+        else refresh();
       });
     });
 
@@ -1010,8 +1044,8 @@
         state.search = search.value || "";
         populateSpecialtySelect();
         var sel = $("mi-app-specialty");
-        if (sel && sel.value) state.specialtyKey = sel.value;
-        refresh();
+        if (sel && sel.value) setSpecialty(sel.value);
+        else refresh();
       });
     }
 
@@ -1113,8 +1147,23 @@
     return true;
   }
 
+  function applyAccessDefaults() {
+    var api = accessApi();
+    var seat = api && api.getSeat ? api.getSeat() : null;
+    if (!state.specialtyKey) {
+      state.specialtyKey = (seat && seat.demoSpecialty) || data().SPECIALTIES[0].key;
+    }
+    if (seat && !Object.keys(state.selected).length) {
+      var st = null;
+      if (seat.tier === "state" && seat.paidState) st = api.normState(seat.paidState);
+      else if (seat.tier === "demo" || seat.tier === "verified") st = api.normState(seat.demoState);
+      if (st) state.selected[st] = true;
+    }
+  }
+
   function init() {
     if (!data().SPECIALTIES || !data().SPECIALTIES.length) return;
+    applyAccessDefaults();
     if (!state.specialtyKey) state.specialtyKey = data().SPECIALTIES[0].key;
     populateSpecialtySelect();
     bindChrome();
@@ -1126,6 +1175,8 @@
     refresh: refresh,
     downloadReport: downloadReport,
     getSpecialtyKey: function () { return state.specialtyKey; },
-    setSpecialtyKey: setSpecialty
+    setSpecialtyKey: setSpecialty,
+    getSelectedCodes: selectedCodes,
+    selectState: function (code, additive) { toggleState(code, additive); }
   };
 })(window);
