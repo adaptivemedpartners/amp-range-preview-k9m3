@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- amp-build:2114-ridge-1x1-lock -->
+<!-- amp-build:2115-ridge-poll-hud -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -21,7 +21,7 @@
   document.head.insertBefore(el, document.head.firstChild);
 })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=2114" />
+<link rel="stylesheet" href="css/site.css?v=2115" />
 <link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="assets/hero-imagine-frame0-1280.webp?v=2110 1280w, assets/hero-imagine-frame0.webp?v=2110 1920w" imagesizes="100vw" />
 </head>
 <body>
@@ -1315,6 +1315,9 @@
           <button type="submit" class="btn btn-primary btn-lg">Verify · unlock +2 specialties</button>
         </form>
         <div class="mi-login-or"><span>or</span></div>
+        <button type="button" class="btn btn-primary btn-lg" id="ridge-simulate-verify">Simulate verified sample</button>
+        <p class="mi-gate-note">Preview only — grants +2 specialty tastes in the committed demo state. No email check.</p>
+        <div class="mi-login-or"><span>or</span></div>
         <button type="button" class="btn btn-ghost btn-lg" id="mi-lite-demo-login">Stay on anonymous demo</button>
         <p class="mi-gate-note mt-16">Need geo + polls? <button type="button" class="linkish" data-go="mi-lite-portal">See State · Region · National →</button></p>
         <button type="button" class="btn btn-ghost mt-12" data-go="mi-lite-app">Back to demo</button>
@@ -1350,15 +1353,22 @@
           <span class="tag" id="ridge-access-tag">Demo · free</span>
           <h3 class="mt-0 mb-0" id="ridge-access-title">1 state × 1 specialty</h3>
           <p class="muted mb-0" id="ridge-access-body">Anonymous demo: full surface for one unit. Verify a work email for +2 specialties.</p>
-          <p class="ridge-poll-meter" id="ridge-poll-meter" hidden>15 of 15 left</p>
+          <p class="ridge-poll-meter" id="ridge-poll-meter" hidden>15 of 15 left this month</p>
+          <div class="ridge-open-units" id="ridge-open-units" hidden></div>
           <p class="muted ridge-seat-line" id="ridge-seat-line">Anonymous demo · org / work email required to verify · 1 allotment per org seat</p>
         </div>
         <div class="btn-row ridge-access-actions">
           <button type="button" class="btn btn-primary" id="ridge-verify-cta" data-go="mi-lite-login" data-trail="1">Verify sample</button>
+          <button type="button" class="btn btn-primary" id="ridge-simulate-verify-app" hidden>Simulate verified sample</button>
           <button type="button" class="btn btn-ghost" id="ridge-upgrade-cta" data-go="mi-lite-portal" data-trail="1">Upgrade</button>
           <button type="button" class="btn btn-ghost" id="ridge-extra-poll-cta" data-ridge-checkout="extra_poll" hidden>Extra poll $9</button>
           <button type="button" class="btn btn-ghost" id="ridge-oneoff-cta" data-ridge-checkout="oneoff">One-off $49</button>
           <button type="button" class="btn btn-ghost" id="mi-lite-lock-again">Reset seat</button>
+        </div>
+        <div class="btn-row ridge-sim-pay" id="ridge-sim-pay">
+          <button type="button" class="btn btn-ghost" data-ridge-simulate="state">Simulate State $99</button>
+          <button type="button" class="btn btn-ghost" data-ridge-simulate="region">Simulate Region $149</button>
+          <button type="button" class="btn btn-ghost" data-ridge-simulate="national">Simulate National $225</button>
         </div>
       </div>
       <form class="mi-app-controls panel panel-glow ridge-controls" id="mi-lite-app-form">
@@ -1374,6 +1384,7 @@
         </div>
         <div class="form-grid two ridge-form-grid">
           <label class="field">Specialty<select id="mi-app-specialty"></select></label>
+          <p class="ridge-taste-hint" id="ridge-taste-hint" hidden>Verified: pick 2 more specialties in the committed state.</p>
           <div class="field ridge-map-tools">
             <span class="field-label">Map tools</span>
             <div class="btn-row ridge-tool-row">
@@ -2093,9 +2104,9 @@
 <script src="js/content.js?v=2110"></script>
 <script src="js/articles.js?v=2110"></script>
 <script src="js/ridge-mi-data.js?v=2110"></script>
-<script src="js/ridge-access.js?v=2114"></script>
-<script src="js/ridge-workbench.js?v=2114"></script>
-<script src="js/app.js?v=2114"></script>
+<script src="js/ridge-access.js?v=2115"></script>
+<script src="js/ridge-workbench.js?v=2115"></script>
+<script src="js/app.js?v=2115"></script>
 <template id="amp-region-map-template">
 <div class="region-map-shell">
   <div class="region-map-intro">

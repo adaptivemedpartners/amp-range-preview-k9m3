@@ -1,5 +1,5 @@
-/* amp-build:2114 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
-   Demo walkthrough (pick specialty → pick state) then 1×1 → verified (+2) → paid geo + polls.
+/* amp-build:2115 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
+   Demo 1×1 → verify +2 specialties (same state) → paid geo + polls.
    Stripe Checkout is stubbed (test-mode hooks). Public data only — no MGMA. */
 (function (w) {
   "use strict";
@@ -206,6 +206,7 @@
     return (seat.oneOffs || []).some(function (p) { return pollKey(p.specialty, p.state) === key; });
   }
   function tasteSpecialties(seat) {
+    seat = seat || load();
     var seen = [];
     (seat.tastes || []).forEach(function (t) {
       if (t && t.specialty && seen.indexOf(t.specialty) === -1) seen.push(t.specialty);
@@ -426,8 +427,50 @@
     if (seat.demoSpecialty && seat.demoState) {
       ensureTaste(seat, seat.demoSpecialty, seat.demoState);
     }
+    seat.demoCommitted = true;
     save(seat);
     return { ok: true, seat: seat };
+  }
+
+  function simulateVerify() {
+    var seat = load();
+    if (isPaid(seat)) return { ok: true, seat: seat, simulated: true };
+    if (!isDemoCommitted(seat) && !(seat.demoSpecialty && seat.demoState)) {
+      return { ok: false, reason: "walkthrough" };
+    }
+    seat.tier = "verified";
+    seat.demoCommitted = true;
+    seat.seat = {
+      name: "Mike (preview)",
+      org: "AMP preview",
+      email: "mike@adaptivemedicalpartners.com",
+      phone: "555-0100",
+      domain: "adaptivemedicalpartners.com",
+      simulated: true
+    };
+    if (seat.demoSpecialty && seat.demoState) {
+      ensureTaste(seat, seat.demoSpecialty, seat.demoState);
+    }
+    save(seat);
+    return { ok: true, seat: seat, simulated: true };
+  }
+
+  function seedPaidUnit(seat) {
+    var spec = seat.demoSpecialty || currentSpecialty();
+    var st = "";
+    if (seat.tier === "state") st = seat.paidState || seat.demoState;
+    else st = currentSelectedState(seat) || seat.demoState;
+    if (spec && st && !hasPoll(seat, spec, st)) {
+      seat.polls.push({ specialty: spec, state: normState(st), at: new Date().toISOString() });
+    }
+  }
+
+  function openUnits(seat) {
+    seat = seat || load();
+    if (isPaid(seat)) return (seat.polls || []).slice();
+    return (seat.tastes || []).map(function (t) {
+      return { specialty: t.specialty, state: t.state || seat.demoState, at: t.at, taste: true };
+    });
   }
 
   function applyPaid(opts) {
@@ -452,6 +495,7 @@
     if (sku === "state") seat.paidState = normState(opts.state || seat.paidState || seat.demoState || DEFAULT_STATE);
     if (sku === "region") seat.paidRegion = String(opts.region || seat.paidRegion || "southwest");
     if (opts.specialty) seat.demoSpecialty = String(opts.specialty);
+    seedPaidUnit(seat);
     return save(seat);
   }
 
@@ -512,18 +556,21 @@
     }
     if (seat.tier === "verified") {
       var used = tasteSpecialties(seat).length;
+      var leftTastes = Math.max(0, VERIFIED_TASTE_CAP - used);
       return {
         tag: "Verified sample · free",
         title: used + " of " + VERIFIED_TASTE_CAP + " specialty tastes",
-        body: "Hard paywall after 3 tastes. Subscribe to unlock geo + monthly polls."
+        body: leftTastes
+          ? ("Pick " + leftTastes + " more specialty" + (leftTastes === 1 ? "" : "s") + " in " + stateLabel(seat.demoState) + ". Same state only. Then hard paywall.")
+          : "Three specialty tastes are in. Subscribe for geo + monthly polls."
       };
     }
     var left = pollsLeft(seat);
     var lim = pollLimit(seat);
     return {
       tag: (PLANS[seat.tier] || {}).label + " · $" + ((PLANS[seat.tier] || {}).price || 0) + "/mo",
-      title: left + " of " + lim + " polls left",
-      body: "A poll is one specialty × state open inside your plan geography. Extra poll $9 · one-off report $49."
+      title: left + " of " + lim + " left this month",
+      body: "A poll is one specialty × state open inside your plan geography. Revisit is free. Extra poll $9 at 0."
     };
   }
 
@@ -561,6 +608,8 @@
     allowsPeek: allowsPeek,
     allowsMulti: allowsMulti,
     verify: verify,
+    simulateVerify: simulateVerify,
+    openUnits: openUnits,
     applyPaid: applyPaid,
     consumeCheckoutQuery: consumeCheckoutQuery,
     specLabel: specLabel,

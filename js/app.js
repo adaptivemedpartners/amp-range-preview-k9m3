@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2114-ridge-1x1-lock";
+  window.__AMP_BUILD = "2115-ridge-poll-hud";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1013,6 +1013,83 @@
     applyRidgeWalkGate();
   }
 
+  function renderRidgeOpenUnits(seat, reallyPaid) {
+    var host = $("#ridge-open-units");
+    var api = ridgeAccess();
+    if (!host || !api) return;
+    var units = api.openUnits ? api.openUnits(seat) : [];
+    if (!units.length || (seat && seat.tier === "demo")) {
+      host.hidden = true;
+      host.innerHTML = "";
+      return;
+    }
+    var curSpec = "";
+    try { curSpec = window.AMPRidgeWorkbench && AMPRidgeWorkbench.getSpecialtyKey ? AMPRidgeWorkbench.getSpecialtyKey() : ""; } catch (e) {}
+    curSpec = curSpec || (seat && seat.demoSpecialty) || "";
+    var curSt = "";
+    try {
+      var codes = window.AMPRidgeWorkbench && AMPRidgeWorkbench.getSelectedCodes ? AMPRidgeWorkbench.getSelectedCodes() : [];
+      curSt = codes && codes[0] ? codes[0] : "";
+    } catch (e2) {}
+    curSt = curSt || (seat && (seat.paidState || seat.demoState)) || "";
+    host.hidden = false;
+    host.innerHTML = units.map(function (u) {
+      var spec = u.specialty || "";
+      var st = api.normState(u.state || seat.demoState);
+      var on = spec === curSpec && st === api.normState(curSt);
+      var label = api.specLabel(spec) + " × " + api.stateLabel(st);
+      return '<button type="button" class="ridge-unit-chip' + (on ? " is-on" : "") + '" data-ridge-unit-spec="' + spec + '" data-ridge-unit-state="' + st + '">' + label + "</button>";
+    }).join("");
+  }
+
+  function applyRidgeSimulateVerify() {
+    var api = ridgeAccess();
+    if (!api || !api.simulateVerify) return;
+    var result = api.simulateVerify();
+    if (!result.ok) {
+      if (result.reason === "walkthrough") jumpToRidgeWalk();
+      return;
+    }
+    hideRidgeDenial();
+    applyMiLiteLockUI();
+    if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.ensureUnitSelection) AMPRidgeWorkbench.ensureUnitSelection();
+    else if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    showMiMockToast("Verified sample · +2 specialties in " + (api.stateLabel(result.seat.demoState) || "your demo state") + ".");
+    if (!document.querySelector('[data-route="mi-lite-app"].on')) {
+      go("mi-lite-app", { trail: true });
+    }
+  }
+
+  function applyRidgeSimulatePay(sku) {
+    var api = ridgeAccess();
+    if (!api) return;
+    sku = String(sku || "state").replace(/^ridge_/, "");
+    var region = ($("#mi-lite-region-select") && $("#mi-lite-region-select").value) || "southwest";
+    var st = ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || undefined;
+    api.applyPaid({ sku: sku, state: st, region: region });
+    hideRidgeDenial();
+    applyMiLiteLockUI();
+    if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.ensureUnitSelection) AMPRidgeWorkbench.ensureUnitSelection();
+    else if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    showMiMockToast("Checkout stub · " + sku + " granted (preview). Polls are live.");
+    if (!document.querySelector('[data-route="mi-lite-app"].on')) {
+      go("mi-lite-app", { trail: true });
+    }
+  }
+
+  function openRidgeUnitChip(spec, st) {
+    var api = ridgeAccess();
+    if (!spec) return;
+    if (api && api.trySpecialty) api.trySpecialty(spec);
+    if (st && api && api.tryState) api.tryState(st);
+    try {
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.setSpecialtyKey) AMPRidgeWorkbench.setSpecialtyKey(spec);
+      if (st && window.AMPRidgeWorkbench && AMPRidgeWorkbench.selectState) AMPRidgeWorkbench.selectState(st);
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    } catch (e) {}
+    applyMiLiteLockUI();
+  }
+
   function renderRidgeAccessChrome(seat, paid) {
     var api = ridgeAccess();
     seat = seat || (api && api.getSeat());
@@ -1032,16 +1109,34 @@
     if (polls) {
       if (reallyPaid && api) {
         polls.hidden = false;
-        polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " left";
+        polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " left this month";
         polls.classList.toggle("is-empty", api.pollsLeft(seat) <= 0);
       } else {
         polls.hidden = true;
         polls.textContent = "";
       }
     }
+    renderRidgeOpenUnits(seat, reallyPaid);
+    var simVerify = $("#ridge-simulate-verify-app");
+    if (simVerify) simVerify.hidden = !(seat && seat.tier === "demo" && api && api.isDemoCommitted && api.isDemoCommitted(seat));
+    var simPay = $("#ridge-sim-pay");
+    if (simPay) simPay.hidden = !!(seat && seat.tier === "national" && reallyPaid);
+    var tasteHint = $("#ridge-taste-hint");
+    if (tasteHint) {
+      if (seat && seat.tier === "verified" && api) {
+        var usedT = api.tasteSpecialties(seat).length;
+        var leftT = Math.max(0, (api.VERIFIED_TASTE_CAP || 3) - usedT);
+        tasteHint.hidden = false;
+        tasteHint.textContent = leftT
+          ? ("Verified: pick " + leftT + " more specialty" + (leftT === 1 ? "" : "s") + " in " + api.stateLabel(seat.demoState) + " from the list. Same state only.")
+          : "Verified sample used — 3 tastes in. Subscribe to open another unit.";
+      } else {
+        tasteHint.hidden = true;
+      }
+    }
     if (verifyBtn) verifyBtn.hidden = !(seat && seat.tier === "demo");
     if (upgradeBtn) upgradeBtn.hidden = !!(seat && seat.tier === "national" && reallyPaid);
-    if (extraBtn) extraBtn.hidden = !reallyPaid;
+    if (extraBtn) extraBtn.hidden = !(reallyPaid && api && api.pollsLeft(seat) <= 0);
     if (oneoffBtn) oneoffBtn.hidden = !!reallyPaid;
     var seatLine = $("#ridge-seat-line");
     if (seatLine) {
@@ -4372,6 +4467,16 @@ function syncGuideRoute(route) {
       hideRidgeDenial();
       go("mi-lite-app", { trail: true });
     });
+    var simVerifyLogin = $("#ridge-simulate-verify");
+    if (simVerifyLogin && !simVerifyLogin._ampWired) {
+      simVerifyLogin._ampWired = true;
+      simVerifyLogin.addEventListener("click", applyRidgeSimulateVerify);
+    }
+    var simVerifyApp = $("#ridge-simulate-verify-app");
+    if (simVerifyApp && !simVerifyApp._ampWired) {
+      simVerifyApp._ampWired = true;
+      simVerifyApp.addEventListener("click", applyRidgeSimulateVerify);
+    }
     var miDemo = $("#mi-lite-demo-login");
     if (miDemo) miDemo.addEventListener("click", function () {
       var api = ridgeAccess();
@@ -4434,6 +4539,18 @@ function syncGuideRoute(route) {
       if (ev.target.closest("[data-ridge-checkout-close]")) {
         ev.preventDefault();
         closeRidgeCheckout();
+        return;
+      }
+      var simPayBtn = ev.target.closest("[data-ridge-simulate]");
+      if (simPayBtn) {
+        ev.preventDefault();
+        applyRidgeSimulatePay(simPayBtn.getAttribute("data-ridge-simulate"));
+        return;
+      }
+      var unitChip = ev.target.closest("[data-ridge-unit-spec]");
+      if (unitChip) {
+        ev.preventDefault();
+        openRidgeUnitChip(unitChip.getAttribute("data-ridge-unit-spec"), unitChip.getAttribute("data-ridge-unit-state"));
         return;
       }
       if (ev.target.closest("[data-ridge-unit-close]")) {

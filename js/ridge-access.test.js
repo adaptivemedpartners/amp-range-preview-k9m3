@@ -67,10 +67,28 @@ assert(api.trySpecialty("emergency_medicine").ok, "verified taste 3");
 assert(!api.trySpecialty("cardiology_noninvasive").ok, "verified 4th is paywall");
 assert(api.lastDenial().reason === "paywall", "paywall reason");
 
+store = {};
+api.reset();
+api.startDemo({ specialty: "family_medicine_without_ob", state: "TX" });
+var sim = api.simulateVerify();
+assert(sim.ok && sim.seat.tier === "verified", "simulate verify grants verified");
+assert(api.tasteSpecialties().length === 1, "simulate starts with demo taste");
+assert(api.trySpecialty("ob_gyn_general").ok, "simulate taste 2");
+assert(api.trySpecialty("emergency_medicine").ok, "simulate taste 3");
+assert(!api.trySpecialty("cardiology_noninvasive").ok, "simulate 4th is paywall");
+assert(!api.allowsMulti(), "verified still no multi-state");
+assert(api.oneStateUnit() === "tx", "verified stays in committed state");
+
 api.applyPaid({ sku: "state", state: "TX" });
 assert(api.isPaid(), "state plan paid");
 assert(api.pollLimit() === 15, "15 polls");
+assert(api.pollsUsed() >= 1, "current 1×1 seeded as first poll");
 assert(api.tryState("tx").ok, "paid TX poll");
+assert(api.pollsUsed() === 1, "revisit TX is free");
+assert(api.trySpecialty("dermatology").ok, "new specialty in TX burns a poll");
+assert(api.pollsUsed() === 2, "second unit consumed");
+assert(api.openUnits().length === 2, "open-unit chips = spent polls");
+assert(String(api.tierCopy().title).indexOf("left this month") !== -1, "HUD says left this month");
 assert(!api.tryState("ca").ok, "state plan CA geo locked");
 assert(api.lastDenial().reason === "geo", "geo reason");
 assert(api.oneStateUnit() === "tx", "state plan forced unit is TX");

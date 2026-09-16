@@ -1,4 +1,4 @@
-/* amp-build:2114-hero-lighten */
+/* amp-build:2115-hero-lighten */
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
 .crumb { display: none !important; }
 
@@ -5152,6 +5152,31 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 #ridge-verify-cta[hidden],
 #ridge-upgrade-cta[hidden] { display: none !important; }
 .ridge-poll-meter.is-empty { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+.ridge-open-units {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 10px 0 0;
+}
+.ridge-open-units[hidden],
+#ridge-simulate-verify-app[hidden],
+#ridge-taste-hint[hidden],
+#ridge-sim-pay[hidden] { display: none !important; }
+.ridge-unit-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 10px; border-radius: 999px;
+  border: 1px solid rgba(13,148,136,.35);
+  background: #ecfdf5; color: #115e59;
+  font-size: 12px; font-weight: 750; cursor: pointer;
+  min-height: 36px;
+}
+.ridge-unit-chip.is-on { background: var(--teal); color: #fff; border-color: var(--teal); }
+.ridge-taste-hint { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.ridge-sim-pay { flex-wrap: wrap; margin-top: 12px; }
+.ridge-sim-pay .btn { min-height: 44px; }
+@media (max-width: 560px) {
+  .ridge-access-actions, .ridge-sim-pay { display: grid; grid-template-columns: 1fr; }
+  .ridge-access-actions .btn, .ridge-sim-pay .btn { width: 100%; }
+  .ridge-open-units { gap: 6px; }
+}
 .ridge-seat-line { margin: 8px 0 0; font-size: 12px; }
 .ridge-access-actions { flex-wrap: wrap; }
 .ridge-unit-overlay { z-index: 5; }
