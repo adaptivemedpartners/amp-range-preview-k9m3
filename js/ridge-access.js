@@ -1,10 +1,11 @@
-/* amp-build:2113 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
+/* amp-build:2114 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
    Demo walkthrough (pick specialty → pick state) then 1×1 → verified (+2) → paid geo + polls.
    Stripe Checkout is stubbed (test-mode hooks). Public data only — no MGMA. */
 (function (w) {
   "use strict";
 
-  var STORAGE_KEY = "amp_ridge_seat_v1";
+  var STORAGE_KEY = "amp_ridge_seat_v2";
+  var STORAGE_KEY_V1 = "amp_ridge_seat_v1";
   var LEGACY_UNLOCK = "amp_mi_lite_unlocked";
   var LEGACY_PLAN = "amp_mi_lite_plan";
 
@@ -81,28 +82,32 @@
       paidRegion: "",
       seat: null,
       checkoutStub: true,
+      grantedByCheckout: false,
       updatedAt: null
     };
   }
 
   function migrateLegacy(seat) {
-    try {
-      if (localStorage.getItem(LEGACY_UNLOCK) !== "1") return seat;
-      var plan = String(localStorage.getItem(LEGACY_PLAN) || "").toLowerCase();
-      if (plan === "monthly" || plan === "annual") plan = "region";
-      if (plan === "state" || plan === "region" || plan === "national") {
-        seat.tier = plan;
-        if (plan === "state" && !seat.paidState) seat.paidState = DEFAULT_STATE;
-        if (plan === "region" && !seat.paidRegion) seat.paidRegion = "southwest";
-      } else if (plan === "demo") {
-        seat.tier = "demo";
-      }
-    } catch (e) {}
+    /* Old MI-lite unlock keys and leftover v1 seats must NOT mint a paid Region/State/National seat. */
+    return seat;
+  }
+
+  function sanitizeSeat(seat) {
+    if (!seat) return seat;
+    if (seat.demoCommitted == null) {
+      seat.demoCommitted = seat.tier === "verified";
+    }
+    if (isPaid(seat) && !seat.grantedByCheckout) {
+      seat.tier = seat.seat ? "verified" : "demo";
+      seat.paidRegion = "";
+      seat.polls = Array.isArray(seat.polls) ? seat.polls : [];
+      seat.extraPolls = 0;
+    }
     return seat;
   }
 
   function load() {
-    if (seatCache) return seatCache;
+    if (seatCache) return sanitizeSeat(seatCache);
     var seat = defaultSeat();
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
@@ -121,12 +126,8 @@
     if (!Array.isArray(seat.polls)) seat.polls = [];
     if (!Array.isArray(seat.oneOffs)) seat.oneOffs = [];
     if (!PLANS[seat.tier]) seat.tier = "demo";
-    if (seat.demoCommitted == null) {
-      /* Legacy demo seats without the flag must re-walk. Verified/paid stay open. */
-      seat.demoCommitted = (seat.tier === "verified" || isPaid(seat));
-    }
-    seatCache = seat;
-    return seat;
+    seatCache = sanitizeSeat(seat);
+    return seatCache;
   }
 
   function save(seat) {
@@ -143,6 +144,7 @@
   function reset() {
     seatCache = null;
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    try { localStorage.removeItem(STORAGE_KEY_V1); } catch (e) {}
     try {
       localStorage.removeItem(LEGACY_UNLOCK);
       localStorage.removeItem(LEGACY_PLAN);
@@ -159,6 +161,24 @@
     seat = seat || load();
     if (isPaid(seat) || seat.tier === "verified") return true;
     return !!(seat.demoCommitted && seat.demoSpecialty && seat.demoState);
+  }
+  function oneStateUnit(seat) {
+    seat = seat || load();
+    if (isPaid(seat)) {
+      if (seat.tier === "state") return normState(seat.paidState || seat.demoState);
+      return "";
+    }
+    if ((seat.tier === "demo" || seat.tier === "verified") && isDemoCommitted(seat) && seat.demoState) {
+      return normState(seat.demoState);
+    }
+    return "";
+  }
+  function allowsPeek(code, seat) {
+    return canState(code, seat);
+  }
+  function allowsMulti(seat) {
+    seat = seat || load();
+    return isPaid(seat) && seat.tier !== "state";
   }
   function pollLimit(seat) {
     seat = seat || load();
@@ -428,6 +448,7 @@
     }
     if (!PLANS[sku] || sku === "demo" || sku === "verified") return seat;
     seat.tier = sku;
+    seat.grantedByCheckout = true;
     if (sku === "state") seat.paidState = normState(opts.state || seat.paidState || seat.demoState || DEFAULT_STATE);
     if (sku === "region") seat.paidRegion = String(opts.region || seat.paidRegion || "southwest");
     if (opts.specialty) seat.demoSpecialty = String(opts.specialty);
@@ -484,9 +505,9 @@
         };
       }
       return {
-        tag: "Demo · free",
+        tag: "Free demo · 1×1",
         title: specLabel(seat.demoSpecialty) + " × " + stateLabel(seat.demoState),
-        body: "Anonymous demo: 1 state × 1 specialty, full surface. Verify a work email to taste +2 specialties."
+        body: "Anonymous demo: 1 specialty × 1 state, full surface. Verify a work email to taste +2 specialties."
       };
     }
     if (seat.tier === "verified") {
@@ -536,6 +557,9 @@
     tryState: tryState,
     startDemo: startDemo,
     isDemoCommitted: isDemoCommitted,
+    oneStateUnit: oneStateUnit,
+    allowsPeek: allowsPeek,
+    allowsMulti: allowsMulti,
     verify: verify,
     applyPaid: applyPaid,
     consumeCheckoutQuery: consumeCheckoutQuery,

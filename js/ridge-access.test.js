@@ -50,11 +50,18 @@ assert(api.lastDenial().reason === "verify", "demo denial is verify");
 assert(api.tryState("tx").ok, "demo TX ok");
 assert(!api.tryState("ca").ok, "demo CA locked");
 assert(api.lastDenial().reason === "verify", "demo out-of-state is verify, not geo");
+assert(api.oneStateUnit() === "tx", "demo forced unit is TX");
+assert(api.allowsPeek("tx"), "demo may peek TX");
+assert(!api.allowsPeek("co"), "demo may not peek CO");
+assert(!api.allowsMulti(), "demo has no multi-select");
 
 var bad = api.verify({ name: "Pat", org: "Clinic", email: "pat@gmail.com", phone: "555" });
 assert(!bad.ok && bad.reason === "work_email", "gmail rejected");
 var ok = api.verify({ name: "Pat", org: "Clinic", email: "pat@ruralhealth.org", phone: "555" });
 assert(ok.ok && ok.seat.tier === "verified", "work email verifies");
+assert(api.oneStateUnit() === "tx", "verified still one-state TX");
+assert(!api.allowsPeek("co"), "verified may not peek other states");
+assert(!api.allowsMulti(), "verified has no multi-select");
 assert(api.trySpecialty("ob_gyn_general").ok, "verified taste 2");
 assert(api.trySpecialty("emergency_medicine").ok, "verified taste 3");
 assert(!api.trySpecialty("cardiology_noninvasive").ok, "verified 4th is paywall");
@@ -66,12 +73,16 @@ assert(api.pollLimit() === 15, "15 polls");
 assert(api.tryState("tx").ok, "paid TX poll");
 assert(!api.tryState("ca").ok, "state plan CA geo locked");
 assert(api.lastDenial().reason === "geo", "geo reason");
+assert(api.oneStateUnit() === "tx", "state plan forced unit is TX");
+assert(!api.allowsMulti(), "state plan has no multi-select");
 
 api.applyPaid({ sku: "region", region: "southwest" });
 var az = api.tryState("az");
 assert(az.ok, "region AZ ok: " + (az.reason || ""));
 assert(api.pollsUsed() >= 1, "at least the TX poll remains");
 assert(api.pollLimit() === 30, "region 30 polls");
+assert(!api.oneStateUnit(), "region is not a single forced unit");
+assert(api.allowsMulti(), "region allows multi-select");
 
 api.applyPaid({ sku: "extra_poll" });
 assert(api.pollLimit() === 31, "region 30 + extra");
@@ -81,5 +92,27 @@ assert(api.canState("me"), "national ME open");
 
 api.applyPaid({ sku: "oneoff", specialty: "dermatology", state: "WA" });
 assert(api.canCombo("dermatology", "wa"), "one-off combo");
+
+store = {};
+var leftover = api.reset();
+leftover.tier = "region";
+leftover.paidRegion = "southwest";
+leftover.polls = [{ specialty: "family_medicine_without_ob", state: "tx" }];
+leftover.grantedByCheckout = false;
+leftover.demoCommitted = true;
+leftover.demoState = "tx";
+leftover.demoSpecialty = "family_medicine_without_ob";
+api.save(leftover);
+var demoted = api.getSeat();
+assert(demoted.tier === "demo", "fake Region seat without Checkout is demoted to demo");
+assert(!api.isPaid(demoted), "demoted seat is not paid");
+assert(String(api.tierCopy(demoted).tag).indexOf("149") === -1, "chrome is not Region $149");
+assert(String(api.tierCopy(demoted).title).indexOf("of 30") === -1, "no 30-poll meter on demo");
+
+store = {};
+var noPromo = api.reset();
+assert(noPromo.tier === "demo", "fresh seat is demo");
+assert(!noPromo.grantedByCheckout, "no checkout grant on fresh seat");
+assert(!api.isPaid(noPromo), "fresh seat is not paid");
 
 console.log("ridge-access.test.js ok");

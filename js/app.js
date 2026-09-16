@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2113-ridge-walk-gate";
+  window.__AMP_BUILD = "2114-ridge-1x1-lock";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1028,19 +1028,21 @@
     if (tag) tag.textContent = copy.tag;
     if (title) title.textContent = copy.title;
     if (body) body.textContent = copy.body;
+    var reallyPaid = !!(paid && seat && (seat.tier === "state" || seat.tier === "region" || seat.tier === "national") && seat.grantedByCheckout);
     if (polls) {
-      if (paid && api) {
+      if (reallyPaid && api) {
         polls.hidden = false;
         polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " left";
         polls.classList.toggle("is-empty", api.pollsLeft(seat) <= 0);
       } else {
         polls.hidden = true;
+        polls.textContent = "";
       }
     }
     if (verifyBtn) verifyBtn.hidden = !(seat && seat.tier === "demo");
-    if (upgradeBtn) upgradeBtn.hidden = !!(seat && (seat.tier === "national"));
-    if (extraBtn) extraBtn.hidden = !paid;
-    if (oneoffBtn) oneoffBtn.hidden = !!paid;
+    if (upgradeBtn) upgradeBtn.hidden = !!(seat && seat.tier === "national" && reallyPaid);
+    if (extraBtn) extraBtn.hidden = !reallyPaid;
+    if (oneoffBtn) oneoffBtn.hidden = !!reallyPaid;
     var seatLine = $("#ridge-seat-line");
     if (seatLine) {
       if (seat && seat.seat && seat.seat.email) {
@@ -1349,6 +1351,7 @@
         if (seat2.demoSpecialty && AMPRidgeWorkbench.getSpecialtyKey && AMPRidgeWorkbench.getSpecialtyKey() !== seat2.demoSpecialty) {
           AMPRidgeWorkbench.setSpecialtyKey(seat2.demoSpecialty);
         }
+        if (AMPRidgeWorkbench.ensureUnitSelection) AMPRidgeWorkbench.ensureUnitSelection();
       }
     } catch (eSync) {}
   }

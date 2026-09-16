@@ -1,4 +1,4 @@
-/* amp-build:2113 Ridge workbench — Light MI full-bleed inside mountain chrome.
+/* amp-build:2114 Ridge workbench — Light MI full-bleed inside mountain chrome.
    No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -507,8 +507,10 @@
 
     var html = "";
     html += '<div class="sel-block">';
+    var oneUnit = !!forcedUnitState();
     html += '<div class="sel-title"><strong>Selected states</strong><span class="sel-hint">' +
-      (state.multi ? "Multi-select ON · click to add/remove" : "Click map · one state · Multi-select / Cmd-click to compare") +
+      (oneUnit ? "Demo 1×1 · committed state only"
+        : (state.multi ? "Multi-select ON · click to add/remove" : "Click map · one state · Multi-select / Cmd-click to compare")) +
       "</span></div>";
     if (picks.length) {
       html += '<div class="sel-chips">';
@@ -516,11 +518,12 @@
         return (names[a] || a).localeCompare(names[b] || b);
       }).forEach(function (code) {
         html += '<span class="sel-chip">' + (names[code] || code.toUpperCase()) +
-          '<button type="button" data-remove-state="' + code + '" title="Remove" aria-label="Remove">×</button></span>';
+          (oneUnit ? "" : '<button type="button" data-remove-state="' + code + '" title="Remove" aria-label="Remove">×</button>') +
+          "</span>";
       });
       html += "</div>";
     } else {
-      html += '<div class="sel-hint">None selected — click a state on the map</div>';
+      html += '<div class="sel-hint">' + (oneUnit ? "Unlocking committed state…" : "None selected — click a state on the map") + "</div>";
     }
     html += "</div>";
 
@@ -611,7 +614,10 @@
       html += '<div class="row"><span class="k">Age 55+</span><span class="v">' + (s.age55Pct != null ? s.age55Pct.toFixed(1) + "%" : "—") + "</span></div>";
     }
 
-    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. No client names or search IDs. Ask AMP for deeper firm tools.</p>';
+    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · ' +
+      (forcedUnitState() ? "Demo is locked to one committed state. Verify or upgrade to open another unit. "
+        : "Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. ") +
+      "No client names or search IDs. Ask AMP for deeper firm tools.</p>";
     body.innerHTML = html;
   }
 
@@ -709,6 +715,30 @@
     if (!api || typeof api.canState !== "function") return true;
     return !!api.canState(code);
   }
+  function accessAllowsPeek(code) {
+    var api = accessApi();
+    if (!api) return true;
+    if (typeof api.allowsPeek === "function") return !!api.allowsPeek(code);
+    return accessAllowsState(code);
+  }
+  function accessAllowsMulti() {
+    var api = accessApi();
+    if (!api || typeof api.allowsMulti !== "function") return true;
+    return !!api.allowsMulti();
+  }
+  function forcedUnitState() {
+    var api = accessApi();
+    if (!api || typeof api.oneStateUnit !== "function") return "";
+    return api.normState ? api.normState(api.oneStateUnit()) : String(api.oneStateUnit() || "");
+  }
+  function ensureForcedSelection() {
+    var forced = forcedUnitState();
+    if (!accessAllowsMulti()) state.multi = false;
+    if (!forced) return forced;
+    state.selected = {};
+    state.selected[forced] = true;
+    return forced;
+  }
   function gateSpecialty(key) {
     var api = accessApi();
     if (!api || typeof api.trySpecialty !== "function") return { ok: true };
@@ -734,23 +764,44 @@
 
   function toggleState(code, additive) {
     if (!code) return;
+    var api = accessApi();
+    var norm = api && api.normState ? api.normState(code) : String(code).toLowerCase();
+    if (!accessAllowsMulti()) {
+      additive = false;
+      state.multi = false;
+    }
+    var forced = forcedUnitState();
+    if (forced) {
+      if (norm !== forced) {
+        ensureForcedSelection();
+        paintMap();
+        renderSidebar();
+        updateTitle();
+        return;
+      }
+      ensureForcedSelection();
+      paintMap();
+      renderSidebar();
+      updateTitle();
+      return;
+    }
     var willSelect = true;
-    if (state.selected[code] && (additive || state.multi)) willSelect = false;
-    else if (!additive && !state.multi && state.selected[code] && selectedCodes().length === 1) willSelect = false;
+    if (state.selected[norm] && (additive || state.multi)) willSelect = false;
+    else if (!additive && !state.multi && state.selected[norm] && selectedCodes().length === 1) willSelect = false;
     if (willSelect) {
-      var gate = gateState(code);
+      var gate = gateState(norm);
       if (!gate.ok) return;
     }
     var multi = !!additive || !!state.multi;
     if (multi) {
-      state.selected[code] = !state.selected[code];
-      if (!state.selected[code]) delete state.selected[code];
+      state.selected[norm] = !state.selected[norm];
+      if (!state.selected[norm]) delete state.selected[norm];
     } else {
       var only = selectedCodes();
-      if (only.length === 1 && only[0] === code) state.selected = {};
+      if (only.length === 1 && only[0] === norm) state.selected = {};
       else {
         state.selected = {};
-        state.selected[code] = true;
+        state.selected[norm] = true;
       }
     }
     paintMap();
@@ -759,7 +810,11 @@
   }
 
   function clearStates() {
-    state.selected = {};
+    if (forcedUnitState()) {
+      ensureForcedSelection();
+    } else {
+      state.selected = {};
+    }
     paintMap();
     renderSidebar();
     updateTitle();
@@ -770,6 +825,26 @@
     if (!tip) return;
     if (!code) { tip.hidden = true; tip.innerHTML = ""; return; }
     var names = stateNames();
+    if (!accessAllowsPeek(code)) {
+      tip.hidden = false;
+      tip.innerHTML = '<div class="tt-head"><div class="tt-title">' + (names[code] || String(code).toUpperCase()) +
+        '</div><div class="tt-hint">Locked</div></div>' +
+        '<div class="tt-body tt-lock"><strong>Verify / upgrade to unlock</strong>' +
+        "<p>Demo is 1 state × 1 specialty. This state stays dark until you verify or subscribe.</p></div>";
+      var wrapLock = $("ridge-map-wrap") || tip.parentElement;
+      if (evt && wrapLock) {
+        var rectL = wrapLock.getBoundingClientRect();
+        var twL = tip.offsetWidth || 260;
+        var thL = tip.offsetHeight || 120;
+        var xL = evt.clientX - rectL.left + 14;
+        var yL = evt.clientY - rectL.top + 14;
+        if (xL + twL > rectL.width - 8) xL = Math.max(8, rectL.width - twL - 8);
+        if (yL + thL > rectL.height - 8) yL = Math.max(8, evt.clientY - rectL.top - thL - 12);
+        tip.style.left = xL + "px";
+        tip.style.top = yL + "px";
+      }
+      return;
+    }
     var s = currentSpec();
     var wt = workforceTerms(s || {});
     var n = physCountFor(code);
@@ -811,9 +886,9 @@
       extra += '<div class="tt-section"><div class="tt-section-label">GME retention</div>';
       extra += '<div class="tt-row"><span class="tt-k">Stay in-state</span><span class="tt-v">' + Number(ret).toFixed(1) + "%</span></div></div>";
     }
-    var hint = state.multi
-      ? "Multi-select ON · click to add/remove"
-      : "Cmd/Ctrl · multi-select";
+    var hint = !accessAllowsMulti()
+      ? "Demo 1×1 · other states locked"
+      : (state.multi ? "Multi-select ON · click to add/remove" : "Cmd/Ctrl · multi-select");
     tip.hidden = false;
     tip.innerHTML = '<div class="tt-head"><div class="tt-title">' + (names[code] || code.toUpperCase()) +
       '</div><div class="tt-hint">' + hint + '</div></div><div class="tt-body">' + rows + extra + "</div>";
@@ -967,7 +1042,7 @@
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
       e.preventDefault();
-      var additive = state.multi || e.metaKey || e.ctrlKey;
+      var additive = accessAllowsMulti() && (state.multi || e.metaKey || e.ctrlKey);
       toggleState(el.getAttribute("data-state"), additive);
     });
   }
@@ -1002,12 +1077,34 @@
       });
   }
 
+  function syncDemoTools() {
+    var multiBtn = $("ridge-multi-toggle");
+    var clearBtn = $("ridge-clear-states");
+    var allowMulti = accessAllowsMulti();
+    if (!allowMulti) state.multi = false;
+    if (multiBtn) {
+      multiBtn.hidden = !allowMulti;
+      multiBtn.disabled = !allowMulti;
+      multiBtn.setAttribute("aria-hidden", allowMulti ? "false" : "true");
+    }
+    if (clearBtn) {
+      clearBtn.hidden = !allowMulti;
+      clearBtn.disabled = !allowMulti;
+    }
+    var caption = document.querySelector("#ridge-map-wrap .map-caption");
+    if (caption && !allowMulti) {
+      caption.textContent = "Demo 1×1 · only the committed state is live. Tap other states for a verify / upgrade cue — no numbers.";
+    }
+  }
+
   function refresh() {
     if (!demoSurfaceReady() || !state.specialtyKey) {
       var cards = $("ridge-bench-cards");
       if (cards) cards.innerHTML = "";
       return;
     }
+    ensureForcedSelection();
+    syncDemoTools();
     updateMetricButtons();
     renderBenchCards();
     paintMap();
@@ -1073,6 +1170,11 @@
       }
       syncMultiBtn();
       multiBtn.addEventListener("click", function () {
+        if (!accessAllowsMulti()) {
+          state.multi = false;
+          syncMultiBtn();
+          return;
+        }
         state.multi = !state.multi;
         syncMultiBtn();
         renderSidebar();
@@ -1086,6 +1188,13 @@
         if (rem) {
           e.preventDefault();
           var code = rem.getAttribute("data-remove-state");
+          if (forcedUnitState()) {
+            ensureForcedSelection();
+            paintMap();
+            renderSidebar();
+            updateTitle();
+            return;
+          }
           if (state.selected[code]) {
             delete state.selected[code];
             paintMap();
@@ -1103,24 +1212,30 @@
 
   function buildReportHtml() {
     var s = currentSpec();
-    var picks = selectedCodes();
     var names = stateNames();
     var logo = (function () {
       try {
-        return new URL("assets/amp-lockup-nav.png?v=2005", window.location.href).href;
+        return new URL("assets/amp-lockup-nav-black.png?v=2114", window.location.href).href;
       } catch (e) {
-        return "assets/amp-lockup-nav.png?v=2005";
+        return "assets/amp-lockup-nav-black.png?v=2114";
       }
     })();
-    var rows = picks.length ? picks : allStateCodes().slice(0, 12);
+    var rows = reportStateCodes();
     var table = rows.map(function (code) {
       return "<tr><td>" + (names[code] || code.toUpperCase()) + "</td><td>" + formatMetric(metricValueFor(code)) +
         "</td><td>" + fmtNum(physCountFor(code)) + "</td><td>" + Number(difficultyFor(code)).toFixed(1) + "</td></tr>";
     }).join("");
-    var tc = s && s.totalComp ? s.totalComp : {};
+    if (!rows.length) {
+      table = "<tr><td colspan='4'>No unlocked state in this report. Demo is 1 specialty × 1 state after you commit both.</td></tr>";
+    }
+    var unit = rows.length === 1 ? rows[0] : null;
+    var supply = unit ? physCountFor(unit) : (s && s.physNational);
+    var postings = unit ? postingsFor(unit) : (s && s.nationalPostings);
+    var comp = unit ? realPayFor(unit) : (s && s.totalComp && s.totalComp.p50);
+    var lens = unit ? ((names[unit] || unit.toUpperCase()) + " · 1×1") : metricLabelForActive();
     return "<!doctype html><html><head><meta charset='utf-8'><title>Ridge Report · Adaptive Medical Partners</title>" +
       "<style>body{font-family:Inter,system-ui,sans-serif;color:#0f172a;padding:32px;max-width:900px;margin:0 auto}" +
-      ".logo{height:52px;width:auto;margin-bottom:18px}h1{font-size:22px;margin:0 0 6px}p{color:#475569}" +
+      ".logo{height:56px;width:auto;max-width:280px;margin-bottom:18px;display:block;opacity:1;filter:none;-webkit-filter:none}h1{font-size:22px;margin:0 0 6px}p{color:#475569}" +
       "table{width:100%;border-collapse:collapse;margin-top:18px}th,td{border-bottom:1px solid #e2e8f0;padding:8px;text-align:left;font-size:13px}" +
       ".stamp{display:inline-block;letter-spacing:.12em;font-size:11px;font-weight:800;color:#9a3412;background:#fff7ed;border:1px solid #fed7aa;padding:4px 8px;border-radius:999px}" +
       ".cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0} .card{border:1px solid #e2e8f0;border-radius:12px;padding:12px} .card b{display:block;font-size:20px;margin-top:6px}" +
@@ -1128,12 +1243,12 @@
       '<img class="logo" src="' + logo + '" alt="Adaptive Medical Partners" />' +
       '<div class="stamp">EXAMPLE / ILLUSTRATIVE</div>' +
       "<h1>Ridge market report</h1>" +
-      "<p><strong>" + (s ? s.label : "Specialty") + "</strong> · " + metricLabelForActive() +
+      "<p><strong>" + (s ? s.label : "Specialty") + "</strong> · " + lens +
       " · Generated from the Ridge sample on Adaptive Medical Partners.</p>" +
       '<div class="cards">' +
-      "<div class='card'>Active supply<b>" + show(fmtNum(s && s.physNational), "n/a") + "</b></div>" +
-      "<div class='card'>Approx. postings<b>" + show(fmtNum(s && s.nationalPostings), "n/a") + "</b></div>" +
-      "<div class='card'>Median total comp<b>" + show(fmtMoney(tc.p50), "n/a") + "</b></div>" +
+      "<div class='card'>Active supply<b>" + show(fmtNum(supply), "n/a") + "</b></div>" +
+      "<div class='card'>Approx. postings<b>" + show(fmtNum(postings), "n/a") + "</b></div>" +
+      "<div class='card'>Median total comp<b>" + show(fmtMoney(comp), "n/a") + "</b></div>" +
       "</div>" +
       "<table><thead><tr><th>State</th><th>Map metric</th><th>Supply</th><th>Difficulty</th></tr></thead><tbody>" +
       table + "</tbody></table>" +
@@ -1169,6 +1284,7 @@
     if (!state.specialtyKey) {
       state.specialtyKey = (seat && seat.demoSpecialty) || (data().SPECIALTIES[0] && data().SPECIALTIES[0].key) || null;
     }
+    if (ensureForcedSelection()) return;
     if (seat && !Object.keys(state.selected).length) {
       var st = null;
       if (seat.tier === "state" && seat.paidState) st = api.normState(seat.paidState);
@@ -1181,6 +1297,7 @@
     if (!data().SPECIALTIES || !data().SPECIALTIES.length) return;
     applyAccessDefaults();
     bindChrome();
+    syncDemoTools();
     if (!demoSurfaceReady() || !state.specialtyKey) {
       var cards = $("ridge-bench-cards");
       if (cards) cards.innerHTML = "";
@@ -1190,6 +1307,14 @@
     loadMapSvg(function () { refresh(); });
   }
 
+  function reportStateCodes() {
+    var forced = forcedUnitState();
+    if (forced) return [forced];
+    var picks = selectedCodes();
+    if (picks.length) return picks;
+    return [];
+  }
+
   w.AMPRidgeWorkbench = {
     init: init,
     refresh: refresh,
@@ -1197,6 +1322,11 @@
     getSpecialtyKey: function () { return state.specialtyKey; },
     setSpecialtyKey: setSpecialty,
     getSelectedCodes: selectedCodes,
-    selectState: function (code, additive) { toggleState(code, additive); }
+    selectState: function (code, additive) { toggleState(code, additive); },
+    ensureUnitSelection: function () {
+      ensureForcedSelection();
+      refresh();
+    },
+    reportStateCodes: reportStateCodes
   };
 })(window);

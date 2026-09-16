@@ -1,4 +1,4 @@
-/* amp-build:2113-hero-lighten */
+/* amp-build:2114-hero-lighten */
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
 .crumb { display: none !important; }
 
@@ -4946,6 +4946,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   color:#0f766e; margin-bottom:4px;
 }
+.ridge-map-tooltip .tt-lock { padding: 10px 12px 12px; }
+.ridge-map-tooltip .tt-lock strong { display: block; margin-bottom: 4px; color: #0f172a; font-size: 13px; }
+.ridge-map-tooltip .tt-lock p { margin: 0; color: #475569; font-size: 12px; line-height: 1.4; }
+#ridge-multi-toggle[hidden],
+#ridge-clear-states[hidden] { display: none !important; }
 .ridge-map-fallback { color:var(--ridge-muted); padding:24px; text-align:center; }
 
 .ridge-sidebar {
