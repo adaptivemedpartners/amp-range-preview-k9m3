@@ -1629,9 +1629,9 @@
     var title = $("#confirm-client-title");
     var lede = $("#confirm-client-lede");
     var discussTitle = $("#client-discuss-title");
-    if (title && owner) title.textContent = first + " has your meeting request.";
+    if (title) title.textContent = first + " looks forward to meeting with you. What would you like to discuss?";
     if (lede && owner) {
-      lede.innerHTML = "A <strong>hiring guide</strong> owns the next step. You wait; AMP works.";
+      lede.innerHTML = "The meeting request is in. Optional: tap a topic so " + first + " can prepare.";
     }
     if (discussTitle) {
       discussTitle.textContent = first + " looks forward to meeting with you. What would you like to discuss?";
