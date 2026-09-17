@@ -1547,6 +1547,8 @@
     if (route === "search") renderSearch();
     if (route === "mpc-portal") renderMpcPortal();
     if (route === "mpc-browse") renderMpcBrowse();
+    if (route === "form-candidate-authorization" || route === "form-interview-expense") hydrateTypeformEmbeds(route);
+    if (route === "form-easy-pay") hydrateEasyPay();
   }
 
   /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT).
@@ -3887,6 +3889,165 @@
     }
   }
 
+  /* amp-build:2111-public-forms — Typeform live embeds + ACH wired to live Webflow */
+  var TYPEFORM_SRC = "https://embed.typeform.com/next/embed.js";
+  var ACH_LIVE_URL = "https://www.adaptivemedicalpartners.com/easy-pay-authorization";
+  var ACH_WF_SITE = "68ae8c1190abe2fd7be13740";
+  var ACH_FIELD_KEYS = {
+    "ABA-Number": "ABA Number",
+    "Bank-Account-Number": "Bank Account Number",
+    "Bank-Account-Type": "Bank Account Type",
+    "First-Name": "First-Name",
+    "Last-Name": "Last-Name",
+    "Title": "Title",
+    "Organization": "Organization",
+    "Signature": "Signature",
+    "Billing-Contact-Email": "Billing Contact Email",
+    "Billing-Contact-Phone": "Billing Contact Phone",
+    "Acceptance": "Acceptance"
+  };
+
+  function loadTypeformScript(cb) {
+    if (window.tf) {
+      if (cb) cb();
+      return;
+    }
+    var existing = document.querySelector('script[data-amp-typeform="1"]');
+    if (existing) {
+      if (cb) existing.addEventListener("load", function () { cb(); }, { once: true });
+      return;
+    }
+    var s = document.createElement("script");
+    s.src = TYPEFORM_SRC;
+    s.async = true;
+    s.setAttribute("data-amp-typeform", "1");
+    if (cb) s.onload = function () { cb(); };
+    document.body.appendChild(s);
+  }
+
+  function hydrateTypeformEmbeds(route) {
+    var view = document.querySelector('.view[data-route="' + route + '"]');
+    if (!view) return;
+    loadTypeformScript(function () {
+      var nodes = view.querySelectorAll("[data-tf-live]");
+      if (!nodes.length) return;
+      if (window.tf && typeof window.tf.load === "function") {
+        try { window.tf.load(); } catch (e) {}
+        return;
+      }
+      if (window.tf && typeof window.tf.reload === "function") {
+        try { window.tf.reload(); } catch (e2) {}
+      }
+    });
+  }
+
+  function setAchStatus(text, isErr) {
+    var status = $("#amp-ach-status");
+    if (!status) return;
+    status.hidden = !text;
+    status.textContent = text || "";
+    status.classList.toggle("is-error", !!isErr);
+  }
+
+  function achOnWwwHost() {
+    return /(^|\.)adaptivemedicalpartners\.com$/i.test(location.hostname || "");
+  }
+
+  function hydrateEasyPay() {
+    bindEasyPayForm();
+    var wrap = $("[data-amp-ach-frame-wrap]");
+    var frame = $("[data-amp-ach-frame]");
+    var form = $("#wf-form-ACH-Form");
+    if (!wrap || !frame || !form) return;
+    wrap.hidden = true;
+    form.hidden = false;
+    /* After mountain owns www, iframing this path would recurse. Live Webflow
+       also sends X-Frame-Options: SAMEORIGIN, so preview hosts fall back to
+       the mountain clone that posts to the same Webflow form handler. */
+    if (achOnWwwHost()) return;
+    if (frame.getAttribute("data-amp-src-set") === "1") return;
+    frame.setAttribute("data-amp-src-set", "1");
+    frame.src = ACH_LIVE_URL;
+    frame.addEventListener("load", function () {
+      try {
+        var href = frame.contentWindow && frame.contentWindow.location.href;
+        if (!href || href === "about:blank") return;
+        var doc = frame.contentDocument;
+        if (!doc || !doc.body) return;
+      } catch (err) {
+        wrap.hidden = false;
+        form.hidden = true;
+      }
+    }, { once: true });
+  }
+
+  function bindEasyPayForm() {
+    var form = $("#wf-form-ACH-Form");
+    if (!form || form.__ampBound) return;
+    form.__ampBound = true;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      submitEasyPay(form);
+    });
+  }
+
+  function submitEasyPay(form) {
+    var accept = form.querySelector('[name="Acceptance"]');
+    if (accept && !accept.checked) {
+      setAchStatus("Please accept the terms to authorize payment.", true);
+      accept.focus();
+      return;
+    }
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var fd = new FormData(form);
+    var body = new URLSearchParams();
+    body.set("name", "ACH Form");
+    body.set("source", ACH_LIVE_URL);
+    body.set("test", "false");
+    Object.keys(ACH_FIELD_KEYS).forEach(function (name) {
+      var val = fd.get(name);
+      if (val == null || val === "") return;
+      if (name === "Acceptance") val = "true";
+      body.set("fields[" + ACH_FIELD_KEYS[name] + "]", String(val));
+    });
+
+    var submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.setAttribute("data-label", submitBtn.textContent);
+      submitBtn.textContent = "Submitting…";
+    }
+    setAchStatus("Transmitting securely…", false);
+
+    fetch("https://webflow.com/api/v1/form/" + ACH_WF_SITE, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+      body: body.toString(),
+      mode: "cors",
+      credentials: "omit",
+      cache: "no-store"
+    }).then(function (res) {
+      if (!res.ok) throw new Error("ach-http");
+      form.reset();
+      form.hidden = true;
+      var done = $("#amp-ach-done");
+      if (done) done.hidden = false;
+      setAchStatus("", false);
+    }).catch(function () {
+      setAchStatus("We could not finish this authorization here. Use Open on AMP so banking details post to the proven live form.", true);
+      var fallback = $("#amp-ach-fallback");
+      if (fallback) fallback.hidden = false;
+    }).then(function () {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Submit authorization";
+      }
+    });
+  }
 
   function closeGuideDock(immediate) {
     var dock = $("#amp-guide-dock");
@@ -4445,6 +4606,8 @@ function syncGuideRoute(route) {
       });
     }
 
+    bindEasyPayForm();
+
     var searchForm = $("#search-form");
     if (searchForm) {
       searchForm.addEventListener("submit", function (e) {
@@ -4853,8 +5016,8 @@ function syncGuideRoute(route) {
        /candidate-authorization  → form-candidate-authorization
        /interview-expense-form   → form-interview-expense
        /easy-pay-authorization   → form-easy-pay
-       KEEP public form paths stay; submit stays on live Webflow until mountain
-       can prove end-to-end submit. Do not invent form fields or stub “ready”.
+       KEEP public form paths stay; Typeform embeds inline; ACH posts to the
+       live Webflow handler (no Mess/localStorage banking, no fake success).
        /job/{slug}               → job/{slug}
        /blog-posts/{slug}        → blog/{slug}
        /ridge                    → mi-lite   (/mi-lite aliases here)
@@ -5021,23 +5184,27 @@ function syncGuideRoute(route) {
     },
     forms: {
       title: "Forms" + BRAND_SUFFIX,
-      description: "Candidate authorization, interview expense, and easy-pay forms from Adaptive Medical Partners.",
-      robots: "index,follow"
+      description: "Shareable authorization and expense forms for Adaptive Medical Partners candidates and organizations.",
+      robots: "index,follow",
+      h1: "Forms"
     },
     "form-candidate-authorization": {
       title: "Candidate Authorization" + BRAND_SUFFIX,
-      description: "Candidate authorization form for Adaptive Medical Partners searches.",
-      robots: "index,follow"
+      description: "Candidate authorization and background verification for Adaptive Medical Partners searches.",
+      robots: "index,follow",
+      h1: "Candidate Authorization & Background Verification"
     },
     "form-interview-expense": {
       title: "Interview Expense Form" + BRAND_SUFFIX,
-      description: "Interview expense form for Adaptive Medical Partners candidates.",
-      robots: "index,follow"
+      description: "Interview travel expense form for Adaptive Medical Partners candidates.",
+      robots: "index,follow",
+      h1: "Interview Expense Form"
     },
     "form-easy-pay": {
       title: "Easy Pay Authorization" + BRAND_SUFFIX,
-      description: "Easy-pay authorization form for Adaptive Medical Partners.",
-      robots: "index,follow"
+      description: "Secure ACH payment authorization for Adaptive Medical Partners organizations. Details are transmitted securely.",
+      robots: "index,follow",
+      h1: "Easy Pay Authorization"
     },
     "mi-lite": {
       title: "Ridge" + BRAND_SUFFIX,
