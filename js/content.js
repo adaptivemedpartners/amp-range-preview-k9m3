@@ -1,3 +1,4 @@
+/* amp-build:2123-pages-confirm */
 /* AMP Mountain Site — content packs (jobs and Education posts)
    Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
    Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.
@@ -10,7 +11,7 @@ window.AMP_CONTENT = {
     { id: "obg", label: "Obstetrics & Gynecology", blurb: "Practice-first OB/GYN roles — schedule and package on a call." },
     { id: "internal_medicine_general", label: "Internal Medicine: General" },
     { id: "emergency_medicine", label: "Emergency Medicine", blurb: "ED coverage for community and critical access partners." },
-    { id: "psychiatry_general", label: "Psychiatry: General", blurb: "Behavioral health and general psychiatry retained searches." },
+    { id: "psychiatry_general", label: "Psychiatry: General", blurb: "Behavioral health and general psychiatry dedicated investment searches." },
     { id: "hospitalist_internal_medicine", label: "Hospitalist: Internal Medicine", blurb: "Hospitalist coverage with clear block and nocturnist options." },
     { id: "cardiology_noninvasive", label: "Cardiology: Noninvasive" },
     { id: "cardiology_invasive_interventional", label: "Cardiology: Invasive-Interventional" },
@@ -210,24 +211,24 @@ window.AMP_CONTENT = {
   ],
   facilities: [
     { id: "fqhc", label: "FQHC / CHC", blurb: "Mission-aligned clinic seats with clear timelines." },
-    { id: "cah", label: "Critical Access", blurb: "Rural CAH retained search — you hold the summit." },
+    { id: "cah", label: "Critical Access", blurb: "Rural CAH physician search — you hold the summit." },
     { id: "community", label: "Community / Rural hospital", blurb: "Community and rural hospital physician seats." },
     { id: "system", label: "Health system", blurb: "Hard-to-fill roles across a health system." },
     { id: "bh", label: "Behavioral Health", blurb: "Behavioral and community behavioral health seats." },
     { id: "group", label: "Multi-specialty / Group", blurb: "Multi-specialty and group practice growth seats." },
     { id: "dental", label: "Dentistry", blurb: "Dental and DSOs with clear package preview." },
     { id: "other", label: "Other", blurb: "Tell us the summit you need staffed." },
-    { id: "hospital", label: "Hospital / Health system", blurb: "Retained search for hard-to-fill physician roles." }
+    { id: "hospital", label: "Hospital / Health system", blurb: "Hard-to-fill physician roles across hospitals and systems." }
   ],
   facilitySpecialtyRanks: {
     "fqhc": [
       { id: "fm", label: "Family Medicine", blurb: "Most common physician hire at FQHCs / CHCs." },
       { id: "pediatrics_general", label: "Pediatrics", blurb: "Core primary-care panel alongside family medicine." },
-      { id: "internal_medicine_general", label: "Internal Medicine", blurb: "Adult primary care for FQHC panels." },
+      { id: "dental", label: "Dentistry", blurb: "On-site dental is a frequent FQHC / CHC seat." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Women’s health — often part-time or contracted." },
+      { id: "internal_medicine_general", label: "Internal Medicine", blurb: "Adult primary care for FQHC panels." },
       { id: "psychiatry_general", label: "Psychiatry", blurb: "Adult psych / addiction — rising visit demand." },
       { id: "nurse_practitioner_family_medicine_without_ob", label: "Family NP", blurb: "Often the largest clinician group on site." },
-      { id: "physician_assistant_primary_care", label: "Physician Assistant", blurb: "Family / primary care APP coverage." },
       { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Prescriber pool for mental health and SUD." },
     ],
     "cah": [
@@ -1882,7 +1883,7 @@ window.AMP_CONTENT = {
     { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first climb.", byline: "Mike Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
     { slug: "place-first-without-regret", title: "Place First Without Regret: Choose the Life Around the Practice", meta: "How residents and fellows can evaluate place-first fit without inventing a town story or falling for a postcard.", byline: "Randy Keeth", tags: ["Residents", "Place", "Career"], mins: 7 },
     { slug: "two-year-test-before-you-sign", title: "The Two-Year Test Before You Sign Your First Physician Contract", meta: "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your second-climb signal.", byline: "Mike Freeman", tags: ["Contracts", "Residents", "Education"], mins: 8 },
-    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A mountain-voice guide to MPC when place is the first filter—and when a retained guide makes the climb safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
+    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A mountain-voice guide to MPC when place is the first filter—and when a dedicated guide makes the climb safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
     { slug: "coordinator-share-pack-grads", title: "A Coordinator’s Share Pack for New Graduates", meta: "A short, practical share pack program coordinators can give graduating residents and fellows before the first job search.", byline: "Adaptive Medical Partners", tags: ["Coordinators", "Graduates", "Education"], mins: 5 },
     {
       slug: "physician-retention-3-year-kpi",
@@ -1894,8 +1895,8 @@ window.AMP_CONTENT = {
     {
       slug: "interview-to-placement-efficiency",
       title: "What Does 1.7 Interviews per Placement Mean for Hospitals?",
-      meta: "What does AMP’s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume — and how retained guides stage prepared hikers at the summit.",
-      tags: ["Interview efficiency", "Retained search", "Education"],
+      meta: "What does AMP’s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume — and how dedicated guides stage prepared hikers at the summit.",
+      tags: ["Interview efficiency", "Dedicated investment search", "Education"],
       mins: 10
     },
     {
@@ -1906,10 +1907,17 @@ window.AMP_CONTENT = {
       mins: 11
     },
     {
+      slug: "amp-history-16-years",
+      title: "16 Years on the Mountain — AMP History Since 2010",
+      meta: "Adaptive Medical Partners’ public timeline from 2010 founding through a 2026 boutique rebirth — 16 years of physician recruiting craft, drawn from About Us.",
+      tags: ["History", "About", "Why AMP"],
+      mins: 7
+    },
+    {
       slug: "retained-vs-contingent-physician-search",
-      title: "Retained or Contingent Physician Search: Which Model Should Hospitals Choose?",
-      meta: "Which physician search model fits — retained or contingent? Compare accountability, marketing, and how Adaptive Medical Partners guides both sides of the mountain.",
-      tags: ["Retained search", "Hospitals", "Education"],
+      title: "Dedicated investment or contingent Physician Search: Which Model Should Hospitals Choose?",
+      meta: "Which physician search model fits — dedicated investment or contingent? Compare accountability, marketing, and how Adaptive Medical Partners guides both sides of the mountain.",
+      tags: ["Dedicated investment search", "Hospitals", "Education"],
       mins: 9
     },
     {
@@ -1929,15 +1937,15 @@ window.AMP_CONTENT = {
     {
       slug: "midwest-lifestyle-for-physicians",
       title: "What Does Midwest Lifestyle for Physicians Usually Leave Out?",
-      meta: "What does Midwest physician lifestyle marketing usually leave out? Commute reality, schools, weekday endings, and how to pressure-test community roles with a retained guide.",
+      meta: "What does Midwest physician lifestyle marketing usually leave out? Commute reality, schools, weekday endings, and how to pressure-test community roles with a dedicated guide.",
       tags: ["Midwest", "Lifestyle", "Physicians"],
       mins: 8
     },
     {
       slug: "what-hospitals-should-ask-retained-firm",
-      title: "What Hospitals Should Ask a Retained Physician Search Firm Before Signing",
-      meta: "Twelve questions hospitals and medical groups should ask any retained firm — including AMP — about process, marketing, candidate quality, and summit meeting readiness.",
-      tags: ["Organizations", "Retained", "BD"],
+      title: "What Hospitals Should Ask a Dedicated Physician Search Firm Before Signing",
+      meta: "Twelve questions hospitals and medical groups should ask any dedicated search firm — including AMP — about process, marketing, candidate quality, and summit meeting readiness.",
+      tags: ["Organizations", "Dedicated", "BD"],
       mins: 10
     },
     {
@@ -1945,6 +1953,38 @@ window.AMP_CONTENT = {
       title: "How Do You Prep for Physician Interviews Without Leaking Confidential Details?",
       meta: "How can physicians prep for interviews without leaking client-specific details? AMP’s no-leaks playbook for confident, ethical conversations.",
       tags: ["Candidates", "Interview", "Confidential"],
+      mins: 8
+    },
+    {
+      slug: "virtual-interview-how-to",
+      title: "Virtual Interview How-To",
+      meta: "Essential checklists for both sides of the screen—so nothing falls through the cracks.",
+      byline: "David Fontenot",
+      tags: ["Interview", "Physicians", "Organizations"],
+      mins: 4
+    },
+    {
+      slug: "rural-recruiting-keeping-candidates-open-minded",
+      title: "Rural Recruiting - Keeping Candidates Open-Minded",
+      meta: "Stop asking about location—start asking about lifestyle (and watch resistance melt away).",
+      byline: "David Fontenot",
+      tags: ["Rural", "Recruiting", "Candidates"],
+      mins: 6
+    },
+    {
+      slug: "can-you-zoom-to-success-in-physician-recruiting",
+      title: "Can you Zoom to Success in Physician Recruiting?",
+      meta: "Should virtual interviews still be part of the standard physician recruiting process? AMP on when Zoom helps — and when it costs the hire.",
+      byline: "David Fontenot",
+      tags: ["Virtual interview", "Recruiting", "Organizations"],
+      mins: 9
+    },
+    {
+      slug: "how-does-your-physician-search-stack-up-against-the-competition",
+      title: "How does your physician search stack up against the competition?",
+      meta: "Free 5-minute assessment reveals how your physician opening ranks against regional and national competitors.",
+      byline: "David Fontenot",
+      tags: ["AMP Score", "Physician search", "Organizations"],
       mins: 8
     }
   ],

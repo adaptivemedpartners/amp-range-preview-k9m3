@@ -36,14 +36,14 @@
 
   var AGREEMENT_META = {
     "summit-clear": {
-      tag: "Summit Clear",
-      title: "Summit Clear (All-In)",
-      blurb: "You hold the peak; AMP does the work — lump retainer + marketing + placement. BD Hub owns this lead."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "You hold the peak; AMP does the work. A hiring guide owns this lead."
     },
     "shared-ascent": {
-      tag: "Shared Ascent",
-      title: "Shared Ascent (Partnership)",
-      blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. BD Hub owns this lead."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "A hiring guide owns the next step."
     },
     "mpc": {
       tag: "MPC · Quiet catch-all",

@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2111-public-forms";
+  window.__AMP_BUILD = "2125-kpi-jump";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -20,6 +20,8 @@
     clientSpecialties: [],
     clientSpecialtyCustom: null,
     agreement: null,
+    clientNeeds: [],
+    clientNeedNote: "",
     mpcAccess: "monthly",
     mpcUnlocked: false,
     mpcFilterSpecialty: "",
@@ -43,14 +45,14 @@
 
   var AGREEMENT_META = {
     "summit-clear": {
-      tag: "Summit Clear",
-      title: "Summit Clear (All-In)",
-      blurb: "You hold the peak; AMP does the work — lump retainer + marketing + placement. A hiring guide owns the next step."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "A hiring guide owns the next step."
     },
     "shared-ascent": {
-      tag: "Shared Ascent",
-      title: "Shared Ascent (Partnership)",
-      blurb: "Lower upfront risk — initiation + 4–6 monthlies. You wait; AMP works. A hiring guide owns the next step."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "A hiring guide owns the next step."
     },
     "mpc": {
       tag: "MPC · tailored search",
@@ -58,37 +60,114 @@
       blurb: "When nothing posted fits, a recruiting guide opens a tailored search with you."
     },
     "market-analysis": {
-      tag: "Free market analysis",
-      title: "Free market analysis from your hiring guide",
-      blurb: "Soft start — leave your info and specialty/state context. Your hiring guide sends a free market read. No retainer to begin."
+      tag: "Hiring consult",
+      title: "Talk with a hiring guide",
+      blurb: "Leave a short note. Your hiring guide will follow up."
     }
   };
 
+  var CLIENT_NEED_META = {
+    volume: { id: "volume", label: "Difficulty getting candidate volume" },
+    convert: { id: "convert", label: "We get candidates but can’t close / convert" },
+    interviews: { id: "interviews", label: "Interviews take too many cycles / wrong people reach leadership" },
+    vacancy: { id: "vacancy", label: "Role stays open too long / vacancy burn" },
+    confidential: { id: "confidential", label: "Confidential / competitive search needs a quieter approach" },
+    story: { id: "story", label: "Need help telling the opportunity story (marketing/preview)" },
+    brief: { id: "brief", label: "Not sure which seats to prioritize / brief is fuzzy" },
+    other: { id: "other", label: "Something else" }
+  };
+
+  function clientNeedLabels() {
+    return (state.clientNeeds || []).map(function (id) {
+      var meta = CLIENT_NEED_META[id];
+      return meta ? meta.label : id;
+    }).filter(Boolean);
+  }
+
+  function clientNeedsStamp() {
+    var labels = clientNeedLabels();
+    var extra = String(state.clientNeedNote || "").trim();
+    var line = labels.join("; ");
+    if (extra) line += (line ? " — " : "") + extra;
+    return line;
+  }
+
+  function clientContextBits() {
+    var bits = [];
+    try {
+      var fac = (AMP_CONTENT.facilities || []).find(function (f) { return f.id === state.facility; });
+      if (fac) bits.push(fac.label);
+      else if (state.facility === "other" && state.facilityCustom) bits.push(state.facilityCustom);
+    } catch (e) {}
+    if (state.clientSpecialties && state.clientSpecialties.length) {
+      bits.push(state.clientSpecialties.map(clientSpecLabel).filter(Boolean).join(", "));
+    } else if (state.clientSpecialty) {
+      bits.push(clientSpecLabel(state.clientSpecialty));
+    }
+    if (state.clientState) bits.push(state.clientState);
+    if (state.clientBd && state.clientBd.ownerName) bits.push(state.clientBd.ownerName);
+    return bits;
+  }
+
+  function writeClientMeetingFields() {
+    var needsField = $("#meeting-needs");
+    var noteField = $("#meeting-need-note");
+    var regionField = $("#meeting-region");
+    var agreeField = $("#meeting-agreement");
+    if (needsField) needsField.value = (state.clientNeeds || []).join(",");
+    if (noteField) noteField.value = String(state.clientNeedNote || "").trim();
+    if (regionField) regionField.value = state.clientState || state.clientRegion || "";
+    if (agreeField) agreeField.value = "";
+    state.agreement = null;
+  }
+
+  function applyClientMeetingNote() {
+    var note = document.querySelector("#client-meeting-form textarea[name=\"note\"]");
+    if (!note) return;
+    var stamp = clientNeedsStamp();
+    var region = state.clientState || "";
+    var owner = state.clientBd && state.clientBd.ownerName ? state.clientBd.ownerName : "";
+    var lines = [];
+    if (stamp) lines.push("Hiring focus: " + stamp);
+    if (region) lines.push("Region: " + region + (owner ? " · " + owner : ""));
+    var prefix = lines.join("\n");
+    var current = String(note.value || "");
+    if (!current.trim()) {
+      note.value = prefix;
+      return;
+    }
+    if (current.indexOf("Hiring focus:") === 0 || current.indexOf("Region:") === 0) {
+      var rest = current.replace(/^(Hiring focus:.*\n?)?(Region:.*\n?)?/, "").replace(/^\n+/, "");
+      note.value = prefix + (rest ? "\n" + rest : "");
+    }
+  }
+
   function syncPickedAgreement() {
+    syncPickedNeeds();
+  }
+
+  function syncPickedNeeds() {
+    writeClientMeetingFields();
+    applyClientMeetingNote();
     var box = $("#picked-agreement");
     var tag = $("#picked-agreement-tag");
     var title = $("#picked-agreement-title");
     var blurb = $("#picked-agreement-blurb");
-    var field = $("#meeting-agreement");
-    var key = state.agreement;
-    var meta = key && AGREEMENT_META[key];
-    if (field) field.value = key || "";
+    var stamp = clientNeedsStamp();
+    var bits = clientContextBits();
     if (!box) return;
-    if (!meta) {
+    if (!stamp && !bits.length) {
       box.hidden = true;
       return;
     }
     box.hidden = false;
-    if (tag) tag.textContent = meta.tag;
-    if (title) title.textContent = meta.title;
-    if (blurb) blurb.textContent = meta.blurb;
-    var note = document.querySelector("#client-meeting-form textarea[name=\"note\"]");
-    if (note && key === "market-analysis" && !note.value) {
-      note.placeholder = "Specialty · state · what you want to understand in the market";
-    }
-    var meetLede = document.querySelector('[data-route="client-meeting"] .lede');
-    if (meetLede && key === "market-analysis") {
-      meetLede.innerHTML = "Request a <strong>free market analysis</strong> from your hiring guide. Soft start — no retainer required.";
+    if (tag) tag.textContent = "What you asked to talk through";
+    if (title) title.textContent = stamp ? "Hiring focus" : "Your search";
+    if (blurb) {
+      var parts = [];
+      if (stamp) parts.push(stamp);
+      if (bits.length) parts.push(bits.join(" · "));
+      blurb.textContent = parts.join(" · ");
     }
   }
 
@@ -910,6 +989,7 @@
 
   function renderMILite() {
     populateMIFields("#mi-app-specialty", "#mi-app-regions");
+    populateRidgeDemoPickers();
   }
 
   function ensureMiLiteStateOptions() {
@@ -957,6 +1037,49 @@
       if (card) card.classList.toggle("is-selected", input.checked);
     });
     syncMiLitePlanPickers();
+    syncRidgeExtraOffer();
+  }
+
+  function isRidgePaidSeat(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    if (api && api.isPaid) return !!api.isPaid(seat);
+    return !!(seat && (seat.tier === "state" || seat.tier === "region" || seat.tier === "national") && seat.grantedByCheckout);
+  }
+
+  function ridgeCanGrantExtra(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    if (api && api.canGrantExtraPoll) return !!api.canGrantExtraPoll(seat);
+    return isRidgePaidSeat(seat);
+  }
+
+  function ridgeCanBuyExtra(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    if (api && api.canBuyExtraPoll) return !!api.canBuyExtraPoll(seat);
+    return ridgeCanGrantExtra(seat) && api && api.pollsLeft && api.pollsLeft(seat) <= 0;
+  }
+
+  function syncRidgeExtraOffer(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    var showBuy = ridgeCanBuyExtra(seat);
+    var showSim = ridgeCanGrantExtra(seat);
+    var extraCard = $("#ridge-extra-poll-card");
+    var extraBuy = $("#ridge-extra-poll-buy");
+    var extraCta = $("#ridge-extra-poll-cta");
+    var extraUnit = $("#ridge-unit-extra");
+    var extraSim = $("#ridge-simulate-extra");
+    if (extraCard) extraCard.hidden = !showBuy;
+    if (extraBuy) {
+      extraBuy.hidden = !showBuy;
+      extraBuy.disabled = !showBuy;
+      extraBuy.setAttribute("aria-disabled", showBuy ? "false" : "true");
+    }
+    if (extraCta) extraCta.hidden = !showBuy;
+    if (extraUnit && extraUnit.hidden === false && !showBuy) extraUnit.hidden = true;
+    if (extraSim) extraSim.hidden = !showSim;
   }
 
   function updateMILiteDashboard() {
@@ -983,33 +1106,540 @@
     }
   }
 
+  function ridgeAccess() {
+    return window.AMPRidgeAccess || null;
+  }
+
   function applyMiLiteLockUI() {
-    var unlocked = readMiLiteUnlock();
+    var api = ridgeAccess();
+    var seat = api ? api.getSeat() : { tier: "demo" };
     var dash = $("#mi-lite-dashboard");
     var meat = $("#mi-lite-dashboard-meat");
     var blur = $("#mi-lite-blur-overlay");
     var lockBanner = $("#mi-lite-lock-banner");
     var openBanner = $("#mi-lite-open-banner");
     var toolbar = $("#mi-lite-toolbar");
+    var paid = api ? api.isPaid(seat) : false;
     if (dash) {
-      dash.classList.toggle("is-locked", !unlocked);
-      dash.classList.toggle("mi-lite-dashboard", true);
+      dash.classList.remove("is-locked");
+      dash.classList.add("mi-lite-dashboard");
+      dash.setAttribute("data-ridge-tier", seat.tier || "demo");
     }
-    if (blur) blur.hidden = unlocked;
-    if (lockBanner) lockBanner.hidden = unlocked;
-    if (openBanner) openBanner.hidden = !unlocked;
-    if (toolbar) toolbar.hidden = !unlocked;
-    if (meat) meat.setAttribute("aria-hidden", unlocked ? "false" : "true");
+    /* Unit-gated surface stays visible; overlay is denial-only, not a whole-dash blur. */
+    if (blur) blur.hidden = true;
+    if (lockBanner) lockBanner.hidden = true;
+    if (openBanner) openBanner.hidden = false;
+    if (toolbar) toolbar.hidden = false;
+    if (meat) meat.setAttribute("aria-hidden", "false");
+    renderRidgeAccessChrome(seat, paid);
+    applyRidgeWalkGate();
   }
 
-  function renderMILiteApp() {
-    renderMILite();
-    updateMILiteDashboard();
+  function renderRidgeOpenUnits(seat, reallyPaid) {
+    var host = $("#ridge-open-units");
+    var api = ridgeAccess();
+    if (!host || !api) return;
+    var units = api.openUnits ? api.openUnits(seat) : [];
+    if (!units.length || (seat && seat.tier === "demo")) {
+      host.hidden = true;
+      host.innerHTML = "";
+      return;
+    }
+    var curSpec = "";
+    try { curSpec = window.AMPRidgeWorkbench && AMPRidgeWorkbench.getSpecialtyKey ? AMPRidgeWorkbench.getSpecialtyKey() : ""; } catch (e) {}
+    curSpec = curSpec || (seat && seat.demoSpecialty) || "";
+    var curSt = "";
+    try {
+      var codes = window.AMPRidgeWorkbench && AMPRidgeWorkbench.getSelectedCodes ? AMPRidgeWorkbench.getSelectedCodes() : [];
+      curSt = codes && codes[0] ? codes[0] : "";
+    } catch (e2) {}
+    curSt = curSt || (seat && (seat.paidState || seat.demoState)) || "";
+    host.hidden = false;
+    host.innerHTML = units.map(function (u) {
+      var spec = u.specialty || "";
+      var st = api.normState(u.state || seat.demoState);
+      var on = spec === curSpec && st === api.normState(curSt);
+      var label = api.specLabel(spec) + " × " + api.stateLabel(st);
+      return '<button type="button" class="ridge-unit-chip' + (on ? " is-on" : "") + '" data-ridge-unit-spec="' + spec + '" data-ridge-unit-state="' + st + '">' + label + "</button>";
+    }).join("");
+  }
+
+  function applyRidgeSimulateVerify() {
+    var api = ridgeAccess();
+    if (!api || !api.simulateVerify) return;
+    var result = api.simulateVerify();
+    if (!result.ok) {
+      if (result.reason === "walkthrough") jumpToRidgeWalk();
+      return;
+    }
+    hideRidgeDenial();
+    applyMiLiteLockUI();
+    if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.ensureUnitSelection) AMPRidgeWorkbench.ensureUnitSelection();
+    else if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    showMiMockToast("Verified sample · +2 specialties in " + (api.stateLabel(result.seat.demoState) || "your demo state") + ".");
+    if (!document.querySelector('[data-route="mi-lite-app"].on')) {
+      go("mi-lite-app", { trail: true });
+    }
+  }
+
+  function applyRidgeSimulatePay(sku) {
+    var api = ridgeAccess();
+    if (!api) return;
+    sku = String(sku || "state").replace(/^ridge_/, "");
+    if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
+      showMiMockToast("Extra poll $9 is only for paid State / Region / National seats.");
+      return;
+    }
+    var region = ($("#mi-lite-region-select") && $("#mi-lite-region-select").value) || "southwest";
+    var st = ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || undefined;
+    api.applyPaid({ sku: sku, state: st, region: region });
+    hideRidgeDenial();
+    applyMiLiteLockUI();
+    if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.ensureUnitSelection) AMPRidgeWorkbench.ensureUnitSelection();
+    else if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    showMiMockToast("Checkout stub · " + sku + " granted (preview). Polls are live.");
+    if (!document.querySelector('[data-route="mi-lite-app"].on')) {
+      go("mi-lite-app", { trail: true });
+    }
+  }
+
+  function openRidgeUnitChip(spec, st) {
+    var api = ridgeAccess();
+    if (!spec) return;
+    if (api && api.trySpecialty) api.trySpecialty(spec);
+    if (st && api && api.tryState) api.tryState(st);
+    try {
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.setSpecialtyKey) AMPRidgeWorkbench.setSpecialtyKey(spec);
+      if (st && window.AMPRidgeWorkbench && AMPRidgeWorkbench.selectState) AMPRidgeWorkbench.selectState(st);
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    } catch (e) {}
     applyMiLiteLockUI();
   }
 
+  function renderRidgeAccessChrome(seat, paid) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    var copy = api && api.tierCopy ? api.tierCopy(seat) : { tag: "Ridge", title: "Demo", body: "" };
+    var tag = $("#ridge-access-tag");
+    var title = $("#ridge-access-title");
+    var body = $("#ridge-access-body");
+    var polls = $("#ridge-poll-meter");
+    var verifyBtn = $("#ridge-verify-cta");
+    var upgradeBtn = $("#ridge-upgrade-cta");
+    var extraBtn = $("#ridge-extra-poll-cta");
+    var oneoffBtn = $("#ridge-oneoff-cta");
+    if (tag) tag.textContent = copy.tag;
+    if (title) title.textContent = copy.title;
+    if (body) body.textContent = copy.body;
+    var reallyPaid = !!(paid && seat && (seat.tier === "state" || seat.tier === "region" || seat.tier === "national") && seat.grantedByCheckout);
+    if (polls) {
+      if (reallyPaid && api) {
+        polls.hidden = false;
+        polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " left this month";
+        polls.classList.toggle("is-empty", api.pollsLeft(seat) <= 0);
+      } else {
+        polls.hidden = true;
+        polls.textContent = "";
+      }
+    }
+    renderRidgeOpenUnits(seat, reallyPaid);
+    var simVerify = $("#ridge-simulate-verify-app");
+    if (simVerify) simVerify.hidden = !(seat && seat.tier === "demo" && api && api.isDemoCommitted && api.isDemoCommitted(seat));
+    var simPay = $("#ridge-sim-pay");
+    if (simPay) simPay.hidden = !!(seat && seat.tier === "national" && reallyPaid);
+    var tasteHint = $("#ridge-taste-hint");
+    if (tasteHint) {
+      if (seat && seat.tier === "verified" && api) {
+        var usedT = api.tasteSpecialties(seat).length;
+        var leftT = Math.max(0, (api.VERIFIED_TASTE_CAP || 3) - usedT);
+        tasteHint.hidden = false;
+        tasteHint.textContent = leftT
+          ? ("Verified: pick " + leftT + " more specialty" + (leftT === 1 ? "" : "s") + " in " + api.stateLabel(seat.demoState) + " from the list. Same state only.")
+          : "Verified sample used — 3 tastes in. Subscribe to open another unit.";
+      } else {
+        tasteHint.hidden = true;
+      }
+    }
+    if (verifyBtn) verifyBtn.hidden = !(seat && seat.tier === "demo");
+    if (upgradeBtn) upgradeBtn.hidden = !!(seat && seat.tier === "national" && reallyPaid);
+    if (extraBtn) extraBtn.hidden = !ridgeCanBuyExtra(seat);
+    if (oneoffBtn) oneoffBtn.hidden = !!reallyPaid;
+    syncRidgeExtraOffer(seat);
+    var seatLine = $("#ridge-seat-line");
+    if (seatLine) {
+      if (seat && seat.seat && seat.seat.email) {
+        seatLine.hidden = false;
+        seatLine.textContent = "Seat · " + seat.seat.org + " · " + seat.seat.email + " · 1 allotment / org seat · no CSV/API in V1";
+      } else {
+        seatLine.hidden = seat && seat.tier !== "demo";
+        if (seat && seat.tier === "demo") seatLine.textContent = "Anonymous demo · org / work email required to verify · 1 allotment per org seat";
+      }
+    }
+  }
+
+  function showRidgeDenial(denial) {
+    var overlay = $("#ridge-unit-overlay");
+    var title = $("#ridge-unit-title");
+    var body = $("#ridge-unit-body");
+    var verify = $("#ridge-unit-verify");
+    var upgrade = $("#ridge-unit-upgrade");
+    var extra = $("#ridge-unit-extra");
+    var oneoff = $("#ridge-unit-oneoff");
+    if (!overlay) return;
+    denial = denial || (ridgeAccess() && ridgeAccess().lastDenial && ridgeAccess().lastDenial());
+    var reason = denial && denial.reason;
+    overlay.hidden = false;
+    if (reason === "verify") {
+      if (title) title.textContent = "Demo is locked to 1 state × 1 specialty.";
+      if (body) body.textContent = "Verify with name, org, work email, and phone to unlock +2 specialty tastes (3 total). Then a hard paywall.";
+      if (verify) verify.hidden = false;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = true;
+    } else if (reason === "paywall") {
+      if (title) title.textContent = "Verified sample used — hard paywall.";
+      if (body) body.textContent = "Three specialty tastes are in. Subscribe for State / Region / National, or buy a $49 one-off report. Extra poll $9 is only after a paid plan.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = false;
+    } else if (reason === "geo") {
+      if (title) title.textContent = "Outside your plan geography.";
+      if (body) body.textContent = "This state is outside the unlocked AMP region or state. Upgrade geo, or buy a $49 one-off report.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = false;
+    } else if (reason === "walkthrough") {
+      if (title) title.textContent = "Pick specialty, then state.";
+      if (body) body.textContent = "The workbench opens only after you commit one specialty × one state.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = true;
+      if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = true;
+    } else if (reason === "polls") {
+      if (title) title.textContent = "No polls left this month.";
+      if (body) body.textContent = "A poll is one specialty × state open. Extra poll $9, or upgrade the plan.";
+      if (verify) verify.hidden = true;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = !ridgeCanBuyExtra();
+      if (oneoff) oneoff.hidden = true;
+    } else {
+      if (title) title.textContent = "Ridge gate";
+      if (body) body.textContent = "This unit is locked on the current stair.";
+      if (verify) verify.hidden = false;
+      if (upgrade) upgrade.hidden = false;
+      if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = true;
+    }
+  }
+
+  function hideRidgeDenial() {
+    var overlay = $("#ridge-unit-overlay");
+    if (overlay) overlay.hidden = true;
+  }
+
+  function fillRidgeSpecSelect(sel) {
+    if (!sel || !window.AMPRidgeMI || !AMPRidgeMI.SPECIALTIES) return;
+    if (sel.options.length > 1) return;
+    if (!sel.options.length) {
+      var blank = document.createElement("option");
+      blank.value = "";
+      blank.textContent = "Select a specialty…";
+      sel.appendChild(blank);
+    }
+    AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+      var opt = document.createElement("option");
+      opt.value = s.key;
+      opt.textContent = s.label;
+      sel.appendChild(opt);
+    });
+  }
+
+  function fillRidgeStateSelect(sel) {
+    if (!sel || sel.options.length > 1) return;
+    RIDGE_US_STATES.forEach(function (row) {
+      var opt = document.createElement("option");
+      opt.value = row.abbr;
+      opt.textContent = row.name + " (" + row.abbr + ")";
+      sel.appendChild(opt);
+    });
+  }
+
+  function ridgeWalkPairs() {
+    return [
+      { spec: $("#ridge-demo-specialty"), state: $("#ridge-demo-state"), hint: $("#ridge-walk-hint"), open: $all(".ridge-demo-open") },
+      { spec: $("#ridge-app-walk-specialty"), state: $("#ridge-app-walk-state"), hint: $("#ridge-app-walk-hint"), open: $all(".ridge-app-walk-open") }
+    ];
+  }
+
+  function syncRidgeWalkthrough() {
+    var api = ridgeAccess();
+    var seat = api && api.getSeat();
+    var committed = !!(api && api.isDemoCommitted && api.isDemoCommitted(seat));
+    ridgeWalkPairs().forEach(function (pair) {
+      var spec = pair.spec;
+      var st = pair.state;
+      if (spec) fillRidgeSpecSelect(spec);
+      if (st) fillRidgeStateSelect(st);
+      if (committed && seat) {
+        if (spec && seat.demoSpecialty) spec.value = seat.demoSpecialty;
+        if (st && seat.demoState) st.value = String(seat.demoState).toUpperCase();
+      } else {
+        if (spec && spec.value && seat && seat.demoSpecialty && spec.value === seat.demoSpecialty && !committed) {
+          /* keep in-progress pick */
+        }
+      }
+      var specVal = spec ? spec.value : "";
+      var stateVal = st ? st.value : "";
+      if (st) st.disabled = !specVal;
+      var stepSpec = spec && spec.closest(".ridge-walk-step");
+      var stepState = st && st.closest(".ridge-walk-step");
+      if (stepSpec) {
+        stepSpec.classList.toggle("is-done", !!specVal);
+        stepSpec.classList.toggle("is-current", !specVal);
+        stepSpec.classList.remove("is-locked");
+      }
+      if (stepState) {
+        stepState.classList.toggle("is-locked", !specVal);
+        stepState.classList.toggle("is-current", !!specVal && !stateVal);
+        stepState.classList.toggle("is-done", !!specVal && !!stateVal);
+      }
+      var ready = !!(specVal && stateVal);
+      pair.open.forEach(function (btn) {
+        btn.disabled = !ready;
+        btn.setAttribute("aria-disabled", ready ? "false" : "true");
+      });
+      if (pair.hint) {
+        if (!specVal) pair.hint.textContent = "Step 1 · pick a specialty. The workbench stays closed.";
+        else if (!stateVal) pair.hint.textContent = "Step 2 · pick a state to unlock that 1×1.";
+        else pair.hint.textContent = "Step 3 · unlock the demo unit. Other specialties and states stay locked.";
+      }
+    });
+  }
+
+  function populateRidgeDemoPickers() {
+    syncRidgeWalkthrough();
+  }
+
+  function readRidgeWalkPicks() {
+    var spec = ($("#ridge-demo-specialty") && $("#ridge-demo-specialty").value)
+      || ($("#ridge-app-walk-specialty") && $("#ridge-app-walk-specialty").value)
+      || "";
+    var st = ($("#ridge-demo-state") && $("#ridge-demo-state").value)
+      || ($("#ridge-app-walk-state") && $("#ridge-app-walk-state").value)
+      || "";
+    return { specialty: spec, state: st };
+  }
+
+  function commitRidgeDemoAndOpen() {
+    var api = ridgeAccess();
+    var picks = readRidgeWalkPicks();
+    if (!picks.specialty || !picks.state) {
+      syncRidgeWalkthrough();
+      jumpToRidgeWalk();
+      return false;
+    }
+    if (api) api.startDemo(picks);
+    go("mi-lite-app", { trail: true });
+    return true;
+  }
+
+  function jumpToRidgeWalk() {
+    var door = $("#ridge-demo-door") || $("#ridge-walk-gate");
+    var onLanding = document.querySelector('[data-route="mi-lite"].on');
+    if (!onLanding) {
+      go("mi-lite", { trail: true });
+      setTimeout(function () {
+        var target = $("#ridge-demo-door");
+        if (target && target.scrollIntoView) target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 40);
+      return;
+    }
+    if (door && door.scrollIntoView) door.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function applyRidgeWalkGate() {
+    var api = ridgeAccess();
+    var ready = !!(api && api.isDemoCommitted && api.isDemoCommitted());
+    var gate = $("#ridge-walk-gate");
+    var dash = $("#mi-lite-dashboard");
+    var form = $("#mi-lite-app-form");
+    var banner = $("#mi-lite-open-banner");
+    if (gate) gate.hidden = ready;
+    if (dash) dash.hidden = !ready;
+    if (form) form.hidden = !ready;
+    if (banner) banner.hidden = !ready;
+    return ready;
+  }
+
+  function openRidgeCheckout(sku) {
+    var api = ridgeAccess();
+    sku = String(sku || "").replace(/^ridge_/, "");
+    if (sku === "extra_poll" && !ridgeCanBuyExtra()) {
+      showMiMockToast("Extra poll $9 is only after a paid State / Region / National allotment is used.");
+      return;
+    }
+    var meta = api && api.SKUS && (api.SKUS[sku] || api.SKUS[String(sku).replace(/^ridge_/, "")]);
+    var modal = $("#ridge-checkout-modal");
+    if (!modal || !meta) return;
+    modal.hidden = false;
+    modal.setAttribute("data-ridge-sku", meta.sku.replace(/^ridge_/, ""));
+    var title = $("#ridge-checkout-title");
+    var amount = $("#ridge-checkout-amount");
+    var note = $("#ridge-checkout-note");
+    if (title) title.textContent = meta.label;
+    if (amount) amount.textContent = meta.kind === "subscription" ? ("$" + meta.amount + " / month") : ("$" + meta.amount + " one-time");
+    if (note) {
+      note.textContent = "Stripe Checkout is stubbed in V1 (test-mode hook). Simulate success to grant the seat locally. No card is charged.";
+    }
+    var portalState = $("#mi-lite-state-select");
+    var portalRegion = $("#mi-lite-region-select");
+    var statePick = $("#ridge-checkout-state");
+    var regionPick = $("#ridge-checkout-region");
+    var specPick = $("#ridge-checkout-specialty");
+    var plan = String(meta.plan || sku);
+    if (statePick) {
+      if (statePick.options.length <= 1) {
+        RIDGE_US_STATES.forEach(function (row) {
+          var opt = document.createElement("option");
+          opt.value = row.abbr;
+          opt.textContent = row.name;
+          statePick.appendChild(opt);
+        });
+      }
+      var stateWrap = statePick.closest(".field");
+      if (stateWrap) stateWrap.hidden = !(plan === "state" || sku === "oneoff");
+      if (portalState && portalState.value) statePick.value = portalState.value;
+    }
+    if (regionPick) {
+      var regionWrap = regionPick.closest(".field");
+      if (regionWrap) regionWrap.hidden = plan !== "region";
+      if (portalRegion && portalRegion.value) regionPick.value = portalRegion.value;
+    }
+    if (specPick) {
+      if (!specPick.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
+        AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+          var opt = document.createElement("option");
+          opt.value = s.key;
+          opt.textContent = s.label;
+          specPick.appendChild(opt);
+        });
+      }
+      var specWrap = specPick.closest(".field");
+      if (specWrap) specWrap.hidden = sku !== "oneoff";
+    }
+  }
+
+  function closeRidgeCheckout() {
+    var modal = $("#ridge-checkout-modal");
+    if (modal) modal.hidden = true;
+  }
+
+  function completeRidgeCheckout() {
+    var api = ridgeAccess();
+    var modal = $("#ridge-checkout-modal");
+    if (!api || !modal) return;
+    var sku = modal.getAttribute("data-ridge-sku") || "state";
+    if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
+      showMiMockToast("Extra poll $9 is only for paid State / Region / National seats.");
+      closeRidgeCheckout();
+      return;
+    }
+    api.applyPaid({
+      sku: sku,
+      state: ($("#ridge-checkout-state") && $("#ridge-checkout-state").value) || ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || undefined,
+      region: ($("#ridge-checkout-region") && $("#ridge-checkout-region").value) || ($("#mi-lite-region-select") && $("#mi-lite-region-select").value) || undefined,
+      specialty: ($("#ridge-checkout-specialty") && $("#ridge-checkout-specialty").value) || undefined
+    });
+    closeRidgeCheckout();
+    hideRidgeDenial();
+    applyMiLiteLockUI();
+    if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+    showMiMockToast("Checkout stub · " + sku + " granted in this browser (test mode, nothing charged).");
+    if (!document.querySelector('[data-route="mi-lite-app"].on')) {
+      go("mi-lite-app", { trail: true });
+    }
+  }
+
+  function showMiMockToast(msg) {
+    var toast = $("#mi-lite-mock-toast");
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.hidden = false;
+    clearTimeout(showMiMockToast._t);
+    showMiMockToast._t = setTimeout(function () { toast.hidden = true; }, 2800);
+  }
+
+  function renderMILiteApp() {
+    var api = ridgeAccess();
+    var ready = applyRidgeWalkGate();
+    renderMILite();
+    if (!ready) {
+      applyMiLiteLockUI();
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) {
+        try { AMPRidgeWorkbench.refresh(); } catch (eHold) {}
+      }
+      return;
+    }
+    updateMILiteDashboard();
+    applyMiLiteLockUI();
+    try {
+      var seat2 = api && api.getSeat();
+      if (seat2 && window.AMPRidgeWorkbench) {
+        if (seat2.demoSpecialty && AMPRidgeWorkbench.getSpecialtyKey && AMPRidgeWorkbench.getSpecialtyKey() !== seat2.demoSpecialty) {
+          AMPRidgeWorkbench.setSpecialtyKey(seat2.demoSpecialty);
+        }
+        if (AMPRidgeWorkbench.ensureUnitSelection) AMPRidgeWorkbench.ensureUnitSelection();
+      }
+    } catch (eSync) {}
+  }
+
   function renderMILiteLogin() {
-    readMiLiteUnlock();
+    var api = ridgeAccess();
+    if (api) api.getSeat();
+  }
+
+  function bindWhyAmpProofPairs() {
+    var root = document.querySelector('.view[data-route="education"]');
+    if (!root) return;
+    var nodes = root.querySelectorAll("[data-proof-pair]");
+    function setPair(id, on) {
+      root.querySelectorAll('[data-proof-pair="' + id + '"]').forEach(function (el) {
+        el.classList.toggle("is-paired", !!on);
+      });
+    }
+    nodes.forEach(function (el) {
+      if (el.getAttribute("data-proof-bound") === "1") return;
+      el.setAttribute("data-proof-bound", "1");
+      var id = el.getAttribute("data-proof-pair");
+      el.addEventListener("mouseenter", function () { setPair(id, true); });
+      el.addEventListener("mouseleave", function () { setPair(id, false); });
+      el.addEventListener("focusin", function () { setPair(id, true); });
+      el.addEventListener("focusout", function () { setPair(id, false); });
+      if (el.classList.contains("why-amp-proof-tile")) {
+        el.setAttribute("role", "button");
+        el.setAttribute("aria-label", (el.getAttribute("aria-label") || "Jump to matching pillar"));
+        el.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          var target = root.querySelector('.pillar-card[data-proof-pair="' + id + '"]');
+          if (!target) return;
+          try {
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+          } catch (eScroll) {
+            target.scrollIntoView(true);
+          }
+          setPair(id, true);
+          try { target.focus({ preventScroll: true }); } catch (eFocus) { try { target.focus(); } catch (e2) {} }
+        });
+        el.addEventListener("keydown", function (ev) {
+          if (ev.key !== "Enter" && ev.key !== " ") return;
+          ev.preventDefault();
+          el.click();
+        });
+      }
+    });
   }
 
   function renderDynamic(route, params) {
@@ -1025,9 +1655,14 @@
     if (route === "job-contact" || route === "chat") renderJobContact(params.id || state.jobId);
     if (route === "client") renderFacilitySignpost();
     if (route === "client-specialty") renderClientSpecialty();
-    if (route === "client-region") renderClientRegion();
+    if (route === "client-region") {
+      renderClientRegion();
+      renderClientOffers();
+      bindClientClimbStations();
+    }
+    if (route === "education") bindWhyAmpProofPairs();
     if (route === "client-meeting") {
-      syncPickedAgreement();
+      syncPickedNeeds();
       if (state.clientState) {
         var _cms = $("#client-meeting-state");
         if (_cms && !_cms.value) _cms.value = state.clientState;
@@ -1048,8 +1683,15 @@
   function go(route, opts) {
     opts = opts || {};
     if (route === "residents-fellows") route = "residents";
+    if (route === "client-retained") route = "client-region";
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
+    if (route === "mi-lite-app") {
+      var walkApi = ridgeAccess();
+      if (walkApi && walkApi.isDemoCommitted && !walkApi.isDemoCommitted()) {
+        route = "mi-lite";
+      }
+    }
     var next = document.querySelector('.view[data-route="' + route + '"]');
     if (!next && (route.indexOf("blog/") === 0 || route.indexOf("blog-posts/") === 0)) {
       next = document.querySelector('.view[data-route="blog-post"]');
@@ -1215,8 +1857,9 @@
             : "";
         }
         if (c && !c.innerHTML.trim()) {
+          var needBit = clientNeedsStamp();
           var messLine = bd
-            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + " → a hiring guide · CC Randy/Mike/David")
+            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + (needBit ? " · " + needBit : "") + " → a hiring guide · CC Randy/Mike/David")
             : "Meeting request → a hiring guide";
           stampMess("client", messLine);
         }
@@ -1397,7 +2040,7 @@
     }
     paint();
     list.onclick = function (e) {
-      /* amp-build:2059 — pick must set specialty, close pop, advance (same as hire-card Select) */
+      /* amp-build:2124-kpi-jump — pick must set specialty, close pop, advance (same as hire-card Select) */
       var raw = e.target;
       if (raw && raw.nodeType === 3) raw = raw.parentElement;
       if (!raw || typeof raw.closest !== "function") return;
@@ -1522,10 +2165,20 @@
   var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 };
   var BD_ZACH_STATES = { IL:1, MO:1, IA:1, KS:1, NE:1 };
   var BD_CC_ALWAYS = ["Randy Keeth", "Mike Freeman", "David Fontenot"]; /* Randy = main CC; Mike + David always copied */
+  var BD_CC_ALWAYS_EMAILS = [
+    "rkeeth@adaptivemedicalpartners.com",
+    "mfreeman@adaptivemedicalpartners.com",
+    "david@adaptivemedicalpartners.com"
+  ];
+  var BD_CC_ALWAYS_MAP = [
+    { name: "Randy Keeth", email: "rkeeth@adaptivemedicalpartners.com" },
+    { name: "Mike Freeman", email: "mfreeman@adaptivemedicalpartners.com" },
+    { name: "David Fontenot", email: "david@adaptivemedicalpartners.com" }
+  ];
   var BD_OWNER_META = {
     aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Hiring guide", blurb: "Texas hiring guide who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
     zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the climb from both sides of the rope.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
-    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Brenton is single. Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
     randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD · unassigned states", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
   function resolveBdOwner(stateCode) {
@@ -1719,17 +2372,13 @@
 
   function paintClientGuideReveal(stateCode) {
     var reveal = $("#client-guide-reveal");
-    var cont = $("#client-region-continue");
     var owner = resolveBdOwner(stateCode);
     if (!reveal || !owner) {
       if (reveal) {
         reveal.hidden = false;
         reveal.classList.add("is-empty");
       }
-      if (cont) {
-        cont.disabled = true;
-        cont.textContent = "Pick a state to continue";
-      }
+      try { paintClientNeedSelection(); } catch (e0) {}
       return;
     }
     reveal.hidden = false;
@@ -1742,7 +2391,6 @@
     var fullBody = $("#client-guide-full-body");
     var fullDet = $("#client-guide-full");
     var note = $("#client-guide-note");
-    var talk = $("#client-guide-talk");
     var scriptEl = document.querySelector('script[src*="app.js?v="]');
     var v = scriptEl && (scriptEl.src.match(/[?&]v=(\d+)/) || [])[1] || "";
     if (img) {
@@ -1756,14 +2404,6 @@
     if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
     if (fullDet) fullDet.open = false;
     if (note) note.textContent = "Main CC Randy · also Mike · David";
-    if (talk) {
-      talk.setAttribute("data-go", "client-meeting");
-      talk.setAttribute("data-trail", "1");
-    }
-    if (cont) {
-      cont.disabled = false;
-      cont.textContent = "Continue with " + owner.name.split(" ")[0] + " →";
-    }
     state.clientBd = {
       state: String(stateCode).toUpperCase(),
       region: state.clientRegion || null,
@@ -1774,6 +2414,7 @@
     };
     state.clientState = String(stateCode).toUpperCase();
     try { stampConciergePath("client-region"); } catch (e) {}
+    try { paintClientNeedSelection(); } catch (e1) {}
   }
 
   function renderClientRegion() {
@@ -1796,7 +2437,6 @@
     var statesWrap = $("#client-region-states");
     var chips = $("#client-state-chips");
     var reveal = $("#client-guide-reveal");
-    var cont = $("#client-region-continue");
 
     function showStates(regionId) {
       state.clientRegion = regionId;
@@ -1830,10 +2470,7 @@
           reveal.hidden = false;
           reveal.classList.add("is-empty");
         }
-        if (cont) {
-          cont.disabled = true;
-          cont.textContent = "Pick a state to continue";
-        }
+        try { paintClientNeedSelection(); } catch (eShow) {}
       }
     }
 
@@ -1869,10 +2506,7 @@
         reveal.hidden = false;
         reveal.classList.add("is-empty");
       }
-      if (cont) {
-        cont.disabled = true;
-        cont.textContent = "Pick a state to continue";
-      }
+      try { paintClientNeedSelection(); } catch (eEmpty) {}
     }
 
     if (chips && chips.getAttribute("data-bound-client-region") !== "1") {
@@ -1889,18 +2523,180 @@
       });
     }
 
-    if (cont && cont.getAttribute("data-bound-client-region") !== "1") {
-      cont.setAttribute("data-bound-client-region", "1");
+  }
+
+  function paintClientNeedSelection() {
+    var list = $("#client-need-cards");
+    var selected = state.clientNeeds || [];
+    if (list) {
+      list.querySelectorAll("[data-client-need]").forEach(function (btn) {
+        var id = (btn.getAttribute("data-client-need") || "").trim();
+        var on = selected.indexOf(id) >= 0;
+        btn.classList.toggle("is-selected", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        var sel = btn.querySelector(".hire-select");
+        if (sel) sel.textContent = on ? "Selected" : "Select";
+      });
+    }
+    var otherWrap = $("#client-need-other-wrap");
+    if (otherWrap) otherWrap.hidden = selected.indexOf("other") < 0;
+    var cont = $("#client-offers-continue");
+    if (cont) {
+      var hasState = !!(state.clientState && state.clientBd);
+      var hasNeeds = selected.length > 0;
+      var ready = hasState && hasNeeds;
+      cont.disabled = !ready;
+      if (!hasState) {
+        cont.textContent = "Pick a state to continue";
+      } else if (!hasNeeds) {
+        cont.textContent = "Select at least one to continue";
+      } else if (state.clientBd && state.clientBd.ownerName) {
+        cont.textContent = "Request a meeting with " + state.clientBd.ownerName.split(" ")[0] + " →";
+      } else {
+        cont.textContent = "Request a meeting →";
+      }
+    }
+    var hint = $("#client-need-hint");
+    if (hint) {
+      hint.textContent = selected.length
+        ? (selected.length === 1 ? "1 selected — add more or continue." : selected.length + " selected — continue when you’re ready.")
+        : "Tap one or more. Multi-select is fine — pick anything that’s true right now.";
+    }
+  }
+
+  function toggleClientNeed(id) {
+    if (!id) return;
+    if (!Array.isArray(state.clientNeeds)) state.clientNeeds = [];
+    var idx = state.clientNeeds.indexOf(id);
+    if (idx >= 0) state.clientNeeds.splice(idx, 1);
+    else state.clientNeeds.push(id);
+    if (state.clientNeeds.indexOf("other") < 0) state.clientNeedNote = "";
+    paintClientNeedSelection();
+    try { stampConciergePath("client-region"); } catch (e) {}
+  }
+
+  function continueClientOffers() {
+    if (!state.clientState || !state.clientBd) {
+      paintClientNeedSelection();
+      var band = $("#client-territory-band") || $("#client-state-chips");
+      if (band && band.scrollIntoView) band.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (!state.clientNeeds || !state.clientNeeds.length) {
+      paintClientNeedSelection();
+      var first = document.querySelector("#client-need-cards [data-client-need]");
+      if (first) first.focus();
+      return;
+    }
+    var otherNote = $("#client-need-other-note");
+    if (otherNote) state.clientNeedNote = String(otherNote.value || "").trim();
+    writeClientMeetingFields();
+    applyClientMeetingNote();
+    var sel = $("#client-meeting-state");
+    if (sel && state.clientState) {
+      sel.value = state.clientState;
+      try { syncClientBdRoutePreview(); } catch (err) {}
+    }
+    go("client-meeting", { trail: true });
+  }
+
+  function renderClientOffers() {
+    var ctx = $("#client-offers-context");
+    if (ctx) {
+      var bits = clientContextBits();
+      ctx.textContent = bits.length ? bits.join(" · ") : "";
+    }
+    if (!Array.isArray(state.clientNeeds)) state.clientNeeds = [];
+    var otherNote = $("#client-need-other-note");
+    if (otherNote && state.clientNeedNote && !otherNote.value) otherNote.value = state.clientNeedNote;
+    paintClientNeedSelection();
+    var list = $("#client-need-cards");
+    if (list && list.getAttribute("data-bound-client-needs") !== "1") {
+      list.setAttribute("data-bound-client-needs", "1");
+      list.addEventListener("click", function (ev) {
+        var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-need]") : null;
+        if (!btn) return;
+        ev.preventDefault();
+        toggleClientNeed((btn.getAttribute("data-client-need") || "").trim());
+      });
+    }
+    if (otherNote && otherNote.getAttribute("data-bound-client-needs") !== "1") {
+      otherNote.setAttribute("data-bound-client-needs", "1");
+      otherNote.addEventListener("input", function () {
+        state.clientNeedNote = String(otherNote.value || "").trim();
+      });
+    }
+    var cont = $("#client-offers-continue");
+    if (cont && cont.getAttribute("data-bound-client-needs") !== "1") {
+      cont.setAttribute("data-bound-client-needs", "1");
       cont.addEventListener("click", function (ev) {
         ev.preventDefault();
-        if (!state.clientState || !state.clientBd) return;
-        var sel = $("#client-meeting-state");
-        if (sel) {
-          sel.value = state.clientState;
-          try { syncClientBdRoutePreview(); } catch (err) {}
-        }
-        go("client-retained", { trail: true });
+        continueClientOffers();
       });
+    }
+    try { stampConciergePath("client-region"); } catch (e2) {}
+  }
+
+  var CLIMB_DEFAULT_LINE = "You set the high camp. We carry the work from the first profile through the close.";
+  var CLIMB_STATION_LINES = {
+    "1": "We walk the clinic week and the culture before anyone is briefed.",
+    "2": "We write a story candidates can trust — not a blast list.",
+    "3": "Only prepared people reach your leadership table.",
+    "4": "A clean dossier and CV packet, ready for the committee.",
+    "5": "We walk the candidate through the summit before they meet you.",
+    "6": "We stay on the rope through the yes — and the first weeks after."
+  };
+
+  function lightClientClimbStation(id, persist) {
+    var band = $("#client-climb-band");
+    var line = $("#client-climb-line");
+    if (!band) return;
+    var stations = band.querySelectorAll(".client-climb-station");
+    stations.forEach(function (btn) {
+      var on = id && btn.getAttribute("data-climb") === String(id);
+      btn.classList.toggle("is-lit", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    if (line) line.textContent = (id && CLIMB_STATION_LINES[String(id)]) || CLIMB_DEFAULT_LINE;
+    if (persist) band.setAttribute("data-climb-lit", id ? String(id) : "");
+  }
+
+  function bindClientClimbStations() {
+    var band = $("#client-climb-band");
+    if (!band) return;
+    if (band.getAttribute("data-bound-climb") === "1") return;
+    band.setAttribute("data-bound-climb", "1");
+    band.addEventListener("mouseover", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+      if (!btn || !band.contains(btn)) return;
+      lightClientClimbStation(btn.getAttribute("data-climb"), false);
+    });
+    band.addEventListener("mouseleave", function () {
+      var kept = band.getAttribute("data-climb-lit") || "";
+      lightClientClimbStation(kept, false);
+    });
+    band.addEventListener("focusin", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+      if (!btn) return;
+      lightClientClimbStation(btn.getAttribute("data-climb"), false);
+    });
+    band.addEventListener("click", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+      if (!btn) return;
+      ev.preventDefault();
+      var id = btn.getAttribute("data-climb");
+      var already = band.getAttribute("data-climb-lit") === id;
+      lightClientClimbStation(already ? "" : id, true);
+    });
+    var trail = band.querySelector(".client-climb-trail");
+    if (trail) {
+      var syncSwipe = function () {
+        var max = trail.scrollWidth - trail.clientWidth - 8;
+        var atEnd = max <= 0 || trail.scrollLeft >= max;
+        band.classList.toggle("is-climb-end", atEnd);
+      };
+      trail.addEventListener("scroll", syncSwipe, { passive: true });
+      syncSwipe();
     }
   }
 
@@ -2131,7 +2927,7 @@
     if (clientMode) {
       if (kicker) kicker.textContent = "Hiring path · territory";
       if (h2) h2.textContent = "Where should we search?";
-      if (help) help.textContent = "Tap one region, then pick your state below.";
+      if (help) help.textContent = "Tap a region, then your state.";
     }
 
     var svg = root.querySelector(".amp-region-map");
@@ -2324,6 +3120,10 @@
       if (state.clientBd && state.clientBd.ownerId) {
         window.AMP_CHATBOT.recruiter = state.clientBd.ownerId;
         window.AMP_CHATBOT.recruiterTag = state.clientBd.ownerId;
+      }
+      if (state.clientNeeds && state.clientNeeds.length) {
+        window.AMP_CHATBOT.clientNeeds = clientNeedLabels().join("; ");
+        window.AMP_CHATBOT.note = clientNeedsStamp();
       }
     }
     if (typeof window.AMP_CHATBOT.configure === "function") {
@@ -3246,6 +4046,81 @@
     return state.enrichBundle;
   }
 
+  function conciergeHandoffUrl() {
+    try {
+      if (window.AMP_CHATBOT && window.AMP_CHATBOT.handoffUrl) {
+        return String(window.AMP_CHATBOT.handoffUrl).trim();
+      }
+    } catch (e) {}
+    var script = document.querySelector("script[data-amp-handoff-url], [data-amp-handoff-url]");
+    return script ? String(script.getAttribute("data-amp-handoff-url") || "").trim() : "";
+  }
+
+  function persistSpaLead(payload) {
+    try {
+      var isClient = payload.audience === "client";
+      var key = isClient ? "amp_chatbot_client_leads" : "amp_chatbot_leads";
+      var list = [];
+      try { list = JSON.parse(localStorage.getItem(key) || "[]"); } catch (e) { list = []; }
+      if (!Array.isArray(list)) list = [];
+      list.push(payload);
+      if (list.length > 50) list = list.slice(-50);
+      localStorage.setItem(key, JSON.stringify(list));
+      if (isClient) {
+        localStorage.setItem("amp_chatbot_last_client_lead", JSON.stringify(payload));
+        try {
+          var all = JSON.parse(localStorage.getItem("amp_chatbot_leads") || "[]");
+          if (!Array.isArray(all)) all = [];
+          all.push(payload);
+          if (all.length > 50) all = all.slice(-50);
+          localStorage.setItem("amp_chatbot_leads", JSON.stringify(all));
+        } catch (e2) {}
+      } else {
+        localStorage.setItem("amp_chatbot_last_lead", JSON.stringify(payload));
+      }
+    } catch (e) {
+      console.warn("[AMP forms] localStorage persist failed:", e);
+    }
+  }
+
+  function hiringGuideCcFields() {
+    return {
+      cc: BD_CC_ALWAYS.slice(),
+      ccEmails: BD_CC_ALWAYS_EMAILS.slice(),
+      ccPeople: BD_CC_ALWAYS_MAP.map(function (p) { return { name: p.name, email: p.email }; })
+    };
+  }
+
+  function postLeadHandoff(payload) {
+    persistSpaLead(payload);
+    var url = conciergeHandoffUrl();
+    console.log("[AMP forms] Handoff lead captured:", payload);
+    if (!url) return Promise.resolve({ ok: false, stub: true, persisted: true });
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+      mode: "cors",
+      credentials: "omit"
+    }).then(function (res) {
+      console.log("[AMP forms] Handoff POST status:", res.status);
+      return { ok: res.ok, status: res.status, persisted: true };
+    }).catch(function (err) {
+      console.warn("[AMP forms] Handoff POST failed (localStorage still OK):", err);
+      return { ok: false, error: String(err), persisted: true };
+    });
+  }
+
+  function setFormBusy(form, busy) {
+    if (!form) return;
+    var btn = form.querySelector('button[type="submit"]');
+    if (btn) {
+      if (busy && !btn.getAttribute("data-idle-label")) btn.setAttribute("data-idle-label", btn.textContent);
+      btn.disabled = !!busy;
+      btn.textContent = busy ? "Sending…" : (btn.getAttribute("data-idle-label") || btn.textContent);
+    }
+  }
+
   function stampMess(kind, payload) {
     var el = kind === "client" ? $("#mess-client-mock") : $("#mess-response-mock");
     if (!el) return;
@@ -3254,14 +4129,14 @@
     var en = sampleEnrich(kind);
     var rank = sampleRankLine();
     if (kind === "client") {
-      var agree = state.agreement && AGREEMENT_META[state.agreement]
-        ? AGREEMENT_META[state.agreement].title
-        : "Client meeting";
+      var needsLine = clientNeedsStamp() || "Hiring consult";
+      var regionLine = (state.clientState || "") + (state.clientBd && state.clientBd.ownerName ? " · " + state.clientBd.ownerName : "");
       el.innerHTML =
         '<div class="row"><span>Owner queue</span><span class="ok">Client lead · your team</span></div>' +
         '<div class="row"><span>Status</span><span class="ok">Captured · routed</span></div>' +
         '<div class="row"><span>When</span><span>' + stamp + '</span></div>' +
-        '<div class="row"><span>Agreement</span><span class="ok">' + agree + '</span></div>' +
+        '<div class="row"><span>Hiring focus</span><span class="ok">' + needsLine + '</span></div>' +
+        (regionLine ? '<div class="row"><span>Region / guide</span><span class="ok">' + regionLine + '</span></div>' : "") +
         '<div class="row"><span>Approx. browse location</span><span class="ok">' + en.geo + '</span></div>' +
         '<div class="row"><span>Referrer / UTM</span><span>' + en.referrer + '</span></div>' +
         '<div class="row"><span>Device / TZ</span><span>' + en.device + '</span></div>' +
@@ -3542,6 +4417,12 @@ function syncGuideRoute(route) {
       var guideRoot = $("#amp-guide");
       var guideDock = $("#amp-guide-dock");
       if (guideRoot && !guideRoot.hidden && guideDock && !guideDock.hidden && !raw.closest("#amp-guide")) closeGuideDock();
+      if (raw.closest("#mi-lite-subscribe")) {
+        e.preventDefault();
+        var subPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
+        openRidgeCheckout(subPlan ? subPlan.value : (state.miLitePlan || "region"));
+        return;
+      }
       var t = raw.closest("[data-go]");
       if (t) {
         if (t.tagName === "A") {
@@ -3570,11 +4451,15 @@ function syncGuideRoute(route) {
         if (route === "mpc-portal") {
           state.agreement = state.agreement || "mpc";
         }
-        if (route === "mi-lite-app" && (t.id === "mi-lite-subscribe" || t.getAttribute("data-mi-unlock") === "1")) {
-          var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-          state.miLitePlan = normalizeMiLitePlan(miPlan ? miPlan.value : (state.miLitePlan || "region"));
-          writeMiLiteUnlock(state.miLitePlan);
-          if (typeof stampMess === "function") stampMess("client", "Ridge sample unlock · " + state.miLitePlan + " → a hiring guide");
+        if (t.id === "mi-lite-subscribe" || t.getAttribute("data-ridge-checkout")) {
+          e.preventDefault();
+          var sku = t.id === "mi-lite-subscribe" ? null : t.getAttribute("data-ridge-checkout");
+          if (!sku) {
+            var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
+            sku = miPlan ? miPlan.value : (state.miLitePlan || "region");
+          }
+          openRidgeCheckout(sku);
+          return;
         }
         go(route, { trail: trail, approach: approach, hash: dataHash });
         return;
@@ -3796,8 +4681,35 @@ function syncGuideRoute(route) {
       jobForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var fd = new FormData(jobForm);
-        stampMess("physician", (fd.get("name") || "Physician") + " · " + (fd.get("specialty") || state.specialty || "OB/GYN"));
-        go("confirm-mess", { trail: true });
+        var spec = String(fd.get("specialty") || state.specialty || "OB/GYN");
+        var payload = {
+          name: String(fd.get("name") || "").trim(),
+          phone: String(fd.get("phone") || "").trim(),
+          email: String(fd.get("email") || "").trim() || null,
+          specialty: spec,
+          region: state.region || (state.regions && state.regions[0]) || null,
+          jobLabel: state.jobId || null,
+          org: null,
+          interest: spec + (fd.get("note") ? " · " + fd.get("note") : ""),
+          note: String(fd.get("note") || ""),
+          source: "AMP website",
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString(),
+          audience: "candidate",
+          channel: "amp_job_interest_form",
+          routeTo: "recruiting_responses",
+          responsesFeedReady: true,
+          recruiterTag: "mike",
+          recruiter: "mike",
+          owner: "mfreeman",
+          formId: "job-interest-form"
+        };
+        setFormBusy(jobForm, true);
+        postLeadHandoff(payload).then(function () {
+          setFormBusy(jobForm, false);
+          stampMess("physician", (payload.name || "Physician") + " · " + spec);
+          go("confirm-mess", { trail: true });
+        });
       });
     }
 
@@ -3814,28 +4726,62 @@ function syncGuideRoute(route) {
       clientForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var fd = new FormData(clientForm);
-        if (fd.get("agreement")) state.agreement = String(fd.get("agreement"));
-        var agreeLabel = state.agreement && AGREEMENT_META[state.agreement]
-          ? AGREEMENT_META[state.agreement].tag
-          : "Client";
+        if (fd.get("needNote")) state.clientNeedNote = String(fd.get("needNote"));
+        if (fd.get("needs") && (!state.clientNeeds || !state.clientNeeds.length)) {
+          state.clientNeeds = String(fd.get("needs")).split(",").filter(Boolean);
+        }
+        var needsLabel = clientNeedsStamp() || "Hiring consult";
         var stCode = String(fd.get("state") || "").toUpperCase();
         var owner = resolveBdOwner(stCode);
         if (!owner) {
           if (stateSel) stateSel.focus();
           return;
         }
+        var cc = hiringGuideCcFields();
         state.clientBd = {
           state: stCode,
           ownerId: owner.id,
           ownerName: owner.name,
           ownerLabel: owner.label,
-          cc: BD_CC_ALWAYS
+          cc: cc.cc,
+          ccEmails: cc.ccEmails
         };
-        stampMess(
-          "client",
-          (fd.get("name") || "Client") + " · " + stCode + " · " + owner.name + " · " + agreeLabel + " → a hiring guide · CC Randy/Mike/David"
-        );
-        go("confirm-client", { trail: true });
+        state.clientState = stCode;
+        var payload = {
+          name: String(fd.get("name") || "").trim(),
+          phone: String(fd.get("phone") || "").trim(),
+          email: String(fd.get("email") || "").trim() || null,
+          specialty: clientSpecLabel(state.clientSpecialty || (state.clientSpecialties && state.clientSpecialties[0])) || null,
+          region: stCode,
+          jobLabel: null,
+          org: String(fd.get("role") || "").trim() || null,
+          role: String(fd.get("role") || "").trim() || null,
+          interest: needsLabel + " · " + stCode + (fd.get("note") ? " · " + fd.get("note") : ""),
+          note: String(fd.get("note") || ""),
+          agreement: state.agreement || null,
+          source: "AMP website",
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString(),
+          audience: "client",
+          channel: "amp_client_meeting_form",
+          routeTo: "bd_hub_randy",
+          responsesFeedReady: true,
+          owner: owner.id,
+          ownerName: owner.name,
+          formId: "client-meeting-form",
+          cc: cc.cc,
+          ccEmails: cc.ccEmails,
+          ccPeople: cc.ccPeople
+        };
+        setFormBusy(clientForm, true);
+        postLeadHandoff(payload).then(function () {
+          setFormBusy(clientForm, false);
+          stampMess(
+            "client",
+            (payload.name || "Client") + " · " + stCode + " · " + owner.name + " · " + needsLabel + " → a hiring guide · CC Randy/Mike/David"
+          );
+          go("confirm-client", { trail: true });
+        });
       });
     }
 
@@ -3891,14 +4837,49 @@ function syncGuideRoute(route) {
         e.preventDefault();
         var fd = new FormData(contactForm);
         var intent = String(fd.get("intent") || "physician");
-        var who = fd.get("name") || "Contact";
-        if (intent === "client") {
-          stampMess("client", who + " · general contact → a hiring guide");
-          go("confirm-client", { trail: true });
+        var who = String(fd.get("name") || "Contact").trim();
+        var isClient = intent === "client";
+        var cc = isClient ? hiringGuideCcFields() : null;
+        var payload = {
+          name: who,
+          phone: String(fd.get("phone") || "").trim(),
+          email: String(fd.get("email") || "").trim() || null,
+          specialty: String(fd.get("role") || "").trim() || null,
+          region: null,
+          jobLabel: null,
+          org: isClient ? String(fd.get("role") || "").trim() || null : null,
+          interest: (isClient ? "Hiring / client contact" : "Physician / candidate contact") + (fd.get("note") ? " · " + fd.get("note") : ""),
+          note: String(fd.get("note") || ""),
+          source: "AMP website",
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString(),
+          audience: isClient ? "client" : "candidate",
+          channel: isClient ? "amp_site_contact_form" : "amp_site_contact_form",
+          routeTo: isClient ? "bd_hub_randy" : "recruiting_responses",
+          responsesFeedReady: true,
+          formId: "site-contact-form",
+          intent: intent
+        };
+        if (isClient && cc) {
+          payload.cc = cc.cc;
+          payload.ccEmails = cc.ccEmails;
+          payload.ccPeople = cc.ccPeople;
         } else {
-          stampMess("physician", who + " · general contact → a recruiting guide");
-          go("confirm-mess", { trail: true });
+          payload.recruiterTag = "mike";
+          payload.recruiter = "mike";
+          payload.owner = "mfreeman";
         }
+        setFormBusy(contactForm, true);
+        postLeadHandoff(payload).then(function () {
+          setFormBusy(contactForm, false);
+          if (isClient) {
+            stampMess("client", who + " · general contact → a hiring guide · CC Randy/Mike/David");
+            go("confirm-client", { trail: true });
+          } else {
+            stampMess("physician", who + " · general contact → a recruiting guide");
+            go("confirm-mess", { trail: true });
+          }
+        });
       });
     }
 
@@ -3941,56 +4922,158 @@ function syncGuideRoute(route) {
       miStateSelect._ampWired = true;
       ensureMiLiteStateOptions();
     }
-    function unlockRidgeAndGo(plan, note) {
-      if (plan) state.miLitePlan = plan;
-      writeMiLiteUnlock(state.miLitePlan || "region");
-      if (typeof stampMess === "function") stampMess("client", note || ("Ridge unlock · " + state.miLitePlan));
-      go("mi-lite-app", { trail: true });
-    }
+    $all(".ridge-demo-open, .ridge-app-walk-open").forEach(function (ridgeDemoGo) {
+      ridgeDemoGo.addEventListener("click", function () {
+        if (ridgeDemoGo.disabled) {
+          jumpToRidgeWalk();
+          return;
+        }
+        commitRidgeDemoAndOpen();
+      });
+    });
+    $all(".ridge-walk-jump").forEach(function (jumpBtn) {
+      jumpBtn.addEventListener("click", function () {
+        var api = ridgeAccess();
+        if (api && api.isDemoCommitted && api.isDemoCommitted()) {
+          go("mi-lite-app", { trail: true });
+          return;
+        }
+        jumpToRidgeWalk();
+      });
+    });
+    ["ridge-demo-specialty", "ridge-demo-state", "ridge-app-walk-specialty", "ridge-app-walk-state"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el || el._ampWalkWired) return;
+      el._ampWalkWired = true;
+      el.addEventListener("change", syncRidgeWalkthrough);
+    });
     var miLoginForm = $("#mi-lite-login-form");
     if (miLoginForm) miLoginForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      unlockRidgeAndGo(state.miLitePlan || "region", "Ridge fake login unlock");
+      var api = ridgeAccess();
+      if (!api) return;
+      var result = api.verify({
+        name: ($("#mi-lite-name") && $("#mi-lite-name").value) || ($("#ridge-verify-name") && $("#ridge-verify-name").value),
+        org: ($("#mi-lite-org") && $("#mi-lite-org").value) || ($("#ridge-verify-org") && $("#ridge-verify-org").value),
+        email: ($("#mi-lite-email") && $("#mi-lite-email").value) || ($("#ridge-verify-email") && $("#ridge-verify-email").value),
+        phone: ($("#mi-lite-phone") && $("#mi-lite-phone").value) || ($("#ridge-verify-phone") && $("#ridge-verify-phone").value)
+      });
+      var err = $("#ridge-verify-error");
+      if (!result.ok) {
+        if (err) {
+          err.hidden = false;
+          err.textContent = result.reason === "work_email"
+            ? "Use a verified work / org email — consumer inboxes (gmail, yahoo, outlook, icloud) stay locked."
+            : "Name, org, work email, and phone are required.";
+        }
+        return;
+      }
+      if (err) err.hidden = true;
+      hideRidgeDenial();
+      go("mi-lite-app", { trail: true });
     });
+    var simVerifyLogin = $("#ridge-simulate-verify");
+    if (simVerifyLogin && !simVerifyLogin._ampWired) {
+      simVerifyLogin._ampWired = true;
+      simVerifyLogin.addEventListener("click", applyRidgeSimulateVerify);
+    }
+    var simVerifyApp = $("#ridge-simulate-verify-app");
+    if (simVerifyApp && !simVerifyApp._ampWired) {
+      simVerifyApp._ampWired = true;
+      simVerifyApp.addEventListener("click", applyRidgeSimulateVerify);
+    }
     var miDemo = $("#mi-lite-demo-login");
     if (miDemo) miDemo.addEventListener("click", function () {
-      unlockRidgeAndGo("demo", "Ridge demo unlock");
+      var api = ridgeAccess();
+      if (api && api.isDemoCommitted && api.isDemoCommitted()) {
+        go("mi-lite-app", { trail: true });
+        return;
+      }
+      jumpToRidgeWalk();
     });
     var miLockAgain = $("#mi-lite-lock-again");
     if (miLockAgain) miLockAgain.addEventListener("click", function () {
+      var api = ridgeAccess();
+      if (api) api.reset();
       clearMiLiteUnlock();
+      hideRidgeDenial();
       applyMiLiteLockUI();
+      applyRidgeWalkGate();
+      syncRidgeWalkthrough();
+      if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
+      showMiMockToast("Ridge seat reset. Pick specialty, then state, to reopen the demo.");
+      go("mi-lite", { trail: true });
     });
-    function showMiMockToast(msg) {
-      var toast = $("#mi-lite-mock-toast");
-      if (!toast) return;
-      toast.textContent = msg;
-      toast.hidden = false;
-      clearTimeout(showMiMockToast._t);
-      showMiMockToast._t = setTimeout(function () { toast.hidden = true; }, 2800);
-    }
     var miSave = $("#mi-lite-save");
     if (miSave) miSave.addEventListener("click", function () {
-      if (!readMiLiteUnlock()) return;
-      showMiMockToast("Saved · example snapshot held in this browser only.");
+      showMiMockToast("Saved · snapshot held in this browser only. No CSV / API export in V1.");
     });
     var miCompare = $("#mi-lite-compare");
     if (miCompare) miCompare.addEventListener("click", function () {
-      if (!readMiLiteUnlock()) return;
-      showMiMockToast("Compare · mock region overlay — Ask AMP for a real side-by-side.");
+      showMiMockToast("Compare · overlay is local only. A poll is one specialty × state.");
     });
     var miDownload = $("#mi-lite-download");
     if (miDownload) miDownload.addEventListener("click", function () {
-      if (!readMiLiteUnlock()) return;
       var opened = false;
       try {
         if (window.AMPRidgeWorkbench && typeof AMPRidgeWorkbench.downloadReport === "function") {
           opened = !!AMPRidgeWorkbench.downloadReport();
         }
       } catch (err) { opened = false; }
-      if (opened) showMiMockToast("Report opened · AMP lockup on the print sheet. Save as PDF from the browser.");
-      else showMiMockToast("Download report · allow pop-ups to open the AMP-branded print sheet, or Ask AMP for a guided brief.");
+      if (opened) showMiMockToast("AMP-branded report opened. Print / Save PDF from the browser.");
+      else showMiMockToast("Allow pop-ups to open the AMP-branded print sheet.");
     });
+    document.body.addEventListener("click", function (ev) {
+      if (ev.target.closest("#mi-lite-subscribe")) {
+        ev.preventDefault();
+        var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
+        openRidgeCheckout(miPlan ? miPlan.value : (state.miLitePlan || "region"));
+        return;
+      }
+      var skuBtn = ev.target.closest("[data-ridge-checkout]");
+      if (skuBtn && !skuBtn.getAttribute("data-go")) {
+        ev.preventDefault();
+        openRidgeCheckout(skuBtn.getAttribute("data-ridge-checkout"));
+        return;
+      }
+      if (ev.target.closest("#ridge-checkout-confirm")) {
+        ev.preventDefault();
+        completeRidgeCheckout();
+        return;
+      }
+      if (ev.target.closest("[data-ridge-checkout-close]")) {
+        ev.preventDefault();
+        closeRidgeCheckout();
+        return;
+      }
+      var simPayBtn = ev.target.closest("[data-ridge-simulate]");
+      if (simPayBtn) {
+        ev.preventDefault();
+        applyRidgeSimulatePay(simPayBtn.getAttribute("data-ridge-simulate"));
+        return;
+      }
+      var unitChip = ev.target.closest("[data-ridge-unit-spec]");
+      if (unitChip) {
+        ev.preventDefault();
+        openRidgeUnitChip(unitChip.getAttribute("data-ridge-unit-spec"), unitChip.getAttribute("data-ridge-unit-state"));
+        return;
+      }
+      if (ev.target.closest("[data-ridge-unit-close]")) {
+        ev.preventDefault();
+        hideRidgeDenial();
+      }
+    });
+    var api = ridgeAccess();
+    if (api && api.onChange) {
+      api.onChange(function () {
+        applyMiLiteLockUI();
+      });
+    }
+    if (api && api.onDenial) {
+      api.onDenial(function (denial) {
+        showRidgeDenial(denial);
+      });
+    }
     /* Education / blog / home Ridge preview cards use data-go already; make panel cards keyboard-activatable */
     $all(".mi-education-card[data-go], .ridge-teaser[data-go]").forEach(function (card) {
       card.addEventListener("keydown", function (e) {
@@ -4235,7 +5318,9 @@ function syncGuideRoute(route) {
     "interview-expense-form": "form-interview-expense",
     "easy-pay-authorization": "form-easy-pay",
     "ridge": "mi-lite",
-    "mi-lite": "mi-lite"
+    "mi-lite": "mi-lite",
+    "why-amp": "education",
+    "client-retained": "client-region"
   };
 
   var ROUTE_TO_PATH = {
@@ -4256,12 +5341,22 @@ function syncGuideRoute(route) {
   function detectBasePath() {
     var p = location.pathname || "/";
     if (p === GH_PAGES_BASE || p.indexOf(GH_PAGES_BASE + "/") === 0) return GH_PAGES_BASE;
+    /* Script URL fallback when pathname is unexpected (odd 404, trailing-slash miss). */
+    try {
+      var scripts = document.getElementsByTagName("script");
+      for (var i = 0; i < scripts.length; i++) {
+        var src = scripts[i].src || "";
+        if (src.indexOf(GH_PAGES_BASE + "/") !== -1) return GH_PAGES_BASE;
+      }
+    } catch (eDet) {}
     return "";
   }
 
   function normalizeRouteAlias(key) {
     if (key === "residents-fellows") return "residents";
     if (key === "market-intelligence" || key === "mi" || key === "ridge") return "mi-lite";
+    if (key === "why-amp") return "education";
+    if (key === "client-retained") return "client-region";
     return key;
   }
 
@@ -4329,7 +5424,7 @@ function syncGuideRoute(route) {
   /* Mike 2026-09-14 locked title / meta / H1 / robots. Do not re-litigate. */
   var SEO_DEFAULT = {
     title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
-    description: "Adaptive Medical Partners — physician & healthcare recruiting firm. Retained search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+    description: "Adaptive Medical Partners — physician & healthcare recruiting firm. Dedicated investment search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
     robots: "index,follow"
   };
 
@@ -4344,12 +5439,12 @@ function syncGuideRoute(route) {
     },
     about: {
       title: "About" + BRAND_SUFFIX,
-      description: "About Adaptive Medical Partners — a retained physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
+      description: "About Adaptive Medical Partners — a physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
       robots: "index,follow"
     },
     blog: {
       title: "Blog — Healthcare Recruiting Insights" + BRAND_SUFFIX,
-      description: "Healthcare recruiting insights from Adaptive Medical Partners — retained search, physician retention, interview efficiency, and rural/FQHC recruiting.",
+      description: "Healthcare recruiting insights from Adaptive Medical Partners — dedicated investment search, physician retention, interview efficiency, and rural/FQHC recruiting.",
       robots: "index,follow"
     },
     contact: {
@@ -4365,8 +5460,8 @@ function syncGuideRoute(route) {
       h1: "Opportunities That Actually Fit Your Goals"
     },
     "for-organizations": {
-      title: "Organizational Services — Retained Physician Search" + BRAND_SUFFIX,
-      description: "Organizational services from Adaptive Medical Partners — retained physician search for hospitals, groups, and FQHCs. You wait at the peak; AMP does the climb work.",
+      title: "Organizational Services — Dedicated Physician Search" + BRAND_SUFFIX,
+      description: "Organizational services from Adaptive Medical Partners — dedicated physician search for hospitals, groups, and FQHCs. You wait at the peak; AMP does the climb work.",
       robots: "index,follow",
       h1: "For Healthcare Organizations"
     },
@@ -4412,13 +5507,14 @@ function syncGuideRoute(route) {
     },
     client: {
       title: "For Healthcare Organizations" + BRAND_SUFFIX,
-      description: "Start the hiring path with Adaptive Medical Partners. Tell us about your facility and specialty — AMP guides retained physician search.",
+      description: "Start the hiring path with Adaptive Medical Partners. Tell us about your facility and specialty — AMP helps hospitals and groups find and keep physicians.",
       robots: "index,follow"
     },
     education: {
-      title: "Education" + BRAND_SUFFIX,
-      description: "Education from Adaptive Medical Partners — residents and fellows, Ridge, AMP Score, and healthcare recruiting guides.",
-      robots: "index,follow"
+      title: "Why AMP" + BRAND_SUFFIX,
+      description: "Why Adaptive Medical Partners — 87% retention at 3 years, 1.7 average interviews per successful placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+      robots: "index,follow",
+      h1: "Why AMP"
     },
     residents: {
       title: "Residents & Fellows" + BRAND_SUFFIX,
@@ -4452,8 +5548,8 @@ function syncGuideRoute(route) {
     "confirm-mess": { title: "Interest Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "confirm-client": { title: "Meeting Request Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-specialty": { title: "Hiring Specialty" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-region": { title: "Search Location" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-retained": { title: "How AMP Works" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-region": { title: "Set the Search · See the Climb" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-retained": { title: "Set the Search · See the Climb" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-meeting": { title: "Request a Meeting" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     mpc: { title: "Tailor a Search" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "mpc-portal": { title: "Client Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
@@ -4735,6 +5831,11 @@ function syncGuideRoute(route) {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    try {
+      var chip = document.getElementById("amp-build-chip");
+      if (chip && window.__AMP_BUILD) chip.textContent = "amp-build " + window.__AMP_BUILD;
+    } catch (eChip) {}
+    try { bindWhyAmpProofPairs(); } catch (ePair) {}
     try { bindClientHireSheetClicks(); } catch (e) {}
     window.addEventListener("resize", layoutSignMediaFrames);
     window.addEventListener("orientationchange", layoutSignMediaFrames);
@@ -4743,6 +5844,9 @@ function syncGuideRoute(route) {
     updateRankOrientationCopy();
     try { rewriteGoHrefs(); } catch (eHref) {}
     bind();
+    try {
+      if (window.AMPRidgeAccess && AMPRidgeAccess.consumeCheckoutQuery) AMPRidgeAccess.consumeCheckoutQuery();
+    } catch (eCheckout) {}
     renderBlogIndex();
     bootFromHash({ fromHistory: true });
     try { scheduleHomeVideoWarm(); } catch (eWarm) {}
