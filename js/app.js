@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2111-public-forms";
+  window.__AMP_BUILD = "2127-home-path-clarity";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -82,10 +82,6 @@
     if (tag) tag.textContent = meta.tag;
     if (title) title.textContent = meta.title;
     if (blurb) blurb.textContent = meta.blurb;
-    var note = document.querySelector("#client-meeting-form textarea[name=\"note\"]");
-    if (note && key === "market-analysis" && !note.value) {
-      note.placeholder = "Specialty · state · what you want to understand in the market";
-    }
     var meetLede = document.querySelector('[data-route="client-meeting"] .lede');
     if (meetLede && key === "market-analysis") {
       meetLede.innerHTML = "Request a <strong>free market analysis</strong> from your hiring guide. Soft start — no retainer required.";
@@ -1030,7 +1026,7 @@
       syncPickedAgreement();
       if (state.clientState) {
         var _cms = $("#client-meeting-state");
-        if (_cms && !_cms.value) _cms.value = state.clientState;
+        if (_cms) _cms.value = state.clientState;
       }
       try { syncClientBdRoutePreview(); } catch (e) {}
     }
@@ -1202,6 +1198,7 @@
         if (m && m.innerHTML.indexOf("When") === -1) stampMess("physician", "Ask a guide / contact interest");
       }
       if (route === "confirm-client") {
+        try { paintConfirmClientDiscuss(); } catch (err) {}
         var c = document.getElementById("mess-client-mock");
         var bd = state.clientBd;
         var ownerChip = document.getElementById("confirm-bd-owner-chip");
@@ -1528,6 +1525,121 @@
     brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Brenton is single. Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
     randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD · unassigned states", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
+  /* Public-language start topics (Mike 2026-09-17). Parked off step 4; reused after meeting request. */
+  var CLIENT_START_TOPICS = [
+    { id: "ridge", label: "Ridge market report", blurb: "A market read for your specialty and state." },
+    { id: "comp", label: "Compensation bands", blurb: "What the market is paying for this seat." },
+    { id: "timeline", label: "Time-to-fill", blurb: "A realistic clock for this search." },
+    { id: "retained", label: "How retained search works", blurb: "Clear next steps without reliving a hard search." },
+    { id: "rural", label: "Rural / FQHC / CAH", blurb: "What works in critical access and community settings." },
+    { id: "slate", label: "Candidate quality", blurb: "Prepared hikers — not a resume dump." },
+    { id: "first-slate", label: "First slate timing", blurb: "When you should expect names." },
+    { id: "agenda", label: "Agenda for our meeting", blurb: "What to cover when we talk." }
+  ];
+
+  function firstClientSpecialtyLabel() {
+    var id = (state.clientSpecialties && state.clientSpecialties[0]) || state.clientSpecialty || "";
+    return clientSpecLabel(id) || "our open specialty";
+  }
+
+  function currentHiringGuide() {
+    if (state.clientBd && state.clientBd.ownerId && BD_OWNER_META[state.clientBd.ownerId]) {
+      return BD_OWNER_META[state.clientBd.ownerId];
+    }
+    return resolveBdOwner(state.clientState || (state.clientBd && state.clientBd.state));
+  }
+
+  function hiringGuideFirstName(owner) {
+    var name = owner && owner.name ? owner.name : "there";
+    return name.split(" ")[0];
+  }
+
+  function hiringGuideMailto(opts) {
+    opts = opts || {};
+    var owner = currentHiringGuide();
+    var first = hiringGuideFirstName(owner);
+    var spec = firstClientSpecialtyLabel();
+    var st = String(state.clientState || (state.clientBd && state.clientBd.state) || "").toUpperCase();
+    var place = st || "the selected state";
+    var subject = opts.subject || ("Ridge report request · " + spec + " · " + place);
+    var body = opts.body || (
+      "Dear " + first + ",\n\n" +
+      "Please send a Ridge report / market analysis for " + spec + " in " + place + ".\n\n" +
+      "Thank you."
+    );
+    /* Public NAP inbox — individual hiring-guide emails are not on the mountain. */
+    return "mailto:inquire@adaptivemedicalpartners.com" +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  }
+
+  function renderClientTopicGrid(root, opts) {
+    if (!root) return;
+    opts = opts || {};
+    root.innerHTML = CLIENT_START_TOPICS.map(function (t) {
+      return '<button type="button" class="client-topic-card" data-client-topic="' + t.id + '">' +
+        "<strong>" + t.label + "</strong><span>" + t.blurb + "</span></button>";
+    }).join("");
+    if (root.getAttribute("data-bound-topics") === "1") return;
+    root.setAttribute("data-bound-topics", "1");
+    root.addEventListener("click", function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-topic]") : null;
+      if (!btn) return;
+      var id = btn.getAttribute("data-client-topic");
+      var topic = CLIENT_START_TOPICS.filter(function (t) { return t.id === id; })[0];
+      if (!topic) return;
+      var owner = currentHiringGuide();
+      var first = hiringGuideFirstName(owner);
+      var spec = firstClientSpecialtyLabel();
+      var st = String(state.clientState || (state.clientBd && state.clientBd.state) || "").toUpperCase();
+      var href = hiringGuideMailto({
+        subject: topic.label + " · " + spec + " · " + (st || "search"),
+        body: "Dear " + first + ",\n\nI would like to discuss " + topic.label.toLowerCase() +
+          " for " + spec + (st ? (" in " + st) : "") + ".\n\nThank you."
+      });
+      try {
+        stampMess("client", (owner && owner.name ? owner.name : "Hiring guide") + " · topic · " + topic.label);
+      } catch (err) {}
+      window.location.href = href;
+    });
+  }
+
+  function syncClientRidgeCtas() {
+    var owner = currentHiringGuide();
+    var first = hiringGuideFirstName(owner);
+    var mid = $("#client-ridge-cta-mid");
+    var foot = $("#client-ridge-cta-foot");
+    var ready = !!(owner && (state.clientState || (state.clientBd && state.clientBd.state)));
+    [mid, foot].forEach(function (el) {
+      if (!el) return;
+      el.hidden = !ready;
+      if (!ready) return;
+      el.href = hiringGuideMailto();
+      if (el.id === "client-ridge-cta-mid") {
+        el.textContent = "Click here to get a full market analysis from " + first;
+      } else {
+        el.textContent = "Get your market Ridge report";
+      }
+    });
+  }
+
+  function paintConfirmClientDiscuss() {
+    var owner = currentHiringGuide();
+    var first = hiringGuideFirstName(owner);
+    var title = $("#confirm-client-title");
+    var lede = $("#confirm-client-lede");
+    var discussTitle = $("#client-discuss-title");
+    if (title && owner) title.textContent = first + " has your meeting request.";
+    if (lede && owner) {
+      lede.innerHTML = "A <strong>hiring guide</strong> owns the next step. You wait; AMP works.";
+    }
+    if (discussTitle) {
+      discussTitle.textContent = first + " looks forward to meeting with you. What would you like to discuss?";
+    }
+    renderClientTopicGrid($("#client-discuss-topics"));
+    renderClientTopicGrid($("#client-start-topics-parked-grid"));
+  }
+
   function resolveBdOwner(stateCode) {
     var st = String(stateCode || "").toUpperCase().trim();
     if (!st) return null;
@@ -1730,6 +1842,7 @@
         cont.disabled = true;
         cont.textContent = "Pick a state to continue";
       }
+      try { syncClientRidgeCtas(); } catch (e) {}
       return;
     }
     reveal.hidden = false;
@@ -1764,6 +1877,7 @@
       cont.disabled = false;
       cont.textContent = "Continue with " + owner.name.split(" ")[0] + " →";
     }
+    try { syncClientRidgeCtas(); } catch (e) {}
     state.clientBd = {
       state: String(stateCode).toUpperCase(),
       region: state.clientRegion || null,
@@ -1889,6 +2003,11 @@
       });
     }
 
+    try {
+      renderClientTopicGrid($("#client-start-topics-parked-grid"));
+      syncClientRidgeCtas();
+    } catch (err) {}
+
     if (cont && cont.getAttribute("data-bound-client-region") !== "1") {
       cont.setAttribute("data-bound-client-region", "1");
       cont.addEventListener("click", function (ev) {
@@ -1899,7 +2018,7 @@
           sel.value = state.clientState;
           try { syncClientBdRoutePreview(); } catch (err) {}
         }
-        go("client-retained", { trail: true });
+        go("client-meeting", { trail: true });
       });
     }
   }
