@@ -1618,9 +1618,25 @@
       el.addEventListener("focusin", function () { setPair(id, true); });
       el.addEventListener("focusout", function () { setPair(id, false); });
       if (el.classList.contains("why-amp-proof-tile")) {
+        el.setAttribute("role", "button");
+        el.setAttribute("aria-label", (el.getAttribute("aria-label") || "Jump to matching pillar"));
         el.addEventListener("click", function (ev) {
           ev.preventDefault();
           ev.stopPropagation();
+          var target = root.querySelector('.pillar-card[data-proof-pair="' + id + '"]');
+          if (!target) return;
+          try {
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+          } catch (eScroll) {
+            target.scrollIntoView(true);
+          }
+          setPair(id, true);
+          try { target.focus({ preventScroll: true }); } catch (eFocus) { try { target.focus(); } catch (e2) {} }
+        });
+        el.addEventListener("keydown", function (ev) {
+          if (ev.key !== "Enter" && ev.key !== " ") return;
+          ev.preventDefault();
+          el.click();
         });
       }
     });
@@ -2024,7 +2040,7 @@
     }
     paint();
     list.onclick = function (e) {
-      /* amp-build:2059 — pick must set specialty, close pop, advance (same as hire-card Select) */
+      /* amp-build:2124-kpi-jump — pick must set specialty, close pop, advance (same as hire-card Select) */
       var raw = e.target;
       if (raw && raw.nodeType === 3) raw = raw.parentElement;
       if (!raw || typeof raw.closest !== "function") return;
