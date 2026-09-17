@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2116-ridge-extra-paid-only";
+  window.__AMP_BUILD = "2117-forms-hub-basepath";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -4899,6 +4899,14 @@ function syncGuideRoute(route) {
   function detectBasePath() {
     var p = location.pathname || "/";
     if (p === GH_PAGES_BASE || p.indexOf(GH_PAGES_BASE + "/") === 0) return GH_PAGES_BASE;
+    /* Script URL fallback when pathname is unexpected (odd 404, trailing-slash miss). */
+    try {
+      var scripts = document.getElementsByTagName("script");
+      for (var i = 0; i < scripts.length; i++) {
+        var src = scripts[i].src || "";
+        if (src.indexOf(GH_PAGES_BASE + "/") !== -1) return GH_PAGES_BASE;
+      }
+    } catch (eDet) {}
     return "";
   }
 
