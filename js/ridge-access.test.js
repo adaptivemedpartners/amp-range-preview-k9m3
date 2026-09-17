@@ -29,6 +29,7 @@ function assert(cond, msg) {
 
 store = {};
 api.reset();
+assert(api.STORAGE_KEY === "amp_ridge_seat_v3", "seat key bumped so leftover Extra chrome dies");
 var fresh = api.getSeat();
 assert(!fresh.demoCommitted, "fresh seat uncommitted");
 assert(!fresh.demoSpecialty, "no default specialty");
@@ -66,6 +67,14 @@ assert(api.trySpecialty("ob_gyn_general").ok, "verified taste 2");
 assert(api.trySpecialty("emergency_medicine").ok, "verified taste 3");
 assert(!api.trySpecialty("cardiology_noninvasive").ok, "verified 4th is paywall");
 assert(api.lastDenial().reason === "paywall", "paywall reason");
+assert(!api.isPaid(), "verified is not a paid plan");
+assert(!api.canGrantExtraPoll(), "verified cannot grant Extra $9");
+assert(!api.canBuyExtraPoll(), "verified cannot buy Extra $9");
+var blockedExtra = api.applyPaid({ sku: "extra_poll" });
+assert((Number(blockedExtra.extraPolls) || 0) === 0, "verified Extra $9 does not increment");
+assert(api.pollLimit() === 0, "verified has no poll allotment");
+assert(String(api.tierCopy().body).indexOf("49") !== -1, "verified paywall offers $49 one-off");
+assert(String(api.tierCopy().body).toLowerCase().indexOf("extra") !== -1, "verified copy says Extra is not this stair");
 
 store = {};
 api.reset();
@@ -78,6 +87,9 @@ assert(api.trySpecialty("emergency_medicine").ok, "simulate taste 3");
 assert(!api.trySpecialty("cardiology_noninvasive").ok, "simulate 4th is paywall");
 assert(!api.allowsMulti(), "verified still no multi-state");
 assert(api.oneStateUnit() === "tx", "verified stays in committed state");
+assert(!api.canGrantExtraPoll(), "simulate-verified cannot grant Extra $9");
+api.applyPaid({ sku: "extra_poll" });
+assert((Number(api.getSeat().extraPolls) || 0) === 0, "simulate Extra before paid is a no-op");
 
 api.applyPaid({ sku: "state", state: "TX" });
 assert(api.isPaid(), "state plan paid");
@@ -93,6 +105,8 @@ assert(!api.tryState("ca").ok, "state plan CA geo locked");
 assert(api.lastDenial().reason === "geo", "geo reason");
 assert(api.oneStateUnit() === "tx", "state plan forced unit is TX");
 assert(!api.allowsMulti(), "state plan has no multi-select");
+assert(api.canGrantExtraPoll(), "paid state can simulate Extra");
+assert(!api.canBuyExtraPoll(), "Extra $9 CTA stays dark while allotment remains");
 
 api.applyPaid({ sku: "region", region: "southwest" });
 var az = api.tryState("az");
@@ -102,8 +116,10 @@ assert(api.pollLimit() === 30, "region 30 polls");
 assert(!api.oneStateUnit(), "region is not a single forced unit");
 assert(api.allowsMulti(), "region allows multi-select");
 
+assert(api.canGrantExtraPoll(), "paid region can simulate Extra");
 api.applyPaid({ sku: "extra_poll" });
 assert(api.pollLimit() === 31, "region 30 + extra");
+assert(api.getSeat().tier === "region", "Extra $9 does not replace a paid plan");
 
 api.applyPaid({ sku: "national" });
 assert(api.canState("me"), "national ME open");
@@ -132,5 +148,43 @@ var noPromo = api.reset();
 assert(noPromo.tier === "demo", "fresh seat is demo");
 assert(!noPromo.grantedByCheckout, "no checkout grant on fresh seat");
 assert(!api.isPaid(noPromo), "fresh seat is not paid");
+assert(!api.canGrantExtraPoll(noPromo), "fresh seat cannot Extra $9");
+assert(!api.canBuyExtraPoll(noPromo), "fresh seat Extra CTA hidden");
+
+store = {};
+api.reset();
+assert(api.STORAGE_KEY === "amp_ridge_seat_v3", "seat key bumped so leftover Extra chrome dies");
+var stale = api.getSeat();
+stale.tier = "verified";
+stale.extraPolls = 12;
+stale.demoCommitted = true;
+stale.demoState = "tx";
+stale.demoSpecialty = "family_medicine_without_ob";
+stale.seat = { email: "pat@ruralhealth.org", org: "Clinic" };
+api.save(stale);
+var cleaned = api.getSeat();
+assert((Number(cleaned.extraPolls) || 0) === 0, "verified leftover extraPolls stripped");
+assert(!api.canBuyExtraPoll(cleaned), "stale verified Extra CTA stays hidden");
+
+store = {};
+api.reset();
+api.startDemo({ specialty: "family_medicine_without_ob", state: "TX" });
+assert(!api.canGrantExtraPoll(), "demo cannot Extra $9");
+api.applyPaid({ sku: "extra_poll" });
+assert((Number(api.getSeat().extraPolls) || 0) === 0, "demo Extra $9 is a no-op");
+
+store = {};
+api.reset();
+api.startDemo({ specialty: "family_medicine_without_ob", state: "TX" });
+api.applyPaid({ sku: "state", state: "TX" });
+var i;
+for (i = 0; i < 20 && api.pollsLeft() > 0; i++) {
+  api.trySpecialty("dermatology_" + i);
+}
+assert(api.pollsLeft() === 0, "allotment exhausted");
+assert(api.canBuyExtraPoll(), "Extra $9 CTA after paid allotment is used");
+api.applyPaid({ sku: "extra_poll" });
+assert(api.pollLimit() === 16, "state 15 + extra after 0");
+assert(api.pollsLeft() === 1, "extra poll restores one open");
 
 console.log("ridge-access.test.js ok");

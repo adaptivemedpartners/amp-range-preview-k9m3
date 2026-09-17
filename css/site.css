@@ -5148,6 +5148,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .ridge-poll-meter[hidden],
 .ridge-unit-overlay[hidden],
 #ridge-extra-poll-cta[hidden],
+#ridge-extra-poll-card[hidden],
+#ridge-extra-poll-buy[hidden],
+#ridge-simulate-extra[hidden],
+#ridge-unit-extra[hidden],
+#ridge-unit-oneoff[hidden],
 #ridge-oneoff-cta[hidden],
 #ridge-verify-cta[hidden],
 #ridge-upgrade-cta[hidden] { display: none !important; }

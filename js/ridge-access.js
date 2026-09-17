@@ -1,10 +1,12 @@
-/* amp-build:2115 Ridge V1 access — unit stairs (Mike lock 2026-09-15).
+/* amp-build:2116 Ridge V1 access — unit stairs (Mike lock 2026-09-16).
    Demo 1×1 → verify +2 specialties (same state) → paid geo + polls.
+   Extra $9 only after a paid State/Region/National allotment is used.
    Stripe Checkout is stubbed (test-mode hooks). Public data only — no MGMA. */
 (function (w) {
   "use strict";
 
-  var STORAGE_KEY = "amp_ridge_seat_v2";
+  var STORAGE_KEY = "amp_ridge_seat_v3";
+  var STORAGE_KEY_V2 = "amp_ridge_seat_v2";
   var STORAGE_KEY_V1 = "amp_ridge_seat_v1";
   var LEGACY_UNLOCK = "amp_mi_lite_unlocked";
   var LEGACY_PLAN = "amp_mi_lite_plan";
@@ -103,6 +105,7 @@
       seat.polls = Array.isArray(seat.polls) ? seat.polls : [];
       seat.extraPolls = 0;
     }
+    if (!isPaid(seat)) seat.extraPolls = 0;
     return seat;
   }
 
@@ -110,7 +113,7 @@
     if (seatCache) return sanitizeSeat(seatCache);
     var seat = defaultSeat();
     try {
-      var raw = localStorage.getItem(STORAGE_KEY);
+      var raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V2);
       if (raw) {
         var parsed = JSON.parse(raw);
         if (parsed && typeof parsed === "object") {
@@ -144,6 +147,7 @@
   function reset() {
     seatCache = null;
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    try { localStorage.removeItem(STORAGE_KEY_V2); } catch (e) {}
     try { localStorage.removeItem(STORAGE_KEY_V1); } catch (e) {}
     try {
       localStorage.removeItem(LEGACY_UNLOCK);
@@ -182,9 +186,17 @@
   }
   function pollLimit(seat) {
     seat = seat || load();
+    if (!isPaid(seat)) return 0;
     var plan = PLANS[seat.tier];
     var base = plan && plan.polls ? plan.polls : 0;
     return base + (Number(seat.extraPolls) || 0);
+  }
+  function canGrantExtraPoll(seat) {
+    return isPaid(seat);
+  }
+  function canBuyExtraPoll(seat) {
+    seat = seat || load();
+    return canGrantExtraPoll(seat) && pollsLeft(seat) <= 0;
   }
   function pollsUsed(seat) {
     seat = seat || load();
@@ -478,6 +490,7 @@
     var sku = String(opts.sku || opts.plan || "").replace(/^ridge_/, "");
     var seat = load();
     if (sku === "extra_poll") {
+      if (!canGrantExtraPoll(seat)) return seat;
       seat.extraPolls = (Number(seat.extraPolls) || 0) + 1;
       return save(seat);
     }
@@ -562,7 +575,7 @@
         title: used + " of " + VERIFIED_TASTE_CAP + " specialty tastes",
         body: leftTastes
           ? ("Pick " + leftTastes + " more specialty" + (leftTastes === 1 ? "" : "s") + " in " + stateLabel(seat.demoState) + ". Same state only. Then hard paywall.")
-          : "Three specialty tastes are in. Subscribe for geo + monthly polls."
+          : "Three specialty tastes are in. Subscribe for geo + monthly polls, or buy a $49 one-off. Extra $9 is not on this stair."
       };
     }
     var left = pollsLeft(seat);
@@ -570,7 +583,7 @@
     return {
       tag: (PLANS[seat.tier] || {}).label + " · $" + ((PLANS[seat.tier] || {}).price || 0) + "/mo",
       title: left + " of " + lim + " left this month",
-      body: "A poll is one specialty × state open inside your plan geography. Revisit is free. Extra poll $9 at 0."
+      body: "A poll is one specialty × state open inside your plan geography. Revisit is free. Extra poll $9 only after this month’s allotment is used."
     };
   }
 
@@ -593,6 +606,8 @@
     getSeat: load,
     isPaid: isPaid,
     isWorkEmail: isWorkEmail,
+    canGrantExtraPoll: canGrantExtraPoll,
+    canBuyExtraPoll: canBuyExtraPoll,
     pollLimit: pollLimit,
     pollsUsed: pollsUsed,
     pollsLeft: pollsLeft,

@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2115-ridge-poll-hud";
+  window.__AMP_BUILD = "2116-ridge-extra-paid-only";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -958,6 +958,49 @@
       if (card) card.classList.toggle("is-selected", input.checked);
     });
     syncMiLitePlanPickers();
+    syncRidgeExtraOffer();
+  }
+
+  function isRidgePaidSeat(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    if (api && api.isPaid) return !!api.isPaid(seat);
+    return !!(seat && (seat.tier === "state" || seat.tier === "region" || seat.tier === "national") && seat.grantedByCheckout);
+  }
+
+  function ridgeCanGrantExtra(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    if (api && api.canGrantExtraPoll) return !!api.canGrantExtraPoll(seat);
+    return isRidgePaidSeat(seat);
+  }
+
+  function ridgeCanBuyExtra(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    if (api && api.canBuyExtraPoll) return !!api.canBuyExtraPoll(seat);
+    return ridgeCanGrantExtra(seat) && api && api.pollsLeft && api.pollsLeft(seat) <= 0;
+  }
+
+  function syncRidgeExtraOffer(seat) {
+    var api = ridgeAccess();
+    seat = seat || (api && api.getSeat());
+    var showBuy = ridgeCanBuyExtra(seat);
+    var showSim = ridgeCanGrantExtra(seat);
+    var extraCard = $("#ridge-extra-poll-card");
+    var extraBuy = $("#ridge-extra-poll-buy");
+    var extraCta = $("#ridge-extra-poll-cta");
+    var extraUnit = $("#ridge-unit-extra");
+    var extraSim = $("#ridge-simulate-extra");
+    if (extraCard) extraCard.hidden = !showBuy;
+    if (extraBuy) {
+      extraBuy.hidden = !showBuy;
+      extraBuy.disabled = !showBuy;
+      extraBuy.setAttribute("aria-disabled", showBuy ? "false" : "true");
+    }
+    if (extraCta) extraCta.hidden = !showBuy;
+    if (extraUnit && extraUnit.hidden === false && !showBuy) extraUnit.hidden = true;
+    if (extraSim) extraSim.hidden = !showSim;
   }
 
   function updateMILiteDashboard() {
@@ -1064,6 +1107,10 @@
     var api = ridgeAccess();
     if (!api) return;
     sku = String(sku || "state").replace(/^ridge_/, "");
+    if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
+      showMiMockToast("Extra poll $9 is only for paid State / Region / National seats.");
+      return;
+    }
     var region = ($("#mi-lite-region-select") && $("#mi-lite-region-select").value) || "southwest";
     var st = ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || undefined;
     api.applyPaid({ sku: sku, state: st, region: region });
@@ -1136,8 +1183,9 @@
     }
     if (verifyBtn) verifyBtn.hidden = !(seat && seat.tier === "demo");
     if (upgradeBtn) upgradeBtn.hidden = !!(seat && seat.tier === "national" && reallyPaid);
-    if (extraBtn) extraBtn.hidden = !(reallyPaid && api && api.pollsLeft(seat) <= 0);
+    if (extraBtn) extraBtn.hidden = !ridgeCanBuyExtra(seat);
     if (oneoffBtn) oneoffBtn.hidden = !!reallyPaid;
+    syncRidgeExtraOffer(seat);
     var seatLine = $("#ridge-seat-line");
     if (seatLine) {
       if (seat && seat.seat && seat.seat.email) {
@@ -1157,6 +1205,7 @@
     var verify = $("#ridge-unit-verify");
     var upgrade = $("#ridge-unit-upgrade");
     var extra = $("#ridge-unit-extra");
+    var oneoff = $("#ridge-unit-oneoff");
     if (!overlay) return;
     denial = denial || (ridgeAccess() && ridgeAccess().lastDenial && ridgeAccess().lastDenial());
     var reason = denial && denial.reason;
@@ -1167,36 +1216,42 @@
       if (verify) verify.hidden = false;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = true;
     } else if (reason === "paywall") {
       if (title) title.textContent = "Verified sample used — hard paywall.";
-      if (body) body.textContent = "Three specialty tastes are in. Subscribe for geo scope + monthly polls, or buy a $49 one-off report.";
+      if (body) body.textContent = "Three specialty tastes are in. Subscribe for State / Region / National, or buy a $49 one-off report. Extra poll $9 is only after a paid plan.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = false;
     } else if (reason === "geo") {
       if (title) title.textContent = "Outside your plan geography.";
       if (body) body.textContent = "This state is outside the unlocked AMP region or state. Upgrade geo, or buy a $49 one-off report.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = false;
     } else if (reason === "walkthrough") {
       if (title) title.textContent = "Pick specialty, then state.";
       if (body) body.textContent = "The workbench opens only after you commit one specialty × one state.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = true;
       if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = true;
     } else if (reason === "polls") {
       if (title) title.textContent = "No polls left this month.";
       if (body) body.textContent = "A poll is one specialty × state open. Extra poll $9, or upgrade the plan.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
-      if (extra) extra.hidden = false;
+      if (extra) extra.hidden = !ridgeCanBuyExtra();
+      if (oneoff) oneoff.hidden = true;
     } else {
       if (title) title.textContent = "Ridge gate";
       if (body) body.textContent = "This unit is locked on the current stair.";
       if (verify) verify.hidden = false;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
+      if (oneoff) oneoff.hidden = true;
     }
   }
 
@@ -1341,6 +1396,11 @@
 
   function openRidgeCheckout(sku) {
     var api = ridgeAccess();
+    sku = String(sku || "").replace(/^ridge_/, "");
+    if (sku === "extra_poll" && !ridgeCanBuyExtra()) {
+      showMiMockToast("Extra poll $9 is only after a paid State / Region / National allotment is used.");
+      return;
+    }
     var meta = api && api.SKUS && (api.SKUS[sku] || api.SKUS[String(sku).replace(/^ridge_/, "")]);
     var modal = $("#ridge-checkout-modal");
     if (!modal || !meta) return;
@@ -1402,6 +1462,11 @@
     var modal = $("#ridge-checkout-modal");
     if (!api || !modal) return;
     var sku = modal.getAttribute("data-ridge-sku") || "state";
+    if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
+      showMiMockToast("Extra poll $9 is only for paid State / Region / National seats.");
+      closeRidgeCheckout();
+      return;
+    }
     api.applyPaid({
       sku: sku,
       state: ($("#ridge-checkout-state") && $("#ridge-checkout-state").value) || ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || undefined,
