@@ -7374,7 +7374,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   margin: 0;
   text-align: center;
   padding: 22px 14px 18px;
-  cursor: default;
+  cursor: pointer;
   pointer-events: auto;
   user-select: none;
   position: relative;
