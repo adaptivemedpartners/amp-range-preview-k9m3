@@ -64,7 +64,7 @@
     <div class="explore-block">
       <div class="explore-kicker">Adaptive Medical Partners</div>
       <h1 class="explore-title">Physician &amp; Healthcare Recruiting</h1>
-      <p class="explore-sub">Dedicated investment search for candidates and organizations. AMP as your guide. Two paths. One mountain.</p>
+      <p class="explore-sub">Your partners in rural healthcare recruiting.</p>
       <div class="proof-chips home-proof home-proof-subtle" aria-label="AMP public proof stats">
         <span class="proof-chip"><strong>87%</strong> stay 3+ yrs</span>
         <span class="proof-chip"><strong>1.7</strong> interviews/hire</span>
@@ -577,6 +577,7 @@
   <div class="trailhead-stage trailhead-sheet-stage trailhead-overlay-stage">
     
     <div class="hire-sheet funnel-panel trailhead-picker" role="region" aria-label="HIRING · FACILITY">
+      <p class="client-step" aria-current="step"><span class="client-step-kicker">Step 2 of 5</span> Facility type</p>
       <h1 class="hire-title">What kind of facility are you hiring for?</h1>
       <div class="hire-card-list">
         <button type="button" class="hire-card" data-facility="fqhc"><h3>FQHC / CHC</h3><p>Mission-aligned clinic seats with clear timelines.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-facility="cah"><h3>Critical Access</h3><p>Rural CAH physician search — you hold the summit.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-facility="community"><h3>Community / Rural hospital</h3><p>Community and rural hospital physician seats.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-facility="system"><h3>Health system</h3><p>Hard-to-fill roles across a health system.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-facility="bh"><h3>Behavioral Health</h3><p>Behavioral and community behavioral health seats.</p><span class="hire-select">Select →</span></button><button type="button" class="hire-card" data-facility="group"><h3>Multi-specialty / Group</h3><p>Multi-specialty and group practice growth seats.</p><span class="hire-select">Select →</span></button>
@@ -591,6 +592,7 @@
   <div class="trailhead-stage trailhead-sheet-stage">
     
     <div class="hire-sheet funnel-panel" role="region" aria-label="HIRING · SPECIALTY">
+      <p class="client-step" aria-current="step"><span class="client-step-kicker">Step 3 of 5</span> Specialties</p>
       <p class="muted hire-fac-line" id="client-spec-fac-label" style="margin:0 0 8px;font-size:12.5px">Facility selected</p>
       <h1 class="hire-title">Which specialty are you hiring?</h1>
       <p class="muted client-spec-hint" id="client-spec-hint" style="margin:0 0 10px;font-size:12.5px">Top picks for this facility — tap to continue. Other is always available below.</p>
@@ -624,8 +626,9 @@
     <div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div>
     <div class="veil"></div>
     <div class="hero-inner">
-      <h1>Set the search · see the climb.</h1>
-      <p class="lede">You set the high camp. We carry the work from the first profile through the close.</p>
+      <p class="client-step client-step-on-hero" aria-current="step"><span class="client-step-kicker">Step 4 of 5</span> Where to search</p>
+      <h1>Where should we search?</h1>
+      <p class="lede">Pick a region, then your state — we’ll show the hiring guide who owns that territory.</p>
     </div>
   </div>
   <div class="section section-lite funnel-panel client-combined-stage">
@@ -663,6 +666,8 @@
         </div>
       </div>
     </div>
+
+    <a class="client-ridge-cta" id="client-ridge-cta-mid" hidden href="mailto:inquire@adaptivemedicalpartners.com">Click here to get a full market analysis from your hiring guide</a>
 
     <div class="client-climb-band" data-climb-option="A" id="client-climb-band">
       <span class="tag">How we help</span>
@@ -708,7 +713,31 @@
       </ol>
     </div>
 
-    <div class="client-need-block">
+    <section class="client-how-help" aria-labelledby="client-how-help-title">
+      <p class="client-how-help-kicker">The climb</p>
+      <h2 class="client-how-help-title" id="client-how-help-title">How we help</h2>
+      <ol class="client-how-help-list">
+        <li><strong>1 · Hear the seat</strong><span>Facility, specialty, and what good looks like at the peak.</span></li>
+        <li><strong>2 · Read the market</strong><span>Competition, draw, and a clear Ridge-style snapshot.</span></li>
+        <li><strong>3 · Set the high camp</strong><span>A brief candidates can trust — you hold the peak.</span></li>
+        <li><strong>4 · Work the climb</strong><span>A named hiring guide owns the search, not a blast list.</span></li>
+        <li><strong>5 · Prepared slate</strong><span>1.7 interviews per hire — committees meet people who are ready.</span></li>
+        <li><strong>6 · Stay rates</strong><span>87% still there at three years. Placement that lasts.</span></li>
+      </ol>
+    </section>
+
+    <a class="client-ridge-cta client-ridge-cta-after" id="client-ridge-cta-foot" hidden href="mailto:inquire@adaptivemedicalpartners.com">Get your market Ridge report</a>
+
+    <div class="client-spec-continue-wrap" style="margin-top:16px">
+      <button type="button" class="btn btn-primary" id="client-offers-continue" disabled>Pick a state to continue</button>
+    </div>
+
+    <!-- Parked for a later page (Mike 2026-09-17). Do not delete. Hidden on this step. -->
+    <section class="client-start-topics" id="client-start-topics-parked" hidden data-amp-later="tell-us-where-to-start" aria-hidden="true">
+      <p class="client-how-help-kicker">Later page</p>
+      <h2 class="client-how-help-title">Tell us where to start</h2>
+      <div class="client-topic-grid" id="client-start-topics-parked-grid"></div>
+      <div class="client-need-block">
       <span class="tag">Tell us where to start</span>
       <h2 class="client-offer-title">What should we talk through?</h2>
       <p class="muted client-need-hint" id="client-need-hint">Tap one or more. Multi-select is fine — pick anything that’s true right now.</p>
@@ -759,10 +788,8 @@
           <textarea id="client-need-other-note" name="clientNeedNote" rows="3" placeholder="What’s on your mind? A sentence is enough."></textarea>
         </label>
       </div>
-      <div class="client-spec-continue-wrap" style="margin-top:16px">
-        <button type="button" class="btn btn-primary" id="client-offers-continue" disabled>Pick a state to continue</button>
       </div>
-    </div>
+    </section>
   </div>
   </div>
 </section>
@@ -775,9 +802,9 @@
   <div class="view-chrome">
   <div class="hero-band">
     <div class="hero-inner">
-      
-      <h1>Request a meeting with your hiring guide.</h1>
-      <p class="lede">You hold the peak. AMP works the climb. Every client inquiry → a <strong>hiring guide</strong> who listens first.</p>
+      <p class="client-step client-step-on-hero" aria-current="step"><span class="client-step-kicker">Step 5 of 5</span> Request a meeting</p>
+      <h1>Request the summit meeting.</h1>
+      <p class="lede">You hold the peak. AMP works the climb. Every client inquiry → a <strong>hiring guide</strong>. Structure on the call.</p>
     </div>
   </div>
   <div class="section section-lite funnel-panel" style="max-width:640px;margin:0 auto">
@@ -863,7 +890,6 @@
           <p class="muted" style="font-size:12px;margin:8px 0 0" id="client-bd-route-note">We’ll connect you with the right hiring guide for your state.</p>
         </div>
       </div>
-      <label class="field mt-16">Short note<textarea name="note" placeholder="Specialty · timeline · what good looks like"></textarea></label>
       <div class="dest-row">
         <span class="dest-chip bd"><span class="dot"></span> A hiring guide owns the next step</span>
         <span class="dest-chip mess"><span class="dot"></span> Recruiting team · secondary support</span>
@@ -884,8 +910,8 @@
       <div class="confirm-hero glass-confirm">
         <div class="check">✓</div>
         <p class="confirm-kicker">Request received · a hiring guide owns next</p>
-        <h1>You’re on the list · hiring guide</h1>
-        <p class="lede confirm-lede">A <strong>hiring guide</strong> owns every client lead. You wait; AMP works. We’ll talk through what you need and recommend a path from there.</p>
+        <h1 id="confirm-client-title">You’re on the list · hiring guide</h1>
+        <p class="lede confirm-lede" id="confirm-client-lede">A <strong>hiring guide</strong> owns every client lead. You wait; AMP works. Our recruiting team provides secondary support.</p>
         <div class="dest-row" style="justify-content:center;flex-wrap:wrap;gap:8px">
           <span class="dest-chip bd" id="confirm-bd-owner-chip"><span class="dot"></span> Hiring guide · owns next step</span>
           <span class="dest-chip mess" id="confirm-bd-cc-chip"><span class="dot"></span> CC Randy · Mike · David</span>
@@ -895,7 +921,12 @@
       </div>
     </div>
   </div>
-  <div class="section section-lite funnel-panel" style="max-width:640px;margin:0 auto">
+  <div class="section section-lite funnel-panel" style="max-width:720px;margin:0 auto">
+    <section class="client-discuss" id="client-discuss" aria-labelledby="client-discuss-title">
+      <h2 class="client-discuss-title" id="client-discuss-title">Your hiring guide looks forward to meeting with you. What would you like to discuss?</h2>
+      <p class="muted" style="margin:0 0 14px;text-align:center">Optional — the meeting request is already in. Tap a topic to send a note.</p>
+      <div class="client-topic-grid" id="client-discuss-topics"></div>
+    </section>
     <div class="mess-mock elevated-mock" id="mess-client-mock"></div>
     <div class="btn-row" style="justify-content:center;margin-top:22px">
       <button type="button" class="btn btn-primary" data-go="home">Explore the Range</button>
