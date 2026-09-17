@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2111-public-forms";
+  window.__AMP_BUILD = "2112-forms-hub-base";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -1038,6 +1038,9 @@
     if (route === "search") renderSearch();
     if (route === "mpc-portal") renderMpcPortal();
     if (route === "mpc-browse") renderMpcBrowse();
+    if (route === "forms") {
+      try { rewriteGoHrefs(); } catch (eHub) {}
+    }
     if (route === "form-candidate-authorization" || route === "form-interview-expense") hydrateTypeformEmbeds(route);
     if (route === "form-easy-pay") hydrateEasyPay();
   }
@@ -3289,7 +3292,7 @@
     }
   }
 
-  /* amp-build:2111-public-forms — Typeform live embeds + ACH wired to live Webflow */
+  /* amp-build:2112-forms-hub-base — Typeform live embeds + ACH wired to live Webflow */
   var TYPEFORM_SRC = "https://embed.typeform.com/next/embed.js";
   var ACH_LIVE_URL = "https://www.adaptivemedicalpartners.com/easy-pay-authorization";
   var ACH_WF_SITE = "68ae8c1190abe2fd7be13740";
@@ -3314,7 +3317,16 @@
     }
     var existing = document.querySelector('script[data-amp-typeform="1"]');
     if (existing) {
-      if (cb) existing.addEventListener("load", function () { cb(); }, { once: true });
+      var ready = existing.readyState === "complete" || existing.readyState === "loaded";
+      if (ready) {
+        if (cb) cb();
+        return;
+      }
+      if (cb) {
+        existing.addEventListener("load", function () { cb(); }, { once: true });
+        /* load may have already fired before this listener attached */
+        window.setTimeout(function () { if (window.tf && cb) cb(); }, 0);
+      }
       return;
     }
     var s = document.createElement("script");
@@ -3358,27 +3370,18 @@
     var wrap = $("[data-amp-ach-frame-wrap]");
     var frame = $("[data-amp-ach-frame]");
     var form = $("#wf-form-ACH-Form");
-    if (!wrap || !frame || !form) return;
-    wrap.hidden = true;
-    form.hidden = false;
+    if (wrap) wrap.hidden = true;
+    if (form) form.hidden = false;
+    if (!form) return;
     /* After mountain owns www, iframing this path would recurse. Live Webflow
-       also sends X-Frame-Options: SAMEORIGIN, so preview hosts fall back to
-       the mountain clone that posts to the same Webflow form handler. */
+       also sends X-Frame-Options: SAMEORIGIN, so preview hosts keep the
+       mountain ACH clone (posts to the same Webflow form handler). Do not
+       swap the clone out for a blocked iframe. */
     if (achOnWwwHost()) return;
-    if (frame.getAttribute("data-amp-src-set") === "1") return;
-    frame.setAttribute("data-amp-src-set", "1");
-    frame.src = ACH_LIVE_URL;
-    frame.addEventListener("load", function () {
-      try {
-        var href = frame.contentWindow && frame.contentWindow.location.href;
-        if (!href || href === "about:blank") return;
-        var doc = frame.contentDocument;
-        if (!doc || !doc.body) return;
-      } catch (err) {
-        wrap.hidden = false;
-        form.hidden = true;
-      }
-    }, { once: true });
+    if (frame) {
+      frame.removeAttribute("src");
+      frame.removeAttribute("data-amp-src-set");
+    }
   }
 
   function bindEasyPayForm() {
@@ -4212,6 +4215,8 @@ function syncGuideRoute(route) {
        /easy-pay-authorization   → form-easy-pay
        KEEP public form paths stay; Typeform embeds inline; ACH posts to the
        live Webflow handler (no Mess/localStorage banking, no fake success).
+       Hub card hrefs go through routeToHref() so GH Pages project preview
+       stays under /amp-range-preview-k9m3/; www keeps /candidate-authorization.
        /job/{slug}               → job/{slug}
        /blog-posts/{slug}        → blog/{slug}
        /ridge                    → mi-lite   (/mi-lite aliases here)
@@ -4323,6 +4328,10 @@ function syncGuideRoute(route) {
       var route = a.getAttribute("data-go");
       if (!route) return;
       a.setAttribute("href", routeToHref(route, a.getAttribute("data-hash")));
+    });
+    /* Forms hub cards: same routeToHref rewrite as every other SPA <a data-go>. */
+    $all(".forms-hub-cards a.card[data-go]").forEach(function (a) {
+      a.setAttribute("href", routeToHref(a.getAttribute("data-go")));
     });
   }
 
