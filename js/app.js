@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2127-home-path-clarity";
+  window.__AMP_BUILD = "2128-home-path-finetune";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2182,16 +2182,16 @@
     brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
     randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD · unassigned states", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
-  /* Public-language start topics (Mike 2026-09-17). Parked off step 4; reused after meeting request. */
+  /* Exact Tell-us-where-to-start need cards — reused on post-submit discuss. */
   var CLIENT_START_TOPICS = [
-    { id: "ridge", label: "Ridge market report", blurb: "A market read for your specialty and state." },
-    { id: "comp", label: "Compensation bands", blurb: "What the market is paying for this seat." },
-    { id: "timeline", label: "Time-to-fill", blurb: "A realistic clock for this search." },
-    { id: "retained", label: "How retained search works", blurb: "Clear next steps without reliving a hard search." },
-    { id: "rural", label: "Rural / FQHC / CAH", blurb: "What works in critical access and community settings." },
-    { id: "slate", label: "Candidate quality", blurb: "Prepared hikers — not a resume dump." },
-    { id: "first-slate", label: "First slate timing", blurb: "When you should expect names." },
-    { id: "agenda", label: "Agenda for our meeting", blurb: "What to cover when we talk." }
+    { id: "volume", label: "Difficulty getting candidate volume", blurb: "The pipeline is thin — not enough people even looking." },
+    { id: "convert", label: "We get candidates but can’t close / convert", blurb: "Interest shows up — then it stalls before anyone signs on." },
+    { id: "interviews", label: "Interviews take too many cycles / wrong people reach leadership", blurb: "Committees are spending time on conversations that should never have been booked." },
+    { id: "vacancy", label: "Role stays open too long / vacancy burn", blurb: "The seat has been empty long enough that the service line is feeling it." },
+    { id: "confidential", label: "Confidential / competitive search needs a quieter approach", blurb: "This one can’t be a public blast — we need a quieter, more careful path." },
+    { id: "story", label: "Need help telling the opportunity story (marketing/preview)", blurb: "The role is real — the story isn’t landing with the people you want." },
+    { id: "brief", label: "Not sure which seats to prioritize / brief is fuzzy", blurb: "Several openings, or the brief still needs a sharper high camp." },
+    { id: "other", label: "Something else", blurb: "A short note is optional — we’ll pick it up on the call." }
   ];
 
   function firstClientSpecialtyLabel() {
@@ -2233,29 +2233,44 @@
   function renderClientTopicGrid(root, opts) {
     if (!root) return;
     opts = opts || {};
-    root.innerHTML = CLIENT_START_TOPICS.map(function (t) {
-      return '<button type="button" class="client-topic-card" data-client-topic="' + t.id + '">' +
-        "<strong>" + t.label + "</strong><span>" + t.blurb + "</span></button>";
-    }).join("");
+    var src = $("#client-need-cards");
+    if (src && src.innerHTML && src.innerHTML.trim()) {
+      root.innerHTML = src.innerHTML;
+      root.querySelectorAll("[data-client-need]").forEach(function (btn) {
+        var id = (btn.getAttribute("data-client-need") || "").trim();
+        if (id) btn.setAttribute("data-client-topic", id);
+        btn.classList.remove("is-selected");
+        btn.removeAttribute("aria-pressed");
+      });
+    } else {
+      root.innerHTML = CLIENT_START_TOPICS.map(function (t) {
+        return '<button type="button" class="hire-card client-need-card" data-client-topic="' + t.id + '" data-client-need="' + t.id + '">' +
+          "<h3>" + t.label + "</h3><p>" + t.blurb + "</p>" +
+          '<span class="hire-select">Select</span></button>';
+      }).join("");
+    }
     if (root.getAttribute("data-bound-topics") === "1") return;
     root.setAttribute("data-bound-topics", "1");
     root.addEventListener("click", function (ev) {
-      var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-topic]") : null;
+      var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-topic], [data-client-need]") : null;
       if (!btn) return;
-      var id = btn.getAttribute("data-client-topic");
+      ev.preventDefault();
+      var id = btn.getAttribute("data-client-topic") || btn.getAttribute("data-client-need");
       var topic = CLIENT_START_TOPICS.filter(function (t) { return t.id === id; })[0];
-      if (!topic) return;
+      var heading = btn.querySelector("h3");
+      var label = (topic && topic.label) || (heading && heading.textContent) || id;
+      if (!label) return;
       var owner = currentHiringGuide();
       var first = hiringGuideFirstName(owner);
       var spec = firstClientSpecialtyLabel();
       var st = String(state.clientState || (state.clientBd && state.clientBd.state) || "").toUpperCase();
       var href = hiringGuideMailto({
-        subject: topic.label + " · " + spec + " · " + (st || "search"),
-        body: "Dear " + first + ",\n\nI would like to discuss " + topic.label.toLowerCase() +
+        subject: label + " · " + spec + " · " + (st || "search"),
+        body: "Dear " + first + ",\n\nI would like to discuss " + String(label).toLowerCase() +
           " for " + spec + (st ? (" in " + st) : "") + ".\n\nThank you."
       });
       try {
-        stampMess("client", (owner && owner.name ? owner.name : "Hiring guide") + " · topic · " + topic.label);
+        stampMess("client", (owner && owner.name ? owner.name : "Hiring guide") + " · topic · " + label);
       } catch (err) {}
       window.location.href = href;
     });
@@ -2263,21 +2278,13 @@
 
   function syncClientRidgeCtas() {
     var owner = currentHiringGuide();
-    var first = hiringGuideFirstName(owner);
-    var mid = $("#client-ridge-cta-mid");
     var foot = $("#client-ridge-cta-foot");
     var ready = !!(owner && (state.clientState || (state.clientBd && state.clientBd.state)));
-    [mid, foot].forEach(function (el) {
-      if (!el) return;
-      el.hidden = !ready;
-      if (!ready) return;
-      el.href = hiringGuideMailto();
-      if (el.id === "client-ridge-cta-mid") {
-        el.textContent = "Click here to get a full market analysis from " + first;
-      } else {
-        el.textContent = "Get your market Ridge report";
-      }
-    });
+    if (!foot) return;
+    foot.hidden = !ready;
+    if (!ready) return;
+    foot.href = hiringGuideMailto();
+    foot.textContent = "Get your market Ridge report";
   }
 
   function paintConfirmClientDiscuss() {
@@ -2673,9 +2680,13 @@
       if (!hasState) {
         cont.textContent = "Pick a state to continue";
       } else if (state.clientBd && state.clientBd.ownerName) {
-        cont.textContent = "Request a meeting with " + state.clientBd.ownerName.split(" ")[0] + " →";
+        cont.textContent = "Request a meeting with " + state.clientBd.ownerName.split(" ")[0] + " and get a full market analysis";
       } else {
-        cont.textContent = "Request a meeting →";
+        var owner = currentHiringGuide();
+        var first = hiringGuideFirstName(owner);
+        cont.textContent = first && first !== "there"
+          ? "Request a meeting with " + first + " and get a full market analysis"
+          : "Request a meeting and get a full market analysis";
       }
     }
     var hint = $("#client-need-hint");
