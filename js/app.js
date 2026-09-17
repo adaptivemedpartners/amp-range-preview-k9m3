@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2129-meeting-cta-gap";
+  window.__AMP_BUILD = "2130-confirm-discuss";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -22,6 +22,7 @@
     agreement: null,
     clientNeeds: [],
     clientNeedNote: "",
+    clientDiscussTopics: [],
     mpcAccess: "monthly",
     mpcUnlocked: false,
     mpcFilterSpecialty: "",
@@ -2249,31 +2250,131 @@
           '<span class="hire-select">Select</span></button>';
       }).join("");
     }
+    if (opts.select !== true) return;
+    paintClientDiscussSelection();
     if (root.getAttribute("data-bound-topics") === "1") return;
     root.setAttribute("data-bound-topics", "1");
     root.addEventListener("click", function (ev) {
       var btn = ev.target && ev.target.closest ? ev.target.closest("[data-client-topic], [data-client-need]") : null;
       if (!btn) return;
       ev.preventDefault();
-      var id = btn.getAttribute("data-client-topic") || btn.getAttribute("data-client-need");
-      var topic = CLIENT_START_TOPICS.filter(function (t) { return t.id === id; })[0];
-      var heading = btn.querySelector("h3");
-      var label = (topic && topic.label) || (heading && heading.textContent) || id;
-      if (!label) return;
-      var owner = currentHiringGuide();
-      var first = hiringGuideFirstName(owner);
-      var spec = firstClientSpecialtyLabel();
-      var st = String(state.clientState || (state.clientBd && state.clientBd.state) || "").toUpperCase();
-      var href = hiringGuideMailto({
-        subject: label + " · " + spec + " · " + (st || "search"),
-        body: "Dear " + first + ",\n\nI would like to discuss " + String(label).toLowerCase() +
-          " for " + spec + (st ? (" in " + st) : "") + ".\n\nThank you."
-      });
-      try {
-        stampMess("client", (owner && owner.name ? owner.name : "Hiring guide") + " · topic · " + label);
-      } catch (err) {}
-      window.location.href = href;
+      toggleClientDiscussTopic(btn.getAttribute("data-client-topic") || btn.getAttribute("data-client-need"));
     });
+    var send = $("#client-discuss-send");
+    if (send && send.getAttribute("data-bound-discuss-send") !== "1") {
+      send.setAttribute("data-bound-discuss-send", "1");
+      send.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        sendClientDiscussTopics();
+      });
+    }
+  }
+
+  function clientDiscussTopicLabels(ids) {
+    return (ids || []).map(function (id) {
+      var topic = CLIENT_START_TOPICS.filter(function (t) { return t.id === id; })[0];
+      if (topic) return topic.label;
+      var meta = CLIENT_NEED_META[id];
+      return meta ? meta.label : id;
+    }).filter(Boolean);
+  }
+
+  function paintClientDiscussSelection() {
+    var root = $("#client-discuss-topics");
+    var selected = Array.isArray(state.clientDiscussTopics) ? state.clientDiscussTopics : [];
+    if (root) {
+      root.querySelectorAll("[data-client-topic], [data-client-need]").forEach(function (btn) {
+        var id = (btn.getAttribute("data-client-topic") || btn.getAttribute("data-client-need") || "").trim();
+        var on = selected.indexOf(id) >= 0;
+        btn.classList.toggle("is-selected", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        var sel = btn.querySelector(".hire-select");
+        if (sel) sel.textContent = on ? "Selected" : "Select";
+      });
+    }
+    var send = $("#client-discuss-send");
+    if (send) send.disabled = !selected.length;
+  }
+
+  function toggleClientDiscussTopic(id) {
+    if (!id) return;
+    if (!Array.isArray(state.clientDiscussTopics)) state.clientDiscussTopics = [];
+    var idx = state.clientDiscussTopics.indexOf(id);
+    if (idx >= 0) state.clientDiscussTopics.splice(idx, 1);
+    else state.clientDiscussTopics.push(id);
+    var status = $("#client-discuss-send-status");
+    if (status) {
+      status.hidden = true;
+      status.textContent = "";
+    }
+    paintClientDiscussSelection();
+  }
+
+  function readLastClientLead() {
+    try {
+      var last = JSON.parse(localStorage.getItem("amp_chatbot_last_client_lead") || "null");
+      return last && typeof last === "object" ? last : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function sendClientDiscussTopics() {
+    var ids = Array.isArray(state.clientDiscussTopics) ? state.clientDiscussTopics.slice() : [];
+    if (!ids.length) {
+      paintClientDiscussSelection();
+      return;
+    }
+    if (!Array.isArray(state.clientNeeds)) state.clientNeeds = [];
+    ids.forEach(function (id) {
+      if (state.clientNeeds.indexOf(id) < 0) state.clientNeeds.push(id);
+    });
+    var topicsLine = clientDiscussTopicLabels(ids).join("; ");
+    var owner = currentHiringGuide();
+    var last = readLastClientLead();
+    var topicBit = "Discuss: " + topicsLine;
+    if (last) {
+      last.discussTopics = ids;
+      last.discussTopicLabels = topicsLine;
+      var interest = String(last.interest || "");
+      if (interest.indexOf("Discuss:") >= 0) last.interest = interest.replace(/Discuss:[\s\S]*$/, topicBit);
+      else last.interest = interest ? (interest + " · " + topicBit) : topicBit;
+      var note = String(last.note || "");
+      if (note.indexOf("Discuss:") >= 0) last.note = note.replace(/Discuss:[\s\S]*$/, topicBit);
+      else last.note = note ? (note + "\n" + topicBit) : topicBit;
+      last.topicsSentAt = new Date().toISOString();
+      postLeadHandoff(last, { replaceLast: true });
+    } else {
+      postLeadHandoff({
+        name: null,
+        audience: "client",
+        channel: "amp_client_meeting_form",
+        source: "AMP website",
+        pageUrl: window.location.href,
+        timestamp: new Date().toISOString(),
+        discussTopics: ids,
+        discussTopicLabels: topicsLine,
+        interest: topicBit,
+        note: topicBit,
+        owner: owner && owner.id ? owner.id : null,
+        ownerName: owner && owner.name ? owner.name : null,
+        formId: "client-discuss-send",
+        region: state.clientState || (state.clientBd && state.clientBd.state) || null
+      });
+    }
+    try {
+      stampMess(
+        "client",
+        (owner && owner.name ? owner.name : "Hiring guide") +
+          " · meeting request · topics · " + topicsLine
+      );
+    } catch (err) {}
+    var status = $("#client-discuss-send-status");
+    if (status) {
+      status.hidden = false;
+      status.textContent = "Sent — topics added to your meeting request.";
+    }
+    paintClientDiscussSelection();
   }
 
   function syncClientRidgeCtas() {
@@ -2300,7 +2401,7 @@
     if (discussTitle) {
       discussTitle.textContent = first + " looks forward to meeting with you. What would you like to discuss?";
     }
-    renderClientTopicGrid($("#client-discuss-topics"));
+    renderClientTopicGrid($("#client-discuss-topics"), { select: true });
     renderClientTopicGrid($("#client-start-topics-parked-grid"));
   }
 
@@ -4185,14 +4286,16 @@
     return script ? String(script.getAttribute("data-amp-handoff-url") || "").trim() : "";
   }
 
-  function persistSpaLead(payload) {
+  function persistSpaLead(payload, opts) {
+    opts = opts || {};
     try {
       var isClient = payload.audience === "client";
       var key = isClient ? "amp_chatbot_client_leads" : "amp_chatbot_leads";
       var list = [];
       try { list = JSON.parse(localStorage.getItem(key) || "[]"); } catch (e) { list = []; }
       if (!Array.isArray(list)) list = [];
-      list.push(payload);
+      if (opts.replaceLast && list.length) list[list.length - 1] = payload;
+      else list.push(payload);
       if (list.length > 50) list = list.slice(-50);
       localStorage.setItem(key, JSON.stringify(list));
       if (isClient) {
@@ -4200,7 +4303,8 @@
         try {
           var all = JSON.parse(localStorage.getItem("amp_chatbot_leads") || "[]");
           if (!Array.isArray(all)) all = [];
-          all.push(payload);
+          if (opts.replaceLast && all.length) all[all.length - 1] = payload;
+          else all.push(payload);
           if (all.length > 50) all = all.slice(-50);
           localStorage.setItem("amp_chatbot_leads", JSON.stringify(all));
         } catch (e2) {}
@@ -4220,8 +4324,8 @@
     };
   }
 
-  function postLeadHandoff(payload) {
-    persistSpaLead(payload);
+  function postLeadHandoff(payload, opts) {
+    persistSpaLead(payload, opts);
     var url = conciergeHandoffUrl();
     console.log("[AMP forms] Handoff lead captured:", payload);
     if (!url) return Promise.resolve({ ok: false, stub: true, persisted: true });

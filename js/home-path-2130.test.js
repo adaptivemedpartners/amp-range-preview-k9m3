@@ -1,5 +1,5 @@
-/* Node smoke: 2129 client-region meeting CTA in the map / How we help gap.
-   Run: node js/home-path-2129.test.js */
+/* Node smoke: 2130 confirm-page discuss + 2129 meeting CTA gap.
+   Run: node js/home-path-2130.test.js */
 var fs = require("fs");
 var path = require("path");
 
@@ -11,10 +11,10 @@ function assert(cond, msg) {
 
 function checkFile(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
-  assert(html.indexOf("<!-- amp-build:2129-meeting-cta-gap -->") !== -1, rel + " missing 2129 stamp comment");
-  assert(html.indexOf("amp-build 2129-meeting-cta-gap") !== -1, rel + " missing 2129 chip");
-  assert(html.indexOf('href="css/site.css?v=2129"') !== -1, rel + " css not ?v=2129");
-  assert(html.indexOf('src="js/app.js?v=2129"') !== -1, rel + " app.js not ?v=2129");
+  assert(html.indexOf("<!-- amp-build:2130-confirm-discuss -->") !== -1, rel + " missing 2130 stamp comment");
+  assert(html.indexOf("amp-build 2130-confirm-discuss") !== -1, rel + " missing 2130 chip");
+  assert(html.indexOf('href="css/site.css?v=2130"') !== -1, rel + " css not ?v=2130");
+  assert(html.indexOf('src="js/app.js?v=2130"') !== -1, rel + " app.js not ?v=2130");
   assert(html.indexOf("js/ridge-access.js") !== -1, rel + " lost ridge-access.js");
   assert(
     html.indexOf("Your partners in rural healthcare recruiting. AMP as your guide. Two paths. One mountain.") !== -1,
@@ -50,6 +50,9 @@ function checkFile(rel) {
   assert(html.indexOf('id="client-discuss-topics"') !== -1, rel + " missing post-submit topic grid");
   assert(html.indexOf('id="confirm-client-title"') !== -1, rel + " missing confirm title id");
   assert(html.indexOf('id="client-discuss-title"') !== -1, rel + " missing discuss title");
+  assert(html.indexOf('id="client-discuss-send"') !== -1, rel + " missing discuss Send button");
+  assert(html.indexOf("Tap a topic to send a note") === -1, rel + " old per-card send copy still on confirm");
+  assert(html.indexOf("Select any topics, then Send") !== -1, rel + " missing multi-select Send hint");
   assert(html.indexOf('id="client-meeting-state"') !== -1, rel + " missing meeting state");
   assert(html.indexOf('id="ridge-checkout-modal"') !== -1, rel + " lost Ridge checkout modal");
   assert(html.indexOf('id="why-amp-pillar-retention"') !== -1, rel + " lost Why AMP KPI pillars");
@@ -75,17 +78,22 @@ function checkFile(rel) {
   var ctaChunk = region.slice(ctaAt - 80, ctaAt + 180);
   assert(ctaChunk.indexOf("client-ridge-cta") !== -1, rel + " meeting CTA missing Ridge bar class");
   assert(ctaChunk.indexOf("btn-primary") === -1, rel + " meeting CTA still uses btn-primary pill");
-  assert(ctaChunk.indexOf("btn btn-primary") === -1, rel + " meeting CTA still uses solid primary pill");
   assert(/id="client-offers-continue"[^>]*hidden/.test(region), rel + " meeting CTA should start hidden like Ridge CTAs");
   var afterFoot = region.slice(footAt);
   assert(afterFoot.indexOf("client-spec-continue-wrap") === -1, rel + " leftover bottom continue wrap after Ridge report");
+
+  var confirm = html.split('data-route="confirm-client"')[1] || "";
+  confirm = confirm.split('data-route="mpc"')[0] || "";
+  assert(confirm.indexOf('id="client-discuss-send"') !== -1, rel + " Send not on confirm page");
+  assert(confirm.indexOf("client-discuss-grid") !== -1, rel + " confirm topics missing 2x4 grid class");
+  assert(confirm.indexOf("client-confirm-discuss-wrap") !== -1, rel + " confirm discuss wrap missing");
 }
 
 checkFile("index.html");
 checkFile("404.html");
 
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('window.__AMP_BUILD = "2129-meeting-cta-gap"') !== -1, "app.js build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2130-confirm-discuss"') !== -1, "app.js build stamp");
 assert(app.indexOf("var CLIENT_START_TOPICS") !== -1, "CLIENT_START_TOPICS missing");
 ["volume", "convert", "interviews", "vacancy", "confidential", "story", "brief", "other"].forEach(function (id) {
   assert(app.indexOf('id: "' + id + '"') !== -1, "missing original need topic " + id);
@@ -100,13 +108,19 @@ assert(app.indexOf("Click here to get a full market analysis from") === -1, "mid
 assert(app.indexOf("function syncClientRidgeCtas") !== -1, "syncClientRidgeCtas missing");
 assert(app.indexOf("function paintConfirmClientDiscuss") !== -1, "paintConfirmClientDiscuss missing");
 assert(app.indexOf("function hiringGuideMailto") !== -1, "hiringGuideMailto missing");
+assert(app.indexOf("function sendClientDiscussTopics") !== -1, "sendClientDiscussTopics missing");
+assert(app.indexOf("function toggleClientDiscussTopic") !== -1, "toggleClientDiscussTopic missing");
+assert(app.indexOf("I would like to discuss") === -1, "per-card mailto body still in app.js");
+assert(app.indexOf("window.location.href = href") === -1, "topic tap still fires mailto");
+assert(app.indexOf("replaceLast: true") !== -1, "Send should extend the existing meeting lead");
+assert(app.indexOf("amp_client_meeting_form") !== -1, "meeting channel lost");
 assert(app.indexOf("Tell-us-where-to-start is parked") !== -1, "continue still requires parked needs");
 assert(app.indexOf("hidden until state/guide ready") !== -1, "meeting CTA should hide until state/guide ready");
 assert(app.indexOf("Pick a state to continue") === -1, "old pick-a-state continue copy still in app.js");
 assert(app.indexOf("go(\"client-meeting\"") !== -1 || app.indexOf('go("client-meeting"') !== -1, "continue must still navigate to client-meeting");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
-assert(css.indexOf("amp-build:2129-meeting-cta-gap") !== -1, "css missing 2129 stamp");
+assert(css.indexOf("amp-build:2130-confirm-discuss") !== -1, "css missing 2130 stamp");
 assert(css.indexOf("min-height: 416px") !== -1, "css missing 30% taller doors");
 assert(css.indexOf(".home-partners-grid") !== -1, "css missing partners one-row");
 assert(css.indexOf(".why-amp-proof-tile") !== -1, "css lost Why AMP KPI tiles");
@@ -117,5 +131,8 @@ assert(css.indexOf("font-size: 19.5px") !== -1, "door-path not noticeably larger
 assert(css.indexOf("#0f172a") !== -1, "css missing dark discuss ink");
 assert(/\.client-discuss-title[\s\S]{0,180}color:\s*#0f172a/.test(css), "discuss title not forced dark");
 assert(css.indexOf("padding-bottom: 88px") === -1, "sticky-bottom padding for old continue still on client-region");
+assert(/\.confirm-band \.hero-inner\s*\{\s*max-width:\s*1040px/.test(css), "confirm card not widened");
+assert(css.indexOf("repeat(4, minmax(0, 1fr))") !== -1, "discuss topics not 4-across on desktop");
+assert(/\.view\.funnel\[data-route="confirm-client"\] \.client-discuss[\s\S]{0,220}background:\s*#ffffff/.test(css), "discuss card not lightened");
 
-console.log("home-path-2129.test.js ok");
+console.log("home-path-2130.test.js ok");
