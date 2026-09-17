@@ -5325,6 +5325,14 @@ function syncGuideRoute(route) {
   function detectBasePath() {
     var p = location.pathname || "/";
     if (p === GH_PAGES_BASE || p.indexOf(GH_PAGES_BASE + "/") === 0) return GH_PAGES_BASE;
+    /* Script URL fallback when pathname is unexpected (odd 404, trailing-slash miss). */
+    try {
+      var scripts = document.getElementsByTagName("script");
+      for (var i = 0; i < scripts.length; i++) {
+        var src = scripts[i].src || "";
+        if (src.indexOf(GH_PAGES_BASE + "/") !== -1) return GH_PAGES_BASE;
+      }
+    } catch (eDet) {}
     return "";
   }
 
