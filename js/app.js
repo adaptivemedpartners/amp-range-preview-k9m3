@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2128-home-path-finetune";
+  window.__AMP_BUILD = "2129-meeting-cta-gap";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2676,17 +2676,19 @@
     if (cont) {
       var hasState = !!(state.clientState && state.clientBd);
       /* 2127: Tell-us-where-to-start is parked — state+guide is enough to continue. */
+      /* 2129: mid Ridge-style CTA — hidden until state/guide ready (same as Ridge report). */
+      cont.hidden = !hasState;
       cont.disabled = !hasState;
-      if (!hasState) {
-        cont.textContent = "Pick a state to continue";
-      } else if (state.clientBd && state.clientBd.ownerName) {
+      if (hasState && state.clientBd && state.clientBd.ownerName) {
         cont.textContent = "Request a meeting with " + state.clientBd.ownerName.split(" ")[0] + " and get a full market analysis";
-      } else {
+      } else if (hasState) {
         var owner = currentHiringGuide();
         var first = hiringGuideFirstName(owner);
         cont.textContent = first && first !== "there"
           ? "Request a meeting with " + first + " and get a full market analysis"
           : "Request a meeting and get a full market analysis";
+      } else {
+        cont.textContent = "Request a meeting and get a full market analysis";
       }
     }
     var hint = $("#client-need-hint");

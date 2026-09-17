@@ -1,3 +1,4 @@
+/* amp-build:2129-meeting-cta-gap */
 /* amp-build:2128-home-path-finetune */
 /* amp-build:2127-home-path-clarity */
 /* amp-build:2123-pages-confirm */
@@ -7057,17 +7058,6 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view[data-route="client-region"] .client-spec-continue-wrap {
   position: static;
 }
-@media (max-width: 720px) {
-  .view[data-route="client-region"] .client-spec-continue-wrap {
-    position: sticky;
-    bottom: 10px;
-    padding-bottom: env(safe-area-inset-bottom, 0);
-    z-index: 5;
-  }
-}
-.view[data-route="client-region"] .funnel-panel {
-  padding-bottom: 88px;
-}
 
 
 /* amp-build:2084 — client map chrome scrub + BD guide card */
@@ -7869,6 +7859,9 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     height: 76px !important;
   }
 }
+/* amp-build:2129-meeting-cta-gap
+   Mike 2026-09-17: step-4 meeting+analysis CTA sits between map and How we help,
+   Ridge-report teal bar (not btn-primary pill), hidden until state/guide ready. */
 /* amp-build:2128-home-path-finetune
    Mike 2026-09-17: path questions larger + all-caps; restore hero second sentence;
    step-4 continue is meeting + market analysis (no mid mailto); confirm discuss
@@ -8022,6 +8015,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   border-radius: 16px;
   text-align: center;
   text-decoration: none;
+  font-family: inherit;
   font-size: 16px;
   font-weight: 740;
   letter-spacing: -0.01em;
@@ -8029,6 +8023,9 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background: linear-gradient(135deg, #5eead4, #14b8a6);
   border: 1px solid rgba(255,255,255,0.28);
   box-shadow: 0 14px 36px rgba(13,148,136,0.28);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
 .client-ridge-cta:hover,
 .client-ridge-cta:focus-visible {
