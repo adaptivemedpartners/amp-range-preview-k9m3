@@ -2209,7 +2209,7 @@
     { id: "vacancy", label: "Role stays open too long / vacancy burn", blurb: "The seat has been empty long enough that the service line is feeling it." },
     { id: "confidential", label: "Confidential / competitive search needs a quieter approach", blurb: "This one can’t be a public blast — we need a quieter, more careful path." },
     { id: "story", label: "Need help telling the opportunity story (marketing/preview)", blurb: "The role is real — the story isn’t landing with the people you want." },
-    { id: "brief", label: "Not sure which seats to prioritize / brief is fuzzy", blurb: "Several openings, or the brief still needs a sharper high camp." },
+    { id: "brief", label: "Not sure which seats to prioritize / brief is fuzzy", blurb: "Several openings, or the brief still needs a sharper focus." },
     { id: "other", label: "Something else", blurb: "A short note is optional — we’ll pick it up on the call." }
   ];
 
@@ -2885,7 +2885,7 @@
     try { stampConciergePath("client-region"); } catch (e2) {}
   }
 
-  var CLIMB_DEFAULT_LINE = "You set the high camp. We carry the work from the first profile through the close.";
+  var CLIMB_DEFAULT_LINE = "You set the brief. We carry the work from the first profile through the close.";
   var CLIMB_STATION_LINES = {
     "1": "We walk the clinic week and the culture before anyone is briefed.",
     "2": "We write a story candidates can trust — not a blast list.",
@@ -5420,9 +5420,9 @@ function syncGuideRoute(route) {
 
     if (chatFunnel.stage === "earn") {
       var earn = chatFunnel.path === "client"
-        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You set the high camp — AMP works the climb."
+        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You set the brief — AMP runs the search."
         : "On the candidate path, we start with your story — why you’d move, what would make you happier — then walk the lit path with you. No spam. Your goals lead.";
-      var me = chatFunnel.path === "client" ? "I’m hiring / holding the peak" : "I’m exploring roles";
+      var me = chatFunnel.path === "client" ? "I’m hiring / setting the brief" : "I’m exploring roles";
       setLog(
         chatBubble("bot", chatFunnelOpenCopy()) +
         chatBubble("me", me) +
@@ -5439,9 +5439,9 @@ function syncGuideRoute(route) {
     }
 
     if (chatFunnel.stage === "contact" || chatFunnel.stage === "done") {
-      var me2 = chatFunnel.path === "client" ? "I’m hiring / holding the peak" : "I’m exploring roles";
+      var me2 = chatFunnel.path === "client" ? "I’m hiring / setting the brief" : "I’m exploring roles";
       var earn2 = chatFunnel.path === "client"
-        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You set the high camp — AMP works the climb."
+        ? "On the client path, we bring a clear plan so you’re not reliving a hard search. You set the brief — AMP runs the search."
         : "On the candidate path, we start with your story — why you’d move, what would make you happier — then walk the lit path with you. No spam. Your goals lead.";
       setLog(
         chatBubble("bot", chatFunnelOpenCopy()) +
@@ -5733,7 +5733,7 @@ function syncGuideRoute(route) {
     },
     "for-organizations": {
       title: "Organizational Services — Dedicated Physician Search" + BRAND_SUFFIX,
-      description: "Organizational services from Adaptive Medical Partners — dedicated physician search for hospitals, groups, and FQHCs. You wait at the peak; AMP does the climb work.",
+      description: "Organizational services from Adaptive Medical Partners — dedicated physician search for hospitals, groups, and FQHCs. You set the brief; AMP runs the search.",
       robots: "index,follow",
       h1: "For Healthcare Organizations"
     },
@@ -6179,7 +6179,7 @@ function syncGuideRoute(route) {
         var lede = guides.querySelector("[data-guides-lede]");
         if (title) title.textContent = path === "client" ? "Your hiring guides" : "Your recruiting guides";
         if (lede) lede.textContent = path === "client"
-          ? "Tap one — they help you set the high camp and own the next step."
+          ? "Tap one — they help you set the brief and own the next step."
           : "Tap one — they turn a preview into a real next step.";
         guides.querySelectorAll("[data-guides-panel]").forEach(function (rail) {
           var on = rail.getAttribute("data-guides-panel") === path;

@@ -8893,3 +8893,38 @@ img[src*="amp-logo-mark"] {
     padding-right: 16px;
   }
 }
+
+
+/* ========== amp-build:2137c — step 4/5 titles on white card (match steps 2–3) ========== */
+.view[data-route="client-region"] .hero-band,
+.view[data-route="client-meeting"] .hero-band {
+  display: none !important;
+}
+.funnel-panel.client-step-card > .client-step.client-step-on-card {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 10px;
+}
+.funnel-panel.client-step-card > .hire-title {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: clamp(22px, 3.2vw, 30px);
+  letter-spacing: -0.02em;
+}
+.funnel-panel.client-step-card > .client-card-lede {
+  margin: 0 0 14px;
+  max-width: 62ch;
+  color: #334155;
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+.view[data-route="client-meeting"] .funnel-panel.client-step-card {
+  margin-top: 24px;
+  padding-top: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 18px;
+}
+.view[data-route="client-region"] .funnel-panel.client-combined-stage.client-step-card {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.92);
+}
