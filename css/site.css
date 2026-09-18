@@ -1,3 +1,4 @@
+/* amp-build:2134-home-retention-hero */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
@@ -8406,4 +8407,157 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   position: absolute;
   left: 14px;
   bottom: 14px;
+}
+
+/* ========== amp-build:2134-home-retention-hero
+   Clinic consult cover + left veil; retention headline; compact equal path cards;
+   MI banner under doors; proof + logos below. Homepage only — funnels untouched. ========== */
+.home-pro-bg {
+  background:
+    linear-gradient(105deg,
+      rgba(21, 35, 50, 0.92) 0%,
+      rgba(21, 35, 50, 0.78) 28%,
+      rgba(21, 35, 50, 0.36) 52%,
+      rgba(21, 35, 50, 0.16) 70%,
+      rgba(21, 35, 50, 0.28) 100%),
+    url("../assets/home-hero-clinic-consult.jpg?v=2134") center / cover no-repeat,
+    #152332;
+}
+.home-mist {
+  background:
+    linear-gradient(90deg, rgba(21, 35, 50, 0.52) 0%, rgba(21, 35, 50, 0.16) 46%, rgba(21, 35, 50, 0.06) 70%, rgba(21, 35, 50, 0.28) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.10) 0%, transparent 38%, rgba(21, 35, 50, 0.48) 80%, rgba(21, 35, 50, 0.90) 100%) !important;
+}
+
+.home-hero-copy {
+  width: min(880px, 100%);
+  margin: 0 auto 10px;
+}
+.home-hero-copy .explore-block {
+  text-align: left;
+  max-width: 22em;
+  margin: 0;
+}
+.home-hero-copy .explore-kicker {
+  display: inline-flex;
+}
+.home-hero-copy .explore-kicker::before { display: none; }
+.home-hero-copy .explore-title {
+  font-size: clamp(28px, 4.6vw, 46px);
+}
+.home-hero-copy .explore-sub {
+  margin: 14px 0 0;
+  max-width: 42ch;
+}
+
+/* Compact equal path cards — height hugs FIND ROLES / REQUEST A SEARCH */
+.doors-hero {
+  align-items: stretch;
+}
+.doors-hero .door-hero {
+  min-height: 0;
+  height: auto;
+  padding: 22px 22px 16px;
+  justify-content: flex-start;
+}
+.doors-hero .door-line {
+  margin: 0 0 0 auto;
+}
+.doors-hero .door-hero .door-cta {
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+.home-mi-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px 22px;
+  width: min(880px, 100%);
+  margin: 20px auto 0;
+  padding: 18px 22px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(21, 35, 50, 0.94) 0%, rgba(26, 58, 78, 0.90) 55%, rgba(21, 35, 50, 0.95) 100%);
+  border: 1px solid rgba(120, 196, 229, 0.40);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(107, 224, 173, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease, border-color .3s ease;
+}
+.home-mi-kicker {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #78C4E5;
+  white-space: nowrap;
+}
+.home-mi-title {
+  display: block;
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.home-mi-line {
+  display: block;
+  margin-top: 4px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: rgba(226, 232, 240, 0.86);
+}
+.home-mi-cta {
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  color: #6BE0AD;
+  white-space: nowrap;
+}
+.home-mi-banner:hover,
+.home-mi-banner:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(107, 224, 173, 0.55);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(120, 196, 229, 0.28);
+  outline: none;
+}
+
+.home-proof-band {
+  width: min(880px, 100%);
+  justify-content: center;
+  gap: 10px;
+  margin: 18px auto 0;
+  opacity: 0.88;
+}
+.home-stage.settled .home-proof-band {
+  opacity: 0.92;
+}
+
+@media (max-width: 720px) {
+  .home-hero-copy .explore-block { max-width: none; }
+  .home-mi-banner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 16px 18px;
+  }
+  .home-mi-kicker { white-space: normal; }
+  .home-mi-cta { white-space: normal; }
+  .doors-hero .door-hero {
+    min-height: 0;
+    padding: 20px 18px 14px;
+  }
+}
+
+@media (max-width: 430px) {
+  .home-hero-copy .explore-title { font-size: clamp(26px, 8.2vw, 36px); }
+  .home-proof-band {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .doors-hero .door-hero {
+    min-height: 0;
+    padding: 18px 16px 12px;
+  }
 }
