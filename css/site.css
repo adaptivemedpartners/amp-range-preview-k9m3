@@ -8628,8 +8628,13 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .home-mi-banner-title { font-size: 1.12rem; }
   .home-pro-bg {
-    /* Tall-phone cover crop is ~26% of the 1280w photo; 86% keeps both desk faces in frame */
-    background-position: center, center, 86% center;
+    /* Tall-phone cover + 1.06 --home-bg-vh overscan. 80% / 32% puts both desk
+       faces in the copy gap; lighter mid-veil so navy scrubs still read. */
+    background-image:
+      linear-gradient(105deg, rgba(21, 35, 50, 0.78) 0%, rgba(21, 35, 50, 0.22) 20%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.04) 100%),
+      linear-gradient(180deg, rgba(21, 35, 50, 0.12) 0%, rgba(21, 35, 50, 0.02) 30%, rgba(21, 35, 50, 0.36) 72%, rgba(21, 35, 50, 0.82) 100%),
+      url("../assets/home-hero-clinic-consult.jpg?v=2137");
+    background-position: center, center, 80% 32%;
   }
 }
 @media (max-width: 480px) {

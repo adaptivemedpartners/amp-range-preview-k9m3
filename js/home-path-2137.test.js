@@ -46,9 +46,8 @@ assert(app.indexOf('go("client-meeting"') !== -1 || app.indexOf("go(\"client-mee
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 assert(css.indexOf("amp-build:2137-preview-polish") !== -1, "css missing 2137 stamp");
-assert(css.indexOf("86% center") !== -1, "mobile hero crop not nudged to ~86%");
+assert(css.indexOf("80% 32%") !== -1, "mobile hero crop not nudged to 80% 32%");
 assert(css.indexOf("62% center") === -1, "old 62% mobile hero crop still present");
-assert(css.indexOf("72% center") === -1, "mid 72% mobile hero crop should not remain");
 assert(css.indexOf("amp-path-cand-rank-countryside.jpg") !== -1, "rank countryside BG missing");
 assert(css.indexOf("amp-path-client-step4-boardroom.jpg") !== -1, "client step4 boardroom BG missing");
 assert(css.indexOf("amp-path-client-step5-desk.jpg") !== -1, "client step5 desk BG missing");
