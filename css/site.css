@@ -1,3 +1,4 @@
+/* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
 /* amp-build:2130-confirm-discuss */
 /* amp-build:2129-meeting-cta-gap */
@@ -16,24 +17,27 @@
 /* amp-build:2008 — path crumbs removed sitewide; hide if any remain */
 .crumb { display: none !important; }
 
-/* AMP Mountain Site — world-class clickthrough · brand standard */
+/* AMP site — LinkedIn card palette · Sep 18 2026 brand retheme */
 :root {
-  --teal: #0d9488;
-  --teal-dark: #0f766e;
-  --teal-deep: #115e59;
-  --teal-glow: rgba(13, 148, 136, 0.45);
-  --teal-soft: #f0fdfa;
-  --navy: #0b1220;
-  --navy-2: #0f172a;
-  --navy-3: #1e293b;
-  --mist: #e8f1ef;
-  --sunrise: #fbbf77;
-  --ink: #0f172a;
+  /* LinkedIn AMP card palette — Sep 18 2026 brand stamp */
+  --teal: #6BE0AD;              /* Allied mint (primary accent) */
+  --teal-dark: #2FAF7A;         /* darker mint — hover / links on light */
+  --teal-deep: #1F8A5E;         /* deep mint — body link contrast on white */
+  --teal-glow: rgba(107, 224, 173, 0.45);
+  --teal-soft: #E8FBF3;         /* mint mist */
+  --sky: #78C4E5;               /* Provider sky — secondary accent / highlights */
+  --sky-soft: #E8F6FC;
+  --navy: #152332;              /* primary / logo / dark surfaces */
+  --navy-2: #1A2C3F;
+  --navy-3: #243B52;
+  --mist: #E8EEF2;              /* soft navy-tinted mist (not mountain teal) */
+  --sunrise: #78C4E5;           /* retired gold sunrise → sky secondary */
+  --ink: #152332;
   --muted: #64748b;
   --line: rgba(148, 163, 184, 0.28);
-  --glass: rgba(15, 23, 42, 0.55);
+  --glass: rgba(21, 35, 50, 0.55);
   --radius: 16px;
-  --shadow: 0 18px 50px rgba(2, 12, 27, 0.35);
+  --shadow: 0 18px 50px rgba(21, 35, 50, 0.35);
   --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -99,7 +103,7 @@ button, input, select, textarea { font: inherit; }
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: rgba(11, 18, 32, 0.88);
+  background: rgba(21, 35, 50, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -448,22 +452,22 @@ button, input, select, textarea { font: inherit; }
 .explore-kicker {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-  color: #99f6e4; margin-bottom: 14px;
+  color: #78C4E5; margin-bottom: 14px;
 }
 .explore-kicker::before, .explore-kicker::after {
-  content: ""; width: 28px; height: 1px; background: linear-gradient(90deg, transparent, #5eead4);
+  content: ""; width: 28px; height: 1px; background: linear-gradient(90deg, transparent, #6BE0AD);
 }
 .explore-title {
   margin: 0;
   font-size: clamp(32px, 6vw, 56px);
   font-weight: 650; letter-spacing: -.03em; line-height: 1.08;
-  /* Shimmer = white ↔ Own the Summit gold (#fcd34d / #f59e0b) — no Climb teal */
+  /* Shimmer = white ↔ sky ↔ mint (LinkedIn card; no mountain gold) */
   background: linear-gradient(
     90deg,
     #ffffff 0%,
-    #fff7ed 18%,
-    #fcd34d 48%,
-    #f59e0b 72%,
+    #E8F6FC 18%,
+    #78C4E5 42%,
+    #6BE0AD 68%,
     #ffffff 100%
   );
   background-size: 220% auto;
@@ -473,10 +477,10 @@ button, input, select, textarea { font: inherit; }
   -webkit-text-fill-color: transparent;
   animation: exploreDoorShimmer 3.6s ease-in-out infinite alternate;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35))
-          drop-shadow(0 0 16px rgba(245, 158, 11, 0.4));
+          drop-shadow(0 0 16px rgba(120, 196, 229, 0.35));
   text-shadow:
     0 0 18px rgba(255, 255, 255, 0.35),
-    0 0 36px rgba(245, 158, 11, 0.3);
+    0 0 36px rgba(107, 224, 173, 0.25);
 }
 @keyframes exploreDoorShimmer {
   0% { background-position: 0% center; }
@@ -485,12 +489,12 @@ button, input, select, textarea { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .explore-title {
     animation: none;
-    background: linear-gradient(90deg, #ffffff, #f59e0b);
+    background: linear-gradient(90deg, #ffffff, #78C4E5 55%, #6BE0AD);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.35));
+    filter: drop-shadow(0 0 12px rgba(120, 196, 229, 0.35));
     text-shadow: 0 2px 18px rgba(0,0,0,.5);
   }
 }
@@ -507,7 +511,7 @@ button, input, select, textarea { font: inherit; }
     rgba(226,232,240,0.72) 0%,
     rgba(226,232,240,0.72) 42%,
     #ffffff 49%,
-    #99f6e4 51%,
+    #78C4E5 51%,
     rgba(226,232,240,0.72) 58%,
     rgba(226,232,240,0.72) 100%
   );
@@ -1662,7 +1666,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   text-transform: uppercase;
   color: #5eead4;
 }
-.home-job2-client .home-job2-path { color: #fcd34d; }
+.home-job2-client .home-job2-path { color: #78C4E5; }
 .home-job2-body h3 {
   margin: 0 0 8px;
   font-size: 1.15rem;
@@ -1693,7 +1697,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 }
 .home-job2-cta.client {
   color: #1c1917;
-  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  background: linear-gradient(135deg, #6BE0AD, #2FAF7A);
 }
 @media (max-width: 640px) {
   .home-partners-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
@@ -1754,7 +1758,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   text-transform: uppercase;
   color: #5eead4;
 }
-.door-client .door-path { color: #fcd34d; }
+.door-client .door-path { color: #78C4E5; }
 .door-who {
   font-size: 11px;
   font-weight: 560;
@@ -1801,7 +1805,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 }
 .door-client .door-cta {
   color: #1c1917;
-  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  background: linear-gradient(135deg, #6BE0AD, #2FAF7A);
   box-shadow: 0 8px 24px rgba(245,158,11,0.32);
 }
 .door-hero:hover .door-cta, .door-hero:focus-visible .door-cta {
@@ -5338,12 +5342,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .amp-guide-action.is-client {
   color: #1c1917;
-  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  background: linear-gradient(135deg, #6BE0AD, #2FAF7A);
   border-color: rgba(251, 191, 119, 0.45);
 }
 .chat-actions .btn[data-chat="door-client"] {
   color: #1c1917;
-  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  background: linear-gradient(135deg, #6BE0AD, #2FAF7A);
   border: 0;
 }
 
@@ -5532,7 +5536,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-climb-tab[data-climb-path="client"].is-on {
   color: #1c1917;
-  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  background: linear-gradient(135deg, #6BE0AD, #2FAF7A);
   box-shadow: 0 8px 22px rgba(245,158,11,0.28);
 }
 .home-climb-steps {
@@ -5611,7 +5615,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-climb-cta.client {
   color: #1c1917;
-  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  background: linear-gradient(135deg, #6BE0AD, #2FAF7A);
 }
 .home-climb-cta[hidden] { display: none !important; }
 
@@ -7435,13 +7439,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-weight: 800;
   background-image: linear-gradient(
     110deg,
-    #d4a017 0%,
-    #fcd34d 16%,
-    #ffffff 38%,
-    #5eead4 50%,
-    #14b8a6 68%,
-    #0f766e 88%,
-    #fde68a 100%
+    #152332 0%,
+    #78C4E5 22%,
+    #ffffff 40%,
+    #6BE0AD 58%,
+    #2FAF7A 78%,
+    #152332 100%
   );
   background-size: 260% auto;
   -webkit-background-clip: text;
@@ -7450,9 +7453,9 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   -webkit-text-fill-color: transparent;
   animation: whyAmpProofShimmer 3.8s ease-in-out infinite alternate;
   filter:
-    drop-shadow(0 0 10px rgba(45,212,191,.55))
-    drop-shadow(0 0 22px rgba(20,184,166,.38))
-    drop-shadow(0 0 8px rgba(253,230,138,.28));
+    drop-shadow(0 0 10px rgba(120,196,229,.45))
+    drop-shadow(0 0 22px rgba(107,224,173,.32))
+    drop-shadow(0 0 8px rgba(21,35,50,.2));
 }
 .why-amp-proof-tile span {
   display: block;
@@ -7460,7 +7463,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   font-size: 13.5px;
   line-height: 1.35;
   font-weight: 650;
-  background-image: linear-gradient(100deg, #334155 0%, #0f766e 48%, #b45309 100%);
+  background-image: linear-gradient(100deg, #334155 0%, #1F8A5E 48%, #2A7AA8 100%);
   background-size: 180% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -7473,26 +7476,26 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .why-amp-proof-tile.is-paired {
   transform: translateY(-4px);
-  border-color: rgba(20,184,166,.45);
-  box-shadow: 0 10px 24px rgba(15,118,110,.12);
+  border-color: rgba(107,224,173,.45);
+  box-shadow: 0 10px 24px rgba(21,35,50,.12);
 }
 .why-amp-proof-tile.is-paired strong {
   filter:
-    drop-shadow(0 0 14px rgba(45,212,191,.75))
-    drop-shadow(0 0 28px rgba(20,184,166,.5));
+    drop-shadow(0 0 14px rgba(120,196,229,.65))
+    drop-shadow(0 0 28px rgba(107,224,173,.45));
 }
 .seo-pillar-links .pillar-card.is-paired {
   transform: translateY(-8px);
-  border-color: #14b8a6;
+  border-color: #6BE0AD;
   box-shadow:
-    0 16px 32px rgba(15,118,110,.18),
-    0 0 0 1px rgba(20,184,166,.35),
-    0 0 28px rgba(45,212,191,.22);
+    0 16px 32px rgba(21,35,50,.16),
+    0 0 0 1px rgba(120,196,229,.35),
+    0 0 28px rgba(107,224,173,.22);
   z-index: 2;
 }
 .seo-pillar-links .pillar-card.is-paired .tag,
 .seo-pillar-links .pillar-card.is-paired h3 {
-  background-image: linear-gradient(100deg, #d4a017, #14b8a6 55%, #0f766e);
+  background-image: linear-gradient(100deg, #152332, #78C4E5 55%, #1F8A5E);
   background-size: 180% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -7502,7 +7505,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (prefers-reduced-motion: reduce) {
   .why-amp-proof-tile strong {
     animation: none;
-    background-image: linear-gradient(90deg, #d4a017, #14b8a6 55%, #0f766e);
+    background-image: linear-gradient(90deg, #152332, #78C4E5 55%, #6BE0AD);
   }
 }
 @media (max-width: 860px) {
@@ -7957,7 +7960,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   text-transform: uppercase;
   color: #5eead4;
 }
-.door-client .door-path { color: #fcd34d; }
+.door-client .door-path { color: #78C4E5; }
 .door-story {
   font-size: clamp(1.85rem, 3.5vw, 2.55rem);
 }
@@ -8000,7 +8003,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   text-transform: uppercase;
   color: #5eead4;
 }
-.home-job2-client .home-job2-path { color: #fcd34d; }
+.home-job2-client .home-job2-path { color: #78C4E5; }
 
 @media (max-width: 780px) {
   .home-partners-grid {
