@@ -1,3 +1,4 @@
+/* amp-build:2137-mi-bg-whiteboard-smoky */
 /* amp-build:2136-path-theme-bgs */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
@@ -8264,7 +8265,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2136");
+    url("../assets/home-hero-clinic-consult.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -8323,11 +8324,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-job2-panel-candidate {
   background:
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2136");
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2137");
 }
 .home-job2-panel-client {
   background:
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2136");
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2137");
 }
 @media (max-width: 640px) {
   .home-job2-panel { height: 160px; }
@@ -8604,7 +8605,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-cand-specialty.jpg?v=2136");
+    url("../assets/amp-path-cand-specialty.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8617,7 +8618,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-cand-nurses.jpg?v=2136");
+    url("../assets/amp-path-cand-nurses.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8630,7 +8631,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-client-fqhc.jpg?v=2136");
+    url("../assets/amp-path-client-fqhc.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8643,7 +8644,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-client-hallway.jpg?v=2136");
+    url("../assets/amp-path-client-hallway.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8703,12 +8704,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .home-job2-panel-candidate {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2136") !important;
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2137") !important;
 }
 .home-job2-panel-client {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2136") !important;
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2137") !important;
 }
 @media (max-width: 640px) {
   .home-job2-card::before { height: 160px; }
@@ -8730,4 +8731,37 @@ img[src*="amp-logo-mark"] {
   -webkit-filter: none !important;
   box-shadow: none !important;
   text-shadow: none !important;
+}
+
+/* ========== amp-build:2137-mi-bg-whiteboard-smoky — MI / ridge entry ========== */
+/* Same smoky cover + navy veil as path BGs. Soft JPG (not crisp, not neon AI). */
+.view[data-route="mi-lite"] > .shot .pro-still,
+.view[data-route="mi-lite-portal"] > .shot .pro-still,
+.view[data-route="mi-lite-login"] > .shot .pro-still,
+.view[data-route="mi-lite-app"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    url("../assets/mi-bg-whiteboard-smoky.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+/* Soften funnel hero-band so cyan radial / hard navy doesn't fight the whiteboard */
+.view[data-route="mi-lite"] .hero-band,
+.view[data-route="mi-lite-portal"] .hero-band,
+.view[data-route="mi-lite-login"] .hero-band,
+.view[data-route="mi-lite-app"] .hero-band {
+  background:
+    linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.52) 55%, rgba(21, 35, 50, 0.72) 100%);
+}
+.view[data-route="mi-lite"] > .shot,
+.view[data-route="mi-lite-portal"] > .shot,
+.view[data-route="mi-lite-login"] > .shot,
+.view[data-route="mi-lite-app"] > .shot {
+  overflow: hidden;
 }
