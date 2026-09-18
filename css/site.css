@@ -1,3 +1,4 @@
+/* amp-build:2142-engagement-pass */
 /* amp-build:2141-david-cleanup */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
@@ -8272,7 +8273,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2141");
+    url("../assets/home-hero-clinic-consult.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -8331,11 +8332,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-job2-panel-candidate {
   background:
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2141");
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2142");
 }
 .home-job2-panel-client {
   background:
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2141");
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2142");
 }
 @media (max-width: 640px) {
   .home-job2-panel { height: 160px; }
@@ -8419,8 +8420,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .explore-block-ad {
   text-align: left;
   align-self: center;
-  width: min(880px, 100%);
-  max-width: 880px;
+  width: min(1080px, calc(100% - 48px));
+  max-width: 1080px;
   margin: 0 auto 8px;
   padding-left: 0;
 }
@@ -8445,14 +8446,14 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-stage.no-mountain-hero .explore-range-row {
   align-self: center;
-  width: min(880px, 100%);
+  width: min(1080px, calc(100% - 48px));
   justify-content: flex-start;
 }
 
 /* Compact equal-height path cards — bottom sits just under CTAs (no dead space) */
 .home-stage.no-mountain-hero .doors-hero {
   align-items: stretch;
-  width: min(880px, 100%);
+  width: min(1080px, calc(100% - 48px));
 }
 .home-stage.no-mountain-hero .door-hero {
   min-height: 0 !important;
@@ -8495,7 +8496,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  width: min(880px, 100%);
+  width: min(1080px, calc(100% - 48px));
   margin: 22px auto 12px;
   padding: 22px 24px;
   border-radius: 16px;
@@ -8555,7 +8556,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   border: 1px solid rgba(120, 196, 229, 0.35);
 }
 .home-proof-stack {
-  width: min(880px, 100%);
+  width: min(1080px, calc(100% - 48px));
   margin: 10px auto 0;
   display: grid;
   gap: 12px;
@@ -8613,7 +8614,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-cand-specialty.jpg?v=2141");
+    url("../assets/amp-path-cand-specialty.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8626,7 +8627,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-cand-nurses.jpg?v=2141");
+    url("../assets/amp-path-cand-nurses.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8639,7 +8640,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-client-fqhc.jpg?v=2141");
+    url("../assets/amp-path-client-fqhc.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8652,7 +8653,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-client-hallway.jpg?v=2141");
+    url("../assets/amp-path-client-hallway.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8712,12 +8713,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .home-job2-panel-candidate {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2141") !important;
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2142") !important;
 }
 .home-job2-panel-client {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2141") !important;
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2142") !important;
 }
 @media (max-width: 640px) {
   .home-job2-card::before { height: 160px; }
@@ -8763,7 +8764,7 @@ img[src*="amp-logo-mark"] {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-client-step4-boardroom-smoky.jpg?v=2141");
+    url("../assets/amp-path-client-step4-boardroom-smoky.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8776,7 +8777,7 @@ img[src*="amp-logo-mark"] {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-client-step5-desk-smoky.jpg?v=2141");
+    url("../assets/amp-path-client-step5-desk-smoky.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8789,7 +8790,7 @@ img[src*="amp-logo-mark"] {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-cand-rank-countryside-smoky.jpg?v=2141");
+    url("../assets/amp-path-cand-rank-countryside-smoky.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8806,7 +8807,7 @@ img[src*="amp-logo-mark"] {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-mi-bg-C-whiteboard-smoky.jpg?v=2141");
+    url("../assets/amp-mi-bg-C-whiteboard-smoky.jpg?v=2142");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8855,8 +8856,8 @@ img[src*="amp-logo-mark"] {
 
 /* Homepage path column — one shared width (doors + MI + proof + partners) */
 .home-path-column {
-  width: min(880px, 100%);
-  max-width: 880px;
+  width: min(1080px, calc(100% - 48px));
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
@@ -8868,7 +8869,8 @@ img[src*="amp-logo-mark"] {
 .home-path-column .doors-hero,
 .home-path-column .home-mi-banner,
 .home-path-column .home-proof-stack,
-.home-path-column .home-partners {
+.home-path-column .home-partners,
+.home-path-column .home-ret-strip {
   width: 100% !important;
   max-width: none !important;
   margin-left: 0 !important;
@@ -9378,5 +9380,224 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   .ridge-workbench .metric-btn,
   #ridge-metric-bar .metric-btn {
     width: auto;
+  }
+}
+
+
+/* ========== amp-build:2142-engagement-pass — widen home column + retention strip + client Zach band ========== */
+
+/* Proof pills share full column width (not a skinny centered island) */
+.home-path-column .home-proof,
+.home-path-column .home-proof-subtle,
+.home-proof-stack .home-proof,
+.home-proof-stack .proof-chips {
+  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.home-path-column .home-proof .proof-chip,
+.home-proof-stack .proof-chip {
+  flex: 1 1 0;
+  text-align: center;
+  min-width: 120px;
+}
+
+/* Homepage Zach-style retention strip — under path/MI/proof, same column */
+.home-path-column .home-ret-strip {
+  width: 100%;
+  margin: 22px 0 8px;
+  padding: 0;
+  box-sizing: border-box;
+}
+.home-ret-strip-kicker {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6BE0AD;
+  text-align: center;
+}
+.home-ret-strip-title {
+  margin: 0 0 16px;
+  font-size: clamp(1.2rem, 2.6vw, 1.55rem);
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+}
+.home-ret-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.home-ret-strip .amp-ret-card {
+  background: rgba(255,255,255,0.97);
+}
+@media (max-width: 760px) {
+  .home-ret-strip-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .home-path-column .home-proof .proof-chip,
+  .home-proof-stack .proof-chip {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 0;
+  }
+}
+
+/* Client step 1 — slim one-story teaser (keeps facility step light) */
+.client-ret-teaser {
+  width: min(440px, 100%);
+  margin: 12px auto 0;
+  padding: 0 4px 8px;
+}
+.amp-ret-card--slim {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  grid-template-rows: 1fr auto;
+  align-items: stretch;
+}
+.amp-ret-card--slim .amp-ret-card-media {
+  grid-row: 1 / 3;
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 96px;
+}
+.amp-ret-card--slim .amp-ret-card-body {
+  padding: 10px 12px 6px;
+}
+.amp-ret-card--slim .amp-ret-footer {
+  grid-column: 2;
+}
+.amp-ret-card--slim .amp-ret-year {
+  font-size: 18px;
+}
+@media (min-width: 900px) {
+  .client-ret-teaser {
+    width: min(560px, 100%);
+  }
+}
+
+/* Client step 2 — richer trio already; ensure desktop 3-col and readable */
+@media (min-width: 900px) {
+  .client-ret-pepper--trio {
+    width: min(1080px, 96%);
+  }
+}
+
+/* Client step 3 — Zach band (navy/sky/mint, countryside smoky) */
+.client-zach-band {
+  position: relative;
+  width: min(1080px, calc(100% - 24px));
+  margin: 18px auto 14px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(120, 196, 229, 0.35);
+  box-shadow: 0 18px 48px rgba(8, 14, 22, 0.35);
+}
+.client-zach-band-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.88) 0%, rgba(21, 35, 50, 0.72) 42%, rgba(26, 61, 69, 0.78) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.35) 0%, rgba(21, 35, 50, 0.55) 100%),
+    url("../assets/amp-path-cand-rank-countryside-smoky.jpg?v=2142");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  filter: saturate(0.92);
+  transform: scale(1.03);
+  transform-origin: center;
+}
+.client-zach-band-inner {
+  position: relative;
+  z-index: 1;
+  padding: 28px 28px 24px;
+  color: #f8fafc;
+  max-width: 720px;
+}
+.client-zach-kicker {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #78C4E5;
+}
+.client-zach-title {
+  margin: 0 0 14px;
+  font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #f8fafc;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+  font-family: var(--font), system-ui, sans-serif; /* not Zach whole-page serif */
+}
+.client-zach-benefits {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.client-zach-benefits li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(226, 232, 240, 0.94);
+  font-weight: 560;
+}
+.client-zach-benefits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6BE0AD;
+  box-shadow: 0 0 10px rgba(107, 224, 173, 0.45);
+}
+.client-zach-closer {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 720;
+  color: #6BE0AD;
+}
+.client-zach-tag {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #78C4E5;
+}
+@media (max-width: 640px) {
+  .client-zach-band {
+    width: calc(100% - 16px);
+    margin: 14px auto 12px;
+  }
+  .client-zach-band-inner {
+    padding: 20px 16px 18px;
+  }
+  .client-zach-benefits {
+    grid-template-columns: 1fr;
+  }
+  /* Mobile: keep single-column; don't force desktop 3-col emptiness */
+  .client-ret-pepper--trio {
+    width: min(440px, 100%);
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Region pepper — keep usable under Zach band; desktop 3-col already from 2139/2140 */
+@media (min-width: 900px) {
+  .client-ret-pepper--region {
+    width: min(1080px, 96%);
   }
 }

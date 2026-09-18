@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2141-david-cleanup";
+  window.__AMP_BUILD = "2142-engagement-pass";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -5679,7 +5679,7 @@ function syncGuideRoute(route) {
 
   /* Mike 2026-09-14 locked title / meta / H1 / robots. Do not re-litigate. */
   var SEO_DEFAULT = {
-    title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
+    title: "Adaptive Medical Partners | Permanent recruitment",
     description: "Adaptive Medical Partners — physician & healthcare recruiting firm. Dedicated investment search for candidates and organizations. 87% retention at 3 years, 1.7 avg interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
     robots: "index,follow"
   };
@@ -5688,10 +5688,10 @@ function syncGuideRoute(route) {
 
   var SEO_MAP = {
     home: {
-      title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
+      title: "Adaptive Medical Partners | Permanent recruitment",
       description: SEO_DEFAULT.description,
-      robots: "index,follow",
-      h1: "Physician & Healthcare Recruiting"
+      robots: "index,follow"
+      /* h1 intentionally omitted — explore-title is locked in HTML; do not overwrite */
     },
     about: {
       title: "About" + BRAND_SUFFIX,
@@ -5949,7 +5949,8 @@ function syncGuideRoute(route) {
       var view = document.querySelector('.view[data-route="' + viewSel + '"]');
       if (view) {
         var heading = view.querySelector("h1");
-        if (heading) heading.textContent = h1;
+        /* Hard lock: never overwrite homepage explore-title H1 */
+        if (heading && !heading.classList.contains("explore-title")) heading.textContent = h1;
       }
     }
   }
