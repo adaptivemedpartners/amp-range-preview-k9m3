@@ -1,4 +1,4 @@
-/* amp-build:2135-home-polish */
+/* amp-build:2136-path-step-bgs */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
@@ -8594,4 +8594,48 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* ========== amp-build:2136-path-step-bgs — smoky ambient photos on 4 path steps ==========
+   Candidate = day-in-life. Client = facility tour.
+   Cover + dark navy veil (homepage-hero family). Funnels / routes / fields untouched. */
+.view.funnel[data-route="physician"] > .shot .pro-still,
+.view.funnel[data-route="physician-region"] > .shot .pro-still,
+.view.funnel[data-route="client"] > .shot .pro-still,
+.view.funnel[data-route="client-specialty"] > .shot .pro-still {
+  background-color: #152332;
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+}
+
+/* Shared navy veil recipe: angled wash + bottom hold, then smoky plate */
+.view.funnel[data-route="physician"] > .shot .pro-still {
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    url("../assets/path-cand-specialty-clinic.jpg?v=2136");
+}
+.view.funnel[data-route="physician-region"] > .shot .pro-still {
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    url("../assets/path-cand-nurses-station.jpg?v=2136");
+}
+.view.funnel[data-route="client"] > .shot .pro-still {
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    url("../assets/path-client-fqhc-exterior.jpg?v=2136");
+}
+.view.funnel[data-route="client-specialty"] > .shot .pro-still {
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    url("../assets/path-client-busy-hallway.jpg?v=2136");
+}
+
+/* Region hero sits over the nurses plate — keep title readable, photo still ambient */
+.view.funnel[data-route="physician-region"] .hero-band {
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.38) 0%, rgba(21, 35, 50, 0.50) 52%, rgba(21, 35, 50, 0.78) 100%);
 }
