@@ -8748,43 +8748,44 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 /* ========== amp-build:2137-path-step-polish — badge on card + new smoky plates ========== */
+/* Source JPGs are already smoky; keep a lighter navy veil so the plate still reads. */
 .view[data-route="physician-rank"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.48) 0%, rgba(21, 35, 50, 0.32) 42%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.16) 0%, rgba(21, 35, 50, 0.10) 48%, rgba(21, 35, 50, 0.46) 100%),
     url("../assets/amp-path-cand-rank-countryside.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
-  transform: scale(1.02);
+  filter: none;
+  transform: scale(1.01);
   transform-origin: center center;
 }
 .view[data-route="client-region"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.48) 0%, rgba(21, 35, 50, 0.32) 42%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.16) 0%, rgba(21, 35, 50, 0.10) 48%, rgba(21, 35, 50, 0.46) 100%),
     url("../assets/amp-path-client-step4-boardroom.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
-  transform: scale(1.02);
+  filter: none;
+  transform: scale(1.01);
   transform-origin: center center;
 }
 .view[data-route="client-meeting"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.48) 0%, rgba(21, 35, 50, 0.32) 42%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.16) 0%, rgba(21, 35, 50, 0.10) 48%, rgba(21, 35, 50, 0.46) 100%),
     url("../assets/amp-path-client-step5-desk.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
-  transform: scale(1.02);
+  filter: none;
+  transform: scale(1.01);
   transform-origin: center center;
 }
 /* Opportunities list + post-submit confirm stay navy-only (no photo plate) */
@@ -8806,7 +8807,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view[data-route="client-region"] .hero-band,
 .view[data-route="client-meeting"] .hero-band {
   background:
-    linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.58) 100%) !important;
+    linear-gradient(180deg, rgba(21, 35, 50, 0.22) 0%, rgba(21, 35, 50, 0.36) 100%) !important;
 }
 
 /* Path-step badge: top-right of the white card, not the dark hero */
