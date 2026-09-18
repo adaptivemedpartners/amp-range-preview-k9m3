@@ -1,3 +1,16 @@
+/* amp-build:2145-seo-polish */
+
+/* amp-build:2145 crawlable education/door cards */
+a.residents-education-card,
+a.mi-education-card {
+  text-decoration: none;
+  color: inherit;
+}
+a.card {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* amp-build:2144-mountain-seo-scrub */
 /* amp-build:2142-engagement-pass */
 /* amp-build:2141-david-cleanup */

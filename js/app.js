@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2144-mountain-seo-scrub";
+  window.__AMP_BUILD = "2145-seo-polish";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -3412,7 +3412,7 @@
   }
 
   var AMP_ORG_NAME = "Adaptive Medical Partners";
-  var AMP_ORG_URL = "https://adaptivemedicalpartners.com/";
+  var AMP_ORG_URL = "https://www.adaptivemedicalpartners.com/";
   var AMP_ORG_ID = AMP_ORG_URL + "#organization";
 
   function jobFieldText(value) {
@@ -3438,7 +3438,7 @@
   }
 
   function jobPostingDescription(j) {
-    var direct = firstJobField(j, ["description", "tease", "excerpt", "sub"]);
+    var direct = firstJobField(j, ["tease", "sub", "excerpt", "description"]);
     var parts = [];
     if (direct) parts.push(direct);
     if (j && j.bullets && j.bullets.length) {
@@ -3459,7 +3459,9 @@
     var url = firstJobField(j, ["url"]);
     if (url) return url;
     var slug = firstJobField(j, ["slug"]);
-    if (slug) return AMP_ORG_URL.replace(/\/$/, "") + "/job/" + slug;
+    var id = firstJobField(j, ["id"]);
+    var key = slug || id;
+    if (key) return AMP_ORG_URL.replace(/\/$/, "") + "/job/" + key;
     return "";
   }
 
@@ -3539,8 +3541,9 @@
     var spec = firstJobField(j, ["specialtyLabel", "specialty"]);
     if (spec) data.occupationalCategory = spec;
 
-    var city = firstJobField(j, ["city"]);
+    /* Region-level only when we have state; city only if a real baked field (never invent towns). */
     var region = firstJobField(j, ["stateAbbr", "state"]);
+    var city = firstJobField(j, ["city"]);
     if (city || region) {
       var address = { "@type": "PostalAddress" };
       if (city) address.addressLocality = city;
@@ -5712,7 +5715,8 @@ function syncGuideRoute(route) {
     about: {
       title: "About" + BRAND_SUFFIX,
       description: "About Adaptive Medical Partners — a physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
-      robots: "index,follow"
+      robots: "index,follow",
+      h1: "About Adaptive Medical Partners"
     },
     blog: {
       title: "Blog — Healthcare Recruiting Insights" + BRAND_SUFFIX,
@@ -5770,7 +5774,8 @@ function syncGuideRoute(route) {
     "mi-lite": {
       title: "Market Intelligence" + BRAND_SUFFIX,
       description: "Market Intelligence is Adaptive Medical Partners’ specialty × region market read — one snapshot for physicians and healthcare organizations.",
-      robots: "index,follow"
+      robots: "index,follow",
+      h1: "See the market before you choose a path."
     },
     physician: {
       title: "For Physicians" + BRAND_SUFFIX,
