@@ -334,7 +334,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/kentucky-cardiac-anesthesiology-aca-8368",
       slug: "kentucky-cardiac-anesthesiology-aca-8368",
@@ -361,7 +361,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/nevada-anesthesia-pain-management-apm-8271",
       slug: "nevada-anesthesia-pain-management-apm-8271",
@@ -388,7 +388,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/colorado-txt-cd-7069",
       slug: "colorado-txt-cd-7069",
@@ -415,7 +415,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/washington-dermatology-d-8244",
       slug: "washington-dermatology-d-8244",
@@ -442,7 +442,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/louisiana-dentist-dds-8391",
       slug: "louisiana-dentist-dds-8391",
@@ -469,7 +469,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-general-dentistry-dds-8418",
       slug: "texas-general-dentistry-dds-8418",
@@ -496,7 +496,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/kansas-emergency-medicine-em-8433",
       slug: "kansas-emergency-medicine-em-8433",
@@ -523,7 +523,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/georgia-endocrinology-end-8356",
       slug: "georgia-endocrinology-end-8356",
@@ -550,7 +550,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/washington-endocrinology-end-8359",
       slug: "washington-endocrinology-end-8359",
@@ -577,7 +577,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-family-medicine-fp8110",
       slug: "california-family-medicine-fp8110",
@@ -604,7 +604,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/washington-family-medicine-fp-8306",
       slug: "washington-family-medicine-fp-8306",
@@ -631,7 +631,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-family-practice-fp-8309",
       slug: "california-family-practice-fp-8309",
@@ -658,7 +658,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/michigan-family-medicine-fp-8429",
       slug: "michigan-family-medicine-fp-8429",
@@ -685,7 +685,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/midwest-family-medicine-fp-8450",
       slug: "midwest-family-medicine-fp-8450",
@@ -712,7 +712,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/oregon-family-medicine-obstetrics-fpob-8385",
       slug: "oregon-family-medicine-obstetrics-fpob-8385",
@@ -739,7 +739,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-family-medicine-ob-residency-program-director-fpob-8462",
       slug: "alabama-family-medicine-ob-residency-program-director-fpob-8462",
@@ -766,7 +766,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 8, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-gastroenterology-ge-8325",
       slug: "texas-gastroenterology-ge-8325",
@@ -793,7 +793,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/north-carolina-gastroenterology-ge-8409",
       slug: "north-carolina-gastroenterology-ge-8409",
@@ -820,7 +820,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-cardiology-hfc-8398",
       slug: "texas-cardiology-hfc-8398",
@@ -847,7 +847,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-hfc-8399",
       slug: "texas-interventional-cardiology-hfc-8399",
@@ -874,7 +874,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/indiana-hematology-oncology-ho-8194",
       slug: "indiana-hematology-oncology-ho-8194",
@@ -901,7 +901,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/kentucky-hematology-oncology-ho-8370",
       slug: "kentucky-hematology-oncology-ho-8370",
@@ -928,7 +928,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-interventional-cardiology-ivc-8349",
       slug: "alabama-interventional-cardiology-ivc-8349",
@@ -955,7 +955,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/kentucky-interventional-cardiology-ivc-8369",
       slug: "kentucky-interventional-cardiology-ivc-8369",
@@ -982,7 +982,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/new-mexico-cardiology-interventional-ivc-8397",
       slug: "new-mexico-cardiology-interventional-ivc-8397",
@@ -1009,7 +1009,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-ivc-8404",
       slug: "texas-interventional-cardiology-ivc-8404",
@@ -1036,7 +1036,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/midwest-licensed-clinical-social-worker-lcsw-8451",
       slug: "midwest-licensed-clinical-social-worker-lcsw-8451",
@@ -1063,7 +1063,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/oregon-medical-director-primary-care-physician-md-8459",
       slug: "oregon-medical-director-primary-care-physician-md-8459",
@@ -1090,7 +1090,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-mfm-8461",
       slug: "alabama-mfm-8461",
@@ -1117,7 +1117,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-neurology-n-8347",
       slug: "alabama-neurology-n-8347",
@@ -1144,7 +1144,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/georgia-neurology-n-8358",
       slug: "georgia-neurology-n-8358",
@@ -1171,7 +1171,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-neurology-n-8411",
       slug: "texas-neurology-n-8411",
@@ -1198,7 +1198,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8224",
       slug: "california-nurse-practitioner-np-8224",
@@ -1225,7 +1225,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8229",
       slug: "california-nurse-practitioner-np-8229",
@@ -1252,7 +1252,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8250",
       slug: "california-nurse-practitioner-np-8250",
@@ -1279,7 +1279,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/indiana-obstetrics-and-gynecology-obg-8180",
       slug: "indiana-obstetrics-and-gynecology-obg-8180",
@@ -1306,7 +1306,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/oklahoma-obstetrics-and-gynecology-obg-8316",
       slug: "oklahoma-obstetrics-and-gynecology-obg-8316",
@@ -1333,7 +1333,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/tennessee-obstetrics-and-gynecology-obg-8321",
       slug: "tennessee-obstetrics-and-gynecology-obg-8321",
@@ -1360,7 +1360,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-obstetrics-and-gynecology-obg-8422",
       slug: "alabama-obstetrics-and-gynecology-obg-8422",
@@ -1387,7 +1387,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/midwest-obstetrics-and-gynecology-obg-8449",
       slug: "midwest-obstetrics-and-gynecology-obg-8449",
@@ -1414,7 +1414,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/louisiana-optometry-od-8364",
       slug: "louisiana-optometry-od-8364",
@@ -1441,7 +1441,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/oregon-occupational-therapy",
       slug: "oregon-occupational-therapy",
@@ -1468,7 +1468,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 8, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/kentucky-otolaryngology-oto-8371",
       slug: "kentucky-otolaryngology-oto-8371",
@@ -1495,7 +1495,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 8, life: 8, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/arizona-psychiatry-p-8191",
       slug: "arizona-psychiatry-p-8191",
@@ -1522,7 +1522,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-physician-assistant-pa-8226",
       slug: "california-physician-assistant-pa-8226",
@@ -1549,7 +1549,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-pediatrics-pd-8403",
       slug: "texas-pediatrics-pd-8403",
@@ -1576,7 +1576,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/oregon-physical-therapy-pt-8387",
       slug: "oregon-physical-therapy-pt-8387",
@@ -1603,7 +1603,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-pulmonology-pud-8348",
       slug: "alabama-pulmonology-pud-8348",
@@ -1630,7 +1630,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/georgia-pulmonology-pud-8355",
       slug: "georgia-pulmonology-pud-8355",
@@ -1657,7 +1657,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/california-radiology-rad-8256",
       slug: "california-radiology-rad-8256",
@@ -1684,7 +1684,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/alabama-rheumatology-rhu-8345",
       slug: "alabama-rheumatology-rhu-8345",
@@ -1711,7 +1711,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/louisiana-rheumatology-rhu-8365",
       slug: "louisiana-rheumatology-rhu-8365",
@@ -1738,7 +1738,7 @@ window.AMP_CONTENT = {
         email: "nsmith@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-radiology-technician-rtech-8273",
       slug: "texas-radiology-technician-rtech-8273",
@@ -1765,7 +1765,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/arizona-rtech-radiology-technician-rtech8447",
       slug: "arizona-rtech-radiology-technician-rtech8447",
@@ -1792,7 +1792,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/oklahoma-speech-therapy-st-8313",
       slug: "oklahoma-speech-therapy-st-8313",
@@ -1819,7 +1819,7 @@ window.AMP_CONTENT = {
         email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-3.jpg",
+      hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/oregon-speech-language-pathology-st-8389",
       slug: "oregon-speech-language-pathology-st-8389",
@@ -1846,7 +1846,7 @@ window.AMP_CONTENT = {
         email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-1.jpg",
+      hero: "",
       summit: { practice: 8, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/georgia-urology-u-8357",
       slug: "georgia-urology-u-8357",
@@ -1873,7 +1873,7 @@ window.AMP_CONTENT = {
         email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
-      hero: "assets/mike-ridge-2.jpg",
+      hero: "",
       summit: { practice: 8, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-urology-u-8410",
       slug: "texas-urology-u-8410",
