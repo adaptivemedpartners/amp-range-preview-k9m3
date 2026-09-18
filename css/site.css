@@ -1,4 +1,4 @@
-/* amp-build:2134-home-ad-hero */
+/* amp-build:2135-home-polish */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
@@ -506,22 +506,10 @@ button, input, select, textarea { font: inherit; }
   max-width: 46ch;
   font-size: clamp(15px, 2.2vw, 18px);
   line-height: 1.45;
-  /* Letter shimmer (not an overlay box): gradient clipped to glyphs */
-  color: rgba(238,246,243,0.88);
-  background-image: linear-gradient(
-    100deg,
-    rgba(226,232,240,0.72) 0%,
-    rgba(226,232,240,0.72) 42%,
-    #ffffff 49%,
-    #78C4E5 51%,
-    rgba(226,232,240,0.72) 58%,
-    rgba(226,232,240,0.72) 100%
-  );
-  background-size: 220% 100%;
-  background-position: 100% 50%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* amp-build:2135 — static subline; no shimmer / gradient text animation */
+  color: rgba(238,246,243,0.92);
+  background-image: none;
+  -webkit-text-fill-color: rgba(238,246,243,0.92);
 }
 .explore-range-row {
   position: relative;
@@ -562,18 +550,15 @@ button, input, select, textarea { font: inherit; }
 }
 
 .home-stage.settled .explore-sub {
-  animation: exploreSubTextShimmer 2.6s ease-in-out 0.8s infinite;
+  /* amp-build:2135 — no text shimmer */
+  animation: none;
 }
 @keyframes exploreSubTextShimmer {
-  0% { background-position: 100% 50%; }
-  100% { background-position: -120% 50%; }
+  0%, 100% { background-position: 0 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .home-stage.settled .explore-sub {
     animation: none;
-    color: rgba(238,246,243,0.9);
-    background-image: none;
-    -webkit-text-fill-color: rgba(238,246,243,0.9);
   }
 }
 .story-chips {
@@ -1497,15 +1482,22 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 /* ——— HOME: 2 heroes + subtle extras ——— */
 .home-proof-subtle {
   justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
-  opacity: 0.72;
+  gap: 10px;
+  margin-top: 10px;
+  opacity: 0.92;
 }
 .home-proof-subtle .proof-chip {
-  font-size: 11px;
-  padding: 5px 10px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
+  /* amp-build:2135 — larger homepage proof pills */
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(153,246,228,0.28);
+}
+.home-proof-subtle .proof-chip strong {
+  font-size: 15px;
+  font-weight: 800;
+  margin-right: 5px;
 }
 .doors-hero {
   display: grid;
@@ -1947,8 +1939,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
     width: 100%;
   }
   .home-proof-subtle .proof-chip {
-    font-size: 9.5px;
-    padding: 4px 6px;
+    font-size: 11.5px;
+    padding: 7px 9px;
     white-space: nowrap;
     flex: 0 1 auto;
   }
@@ -1980,8 +1972,8 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
     gap: 3px;
   }
   .home-proof-subtle .proof-chip {
-    font-size: 9px;
-    padding: 3px 5px;
+    font-size: 11px;
+    padding: 6px 8px;
     white-space: nowrap;
   }
   .home-proof-subtle .proof-chip strong { margin-right: 2px; }
@@ -8272,7 +8264,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2134");
+    url("../assets/home-hero-clinic-consult.jpg?v=2135");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -8320,23 +8312,22 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   box-shadow: inset 0 0 0 1px rgba(120, 196, 229, 0.22);
 }
 
-/* Job2 accent panels instead of mountain photos */
+/* amp-build:2135 — Job2 story photos (provider / boardroom) */
 .home-job2-panel {
   display: block;
   width: 100%;
   height: 180px;
-  background:
-    linear-gradient(135deg, #152332 0%, #1e4a5c 50%, #152332 100%);
+  object-fit: cover;
+  object-position: center;
+  background: #152332;
 }
 .home-job2-panel-candidate {
   background:
-    linear-gradient(120deg, #152332 0%, #1a4d45 45%, #78C4E5 160%);
-  background-size: 140% 140%;
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2135");
 }
 .home-job2-panel-client {
   background:
-    linear-gradient(120deg, #152332 0%, #1a3f5c 40%, #6BE0AD 160%);
-  background-size: 140% 140%;
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2135");
 }
 @media (max-width: 640px) {
   .home-job2-panel { height: 160px; }
@@ -8414,7 +8405,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 
-/* ========== amp-build:2134-home-ad-hero — soft A+D clinic hero + MI under doors ========== */
+/* ========== amp-build:2135-home-polish — MI banner, proof pills, story photos, no shimmer ========== */
 /* Hero photo is BACKGROUND only (half-blur clinic/consult); copy + doors carry the page */
 .home-stage.no-mountain-hero .explore-block-ad,
 .explore-block-ad {
@@ -8491,20 +8482,24 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 .home-mi-banner {
+  /* amp-build:2135 — Market Intelligence banner more prominent under path cards */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 18px;
   width: min(880px, 100%);
-  margin: 16px auto 8px;
-  padding: 16px 18px;
-  border-radius: 14px;
+  margin: 22px auto 12px;
+  padding: 22px 24px;
+  border-radius: 16px;
   text-decoration: none;
   color: #fff;
-  background: linear-gradient(90deg, #152332 0%, #1c3a4f 100%);
-  border: 1px solid rgba(120, 196, 229, 0.35);
-  box-shadow: 0 10px 28px rgba(8, 14, 22, 0.35);
-  transition: border-color .18s ease, box-shadow .18s ease;
+  background: linear-gradient(100deg, #0f1c2a 0%, #163a52 55%, #1a4d45 100%);
+  border: 2px solid rgba(120, 196, 229, 0.55);
+  box-shadow:
+    0 16px 40px rgba(8, 14, 22, 0.45),
+    0 0 0 1px rgba(107, 224, 173, 0.12) inset,
+    0 0 36px rgba(120, 196, 229, 0.22);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
   opacity: 0;
   transform: translateY(14px);
 }
@@ -8515,32 +8510,41 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-mi-banner:hover,
 .home-mi-banner:focus-visible {
-  border-color: rgba(120, 196, 229, 0.7);
-  box-shadow: 0 14px 34px rgba(8, 14, 22, 0.42), 0 0 0 1px rgba(107, 224, 173, 0.18);
+  border-color: rgba(120, 196, 229, 0.9);
+  box-shadow:
+    0 18px 48px rgba(8, 14, 22, 0.5),
+    0 0 0 1px rgba(107, 224, 173, 0.28) inset,
+    0 0 48px rgba(120, 196, 229, 0.35);
   outline: none;
 }
 .home-mi-banner-copy {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
   min-width: 0;
 }
 .home-mi-banner-title {
-  font-weight: 700;
-  font-size: 1.02rem;
-  letter-spacing: -.01em;
+  font-weight: 820;
+  font-size: 1.28rem;
+  letter-spacing: -.02em;
+  text-shadow: 0 0 18px rgba(120, 196, 229, 0.25);
 }
 .home-mi-banner-desc {
-  font-size: .82rem;
-  color: #b7cdd9;
-  line-height: 1.35;
+  font-size: .92rem;
+  color: #cfe3ee;
+  line-height: 1.4;
+  font-weight: 560;
 }
 .home-mi-banner-go {
   flex: 0 0 auto;
-  font-size: .8rem;
-  font-weight: 700;
+  font-size: .95rem;
+  font-weight: 780;
   color: #78C4E5;
   white-space: nowrap;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(120, 196, 229, 0.12);
+  border: 1px solid rgba(120, 196, 229, 0.35);
 }
 .home-proof-stack {
   width: min(880px, 100%);
@@ -8577,10 +8581,10 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     width: 100%;
   }
   .home-mi-banner {
-    margin-top: 14px;
-    padding: 14px 14px;
+    margin-top: 18px;
+    padding: 18px 18px;
   }
-  .home-mi-banner-title { font-size: .95rem; }
+  .home-mi-banner-title { font-size: 1.12rem; }
   .home-pro-bg {
     background-position: center, center, 62% center;
   }
