@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2145-seo-polish";
+  window.__AMP_BUILD = "2146-mi-hub-faq";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -5772,8 +5772,8 @@ function syncGuideRoute(route) {
       h1: "Easy Pay Authorization"
     },
     "mi-lite": {
-      title: "Market Intelligence" + BRAND_SUFFIX,
-      description: "Market Intelligence is Adaptive Medical Partners’ specialty × region market read — one snapshot for physicians and healthcare organizations.",
+      title: "Market Intelligence — Specialty × State Market Read" + BRAND_SUFFIX,
+      description: "Market Intelligence from Adaptive Medical Partners: specialty × state market depth before a search. Public proof — 87% retention at 3 years, 1.7 interviews per hire, 700+ rural/FQHC/CAH partners, 16 years since 2010. Canonical hub for hiring orgs and physician guides.",
       robots: "index,follow",
       h1: "See the market before you choose a path."
     },
