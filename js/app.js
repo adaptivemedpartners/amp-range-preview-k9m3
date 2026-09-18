@@ -4345,10 +4345,28 @@
     };
   }
 
+  /* amp-build:2136 — Pages preview bake: never hang on live handoff */
+  function isAmpPagesPreviewBake() {
+    try {
+      var h = String(location.hostname || "");
+      var p = String(location.pathname || "");
+      if (window.__AMP_PREVIEW_MOCK_SUCCESS === true) return true;
+      if (window.__AMP_PREVIEW_MOCK_SUCCESS === false) return false;
+      return h.indexOf("github.io") !== -1 || p.indexOf("amp-range-preview") !== -1;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function postLeadHandoff(payload, opts) {
     persistSpaLead(payload, opts);
-    var url = conciergeHandoffUrl();
     console.log("[AMP forms] Handoff lead captured:", payload);
+    /* Preview: mock-success immediately — client meeting + Tap-to-Talk must not stick on Sending… */
+    if (isAmpPagesPreviewBake()) {
+      console.log("[AMP forms] Preview mock-success — skip network handoff");
+      return Promise.resolve({ ok: true, stub: true, previewMock: true, persisted: true });
+    }
+    var url = conciergeHandoffUrl();
     if (!url) return Promise.resolve({ ok: false, stub: true, persisted: true });
     return fetch(url, {
       method: "POST",

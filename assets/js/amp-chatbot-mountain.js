@@ -693,6 +693,16 @@
     persistLead(payload);
     var storeKey = payload.audience === "client" ? "amp_chatbot_client_leads" : "amp_chatbot_leads";
     console.log("[AMP Chatbot] Handoff lead captured. Saved to localStorage key " + storeKey + ":", payload);
+    /* amp-build:2136 — Pages preview bake: mock-success, no live send hang */
+    try {
+      var _h = String(location.hostname || "");
+      var _p = String(location.pathname || "");
+      if (window.__AMP_PREVIEW_MOCK_SUCCESS !== false &&
+          (_h.indexOf("github.io") !== -1 || _p.indexOf("amp-range-preview") !== -1 || window.__AMP_PREVIEW_MOCK_SUCCESS === true)) {
+        console.log("[AMP chatbot] Preview mock-success — skip network handoff");
+        return Promise.resolve({ ok: true, stub: true, previewMock: true, persisted: true });
+      }
+    } catch (ePrev) {}
     if (!handoffUrl) {
       return Promise.resolve({ ok: false, stub: true, persisted: true });
     }
