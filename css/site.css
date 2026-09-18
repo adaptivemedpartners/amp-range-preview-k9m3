@@ -8628,8 +8628,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .home-mi-banner-title { font-size: 1.12rem; }
   .home-pro-bg {
-    /* Nudge photo left so both desk faces stay inside the phone crop */
-    background-position: center, center, 72% center;
+    /* Tall-phone cover crop is ~26% of the 1280w photo; 86% keeps both desk faces in frame */
+    background-position: center, center, 86% center;
   }
 }
 @media (max-width: 480px) {
@@ -8719,26 +8719,26 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view[data-route="physician-rank"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.48) 0%, rgba(21, 35, 50, 0.22) 46%, rgba(21, 35, 50, 0.14) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.12) 0%, rgba(21, 35, 50, 0.06) 48%, rgba(21, 35, 50, 0.40) 100%),
     url("../assets/amp-path-cand-rank-countryside.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
+  filter: blur(0.4px);
   transform: scale(1.02);
   transform-origin: center center;
 }
 .view[data-route="client-region"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.52) 0%, rgba(21, 35, 50, 0.26) 44%, rgba(21, 35, 50, 0.16) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.14) 0%, rgba(21, 35, 50, 0.08) 46%, rgba(21, 35, 50, 0.42) 100%),
     url("../assets/amp-path-client-step4-boardroom.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
+  filter: blur(0.4px);
   transform: scale(1.02);
   transform-origin: center center;
 }
@@ -8746,28 +8746,21 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view[data-route="confirm-client"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.50) 0%, rgba(21, 35, 50, 0.24) 44%, rgba(21, 35, 50, 0.14) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.12) 0%, rgba(21, 35, 50, 0.06) 48%, rgba(21, 35, 50, 0.40) 100%),
     url("../assets/amp-path-client-step5-desk.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, 42% center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
+  filter: blur(0.4px);
   transform: scale(1.02);
   transform-origin: center center;
 }
-.view[data-route="physician-rank"] .hero-band .bg.pro-bg,
-.view[data-route="client-region"] .hero-band .bg.pro-bg,
-.view[data-route="client-meeting"] .hero-band .bg.pro-bg,
-.view[data-route="confirm-client"] .hero-band .bg.pro-bg {
-  background:
-    linear-gradient(135deg, rgba(21, 35, 50, 0.55) 0%, rgba(21, 35, 50, 0.35) 55%, rgba(21, 35, 50, 0.50) 100%) !important;
-}
-.view[data-route="physician-rank"] .hero-band .veil,
-.view[data-route="client-region"] .hero-band .veil,
-.view[data-route="client-meeting"] .hero-band .veil,
-.view[data-route="confirm-client"] .hero-band .veil {
-  background: linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.58) 100%) !important;
+.view.funnel[data-route="physician-rank"] .hero-band,
+.view.funnel[data-route="client-region"] .hero-band,
+.view.funnel[data-route="client-meeting"] .hero-band,
+.view.funnel[data-route="confirm-client"] .hero-band {
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.22) 0%, rgba(21, 35, 50, 0.12) 55%, rgba(21, 35, 50, 0.32) 100%);
 }
 
 /* Story cards — CSS smoky: blur + ~40% navy veil (no Desktop *-smoky.jpg) */
