@@ -1,4 +1,4 @@
-/* amp-build:2136-path-theme-bgs */
+/* amp-build:2137-path-step-polish */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
@@ -8036,34 +8036,66 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 
 .explore-sub { max-width: 54ch; }
 
+.path-step,
 .client-step {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 5;
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 12px;
-  margin: 0 0 10px;
+  align-items: center;
+  gap: 0;
+  margin: 0;
   font-size: 13px;
   font-weight: 650;
   letter-spacing: 0.02em;
-  color: rgba(226,232,240,0.88);
+  color: #0f172a;
+  pointer-events: none;
 }
+.path-step-kicker,
 .client-step-kicker {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
+  padding: 7px 13px;
   border-radius: 999px;
-  font-size: 11px;
-  font-weight: 780;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #042f2e;
-  background: linear-gradient(135deg, #5eead4, #2dd4bf);
+  color: #ecfeff;
+  background: #152332;
+  border: 1px solid rgba(94, 234, 212, 0.55);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
+}
+.path-step-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .client-step-on-hero {
-  justify-content: center;
-  color: rgba(226,232,240,0.92);
+  position: absolute;
+  justify-content: flex-end;
+  color: #0f172a;
 }
-.hire-sheet .client-step { margin-bottom: 12px; }
+.hire-sheet,
+.funnel-panel:has(> .path-step),
+.funnel-panel:has(> .client-step) {
+  position: relative;
+}
+.hire-sheet:has(> .path-step),
+.hire-sheet:has(> .client-step),
+.funnel-panel:has(> .path-step),
+.funnel-panel:has(> .client-step) {
+  padding-top: 48px;
+}
+.hire-sheet .client-step,
+.hire-sheet .path-step { margin: 0; }
 
 .client-ridge-cta {
   display: flex;
@@ -8713,6 +8745,106 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (max-width: 640px) {
   .home-job2-card::before { height: 160px; }
   .home-job2-photo { filter: blur(2px) saturate(0.92) brightness(0.88); }
+}
+
+/* ========== amp-build:2137-path-step-polish — badge on card + new smoky plates ========== */
+.view[data-route="physician-rank"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    url("../assets/amp-path-cand-rank-countryside.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="client-region"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    url("../assets/amp-path-client-step4-boardroom.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="client-meeting"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    url("../assets/amp-path-client-step5-desk.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+/* Opportunities list + post-submit confirm stay navy-only (no photo plate) */
+.view[data-route="physician-jobs"] > .shot .pro-still,
+.view[data-route="confirm-client"] > .shot .pro-still {
+  background-image: none;
+  filter: none;
+  transform: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120, 196, 229, 0.18), transparent 55%),
+    linear-gradient(165deg, #152332 0%, #1a3348 50%, #152332 100%);
+}
+.view[data-route="physician-rank"] > .shot,
+.view[data-route="client-region"] > .shot,
+.view[data-route="client-meeting"] > .shot {
+  overflow: hidden;
+}
+.view[data-route="physician-rank"] .hero-band,
+.view[data-route="client-region"] .hero-band,
+.view[data-route="client-meeting"] .hero-band {
+  background:
+    linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.58) 100%) !important;
+}
+
+/* Path-step badge: top-right of the white card, not the dark hero */
+.hire-sheet.funnel-panel:has(> .path-step),
+.hire-sheet.funnel-panel:has(> .client-step),
+.view.funnel.trailhead .hire-sheet.funnel-panel:has(> .path-step),
+.view.funnel.client-spec-sheet .hire-sheet.funnel-panel:has(> .client-step) {
+  position: relative;
+  padding-top: 52px !important;
+}
+.view[data-route="client-region"] .funnel-panel.client-combined-stage {
+  position: relative;
+  padding-top: 52px;
+}
+.view[data-route="client-meeting"] .funnel-panel.client-meeting-card,
+.view[data-route="client-meeting"] .section-lite.funnel-panel {
+  position: relative;
+  padding-top: 52px;
+}
+.rank-panel.funnel-panel:has(> .path-step) {
+  position: relative;
+  padding-top: 52px !important;
+}
+@media (max-width: 640px) {
+  .hire-sheet.funnel-panel:has(> .path-step),
+  .hire-sheet.funnel-panel:has(> .client-step) {
+    padding-top: 46px !important;
+  }
+  .path-step,
+  .client-step {
+    top: 8px;
+    right: 8px;
+  }
+  .path-step-kicker,
+  .client-step-kicker {
+    padding: 6px 11px;
+    font-size: 11px;
+  }
 }
 
 /* ========== amp-build:2136 — AMP logo crisp (Mike + Randy lock): no glow/bloom ========== */
