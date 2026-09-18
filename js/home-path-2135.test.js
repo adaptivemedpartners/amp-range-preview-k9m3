@@ -87,8 +87,8 @@ assert(css.indexOf("exploreSubTextShimmer") === -1, "css still animates explore-
 assert(/\.explore-sub \{[\s\S]{0,280}animation:\s*none/.test(css) || /\.explore-sub \{[\s\S]{0,280}background-image:\s*none/.test(css), "explore-sub not static");
 assert(css.indexOf("min-height: 0 !important") !== -1, "compact door min-height lock missing");
 assert(/\.home-stage\.no-mountain-hero \.door-hero \{[\s\S]{0,180}min-height:\s*0 !important/.test(css), "door compact sizing changed");
-assert(/\.home-mi-banner-title \{[\s\S]{0,80}font-size:\s*1\.38rem/.test(css), "MI title not enlarged");
-assert(/\.home-proof-stack \.proof-chip,[\s\S]{0,80}\.home-proof-subtle \.proof-chip \{[\s\S]{0,80}font-size:\s*15px/.test(css), "proof pills not enlarged");
+assert(/\.home-mi-banner-title \{[\s\S]{0,80}font-size:\s*1\.55rem/.test(css), "MI title not enlarged");
+assert(/\.home-proof-stack \.proof-chip,[\s\S]{0,80}\.home-proof-subtle \.proof-chip \{[\s\S]{0,80}font-size:\s*16\.5px/.test(css), "proof pills not enlarged");
 assert(css.indexOf("story-provider") === -1 || true, "css ok");
 assert(css.indexOf(".home-job2-photo-facility") !== -1, "facility photo crop class missing");
 

@@ -8580,44 +8580,44 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 /* MI banner: more visual weight under path doors — same href=/ridge + data-go=mi-lite */
 .home-mi-banner {
   position: relative;
-  margin: 22px auto 10px;
-  padding: 22px 26px;
-  border-radius: 16px;
+  margin: 24px auto 12px;
+  padding: 26px 28px 26px 30px;
+  border-radius: 18px;
   background:
     linear-gradient(105deg, #0f2433 0%, #1a4a62 52%, #163848 100%);
-  border: 2px solid rgba(120, 196, 229, 0.58);
+  border: 2px solid rgba(120, 196, 229, 0.7);
   box-shadow:
-    0 18px 44px rgba(8, 14, 22, 0.48),
-    0 0 0 1px rgba(107, 224, 173, 0.22),
-    0 0 42px rgba(120, 196, 229, 0.16);
+    0 20px 48px rgba(8, 14, 22, 0.52),
+    0 0 0 1px rgba(107, 224, 173, 0.28),
+    0 0 52px rgba(120, 196, 229, 0.2);
 }
 .home-mi-banner::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 10px;
-  bottom: 10px;
-  width: 5px;
-  border-radius: 0 6px 6px 0;
+  top: 12px;
+  bottom: 12px;
+  width: 7px;
+  border-radius: 0 7px 7px 0;
   background: linear-gradient(180deg, #6BE0AD, #78C4E5);
 }
-.home-mi-banner-copy { gap: 5px; padding-left: 8px; }
+.home-mi-banner-copy { gap: 6px; padding-left: 10px; }
 .home-mi-banner-title {
-  font-size: 1.38rem;
-  font-weight: 780;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
 }
 .home-mi-banner-desc {
-  font-size: 0.98rem;
+  font-size: 1.02rem;
   color: #d5e6ef;
 }
 .home-mi-banner-go {
-  font-size: 0.98rem;
-  padding: 11px 16px;
+  font-size: 1.02rem;
+  padding: 12px 18px;
   border-radius: 999px;
-  background: rgba(120, 196, 229, 0.18);
-  border: 1px solid rgba(120, 196, 229, 0.45);
+  background: rgba(120, 196, 229, 0.2);
+  border: 1px solid rgba(120, 196, 229, 0.5);
   color: #e8f6fc;
 }
 .home-mi-banner:hover .home-mi-banner-go,
@@ -8631,23 +8631,23 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .home-proof-stack .home-proof,
 .home-proof-subtle {
   opacity: 1;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .home-proof-stack .proof-chip,
 .home-proof-subtle .proof-chip {
-  font-size: 15px;
+  font-size: 16.5px;
   font-weight: 680;
-  padding: 10px 16px;
-  background: rgba(15, 23, 42, 0.68);
-  border: 1px solid rgba(120, 196, 229, 0.38);
-  color: #f1f5f9;
+  padding: 12px 18px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(120, 196, 229, 0.42);
+  color: #f8fafc;
 }
 .home-proof-stack .proof-chip strong,
 .home-proof-subtle .proof-chip strong {
-  font-size: 17px;
-  font-weight: 800;
-  margin-right: 6px;
+  font-size: 20px;
+  font-weight: 820;
+  margin-right: 7px;
   color: #99f6e4;
 }
 
@@ -8663,17 +8663,17 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 @media (max-width: 720px) {
   .home-mi-banner {
     margin-top: 18px;
-    padding: 18px 18px 18px 20px;
+    padding: 20px 18px 20px 22px;
   }
-  .home-mi-banner-title { font-size: 1.18rem; }
-  .home-mi-banner-desc { font-size: 0.9rem; }
+  .home-mi-banner-title { font-size: 1.28rem; }
+  .home-mi-banner-desc { font-size: 0.95rem; }
   .home-proof-stack .proof-chip,
   .home-proof-subtle .proof-chip {
-    font-size: 13.5px;
-    padding: 9px 13px;
+    font-size: 14.5px;
+    padding: 10px 14px;
   }
   .home-proof-stack .proof-chip strong,
-  .home-proof-subtle .proof-chip strong { font-size: 15.5px; }
+  .home-proof-subtle .proof-chip strong { font-size: 17px; }
   .home-job2-photo { height: 190px; }
 }
 @media (max-width: 480px) {
@@ -8682,7 +8682,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     align-items: flex-start;
     padding: 18px 16px 16px 18px;
   }
-  .home-mi-banner-title { font-size: 1.12rem; }
+  .home-mi-banner-title { font-size: 1.18rem; }
   .home-proof-stack .home-proof,
   .home-proof-subtle {
     flex-wrap: wrap;
@@ -8690,10 +8690,10 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .home-proof-stack .proof-chip,
   .home-proof-subtle .proof-chip {
-    font-size: 12.5px;
-    padding: 8px 11px;
+    font-size: 13.5px;
+    padding: 9px 12px;
     white-space: nowrap;
   }
   .home-proof-stack .proof-chip strong,
-  .home-proof-subtle .proof-chip strong { font-size: 14px; }
+  .home-proof-subtle .proof-chip strong { font-size: 16px; }
 }
