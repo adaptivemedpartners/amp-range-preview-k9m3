@@ -1,3 +1,4 @@
+/* amp-build:2134-home-ad-hero */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
@@ -8267,10 +8268,14 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   height: var(--home-bg-vh, 100vh);
   z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(120, 196, 229, 0.22), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 85% 30%, rgba(107, 224, 173, 0.12), transparent 50%),
-    linear-gradient(165deg, #152332 0%, #1a3348 42%, #152332 100%);
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
+    url("../assets/home-hero-clinic-consult.jpg?v=2134");
+  background-size: cover, cover, cover;
+  background-position: center, center, center right;
+  background-repeat: no-repeat;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
@@ -8285,7 +8290,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-mist {
   background:
-    linear-gradient(180deg, rgba(21, 35, 50, 0.15) 0%, rgba(21, 35, 50, 0.05) 40%, rgba(21, 35, 50, 0.55) 78%, rgba(21, 35, 50, 0.92) 100%) !important;
+    linear-gradient(180deg, rgba(21, 35, 50, 0.08) 0%, rgba(21, 35, 50, 0.02) 38%, rgba(21, 35, 50, 0.45) 76%, rgba(21, 35, 50, 0.88) 100%) !important;
 }
 .home-stage.on .home-mist {
   /* keep fixed mist over pro bg */
@@ -8406,4 +8411,183 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   position: absolute;
   left: 14px;
   bottom: 14px;
+}
+
+
+/* ========== amp-build:2134-home-ad-hero — soft A+D clinic hero + MI under doors ========== */
+/* Hero photo is BACKGROUND only (half-blur clinic/consult); copy + doors carry the page */
+.home-stage.no-mountain-hero .explore-block-ad,
+.explore-block-ad {
+  text-align: left;
+  align-self: center;
+  width: min(880px, 100%);
+  max-width: 880px;
+  margin: 0 auto 8px;
+  padding-left: 0;
+}
+.explore-block-ad .explore-kicker {
+  color: #6BE0AD;
+}
+.explore-block-ad .explore-kicker::before,
+.explore-block-ad .explore-kicker::after {
+  background: linear-gradient(90deg, transparent, #6BE0AD);
+}
+.explore-block-ad .explore-title {
+  font-size: clamp(28px, 4.6vw, 46px);
+  line-height: 1.12;
+  max-width: 18ch;
+}
+.explore-block-ad .explore-sub {
+  display: block;
+  margin-left: 0;
+  max-width: 38ch;
+  text-align: left;
+  color: rgba(232, 238, 242, 0.92);
+}
+.home-stage.no-mountain-hero .explore-range-row {
+  align-self: center;
+  width: min(880px, 100%);
+  justify-content: flex-start;
+}
+
+/* Compact equal-height path cards — bottom sits just under CTAs (no dead space) */
+.home-stage.no-mountain-hero .doors-hero {
+  align-items: stretch;
+  width: min(880px, 100%);
+}
+.home-stage.no-mountain-hero .door-hero {
+  min-height: 0 !important;
+  height: auto;
+  padding: 20px 22px 18px !important;
+  justify-content: flex-start;
+  gap: 0;
+}
+.home-stage.no-mountain-hero .door-hero .door-top {
+  margin-bottom: 10px;
+}
+.home-stage.no-mountain-hero .door-hero .door-story {
+  margin: 0 0 8px;
+}
+.home-stage.no-mountain-hero .door-hero .door-line {
+  margin: 0 0 0 auto !important; /* kill legacy margin-bottom:auto dead space */
+  flex: 0 1 auto;
+}
+.home-stage.no-mountain-hero .door-hero .door-cta {
+  /* pin CTA to card bottom when grid equalizes heights — no empty pad under buttons */
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  align-self: flex-end;
+  padding-top: 14px; /* breathing room above CTA without growing card below */
+}
+@media (max-width: 640px) {
+  .home-stage.no-mountain-hero .door-hero {
+    padding: 16px 16px 14px !important;
+  }
+  .home-stage.no-mountain-hero .door-hero .door-cta {
+    margin-top: 12px !important;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.home-mi-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: min(880px, 100%);
+  margin: 16px auto 8px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(90deg, #152332 0%, #1c3a4f 100%);
+  border: 1px solid rgba(120, 196, 229, 0.35);
+  box-shadow: 0 10px 28px rgba(8, 14, 22, 0.35);
+  transition: border-color .18s ease, box-shadow .18s ease;
+  opacity: 0;
+  transform: translateY(14px);
+}
+.home-stage.settled .home-mi-banner {
+  opacity: 1;
+  transform: none;
+  transition: opacity .85s cubic-bezier(.22,.61,.36,1) .28s, transform .85s cubic-bezier(.22,.61,.36,1) .28s, border-color .18s ease, box-shadow .18s ease;
+}
+.home-mi-banner:hover,
+.home-mi-banner:focus-visible {
+  border-color: rgba(120, 196, 229, 0.7);
+  box-shadow: 0 14px 34px rgba(8, 14, 22, 0.42), 0 0 0 1px rgba(107, 224, 173, 0.18);
+  outline: none;
+}
+.home-mi-banner-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.home-mi-banner-title {
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: -.01em;
+}
+.home-mi-banner-desc {
+  font-size: .82rem;
+  color: #b7cdd9;
+  line-height: 1.35;
+}
+.home-mi-banner-go {
+  flex: 0 0 auto;
+  font-size: .8rem;
+  font-weight: 700;
+  color: #78C4E5;
+  white-space: nowrap;
+}
+.home-proof-stack {
+  width: min(880px, 100%);
+  margin: 10px auto 0;
+  display: grid;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(12px);
+}
+.home-stage.settled .home-proof-stack {
+  opacity: 1;
+  transform: none;
+  transition: opacity .85s cubic-bezier(.22,.61,.36,1) .36s, transform .85s cubic-bezier(.22,.61,.36,1) .36s;
+}
+.home-proof-stack .home-proof {
+  justify-content: flex-start;
+  margin: 0;
+}
+.home-proof-stack .home-partners {
+  margin-top: 0;
+  padding-top: 4px;
+}
+@media (max-width: 720px) {
+  .explore-block-ad {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto 6px;
+  }
+  .explore-block-ad .explore-title {
+    max-width: none;
+    font-size: clamp(26px, 7.2vw, 36px);
+  }
+  .home-stage.no-mountain-hero .explore-range-row {
+    width: 100%;
+  }
+  .home-mi-banner {
+    margin-top: 14px;
+    padding: 14px 14px;
+  }
+  .home-mi-banner-title { font-size: .95rem; }
+  .home-pro-bg {
+    background-position: center, center, 62% center;
+  }
+}
+@media (max-width: 480px) {
+  .home-mi-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
