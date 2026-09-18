@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2142-engagement-pass";
+  window.__AMP_BUILD = "2143-market-intelligence-url";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -5553,7 +5553,7 @@ function syncGuideRoute(route) {
        live Webflow handler (no Mess/localStorage banking, no fake success).
        /job/{slug}               → job/{slug}
        /blog-posts/{slug}        → blog/{slug}
-       /ridge                    → mi-lite   (/mi-lite aliases here)
+       /market-intelligence      → mi-lite   (/ridge, /mi-lite alias → rewrite here)
      Other SPA views use /{data-route}. Old #hash links still boot, then upgrade to path.
   */
   var GH_PAGES_BASE = "/amp-range-preview-k9m3";
@@ -5573,8 +5573,18 @@ function syncGuideRoute(route) {
     "candidate-authorization": "form-candidate-authorization",
     "interview-expense-form": "form-interview-expense",
     "easy-pay-authorization": "form-easy-pay",
+    "market-intelligence": "mi-lite",
+    "market-intelligence/login": "mi-lite-login",
+    "market-intelligence/portal": "mi-lite-portal",
+    "market-intelligence/app": "mi-lite-app",
     "ridge": "mi-lite",
+    "ridge/login": "mi-lite-login",
+    "ridge/portal": "mi-lite-portal",
+    "ridge/app": "mi-lite-app",
     "mi-lite": "mi-lite",
+    "mi-lite-login": "mi-lite-login",
+    "mi-lite-portal": "mi-lite-portal",
+    "mi-lite-app": "mi-lite-app",
     "why-amp": "education",
     "client-retained": "client-region"
   };
@@ -5591,7 +5601,10 @@ function syncGuideRoute(route) {
     "form-candidate-authorization": "/candidate-authorization",
     "form-interview-expense": "/interview-expense-form",
     "form-easy-pay": "/easy-pay-authorization",
-    "mi-lite": "/ridge"
+    "mi-lite": "/market-intelligence",
+    "mi-lite-login": "/market-intelligence/login",
+    "mi-lite-portal": "/market-intelligence/portal",
+    "mi-lite-app": "/market-intelligence/app"
   };
 
   function detectBasePath() {
@@ -5611,6 +5624,9 @@ function syncGuideRoute(route) {
   function normalizeRouteAlias(key) {
     if (key === "residents-fellows") return "residents";
     if (key === "market-intelligence" || key === "mi" || key === "ridge") return "mi-lite";
+    if (key === "market-intelligence/login" || key === "ridge/login" || key === "mi-lite-login") return "mi-lite-login";
+    if (key === "market-intelligence/portal" || key === "ridge/portal" || key === "mi-lite-portal") return "mi-lite-portal";
+    if (key === "market-intelligence/app" || key === "ridge/app" || key === "mi-lite-app") return "mi-lite-app";
     if (key === "why-amp") return "education";
     if (key === "client-retained") return "client-region";
     return key;
@@ -6071,7 +6087,7 @@ function syncGuideRoute(route) {
       go("home", nav);
       key = "home";
     }
-    /* Upgrade legacy #hash and aliases (/mi-lite → /ridge) to the canonical pathname. */
+    /* Upgrade legacy #hash and aliases (/ridge, /mi-lite → /market-intelligence) to the canonical pathname. */
     if (location.protocol !== "file:") {
       if (location.hash) {
         try { setRouteHash(key, { replace: true }); } catch (e2) {}
