@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2136-path-theme-bgs";
+  window.__AMP_BUILD = "2137-walkthrough-polish";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -4345,7 +4345,7 @@
     };
   }
 
-  /* amp-build:2136 — Pages preview bake: never hang on live handoff */
+  /* amp-build:2137 — Pages preview bake: never hang on live handoff */
   function isAmpPagesPreviewBake() {
     try {
       var h = String(location.hostname || "");
