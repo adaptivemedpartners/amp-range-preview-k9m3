@@ -26,11 +26,11 @@
   };
 
   var SKUS = {
-    state: { sku: "ridge_state", kind: "subscription", plan: "state", amount: 99, label: "Ridge State · $99/mo" },
-    region: { sku: "ridge_region", kind: "subscription", plan: "region", amount: 149, label: "Ridge Region · $149/mo" },
-    national: { sku: "ridge_national", kind: "subscription", plan: "national", amount: 225, label: "Ridge National · $225/mo" },
-    extra_poll: { sku: "ridge_extra_poll", kind: "one_time", amount: 9, label: "Ridge Extra Poll · $9" },
-    oneoff: { sku: "ridge_oneoff", kind: "one_time", amount: 49, label: "Ridge One-off Report · $49" }
+    state: { sku: "ridge_state", kind: "subscription", plan: "state", amount: 99, label: "Market Intelligence State · $99/mo" },
+    region: { sku: "ridge_region", kind: "subscription", plan: "region", amount: 149, label: "Market Intelligence Region · $149/mo" },
+    national: { sku: "ridge_national", kind: "subscription", plan: "national", amount: 225, label: "Market Intelligence National · $225/mo" },
+    extra_poll: { sku: "ridge_extra_poll", kind: "one_time", amount: 9, label: "Market Intelligence Extra Poll · $9" },
+    oneoff: { sku: "ridge_oneoff", kind: "one_time", amount: 49, label: "Market Intelligence One-off Report · $49" }
   };
 
   var REGIONS = {

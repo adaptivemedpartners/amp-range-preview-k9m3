@@ -946,7 +946,7 @@
     { abbr: "WV", name: "West Virginia" }, { abbr: "WI", name: "Wisconsin" }, { abbr: "WY", name: "Wyoming" }
   ];
 
-  /* EXAMPLE purchase regions for Ridge packages — refine later OK */
+  /* EXAMPLE purchase regions for Market Intelligence packages — refine later OK */
   var RIDGE_PURCHASE_REGIONS = {
     west: { label: "West", states: ["WA", "OR", "CA", "NV", "AK", "HI", "ID", "MT", "WY", "UT", "CO"] },
     southwest: { label: "Southwest", states: ["AZ", "NM", "TX", "OK"] },
@@ -1120,7 +1120,7 @@
           AMPRidgeWorkbench.refresh();
         }
       } catch (err) {
-        console.warn("Ridge workbench", err);
+        console.warn("Market Intelligence workbench", err);
       }
     }
   }
@@ -1238,7 +1238,7 @@
   function renderRidgeAccessChrome(seat, paid) {
     var api = ridgeAccess();
     seat = seat || (api && api.getSeat());
-    var copy = api && api.tierCopy ? api.tierCopy(seat) : { tag: "Ridge", title: "Demo", body: "" };
+    var copy = api && api.tierCopy ? api.tierCopy(seat) : { tag: "Market Intelligence", title: "Demo", body: "" };
     var tag = $("#ridge-access-tag");
     var title = $("#ridge-access-title");
     var body = $("#ridge-access-body");
@@ -1344,7 +1344,7 @@
       if (extra) extra.hidden = !ridgeCanBuyExtra();
       if (oneoff) oneoff.hidden = true;
     } else {
-      if (title) title.textContent = "Ridge gate";
+      if (title) title.textContent = "Market Intelligence gate";
       if (body) body.textContent = "This unit is locked on the current stair.";
       if (verify) verify.hidden = false;
       if (upgrade) upgrade.hidden = false;
@@ -2237,10 +2237,10 @@
     var spec = firstClientSpecialtyLabel();
     var st = String(state.clientState || (state.clientBd && state.clientBd.state) || "").toUpperCase();
     var place = st || "the selected state";
-    var subject = opts.subject || ("Ridge report request · " + spec + " · " + place);
+    var subject = opts.subject || ("Market Intelligence report request · " + spec + " · " + place);
     var body = opts.body || (
       "Dear " + first + ",\n\n" +
-      "Please send a Ridge report / market analysis for " + spec + " in " + place + ".\n\n" +
+      "Please send a Market Intelligence report / market analysis for " + spec + " in " + place + ".\n\n" +
       "Thank you."
     );
     /* Public NAP inbox — individual hiring-guide emails are not on the mountain. */
@@ -2403,7 +2403,7 @@
     foot.hidden = !ready;
     if (!ready) return;
     foot.href = hiringGuideMailto();
-    foot.textContent = "Get your market Ridge report";
+    foot.textContent = "Get your Market Intelligence report";
   }
 
   function paintConfirmClientDiscuss() {
@@ -3637,7 +3637,7 @@
   }
 
   function jobsSoftBench() {
-    return "<aside class=\"jobs-soft-bench\" aria-label=\"Beyond the posted trail\"><span class=\"tag\">Beyond the posted trail</span><h3 class=\"jobs-soft-bench-title\">Posted roles are only part of the ridge.</h3><p><strong>These are the roles we post.</strong> Guides also hold matches we don’t list — quiet opportunities that never hit this shelf. If nothing here feels right, talk with a guide and keep climbing.</p><button type=\"button\" class=\"btn btn-ghost jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a guide <span aria-hidden=\"true\">→</span></button></aside>";
+    return "<aside class=\"jobs-soft-bench\" aria-label=\"Beyond the posted trail\"><span class=\"tag\">Beyond the posted trail</span><h3 class=\"jobs-soft-bench-title\">Posted roles are only part of the path.</h3><p><strong>These are the roles we post.</strong> Guides also hold matches we don’t list — quiet opportunities that never hit this shelf. If nothing here feels right, talk with a guide and keep climbing.</p><button type=\"button\" class=\"btn btn-ghost jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a guide <span aria-hidden=\"true\">→</span></button></aside>";
   }
 
   function jobsMpcEmpty() {
@@ -3670,7 +3670,7 @@
           var soft = { practice: "Practice feel", life: "Life rhythm", location: "Place", income: "Income clarity" };
           return (i + 1) + ". " + (soft[r] || RANK_LABELS[r] || r);
         }).join(" · ");
-        sortLine.textContent = "Sorted for your summit: " + pretty;
+        sortLine.textContent = "Sorted for your search: " + pretty;
         sortLine.hidden = false;
       } else {
         sortLine.textContent = "";
@@ -4028,7 +4028,7 @@
   };
 
   var RANK_DIMS = [
-    { id: "practice", label: "Practice feel", blurb: "How the week runs on the ridge — clinic pace, team, call." },
+    { id: "practice", label: "Practice feel", blurb: "How the week runs in practice — clinic pace, team, call." },
     { id: "life", label: "Life rhythm", blurb: "Room outside clinic — evenings, weekends, the trail home." },
     { id: "location", label: "Place", blurb: "Where you live and what the community feels like." },
     { id: "income", label: "Income clarity", blurb: "Package clarity — band, structure, what lands on the call." }
@@ -5273,7 +5273,7 @@ function syncGuideRoute(route) {
       applyRidgeWalkGate();
       syncRidgeWalkthrough();
       if (window.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) AMPRidgeWorkbench.refresh();
-      showMiMockToast("Ridge seat reset. Pick specialty, then state, to reopen the demo.");
+      showMiMockToast("Market Intelligence seat reset. Pick specialty, then state, to reopen the demo.");
       go("mi-lite", { trail: true });
     });
     var miSave = $("#mi-lite-save");
@@ -5768,8 +5768,8 @@ function syncGuideRoute(route) {
       h1: "Easy Pay Authorization"
     },
     "mi-lite": {
-      title: "Ridge" + BRAND_SUFFIX,
-      description: "Ridge is Adaptive Medical Partners’ specialty × region market read — one snapshot for physicians and healthcare organizations.",
+      title: "Market Intelligence" + BRAND_SUFFIX,
+      description: "Market Intelligence is Adaptive Medical Partners’ specialty × region market read — one snapshot for physicians and healthcare organizations.",
       robots: "index,follow"
     },
     physician: {
@@ -5826,9 +5826,9 @@ function syncGuideRoute(route) {
     mpc: { title: "Tailor a Search" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "mpc-portal": { title: "Client Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "mpc-browse": { title: "Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "mi-lite-portal": { title: "Ridge Pricing" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "mi-lite-login": { title: "Ridge Sign In" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "mi-lite-app": { title: "Ridge Sample" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX }
+    "mi-lite-portal": { title: "Market Intelligence Pricing" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mi-lite-login": { title: "Market Intelligence Sign In" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "mi-lite-app": { title: "Market Intelligence Sample" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX }
   };
 
   function blogFallbackMeta(post) {
