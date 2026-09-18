@@ -17,7 +17,7 @@
   - Retired form URLs (List 1 #10 301s): /most-placeable-candidate-request,
     /web-posting-request, /postcard-reqeust-form, /pto-request-form,
     /amplified-email-request
-  - Aliases: /mi-lite → /ridge, /contact → /contact-us
+  - Aliases: /ridge + /mi-lite → /market-intelligence, /contact → /contact-us
   - Guide person hashes, phone-crop.html
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -55,7 +55,7 @@
     <loc>https://www.adaptivemedicalpartners.com/easy-pay-authorization</loc>
   </url>
   <url>
-    <loc>https://www.adaptivemedicalpartners.com/ridge</loc>
+    <loc>https://www.adaptivemedicalpartners.com/market-intelligence</loc>
   </url>
   <url>
     <loc>https://www.adaptivemedicalpartners.com/physician</loc>
