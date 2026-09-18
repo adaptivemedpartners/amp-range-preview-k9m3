@@ -11,10 +11,10 @@ function assert(cond, msg) {
 
 function checkFile(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
-  assert(html.indexOf("<!-- amp-build:2130-confirm-discuss -->") !== -1, rel + " missing 2130 stamp comment");
-  assert(html.indexOf("amp-build 2130-confirm-discuss") !== -1, rel + " missing 2130 chip");
-  assert(html.indexOf('href="css/site.css?v=2130"') !== -1, rel + " css not ?v=2130");
-  assert(html.indexOf('src="js/app.js?v=2130"') !== -1, rel + " app.js not ?v=2130");
+  assert(html.indexOf("<!-- amp-build:2131-mobile-rank-cards -->") !== -1, rel + " missing 2131 stamp comment");
+  assert(html.indexOf("amp-build 2131-mobile-rank-cards") !== -1, rel + " missing 2131 chip");
+  assert(html.indexOf('href="css/site.css?v=2131"') !== -1, rel + " css not ?v=2131");
+  assert(html.indexOf('src="js/app.js?v=2131"') !== -1, rel + " app.js not ?v=2131");
   assert(html.indexOf("js/ridge-access.js") !== -1, rel + " lost ridge-access.js");
   assert(
     html.indexOf("Your partners in rural healthcare recruiting. AMP as your guide. Two paths. One mountain.") !== -1,
@@ -93,7 +93,7 @@ checkFile("index.html");
 checkFile("404.html");
 
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('window.__AMP_BUILD = "2130-confirm-discuss"') !== -1, "app.js build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2131-mobile-rank-cards"') !== -1, "app.js build stamp");
 assert(app.indexOf("var CLIENT_START_TOPICS") !== -1, "CLIENT_START_TOPICS missing");
 ["volume", "convert", "interviews", "vacancy", "confidential", "story", "brief", "other"].forEach(function (id) {
   assert(app.indexOf('id: "' + id + '"') !== -1, "missing original need topic " + id);
@@ -120,7 +120,7 @@ assert(app.indexOf("Pick a state to continue") === -1, "old pick-a-state continu
 assert(app.indexOf("go(\"client-meeting\"") !== -1 || app.indexOf('go("client-meeting"') !== -1, "continue must still navigate to client-meeting");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
-assert(css.indexOf("amp-build:2130-confirm-discuss") !== -1, "css missing 2130 stamp");
+assert(css.indexOf("amp-build:2131-mobile-rank-cards") !== -1, "css missing 2131 stamp");
 assert(css.indexOf("min-height: 416px") !== -1, "css missing 30% taller doors");
 assert(css.indexOf(".home-partners-grid") !== -1, "css missing partners one-row");
 assert(css.indexOf(".why-amp-proof-tile") !== -1, "css lost Why AMP KPI tiles");
@@ -134,5 +134,13 @@ assert(css.indexOf("padding-bottom: 88px") === -1, "sticky-bottom padding for ol
 assert(/\.confirm-band \.hero-inner\s*\{\s*max-width:\s*1040px/.test(css), "confirm card not widened");
 assert(css.indexOf("repeat(4, minmax(0, 1fr))") !== -1, "discuss topics not 4-across on desktop");
 assert(/\.view\.funnel\[data-route="confirm-client"\] \.client-discuss[\s\S]{0,220}background:\s*#ffffff/.test(css), "discuss card not lightened");
+
+/* 2131: mobile-only rank-card compact — desktop/tablet metrics stay */
+assert(css.indexOf("min-height: 168px") !== -1, "desktop rank-card min-height should stay 168px");
+assert(/\.rank-card \{[\s\S]{0,180}padding:\s*22px 16px 16px/.test(css), "desktop rank-card padding should stay");
+assert(/@media \(max-width:\s*720px\)[\s\S]{0,1800}\.rank-card \{[\s\S]{0,220}min-height:\s*0/.test(css), "phone rank-card missing min-height:0");
+assert(/@media \(max-width:\s*720px\)[\s\S]{0,1800}\.rank-card \{[\s\S]{0,220}padding:\s*10px 12px 8px/.test(css), "phone rank-card padding not compacted");
+assert(/@media \(max-width:\s*720px\)[\s\S]{0,2200}\.rank-card p \{[\s\S]{0,160}-webkit-line-clamp:\s*2/.test(css), "phone rank blurb not clamped to 2 lines");
+assert(/@media \(max-width:\s*720px\)[\s\S]{0,1600}gap:\s*6px/.test(css), "phone rank-track gap not tightened");
 
 console.log("home-path-2130.test.js ok");

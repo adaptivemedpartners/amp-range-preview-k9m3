@@ -1,3 +1,4 @@
+/* amp-build:2131-mobile-rank-cards */
 /* amp-build:2130-confirm-discuss */
 /* amp-build:2129-meeting-cta-gap */
 /* amp-build:2128-home-path-finetune */
@@ -3249,8 +3250,8 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
   .rank-axis {
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
-    margin: 0 0 12px;
+    gap: 6px;
+    margin: 0 0 8px;
   }
   .rank-axis-most,
   .rank-axis-least {
@@ -3258,7 +3259,7 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
   }
   .rank-axis-line {
     width: 4px;
-    height: 48px;
+    height: 28px;
     flex: 0 0 auto;
     align-self: center;
     background: linear-gradient(180deg, #0d9488, #99f6e4 45%, #cbd5e1);
@@ -3281,14 +3282,42 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
     scroll-snap-type: none;
     width: 100%;
     max-width: 100%;
-    gap: 10px;
+    gap: 6px;
+  }
+  .rank-track.is-dragging-active {
+    gap: 6px;
   }
   .rank-card {
     flex: 0 0 auto !important;
     width: 100% !important;
     max-width: none !important;
     min-width: 0 !important;
+    min-height: 0;
+    padding: 10px 12px 8px;
     scroll-snap-align: unset;
+  }
+  .rank-card h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    margin: 2px 0 3px;
+    padding-right: 40px;
+  }
+  .rank-card p {
+    font-size: 12px;
+    line-height: 1.28;
+    margin: 0 0 4px;
+    -webkit-line-clamp: 2;
+  }
+  .rank-card .meta {
+    margin-top: 2px;
+    font-size: 12px;
+  }
+  .rank-num {
+    top: 8px;
+    right: 8px;
+    min-width: 30px;
+    height: 26px;
+    font-size: 12.5px;
   }
   /* Drop cues: horizontal bars at top/bottom (override desktop left/right) */
   .rank-card.is-drop-before::before,
@@ -3317,6 +3346,15 @@ body.amp-live-trailhead .site-nav .brand .brand-lockup-img {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+  }
+  .rank-actions .btn-lg {
+    min-height: 46px;
+    padding: 12px 14px;
+  }
+  .rank-hint {
+    margin: 8px 0 0;
+    font-size: 12.5px;
   }
 }
 
@@ -7878,6 +7916,9 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
     height: 76px !important;
   }
 }
+/* amp-build:2131-mobile-rank-cards
+   Mike 2026-09-18: physician rank cards compact on phone only (padding, title,
+   2-line blurb clamp, tighter gaps) so #1–#4 fit without huge scroll. */
 /* amp-build:2130-confirm-discuss
    Mike 2026-09-17: confirm page — wider success card, lighter discuss card,
    2×4 topic grid, multi-select + Send appends topics to the meeting lead. */
