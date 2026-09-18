@@ -1,4 +1,4 @@
-/* amp-build:2136-path-theme-bgs */
+/* amp-build:2137-walkthrough-polish */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
@@ -8264,7 +8264,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2136");
+    url("../assets/home-hero-clinic-consult.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -8323,11 +8323,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-job2-panel-candidate {
   background:
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2136");
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2137");
 }
 .home-job2-panel-client {
   background:
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2136");
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2137");
 }
 @media (max-width: 640px) {
   .home-job2-panel { height: 160px; }
@@ -8586,7 +8586,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .home-mi-banner-title { font-size: 1.12rem; }
   .home-pro-bg {
-    background-position: center, center, 62% center;
+    /* 2137: both faces clear right edge; pair still right-weighted (not centered) */
+    background-position: center, center, 70% center;
   }
 }
 @media (max-width: 480px) {
@@ -8604,7 +8605,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-cand-specialty.jpg?v=2136");
+    url("../assets/amp-path-cand-specialty.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8617,7 +8618,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-cand-nurses.jpg?v=2136");
+    url("../assets/amp-path-cand-nurses.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8630,7 +8631,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-client-fqhc.jpg?v=2136");
+    url("../assets/amp-path-client-fqhc.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8643,7 +8644,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-client-hallway.jpg?v=2136");
+    url("../assets/amp-path-client-hallway.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8703,12 +8704,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .home-job2-panel-candidate {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2136") !important;
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2137") !important;
 }
 .home-job2-panel-client {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2136") !important;
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2137") !important;
 }
 @media (max-width: 640px) {
   .home-job2-card::before { height: 160px; }
@@ -8730,4 +8731,165 @@ img[src*="amp-logo-mark"] {
   -webkit-filter: none !important;
   box-shadow: none !important;
   text-shadow: none !important;
+}
+
+
+/* ========== amp-build:2137-walkthrough-polish ========== */
+/* Step badge on white card (top-right) — not stuck in dark hero */
+.client-step.client-step-on-card {
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 0 14px;
+  color: #0f172a;
+}
+.hire-sheet .client-step.client-step-on-card {
+  margin-bottom: 12px;
+}
+.funnel-panel .client-step.client-step-on-card {
+  width: 100%;
+}
+
+/* New path BGs — soft navy veils (same recipe as 2136) */
+.view[data-route="client-region"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    url("../assets/amp-path-client-step4-boardroom-smoky.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="client-meeting"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    url("../assets/amp-path-client-step5-desk-smoky.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="physician-rank"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    url("../assets/amp-path-cand-rank-countryside-smoky.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+/* MI / Ridge — whiteboard C smoky */
+.view[data-route="mi-lite"] > .shot .pro-still,
+.view[data-route="mi-lite-portal"] > .shot .pro-still,
+.view[data-route="mi-lite-login"] > .shot .pro-still,
+.view[data-route="mi-lite-app"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    url("../assets/amp-mi-bg-C-whiteboard-smoky.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+/* Soften hero-band on routes with path photos */
+.view[data-route="client-region"] .hero-band .bg.pro-bg,
+.view[data-route="client-meeting"] .hero-band .bg.pro-bg,
+.view[data-route="physician-rank"] .hero-band .bg.pro-bg,
+.view[data-route="mi-lite"] .hero-band .bg.pro-bg,
+.view[data-route="mi-lite-portal"] .hero-band .bg.pro-bg,
+.view[data-route="mi-lite-login"] .hero-band .bg.pro-bg,
+.view[data-route="mi-lite-app"] .hero-band .bg.pro-bg {
+  background:
+    linear-gradient(135deg, rgba(21, 35, 50, 0.55) 0%, rgba(21, 35, 50, 0.35) 55%, rgba(21, 35, 50, 0.50) 100%) !important;
+}
+.view[data-route="client-region"] .hero-band .veil,
+.view[data-route="client-meeting"] .hero-band .veil,
+.view[data-route="physician-rank"] .hero-band .veil,
+.view[data-route="mi-lite"] .hero-band .veil,
+.view[data-route="mi-lite-portal"] .hero-band .veil,
+.view[data-route="mi-lite-login"] .hero-band .veil,
+.view[data-route="mi-lite-app"] .hero-band .veil {
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.58) 100%) !important;
+}
+/* Confirm stays blank — no path photo */
+.view[data-route="confirm-client"] > .shot .pro-still {
+  background-image: none !important;
+  filter: none !important;
+  transform: none !important;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120, 196, 229, 0.18), transparent 55%),
+    linear-gradient(165deg, #152332 0%, #1a3348 50%, #152332 100%) !important;
+}
+.view[data-route="client-region"] > .shot,
+.view[data-route="client-meeting"] > .shot,
+.view[data-route="physician-rank"] > .shot,
+.view[data-route="mi-lite"] > .shot,
+.view[data-route="mi-lite-portal"] > .shot,
+.view[data-route="mi-lite-login"] > .shot,
+.view[data-route="mi-lite-app"] > .shot {
+  overflow: hidden;
+}
+
+/* Homepage path column — one shared width (doors + MI + proof + partners) */
+.home-path-column {
+  width: min(880px, 100%);
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+.home-path-column .doors-hero,
+.home-path-column .home-mi-banner,
+.home-path-column .home-proof-stack,
+.home-path-column .home-partners {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+}
+.home-path-column .home-mi-banner {
+  margin-top: 22px;
+  margin-bottom: 12px;
+}
+.home-path-column .home-proof-stack {
+  margin-top: 10px;
+}
+.home-path-column .home-partners {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  padding-left: 22px;
+  padding-right: 22px;
+}
+@media (max-width: 640px) {
+  .home-path-column {
+    width: 100%;
+    max-width: none;
+  }
+  .home-path-column .doors-hero {
+    width: 100% !important; /* kill legacy min(440px) stair-step */
+  }
+  .home-path-column .home-partners {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }

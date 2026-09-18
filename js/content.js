@@ -207,7 +207,7 @@ window.AMP_CONTENT = {
     { id: "mountain", label: "Mountain West", blurb: "Elevation optional — clarity on schedule required.", states: ["ID", "MT", "WY", "NV", "UT", "CO", "AZ", "NM"] },
     { id: "northeast", label: "Northeast", blurb: "Academic-adjacent and community employed roles.", states: ["PA", "NY", "NJ", "CT", "RI", "MA", "VT", "NH", "ME", "DE", "MD"] },
     { id: "akhi", label: "Alaska & Hawaii", blurb: "Alaska and Hawaii paths with the same guided search experience.", states: ["AK", "HI"] },
-    { id: "open", label: "Open", blurb: "Let AMP surface the right ridge for you.", states: [] }
+    { id: "open", label: "Open", blurb: "Let AMP surface the right path for you.", states: [] }
   ],
   facilities: [
     { id: "fqhc", label: "FQHC / CHC", blurb: "Mission-aligned clinic seats with clear timelines." },
