@@ -1,3 +1,4 @@
+/* amp-build:2137-preview-polish */
 /* amp-build:2136-path-theme-bgs */
 /* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
@@ -8050,20 +8051,61 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .client-step-kicker {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
+  padding: 7px 12px;
   border-radius: 999px;
-  font-size: 11px;
-  font-weight: 780;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #042f2e;
   background: linear-gradient(135deg, #5eead4, #2dd4bf);
+  border: 1px solid rgba(4, 47, 46, 0.16);
+  box-shadow: 0 8px 18px rgba(13, 148, 136, 0.32);
 }
 .client-step-on-hero {
   justify-content: center;
   color: rgba(226,232,240,0.92);
 }
-.hire-sheet .client-step { margin-bottom: 12px; }
+/* amp-build:2137 — STEP X OF 5 sits on the white card, top-right */
+.hire-sheet,
+.funnel-panel.client-combined-stage,
+.view[data-route="client-meeting"] .funnel-panel {
+  position: relative;
+}
+.hire-sheet .client-step,
+.client-step-on-card {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  margin: 0;
+  gap: 0;
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+}
+.hire-sheet .hire-title {
+  padding-right: 132px;
+}
+.view[data-route="client-region"] .funnel-panel.client-combined-stage {
+  padding-top: 48px;
+}
+.view[data-route="client-meeting"] .funnel-panel {
+  padding-top: 48px;
+}
+@media (max-width: 520px) {
+  .hire-sheet .client-step,
+  .client-step-on-card {
+    top: 10px;
+    right: 10px;
+  }
+  .hire-sheet .hire-title {
+    padding-right: 118px;
+  }
+  .view[data-route="client-region"] .funnel-panel.client-combined-stage {
+    padding-top: 44px;
+  }
+}
 
 .client-ridge-cta {
   display: flex;
@@ -8264,7 +8306,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2136");
+    url("../assets/home-hero-clinic-consult.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -8323,11 +8365,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-job2-panel-candidate {
   background:
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2136");
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2137");
 }
 .home-job2-panel-client {
   background:
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2136");
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2137");
 }
 @media (max-width: 640px) {
   .home-job2-panel { height: 160px; }
@@ -8586,7 +8628,8 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .home-mi-banner-title { font-size: 1.12rem; }
   .home-pro-bg {
-    background-position: center, center, 62% center;
+    /* Nudge photo left so both desk faces stay inside the phone crop */
+    background-position: center, center, 72% center;
   }
 }
 @media (max-width: 480px) {
@@ -8604,7 +8647,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-cand-specialty.jpg?v=2136");
+    url("../assets/amp-path-cand-specialty.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8617,7 +8660,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-cand-nurses.jpg?v=2136");
+    url("../assets/amp-path-cand-nurses.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8630,7 +8673,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
-    url("../assets/amp-path-client-fqhc.jpg?v=2136");
+    url("../assets/amp-path-client-fqhc.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8643,7 +8686,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   background-image:
     linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
     linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
-    url("../assets/amp-path-client-hallway.jpg?v=2136");
+    url("../assets/amp-path-client-hallway.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
@@ -8663,9 +8706,68 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view[data-route="physician"] > .shot,
 .view[data-route="physician-specialty"] > .shot,
 .view[data-route="physician-region"] > .shot,
+.view[data-route="physician-rank"] > .shot,
 .view[data-route="client"] > .shot,
-.view[data-route="client-specialty"] > .shot {
+.view[data-route="client-specialty"] > .shot,
+.view[data-route="client-region"] > .shot,
+.view[data-route="client-meeting"] > .shot,
+.view[data-route="confirm-client"] > .shot {
   overflow: hidden;
+}
+
+/* amp-build:2137 — remaining path BGs (rank / client 4–5 / confirm) + homepage-like veils */
+.view[data-route="physician-rank"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    url("../assets/amp-path-cand-rank-countryside.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="client-region"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    url("../assets/amp-path-client-step4-boardroom.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="client-meeting"] > .shot .pro-still,
+.view[data-route="confirm-client"] > .shot .pro-still {
+  background-color: #152332;
+  background-image:
+    linear-gradient(105deg, rgba(21, 35, 50, 0.80) 0%, rgba(21, 35, 50, 0.52) 40%, rgba(21, 35, 50, 0.38) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.16) 45%, rgba(21, 35, 50, 0.76) 100%),
+    url("../assets/amp-path-client-step5-desk.jpg?v=2137");
+  background-size: cover, cover, cover;
+  background-position: center, center, 42% center;
+  background-repeat: no-repeat;
+  filter: blur(0.6px);
+  transform: scale(1.02);
+  transform-origin: center center;
+}
+.view[data-route="physician-rank"] .hero-band .bg.pro-bg,
+.view[data-route="client-region"] .hero-band .bg.pro-bg,
+.view[data-route="client-meeting"] .hero-band .bg.pro-bg,
+.view[data-route="confirm-client"] .hero-band .bg.pro-bg {
+  background:
+    linear-gradient(135deg, rgba(21, 35, 50, 0.55) 0%, rgba(21, 35, 50, 0.35) 55%, rgba(21, 35, 50, 0.50) 100%) !important;
+}
+.view[data-route="physician-rank"] .hero-band .veil,
+.view[data-route="client-region"] .hero-band .veil,
+.view[data-route="client-meeting"] .hero-band .veil,
+.view[data-route="confirm-client"] .hero-band .veil {
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.58) 100%) !important;
 }
 
 /* Story cards — CSS smoky: blur + ~40% navy veil (no Desktop *-smoky.jpg) */
@@ -8703,12 +8805,12 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .home-job2-panel-candidate {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2136") !important;
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2137") !important;
 }
 .home-job2-panel-client {
   background:
     linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2136") !important;
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2137") !important;
 }
 @media (max-width: 640px) {
   .home-job2-card::before { height: 160px; }
