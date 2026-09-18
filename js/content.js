@@ -1,11 +1,11 @@
-/* amp-build:2123-pages-confirm */
-/* AMP Mountain Site — content packs (jobs and Education posts)
+/* amp-build:2144-mountain-seo-scrub */
+/* AMP Site — content packs (jobs and Education posts)
    Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
    Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.
    No invented towns/hospitals. Recruiter from live job copy (or Georgia 835x guide pattern). */
 window.AMP_CONTENT = {
   specialties: [
-    { id: "fm", label: "Family Medicine", blurb: "Clinic-first weeks with room for life outside the trail." },
+    { id: "fm", label: "Family Medicine", blurb: "Clinic-first weeks with room for life outside the clinic." },
     { id: "cards", label: "Cardiology", blurb: "Hard-to-fill cardiology seats — noninvasive through interventional." },
     { id: "family_medicine_with_ob", label: "Family Medicine (with OB)" },
     { id: "obg", label: "Obstetrics & Gynecology", blurb: "Practice-first OB/GYN roles — schedule and package on a call." },
@@ -196,7 +196,7 @@ window.AMP_CONTENT = {
     { id: "nuclear_medicine_technologist", label: "Nuclear Medicine Technologist" },
     { id: "medical_laboratory_scientist", label: "Medical Laboratory Scientist" },
     { id: "audiologist", label: "Audiologist" },
-    { id: "other", label: "Other", blurb: "Tell us your trail — we route you to the right guide." }
+    { id: "other", label: "Other", blurb: "Tell us what you need — we route you to the right guide." }
   ],
   /* Mock membership uses common regional groupings; no town or hospital names are implied. */
   regions: [
@@ -211,13 +211,13 @@ window.AMP_CONTENT = {
   ],
   facilities: [
     { id: "fqhc", label: "FQHC / CHC", blurb: "Mission-aligned clinic seats with clear timelines." },
-    { id: "cah", label: "Critical Access", blurb: "Rural CAH physician search — you hold the summit." },
+    { id: "cah", label: "Critical Access", blurb: "Rural CAH physician search — you own the hire brief." },
     { id: "community", label: "Community / Rural hospital", blurb: "Community and rural hospital physician seats." },
     { id: "system", label: "Health system", blurb: "Hard-to-fill roles across a health system." },
     { id: "bh", label: "Behavioral Health", blurb: "Behavioral and community behavioral health seats." },
     { id: "group", label: "Multi-specialty / Group", blurb: "Multi-specialty and group practice growth seats." },
     { id: "dental", label: "Dentistry", blurb: "Dental and DSOs with clear package preview." },
-    { id: "other", label: "Other", blurb: "Tell us the summit you need staffed." },
+    { id: "other", label: "Other", blurb: "Tell us the role you need staffed." },
     { id: "hospital", label: "Hospital / Health system", blurb: "Hard-to-fill physician roles across hospitals and systems." }
   ],
   facilitySpecialtyRanks: {
@@ -1880,22 +1880,22 @@ window.AMP_CONTENT = {
     }
   ],
   posts: [
-    { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first climb.", byline: "Mike Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
+    { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first role.", byline: "Mike Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
     { slug: "place-first-without-regret", title: "Place First Without Regret: Choose the Life Around the Practice", meta: "How residents and fellows can evaluate place-first fit without inventing a town story or falling for a postcard.", byline: "Randy Keeth", tags: ["Residents", "Place", "Career"], mins: 7 },
-    { slug: "two-year-test-before-you-sign", title: "The Two-Year Test Before You Sign Your First Physician Contract", meta: "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your second-climb signal.", byline: "Mike Freeman", tags: ["Contracts", "Residents", "Education"], mins: 8 },
-    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A mountain-voice guide to MPC when place is the first filter—and when a dedicated guide makes the climb safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
+    { slug: "two-year-test-before-you-sign", title: "The Two-Year Test Before You Sign Your First Physician Contract", meta: "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your next-move signal.", byline: "Mike Freeman", tags: ["Contracts", "Residents", "Education"], mins: 8 },
+    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A practical guide to MPC when place is the first filter—and when a dedicated guide makes the search safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
     { slug: "coordinator-share-pack-grads", title: "A Coordinator’s Share Pack for New Graduates", meta: "A short, practical share pack program coordinators can give graduating residents and fellows before the first job search.", byline: "Adaptive Medical Partners", tags: ["Coordinators", "Graduates", "Education"], mins: 5 },
     {
       slug: "physician-retention-3-year-kpi",
       title: "Why Is 3-Year Physician Retention the Real KPI — Not Just ‘Filled’?",
-      meta: "Why do stay rates beat time-to-fill? Adaptive Medical Partners cites 87% physician retention at three years — the mountain KPI that protects patients, budgets, and culture.",
+      meta: "Why do stay rates beat time-to-fill? Adaptive Medical Partners cites 87% physician retention at three years — the retention KPI that protects patients, budgets, and culture.",
       tags: ["Retention", "Hospitals", "Education"],
       mins: 11
     },
     {
       slug: "interview-to-placement-efficiency",
       title: "What Does 1.7 Interviews per Placement Mean for Hospitals?",
-      meta: "What does AMP’s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume — and how dedicated guides stage prepared hikers at the summit.",
+      meta: "What does AMP’s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume — and how dedicated guides stage prepared candidates ready to hire.",
       tags: ["Interview efficiency", "Dedicated investment search", "Education"],
       mins: 10
     },
@@ -1908,7 +1908,7 @@ window.AMP_CONTENT = {
     },
     {
       slug: "amp-history-16-years",
-      title: "16 Years on the Mountain — AMP History Since 2010",
+      title: "16 Years of Physician Recruiting Craft — AMP History Since 2010",
       meta: "Adaptive Medical Partners’ public timeline from 2010 founding through a 2026 boutique rebirth — 16 years of physician recruiting craft, drawn from About Us.",
       tags: ["History", "About", "Why AMP"],
       mins: 7
@@ -1916,7 +1916,7 @@ window.AMP_CONTENT = {
     {
       slug: "retained-vs-contingent-physician-search",
       title: "Dedicated investment or contingent Physician Search: Which Model Should Hospitals Choose?",
-      meta: "Which physician search model fits — dedicated investment or contingent? Compare accountability, marketing, and how Adaptive Medical Partners guides both sides of the mountain.",
+      meta: "Which physician search model fits — dedicated investment or contingent? Compare accountability, marketing, and how Adaptive Medical Partners guides both sides of the search.",
       tags: ["Dedicated investment search", "Hospitals", "Education"],
       mins: 9
     },
@@ -1944,7 +1944,7 @@ window.AMP_CONTENT = {
     {
       slug: "what-hospitals-should-ask-retained-firm",
       title: "What Hospitals Should Ask a Dedicated Physician Search Firm Before Signing",
-      meta: "Twelve questions hospitals and medical groups should ask any dedicated search firm — including AMP — about process, marketing, candidate quality, and summit meeting readiness.",
+      meta: "Twelve questions hospitals and medical groups should ask any dedicated search firm — including AMP — about process, marketing, candidate quality, and hiring meeting readiness.",
       tags: ["Organizations", "Dedicated", "BD"],
       mins: 10
     },

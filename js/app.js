@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2143-market-intelligence-url";
+  window.__AMP_BUILD = "2144-mountain-seo-scrub";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -2197,7 +2197,7 @@
   ];
   var BD_OWNER_META = {
     aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Hiring guide", blurb: "Texas hiring guide who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
-    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the climb from both sides of the rope.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
+    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the search from both sides of the table.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the work again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear brief.</p><p>Zach partners with healthcare organizations to set the brief: clearer requirements, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
     brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
     randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
@@ -2894,7 +2894,7 @@
     "2": "We write a story candidates can trust — not a blast list.",
     "3": "Only prepared people reach your leadership table.",
     "4": "A clean dossier and CV packet, ready for the committee.",
-    "5": "We walk the candidate through the summit before they meet you.",
+    "5": "We walk the candidate through interview prep before they meet you.",
     "6": "We stay on the rope through the yes — and the first weeks after."
   };
 
@@ -5795,7 +5795,7 @@ function syncGuideRoute(route) {
     },
     guides: {
       title: "Meet Your Guides" + BRAND_SUFFIX,
-      description: "Meet the Adaptive Medical Partners guides — recruiting and hiring practitioners who stay until the summit meeting is prepared.",
+      description: "Meet the Adaptive Medical Partners guides — recruiting and hiring practitioners who stay until the hiring meeting is prepared.",
       robots: "index,follow"
     },
     search: {
@@ -5810,7 +5810,7 @@ function syncGuideRoute(route) {
     },
     "amp-score": {
       title: "AMP Score" + BRAND_SUFFIX,
-      description: "AMP Score lives at getampscore.com. This mountain-site page is a preview only — open the full product on getampscore.com.",
+      description: "AMP Score lives at getampscore.com. This preview page is tease-level only — open the full product on getampscore.com.",
       robots: SEO_NOINDEX
     },
     "physician-rank": { title: "What Matters Most" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
@@ -5820,8 +5820,8 @@ function syncGuideRoute(route) {
     "confirm-mess": { title: "Interest Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "confirm-client": { title: "Meeting Request Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-specialty": { title: "Hiring Specialty" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-region": { title: "Set the Search · See the Climb" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    "client-retained": { title: "Set the Search · See the Climb" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-region": { title: "Set the Search · Review the Path" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    "client-retained": { title: "Set the Search · Review the Path" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-meeting": { title: "Request a Meeting" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     mpc: { title: "Tailor a Search" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "mpc-portal": { title: "Client Browse Tools" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
