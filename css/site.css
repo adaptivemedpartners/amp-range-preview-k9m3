@@ -8456,15 +8456,14 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .doors-hero .door-hero {
   min-height: 0;
-  height: auto;
-  padding: 22px 22px 16px;
+  padding: 20px 22px 12px;
   justify-content: flex-start;
 }
 .doors-hero .door-line {
-  margin: 0 0 0 auto;
+  margin: 0 0 12px auto;
 }
 .doors-hero .door-hero .door-cta {
-  margin-top: 14px;
+  margin-top: auto;
   margin-bottom: 0;
 }
 
@@ -8546,7 +8545,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .home-mi-cta { white-space: normal; }
   .doors-hero .door-hero {
     min-height: 0;
-    padding: 20px 18px 14px;
+    padding: 18px 18px 12px;
   }
 }
 
@@ -8558,6 +8557,6 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   }
   .doors-hero .door-hero {
     min-height: 0;
-    padding: 18px 16px 12px;
+    padding: 16px 16px 10px;
   }
 }

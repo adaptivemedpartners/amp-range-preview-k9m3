@@ -71,6 +71,7 @@ assert(fs.existsSync(path.join(ROOT, "assets/home-hero-clinic-consult.jpg")), "m
 
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(app.indexOf('window.__AMP_BUILD = "2134-home-retention-hero"') !== -1, "app.js build stamp");
+assert(app.indexOf('h1: "Permanent recruitment measured in years — not placements."') !== -1, "SEO home h1 must keep retention headline");
 assert(app.indexOf("go(\"client-meeting\"") !== -1 || app.indexOf('go("client-meeting"') !== -1, "client meeting nav must stay");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
@@ -79,7 +80,8 @@ assert(css.indexOf("home-hero-clinic-consult.jpg") !== -1, "css missing clinic h
 assert(css.indexOf("#152332") !== -1 && css.indexOf("#78C4E5") !== -1 && css.indexOf("#6BE0AD") !== -1, "LinkedIn palette colors missing");
 var block = css.slice(css.lastIndexOf("amp-build:2134-home-retention-hero"));
 assert(/\.doors-hero \.door-hero\s*\{[\s\S]{0,180}min-height:\s*0/.test(block), "homepage doors must drop min-height");
-assert(/\.doors-hero \.door-hero\s*\{[\s\S]{0,220}padding:\s*22px 22px 16px/.test(block), "homepage doors must hug CTA with tight padding");
+assert(/\.doors-hero \.door-hero\s*\{[\s\S]{0,220}padding:\s*20px 22px 12px/.test(block), "homepage doors must hug CTA with tight padding");
+assert(/\.doors-hero \.door-hero \.door-cta\s*\{[\s\S]{0,80}margin-top:\s*auto/.test(block), "door CTAs should pin to the card bottom");
 assert(block.indexOf(".home-mi-banner") !== -1, "css missing MI banner");
 assert(block.indexOf(".home-proof-band") !== -1, "css missing proof band");
 

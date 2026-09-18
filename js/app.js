@@ -5689,7 +5689,7 @@ function syncGuideRoute(route) {
       title: "Adaptive Medical Partners | Physician & Healthcare Recruiting",
       description: SEO_DEFAULT.description,
       robots: "index,follow",
-      h1: "Physician & Healthcare Recruiting"
+      h1: "Permanent recruitment measured in years — not placements."
     },
     about: {
       title: "About" + BRAND_SUFFIX,
