@@ -48,7 +48,7 @@ assert(css.indexOf("?v=2136") === -1, "css leftover ?v=2136");
 ["mi-lite", "mi-lite-portal", "mi-lite-login", "mi-lite-app"].forEach(function (route) {
   assert(css.indexOf('data-route="' + route + '"') !== -1, "css missing route " + route);
 });
-assert(css.indexOf("filter: blur(0.6px)") !== -1, "MI BG missing smoky blur");
+assert(/filter:\s*blur\(0\.[68]px\)/.test(css), "MI BG missing smoky blur");
 assert(/rgba\(21,\s*35,\s*50/.test(css), "navy veil rgba missing");
 /* Not neon AI — MI rule must not reintroduce the cyan radial glow */
 var miAt = css.indexOf("amp-build:2137-mi-bg-whiteboard-smoky — MI / ridge entry");

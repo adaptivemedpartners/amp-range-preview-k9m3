@@ -8734,30 +8734,31 @@ img[src*="amp-logo-mark"] {
 }
 
 /* ========== amp-build:2137-mi-bg-whiteboard-smoky — MI / ridge entry ========== */
-/* Same smoky cover + navy veil as path BGs. Soft JPG (not crisp, not neon AI). */
+/* Same recipe as path BGs (cover + navy veil + soft blur). Source JPG is already
+   smoky/low-key, so veils are lighter than path photos — otherwise the scene dies. */
 .view[data-route="mi-lite"] > .shot .pro-still,
 .view[data-route="mi-lite-portal"] > .shot .pro-still,
 .view[data-route="mi-lite-login"] > .shot .pro-still,
 .view[data-route="mi-lite-app"] > .shot .pro-still {
   background-color: #152332;
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.82) 0%, rgba(21, 35, 50, 0.55) 38%, rgba(21, 35, 50, 0.40) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.30) 0%, rgba(21, 35, 50, 0.18) 42%, rgba(21, 35, 50, 0.78) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.48) 0%, rgba(21, 35, 50, 0.26) 42%, rgba(21, 35, 50, 0.16) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.14) 0%, rgba(21, 35, 50, 0.08) 48%, rgba(21, 35, 50, 0.46) 100%),
     url("../assets/mi-bg-whiteboard-smoky.jpg?v=2137");
   background-size: cover, cover, cover;
   background-position: center, center, center;
   background-repeat: no-repeat;
-  filter: blur(0.6px);
-  transform: scale(1.02);
+  filter: blur(0.8px) saturate(0.86) brightness(1.14);
+  transform: scale(1.03);
   transform-origin: center center;
 }
-/* Soften funnel hero-band so cyan radial / hard navy doesn't fight the whiteboard */
+/* Hero-band: navy wash only — no cyan radial, photo must still read behind type */
 .view[data-route="mi-lite"] .hero-band,
 .view[data-route="mi-lite-portal"] .hero-band,
 .view[data-route="mi-lite-login"] .hero-band,
 .view[data-route="mi-lite-app"] .hero-band {
   background:
-    linear-gradient(180deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.52) 55%, rgba(21, 35, 50, 0.72) 100%);
+    linear-gradient(180deg, rgba(21, 35, 50, 0.18) 0%, rgba(21, 35, 50, 0.28) 55%, rgba(21, 35, 50, 0.46) 100%);
 }
 .view[data-route="mi-lite"] > .shot,
 .view[data-route="mi-lite-portal"] > .shot,
