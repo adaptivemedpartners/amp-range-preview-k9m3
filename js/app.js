@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2132-brand-retheme";
+  window.__AMP_BUILD = "2133-no-mountain";
 
     /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
@@ -422,7 +422,7 @@
         img.style.visibility = "";
         /* Prefer baked freeze; else stock post-swoop PNG */
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2110";
+          /* 2133: no mountain freeze */ img.removeAttribute("src"); img.classList.add("pro-still");
         }
       } catch (e) {}
     }
@@ -439,6 +439,9 @@
 
   /* After swoop: paint the exact paused video frame onto trailhead stills (same framing as home video). */
   function bakeFreezeToTrailheadStills(done) {
+    /* amp-build:2133-no-mountain — do not paint mountain freeze frames */
+    if (typeof done === "function") done();
+    return;
     video = video || $("#home-video");
     /* Only the wood-sign trailheads — never paint the freeze onto later ridge steps. */
     var imgs = $all('.view.trailhead[data-route="physician"] img.still, .view.trailhead[data-route="client"] img.still');
@@ -449,7 +452,7 @@
       /* Fallback still matches 4.0s extract */
       imgs.forEach(function (img) {
         if (!img.getAttribute("data-baked")) {
-          img.src = "assets/hero-mountain-trailhead-freeze.png?v=2110";
+          /* 2133: no mountain freeze */ img.removeAttribute("src"); img.classList.add("pro-still");
         }
       });
       finishBake();
@@ -559,8 +562,9 @@
     var live = document.querySelector('.view.trailhead.on[data-route="' + route + '"]') ||
       document.querySelector('.view.trailhead[data-route="' + route + '"]');
     if (live) {
-      live.classList.add("after-approach", "picker-in", "signs-lit", "live-video-bg");
-      /* Keep live-video-bg — shot still stays hidden so last video frame remains solid. */
+      live.classList.add("after-approach", "picker-in", "signs-lit");
+      live.classList.remove("live-video-bg");
+      /* 2133: professional navy still under picker — no live mountain video */
     }
     state.approachHold = true;
     if (live && live.querySelector(".hire-sheet")) {
@@ -594,7 +598,7 @@
   /* Still-first LCP: do not put src on <video> until the page is usable (or the
      visitor actually starts the approach). Warm only on the home view so deep
      routes do not pull imagine-home.mp4. */
-  var HOME_VIDEO_SRC = "assets/imagine-home.mp4?v=2110";
+  var HOME_VIDEO_SRC = ""; /* 2133: mountain approach video removed */
 
   function homeVideoSrcOf(el) {
     if (!el) return "";
@@ -702,6 +706,20 @@
      Pin to body hold BEFORE play. Pause at SETTLE (bake frame). Full speed — no
      playbackRate ease (that read as a soft cleanup / slowdown at the end). */
   function playHomeApproach(done, approachRoute) {
+    /* amp-build:2133-no-mountain — skip mountain swoop video; land route chrome immediately */
+    state._approachRoute = approachRoute || "physician";
+    var NO_MOUNTAIN_APPROACH = true;
+    if (NO_MOUNTAIN_APPROACH) {
+      var stageSkip = $("#home-stage");
+      if (stageSkip) {
+        stageSkip.classList.add("approach-ghost", "settled");
+        stageSkip.classList.remove("playing");
+      }
+      showBakedTrailheadStill(function () {
+        if (typeof done === "function") done();
+      });
+      return;
+    }
     state._approachRoute = approachRoute || "physician";
     /* Round-2 climb: start with picker hidden so OVERLAY_AT can fade it in again. */
     resetTrailheadPickerChrome(
@@ -3719,10 +3737,13 @@
     }).join("");
     injectJobJsonLd(buildJobPostingJsonLd(j));
     stampJobConcierge(j);
+    var heroBlock = j.hero
+      ? '<div class="job-hero"><img src="' + j.hero + '" alt="' + escapeAttr(jobHeroAlt(j)) + '"><div class="badge">Practice preview · not a facility dump</div></div>'
+      : '<div class="job-hero job-hero-pro" role="img" aria-label="Practice preview"><div class="badge">Practice preview · not a facility dump</div></div>';
     root.innerHTML =
       '<div class="job-layout">' +
         '<div>' +
-          '<div class="job-hero"><img src="' + j.hero + '" alt="' + escapeAttr(jobHeroAlt(j)) + '"><div class="badge">Lifestyle hero · not a facility dump</div></div>' +
+          heroBlock +
           '<div class="panel mt-16">' +
             '<span class="pill">' + j.code + '</span>' +
             '<h2 style="margin:10px 0 6px;font-size:26px;letter-spacing:-.03em">' + j.title + '</h2>' +

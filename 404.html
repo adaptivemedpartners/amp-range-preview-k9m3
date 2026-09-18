@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- amp-build:2132-brand-retheme -->
+<!-- amp-build:2133-no-mountain -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -21,15 +21,14 @@
   document.head.insertBefore(el, document.head.firstChild);
 })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=2132" />
-<link rel="preload" as="image" type="image/webp" fetchpriority="high" imagesrcset="assets/hero-imagine-frame0-1280.webp?v=2132 1280w, assets/hero-imagine-frame0.webp?v=2132 1920w" imagesizes="100vw" />
+<link rel="stylesheet" href="css/site.css?v=2133" />
 </head>
 <body>
 <div id="approach-video-hold" class="approach-video-hold" aria-hidden="true" hidden></div>
 <nav class="site-nav is-home" id="site-nav" aria-label="Primary">
   <a class="brand brand-lockup brand-glow-white" href="/" data-go="home" aria-label="AMP Adaptive Medical Partners home">
-    <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2132" alt="Adaptive Medical Partners" width="304" height="68" />
-    <img class="brand-lockup-img is-black" src="assets/amp-lockup-nav-black.png?v=2132" alt="Adaptive Medical Partners" width="304" height="68" />
+    <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2133" alt="Adaptive Medical Partners" width="304" height="68" />
+    <img class="brand-lockup-img is-black" src="assets/amp-lockup-nav-black.png?v=2133" alt="Adaptive Medical Partners" width="304" height="68" />
   </a>
   <div class="nav-links">
     <a class="nav-link hide-sm" href="/physician" data-go="physician">Physicians</a>
@@ -48,18 +47,12 @@
 
 <div id="app">
 
-<!-- ========== HOME: zoomed-OUT wide mountain + clean copy (no auto zoom-in) ========== -->
-<section class="view on home-stage settled" data-route="home" id="home-stage">
-  <!-- Still-first LCP (Mike 2026-09-15): light still paints first; video src attaches after usable.
-       Desktop gets full-res high-q WebP (q=95) with original PNG fallback — do not crush 27" quality.
-       Phone gets 1280w WebP. Video is data-src / preload=none so it cannot block first paint. -->
-  <picture>
-    <source type="image/webp" srcset="assets/hero-imagine-frame0-1280.webp?v=2132 1280w, assets/hero-imagine-frame0.webp?v=2132 1920w" sizes="100vw" />
-    <img class="home-poster" src="assets/hero-imagine-frame0.png?v=2132" width="1920" height="1088" fetchpriority="high" decoding="async" alt="" />
-  </picture>
-  <video id="home-video" class="home-video" data-src="assets/imagine-home.mp4?v=2132" playsinline muted preload="none"></video>
+<!-- ========== HOME: professional navy header (no mountain video/poster) ========== -->
+<section class="view on home-stage settled no-mountain-hero" data-route="home" id="home-stage">
+  <div class="home-pro-bg" aria-hidden="true"></div>
+  <video id="home-video" class="home-video" playsinline muted preload="none" hidden></video>
   <div class="home-mist" aria-hidden="true"></div>
-  <button type="button" class="home-skip" data-play-approach hidden>Watch the approach</button>
+  <button type="button" class="home-skip" data-play-approach hidden>Continue</button>
   <div class="home-overlay">
     <div class="explore-block">
       <div class="explore-kicker">Adaptive Medical Partners</div>
@@ -77,7 +70,6 @@
     </div>
     <div class="doors doors-hero" id="home-doors" role="navigation" aria-label="Main routes">
       <a class="door door-hero door-candidate" href="/physician" data-go="physician" data-approach="1">
-        <img class="door-photo" src="assets/home-door-candidate-journey.png?v=2132" alt="" aria-hidden="true" />
         <div class="door-photo-shade" aria-hidden="true"></div>
         <div class="door-glow" aria-hidden="true"></div>
         <div class="door-top">
@@ -90,7 +82,6 @@
         <span class="door-cta">Find roles <span aria-hidden="true">→</span></span>
       </a>
       <a class="door door-hero door-client" href="/client" data-go="client" data-approach="1">
-        <img class="door-photo" src="assets/home-door-client-summit.png?v=2132" alt="" aria-hidden="true" />
         <div class="door-photo-shade" aria-hidden="true"></div>
         <div class="door-glow" aria-hidden="true"></div>
         <div class="door-top">
@@ -106,12 +97,12 @@
     <div class="home-partners" aria-label="Organizations that trust AMP">
       <p class="home-partners-kicker">700+ rural hospitals, FQHCs &amp; critical access facilities trust our process</p>
       <div class="home-partners-grid">
-        <img class="partner-logo" src="assets/partners/adventist-health.png?v=2132" alt="Adventist Health" width="180" height="48" loading="lazy" />
-        <img class="partner-logo" src="assets/partners/iphca.png?v=2132" alt="Illinois Primary Health Care Association" width="180" height="48" loading="lazy" />
-        <img class="partner-logo" src="assets/partners/tenet-health.png?v=2132" alt="Tenet Health" width="180" height="48" loading="lazy" />
-        <img class="partner-logo" src="assets/partners/chs.png?v=2132" alt="Community Health Systems" width="180" height="48" loading="lazy" />
-        <img class="partner-logo" src="assets/partners/vcu.png?v=2132" alt="VCU" width="180" height="48" loading="lazy" />
-        <img class="partner-logo" src="assets/partners/shriners.png?v=2132" alt="Shriners Hospitals for Children" width="180" height="48" loading="lazy" />
+        <img class="partner-logo" src="assets/partners/adventist-health.png?v=2133" alt="Adventist Health" width="180" height="48" loading="lazy" />
+        <img class="partner-logo" src="assets/partners/iphca.png?v=2133" alt="Illinois Primary Health Care Association" width="180" height="48" loading="lazy" />
+        <img class="partner-logo" src="assets/partners/tenet-health.png?v=2133" alt="Tenet Health" width="180" height="48" loading="lazy" />
+        <img class="partner-logo" src="assets/partners/chs.png?v=2133" alt="Community Health Systems" width="180" height="48" loading="lazy" />
+        <img class="partner-logo" src="assets/partners/vcu.png?v=2133" alt="VCU" width="180" height="48" loading="lazy" />
+        <img class="partner-logo" src="assets/partners/shriners.png?v=2133" alt="Shriners Hospitals for Children" width="180" height="48" loading="lazy" />
       </div>
     </div>
 
@@ -120,7 +111,7 @@
       <h2 class="home-job2-title">Guides who care about getting it right</h2>
       <div class="home-job2-grid">
         <article class="home-job2-card home-job2-candidate">
-          <img class="home-job2-photo" src="assets/home-job2-candidate.jpg?v=2132" alt="An AMP guide showing a physician the lit path up the mountain" width="800" height="450" loading="lazy" />
+          <div class="home-job2-panel home-job2-panel-candidate" role="img" aria-label="Candidate recruiting path"></div>
           <div class="home-job2-body">
             <span class="home-job2-path">Are you a provider looking for a job?</span>
             <h3>Your story sets the route</h3>
@@ -129,7 +120,7 @@
           </div>
         </article>
         <article class="home-job2-card home-job2-client">
-          <img class="home-job2-photo" src="assets/home-job2-client.jpg?v=2132" alt="A healthcare leader on a cabin balcony watching candidates ascend a lit path" width="800" height="450" loading="lazy" />
+          <div class="home-job2-panel home-job2-panel-client" role="img" aria-label="Client hiring path"></div>
           <div class="home-job2-body">
             <span class="home-job2-path">Are you a medical facility looking to hire?</span>
             <h3>Hire without reliving a hard search</h3>
@@ -220,35 +211,35 @@
         <p class="home-learn-lede" data-guides-lede>Tap one — they turn a preview into a real next step.</p>
         <div class="home-guides-roster guides-roster is-on" data-guides-panel="candidate" role="list">
           <a class="guide-card guide-row" href="/guides#guide-michael-freeman" data-go="guides" data-hash="guide-michael-freeman" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/mike-freeman.jpg?v=2132" alt="Mike Freeman" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/mike-freeman.jpg?v=2133" alt="Mike Freeman" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Mike Freeman</span>
               <span class="guide-role">Managing Partner, Recruiting</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-stephanie-youngblood" data-go="guides" data-hash="guide-stephanie-youngblood" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/stephanie-youngblood.jpg?v=2132" alt="Stephanie Youngblood" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/stephanie-youngblood.jpg?v=2133" alt="Stephanie Youngblood" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Stephanie Youngblood</span>
               <span class="guide-role">Recruiting guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-hadley-herrera" data-go="guides" data-hash="guide-hadley-herrera" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/hadley-herrera.jpg?v=2132" alt="Hadley Herrera" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/hadley-herrera.jpg?v=2133" alt="Hadley Herrera" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Hadley Herrera</span>
               <span class="guide-role">Recruiting guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-nate-smith" data-go="guides" data-hash="guide-nate-smith" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/nate-smith.jpg?v=2132" alt="Nate Smith" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/nate-smith.jpg?v=2133" alt="Nate Smith" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Nate Smith</span>
               <span class="guide-role">Recruiting guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-amy-myers" data-go="guides" data-hash="guide-amy-myers" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/amy-myers.jpg?v=2132" alt="Amy Myers" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/amy-myers.jpg?v=2133" alt="Amy Myers" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Amy Myers</span>
               <span class="guide-role">Recruiting guide</span>
@@ -257,35 +248,35 @@
         </div>
         <div class="home-guides-roster guides-roster" data-guides-panel="client" role="list" hidden>
           <a class="guide-card guide-row" href="/guides#guide-randy-keeth" data-go="guides" data-hash="guide-randy-keeth" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/randy-keeth.jpg?v=2132" alt="Randy Keeth" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/randy-keeth.jpg?v=2133" alt="Randy Keeth" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Randy Keeth</span>
               <span class="guide-role">Managing Partner, Business Development</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-brenton-mcmahan" data-go="guides" data-hash="guide-brenton-mcmahan" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/brenton-mcmahan.jpg?v=2132" alt="Brenton McMahan" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/brenton-mcmahan.jpg?v=2133" alt="Brenton McMahan" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Brenton McMahan</span>
               <span class="guide-role">Hiring guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-aaron-wagner" data-go="guides" data-hash="guide-aaron-wagner" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/aaron-wagner.jpg?v=2132" alt="Aaron Wagner" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/aaron-wagner.jpg?v=2133" alt="Aaron Wagner" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Aaron Wagner</span>
               <span class="guide-role">Hiring guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-zach-hamann" data-go="guides" data-hash="guide-zach-hamann" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/zach-hamann.jpg?v=2132" alt="Zach Hamann" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/zach-hamann.jpg?v=2133" alt="Zach Hamann" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Zach Hamann</span>
               <span class="guide-role">Hiring guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-kelley-lobona" data-go="guides" data-hash="guide-kelley-lobona" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/kelley-lobona.jpg?v=2132" alt="Kelley Lobona" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/kelley-lobona.jpg?v=2133" alt="Kelley Lobona" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Kelley Lobona</span>
               <span class="guide-role">Hiring guide</span>
@@ -329,19 +320,19 @@
 <!-- ========== PHYSICIAN FUNNEL ========== -->
 <section class="view page funnel trailhead" data-route="physician">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/hero-mountain-trailhead-freeze-1280.webp?v=2132 1280w, assets/hero-mountain-trailhead-freeze.webp?v=2132 1920w" sizes="100vw" /><img class="still" src="assets/hero-mountain-trailhead-freeze.png?v=2132" width="1920" height="1088" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="trailhead-stage trailhead-sheet-stage trailhead-overlay-stage">
     
-    <div class="hire-sheet funnel-panel trailhead-picker" role="region" aria-label="SEARCHING FOR THE PEAK">
+    <div class="hire-sheet funnel-panel trailhead-picker" role="region" aria-label="Choose your specialty">
       <h1 class="hire-title">Pick your specialty.</h1>
       <div class="hire-card-list">
-        <button type="button" class="hire-card" data-specialty="fm"><h3>Family Medicine</h3><p>Clinic-first weeks with room for life outside the trail.</p><span class="hire-select">Select →</span></button>
+        <button type="button" class="hire-card" data-specialty="fm"><h3>Family Medicine</h3><p>Clinic-first weeks with room for life outside work.</p><span class="hire-select">Select →</span></button>
         <button type="button" class="hire-card" data-specialty="obg"><h3>Obstetrics &amp; Gynecology</h3><p>Practice-first OB/GYN roles — schedule and package on a call.</p><span class="hire-select">Select →</span></button>
         <button type="button" class="hire-card" data-specialty="gi"><h3>Gastroenterology</h3><p>Procedure and clinic mix with clear schedule preview.</p><span class="hire-select">Select →</span></button>
         <button type="button" class="hire-card" data-specialty="neuro"><h3>Neurology</h3><p>Outpatient and hybrid neuro paths with guide support.</p><span class="hire-select">Select →</span></button>
         <button type="button" class="hire-card" data-specialty="dental"><h3>Dentistry</h3><p>Dental and DSOs with clear package preview.</p><span class="hire-select">Select →</span></button>
-        <button type="button" class="hire-card" data-specialty="other"><h3>Other</h3><p>Tell us your trail — we route you to the right guide.</p><span class="hire-select">Select →</span></button>
+        <button type="button" class="hire-card" data-specialty="other"><h3>Other</h3><p>Tell us your specialty — we route you to the right guide.</p><span class="hire-select">Select →</span></button>
       </div>
       <div class="spec-other-pop" id="spec-other-pop" hidden role="dialog" aria-label="Choose another specialty">
         <button type="button" class="spec-other-close" id="spec-other-close" aria-label="Close">×</button>
@@ -354,11 +345,11 @@
 </section>
 <section class="view page funnel rank-view" data-route="physician-rank">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band rank-hero">
-    <div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -386,11 +377,11 @@
 </section>
 <section class="view page funnel" data-route="physician-region">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
-    <div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -405,11 +396,11 @@
 </section>
 <section class="view page funnel" data-route="physician-jobs">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
-    <div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -437,7 +428,7 @@
         <div class="panel panel-glow">
           <span class="tag">Fit that lasts</span>
           <h3 class="mt-8" style="font-size:17px;letter-spacing:-.02em;margin:8px 0 6px">87% stay 3+ years</h3>
-          <p class="muted mb-0">Because fit matters. Placement is reaching the peak; retention is staying on the mountain with a life you can keep.</p>
+          <p class="muted mb-0">Because fit matters. Placement is the hire; retention is staying in a role and a life you can keep.</p>
         </div>
         <div class="panel panel-glow">
           <span class="tag">Preview → talk</span>
@@ -461,11 +452,11 @@
 </section>
 <section class="view page funnel" data-route="job">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band" style="padding-bottom:20px">
-    <div class="bg" style="background-image:url('assets/mike-ridge-3.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -478,7 +469,7 @@
 </section>
 <section class="view page funnel" data-route="job-contact">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -520,7 +511,7 @@
 </section>
 <section class="view page funnel" data-route="chat">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band" style="padding-bottom:8px">
@@ -539,7 +530,7 @@
 </section>
 <section class="view page funnel" data-route="confirm-mess">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band confirm-band">
@@ -572,7 +563,7 @@
 <!-- ========== CLIENT FUNNEL (same trail transition family) ========== -->
 <section class="view page funnel trailhead" data-route="client">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/hero-mountain-trailhead-freeze-1280.webp?v=2132 1280w, assets/hero-mountain-trailhead-freeze.webp?v=2132 1920w" sizes="100vw" /><img class="still" src="assets/hero-mountain-trailhead-freeze.png?v=2132" width="1920" height="1088" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="trailhead-stage trailhead-sheet-stage trailhead-overlay-stage">
     
@@ -587,7 +578,7 @@
 </section>
 <section class="view page funnel trailhead client-spec-sheet" data-route="client-specialty">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/hero-mountain-trailhead-freeze-1280.webp?v=2132 1280w, assets/hero-mountain-trailhead-freeze.webp?v=2132 1920w" sizes="100vw" /><img class="still" src="assets/hero-mountain-trailhead-freeze.png?v=2132" width="1920" height="1088" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="trailhead-stage trailhead-sheet-stage">
     
@@ -619,11 +610,11 @@
 
 <section class="view page funnel" data-route="client-region">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
-    <div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       <p class="client-step client-step-on-hero" aria-current="step"><span class="client-step-kicker">Step 4 of 5</span> Where to search</p>
@@ -793,13 +784,13 @@
 <section class="view page funnel" data-route="client-retained" hidden aria-hidden="true"></section>
 <section class="view page funnel" data-route="client-meeting">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
     <div class="hero-inner">
       <p class="client-step client-step-on-hero" aria-current="step"><span class="client-step-kicker">Step 5 of 5</span> Request a meeting</p>
-      <h1>Request the summit meeting.</h1>
+      <h1>Request a hiring consultation.</h1>
       <p class="lede">You hold the peak. AMP works the climb. Every client inquiry → a <strong>hiring guide</strong>. Structure on the call.</p>
     </div>
   </div>
@@ -897,7 +888,7 @@
 </section>
 <section class="view page funnel" data-route="confirm-client">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band confirm-band">
@@ -940,7 +931,7 @@
 <!-- ========== MPC · tailored search ========== -->
 <section class="view page funnel" data-route="mpc">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -956,7 +947,7 @@
         <div class="mpc-icon" aria-hidden="true">🌲</div>
         <span class="tag">Candidate · Wilderness</span>
         <h3>When posted roles don’t fit</h3>
-        <p>You’re still searching for the peak — open country, unknown ridge lines. MPC keeps you on the mountain with a guide instead of a dead end.</p>
+        <p>You’re still searching for the right fit. MPC keeps you moving with a named guide instead of a dead end.</p>
       </div>
       <div class="mpc-panel dedicated">
         <div class="mpc-icon" aria-hidden="true">🧭</div>
@@ -1012,11 +1003,11 @@
 <!-- ========== MPC PORTAL: not available yet ========== -->
 <section class="view page funnel" data-route="mpc-portal">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
-    <div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -1041,7 +1032,7 @@
 
 <section class="view page funnel" data-route="mpc-browse">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1076,11 +1067,11 @@
 <!-- ========== EDUCATION + SITE PAGES ========== -->
 <section class="view page funnel" data-route="education">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
-    <div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -1111,15 +1102,15 @@
       <div class="seo-pillars-head">
         <span class="tag">Why AMP · Proof</span>
         <h2 class="seo-pillars-title">Why retention, interview efficiency, and rural / FQHC craft matter</h2>
-        <p class="muted mb-0">Public proof first — then open the guide that matches where you are on the trail.</p>
+        <p class="muted mb-0">Public proof first — then open the guide that matches where you are in your search.</p>
       </div>
       <div class="residents-education-card panel panel-glow" data-go="residents" role="button" tabindex="0"><div><span class="tag">Residents &amp; Fellows</span><h2>Coming out of training? Start with the week.</h2><p class="muted mb-0">Learn the shortfalls, place-first questions, contract checkpoints, and second-climb signals before a job search becomes a commitment.</p></div><span class="meta">Enter the residents hub →</span></div>
       <div class="mi-education-card panel panel-glow" data-go="mi-lite" role="button" tabindex="0"><div><span class="tag">Market Intelligence · EXAMPLE</span><h2>Hard to know compensation? Open Market Intelligence.</h2><p class="muted mb-0">AMP’s market read for specialty × region — one product for candidates or clients. Blurred sample until unlock; Ask AMP for deeper firm tools.</p></div><span class="meta">Open Market Intelligence →</span></div>
       <div class="seo-pillar-links">
-        <button class="card pillar-card" type="button" id="why-amp-pillar-retention" data-proof-pair="retention" data-blog="physician-retention-3-year-kpi"><span class="tag">Retention</span><h3>Why 3-year retention is the real KPI</h3><p>87% still on the mountain — not just “filled.”</p><div class="meta">Read pillar →</div></button>
-        <button class="card pillar-card" type="button" id="why-amp-pillar-efficiency" data-proof-pair="efficiency" data-blog="interview-to-placement-efficiency"><span class="tag">Efficiency</span><h3>The 1.7 interview story</h3><p>Prepared hikers at the summit — we don’t waste meetings.</p><div class="meta">Read pillar →</div></button>
+        <button class="card pillar-card" type="button" id="why-amp-pillar-retention" data-proof-pair="retention" data-blog="physician-retention-3-year-kpi"><span class="tag">Retention</span><h3>Why 3-year retention is the real KPI</h3><p>87% still in role at 3 years — not just “filled.”</p><div class="meta">Read pillar →</div></button>
+        <button class="card pillar-card" type="button" id="why-amp-pillar-efficiency" data-proof-pair="efficiency" data-blog="interview-to-placement-efficiency"><span class="tag">Efficiency</span><h3>The 1.7 interview story</h3><p>Prepared candidates for interviews — we don’t waste meetings.</p><div class="meta">Read pillar →</div></button>
         <button class="card pillar-card" type="button" id="why-amp-pillar-rural" data-proof-pair="rural" data-blog="rural-fqhc-critical-access-recruiting"><span class="tag">Rural / FQHC</span><h3>700+ partnerships that matter</h3><p>Critical access &amp; community health recruiting craft.</p><div class="meta">Read pillar →</div></button>
-        <button class="card pillar-card" type="button" id="why-amp-pillar-history" data-proof-pair="history" data-blog="amp-history-16-years"><span class="tag">History</span><h3>16 years on the mountain</h3><p>From 2010 founding to a 2026 boutique rebirth — the public timeline, not a trophy wall.</p><div class="meta">Read pillar →</div></button>
+        <button class="card pillar-card" type="button" id="why-amp-pillar-history" data-proof-pair="history" data-blog="amp-history-16-years"><span class="tag">History</span><h3>16 years of specialized search</h3><p>From 2010 founding to a 2026 boutique rebirth — the public timeline, not a trophy wall.</p><div class="meta">Read pillar →</div></button>
         <button class="card pillar-card" type="button" data-go="mpc" data-trail="1"><span class="tag">MPC</span><h3>Market Prime Candidate</h3><p>When nothing posted fits, a recruiting guide opens a tailored search with you.</p><div class="meta">Open tailored search →</div></button>
       </div>
     </div>
@@ -1137,7 +1128,7 @@
     <div class="panel panel-glow mt-24 geo-faq-panel" id="amp-geo-faq">
       <span class="tag">FAQ</span>
       <h2 class="mt-8" style="font-size:20px;letter-spacing:-.02em">Physician recruiting questions AMP answers plainly</h2>
-      <p class="muted" style="font-size:14px;margin:0 0 12px">Mountain voice, public proof only, no invented towns.</p>
+      <p class="muted" style="font-size:14px;margin:0 0 12px">Plain voice, public proof only, no invented towns.</p>
       <div class="faq" role="list">
         <details open>
           <summary>What is the difference between dedicated and contingent physician search?</summary>
@@ -1153,11 +1144,11 @@
         </details>
         <details>
           <summary>What does AMP’s 87% retention at 3 years mean?</summary>
-          <p>It is the share of AMP placements still in role (or system) at the three-year mark. Placement is reaching the peak; retention is staying on the mountain. It is public proof of durable fit — not a personal guarantee for every search, and not the same as time-to-fill.</p>
+          <p>It is the share of AMP placements still in role (or system) at the three-year mark. Placement is the hire; retention is staying in role. It is public proof of durable fit — not a personal guarantee for every search, and not the same as time-to-fill.</p>
         </details>
         <details>
           <summary>What does 1.7 average interviews per placement mean?</summary>
-          <p>It is AMP’s reported mean number of interviews per successful placement. The point is summit-meeting efficiency: prepare hikers on the trail so committees do not burn cycles on candidates who were never summit-ready. It is a process KPI from About language, not a promise that every search has a two-person slate.</p>
+          <p>It is AMP’s reported mean number of interviews per successful placement. The point is interview efficiency: prepare candidates so committees do not burn cycles on people who were never interview-ready. It is a process KPI from About language, not a promise that every search has a two-person slate.</p>
         </details>
         <details>
           <summary>Does AMP focus on rural, FQHC, and critical access recruiting?</summary>
@@ -1169,7 +1160,7 @@
         </details>
         <details>
           <summary>How does AMP protect confidentiality?</summary>
-          <p>Public job pages are trail signs: practice-first headlines, limited bullets, lifestyle heroes when useful. Named facility deep-dives, non-public financials, and full stacks stay gated for confidential calls and summit meetings. Dual applying around your guide creates crossed wires — let AMP coordinate when representing the search.</p>
+          <p>Public job pages are previews: practice-first headlines, limited bullets, lifestyle heroes when useful. Named facility deep-dives, non-public financials, and full stacks stay gated for confidential calls and hiring meetings. Dual applying around your guide creates crossed wires — let AMP coordinate when representing the search.</p>
         </details>
       </div>
       <div class="btn-row mt-16">
@@ -1185,7 +1176,7 @@
 </section>
 <section class="view page funnel" data-route="amp-score">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1193,7 +1184,7 @@
       
       <h1>AMP Score</h1>
       <p class="lede">Fit without mystique — lifestyle, practice design, compensation clarity, culture, summit readiness.</p>
-      <div class="trail-sign">This mountain page is a preview only. The live AMP Score product is on getampscore.com.</div>
+      <div class="trail-sign">This page is a preview only. The live AMP Score product is on getampscore.com.</div>
       <div class="btn-row" style="margin-top:14px">
         <a class="btn btn-primary" href="https://getampscore.com/" target="_blank" rel="noopener noreferrer">Open AMP Score at getampscore.com</a>
       </div>
@@ -1220,7 +1211,7 @@
       </div>
       <div class="btn-row">
         <a class="btn btn-primary" href="https://getampscore.com/" target="_blank" rel="noopener noreferrer">Open getampscore.com</a>
-        <button type="button" class="btn btn-ghost" data-go="physician" data-trail="1">Physician trail</button>
+        <button type="button" class="btn btn-ghost" data-go="physician" data-trail="1">Physician path</button>
         <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">Client path</button>
         <button type="button" class="btn btn-ghost" data-go="blog/amp-score-explained">Read the article</button>
       </div>
@@ -1231,7 +1222,7 @@
 
 <section class="view page" data-route="blog">
   <div class="hero-band">
-    <div class="bg" data-bg="assets/trailsigns.webp?v=2132"></div>
+    <div class="bg pro-bg"></div>
     <div class="veil"></div>
     <div class="hero-inner">
       
@@ -1270,9 +1261,9 @@
 </section>
 
 <section class="view page funnel residents-view" data-route="residents">
-  <div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" /></div>
+  <div class="shot" aria-hidden="true"><div class="still pro-still" aria-hidden="true"></div></div>
   <div class="view-chrome">
-    <div class="hero-band residents-hero"><div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>Coming out of training?</h1><p class="lede">Your first job is a summit worth choosing carefully. AMP is the guide: you’re searching for the peak, while the right client is waiting at the peak. Start with the shortfalls before you click into roles.</p><div class="btn-row"><button type="button" class="btn btn-primary" data-go="mi-lite">Peek at the ridge</button><button type="button" class="btn btn-ghost" data-go="contact">Talk with a guide</button></div></div></div>
+    <div class="hero-band residents-hero"><div class="bg pro-bg"></div><div class="veil"></div><div class="hero-inner"><h1>Coming out of training?</h1><p class="lede">Your first job is worth choosing carefully. AMP is the guide: you’re looking for the right role, while the right employer is ready to hire. Start with the shortfalls before you click into roles.</p><div class="btn-row"><button type="button" class="btn btn-primary" data-go="mi-lite">See Market Intelligence</button><button type="button" class="btn btn-ghost" data-go="contact">Talk with a guide</button></div></div></div>
     <div class="section section-lite funnel-panel residents-panel">
       <div class="residents-callout panel panel-glow"><strong>As reported by the AMA:</strong> nearly 60% leave their first post-training job within three years, and more than 25% consider leaving within year one. Let that push you to ask sharper questions before you choose — not tell you how your story ends.</div>
       <div class="learn-rails"><article class="learn-rail"><span class="rail-num">01</span><h2>Shortfalls</h2><p>Notice what the brochure leaves out: the actual week, call architecture, team support, and what changes after the guarantee.</p><button type="button" class="btn btn-primary learn-rail-cta" data-go="blog/first-job-shortfalls-residents-fellows">Read shortfalls →</button></article><article class="learn-rail"><span class="rail-num">02</span><h2>Place first</h2><p>Region matters, but place is more than a label. Ask where you will practice, who you will become there, and what your partner needs too.</p><button type="button" class="btn btn-primary learn-rail-cta" data-go="blog/place-first-without-regret">Place-first guide →</button></article><article class="learn-rail"><span class="rail-num">03</span><h2>Contracts</h2><p>Build contract literacy before you sign: compensation mechanics, schedule language, restrictive covenants, termination, and who answers questions.</p><button type="button" class="btn btn-primary learn-rail-cta" data-go="blog/two-year-test-before-you-sign">Two-year test →</button></article><article class="learn-rail"><span class="rail-num">04</span><h2>Second climb</h2><p>If the first ridge is wrong, a second climb is not failure. Learn how to audit the fit before you carry a new pack.</p><button type="button" class="btn btn-primary learn-rail-cta" data-go="blog/mpc-when-location-leads">Second-climb note →</button></article></div>
@@ -1284,9 +1275,9 @@
   </div>
 </section>
 <section class="view page funnel mi-lite-view" data-route="mi-lite">
-  <div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" /></div>
+  <div class="shot" aria-hidden="true"><div class="still pro-still" aria-hidden="true"></div></div>
   <div class="view-chrome">
-    <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>See the ridge before you choose a trail.</h1><p class="lede"><strong>Ridge</strong> is AMP’s public market read — specialty × state, unit-gated. Demo is free (1×1, full surface) after you pick both. Verify a work email for +2 specialties. Then paid geo + polls.</p><div class="btn-row"><button type="button" class="btn btn-primary ridge-walk-jump">Open free demo →</button><button type="button" class="btn btn-ghost" data-go="mi-lite-portal" data-trail="1">View pricing</button></div></div></div>
+    <div class="hero-band"><div class="bg pro-bg"></div><div class="veil"></div><div class="hero-inner"><h1>See the market before you choose a path.</h1><p class="lede"><strong>Ridge</strong> is AMP’s public market read — specialty × state, unit-gated. Demo is free (1×1, full surface) after you pick both. Verify a work email for +2 specialties. Then paid geo + polls.</p><div class="btn-row"><button type="button" class="btn btn-primary ridge-walk-jump">Open free demo →</button><button type="button" class="btn btn-ghost" data-go="mi-lite-portal" data-trail="1">View pricing</button></div></div></div>
     <div class="section section-lite funnel-panel mi-lite-panel">
       <div class="mi-lite-disclaimer panel"><strong>PUBLIC DATA ONLY</strong><span>No MGMA. No live feed, client names, search IDs, towns, or hospitals. A poll is one specialty × state open inside the plan geography.</span></div>
       <div class="mi-lite-scope panel"><div><span class="tag">Stairs · locked 2026-09-16</span><h2>Demo → verify → paywall.</h2><p class="muted mb-0">Anonymous demo is 1 state × 1 specialty, full surface, printable AMP-branded PDF. Verified sample unlocks +2 specialties (3 tastes total), then a hard paywall: subscribe, or a $49 one-off. Extra poll $9 is only after a paid plan’s monthly allotment is used.</p></div><div class="mi-scope-grid"><div><strong>Included</strong><span>USA map + metric toggles</span><span>Six HUD / bench cards</span><span>AMP-branded printable PDF</span><span>Org / work-email seat (1 allotment)</span></div><div><strong>Not included</strong><span>No MGMA on the external product</span><span>No named towns or hospitals</span><span>No bulk CSV / API in V1</span><span>Ask AMP for deeper firm tools</span></div></div></div>
@@ -1310,14 +1301,14 @@
   </div>
 </section>
 <section class="view page funnel mi-lite-view" data-route="mi-lite-portal">
-  <div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" /></div><div class="view-chrome">
-    <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-1.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>Unlock geo + monthly polls.</h1><p class="lede">Same Ridge tool. State, Region, or National. Polls meter what you open: one specialty × state inside the plan geography. After a paid plan’s allotment is used, Extra poll $9. Or a $49 one-off report with no subscription.</p></div></div>
+  <div class="shot" aria-hidden="true"><div class="still pro-still" aria-hidden="true"></div></div><div class="view-chrome">
+    <div class="hero-band"><div class="bg pro-bg"></div><div class="veil"></div><div class="hero-inner"><h1>Unlock geo + monthly polls.</h1><p class="lede">Same Ridge tool. State, Region, or National. Polls meter what you open: one specialty × state inside the plan geography. After a paid plan’s allotment is used, Extra poll $9. Or a $49 one-off report with no subscription.</p></div></div>
     <div class="section section-lite funnel-panel mi-lite-panel"><div class="mi-lite-disclaimer panel"><strong>STRIPE CHECKOUT STUBBED</strong><span>Access gates, poll counter, and geo scope are real in this SPA. Checkout is test-mode only — nothing is charged.</span></div><div class="mi-price-layout"><div class="mi-price-intro panel panel-glow"><span class="tag">Ridge · V1 lock</span><h2>State · Region · National.</h2><p>Account is an org / work email. One allotment per org seat. No bulk CSV or API in V1. AMP purchase regions: <strong>West</strong>, <strong>Southwest</strong>, <strong>Midwest</strong>, <strong>Northeast</strong>, <strong>Southeast</strong>. Public data only — no MGMA.</p><p class="mi-seat-note"><strong>1 seat included</strong> · polls reset with the monthly plan · extras $9 each after a paid allotment (never on demo or verified-only).</p><div class="dest-row"><span class="dest-chip bd"><span class="dot"></span> Geo + poll gates on</span><span class="dest-chip mess"><span class="dot"></span> Checkout stub · test mode</span></div></div><div class="mi-pricing panel panel-glow"><h3 class="mt-0">Choose a subscription</h3><div class="mi-price-grid mi-price-grid-3" role="radiogroup" aria-label="Ridge packages"><label class="mi-price-card"><input type="radio" name="mi-lite-plan" value="state" /><span class="mi-price-tag">State</span><strong>$99<span>/mo</span></strong><span class="mi-price-alt">15 polls / month</span><p><strong>1 state</strong> unlocked. Extra polls $9.</p></label><label class="mi-price-card is-selected"><input type="radio" name="mi-lite-plan" value="region" checked /><span class="mi-price-tag">Region</span><strong>$149<span>/mo</span></strong><span class="mi-price-alt">30 polls / month</span><p><strong>1 AMP region</strong> — West · Southwest · Midwest · Northeast · or Southeast.</p></label><label class="mi-price-card"><input type="radio" name="mi-lite-plan" value="national" /><span class="mi-price-tag">National</span><strong>$225<span>/mo</span></strong><span class="mi-price-alt">60 polls / month</span><p><strong>All states</strong> unlocked. Extra polls $9.</p></label></div><div class="mi-plan-pickers" id="mi-lite-plan-pickers"><div class="mi-plan-picker" id="mi-lite-state-picker" hidden><label class="field">Pick your state<select id="mi-lite-state-select" name="mi-lite-state" aria-label="Pick your state"><option value="">Select a state…</option></select></label></div><div class="mi-plan-picker" id="mi-lite-region-picker"><label class="field">Pick purchase region<select id="mi-lite-region-select" name="mi-lite-region" aria-label="Pick purchase region"><option value="">Select a region…</option><option value="west">West</option><option value="southwest">Southwest</option><option value="midwest">Midwest</option><option value="northeast">Northeast</option><option value="southeast">Southeast</option></select></label><p class="muted mi-region-states" id="mi-lite-region-states" hidden></p></div></div><div class="mi-price-grid mi-price-grid-2 ridge-add-on-grid"><label class="mi-price-card" id="ridge-extra-poll-card" hidden><span class="mi-price-tag">Extra poll</span><strong>$9</strong><p>Paid seats only — one more specialty × state after this month’s allotment is used.</p><button type="button" class="btn btn-ghost" id="ridge-extra-poll-buy" data-ridge-checkout="extra_poll" hidden>Buy extra poll</button></label><label class="mi-price-card"><span class="mi-price-tag">One-off report</span><strong>$49</strong><p>One specialty × state PDF. No subscription required.</p><button type="button" class="btn btn-ghost" data-ridge-checkout="oneoff">Buy one-off</button></label></div><p class="mi-gate-note" id="mi-lite-gate-note">Checkout is stubbed (test-mode hook). Simulate payment to grant the seat, poll pack, or one-off in this browser. Gates and counters are live.</p><button type="button" class="btn btn-primary btn-lg" id="mi-lite-subscribe">Open Checkout stub</button><button type="button" class="btn btn-ghost mt-12" data-go="mi-lite-login" data-trail="1">Or verify a work email</button><button type="button" class="btn btn-ghost mt-12" data-go="mi-lite">Back to Ridge</button></div></div></div>
   </div>
 </section>
 <section class="view page funnel mi-lite-view" data-route="mi-lite-login">
-  <div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" /></div><div class="view-chrome">
-    <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-2.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>Verify a work email for +2 specialties.</h1><p class="lede">Name, org, verified work email, and phone unlock two more specialty tastes (3 total). Then a hard paywall. Account = org / work email · one allotment per org seat.</p></div></div>
+  <div class="shot" aria-hidden="true"><div class="still pro-still" aria-hidden="true"></div></div><div class="view-chrome">
+    <div class="hero-band"><div class="bg pro-bg"></div><div class="veil"></div><div class="hero-inner"><h1>Verify a work email for +2 specialties.</h1><p class="lede">Name, org, verified work email, and phone unlock two more specialty tastes (3 total). Then a hard paywall. Account = org / work email · one allotment per org seat.</p></div></div>
     <div class="section section-lite funnel-panel mi-lite-panel">
       <div class="mi-lite-disclaimer panel"><strong>FREE GATED SAMPLE</strong><span>Consumer inboxes (gmail, yahoo, outlook, icloud) stay locked. Org / work email only. No Stripe on this stair.</span></div>
       <div class="mi-login panel panel-glow">
@@ -1341,8 +1332,8 @@
   </div>
 </section>
 <section class="view page funnel mi-lite-view" data-route="mi-lite-app">
-  <div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" /></div><div class="view-chrome">
-    <div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-3.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>Ridge workbench.</h1><p class="lede">Full surface for the units you have unlocked. Demo is 1 state × 1 specialty. Verify for +2 specialties. Paid plans meter polls and enforce geo. Public data only — no MGMA.</p></div></div>
+  <div class="shot" aria-hidden="true"><div class="still pro-still" aria-hidden="true"></div></div><div class="view-chrome">
+    <div class="hero-band"><div class="bg pro-bg"></div><div class="veil"></div><div class="hero-inner"><h1>Ridge workbench.</h1><p class="lede">Full surface for the units you have unlocked. Demo is 1 state × 1 specialty. Verify for +2 specialties. Paid plans meter polls and enforce geo. Public data only — no MGMA.</p></div></div>
     <div class="section section-lite funnel-panel mi-app-panel">
       <div class="mi-lite-disclaimer panel"><strong>PUBLIC DATA · NO MGMA</strong><span>No client names, search IDs, towns, or hospitals. One org seat · no bulk CSV / API in V1.</span></div>
       <div class="ridge-walk-gate panel panel-glow" id="ridge-walk-gate" hidden>
@@ -1491,10 +1482,10 @@
     </div>
   </div>
 </div>
-<section class="view page funnel guides-view" data-route="guides"><div class="shot" aria-hidden="true"><img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" /></div><div class="view-chrome"><div class="hero-band"><div class="bg" style="background-image:url('assets/mike-ridge-3.jpg')"></div><div class="veil"></div><div class="hero-inner"><h1>Every climb deserves an experienced guide.</h1><p class="lede">The people on the rope with you — practitioners who know the terrain, tell the truth, and stay until the summit meeting is prepared.</p></div></div><div class="section section-lite funnel-panel guides-panel"><div class="guide-section-label"><span class="tag">Leadership</span><p class="muted">Keep the mountain clear — ownership, craft, and the handoff when it matters.</p></div><div class="guides-roster guides-roster-lead guides-grid"><article id="guide-david-fontenot" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/david-fontenot.jpg?v=2111" alt="David Fontenot" /></div><div class="guide-body"><h3>David Fontenot</h3><p class="guide-role">Founder, President &amp; CEO</p><p class="guide-blurb">Founder who still climbs with the team — rural fit, family-to-community matching, and lasting retention.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>David Fontenot is Founder, President, and CEO of Adaptive Medical Partners. He brings about eighteen years of healthcare recruiting expertise, with the great majority of his searches in rural and underserved communities. Growing up in Louisiana, he understands the unique challenge of fitting families to communities—the key to long-term retention. As CEO he still actively recruits alongside his team, keeping AMP current with how rural healthcare evolves day to day. That hands-on leadership and community understanding sit behind AMP’s lasting placement craft.</p><p>Under David’s ownership AMP stays boutique and client-centric: proven methods from more than a decade and a half of specialized search, paired with modern tools—without losing the guide on the rope.</p><p>David has been married for ten years and has two kids. Outside work, he and his wife play in a pool league together—a rhythm that matters to them.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-michael-freeman" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/mike-freeman.jpg?v=2111" alt="Mike Freeman" /></div><div class="guide-body"><h3>Mike Freeman</h3><p class="guide-role">Managing Partner, Recruiting</p><p class="guide-blurb">Sixteen years of physician recruiting — practitioner context, cultural fit, and a drive to build the best firm possible.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Mike Freeman is Managing Partner, Recruiting at Adaptive Medical Partners, with sixteen years of specialized physician recruiting experience (since 2010). He has earned Recruiter of the Year honors three times (2015, 2017, and 2021). A psychology degree from college helps him read candidate motivations and cultural fit—not just credentials on a page.</p><p>At AMP, Mike organizes recruiting activity across the team and mentors newer guides so service stays exceptional. Two years in business development give him a clear view of both sides of the table: what clients need to hold the peak, and what candidates need to choose a climb they can stay on—especially in rural and community settings. He drives innovation and truth in the work, always pushing Adaptive Medical Partners toward being the best firm it can be.</p><p>Based in the Dallas–Fort Worth area, Mike has been married for twenty years. He and his wife have two kids—a teenage boy and a college-aged daughter. Outside work the family loves to travel, eat great food, and show up for their kids. Mike still plays soccer as a grown man, and he’s not shy about it.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-randy-keeth" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/randy-keeth.jpg?v=2111" alt="Randy Keeth" /></div><div class="guide-body"><h3>Randy Keeth</h3><p class="guide-role">Managing Partner, Business Development</p><p class="guide-territory">National BD · unassigned states · CC on every lead</p><p class="guide-blurb">Client-first BD for rural partners — trusted relationships, faster fills, and a brief candidates can trust.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP’s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP’s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy’s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company’s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP’s clients.</p><p>Randy is married and has a teenage son.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article></div><div class="guide-section-label mt-24"><span class="tag">Recruiting guides</span><p class="muted">Named guides for the next step — not a blast list, not a dead inbox.</p></div><div class="guides-roster guides-roster-recruit guides-grid recruiter-guides"><article id="guide-stephanie-youngblood" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/stephanie-youngblood.jpg?v=2111" alt="Stephanie Youngblood" /></div><div class="guide-body"><h3>Stephanie Youngblood</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Listens first, then builds a clear path — administrator-minded recruiting with a thoughtful pace.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Stephanie Youngblood is a Physician Recruiter at Adaptive Medical Partners, partnering with healthcare organizations and physicians across the country. She brings an administrator’s perspective to physician search—listening closely, then shaping flexible, tailored solutions that fit both the practice and the candidate.</p><p>Before AMP, Stephanie spent years as an Account Executive at Soliant, where colleagues knew her as a go-to recruiter who found strong matches quickly, kept talent engaged, and mentored newer teammates by leading by example. Earlier work in sales support, operations, and high-stakes event leadership sharpened the same strengths she uses now: calm coordination, clear communication, and showing up when details matter.</p><p>At Adaptive Medical Partners, Stephanie focuses on exceptional client service and a simplified process. She helps executives and candidates know what comes next—without the noise—so hard searches stay grounded and on track.</p><p>Based in the Houston area (Cypress, Texas), Stephanie’s life outside work centers on family. She and her husband of more than ten years are raising a young daughter and a son, along with two teenage stepdaughters. Time with them is where she recharges.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-hadley-herrera" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/hadley-herrera.jpg?v=2111" alt="Hadley Herrera" /></div><div class="guide-body"><h3>Hadley Herrera</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Finds the signal in a crowded search and keeps the candidate experience warm.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Hadley Herrera is a Physician Recruiter at Adaptive Medical Partners, where she partners with healthcare organizations and physicians across the country to create meaningful, long-term connections.</p><p>Hadley takes a relationship-driven approach to recruiting, focusing on understanding what matters most to both the candidate and the organization—from career goals and practice dynamics to culture, community, and long-term fit. She believes successful recruiting goes beyond filling a position; it is about finding the right opportunity for the right person.</p><p>Known for her persistence, communication, and personal approach, Hadley works closely with candidates throughout every stage of the recruitment process while helping healthcare organizations navigate some of their most challenging searches.</p><p>Based in Dallas, Texas, Hadley attended Baylor University and brings an energetic, people-first mindset to the Adaptive Medical Partners team. Family is especially important to her, and outside of work, she enjoys spending time with family, playing volleyball, reading, being outdoors, and trying new restaurants.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-nate-smith" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/nate-smith.jpg?v=2111" alt="Nate Smith" /></div><div class="guide-body"><h3>Nate Smith</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Helps candidates compare practice, place, and the life between shifts — relationship-first, high standards.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Nate Smith is a Physician Recruiter at Adaptive Medical Partners, partnering with candidates and healthcare organizations across the country. He works directly with both sides to deliver clear staffing solutions, excellent customer experience, and relationships that last past the first placement.</p><p>Nate’s recruiting path includes high-volume and niche searches across industries, with standout performance at CyberCoders—Rookie of the Year, consecutive top-performer clubs, and recognition among the firm’s strongest tax and accounting recruiters. An earlier chapter at Rhino Medical Services was a meaningful step into healthcare staffing, where he learned to read client need fast and keep credentialed providers moving. He brings that mix of pace and care to AMP’s physician work.</p><p>At Adaptive Medical Partners, Nate helps candidates weigh practice, place, and the life between shifts—so the summit meeting is informed, not rushed.</p><p>Based in Fort Worth, Texas, Nate holds a bachelor’s degree in Political Science from the University of North Texas at Dallas. He is married and he and his wife are raising two little girls. Outside work they are foodies, and Nate loves a good card game with friends and family.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-amy-myers" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/amy-myers.jpg?v=2111" alt="Amy Myers" /></div><div class="guide-body"><h3>Amy Myers</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Turns a job preview into a focused, personal conversation — durable matches over rapid placements.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Amy Myers is a Physician Recruiter at Adaptive Medical Partners, connecting physicians and allied professionals with healthcare organizations for matches that last.</p><p>Her earlier recruiting work in IT, education, and transportation taught her to look past surface credentials—to culture, day-to-day realities, and long-term alignment. She brings that same practical judgment to physician search, especially in the specialized and underserved settings AMP serves.</p><p>Amy focuses on durable matches, not rapid placements. She takes time to learn a physician’s clinical interests, lifestyle priorities, and career vision, then aligns those with what practices and communities actually need—a focused, low-pressure process that favors quality over quantity.</p><p>Based in the Dallas/Fort Worth area, Amy has lived on the East Coast, in the Mountain West, and in the Midwest. She holds a BA in Psychology and a BS in Communications from SUNY Oswego and an MS in Student Personnel Administration from Buffalo State—training that shapes an empathetic, people-first style. Outside work she enjoys reading, traveling, concerts, and time with family and friends.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article></div><div class="guide-section-label mt-24"><span class="tag">Hiring guides</span><p class="muted">Partners on the client rope — set the high camp, keep the search moving.</p></div><div class="guides-roster guides-roster-hire guides-grid guides-grid-small mt-24"><article id="guide-brenton-mcmahan" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/brenton-mcmahan.jpg?v=2111" alt="Brenton McMahan" /></div><div class="guide-body"><h3>Brenton McMahan</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Territory · GA · AL · TN · KY</p><p class="guide-blurb">Client-first guide for the Southeast — listens hard, delivers solutions, and keeps the high camp ready.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first—listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton’s BD territory is Georgia, Alabama, Tennessee, and Kentucky — the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton’s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-aaron-wagner" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/aaron-wagner.jpg?v=2111" alt="Aaron Wagner" /></div><div class="guide-body"><h3>Aaron Wagner</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Territory · TX · CA</p><p class="guide-blurb">Texas hiring guide who partners with hospital and practice leaders — clear process, flexible solutions.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development—including earlier chapters at Rhino Medical Services and Republic Health Resources—plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron’s BD territory is Texas and California — hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires—fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-zach-hamann" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/zach-hamann.jpg?v=2111" alt="Zach Hamann" /></div><div class="guide-body"><h3>Zach Hamann</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Territory · IL · MO · IA · KS · NE</p><p class="guide-blurb">Came back to AMP on purpose — Senior BD who knows the climb from both sides of the rope.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms—including The Medicus Firm—and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team—someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach’s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska — Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-kelley-lobona" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/kelley-lobona.jpg?v=2111" alt="Kelley Lobona" /></div><div class="guide-body"><h3>Kelley Lobona</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Sales enablement · BD training</p><p class="guide-blurb">Sales enablement + BD training — helps hiring guides build territories, daily plans, and a sharper climb.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Kelley Lobona is a hiring guide and Business Consultant at Adaptive Medical Partners, based in the Dallas area. She first worked with AMP in business development (alongside teammates like Zach Hamann in an earlier chapter), gained outside experience—including The Medicus Firm and earlier sales leadership roles—and returned to AMP in a role she is especially excited about.</p><p>Kelley’s focus is sales enablement for the hiring-guide team — territories, daily plans, and training — not a state catch-all on inbound leads.</p><p>Kelley still does business development, but her unique focus is sales enablement: helping other hiring guides build their territories, shape daily action plans and follow-ups, and rework the training program so the whole team climbs with clearer rhythm. She is deeply committed to AMP’s success and growth.</p><p>Kelley is married. Outside work she values time with her husband.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article></div><div class="guides-cta panel panel-glow mt-24"><h2>Ready to talk?</h2><p class="muted">When you are ready, send a short note. We'll connect you with the right guide.</p><button type="button" class="btn btn-primary" data-go="contact">Contact AMP</button></div></div></div></section>
+<section class="view page funnel guides-view" data-route="guides"><div class="shot" aria-hidden="true"><div class="still pro-still" aria-hidden="true"></div></div><div class="view-chrome"><div class="hero-band"><div class="bg pro-bg"></div><div class="veil"></div><div class="hero-inner"><h1>Every search deserves an experienced guide.</h1><p class="lede">The people beside you — practitioners who know the work, tell the truth, and stay until the conversation is prepared.</p></div></div><div class="section section-lite funnel-panel guides-panel"><div class="guide-section-label"><span class="tag">Leadership</span><p class="muted">Clear ownership, craft, and the handoff when it matters.</p></div><div class="guides-roster guides-roster-lead guides-grid"><article id="guide-david-fontenot" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/david-fontenot.jpg?v=2111" alt="David Fontenot" /></div><div class="guide-body"><h3>David Fontenot</h3><p class="guide-role">Founder, President &amp; CEO</p><p class="guide-blurb">Founder who still recruits with the team — rural fit, family-to-community matching, and lasting retention.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>David Fontenot is Founder, President, and CEO of Adaptive Medical Partners. He brings about eighteen years of healthcare recruiting expertise, with the great majority of his searches in rural and underserved communities. Growing up in Louisiana, he understands the unique challenge of fitting families to communities—the key to long-term retention. As CEO he still actively recruits alongside his team, keeping AMP current with how rural healthcare evolves day to day. That hands-on leadership and community understanding sit behind AMP’s lasting placement craft.</p><p>Under David’s ownership AMP stays boutique and client-centric: proven methods from more than a decade and a half of specialized search, paired with modern tools—without losing the guide on the rope.</p><p>David has been married for ten years and has two kids. Outside work, he and his wife play in a pool league together—a rhythm that matters to them.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-michael-freeman" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/mike-freeman.jpg?v=2111" alt="Mike Freeman" /></div><div class="guide-body"><h3>Mike Freeman</h3><p class="guide-role">Managing Partner, Recruiting</p><p class="guide-blurb">Sixteen years of physician recruiting — practitioner context, cultural fit, and a drive to build the best firm possible.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Mike Freeman is Managing Partner, Recruiting at Adaptive Medical Partners, with sixteen years of specialized physician recruiting experience (since 2010). He has earned Recruiter of the Year honors three times (2015, 2017, and 2021). A psychology degree from college helps him read candidate motivations and cultural fit—not just credentials on a page.</p><p>At AMP, Mike organizes recruiting activity across the team and mentors newer guides so service stays exceptional. Two years in business development give him a clear view of both sides of the table: what clients need to hold the peak, and what candidates need to choose a climb they can stay on—especially in rural and community settings. He drives innovation and truth in the work, always pushing Adaptive Medical Partners toward being the best firm it can be.</p><p>Based in the Dallas–Fort Worth area, Mike has been married for twenty years. He and his wife have two kids—a teenage boy and a college-aged daughter. Outside work the family loves to travel, eat great food, and show up for their kids. Mike still plays soccer as a grown man, and he’s not shy about it.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-randy-keeth" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/randy-keeth.jpg?v=2111" alt="Randy Keeth" /></div><div class="guide-body"><h3>Randy Keeth</h3><p class="guide-role">Managing Partner, Business Development</p><p class="guide-territory">National BD · unassigned states · CC on every lead</p><p class="guide-blurb">Client-first BD for rural partners — trusted relationships, faster fills, and a brief candidates can trust.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP’s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP’s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy’s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company’s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP’s clients.</p><p>Randy is married and has a teenage son.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article></div><div class="guide-section-label mt-24"><span class="tag">Recruiting guides</span><p class="muted">Named guides for the next step — not a blast list, not a dead inbox.</p></div><div class="guides-roster guides-roster-recruit guides-grid recruiter-guides"><article id="guide-stephanie-youngblood" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/stephanie-youngblood.jpg?v=2111" alt="Stephanie Youngblood" /></div><div class="guide-body"><h3>Stephanie Youngblood</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Listens first, then builds a clear path — administrator-minded recruiting with a thoughtful pace.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Stephanie Youngblood is a Physician Recruiter at Adaptive Medical Partners, partnering with healthcare organizations and physicians across the country. She brings an administrator’s perspective to physician search—listening closely, then shaping flexible, tailored solutions that fit both the practice and the candidate.</p><p>Before AMP, Stephanie spent years as an Account Executive at Soliant, where colleagues knew her as a go-to recruiter who found strong matches quickly, kept talent engaged, and mentored newer teammates by leading by example. Earlier work in sales support, operations, and high-stakes event leadership sharpened the same strengths she uses now: calm coordination, clear communication, and showing up when details matter.</p><p>At Adaptive Medical Partners, Stephanie focuses on exceptional client service and a simplified process. She helps executives and candidates know what comes next—without the noise—so hard searches stay grounded and on track.</p><p>Based in the Houston area (Cypress, Texas), Stephanie’s life outside work centers on family. She and her husband of more than ten years are raising a young daughter and a son, along with two teenage stepdaughters. Time with them is where she recharges.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-hadley-herrera" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/hadley-herrera.jpg?v=2111" alt="Hadley Herrera" /></div><div class="guide-body"><h3>Hadley Herrera</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Finds the signal in a crowded search and keeps the candidate experience warm.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Hadley Herrera is a Physician Recruiter at Adaptive Medical Partners, where she partners with healthcare organizations and physicians across the country to create meaningful, long-term connections.</p><p>Hadley takes a relationship-driven approach to recruiting, focusing on understanding what matters most to both the candidate and the organization—from career goals and practice dynamics to culture, community, and long-term fit. She believes successful recruiting goes beyond filling a position; it is about finding the right opportunity for the right person.</p><p>Known for her persistence, communication, and personal approach, Hadley works closely with candidates throughout every stage of the recruitment process while helping healthcare organizations navigate some of their most challenging searches.</p><p>Based in Dallas, Texas, Hadley attended Baylor University and brings an energetic, people-first mindset to the Adaptive Medical Partners team. Family is especially important to her, and outside of work, she enjoys spending time with family, playing volleyball, reading, being outdoors, and trying new restaurants.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-nate-smith" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/nate-smith.jpg?v=2111" alt="Nate Smith" /></div><div class="guide-body"><h3>Nate Smith</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Helps candidates compare practice, place, and the life between shifts — relationship-first, high standards.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Nate Smith is a Physician Recruiter at Adaptive Medical Partners, partnering with candidates and healthcare organizations across the country. He works directly with both sides to deliver clear staffing solutions, excellent customer experience, and relationships that last past the first placement.</p><p>Nate’s recruiting path includes high-volume and niche searches across industries, with standout performance at CyberCoders—Rookie of the Year, consecutive top-performer clubs, and recognition among the firm’s strongest tax and accounting recruiters. An earlier chapter at Rhino Medical Services was a meaningful step into healthcare staffing, where he learned to read client need fast and keep credentialed providers moving. He brings that mix of pace and care to AMP’s physician work.</p><p>At Adaptive Medical Partners, Nate helps candidates weigh practice, place, and the life between shifts—so the summit meeting is informed, not rushed.</p><p>Based in Fort Worth, Texas, Nate holds a bachelor’s degree in Political Science from the University of North Texas at Dallas. He is married and he and his wife are raising two little girls. Outside work they are foodies, and Nate loves a good card game with friends and family.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-amy-myers" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/amy-myers.jpg?v=2111" alt="Amy Myers" /></div><div class="guide-body"><h3>Amy Myers</h3><p class="guide-role">Recruiting guide</p><p class="guide-blurb">Turns a job preview into a focused, personal conversation — durable matches over rapid placements.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Amy Myers is a Physician Recruiter at Adaptive Medical Partners, connecting physicians and allied professionals with healthcare organizations for matches that last.</p><p>Her earlier recruiting work in IT, education, and transportation taught her to look past surface credentials—to culture, day-to-day realities, and long-term alignment. She brings that same practical judgment to physician search, especially in the specialized and underserved settings AMP serves.</p><p>Amy focuses on durable matches, not rapid placements. She takes time to learn a physician’s clinical interests, lifestyle priorities, and career vision, then aligns those with what practices and communities actually need—a focused, low-pressure process that favors quality over quantity.</p><p>Based in the Dallas/Fort Worth area, Amy has lived on the East Coast, in the Mountain West, and in the Midwest. She holds a BA in Psychology and a BS in Communications from SUNY Oswego and an MS in Student Personnel Administration from Buffalo State—training that shapes an empathetic, people-first style. Outside work she enjoys reading, traveling, concerts, and time with family and friends.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article></div><div class="guide-section-label mt-24"><span class="tag">Hiring guides</span><p class="muted">Partners on the client side — set the brief, keep the search moving.</p></div><div class="guides-roster guides-roster-hire guides-grid guides-grid-small mt-24"><article id="guide-brenton-mcmahan" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/brenton-mcmahan.jpg?v=2111" alt="Brenton McMahan" /></div><div class="guide-body"><h3>Brenton McMahan</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Territory · GA · AL · TN · KY</p><p class="guide-blurb">Client-first guide for the Southeast — listens hard, delivers solutions, and keeps the search ready.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first—listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton’s BD territory is Georgia, Alabama, Tennessee, and Kentucky — the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton’s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-aaron-wagner" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/aaron-wagner.jpg?v=2111" alt="Aaron Wagner" /></div><div class="guide-body"><h3>Aaron Wagner</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Territory · TX · CA</p><p class="guide-blurb">Texas hiring guide who partners with hospital and practice leaders — clear process, flexible solutions.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development—including earlier chapters at Rhino Medical Services and Republic Health Resources—plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron’s BD territory is Texas and California — hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires—fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-zach-hamann" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/zach-hamann.jpg?v=2111" alt="Zach Hamann" /></div><div class="guide-body"><h3>Zach Hamann</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Territory · IL · MO · IA · KS · NE</p><p class="guide-blurb">Came back to AMP on purpose — Senior BD who knows the search from both sides of the table.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms—including The Medicus Firm—and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team—someone who chose the climb again because the guide culture and client craft had moved forward.</p><p>Zach’s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska — Midwest partners who need a clear high camp.</p><p>Zach partners with healthcare organizations to set the high camp: clearer briefs, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article><article id="guide-kelley-lobona" class="guide-card guide-row"><div class="guide-avatar has-photo"><img src="assets/team/kelley-lobona.jpg?v=2111" alt="Kelley Lobona" /></div><div class="guide-body"><h3>Kelley Lobona</h3><p class="guide-role">Hiring guide</p><p class="guide-territory">Sales enablement · BD training</p><p class="guide-blurb">Sales enablement + BD training — helps hiring guides build territories, daily plans, and sharper process.</p><details class="guide-full"><summary>Full story</summary><div class="guide-full-body"><p>Kelley Lobona is a hiring guide and Business Consultant at Adaptive Medical Partners, based in the Dallas area. She first worked with AMP in business development (alongside teammates like Zach Hamann in an earlier chapter), gained outside experience—including The Medicus Firm and earlier sales leadership roles—and returned to AMP in a role she is especially excited about.</p><p>Kelley’s focus is sales enablement for the hiring-guide team — territories, daily plans, and training — not a state catch-all on inbound leads.</p><p>Kelley still does business development, but her unique focus is sales enablement: helping other hiring guides build their territories, shape daily action plans and follow-ups, and rework the training program so the whole team climbs with clearer rhythm. She is deeply committed to AMP’s success and growth.</p><p>Kelley is married. Outside work she values time with her husband.</p></div></details><button type="button" class="btn btn-ghost" data-go="contact">Tap to Talk</button></div></article></div><div class="guides-cta panel panel-glow mt-24"><h2>Ready to talk?</h2><p class="muted">When you are ready, send a short note. We'll connect you with the right guide.</p><button type="button" class="btn btn-primary" data-go="contact">Contact AMP</button></div></div></div></section>
 <section class="view page funnel" data-route="about">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1506,8 +1497,8 @@
   </div>
   <div class="section section-lite funnel-panel" style="max-width:760px;margin:0 auto">
     <div class="panel panel-glow about-body">
-    <h2 class="mt-0" style="font-size:20px;letter-spacing:-.02em">Who we are on the mountain</h2>
-    <p>AMP is the guide. Candidates are <strong>searching for the peak</strong>. Clients are <strong>waiting at the peak</strong> — AMP does the climb work; they don’t haul the candidate up. We educate both sides so the summit meeting happens — prepared, confidential, owned.</p>
+    <h2 class="mt-0" style="font-size:20px;letter-spacing:-.02em">Who we are</h2>
+    <p>AMP is the guide. Candidates are <strong>looking for the right role</strong>. Clients are <strong>ready to hire</strong> — AMP runs the search work; they don’t push a fit that isn’t there. We educate both sides so the meeting happens — prepared, confidential, owned.</p>
     <p>When nothing posted fits, <strong>MPC</strong> opens a tailored search with a guide — wilderness interest still routes you to a <strong>recruiting guide</strong>. Dedicated is AMP guiding the hiker to a prepared summit wait.</p>
     <p>Based in Irving, Texas. Dedicated investment search craft. <strong>MPC</strong> is a tailored search path for candidates. Every <strong>client</strong> lead → a <strong>hiring guide</strong>; every <strong>candidate</strong> → a <strong>recruiting guide</strong>. Public proof — not invented math:</p>
     <div class="proof-chips about-proof" style="justify-content:flex-start;margin:18px 0" aria-label="AMP About proof">
@@ -1523,7 +1514,7 @@
       </div>
       <div class="proof-kpi">
         <strong>1.7 interviews / placement</strong>
-        <p>Mean interviews per successful hire. Prepared hikers at the summit; fewer wasted committee meetings.</p>
+        <p>Mean interviews per successful hire. Prepared candidates; fewer wasted committee meetings.</p>
       </div>
       <div class="proof-kpi">
         <strong>700+ rural / FQHC / CAH</strong>
@@ -1545,7 +1536,7 @@
       <button type="button" class="btn btn-primary" data-go="contact">Contact AMP</button>
       <button type="button" class="btn btn-ghost" data-go="proof">AMP proof / stats</button>
       <button type="button" class="btn btn-ghost" data-go="blog/physician-retention-3-year-kpi">Read retention pillar</button>
-      <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">I’m hiring · hold the peak</button>
+      <button type="button" class="btn btn-ghost" data-go="client" data-trail="1">I’m hiring · start a search</button>
       <button type="button" class="btn btn-ghost" data-go="mpc" data-trail="1">MPC · tailor-search</button>
     </div>
 
@@ -1674,7 +1665,7 @@
       </details>
       <details>
         <summary>How does AMP protect confidentiality?</summary>
-        <p>Preview-level public pages; full stacks and non-public economics stay on confidential calls and summit meetings.</p>
+        <p>Preview-level public pages; full stacks and non-public economics stay on confidential calls and hiring meetings.</p>
       </details>
     </div>
 
@@ -1685,21 +1676,21 @@
 
 <section class="view page funnel" data-route="proof">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-1.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
     <div class="hero-inner">
       
       <h1>What do AMP’s public proof stats mean?</h1>
-      <p class="lede">Cite-friendly KPIs with plain definitions — mountain voice, no invented towns, no confidential economics.</p>
+      <p class="lede">Cite-friendly KPIs with plain definitions — no invented towns, no confidential economics.</p>
     </div>
   </div>
   <div class="section section-lite funnel-panel" style="max-width:760px;margin:0 auto">
     <div class="panel panel-glow">
       <span class="tag">AMP proof · Generative-engine ready</span>
       <h2 class="mt-8" style="font-size:20px;letter-spacing:-.02em">Adaptive Medical Partners — public proof</h2>
-      <p>Since 2010, Adaptive Medical Partners has practiced physician recruiting from Irving, Texas. Candidates search for the peak. Clients wait at the peak. AMP guides the traverse so the summit meeting is prepared.</p>
+      <p>Since 2010, Adaptive Medical Partners has practiced physician recruiting from Irving, Texas. Candidates look for the right role. Clients are ready to hire. AMP guides the process so the meeting is prepared.</p>
       <div class="proof-chips" style="justify-content:flex-start;margin:18px 0" aria-label="AMP proof chips">
         <span class="proof-chip lite"><strong>87%</strong> retention at 3 years</span>
         <span class="proof-chip lite"><strong>1.7</strong> interviews / placement</span>
@@ -1709,11 +1700,11 @@
       <div class="proof-kpi-grid" aria-label="Defined AMP KPIs">
         <div class="proof-kpi">
           <strong>87% retention at three years</strong>
-          <p><em>Definition:</em> Share of AMP placements still in role (or system) at the three-year mark. Measures whether the hire stayed — not only whether the req closed. Placement reaches the peak; retention stays on the mountain.</p>
+          <p><em>Definition:</em> Share of AMP placements still in role (or system) at the three-year mark. Measures whether the hire stayed — not only whether the req closed. Placement is the hire; retention is staying in role.</p>
         </div>
         <div class="proof-kpi">
           <strong>1.7 average interviews per successful placement</strong>
-          <p><em>Definition:</em> Mean number of interviews associated with a successful placement. Measures summit-meeting efficiency: educate and filter on the trail so committees meet prepared candidates.</p>
+          <p><em>Definition:</em> Mean number of interviews associated with a successful placement. Measures interview efficiency: educate and filter on the trail so committees meet prepared candidates.</p>
         </div>
         <div class="proof-kpi">
           <strong>700+ rural / FQHC / critical access partners</strong>
@@ -1738,7 +1729,7 @@
 
 <section class="view page funnel" data-route="for-physicians">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/trailsigns-960.webp?v=2132 960w, assets/trailsigns.webp?v=2132 1536w" sizes="100vw" /><img class="still" src="assets/trailsigns.png" width="1536" height="1024" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1756,7 +1747,7 @@
         <li>Controlled reveal · no leaks</li>
         <li>Ask a guide + named recruiter</li>
       </ul>
-      <button type="button" class="btn btn-primary btn-lg" data-go="physician" data-trail="1">Start physician trail</button>
+      <button type="button" class="btn btn-primary btn-lg" data-go="physician" data-trail="1">Start physician search</button>
     </div>
   </div>
   </div>
@@ -1764,7 +1755,7 @@
 
 <section class="view page funnel" data-route="for-organizations">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-3.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1788,7 +1779,7 @@
 
 <section class="view page funnel" data-route="contact">
   <div class="shot" aria-hidden="true">
-    <img class="still" src="assets/mike-ridge-2.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1827,7 +1818,7 @@
 
 <section class="view page funnel" data-route="forms">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/trailsigns-960.webp?v=2132 960w, assets/trailsigns.webp?v=2132 1536w" sizes="100vw" /><img class="still" src="assets/trailsigns.png" width="1536" height="1024" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1865,7 +1856,7 @@
 
 <section class="view page funnel" data-route="form-candidate-authorization">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/trailsigns-960.webp?v=2132 960w, assets/trailsigns.webp?v=2132 1536w" sizes="100vw" /><img class="still" src="assets/trailsigns.png" width="1536" height="1024" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1892,7 +1883,7 @@
 
 <section class="view page funnel" data-route="form-interview-expense">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/trailsigns-960.webp?v=2132 960w, assets/trailsigns.webp?v=2132 1536w" sizes="100vw" /><img class="still" src="assets/trailsigns.png" width="1536" height="1024" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1919,7 +1910,7 @@
 
 <section class="view page funnel" data-route="form-easy-pay">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/trailsigns-960.webp?v=2132 960w, assets/trailsigns.webp?v=2132 1536w" sizes="100vw" /><img class="still" src="assets/trailsigns.png" width="1536" height="1024" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -1931,7 +1922,7 @@
   </div>
   <div class="section section-lite funnel-panel forms-ach-panel">
     <div class="panel panel-glow">
-      <p class="muted" style="margin-top:0">Complete the information below to set up electronic payment processing. Details transmit securely to AMP’s live authorization handler — they are not saved in mountain, Mess, or browser storage.</p>
+      <p class="muted" style="margin-top:0">Complete the information below to set up electronic payment processing. Details transmit securely to AMP’s live authorization handler — they are not saved in preview storage, Mess, or browser storage.</p>
       <div class="form-live-frame-wrap" data-amp-ach-frame-wrap hidden>
         <iframe class="form-live-frame" data-amp-ach-frame title="Easy pay authorization" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
@@ -2004,7 +1995,7 @@
 
 <section class="view page funnel" data-route="search">
   <div class="shot" aria-hidden="true">
-    <picture><source type="image/webp" srcset="assets/trailsigns-960.webp?v=2132 960w, assets/trailsigns.webp?v=2132 1536w" sizes="100vw" /><img class="still" src="assets/trailsigns.png" width="1536" height="1024" loading="lazy" decoding="async" alt="" /></picture>
+    <div class="still pro-still" aria-hidden="true"></div>
   </div>
   <div class="view-chrome">
   <div class="hero-band">
@@ -2022,7 +2013,7 @@
       </div>
       <button class="btn btn-primary btn-lg mt-16" type="submit">Show matching roles</button>
     </form>
-    <p class="muted mt-16" style="font-size:13px">Prefer the guided trail? <button type="button" class="linkish" data-go="physician" data-trail="1" style="background:none;border:0;color:#0f766e;font-weight:700;cursor:pointer">Start candidate path</button></p>
+    <p class="muted mt-16" style="font-size:13px">Prefer the guided path? <button type="button" class="linkish" data-go="physician" data-trail="1" style="background:none;border:0;color:#0f766e;font-weight:700;cursor:pointer">Start candidate path</button></p>
   </div>
   </div>
 </section>
@@ -2038,12 +2029,12 @@
       <a href="mailto:inquire@adaptivemedicalpartners.com">inquire@adaptivemedicalpartners.com</a>
       <p style="margin:12px 0 0;font-size:12px">AMP = guide · Candidate = searching for the peak · Client = waiting at the peak · MPC = tailored search when posted roles don’t fit</p>
       <p style="margin:8px 0 0;font-size:12px;color:#64748b">87% @ 3 yrs · 1.7 interviews · 700+ rural/FQHC/CAH · 16 years since 2010</p>
-      <p class="amp-build-chip" id="amp-build-chip">amp-build 2132-brand-retheme</p>
+      <p class="amp-build-chip" id="amp-build-chip">amp-build 2133-no-mountain</p>
     </div>
     <div>
       <h4>Doors</h4>
       <a class="linkish" href="/physician" data-go="physician" data-trail="1">I’m a physician</a>
-      <a class="linkish" href="/client" data-go="client" data-trail="1">I’m hiring · hold the peak</a>
+      <a class="linkish" href="/client" data-go="client" data-trail="1">I’m hiring · start a search</a>
       <a class="linkish" href="/education" data-go="education">Why AMP</a>
       <a class="linkish" href="/residents" data-go="residents">Residents &amp; Fellows</a>
     </div>
@@ -2155,7 +2146,7 @@
           "name": "What does AMP’s 87% retention at 3 years mean?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It is the share of AMP placements still in role or system at the three-year mark. Placement is reaching the peak; retention is staying on the mountain. It is public proof of durable fit, not a personal guarantee for every search, and not the same as time-to-fill."
+            "text": "It is the share of AMP placements still in role or system at the three-year mark. Placement is the hire; retention is staying in role. It is public proof of durable fit, not a personal guarantee for every search, and not the same as time-to-fill."
           }
         },
         {
@@ -2163,7 +2154,7 @@
           "name": "What does 1.7 average interviews per placement mean?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It is AMP’s reported mean number of interviews per successful placement. The point is summit-meeting efficiency: prepare candidates on the trail so committees do not burn cycles on people who were never summit-ready. It is a process KPI, not a promise that every search has a two-person slate."
+            "text": "It is AMP’s reported mean number of interviews per successful placement. The point is interview efficiency: prepare candidates so committees do not burn cycles on people who were never interview-ready. It is a process KPI, not a promise that every search has a two-person slate."
           }
         },
         {
@@ -2187,7 +2178,7 @@
           "name": "How does AMP protect confidentiality in physician recruiting?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Public job pages are trail signs with practice-first headlines and limited bullets. Named facility deep-dives, non-public financials, and full compensation stacks stay gated for confidential calls and summit meetings so searches remain protected."
+            "text": "Public job pages are previews with practice-first headlines and limited bullets. Named facility deep-dives, non-public financials, and full compensation stacks stay gated for confidential calls and hiring meetings so searches remain protected."
           }
         }
       ]
@@ -2196,12 +2187,12 @@
 }
 </script>
 
-<script src="js/content.js?v=2132"></script>
-<script src="js/articles.js?v=2132"></script>
-<script src="js/ridge-mi-data.js?v=2132"></script>
-<script src="js/ridge-access.js?v=2132"></script>
-<script src="js/ridge-workbench.js?v=2132"></script>
-<script src="js/app.js?v=2132"></script>
+<script src="js/content.js?v=2133"></script>
+<script src="js/articles.js?v=2133"></script>
+<script src="js/ridge-mi-data.js?v=2133"></script>
+<script src="js/ridge-access.js?v=2133"></script>
+<script src="js/ridge-workbench.js?v=2133"></script>
+<script src="js/app.js?v=2133"></script>
 <script src="https://embed.typeform.com/next/embed.js" defer data-amp-typeform="1"></script>
 <template id="amp-region-map-template">
 <div class="region-map-shell">
@@ -2494,6 +2485,6 @@ window.AMP_CHATBOT = Object.assign({
   handoffUrl: "https://pmbehaioxviyhdmmczfl.supabase.co/functions/v1/amp-chatbot-handoff"
 }, window.AMP_CHATBOT || {});
 </script>
-<script src="assets/js/amp-chatbot-mountain.js?v=2132" async data-amp-chatbot-js="1"></script>
+<script src="assets/js/amp-chatbot-mountain.js?v=2133" async data-amp-chatbot-js="1"></script>
 </body>
 </html>

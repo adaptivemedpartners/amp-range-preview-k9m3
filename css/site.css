@@ -1,3 +1,4 @@
+/* amp-build:2133-no-mountain */
 /* amp-build:2132-brand-retheme */
 /* amp-build:2131-mobile-rank-cards */
 /* amp-build:2130-confirm-discuss */
@@ -8250,4 +8251,159 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   .client-topic-grid { grid-template-columns: 1fr; }
   .client-discuss-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .client-ridge-cta { font-size: 15px; padding: 14px 14px; }
+}
+
+
+/* ========== amp-build:2133-no-mountain — sitewide professional chrome (no mountain art) ========== */
+.home-stage.no-mountain-hero,
+.home-stage {
+  background: #152332;
+  color: #fff;
+}
+.home-pro-bg {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: var(--home-bg-vh, 100vh);
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(120, 196, 229, 0.22), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 30%, rgba(107, 224, 173, 0.12), transparent 50%),
+    linear-gradient(165deg, #152332 0%, #1a3348 42%, #152332 100%);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.home-stage .home-poster,
+.home-stage > picture,
+.home-stage #home-video,
+.home-stage.on .home-poster,
+.home-stage.on #home-video {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.home-mist {
+  background:
+    linear-gradient(180deg, rgba(21, 35, 50, 0.15) 0%, rgba(21, 35, 50, 0.05) 40%, rgba(21, 35, 50, 0.55) 78%, rgba(21, 35, 50, 0.92) 100%) !important;
+}
+.home-stage.on .home-mist {
+  /* keep fixed mist over pro bg */
+}
+
+/* Doors: navy / sky / mint professional panels (no hike photos) */
+.door-hero.door-candidate {
+  background:
+    linear-gradient(155deg, rgba(21, 35, 50, 0.96) 0%, rgba(26, 58, 78, 0.92) 48%, rgba(21, 35, 50, 0.96) 100%),
+    linear-gradient(135deg, #152332, #1f4a5c) !important;
+}
+.door-hero.door-client {
+  background:
+    linear-gradient(155deg, rgba(21, 35, 50, 0.96) 0%, rgba(30, 70, 90, 0.9) 45%, rgba(21, 35, 50, 0.96) 100%),
+    linear-gradient(135deg, #152332, #245a6e) !important;
+}
+.door-photo { display: none !important; }
+.door-photo-shade {
+  background:
+    linear-gradient(180deg, rgba(21, 35, 50, 0.15) 0%, rgba(21, 35, 50, 0.05) 40%, rgba(21, 35, 50, 0.45) 100%),
+    linear-gradient(90deg, transparent 0%, rgba(120, 196, 229, 0.08) 100%) !important;
+}
+.door-candidate .door-photo-shade {
+  box-shadow: inset 0 0 0 1px rgba(107, 224, 173, 0.18);
+}
+.door-client .door-photo-shade {
+  box-shadow: inset 0 0 0 1px rgba(120, 196, 229, 0.22);
+}
+
+/* Job2 accent panels instead of mountain photos */
+.home-job2-panel {
+  display: block;
+  width: 100%;
+  height: 180px;
+  background:
+    linear-gradient(135deg, #152332 0%, #1e4a5c 50%, #152332 100%);
+}
+.home-job2-panel-candidate {
+  background:
+    linear-gradient(120deg, #152332 0%, #1a4d45 45%, #78C4E5 160%);
+  background-size: 140% 140%;
+}
+.home-job2-panel-client {
+  background:
+    linear-gradient(120deg, #152332 0%, #1a3f5c 40%, #6BE0AD 160%);
+  background-size: 140% 140%;
+}
+@media (max-width: 640px) {
+  .home-job2-panel { height: 160px; }
+}
+
+/* Sitewide: kill mountain stills / trailhead freeze / trailsigns / ridge photos */
+.view > .shot,
+.view.funnel > .shot,
+.view.funnel.trailhead > .shot {
+  background: #152332 !important;
+}
+.view > .shot img.still,
+.view > .shot picture,
+.view.funnel > .shot img.still,
+.view.funnel > .shot picture,
+.view.funnel.trailhead > .shot img.still,
+.view.funnel.trailhead > .shot picture {
+  display: none !important;
+  opacity: 0 !important;
+}
+.still.pro-still,
+.view > .shot .pro-still,
+.view.funnel > .shot .pro-still {
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1 !important;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120, 196, 229, 0.18), transparent 55%),
+    linear-gradient(165deg, #152332 0%, #1a3348 50%, #152332 100%);
+  border: 0;
+}
+
+/* Hero bands: solid professional navy instead of mountain photos */
+.hero-band .bg,
+.hero-band .bg.pro-bg {
+  background-image: none !important;
+  background:
+    radial-gradient(ellipse 90% 70% at 30% 0%, rgba(120, 196, 229, 0.2), transparent 55%),
+    linear-gradient(135deg, #152332 0%, #1a3a4e 55%, #152332 100%) !important;
+}
+.hero-band .veil {
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.35) 0%, rgba(21, 35, 50, 0.55) 100%) !important;
+}
+
+/* Approach video hold: no mountain flash */
+#approach-video-hold,
+#approach-video-hold video,
+#approach-video-hold canvas.approach-freeze {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Confirm / funnel: opaque navy under panels (no mountain ghost) */
+.view.funnel {
+  background-color: #152332;
+}
+
+.job-hero-pro {
+  position: relative;
+  min-height: 200px;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(120,196,229,0.28), transparent 55%),
+    linear-gradient(135deg, #152332 0%, #1a3a4e 55%, #152332 100%);
+}
+.job-hero-pro .badge {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
 }
