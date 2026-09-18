@@ -8605,37 +8605,37 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .view.funnel[data-route="client-specialty"] > .shot .pro-still {
   background-color: #152332;
   background-size: cover, cover, cover;
-  background-position: center, center, center;
+  background-position: center, center, center right;
   background-repeat: no-repeat;
 }
 
-/* Shared navy veil recipe: angled wash + bottom hold, then smoky plate */
+/* Same navy veil family as .home-pro-bg — smoky plate peeks on the right */
 .view.funnel[data-route="physician"] > .shot .pro-still {
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
     url("../assets/path-cand-specialty-clinic.jpg?v=2136");
 }
 .view.funnel[data-route="physician-region"] > .shot .pro-still {
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
     url("../assets/path-cand-nurses-station.jpg?v=2136");
 }
 .view.funnel[data-route="client"] > .shot .pro-still {
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
     url("../assets/path-client-fqhc-exterior.jpg?v=2136");
 }
 .view.funnel[data-route="client-specialty"] > .shot .pro-still {
   background-image:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.86) 0%, rgba(21, 35, 50, 0.62) 36%, rgba(21, 35, 50, 0.40) 62%, rgba(21, 35, 50, 0.48) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.28) 0%, rgba(21, 35, 50, 0.12) 40%, rgba(21, 35, 50, 0.74) 82%, rgba(21, 35, 50, 0.90) 100%),
+    linear-gradient(105deg, rgba(21, 35, 50, 0.92) 0%, rgba(21, 35, 50, 0.72) 34%, rgba(21, 35, 50, 0.38) 58%, rgba(21, 35, 50, 0.22) 100%),
+    linear-gradient(180deg, rgba(21, 35, 50, 0.25) 0%, rgba(21, 35, 50, 0.08) 42%, rgba(21, 35, 50, 0.72) 78%, rgba(21, 35, 50, 0.94) 100%),
     url("../assets/path-client-busy-hallway.jpg?v=2136");
 }
 
-/* Region hero sits over the nurses plate — keep title readable, photo still ambient */
+/* Region hero: light navy wash only — shot veil already holds readability */
 .view.funnel[data-route="physician-region"] .hero-band {
-  background: linear-gradient(180deg, rgba(21, 35, 50, 0.38) 0%, rgba(21, 35, 50, 0.50) 52%, rgba(21, 35, 50, 0.78) 100%);
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.22) 0%, rgba(21, 35, 50, 0.28) 50%, rgba(21, 35, 50, 0.55) 100%);
 }
