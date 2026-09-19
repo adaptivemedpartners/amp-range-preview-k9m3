@@ -9785,6 +9785,16 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
 .client-step3-ret-strip .amp-ret-card:not(.amp-ret-card--proof) {
   background: rgba(255, 255, 255, 0.97);
 }
+/* 4-col step3: keep the 2151 type strengthen without a 3-line ragged footer */
+@media (min-width: 900px) {
+  .home-ret-strip-grid--4 .amp-ret-card:not(.amp-ret-card--proof) .amp-ret-footer {
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    padding: 11px 12px;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+}
 @media (min-width: 900px) {
   .view.funnel.trailhead[data-route="client-specialty"] .trailhead-sheet-stage {
     max-width: 1120px;
