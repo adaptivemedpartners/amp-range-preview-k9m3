@@ -1,4 +1,4 @@
-/* amp-build:2147-aspects-v1 */
+/* amp-build:2148-sharp-path-cards */
 
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
@@ -8346,11 +8346,11 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 .home-job2-panel-candidate {
   background:
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2142");
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2148");
 }
 .home-job2-panel-client {
   background:
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2142");
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2148");
 }
 @media (max-width: 640px) {
   .home-job2-panel { height: 160px; }
@@ -8692,27 +8692,17 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   overflow: hidden;
 }
 
-/* Story cards — CSS smoky: blur + ~40% navy veil (no Desktop *-smoky.jpg) */
+/* Story cards — amp-build:2148-sharp-path-cards: CLEAR photos (no smoky blur/veil) */
 .home-job2-card {
   position: relative;
 }
 .home-job2-photo {
-  filter: blur(2.5px) saturate(0.92) brightness(0.88);
-  transform: scale(1.08);
-  transform-origin: center center;
+  filter: none;
+  transform: none;
 }
+/* Captions live in .home-job2-body below the photo — no full-card navy veil */
 .home-job2-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 180px;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.48) 0%, rgba(21, 35, 50, 0.36) 45%, rgba(21, 35, 50, 0.42) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.22) 0%, rgba(21, 35, 50, 0.40) 100%);
+  content: none;
 }
 .home-job2-body {
   position: relative;
@@ -8721,22 +8711,19 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 .home-job2-panel-candidate,
 .home-job2-panel-client {
   position: relative;
-  filter: blur(2px) saturate(0.92) brightness(0.88);
-  transform: scale(1.04);
+  filter: none;
+  transform: none;
 }
 .home-job2-panel-candidate {
   background:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2142") !important;
+    center / cover no-repeat url("../assets/amp-story-provider.jpg?v=2148") !important;
 }
 .home-job2-panel-client {
   background:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.42) 0%, rgba(21, 35, 50, 0.32) 100%),
-    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2142") !important;
+    center / cover no-repeat url("../assets/amp-story-boardroom.jpg?v=2148") !important;
 }
 @media (max-width: 640px) {
-  .home-job2-card::before { height: 160px; }
-  .home-job2-photo { filter: blur(2px) saturate(0.92) brightness(0.88); }
+  .home-job2-photo { filter: none; transform: none; }
 }
 
 /* ========== amp-build:2136 — AMP logo crisp (Mike + Randy lock): no glow/bloom ========== */
