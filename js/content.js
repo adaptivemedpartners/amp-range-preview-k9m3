@@ -1,4 +1,4 @@
-/* amp-build:2148-sharp-path-cards */
+/* amp-build:2149-client-step3-ret-strip */
 /* AMP Site — content packs (jobs and Education posts)
    Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
    Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.

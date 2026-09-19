@@ -1,4 +1,4 @@
-/* amp-build:2148-sharp-path-cards */
+/* amp-build:2149-client-step3-ret-strip */
 
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
@@ -8692,7 +8692,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   overflow: hidden;
 }
 
-/* Story cards — amp-build:2148-sharp-path-cards: CLEAR photos (no smoky blur/veil) */
+/* Story cards — amp-build:2149-client-step3-ret-strip: CLEAR photos (no smoky blur/veil) */
 .home-job2-card {
   position: relative;
 }
@@ -9639,3 +9639,90 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
 .ridge-workbench .aspects-story .as-hook { font-size:12px; margin-top:4px; color:#0e7490; line-height:1.35; }
 .ridge-workbench .aspects-story .as-pending { font-size:11px; color:#b45309; margin-top:3px; }
 .ridge-workbench .aspects-story .as-empty { font-size:12px; color:var(--ridge-muted); }
+
+
+/* ========== amp-build:2149-client-step3-ret-strip — 4-card strip on client-specialty ========== */
+.home-ret-strip-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.home-ret-strip .amp-ret-card.amp-ret-card--proof,
+.amp-ret-card.amp-ret-card--proof {
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  border: 1px solid rgba(120, 196, 229, 0.55);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(8, 14, 22, 0.35);
+  overflow: hidden;
+  color: #f8fafc;
+  min-height: 100%;
+}
+.amp-ret-proof-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 16px 14px;
+}
+.amp-ret-proof-eyebrow {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #78C4E5;
+}
+.amp-ret-proof-lead {
+  margin: 0;
+  font-size: clamp(15px, 1.35vw, 18px);
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  color: #ffffff;
+}
+.amp-ret-proof-footer {
+  margin-top: auto;
+  padding: 12px 16px;
+  background: transparent;
+  border-top: 1px solid rgba(120, 196, 229, 0.28);
+  color: #6BE0AD;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-transform: none;
+}
+.client-step3-ret-strip {
+  width: min(1080px, 100%);
+  margin: 18px auto 8px;
+  padding: 0 4px 12px;
+  box-sizing: border-box;
+}
+.client-step3-ret-strip .home-ret-strip-kicker,
+.client-step3-ret-strip .home-ret-strip-title {
+  display: none;
+}
+.client-step3-ret-strip .amp-ret-card:not(.amp-ret-card--proof) {
+  background: rgba(255, 255, 255, 0.97);
+}
+@media (min-width: 900px) {
+  .view.funnel.trailhead[data-route="client-specialty"] .trailhead-sheet-stage {
+    max-width: 1120px;
+  }
+  .client-step3-ret-strip {
+    width: min(1080px, 100%);
+    margin-top: 20px;
+  }
+}
+@media (max-width: 899px) {
+  .home-ret-strip-grid--4 {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .client-step3-ret-strip {
+    width: min(440px, 100%);
+  }
+}
+
