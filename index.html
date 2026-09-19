@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- amp-build:2151-ret-card-type-strengthen -->
+<!-- amp-build:2152-hero-rotating-ret-card -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -21,7 +21,7 @@
   document.head.insertBefore(el, document.head.firstChild);
 })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=2151" />
+<link rel="stylesheet" href="css/site.css?v=2152" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
@@ -30,8 +30,8 @@
 <div id="approach-video-hold" class="approach-video-hold" aria-hidden="true" hidden></div>
 <nav class="site-nav is-home" id="site-nav" aria-label="Primary">
   <a class="brand brand-lockup brand-glow-white" href="/" data-go="home" aria-label="AMP Adaptive Medical Partners home">
-    <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2151" alt="Adaptive Medical Partners" width="304" height="68" />
-    <img class="brand-lockup-img is-black" src="assets/amp-lockup-nav-black.png?v=2151" alt="Adaptive Medical Partners" width="304" height="68" />
+    <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2152" alt="Adaptive Medical Partners" width="304" height="68" />
+    <img class="brand-lockup-img is-black" src="assets/amp-lockup-nav-black.png?v=2152" alt="Adaptive Medical Partners" width="304" height="68" />
   </a>
   <div class="nav-links">
     <a class="nav-link hide-sm" href="/physician" data-go="physician">Physicians</a>
@@ -58,9 +58,53 @@
   <button type="button" class="home-skip" data-play-approach hidden>Continue</button>
   <div class="home-overlay">
     <div class="explore-block explore-block-ad">
-      <div class="explore-kicker">RETENTION-LED</div>
-      <h1 class="explore-title">Permanent recruitment measured in years — not placements.</h1>
-      <p class="explore-sub">Your partners in rural healthcare recruiting. Clear paths for physicians and hiring organizations.</p>
+      <div class="explore-ad-copy">
+        <div class="explore-kicker">RETENTION-LED</div>
+        <h1 class="explore-title">Permanent recruitment measured in years — not placements.</h1>
+        <p class="explore-sub">Your partners in rural healthcare recruiting. Clear paths for physicians and hiring organizations.</p>
+      </div>
+      <aside class="hero-ret-rotator" data-hero-ret-rotator aria-roledescription="carousel" aria-label="Retention stories">
+        <div class="hero-ret-rotator-stage">
+          <article class="hero-ret-mini is-on" data-hero-ret-slide>
+            <div class="hero-ret-mini-inner">
+              <img class="hero-ret-mini-photo" src="assets/story-2015-peds-ne.jpg?v=2152" alt="" width="56" height="56" decoding="async" />
+              <div class="hero-ret-mini-copy">
+                <p class="hero-ret-mini-year">2015</p>
+                <p class="hero-ret-mini-role">Pediatrician</p>
+                <p class="hero-ret-mini-place">Nebraska FQHC</p>
+              </div>
+            </div>
+            <footer class="hero-ret-mini-footer">11 YEARS LATER. STILL THERE.</footer>
+          </article>
+          <article class="hero-ret-mini" data-hero-ret-slide aria-hidden="true">
+            <div class="hero-ret-mini-inner">
+              <img class="hero-ret-mini-photo" src="assets/story-2018-fm-ne-cah.jpg?v=2152" alt="" width="56" height="56" decoding="async" />
+              <div class="hero-ret-mini-copy">
+                <p class="hero-ret-mini-year">2018</p>
+                <p class="hero-ret-mini-role">Family Medicine</p>
+                <p class="hero-ret-mini-place">Nebraska Critical Access Hospital</p>
+              </div>
+            </div>
+            <footer class="hero-ret-mini-footer">8 YEARS LATER. STILL THERE.</footer>
+          </article>
+          <article class="hero-ret-mini" data-hero-ret-slide aria-hidden="true">
+            <div class="hero-ret-mini-inner">
+              <img class="hero-ret-mini-photo" src="assets/story-2021-physician-ks.jpg?v=2152" alt="" width="56" height="56" decoding="async" />
+              <div class="hero-ret-mini-copy">
+                <p class="hero-ret-mini-year">2021</p>
+                <p class="hero-ret-mini-role">Physician</p>
+                <p class="hero-ret-mini-place">Kansas</p>
+              </div>
+            </div>
+            <footer class="hero-ret-mini-footer">5 YEARS LATER. STILL THERE.</footer>
+          </article>
+        </div>
+        <div class="hero-ret-dots" role="tablist" aria-label="Retention story">
+          <button type="button" class="hero-ret-dot is-on" data-hero-ret-dot aria-label="2015 Pediatrician Nebraska FQHC" aria-current="true"></button>
+          <button type="button" class="hero-ret-dot" data-hero-ret-dot aria-label="2018 Family Medicine Nebraska Critical Access Hospital"></button>
+          <button type="button" class="hero-ret-dot" data-hero-ret-dot aria-label="2021 Physician Kansas"></button>
+        </div>
+      </aside>
     </div>
     <div class="explore-range-row">
       <button type="button" class="explore-range-invite" data-scroll-to="home-doors">Choose a path <span aria-hidden="true">↓</span></button>
@@ -109,12 +153,12 @@
       <div class="home-partners" aria-label="Organizations that trust AMP">
         <p class="home-partners-kicker">700+ rural hospitals, FQHCs &amp; critical access facilities trust our process</p>
         <div class="home-partners-grid">
-          <img class="partner-logo" src="assets/partners/adventist-health.png?v=2151" alt="Adventist Health" width="180" height="48" loading="lazy" />
-          <img class="partner-logo" src="assets/partners/iphca.png?v=2151" alt="Illinois Primary Health Care Association" width="180" height="48" loading="lazy" />
-          <img class="partner-logo" src="assets/partners/tenet-health.png?v=2151" alt="Tenet Health" width="180" height="48" loading="lazy" />
-          <img class="partner-logo" src="assets/partners/chs.png?v=2151" alt="Community Health Systems" width="180" height="48" loading="lazy" />
-          <img class="partner-logo" src="assets/partners/vcu.png?v=2151" alt="VCU" width="180" height="48" loading="lazy" />
-          <img class="partner-logo" src="assets/partners/shriners.png?v=2151" alt="Shriners Hospitals for Children" width="180" height="48" loading="lazy" />
+          <img class="partner-logo" src="assets/partners/adventist-health.png?v=2152" alt="Adventist Health" width="180" height="48" loading="lazy" />
+          <img class="partner-logo" src="assets/partners/iphca.png?v=2152" alt="Illinois Primary Health Care Association" width="180" height="48" loading="lazy" />
+          <img class="partner-logo" src="assets/partners/tenet-health.png?v=2152" alt="Tenet Health" width="180" height="48" loading="lazy" />
+          <img class="partner-logo" src="assets/partners/chs.png?v=2152" alt="Community Health Systems" width="180" height="48" loading="lazy" />
+          <img class="partner-logo" src="assets/partners/vcu.png?v=2152" alt="VCU" width="180" height="48" loading="lazy" />
+          <img class="partner-logo" src="assets/partners/shriners.png?v=2152" alt="Shriners Hospitals for Children" width="180" height="48" loading="lazy" />
         </div>
       </div>
     </div>
@@ -125,7 +169,7 @@
       <div class="home-ret-strip-grid">
         <article class="amp-ret-card" data-ret="2015-peds">
           <div class="amp-ret-card-media">
-            <img src="assets/story-2015-peds-ne.jpg?v=2151" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
+            <img src="assets/story-2015-peds-ne.jpg?v=2152" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
           </div>
           <div class="amp-ret-card-body">
             <p class="amp-ret-year">2015</p>
@@ -137,7 +181,7 @@
         </article>
         <article class="amp-ret-card" data-ret="2018-fm">
           <div class="amp-ret-card-media">
-            <img src="assets/story-2018-fm-ne-cah.jpg?v=2151" alt="Family Medicine placement story" width="640" height="360" loading="lazy" />
+            <img src="assets/story-2018-fm-ne-cah.jpg?v=2152" alt="Family Medicine placement story" width="640" height="360" loading="lazy" />
           </div>
           <div class="amp-ret-card-body">
             <p class="amp-ret-year">2018</p>
@@ -149,7 +193,7 @@
         </article>
         <article class="amp-ret-card" data-ret="2021-ks">
           <div class="amp-ret-card-media">
-            <img src="assets/story-2021-physician-ks.jpg?v=2151" alt="Physician placement story" width="640" height="360" loading="lazy" />
+            <img src="assets/story-2021-physician-ks.jpg?v=2152" alt="Physician placement story" width="640" height="360" loading="lazy" />
           </div>
           <div class="amp-ret-card-body">
             <p class="amp-ret-year">2021</p>
@@ -168,7 +212,7 @@
       <h2 class="home-job2-title">Guides who care about getting it right</h2>
       <div class="home-job2-grid">
         <article class="home-job2-card home-job2-candidate">
-          <img class="home-job2-photo" src="assets/amp-story-provider.jpg?v=2151" alt="Physician in white coat looking at camera" width="640" height="360" loading="lazy" />
+          <img class="home-job2-photo" src="assets/amp-story-provider.jpg?v=2152" alt="Physician in white coat looking at camera" width="640" height="360" loading="lazy" />
           <div class="home-job2-body">
             <span class="home-job2-path">Are you a provider looking for a job?</span>
             <h3>Your story sets the route</h3>
@@ -177,7 +221,7 @@
           </div>
         </article>
         <article class="home-job2-card home-job2-client">
-          <img class="home-job2-photo" src="assets/amp-story-boardroom.jpg?v=2151" alt="Hospital boardroom with CMO and administrators" width="640" height="360" loading="lazy" />
+          <img class="home-job2-photo" src="assets/amp-story-boardroom.jpg?v=2152" alt="Hospital boardroom with CMO and administrators" width="640" height="360" loading="lazy" />
           <div class="home-job2-body">
             <span class="home-job2-path">Are you a medical facility looking to hire?</span>
             <h3>Hire without reliving a hard search</h3>
@@ -268,35 +312,35 @@
         <p class="home-learn-lede" data-guides-lede>Tap one — they turn a preview into a real next step.</p>
         <div class="home-guides-roster guides-roster is-on" data-guides-panel="candidate" role="list">
           <a class="guide-card guide-row" href="/guides#guide-michael-freeman" data-go="guides" data-hash="guide-michael-freeman" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/mike-freeman.jpg?v=2151" alt="Mike Freeman" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/mike-freeman.jpg?v=2152" alt="Mike Freeman" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Mike Freeman</span>
               <span class="guide-role">Managing Partner, Recruiting</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-stephanie-youngblood" data-go="guides" data-hash="guide-stephanie-youngblood" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/stephanie-youngblood.jpg?v=2151" alt="Stephanie Youngblood" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/stephanie-youngblood.jpg?v=2152" alt="Stephanie Youngblood" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Stephanie Youngblood</span>
               <span class="guide-role">Recruiting guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-hadley-herrera" data-go="guides" data-hash="guide-hadley-herrera" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/hadley-herrera.jpg?v=2151" alt="Hadley Herrera" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/hadley-herrera.jpg?v=2152" alt="Hadley Herrera" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Hadley Herrera</span>
               <span class="guide-role">Recruiting guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-nate-smith" data-go="guides" data-hash="guide-nate-smith" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/nate-smith.jpg?v=2151" alt="Nate Smith" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/nate-smith.jpg?v=2152" alt="Nate Smith" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Nate Smith</span>
               <span class="guide-role">Recruiting guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-amy-myers" data-go="guides" data-hash="guide-amy-myers" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/amy-myers.jpg?v=2151" alt="Amy Myers" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/amy-myers.jpg?v=2152" alt="Amy Myers" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Amy Myers</span>
               <span class="guide-role">Recruiting guide</span>
@@ -305,35 +349,35 @@
         </div>
         <div class="home-guides-roster guides-roster" data-guides-panel="client" role="list" hidden>
           <a class="guide-card guide-row" href="/guides#guide-randy-keeth" data-go="guides" data-hash="guide-randy-keeth" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/randy-keeth.jpg?v=2151" alt="Randy Keeth" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/randy-keeth.jpg?v=2152" alt="Randy Keeth" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Randy Keeth</span>
               <span class="guide-role">Managing Partner, Business Development</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-brenton-mcmahan" data-go="guides" data-hash="guide-brenton-mcmahan" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/brenton-mcmahan.jpg?v=2151" alt="Brenton McMahan" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/brenton-mcmahan.jpg?v=2152" alt="Brenton McMahan" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Brenton McMahan</span>
               <span class="guide-role">Hiring guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-aaron-wagner" data-go="guides" data-hash="guide-aaron-wagner" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/aaron-wagner.jpg?v=2151" alt="Aaron Wagner" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/aaron-wagner.jpg?v=2152" alt="Aaron Wagner" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Aaron Wagner</span>
               <span class="guide-role">Hiring guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-zach-hamann" data-go="guides" data-hash="guide-zach-hamann" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/zach-hamann.jpg?v=2151" alt="Zach Hamann" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/zach-hamann.jpg?v=2152" alt="Zach Hamann" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Zach Hamann</span>
               <span class="guide-role">Hiring guide</span>
             </span>
           </a>
           <a class="guide-card guide-row" href="/guides#guide-kelley-lobona" data-go="guides" data-hash="guide-kelley-lobona" role="listitem">
-            <span class="guide-avatar has-photo"><img src="assets/team/kelley-lobona.jpg?v=2151" alt="Kelley Lobona" width="120" height="150" loading="lazy" /></span>
+            <span class="guide-avatar has-photo"><img src="assets/team/kelley-lobona.jpg?v=2152" alt="Kelley Lobona" width="120" height="150" loading="lazy" /></span>
             <span class="guide-body">
               <span class="home-guide-name">Kelley Lobona</span>
               <span class="guide-role">Hiring guide</span>
@@ -633,7 +677,7 @@
     </div>
     <section class="client-zach-band" aria-label="One provider can change more than a schedule">
       <div class="client-zach-photo">
-        <img class="client-zach-photo-img" src="assets/amp-path-cand-rank-countryside-smoky.jpg?v=2151" alt="" width="960" height="540" loading="lazy" />
+        <img class="client-zach-photo-img" src="assets/amp-path-cand-rank-countryside-smoky.jpg?v=2152" alt="" width="960" height="540" loading="lazy" />
         <h2 class="client-zach-title">One provider can change more than a schedule.</h2>
       </div>
       <div class="client-zach-mid">
@@ -669,7 +713,7 @@
     <aside class="client-ret-teaser" aria-label="Retention story">
       <article class="amp-ret-card amp-ret-card--slim" data-ret="2015-peds">
         <div class="amp-ret-card-media">
-          <img src="assets/story-2015-peds-ne.jpg?v=2151" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
+          <img src="assets/story-2015-peds-ne.jpg?v=2152" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
         </div>
         <div class="amp-ret-card-body">
           <p class="amp-ret-year">2015</p>
@@ -721,7 +765,7 @@
         </article>
         <article class="amp-ret-card" data-ret="2015-peds">
           <div class="amp-ret-card-media">
-            <img src="assets/story-2015-peds-ne.jpg?v=2151" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
+            <img src="assets/story-2015-peds-ne.jpg?v=2152" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
           </div>
           <div class="amp-ret-card-body">
             <p class="amp-ret-year">2015</p>
@@ -733,7 +777,7 @@
         </article>
         <article class="amp-ret-card" data-ret="2018-fm">
           <div class="amp-ret-card-media">
-            <img src="assets/story-2018-fm-ne-cah.jpg?v=2151" alt="Family Medicine placement story" width="640" height="360" loading="lazy" />
+            <img src="assets/story-2018-fm-ne-cah.jpg?v=2152" alt="Family Medicine placement story" width="640" height="360" loading="lazy" />
           </div>
           <div class="amp-ret-card-body">
             <p class="amp-ret-year">2018</p>
@@ -745,7 +789,7 @@
         </article>
         <article class="amp-ret-card" data-ret="2021-ks">
           <div class="amp-ret-card-media">
-            <img src="assets/story-2021-physician-ks.jpg?v=2151" alt="Physician placement story" width="640" height="360" loading="lazy" />
+            <img src="assets/story-2021-physician-ks.jpg?v=2152" alt="Physician placement story" width="640" height="360" loading="lazy" />
           </div>
           <div class="amp-ret-card-body">
             <p class="amp-ret-year">2021</p>
@@ -933,7 +977,7 @@
     <div class="client-ret-pepper-cards">
       <article class="amp-ret-card amp-ret-card--dense amp-ret-card--desktop" data-ret="2015-peds">
         <div class="amp-ret-card-media">
-          <img src="assets/story-2015-peds-ne.jpg?v=2151" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
+          <img src="assets/story-2015-peds-ne.jpg?v=2152" alt="Pediatrician placement story" width="640" height="360" loading="lazy" />
         </div>
         <div class="amp-ret-card-body">
           <p class="amp-ret-year">2015</p>
@@ -945,7 +989,7 @@
       </article>
       <article class="amp-ret-card amp-ret-card--dense" data-ret="2018-fm">
         <div class="amp-ret-card-media">
-          <img src="assets/story-2018-fm-ne-cah.jpg?v=2151" alt="Family Medicine placement story" width="640" height="360" loading="lazy" />
+          <img src="assets/story-2018-fm-ne-cah.jpg?v=2152" alt="Family Medicine placement story" width="640" height="360" loading="lazy" />
         </div>
         <div class="amp-ret-card-body">
           <p class="amp-ret-year">2018</p>
@@ -957,7 +1001,7 @@
       </article>
       <article class="amp-ret-card amp-ret-card--dense" data-ret="2021-ks">
         <div class="amp-ret-card-media">
-          <img src="assets/story-2021-physician-ks.jpg?v=2151" alt="Physician placement story" width="640" height="360" loading="lazy" />
+          <img src="assets/story-2021-physician-ks.jpg?v=2152" alt="Physician placement story" width="640" height="360" loading="lazy" />
         </div>
         <div class="amp-ret-card-body">
           <p class="amp-ret-year">2021</p>
@@ -2262,7 +2306,7 @@
       <a href="mailto:inquire@adaptivemedicalpartners.com">inquire@adaptivemedicalpartners.com</a>
       <p style="margin:12px 0 0;font-size:12px">AMP = guide · Candidate = searching for a role · Client = hiring with a brief · MPC = tailored search when posted roles don’t fit</p>
       <p style="margin:8px 0 0;font-size:12px;color:#64748b">87% @ 3 yrs · 1.7 interviews · 700+ rural/FQHC/CAH · 16 years since 2010</p>
-      <p class="amp-build-chip" id="amp-build-chip">amp-build 2151-ret-card-type-strengthen</p>
+      <p class="amp-build-chip" id="amp-build-chip">amp-build 2152-hero-rotating-ret-card</p>
     </div>
     <div>
       <h4>Doors</h4>
@@ -2471,13 +2515,14 @@
 }
 </script>
 
-<script src="js/content.js?v=2151"></script>
-<script src="js/articles.js?v=2151"></script>
-<script src="js/ridge-mi-data.js?v=2151"></script>
-<script src="js/ridge-access.js?v=2151"></script>
-<script src="js/mi-aspect-hooks-v1.js?v=2151"></script>
-<script src="js/ridge-workbench.js?v=2151"></script>
-<script src="js/app.js?v=2151"></script>
+<script src="js/content.js?v=2152"></script>
+<script src="js/articles.js?v=2152"></script>
+<script src="js/ridge-mi-data.js?v=2152"></script>
+<script src="js/ridge-access.js?v=2152"></script>
+<script src="js/mi-aspect-hooks-v1.js?v=2152"></script>
+<script src="js/ridge-workbench.js?v=2152"></script>
+<script src="js/app.js?v=2152"></script>
+<script src="js/hero-ret-rotator.js?v=2152"></script>
 <script src="https://embed.typeform.com/next/embed.js" defer data-amp-typeform="1"></script>
 <template id="amp-region-map-template">
 <div class="region-map-shell">
@@ -2770,6 +2815,6 @@ window.AMP_CHATBOT = Object.assign({
   handoffUrl: "https://pmbehaioxviyhdmmczfl.supabase.co/functions/v1/amp-chatbot-handoff"
 }, window.AMP_CHATBOT || {});
 </script>
-<script src="assets/js/amp-chatbot-mountain.js?v=2151" async data-amp-chatbot-js="1"></script>
+<script src="assets/js/amp-chatbot-mountain.js?v=2152" async data-amp-chatbot-js="1"></script>
 </body>
 </html>
