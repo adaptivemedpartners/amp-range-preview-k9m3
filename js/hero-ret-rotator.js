@@ -1,4 +1,4 @@
-/* amp-build:2152-hero-rotating-ret-card
+/* amp-build:2153-hero-rotator-mobile-slim
    Compact homepage hero retention rotator. Self-contained.
    Soft crossfade ~3.8s, pause on hover/focus, static first card if reduced-motion. */
 (function () {

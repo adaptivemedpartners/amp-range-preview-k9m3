@@ -1,4 +1,4 @@
-/* amp-build:2152-hero-rotating-ret-card */
+/* amp-build:2153-hero-rotator-mobile-slim */
 /* amp-build:2151-ret-card-type-strengthen */
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
@@ -9960,16 +9960,122 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
 }
 
-/* Mobile: stack under H1 / above Choose a path — never overlay the photo face */
-@media (max-width: 899px) {
+/* amp-build:2153 — mobile: inline gutter on large phones; slim left strip on small.
+   Never cover the clinic-desk pair (photo is right-weighted). Desktop 900px+ stays above. */
+
+/* Large phones / phablets: compact card beside the headline, same gutter idea as desktop */
+@media (min-width: 640px) and (max-width: 899px) {
+  .explore-block-ad {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  .explore-ad-copy {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: min(16ch, calc(100% - 168px));
+  }
+  .explore-block-ad .explore-title {
+    max-width: 16ch;
+  }
+  .hero-ret-rotator {
+    width: 152px;
+    flex: 0 0 152px;
+    margin: 0;
+    align-self: center;
+  }
+  .hero-ret-mini-inner {
+    padding: 8px 9px 6px;
+    gap: 8px;
+  }
+  .hero-ret-mini-photo {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+  }
+  .hero-ret-mini-year {
+    font-size: 15px;
+  }
+  .hero-ret-mini-role {
+    font-size: 12px;
+  }
+  .hero-ret-mini-place {
+    font-size: 10.5px;
+  }
+  .hero-ret-mini-footer {
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+  .hero-ret-dots {
+    margin-top: 6px;
+  }
+}
+
+/* Typical phones: one-row left chip under copy — short, not a tall stacked block */
+@media (max-width: 639px) {
   .explore-block-ad {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
   .hero-ret-rotator {
-    width: min(248px, 92%);
-    margin: 12px 0 4px;
+    width: min(228px, 72%);
+    margin: 8px 0 2px;
+  }
+  .hero-ret-rotator-stage {
+    border-radius: 10px;
+  }
+  .hero-ret-mini {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .hero-ret-mini-inner {
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+  .hero-ret-mini-photo {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 6px;
+  }
+  .hero-ret-mini-year {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  .hero-ret-mini-role {
+    font-size: 11.5px;
+  }
+  .hero-ret-mini-place {
+    font-size: 10.5px;
+    margin-top: 1px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hero-ret-mini-footer {
+    margin-top: 0;
+    max-width: 6.8rem;
+    padding: 7px 8px;
+    display: flex;
+    align-items: center;
+    font-size: 9.5px;
+    line-height: 1.2;
+    border-top: 0;
+    border-left: 1px solid rgba(14, 61, 50, 0.16);
+  }
+  .hero-ret-dots {
+    margin-top: 5px;
+    gap: 5px;
+  }
+  .hero-ret-dot {
+    width: 5px;
+    height: 5px;
   }
 }
 
