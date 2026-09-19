@@ -1,4 +1,4 @@
-/* amp-build:2146-mi-hub-faq */
+/* amp-build:2147-aspects-v1 */
 /* AMP Site — content packs (jobs and Education posts)
    Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
    Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.

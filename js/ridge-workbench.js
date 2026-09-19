@@ -1,4 +1,4 @@
-/* amp-build:2116 Ridge workbench — Light MI full-bleed inside mountain chrome.
+/* amp-build:2147 Market Intelligence workbench — Aspects v1 + AMP bands.
    No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -13,6 +13,188 @@
     { key: "realpay", label: "Real pay value" },
     { key: "comp", label: "Median total comp" }
   ];
+
+  /* Aspects v1 — Market Intelligence (product term). Shared store key with firm MI. */
+  var ASPECTS_V1 = [
+    { id: "raw", label: "Raw",
+      move: "National specialty cash ruler — YOUR Baseline (Competitive when AMP bands are set).",
+      weight: "pending Mike weights" },
+    { id: "place_draw", label: "Place draw",
+      move: "Who lives there / desirability / COL–taxes framing. Deep metros can lower required pay when the specialty pool is deep.",
+      weight: "pending Mike weights" },
+    { id: "day_load", label: "Day load",
+      move: "Patients/day, schedule, and pay-per-patient shift effective cash vs headline package.",
+      weight: "pending Mike weights · subtype day-load rules still to bake" },
+    { id: "specialty_supply", label: "Specialty supply",
+      move: "How many real candidates for this specialty here (not generic market pull).",
+      weight: "pending Mike weights" },
+    { id: "support", label: "Support",
+      move: "Culture, admin burden, and unspoken value. Soft read OK for v1.",
+      weight: "qualitative v1" },
+    { id: "cah", label: "CAH",
+      move: "Critical access (≤25 beds) / CAH-heavy markets often need higher cash on top of geo.",
+      weight: "pending Mike weights · facility overlay not yet wired" },
+    { id: "fqhc", label: "FQHC",
+      move: "Medicaid PPS / change-in-scope rules. Not “more FQHC sites = higher pay.”",
+      weight: "pending Mike weights" },
+    { id: "cms", label: "CMS",
+      move: "Revenue/collections triangulation. Subtypes inherit parent. Not auto-Baseline $.",
+      weight: "pending Mike weights — triangulation language only" }
+  ];
+  var ASPECTS_STORE_KEY = "amp_mi_aspects_v1";
+  var aspectsV1Active = ["raw"];
+
+  function aspectDef(id) {
+    for (var i = 0; i < ASPECTS_V1.length; i++) if (ASPECTS_V1[i].id === id) return ASPECTS_V1[i];
+    return null;
+  }
+  function normalizeAspectsList(arr) {
+    var allow = {};
+    ASPECTS_V1.forEach(function (a) { allow[a.id] = 1; });
+    var out = [];
+    (arr || []).forEach(function (id) {
+      id = String(id || "");
+      if (allow[id] && out.indexOf(id) < 0) out.push(id);
+    });
+    return out;
+  }
+  function loadAspectsV1() {
+    try {
+      var raw = localStorage.getItem(ASPECTS_STORE_KEY);
+      if (!raw) return ["raw"];
+      var list = normalizeAspectsList(JSON.parse(raw));
+      return list.length ? list : ["raw"];
+    } catch (e) { return ["raw"]; }
+  }
+  function saveAspectsV1() {
+    try { localStorage.setItem(ASPECTS_STORE_KEY, JSON.stringify(aspectsV1Active)); } catch (e) {}
+  }
+  function isAspectOn(id) { return aspectsV1Active.indexOf(id) >= 0; }
+  function syncAspectsUi() {
+    document.querySelectorAll("#ridge-aspects-chips .aspect-chip").forEach(function (btn) {
+      var id = btn.getAttribute("data-aspect");
+      var on = isAspectOn(id);
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var note = $("ridge-aspects-note");
+    if (note) {
+      var n = aspectsV1Active.length;
+      note.textContent = n
+        ? (n + " Aspect" + (n === 1 ? "" : "s") + " on · story panel follows · AMP bands when set · weights pending · Medicaid later")
+        : "No Aspects on — turn on Raw (or others) to shape the market read";
+    }
+  }
+  function toggleAspectV1(id) {
+    if (!aspectDef(id)) return;
+    var i = aspectsV1Active.indexOf(id);
+    if (i >= 0) aspectsV1Active.splice(i, 1);
+    else aspectsV1Active.push(id);
+    aspectsV1Active = normalizeAspectsList(aspectsV1Active);
+    saveAspectsV1();
+    syncAspectsUi();
+    try { renderSidebar(); } catch (e) {}
+  }
+  function aspectHooksForSpecialty(s) {
+    var hooks = w.MI_ASPECT_HOOKS || {};
+    var label = s && s.label ? s.label : "";
+    var cms = (hooks.cmsByLabel && hooks.cmsByLabel[label]) || null;
+    var rediMap = hooks.rediByStateByLabel || {};
+    var rediUs = hooks.rediUsByLabel || {};
+    var redi = rediMap[label] || null;
+    var tot = rediUs[label] || null;
+    if (!redi) {
+      var keys = Object.keys(rediMap);
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        if (label.indexOf(k) >= 0 || k.indexOf(label) >= 0) { redi = rediMap[k]; tot = rediUs[k] || tot; break; }
+      }
+    }
+    if (!cms && hooks.cmsByLabel) {
+      var ckeys = Object.keys(hooks.cmsByLabel);
+      for (var j = 0; j < ckeys.length; j++) {
+        var ck = ckeys[j];
+        if (label.indexOf(ck) >= 0 || ck.indexOf(label) >= 0) { cms = hooks.cmsByLabel[ck]; break; }
+      }
+    }
+    return { cms: cms, rediByState: redi, rediUs: tot, label: label };
+  }
+  function aspectHookHtml(id, s) {
+    var h = aspectHooksForSpecialty(s);
+    var picks = selectedCodes();
+    var bits = [];
+    if (id === "raw") {
+      var amp = getAmpBands(s);
+      if (amp && amp.competitive != null) bits.push("Data: YOUR Baseline (Competitive) " + fmtMoney(amp.competitive));
+      else bits.push("Data: AMP bands pending — no invented $");
+    } else if (id === "place_draw") {
+      if (picks.length) {
+        var parts = [];
+        picks.slice(0, 6).forEach(function (code) {
+          var rpp = STATE_RPP[code];
+          if (rpp != null) parts.push((stateNames()[code] || code.toUpperCase()) + " COL " + rpp);
+        });
+        if (parts.length) bits.push("Data: " + parts.join(" · "));
+      } else bits.push("Data: select state(s) for COL (RPP) context");
+    } else if (id === "specialty_supply") {
+      if (picks.length && h.rediByState) {
+        var sum = 0, have = 0;
+        picks.forEach(function (code) {
+          var v = h.rediByState[code];
+          if (v != null) { sum += v; have++; }
+        });
+        if (have) bits.push("Data: Redi residence in selection ≈ " + fmtNum(sum) +
+          (h.rediUs && h.rediUs.usTotal != null ? (" · U.S. " + fmtNum(h.rediUs.usTotal)) : ""));
+      }
+      if (s && s.physNational != null) bits.push("Data: national supply signal " + fmtNum(s.physNational));
+      if (!bits.length) bits.push("Data: Redi hook pending for this label");
+    } else if (id === "cms") {
+      if (h.cms && h.cms.avgAllowed != null) {
+        bits.push("Data: CMS avg allowed/provider ~" + fmtMoney(h.cms.avgAllowed) +
+          (h.cms.relIndex != null ? (" · rel index " + h.cms.relIndex) : "") +
+          " — triangulation only, not Baseline $");
+      } else bits.push("Data: CMS context not mapped for this label");
+    } else {
+      bits.push("Data hook: qualitative in v1");
+    }
+    return bits.join(" · ");
+  }
+  function renderAspectsStoryHtml(s) {
+    var html = '<div class="aspects-story" id="ridge-aspects-story">';
+    html += "<h4>Aspects · how the read moves</h4>";
+    if (!aspectsV1Active.length) {
+      html += '<div class="as-empty">No Aspects active. Turn on Raw (or others) above.</div></div>';
+      return html;
+    }
+    aspectsV1Active.forEach(function (id) {
+      var def = aspectDef(id);
+      if (!def) return;
+      html += '<div class="as-item"><div class="as-name">' + def.label + "</div>";
+      html += '<div class="as-move">' + def.move + "</div>";
+      var hook = aspectHookHtml(id, s);
+      if (hook) html += '<div class="as-hook">' + hook + "</div>";
+      if (def.weight) html += '<div class="as-pending">' + def.weight + "</div>";
+      html += "</div>";
+    });
+    html += '<div class="note" style="margin-top:8px">Aspects shape the consult story. They do not invent Baseline dollars. AMP guides are never replaced by this panel. Medicaid Aspect = later.</div>';
+    html += "</div>";
+    return html;
+  }
+  function bindAspectsV1() {
+    if (document._ridgeAspectsV1Bound) return;
+    document._ridgeAspectsV1Bound = true;
+    aspectsV1Active = loadAspectsV1();
+    var chips = $("ridge-aspects-chips");
+    if (chips) {
+      chips.addEventListener("click", function (e) {
+        var btn = e.target.closest(".aspect-chip");
+        if (!btn) return;
+        toggleAspectV1(btn.getAttribute("data-aspect"));
+      });
+    }
+    syncAspectsUi();
+  }
+
 
   /* Illustrative state COL / RPP seeds (EXAMPLE) — not live BLS */
   var STATE_RPP = {
@@ -195,36 +377,53 @@
     }
     return { count: g._national, type: g._type, national: g._national };
   }
-  function mgmaBarsHtml(tc, opts) {
+  function getAmpBands(s) {
+    s = s || currentSpec();
+    if (!s || !s.ampBands) return null;
+    var b = s.ampBands;
+    if (b.competitive == null && b.redAlert == null) return null;
+    return b;
+  }
+
+  /** Public MI: AMP market bands only. Never MGMA percentiles on this surface. */
+  function ampBandsHtml(amp, opts) {
     opts = opts || {};
     var cls = opts.className || "ridge-bars";
-    if (!tc) return "";
-    var maxComp = Math.max(tc.p90 || 0, tc.p75 || 0, tc.p50 || 0, tc.p25 || 0, 1);
+    if (!amp || amp.competitive == null) {
+      return '<div class="' + cls + ' ridge-bars-pending"><div class="bar-row"><span class="bar-lbl">AMP bands</span><span class="bar-val">Pending — Mike YOUR Baseline</span></div></div>';
+    }
+    var maxComp = Math.max(amp.destination || 0, amp.magnet || 0, amp.competitive || 0, amp.redAlert || 0, 1);
     var html = '<div class="' + cls + '">';
-    [["25th", tc.p25], ["50th", tc.p50], ["75th", tc.p75], ["90th", tc.p90]].forEach(function (pair) {
+    [["Red alert", amp.redAlert], ["Competitive", amp.competitive], ["Magnet", amp.magnet], ["Destination", amp.destination]].forEach(function (pair) {
       var pct = pair[1] != null ? Math.round(pair[1] / maxComp * 100) : 0;
       html += '<div class="bar-row"><span class="bar-lbl">' + pair[0] + '</span><div class="bar"><i style="width:' + pct + '%"></i></div><span class="bar-val">' + show(fmtMoney(pair[1]), "—") + "</span></div>";
     });
     html += "</div>";
-    if (opts.mean !== false && tc.mean != null) {
+    if (opts.mean !== false) {
       html += '<div class="mean-line' + (opts.meanRow ? " mean-row" : "") + '">';
-      if (opts.meanRow) html += '<span class="k">Mean</span><span class="v"><strong>' + fmtMoney(tc.mean) + "</strong></span>";
-      else html += "Mean " + fmtMoney(tc.mean) + (opts.meanSuffix || " · public · EXAMPLE");
+      if (opts.meanRow) html += '<span class="k">Baseline</span><span class="v"><strong>Competitive</strong></span>';
+      else html += "Competitive = YOUR Baseline" + (opts.meanSuffix || " · public · EXAMPLE");
       html += "</div>";
     }
     return html;
   }
 
+  // Back-compat name: public surface must not render MGMA percentiles.
+  function mgmaBarsHtml(tc, opts) {
+    return ampBandsHtml(getAmpBands(), opts);
+  }
+
   function realPayFor(code) {
     var s = currentSpec();
-    var p50 = s && s.totalComp && s.totalComp.p50 != null ? s.totalComp.p50 : null;
-    if (p50 == null) return 0;
+    var amp = getAmpBands(s);
+    var base = amp && amp.competitive != null ? amp.competitive : null;
+    if (base == null) return 0;
     var rpp = rppFor(code) || 100;
-    return Math.round(p50 * (100 / rpp));
+    return Math.round(base * (100 / rpp));
   }
   function compFor() {
-    var s = currentSpec();
-    return s && s.totalComp && s.totalComp.p50 != null ? s.totalComp.p50 : 0;
+    var amp = getAmpBands();
+    return amp && amp.competitive != null ? amp.competitive : 0;
   }
 
   function metricValueFor(code) {
@@ -408,16 +607,20 @@
     var s = currentSpec();
     if (!s) { host.innerHTML = ""; return; }
     var tc = s.totalComp || {};
+    var amp = getAmpBands(s);
     var rvu = s.workRVUs || {};
     var ratio = s.compRatio || {};
     var wt = workforceTerms(s);
     var html = "";
 
-    /* Row 1 (Mike 1999): Compensation top-left, then pipeline, then workforce age.
-       Row 2: former top row — supply, postings, openings ratio. */
-    html += '<div class="bench-card comp bench-featured"><div class="title">Total Compensation (national public)</div>';
-    html += '<div class="hero">' + show(fmtMoney(tc.p50), "n/a") + "<small>median</small></div>";
-    html += mgmaBarsHtml(tc, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · public · EXAMPLE" });
+    /* Row 1: AMP market bands only on public (Competitive = YOUR Baseline). Pending if gap. */
+    html += '<div class="bench-card comp bench-featured"><div class="title">AMP cash bands (market read)</div>';
+    if (amp && amp.competitive != null) {
+      html += '<div class="hero">' + show(fmtMoney(amp.competitive), "n/a") + "<small>Competitive</small></div>";
+    } else {
+      html += '<div class="hero">Pending<small>YOUR Baseline</small></div>';
+    }
+    html += ampBandsHtml(amp, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · public · EXAMPLE" });
     if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
       html += '<div class="bench-extra">';
       if (ratio.p50 != null) html += '<span>Comp / wRVU <b>' + show(fmtNum(ratio.p50, 2), "n/a") + "</b></span>";
@@ -527,6 +730,8 @@
     }
     html += "</div>";
 
+    html += renderAspectsStoryHtml(s);
+
     html += '<div class="section-title">Market Insight</div>';
     if (picks.length === 1) {
       var code0 = picks[0];
@@ -549,9 +754,9 @@
     html += '<div class="row"><span class="k">Speed-to-fill</span><span class="v"><strong>~' + ttfDays +
       " days</strong></span></div>";
 
-    if (s && s.totalComp) {
-      html += '<div class="section-title">Total Compensation (national public)</div>';
-      html += mgmaBarsHtml(s.totalComp, { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
+    if (s && (s.ampBands || s.totalComp)) {
+      html += '<div class="section-title">AMP cash bands (market read)</div>';
+      html += ampBandsHtml(getAmpBands(s), { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
       if (s.compRatio && s.compRatio.p50 != null)
         html += '<div class="row"><span class="k">Comp / wRVU</span><span class="v">' + show(fmtNum(s.compRatio.p50, 2), "—") + "</span></div>";
       if (s.workRVUs && s.workRVUs.p50 != null)
@@ -1117,6 +1322,8 @@
     if (!root || root.getAttribute("data-ridge-chrome") === "1") return;
     root.setAttribute("data-ridge-chrome", "1");
 
+    try { bindAspectsV1(); } catch (e) {}
+
     var bar = $("ridge-metric-bar");
     if (bar) {
       bar.addEventListener("click", function (e) {
@@ -1231,7 +1438,7 @@
     var unit = rows.length === 1 ? rows[0] : null;
     var supply = unit ? physCountFor(unit) : (s && s.physNational);
     var postings = unit ? postingsFor(unit) : (s && s.nationalPostings);
-    var comp = unit ? realPayFor(unit) : (s && s.totalComp && s.totalComp.p50);
+    var comp = unit ? realPayFor(unit) : (function(){ var a=getAmpBands(s); return a && a.competitive != null ? a.competitive : null; })();
     var lens = unit ? ((names[unit] || unit.toUpperCase()) + " · 1×1") : metricLabelForActive();
     return "<!doctype html><html><head><meta charset='utf-8'><title>Market Intelligence Report · Adaptive Medical Partners</title>" +
       "<style>body{font-family:Inter,system-ui,sans-serif;color:#0f172a;padding:32px;max-width:900px;margin:0 auto}" +
