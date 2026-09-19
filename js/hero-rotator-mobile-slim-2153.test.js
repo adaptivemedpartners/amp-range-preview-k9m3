@@ -1,3 +1,3 @@
-/* Node smoke: 2153 hero rotator mobile slim — superseded by 2154.
-   Run: node js/hero-rotator-mobile-slim-2153.test.js */
-require("./hero-cleanup-kansas-2154.test.js");
+/* Node smoke: 2153 hero rotator mobile slim banner under H1.
+   Superseded by 2155 homepage placements map. */
+require("./home-placements-map-2155.test.js");
