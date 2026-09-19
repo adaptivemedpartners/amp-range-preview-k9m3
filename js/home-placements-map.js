@@ -152,10 +152,18 @@
   }
 
   function raiseFeatured(svg) {
+    var old = svg.querySelector(".home-place-featured");
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var layer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    layer.setAttribute("class", "home-place-featured");
     Object.keys(PLACEMENTS).forEach(function (code) {
-      var path = svg.querySelector('[data-state="' + code + '"]');
-      if (path && path.parentNode) path.parentNode.appendChild(path);
+      var src = svg.querySelector('g.state [data-state="' + code + '"], [data-state="' + code + '"]');
+      if (!src || (src.closest && src.closest(".home-place-featured"))) return;
+      var clone = src.cloneNode(true);
+      clone.setAttribute("data-featured", "1");
+      layer.appendChild(clone);
     });
+    svg.appendChild(layer);
   }
 
   function addPins(svg) {
