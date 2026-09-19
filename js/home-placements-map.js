@@ -266,6 +266,8 @@
       el.style.cursor = "pointer";
       el.style.pointerEvents = "auto";
       if (storiesFor(code)) {
+        el.setAttribute("fill", "#2a9d8f");
+        el.style.setProperty("fill", "#2a9d8f", "important");
         el.setAttribute("tabindex", "0");
         el.setAttribute("role", "button");
         el.setAttribute("aria-label", stateLabel(code) + " placement stories");

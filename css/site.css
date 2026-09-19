@@ -10157,6 +10157,13 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   transition: fill 0.16s ease;
   vector-effect: non-scaling-stroke;
 }
+.home-place-map-host path.ne,
+.home-place-map-host path.ks,
+.home-place-map-host path[data-state="ne"],
+.home-place-map-host path[data-state="ks"] {
+  fill: #2a9d8f !important;
+  stroke: #14786e;
+}
 .home-place-map-host path[data-state].has-story {
   fill: #2a9d8f;
   stroke: #14786e;
