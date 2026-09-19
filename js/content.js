@@ -1,4 +1,4 @@
-/* amp-build:2153-hero-rotator-mobile-slim */
+/* amp-build:2154-hero-cleanup-kansas */
 /* AMP Site — content packs (jobs and Education posts)
    Jobs: 58 published www /job/{slug} items synced 2026-09-15 from live Webflow.
    Source: www.adaptivemedicalpartners.com/jobs + CMS Jobs collection.
