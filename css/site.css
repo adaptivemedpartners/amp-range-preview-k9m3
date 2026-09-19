@@ -9508,9 +9508,9 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
 }
 .client-zach-photo {
   position: relative;
-  min-height: 228px;
+  min-height: 248px;
   overflow: hidden;
-  background: #243044;
+  background: #6a7a6c;
 }
 .client-zach-photo-img {
   position: absolute;
@@ -9518,23 +9518,32 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 28% 58%;
-  filter: saturate(1.2) contrast(1.08) sepia(0.22) brightness(0.9);
+  object-position: 35% 45%;
+  filter: saturate(1.45) contrast(1.2) sepia(0.08) brightness(1.28);
+}
+.client-zach-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(12, 14, 18, 0.38) 0%, rgba(12, 14, 18, 0.16) 46%, transparent 72%);
+  pointer-events: none;
 }
 .client-zach-photo::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
-    linear-gradient(90deg, rgba(18, 16, 14, 0.22) 0%, rgba(18, 16, 14, 0.08) 40%, rgba(255, 255, 255, 0.62) 82%, #fff 100%),
-    linear-gradient(180deg, rgba(255, 132, 58, 0.28) 0%, rgba(28, 22, 20, 0.08) 48%, rgba(16, 20, 28, 0.32) 100%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.58) 82%, #fff 100%),
+    linear-gradient(180deg, rgba(255, 154, 72, 0.32) 0%, rgba(255, 154, 72, 0.08) 42%, rgba(20, 24, 32, 0.12) 100%);
   pointer-events: none;
 }
 .client-zach-title {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   margin: 0;
-  padding: 26px 20px 26px 24px;
+  padding: 28px 22px 28px 26px;
   max-width: 15ch;
   font-family: var(--font), system-ui, sans-serif;
   font-size: clamp(1.32rem, 2.35vw, 1.82rem);
@@ -9583,9 +9592,9 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   height: 100%;
 }
 .client-zach-closer {
-  margin: 2px 0 0;
-  font-size: 15.5px;
-  font-weight: 780;
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--navy);
 }
@@ -9633,12 +9642,12 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
     margin: 14px auto 10px;
   }
   .client-zach-photo {
-    min-height: 176px;
+    min-height: 188px;
   }
   .client-zach-photo::after {
     background:
-      linear-gradient(180deg, rgba(18, 16, 14, 0.12) 0%, rgba(18, 16, 14, 0.28) 62%, #fff 100%),
-      linear-gradient(90deg, rgba(255, 132, 58, 0.22), transparent 70%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 58%, #fff 100%),
+      linear-gradient(90deg, rgba(255, 154, 72, 0.22), transparent 70%);
   }
   .client-zach-title {
     max-width: 16ch;
