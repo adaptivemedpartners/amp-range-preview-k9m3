@@ -1,4 +1,4 @@
-/* amp-build:2149-client-step3-ret-strip */
+/* amp-build:2150-client-step2-zach-banner */
 
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
@@ -9490,104 +9490,176 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
 }
 
-/* Client step 3 — Zach band (navy/sky/mint, countryside smoky) */
+/* ========== amp-build:2150-client-step2-zach-banner — 3-zone One provider (facility step) ========== */
 .client-zach-band {
   position: relative;
-  width: min(1080px, calc(100% - 24px));
-  margin: 18px auto 14px;
-  border-radius: 20px;
+  z-index: 2;
+  width: min(1080px, 100%);
+  margin: 18px auto 10px;
+  display: grid;
+  grid-template-columns: minmax(220px, 1.05fr) minmax(250px, 1.2fr) minmax(148px, 0.52fr);
+  align-items: stretch;
+  background: #fff;
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(120, 196, 229, 0.35);
-  box-shadow: 0 18px 48px rgba(8, 14, 22, 0.35);
+  border: 2px solid var(--navy);
+  box-shadow: 0 16px 40px rgba(21, 35, 50, 0.22);
+  pointer-events: auto;
 }
-.client-zach-band-bg {
+.client-zach-photo {
+  position: relative;
+  min-height: 248px;
+  overflow: hidden;
+  background: #6a7a6c;
+}
+.client-zach-photo-img {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(105deg, rgba(21, 35, 50, 0.88) 0%, rgba(21, 35, 50, 0.72) 42%, rgba(26, 61, 69, 0.78) 100%),
-    linear-gradient(180deg, rgba(21, 35, 50, 0.35) 0%, rgba(21, 35, 50, 0.55) 100%),
-    url("../assets/amp-path-cand-rank-countryside-smoky.jpg?v=2142");
-  background-size: cover, cover, cover;
-  background-position: center, center, center;
-  filter: saturate(0.92);
-  transform: scale(1.03);
-  transform-origin: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 35% 45%;
+  filter: saturate(1.45) contrast(1.2) sepia(0.08) brightness(1.28);
 }
-.client-zach-band-inner {
-  position: relative;
+.client-zach-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  padding: 28px 28px 24px;
-  color: #f8fafc;
-  max-width: 720px;
+  background: linear-gradient(90deg, rgba(12, 14, 18, 0.38) 0%, rgba(12, 14, 18, 0.16) 46%, transparent 72%);
+  pointer-events: none;
 }
-.client-zach-kicker {
-  margin: 0 0 8px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #78C4E5;
+.client-zach-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.58) 82%, #fff 100%),
+    linear-gradient(180deg, rgba(255, 154, 72, 0.32) 0%, rgba(255, 154, 72, 0.08) 42%, rgba(20, 24, 32, 0.12) 100%);
+  pointer-events: none;
 }
 .client-zach-title {
-  margin: 0 0 14px;
-  font-size: clamp(1.25rem, 2.8vw, 1.75rem);
-  font-weight: 780;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  color: #f8fafc;
-  text-shadow: 0 2px 18px rgba(0,0,0,0.35);
-  font-family: var(--font), system-ui, sans-serif; /* not Zach whole-page serif */
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 28px 22px 28px 26px;
+  max-width: 15ch;
+  font-family: var(--font), system-ui, sans-serif;
+  font-size: clamp(1.32rem, 2.35vw, 1.82rem);
+  font-weight: 760;
+  letter-spacing: -0.028em;
+  line-height: 1.14;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.48);
+}
+.client-zach-mid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 18px 18px 6px;
+  background: #fff;
 }
 .client-zach-benefits {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 8px;
+  gap: 9px;
 }
 .client-zach-benefits li {
-  position: relative;
-  padding-left: 18px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: rgba(226, 232, 240, 0.94);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  font-size: 14.5px;
+  line-height: 1.35;
+  color: var(--navy);
   font-weight: 560;
 }
-.client-zach-benefits li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #6BE0AD;
-  box-shadow: 0 0 10px rgba(107, 224, 173, 0.45);
+.client-zach-benefits li::before { display: none; }
+.client-zach-ico {
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  color: var(--navy);
+  margin-top: 1px;
+}
+.client-zach-ico svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .client-zach-closer {
-  margin: 0 0 6px;
-  font-size: 15px;
-  font-weight: 720;
-  color: #6BE0AD;
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--navy);
 }
-.client-zach-tag {
+.client-zach-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 16px 18px 14px;
+  border-left: 1px solid rgba(21, 35, 50, 0.16);
+  background: #fff;
+}
+.client-zach-script {
   margin: 0;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #78C4E5;
+  font-family: "Caveat", "Segoe Script", "Bradley Hand", "Brush Script MT", cursive;
+  font-size: clamp(1.5rem, 2.15vw, 1.9rem);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.18;
+  color: var(--navy-2);
 }
-@media (max-width: 640px) {
+.client-zach-swoosh {
+  position: relative;
+  display: inline-block;
+}
+.client-zach-swoosh::after {
+  content: "";
+  position: absolute;
+  left: -6%;
+  right: -10%;
+  bottom: -3px;
+  height: 11px;
+  background: no-repeat center / 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 14' fill='none'%3E%3Cpath d='M2 9c28 6 52-7 80-5 22 1.5 48 8 76 2' stroke='%236BE0AD' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+@media (min-width: 900px) {
+  .view.funnel.trailhead[data-route="client"] .client-zach-band {
+    width: min(1080px, 100%);
+  }
+}
+@media (max-width: 899px) {
   .client-zach-band {
-    width: calc(100% - 16px);
-    margin: 14px auto 12px;
-  }
-  .client-zach-band-inner {
-    padding: 20px 16px 18px;
-  }
-  .client-zach-benefits {
     grid-template-columns: 1fr;
+    width: min(560px, calc(100% - 16px));
+    margin: 14px auto 10px;
+  }
+  .client-zach-photo {
+    min-height: 188px;
+  }
+  .client-zach-photo::after {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 58%, #fff 100%),
+      linear-gradient(90deg, rgba(255, 154, 72, 0.22), transparent 70%);
+  }
+  .client-zach-title {
+    max-width: 16ch;
+    padding: 22px 18px 40px;
+  }
+  .client-zach-mid {
+    padding: 4px 18px 14px;
+  }
+  .client-zach-end {
+    border-left: 0;
+    border-top: 1px solid rgba(21, 35, 50, 0.1);
+    padding: 6px 20px 18px;
   }
   /* Mobile: keep single-column; don't force desktop 3-col emptiness */
   .client-ret-pepper--trio {
