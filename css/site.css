@@ -1,5 +1,4 @@
-/* amp-build:2150-client-step2-zach-banner */
-
+/* amp-build:2151-ret-card-type-strengthen */
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
 a.mi-education-card {
@@ -8995,46 +8994,51 @@ img[src*="amp-logo-mark"] {
   display: block;
 }
 .amp-ret-card-body {
-  padding: 12px 14px 10px;
+  padding: 14px 16px 12px;
 }
+/* amp-build:2151-ret-card-type-strengthen — information hierarchy on story cards */
 .amp-ret-year {
   margin: 0 0 4px;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   color: var(--navy);
-  line-height: 1.1;
+  line-height: 1.05;
 }
 .amp-ret-role {
   margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--navy-2);
+  font-size: 15px;
+  font-weight: 780;
+  color: var(--navy);
+  line-height: 1.25;
 }
 .amp-ret-place {
-  margin: 2px 0 0;
-  font-size: 12.5px;
-  color: var(--muted);
+  margin: 3px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
   line-height: 1.35;
 }
 .amp-ret-days {
   margin: 8px 0 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.055em;
   text-transform: uppercase;
-  color: var(--navy-3);
+  color: var(--navy-2);
 }
 .amp-ret-footer {
   margin-top: auto;
-  padding: 10px 14px;
+  padding: 12px 16px;
   background: var(--teal-soft);
-  color: var(--teal-deep);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  color: #0E3D32;
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  border-top: 1px solid rgba(47, 175, 122, 0.18);
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  border-top: 1px solid rgba(14, 61, 50, 0.16);
 }
 .client-ret-pepper--solo {
   width: min(440px, 100%);
@@ -9055,7 +9059,10 @@ img[src*="amp-logo-mark"] {
     grid-template-columns: 1fr;
     width: min(440px, 100%);
   }
-  .amp-ret-year { font-size: 20px; }
+  .amp-ret-year { font-size: 22px; }
+  .amp-ret-role { font-size: 14.5px; }
+  .amp-ret-days { font-size: 12px; }
+  .amp-ret-footer { font-size: 13px; letter-spacing: 0.035em; padding: 12px 14px; }
 }
 
 /* ========== amp-build:2140-hero-retention-led — DESKTOP ONLY client pickers + rich pepper ========== */
