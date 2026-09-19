@@ -1,3 +1,4 @@
+/* amp-build:2154-hero-cleanup-kansas */
 /* amp-build:2153-hero-rotator-mobile-slim */
 /* amp-build:2151-ret-card-type-strengthen */
 /* amp-build:2145 crawlable education/door cards */
@@ -8456,7 +8457,17 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   margin-left: 0;
   max-width: 38ch;
   text-align: left;
-  color: rgba(232, 238, 242, 0.92);
+  color: rgba(244, 248, 251, 0.96);
+  -webkit-text-fill-color: rgba(244, 248, 251, 0.96);
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 680;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+/* amp-build:2154 — mountain leftover CTA removed */
+.explore-range-row,
+.explore-range-invite {
+  display: none !important;
 }
 .home-stage.no-mountain-hero .explore-range-row {
   align-self: center;
@@ -9942,6 +9953,16 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
   .explore-ad-copy {
     flex: 0 1 auto;
+    width: fit-content;
+  }
+  /* Title column sets the width; partners line matches the H1 */
+  .explore-block-ad .explore-title {
+    width: 18ch;
+    max-width: 18ch;
+  }
+  .explore-block-ad .explore-sub {
+    width: 100%;
+    max-width: none;
   }
   .hero-ret-rotator {
     width: 220px;
@@ -9991,7 +10012,17 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
   .explore-block-ad .explore-sub {
     order: 4;
-    margin-top: 10px;
+    margin-top: 12px;
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    font-size: clamp(16px, 4.4vw, 20px);
+    font-weight: 700;
+    text-align: left;
   }
   .hero-ret-rotator-stage {
     background: rgba(21, 35, 50, 0.28);
