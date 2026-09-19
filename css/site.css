@@ -1,4 +1,4 @@
-/* amp-build:2146-mi-hub-faq */
+/* amp-build:2147-aspects-v1 */
 
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
@@ -9615,3 +9615,40 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
     width: min(1080px, 96%);
   }
 }
+
+.ridge-workbench .aspects-bar {
+  display:flex; align-items:flex-start; flex-wrap:wrap; gap:8px;
+  margin:0 0 10px; padding:8px 10px;
+  background:rgba(15,23,42,.04);
+  border:1px solid var(--ridge-border, #e2e8f0); border-radius:12px;
+}
+.ridge-workbench .aspects-label {
+  font-size:11px; font-weight:700; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--ridge-muted); padding-top:6px;
+}
+.ridge-workbench .aspects-chips { display:flex; flex-wrap:wrap; gap:6px; flex:1; min-width:0; }
+.ridge-workbench .aspect-chip {
+  border:1px solid var(--ridge-border, #e2e8f0); background:#fff;
+  color:var(--ridge-muted); border-radius:999px; padding:6px 11px;
+  font-size:12px; font-weight:650; cursor:pointer;
+}
+.ridge-workbench .aspect-chip.active {
+  background:rgba(42,155,181,.16); border-color:#2a9bb5; color:#0e7490;
+}
+.ridge-workbench .aspects-note { font-size:11px; color:var(--ridge-muted); width:100%; margin:2px 0 0; }
+.ridge-workbench .aspects-story {
+  margin:0 0 12px; padding:10px 12px;
+  border:1px solid var(--ridge-border, #e2e8f0); border-radius:12px;
+  background:rgba(15,23,42,.03);
+}
+.ridge-workbench .aspects-story h4 {
+  margin:0 0 6px; font-size:12px; font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase; color:#0e7490;
+}
+.ridge-workbench .aspects-story .as-item { margin:0 0 8px; padding-bottom:8px; border-bottom:1px solid rgba(148,163,184,.35); }
+.ridge-workbench .aspects-story .as-item:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+.ridge-workbench .aspects-story .as-name { font-weight:700; font-size:13px; }
+.ridge-workbench .aspects-story .as-move { font-size:12px; color:var(--ridge-muted); margin-top:2px; line-height:1.35; }
+.ridge-workbench .aspects-story .as-hook { font-size:12px; margin-top:4px; color:#0e7490; line-height:1.35; }
+.ridge-workbench .aspects-story .as-pending { font-size:11px; color:#b45309; margin-top:3px; }
+.ridge-workbench .aspects-story .as-empty { font-size:12px; color:var(--ridge-muted); }
