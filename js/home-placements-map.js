@@ -151,6 +151,13 @@
     }
   }
 
+  function raiseFeatured(svg) {
+    Object.keys(PLACEMENTS).forEach(function (code) {
+      var path = svg.querySelector('[data-state="' + code + '"]');
+      if (path && path.parentNode) path.parentNode.appendChild(path);
+    });
+  }
+
   function addPins(svg) {
     var old = svg.querySelector(".home-place-pins");
     if (old && old.parentNode) old.parentNode.removeChild(old);
@@ -256,6 +263,7 @@
         el.setAttribute("aria-label", stateLabel(code) + " placement stories");
       }
     });
+    raiseFeatured(svg);
     addPins(svg);
     bind(host);
     state.ready = true;

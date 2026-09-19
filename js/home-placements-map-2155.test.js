@@ -92,6 +92,7 @@ assert(app.indexOf("never overwrite homepage explore-title H1") !== -1, "SEO exp
 var mapJs = fs.readFileSync(path.join(ROOT, "js/home-placements-map.js"), "utf8");
 assert(mapJs.indexOf("amp-build:2155-home-placements-map") !== -1, "map js missing 2155 stamp");
 assert(mapJs.indexOf("ridge-usa-map.svg") !== -1, "map js must reuse in-repo SVG");
+assert(mapJs.indexOf("raiseFeatured") !== -1, "map js must raise featured states above neighbors");
 assert(mapJs.indexOf("Nebraska FQHC") !== -1, "map js missing 2015 placement");
 assert(mapJs.indexOf("Nebraska Critical Access Hospital") !== -1, "map js missing 2018 placement");
 assert(mapJs.indexOf("Kansas medical group") !== -1, "map js missing 2021 Kansas medical group");
