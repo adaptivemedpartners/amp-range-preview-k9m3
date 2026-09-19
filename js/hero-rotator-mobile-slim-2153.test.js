@@ -1,4 +1,4 @@
-/* Node smoke: 2153 hero rotator mobile slim / inline.
+/* Node smoke: 2153 hero rotator mobile slim banner under H1.
    Run: node js/hero-rotator-mobile-slim-2153.test.js */
 var fs = require("fs");
 var path = require("path");
@@ -54,9 +54,10 @@ assert(css.indexOf(".hero-ret-rotator") !== -1, "css missing rotator");
 assert(css.indexOf("prefers-reduced-motion: reduce") !== -1, "css missing reduced-motion");
 assert(css.indexOf("@media (min-width: 900px)") !== -1, "desktop gutter media query removed");
 assert(css.indexOf("width: 220px") !== -1, "desktop 220px gutter width removed");
-assert(css.indexOf("@media (min-width: 640px) and (max-width: 899px)") !== -1, "large-phone inline query missing");
-assert(css.indexOf("@media (max-width: 639px)") !== -1, "small-phone slim-strip query missing");
-assert(css.indexOf("flex-direction: row") !== -1, "slim strip should be a one-row chip");
-assert(css.indexOf("justify-content: flex-start") !== -1, "gutter must stay left-aligned, not over the photo");
+assert(css.indexOf("@media (max-width: 899px)") !== -1, "mobile banner media query missing");
+assert(css.indexOf("display: contents") !== -1, "mobile copy unwrap missing — banner must sit under H1");
+assert(css.indexOf("box-shadow: none") !== -1, "mobile banner should drop the card shadow");
+assert(css.indexOf("order: 3") !== -1, "rotator order must sit under H1");
+assert(css.indexOf("@media (min-width: 640px) and (max-width: 899px)") === -1, "discarded large-phone inline gutter leaked back in");
 
 console.log("hero-rotator-mobile-slim-2153.test.js: ok");
