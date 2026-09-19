@@ -1,3 +1,4 @@
+/* amp-build:2152-hero-rotating-ret-card */
 /* amp-build:2151-ret-card-type-strengthen */
 /* amp-build:2145 crawlable education/door cards */
 a.residents-education-card,
@@ -9812,6 +9813,169 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
   .client-step3-ret-strip {
     width: min(440px, 100%);
+  }
+}
+
+/* ========== amp-build:2152-hero-rotating-ret-card — compact hero gutter mock ========== */
+.explore-ad-copy {
+  min-width: 0;
+}
+.hero-ret-rotator {
+  position: relative;
+  z-index: 4;
+  width: min(248px, 100%);
+  margin: 14px 0 6px;
+  flex: 0 0 auto;
+  pointer-events: auto;
+}
+.hero-ret-rotator-stage {
+  display: grid;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 10px 28px rgba(21, 35, 50, 0.22);
+}
+.hero-ret-mini {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  pointer-events: none;
+}
+.hero-ret-mini[hidden] {
+  display: flex;
+}
+.hero-ret-mini.is-on {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+  pointer-events: auto;
+}
+.hero-ret-mini-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px 8px;
+}
+.hero-ret-mini-photo {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex: 0 0 44px;
+  background: var(--mist);
+}
+.hero-ret-mini-copy {
+  min-width: 0;
+}
+.hero-ret-mini-year {
+  margin: 0 0 2px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--navy);
+  line-height: 1.05;
+}
+.hero-ret-mini-role {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 780;
+  color: var(--navy);
+  line-height: 1.25;
+}
+.hero-ret-mini-place {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.3;
+}
+.hero-ret-mini-footer {
+  margin-top: auto;
+  padding: 8px 12px;
+  background: var(--teal-soft);
+  color: #0E3D32;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  border-top: 1px solid rgba(14, 61, 50, 0.16);
+}
+.hero-ret-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.hero-ret-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(232, 238, 242, 0.42);
+  box-shadow: 0 0 0 1px rgba(21, 35, 50, 0.18);
+  cursor: pointer;
+}
+.hero-ret-dot.is-on {
+  background: #6BE0AD;
+  box-shadow: 0 0 0 1px rgba(14, 61, 50, 0.28);
+}
+.hero-ret-dot:focus-visible {
+  outline: 2px solid #78C4E5;
+  outline-offset: 2px;
+}
+
+/* Desktop: sit in the mid-right gutter — right of H1, left of the photo subject */
+@media (min-width: 900px) {
+  .explore-block-ad {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+  }
+  .explore-ad-copy {
+    flex: 0 1 auto;
+  }
+  .hero-ret-rotator {
+    width: 220px;
+    margin: 10px 0 0;
+    align-self: center;
+  }
+}
+
+/* Keep the card out of the woman's face on mid-width desktops */
+@media (min-width: 900px) and (max-width: 1099px) {
+  .explore-block-ad {
+    gap: 18px;
+  }
+  .hero-ret-rotator {
+    width: 196px;
+  }
+}
+
+/* Mobile: stack under H1 / above Choose a path — never overlay the photo face */
+@media (max-width: 899px) {
+  .explore-block-ad {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-ret-rotator {
+    width: min(248px, 92%);
+    margin: 12px 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ret-mini {
+    transition: none;
   }
 }
 
