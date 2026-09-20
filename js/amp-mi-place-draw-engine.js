@@ -643,7 +643,7 @@ function isLightLook() {
         '<button type="button" data-jump="la">LA</button>' +
         '<button type="button" data-jump="rnd">Rural ND</button>' +
         '<button type="button" data-jump="wtx">West TX</button></div>' +
-        '<div style="margin-top:6px;font-size:10px;opacity:0.85">Click/drag pin · border glow only · AMP YOUR Baseline cash · no MGMA</div>';
+        '<div style="margin-top:6px;font-size:10px;opacity:0.85">Tap to pin on phone · click/drag on desktop · border glow only · AMP YOUR Baseline cash · no MGMA</div>';
       wrap.appendChild(chrome);
     }
     if (wrap && !document.getElementById("placeHoverCard")) {
@@ -900,21 +900,48 @@ function isLightLook() {
       '<div class="pd-note">AMP YOUR Baseline · ORDER Red &lt; Comp &lt; Magnet &lt; Dest · no MGMA</div>';
   }
 
+  function isTouchPtr(e) {
+    return !!(e && (e.pointerType === "touch" || e.pointerType === "pen"));
+  }
+  var touchTap = null;
+  var lastPtrTouch = false;
   function onPointerDown(e) {
     if (!enabled) return;
     if (e.button != null && e.button !== 0) return;
     if (e.target && e.target.closest && e.target.closest(".aspect-chip, .metric-btn, button, a, input, select, #mi-place-draw-chrome")) return;
+    lastPtrTouch = isTouchPtr(e);
+    if (lastPtrTouch) {
+      /* Phone: tap-to-pin. Do not drag the pin with the finger. */
+      touchTap = { x: e.clientX, y: e.clientY, moved: false };
+      dragging = false;
+      try { e.preventDefault(); } catch (err) {}
+      return;
+    }
     dragging = true;
     placePinAtEvent(e);
     try { e.preventDefault(); } catch (err) {}
   }
   function onPointerMove(e) {
     if (!enabled) return;
+    if (touchTap && isTouchPtr(e)) {
+      var dx = e.clientX - touchTap.x, dy = e.clientY - touchTap.y;
+      if (dx * dx + dy * dy > 576) touchTap.moved = true; /* 24px slop */
+      return;
+    }
     if (dragging) placePinAtEvent(e);
     else scheduleHoverFromEvent(e);
   }
-  function onPointerUp() { dragging = false; }
-  function onPointerLeave() { if (!dragging) setHoverCardVisible(false); }
+  function onPointerUp(e) {
+    if (touchTap) {
+      if (!touchTap.moved && e && e.clientX != null) placePinAtEvent(e);
+      touchTap = null;
+    }
+    dragging = false;
+  }
+  function onPointerLeave() {
+    if (lastPtrTouch) return; /* keep tap card on phone */
+    if (!dragging) setHoverCardVisible(false);
+  }
 
   var boundSvg = null;
   function bindOnce() {
@@ -923,8 +950,8 @@ function isLightLook() {
     if (bound && boundSvg === svg) return;
     bound = true;
     boundSvg = svg;
-    svg.addEventListener("pointerdown", onPointerDown);
-    svg.addEventListener("pointermove", onPointerMove);
+    svg.addEventListener("pointerdown", onPointerDown, { passive: false });
+    svg.addEventListener("pointermove", onPointerMove, { passive: false });
     window.addEventListener("pointerup", onPointerUp);
     svg.addEventListener("pointerleave", onPointerLeave);
     var ht = document.getElementById("hoverCardToggle");

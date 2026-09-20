@@ -53,6 +53,8 @@ assert(css.indexOf("aspect-cms-on") !== -1, "css missing CMS chrome");
 assert(css.indexOf("aspect-hpsa-pressure") !== -1, "css missing CAH/FQHC HPSA stroke");
 assert(css.indexOf("aspect-specialty-supply-on") !== -1, "css missing Specialty supply chrome");
 assert(css.indexOf("aspect-raw-on") !== -1, "css missing Raw amplify");
+assert(css.indexOf("@media (max-width: 430px)") !== -1, "css missing ~390 phone MI rules");
+assert(css.indexOf("padding:0") !== -1 || css.indexOf("padding: 0") !== -1, "MI svg padding must be 0 so heat CTM is live");
 assert(css.indexOf("amp-build:2155-home-placements-map") !== -1, "css lost 2155 homepage map rules");
 
 var wb = read("js/ridge-workbench.js");
@@ -83,6 +85,7 @@ assert(hooks.indexOf("rediByStateByLabel") !== -1, "hooks missing Redi-by-state"
 var pdSrc = read("js/amp-mi-place-draw-engine.js");
 assert(pdSrc.indexOf('__version === "20260919b"') !== -1, "engine version lock missing");
 assert(pdSrc.indexOf("placeDrawHeatLayer") !== -1, "engine missing official heat layer id");
+assert(pdSrc.indexOf("tap-to-pin") !== -1, "engine missing phone tap-to-pin");
 assert(pdSrc.indexOf("flLonAdjust") !== -1 && pdSrc.indexOf("flLonUnadjust") !== -1, "FL projection helpers missing");
 assert(pdSrc.indexOf("30.33") !== -1 && pdSrc.indexOf("-81.66") !== -1, "Jax NE lock missing");
 assert(pdSrc.indexOf("Naples") !== -1 && pdSrc.indexOf("Tampa") !== -1, "Gulf Tampa–Naples missing");
