@@ -1,3 +1,4 @@
+/* amp-build:2157-mi-map-pinch-zoom */
 /* amp-build:2156-mi-place-draw-heat */
 /* amp-build:2154-hero-cleanup-kansas */
 /* amp-build:2153-hero-rotator-mobile-slim */
@@ -10322,7 +10323,7 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
 }
 
-/* ========== amp-build:2156-mi-place-draw-heat — public MI Aspects + AmpMiPlaceDraw 20260919c ========== */
+/* ========== amp-build:2156-mi-place-draw-heat — public MI Aspects + AmpMiPlaceDraw 20260919d ========== */
 html.mi-place-draw-on .ridge-workbench .map-wrap,
 html.mi-place-draw-on .ridge-map-container {
   background:
@@ -10565,7 +10566,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   }
   html.mi-place-draw-on #placeDrawSelectionOutline .pd-outline,
   html.mi-place-draw-on #placeDrawSelectionOutline path {
-    stroke-width: 3.6px !important;
+    stroke-width: 2.2px !important;
     stroke: #0B3A4D !important;
   }
   .ridge-aspect-map-banner {
@@ -10597,5 +10598,59 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
     font-size: 16px; /* iOS: no input-zoom */
   }
   .ridge-workbench .metric-btn { min-height: 36px; }
+}
+
+/* ========== amp-build:2157-mi-map-pinch-zoom — pinch/pan host ========== */
+.ridge-map-container.is-zoomed,
+.ridge-map-container.is-pinching {
+  overflow: hidden;
+}
+.ridge-map-container.is-zoomed svg,
+.ridge-map-container.is-pinching svg {
+  transform-origin: 0 0;
+}
+@media (max-width: 899px) {
+  .ridge-map-container {
+    overflow: hidden;
+  }
+}
+
+/* PLACE_DRAW_MOBILE_BORDER_PASS_20260919d — thinner/softer selection on phones only */
+@media (max-width: 768px) {
+  .ridge-map-container path[data-state].selected,
+  .ridge-map-container circle[data-state].selected {
+    stroke-width: 1.2px !important;
+    stroke-opacity: .88;
+    filter: none !important;
+    -webkit-filter: none !important;
+    animation: ridgeStrokePulseMobile 1.5s ease-in-out infinite;
+  }
+  .ridge-map-container .outline-selected {
+    stroke-width: 1.3px !important;
+    stroke-opacity: .86;
+    filter: url(#ampStateBorderGlowMobile) !important;
+    -webkit-filter: url(#ampStateBorderGlowMobile) !important;
+    animation: ridgeStrokePulseMobile 1.5s ease-in-out infinite;
+  }
+  html.mi-place-draw-on #ridge-map-container path[data-state].selected,
+  html.mi-place-draw-on #ridge-map-container circle[data-state].selected,
+  html.mi-place-draw-on #ridge-map-container path[data-state].pd-pin-selected,
+  html.mi-place-draw-on #ridge-map-container circle[data-state].pd-pin-selected,
+  html.mi-place-draw-on #map-container path[data-state].selected,
+  html.mi-place-draw-on #map-container circle[data-state].selected {
+    stroke-width: 1.05px !important;
+  }
+  html.mi-place-draw-on #placeDrawSelectionOutline path.pd-outline,
+  html.mi-place-draw-on #placeDrawSelectionOutline circle.pd-outline {
+    stroke-width: 1.8px !important;
+    stroke-opacity: .86;
+    filter: url(#ampStateBorderGlowMobile) !important;
+    -webkit-filter: url(#ampStateBorderGlowMobile) !important;
+    animation: ridgeStrokePulseMobile 1.5s ease-in-out infinite;
+  }
+  @keyframes ridgeStrokePulseMobile {
+    0%, 100% { stroke-width: 1.15px; }
+    50% { stroke-width: 1.45px; }
+  }
 }
 

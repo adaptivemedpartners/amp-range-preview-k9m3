@@ -1,6 +1,9 @@
-/* amp-build:2156-mi-place-draw-heat
+/* amp-build:2157-mi-map-pinch-zoom
+   amp-build:2156-mi-place-draw-heat
    amp-build:2153 Market Intelligence workbench — Aspects v1 + AMP bands.
-   Place-draw heat via AmpMiPlaceDraw engine 20260919c (js/amp-mi-place-draw-engine.js).
+   Place-draw heat via AmpMiPlaceDraw engine 20260919d (js/amp-mi-place-draw-engine.js).
+   Map host owns pinch-to-zoom / pan so heat + state paths + pin share one SVG transform.
+   Place-draw hover/pin card only inside the committed sample / unlocked state.
    No firm iframe. No MGMA. No Look/theme switcher. Firm guts stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -1399,13 +1402,177 @@
     return el;
   }
 
+  var MI_MAP_VIEW = { scale: 1, x: 0, y: 0, min: 1, max: 3.6 };
+
+  function bindMapViewport(root) {
+    if (!root || root.getAttribute("data-mi-zoom-bound") === "1") return;
+    root.setAttribute("data-mi-zoom-bound", "1");
+
+    var pointers = {};
+    var pinch = null;
+    var pan = null;
+
+    function currentSvg() { return root.querySelector("svg"); }
+
+    function applyView() {
+      var svg = currentSvg();
+      if (!svg) return;
+      if (MI_MAP_VIEW.scale <= 1.001) {
+        MI_MAP_VIEW.scale = 1;
+        MI_MAP_VIEW.x = 0;
+        MI_MAP_VIEW.y = 0;
+      }
+      clampView();
+      svg.style.transformOrigin = "0 0";
+      svg.style.willChange = "transform";
+      svg.style.transform = "translate(" + MI_MAP_VIEW.x + "px," + MI_MAP_VIEW.y + "px) scale(" + MI_MAP_VIEW.scale + ")";
+      root.classList.toggle("is-zoomed", MI_MAP_VIEW.scale > 1.02);
+      root.setAttribute("data-map-scale", String(Math.round(MI_MAP_VIEW.scale * 100) / 100));
+    }
+
+    function clampView() {
+      var rect = root.getBoundingClientRect();
+      var w = rect.width || 1, h = rect.height || 1;
+      var s = MI_MAP_VIEW.scale;
+      if (s <= 1) { MI_MAP_VIEW.x = 0; MI_MAP_VIEW.y = 0; return; }
+      var sw = w * s, sh = h * s;
+      var slack = 0.12;
+      var maxX = w * slack;
+      var minX = w - sw - w * slack;
+      var maxY = h * slack;
+      var minY = h - sh - h * slack;
+      if (minX > maxX) minX = maxX = (w - sw) / 2;
+      if (minY > maxY) minY = maxY = (h - sh) / 2;
+      MI_MAP_VIEW.x = Math.min(maxX, Math.max(minX, MI_MAP_VIEW.x));
+      MI_MAP_VIEW.y = Math.min(maxY, Math.max(minY, MI_MAP_VIEW.y));
+    }
+
+    function zoomAt(fx, fy, nextScale) {
+      nextScale = Math.max(MI_MAP_VIEW.min, Math.min(MI_MAP_VIEW.max, nextScale));
+      var s = MI_MAP_VIEW.scale || 1;
+      MI_MAP_VIEW.x = fx - (fx - MI_MAP_VIEW.x) * (nextScale / s);
+      MI_MAP_VIEW.y = fy - (fy - MI_MAP_VIEW.y) * (nextScale / s);
+      MI_MAP_VIEW.scale = nextScale;
+      applyView();
+    }
+
+    function ptrCount() { return Object.keys(pointers).length; }
+
+    function pinchMetrics() {
+      var ids = Object.keys(pointers);
+      if (ids.length < 2) return null;
+      var a = pointers[ids[0]], b = pointers[ids[1]];
+      var dx = b.x - a.x, dy = b.y - a.y;
+      return { dist: Math.hypot(dx, dy) || 1, midX: (a.x + b.x) / 2, midY: (a.y + b.y) / 2 };
+    }
+
+    function localPoint(clientX, clientY) {
+      var r = root.getBoundingClientRect();
+      return { x: clientX - r.left, y: clientY - r.top };
+    }
+
+    function ignoreChrome(e) {
+      return !!(e.target && e.target.closest &&
+        e.target.closest("#mi-place-draw-chrome, #placeHoverCard, button, a, input, select"));
+    }
+
+    root.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
+      if (ignoreChrome(e)) return;
+      root.classList.remove("did-pan", "did-pinch");
+      pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (ptrCount() >= 2) {
+        var m = pinchMetrics();
+        var lp = localPoint(m.midX, m.midY);
+        pinch = { dist: m.dist, scale: MI_MAP_VIEW.scale, fx: lp.x, fy: lp.y };
+        pan = null;
+        root.classList.add("is-pinching", "did-pinch");
+        root.classList.remove("is-panning");
+        try { e.preventDefault(); } catch (err) {}
+      } else if (MI_MAP_VIEW.scale > 1.05) {
+        pan = { x: e.clientX, y: e.clientY, vx: MI_MAP_VIEW.x, vy: MI_MAP_VIEW.y, moved: false };
+      }
+    }, { capture: true, passive: false });
+
+    root.addEventListener("pointermove", function (e) {
+      if (!pointers[e.pointerId]) return;
+      pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (pinch && ptrCount() >= 2) {
+        var m = pinchMetrics();
+        var lp = localPoint(m.midX, m.midY);
+        zoomAt(lp.x, lp.y, pinch.scale * (m.dist / pinch.dist));
+        try { e.preventDefault(); } catch (err) {}
+        return;
+      }
+      if (pan && ptrCount() === 1 && MI_MAP_VIEW.scale > 1.05) {
+        var dx = e.clientX - pan.x, dy = e.clientY - pan.y;
+        if (!pan.moved && (dx * dx + dy * dy) < 100) return;
+        pan.moved = true;
+        root.classList.add("is-panning", "did-pan");
+        MI_MAP_VIEW.x = pan.vx + dx;
+        MI_MAP_VIEW.y = pan.vy + dy;
+        applyView();
+        try { e.preventDefault(); } catch (err2) {}
+      }
+    }, { capture: true, passive: false });
+
+    function endPtr(e) {
+      delete pointers[e.pointerId];
+      if (ptrCount() < 2) pinch = null;
+      if (ptrCount() === 0) pan = null;
+      requestAnimationFrame(function () {
+        if (ptrCount() < 2) root.classList.remove("is-pinching");
+        if (ptrCount() === 0) root.classList.remove("is-panning");
+      });
+    }
+    root.addEventListener("pointerup", endPtr, { capture: true });
+    root.addEventListener("pointercancel", endPtr, { capture: true });
+
+    root.addEventListener("touchmove", function (e) {
+      if ((e.touches && e.touches.length >= 2) ||
+          root.classList.contains("is-panning") ||
+          root.classList.contains("is-pinching")) {
+        try { e.preventDefault(); } catch (err) {}
+      }
+    }, { passive: false });
+
+    /* Desktop/trackpad: ctrl/meta + wheel (incl. native pinch-as-wheel). Do not steal page scroll. */
+    root.addEventListener("wheel", function (e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      if (ignoreChrome(e)) return;
+      e.preventDefault();
+      var lp = localPoint(e.clientX, e.clientY);
+      zoomAt(lp.x, lp.y, MI_MAP_VIEW.scale * Math.exp(-e.deltaY * 0.002));
+    }, { passive: false });
+
+    w.__AMP_MI_MAP_VIEWPORT = {
+      get: function () { return { scale: MI_MAP_VIEW.scale, x: MI_MAP_VIEW.x, y: MI_MAP_VIEW.y }; },
+      set: function (s, x, y) {
+        MI_MAP_VIEW.scale = s;
+        MI_MAP_VIEW.x = x || 0;
+        MI_MAP_VIEW.y = y || 0;
+        applyView();
+      },
+      reset: function () {
+        MI_MAP_VIEW.scale = 1;
+        MI_MAP_VIEW.x = 0;
+        MI_MAP_VIEW.y = 0;
+        applyView();
+      },
+      zoomAt: zoomAt,
+      apply: applyView
+    };
+    applyView();
+  }
+
   function bindMap() {
     var root = $("ridge-map-container");
     if (!root || root.getAttribute("data-ridge-bound") === "1") return;
     root.setAttribute("data-ridge-bound", "1");
     ensureMapGlow(root);
-    /* Phone: finger-drag must sweep states, not scroll the page */
+    /* Phone: finger-drag must sweep states, not scroll the page. Pinch is custom (touch-action none). */
     root.style.touchAction = "none";
+    bindMapViewport(root);
 
     var fingerDrag = false;
 
@@ -1434,6 +1601,7 @@
         showTooltip(null, null);
         return;
       }
+      if (root.classList.contains("is-pinching") || root.classList.contains("is-panning")) return;
       if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
       fingerDrag = true;
       try { root.setPointerCapture(e.pointerId); } catch (err) {}
@@ -1454,7 +1622,7 @@
     });
 
     root.addEventListener("pointermove", function (e) {
-      if (isAspectOn("place_draw")) {
+      if (isAspectOn("place_draw") || root.classList.contains("is-pinching") || root.classList.contains("is-panning")) {
         showTooltip(null, null);
         return;
       }
@@ -1488,6 +1656,11 @@
     });
     root.addEventListener("click", function (e) {
       if (isAspectOn("place_draw")) return;
+      if (root.classList.contains("is-pinching") || root.classList.contains("is-panning") ||
+          root.classList.contains("did-pan") || root.classList.contains("did-pinch")) {
+        e.preventDefault();
+        return;
+      }
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
       e.preventDefault();
@@ -1507,7 +1680,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2156")
+    fetch("assets/ridge-usa-map.svg?v=2157")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();

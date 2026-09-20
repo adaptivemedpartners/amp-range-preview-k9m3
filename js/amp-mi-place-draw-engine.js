@@ -5,7 +5,7 @@
  */
 (function (global) {
   "use strict";
-  if (global.AmpMiPlaceDraw && global.AmpMiPlaceDraw.__version === "20260919c") return;
+  if (global.AmpMiPlaceDraw && global.AmpMiPlaceDraw.__version === "20260919d") return;
 
 const PROJ = {
     x: [2759.8538078730785, 24.915358690648933, -14.953439595594197, -0.0007039183835004792, -0.06417214636590662, -0.21364840651961714],
@@ -548,6 +548,53 @@ function isLightLook() {
   var hoverRaf = 0, hoverPending = null;
   var bound = false;
   var pinState = null;
+  var committedStates = null;
+
+  function committedStateCodes() {
+    var out = [];
+    try {
+      var api = global.AMPRidgeAccess;
+      if (api && typeof api.oneStateUnit === "function") {
+        var unit = api.oneStateUnit();
+        if (unit) return [String(unit).toLowerCase()];
+      }
+      if (api && typeof api.allowedStates === "function") {
+        var allowed = api.allowedStates();
+        if (Array.isArray(allowed) && allowed.length) {
+          return allowed.map(function (code) { return String(code || "").toLowerCase(); }).filter(Boolean);
+        }
+      }
+    } catch (e0) {}
+    try {
+      if (global.AMPRidgeWorkbench && typeof global.AMPRidgeWorkbench.getSelectedCodes === "function") {
+        out = global.AMPRidgeWorkbench.getSelectedCodes() || [];
+      }
+    } catch (e) {}
+    try {
+      if ((!out || !out.length) && typeof selectedStates !== "undefined" && Array.isArray(selectedStates)) {
+        out = selectedStates.slice();
+      }
+    } catch (e2) {}
+    return (out || []).map(function (code) { return String(code || "").toLowerCase(); }).filter(Boolean);
+  }
+
+  function commitStateScope() {
+    var picks = committedStateCodes();
+    if (!picks.length) {
+      var xy = pin.svgX != null && pin.svgY != null ? [pin.svgX, pin.svgY] : lonLatToSvg(pin.lon, pin.lat);
+      var initial = stateAtSvg(xy[0], xy[1]);
+      if (initial) picks = [initial];
+    }
+    committedStates = picks;
+  }
+
+  function stateIsCommitted(st) {
+    if (!st) return false;
+    var code = String(st).toLowerCase();
+    var live = committedStateCodes();
+    if (live && live.length) return live.indexOf(code) >= 0;
+    return Array.isArray(committedStates) && committedStates.indexOf(code) >= 0;
+  }
 
   function mapSvg() {
     return document.querySelector("#map-container svg")
@@ -586,6 +633,25 @@ function isLightLook() {
         '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
         '<feMerge><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>';
       defs.appendChild(glow);
+    }
+    if (!svg.querySelector("#ampStateBorderGlowMobile")) {
+      var mobileGlow = document.createElementNS("http://www.w3.org/2000/svg", "filter");
+      mobileGlow.setAttribute("id", "ampStateBorderGlowMobile");
+      mobileGlow.setAttribute("x", "-100%"); mobileGlow.setAttribute("y", "-100%");
+      mobileGlow.setAttribute("width", "300%"); mobileGlow.setAttribute("height", "300%");
+      mobileGlow.setAttribute("color-interpolation-filters", "sRGB");
+      mobileGlow.innerHTML =
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="0.9" result="b1"/>' +
+        '<feFlood flood-color="#ffffff" flood-opacity="0.72" result="f1"/>' +
+        '<feComposite in="f1" in2="b1" operator="in" result="g1"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b2"/>' +
+        '<feFlood flood-color="#5ec8e0" flood-opacity="0.55" result="f2"/>' +
+        '<feComposite in="f2" in2="b2" operator="in" result="g2"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="4.5" result="b3"/>' +
+        '<feFlood flood-color="#2a9bb5" flood-opacity="0.32" result="f3"/>' +
+        '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
+        '<feMerge><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>';
+      defs.appendChild(mobileGlow);
     }
     if (!svg.querySelector("#conusClip")) {
       var clip = document.createElementNS("http://www.w3.org/2000/svg", "clipPath");
@@ -643,7 +709,7 @@ function isLightLook() {
         '<button type="button" data-jump="la">LA</button>' +
         '<button type="button" data-jump="rnd">Rural ND</button>' +
         '<button type="button" data-jump="wtx">West TX</button></div>' +
-        '<div class="pd-chrome-hint" style="margin-top:6px;font-size:10px;opacity:0.85">Tap map to pin · drag to fine-tune · border glow · AMP YOUR Baseline · no MGMA</div>';
+        '<div class="pd-chrome-hint" style="margin-top:6px;font-size:10px;opacity:0.85">Tap unlocked state to pin · hover/pin card only inside committed sample · pinch to zoom · AMP YOUR Baseline · no MGMA</div>';
       wrap.appendChild(chrome);
     }
     if (wrap && !document.getElementById("placeHoverCard")) {
@@ -758,7 +824,8 @@ function isLightLook() {
     if (!svg || !outline) return;
     var px = pin.svgX != null ? pin.svgX : lonLatToSvg(pin.lon, pin.lat)[0];
     var py = pin.svgY != null ? pin.svgY : lonLatToSvg(pin.lon, pin.lat)[1];
-    var st = stateAtSvg(px, py);
+    var rawState = stateAtSvg(px, py);
+    var st = stateIsCommitted(rawState) ? rawState : null;
     pinState = st;
     svg.querySelectorAll(".pd-pin-selected").forEach(function (el) { el.classList.remove("pd-pin-selected"); });
     outline.innerHTML = "";
@@ -788,6 +855,7 @@ function isLightLook() {
   function renderAll() {
     if (!enabled) return;
     syncSpecialtyFromMI();
+    commitStateScope();
     try { renderHeat(); } catch (e) { console.warn("place-draw heat", e); }
     renderPin();
     updateSelectedState();
@@ -858,10 +926,11 @@ function isLightLook() {
   }
   function updateHoverCardAt(lat, lon, sx, sy, clientX, clientY) {
     if (!hoverCardOn || !enabled) { setHoverCardVisible(false); return; }
+    var st = stateAtSvg(sx, sy);
+    if (!stateIsCommitted(st)) { setHoverCardVisible(false); return; }
     var s = sampleField(lat, lon);
     var b = computeBands(s, lat, lon);
     var near = nearestMetro(lat, lon);
-    var st = stateAtSvg(sx, sy);
     var loc = near ? near.label : "—";
     if (st) loc += " · " + st.toUpperCase();
     function set(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
@@ -896,6 +965,12 @@ function isLightLook() {
     var box = document.getElementById("mi-place-draw-panel");
     if (!box || !enabled) return;
     syncSpecialtyFromMI();
+    var pinSt = pinState || stateAtSvg(pin.svgX, pin.svgY);
+    if (!stateIsCommitted(pinSt)) {
+      box.innerHTML = '<div class="pd-panel-head">Place draw · pin</div>' +
+        '<p class="pd-note">Pin stats unlock inside the committed demo state.</p>';
+      return;
+    }
     var s = sampleField(pin.lat, pin.lon);
     var b = computeBands(s, pin.lat, pin.lon);
     var near = nearestMetro(pin.lat, pin.lon);
@@ -925,26 +1000,51 @@ function isLightLook() {
     } catch (e2) {}
     return false;
   }
+  function mapHostEl() {
+    return document.getElementById("ridge-map-container")
+      || document.getElementById("map-container");
+  }
+  function mapGestureLock() {
+    var host = mapHostEl();
+    if (!host) return { pinch: false, pan: false, zoomed: false };
+    return {
+      pinch: host.classList.contains("is-pinching"),
+      pan: host.classList.contains("is-panning"),
+      zoomed: host.classList.contains("is-zoomed")
+    };
+  }
   var dragStart = null;
   var TAP_SLOP = 12;
   function onPointerDown(e) {
     if (!enabled) return;
     if (e.button != null && e.button !== 0) return;
     if (e.target && e.target.closest && e.target.closest(".aspect-chip, .metric-btn, button, a, input, select, #mi-place-draw-chrome, #placeHoverCard")) return;
+    var lock = mapGestureLock();
+    if (lock.pinch) return;
     var coarse = isCoarsePointer() || e.pointerType === "touch" || e.pointerType === "pen";
-    dragStart = { x: e.clientX, y: e.clientY, coarse: coarse };
+    dragStart = { x: e.clientX, y: e.clientY, coarse: coarse, pendingTap: false };
+    /* Zoomed phone: wait for a still tap so single-finger pan is not a pin. Unzoomed: tap-first. */
+    if (lock.zoomed && coarse) {
+      dragStart.pendingTap = true;
+      dragging = false;
+      try { if (e.currentTarget && e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+      return;
+    }
     /* Tap-first on phone: place immediately; drag only after slop. Desktop keeps click/drag. */
     placePinAtEvent(e);
     if (coarse) {
       dragging = false;
-      try { if (e.currentTarget && e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+      try { if (e.currentTarget && e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); } catch (err2) {}
     } else {
       dragging = true;
-      try { e.preventDefault(); } catch (err2) {}
+      try { e.preventDefault(); } catch (err3) {}
     }
   }
   function onPointerMove(e) {
     if (!enabled) return;
+    var lock = mapGestureLock();
+    if (lock.pinch || lock.pan) return;
+    if (dragStart && dragStart.pendingTap) return;
     if (dragStart && !dragging) {
       var dx = e.clientX - dragStart.x, dy = e.clientY - dragStart.y;
       if ((dx * dx + dy * dy) > (TAP_SLOP * TAP_SLOP)) dragging = true;
@@ -952,7 +1052,12 @@ function isLightLook() {
     if (dragging) placePinAtEvent(e);
     else if (!dragStart || !dragStart.coarse) scheduleHoverFromEvent(e);
   }
-  function onPointerUp() {
+  function onPointerUp(e) {
+    var lock = mapGestureLock();
+    if (dragStart && dragStart.pendingTap && e && !lock.pinch && !lock.pan) {
+      var ux = e.clientX - dragStart.x, uy = e.clientY - dragStart.y;
+      if ((ux * ux + uy * uy) <= (TAP_SLOP * TAP_SLOP)) placePinAtEvent(e);
+    }
     dragging = false;
     dragStart = null;
   }
@@ -972,6 +1077,7 @@ function isLightLook() {
     svg.addEventListener("pointerdown", onPointerDown);
     svg.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
     svg.addEventListener("pointerleave", onPointerLeave);
     var ht = document.getElementById("hoverCardToggle");
     if (ht && !ht.__pdBound) {
@@ -1044,6 +1150,7 @@ function isLightLook() {
     bindOnce(); /* bindOnce is idempotent per SVG */
     setLayersVisible(true);
     if (pin.svgX == null) setPinLonLat(25.76, -80.19);
+    commitStateScope();
     heatCache = null;
     try {
       if (typeof document !== "undefined" && document.body && document.body.classList.contains("mi-mobile")) {
@@ -1057,6 +1164,8 @@ function isLightLook() {
   function disable() {
     enabled = false;
     dragging = false;
+    committedStates = null;
+    pinState = null;
     setHoverCardVisible(false);
     setLayersVisible(false);
     var svg = mapSvg();
@@ -1067,7 +1176,7 @@ function isLightLook() {
   }
 
   global.AmpMiPlaceDraw = {
-    __version: "20260919c",
+    __version: "20260919d",
     enable: enable,
     disable: disable,
     isEnabled: function () { return !!enabled; },
@@ -1080,11 +1189,14 @@ function isLightLook() {
       return true;
     },
     getPinBands: function () {
+      var st = pinState || stateAtSvg(pin.svgX, pin.svgY);
+      if (!stateIsCommitted(st)) return null;
       syncSpecialtyFromMI();
       var s = sampleField(pin.lat, pin.lon);
       return computeBands(s, pin.lat, pin.lon);
     },
     getPin: function () { return { lat: pin.lat, lon: pin.lon, state: pinState }; },
+    stateIsCommitted: stateIsCommitted,
     setHoverCardOn: function (v) { hoverCardOn = !!v; if (!hoverCardOn) setHoverCardVisible(false); },
     ensureScaffold: ensureScaffold,
     refreshPanel: updateMiPlacePanel,
