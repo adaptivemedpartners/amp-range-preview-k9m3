@@ -1,7 +1,7 @@
 /* amp-build:2156-mi-place-draw-heat
    amp-build:2153 Market Intelligence workbench — Aspects v1 + AMP bands.
-   Place-draw national metro heat when Aspects Place draw is ON (locked mock 2026-09-19).
-   No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
+   Place-draw heat via AmpMiPlaceDraw engine 20260919b (js/amp-mi-place-draw-engine.js).
+   No firm iframe. No MGMA. No Look/theme switcher. Firm guts stay behind Ask AMP. */
 (function (w) {
   "use strict";
 
@@ -133,18 +133,30 @@
       if (amp && amp.competitive != null) bits.push("Data: YOUR Baseline (Competitive) " + fmtMoney(amp.competitive));
       else bits.push("Data: AMP bands pending — no invented $");
     } else if (id === "place_draw") {
-      var pd = w.AMPPlaceDraw;
+      var pd = placeDrawApi();
       if (pd && pd.isEnabled && pd.isEnabled()) {
-        var pin = pd.readPinState ? pd.readPinState() : null;
-        if (pin && pin.metro) {
-          bits.push("Pin: " + pin.metro.label +
-            (pin.state ? (" · " + pin.state.toUpperCase()) : "") +
-            " · draw " + pin.field.draw +
-            " · " + (pin.bands.placeMode === "compress" ? "metro compress" : "cool-field amplify"));
-          bits.push("Cash: Red " + pd.formatMoney(pin.bands.red) +
-            " · Comp " + pd.formatMoney(pin.bands.competitive) +
-            " · Magnet " + pd.formatMoney(pin.bands.magnet) +
-            " · Dest " + pd.formatMoney(pin.bands.destination));
+        var pin = pd.getPin ? pd.getPin() : null;
+        var bands = pd.getPinBands ? pd.getPinBands() : null;
+        var metros = pd.METROS || [];
+        var near = null;
+        if (pin && metros.length) {
+          var bestD = Infinity;
+          for (var mi = 0; mi < metros.length; mi++) {
+            var m = metros[mi];
+            var dlat = (pin.lat - m.lat), dlon = (pin.lon - m.lon);
+            var dd = dlat * dlat + dlon * dlon;
+            if (dd < bestD) { bestD = dd; near = m; }
+          }
+        }
+        if (pin && bands) {
+          bits.push("Pin: " + (near ? near.label : "metro field") +
+            (pin.state ? (" · " + String(pin.state).toUpperCase()) : "") +
+            " · " + (bands.placeMode === "compress" ? "metro compress" : "cool-field amplify"));
+          bits.push("Cash: Red " + fmtMoney(bands.red) +
+            " · Comp " + fmtMoney(bands.competitive) +
+            " · Magnet " + fmtMoney(bands.magnet) +
+            " · Dest " + fmtMoney(bands.destination) +
+            " — AMP YOUR Baseline ladder, not MGMA");
         }
       } else if (picks.length) {
         var parts = [];
@@ -418,8 +430,9 @@
   function getAmpBands(s) {
     s = s || currentSpec();
     if (s && s.ampBands && (s.ampBands.competitive != null || s.ampBands.redAlert != null)) return s.ampBands;
-    var pd = w.AMPPlaceDraw;
-    if (isFmSpecialty(s) && pd && pd.FM_BANDS) return pd.FM_BANDS;
+    var pd = placeDrawApi();
+    var fm = pd && pd.SPECIALTIES && pd.SPECIALTIES.fm;
+    if (isFmSpecialty(s) && fm && fm.ampBands) return fm.ampBands;
     return null;
   }
   function hpsaPressureCodes() {
@@ -629,7 +642,7 @@
     }
     var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
     nodes.forEach(function (el) {
-      if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
+      if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#placeDrawSelectionOutline") || el.closest("#placeDrawPinLayer") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
       var code = el.getAttribute("data-state");
       if (placeOn) {
         /* Light uncalled slate — never paint teal selected fill over metro heat */
@@ -942,6 +955,10 @@
         : "Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. ") +
       "No client names or search IDs. Ask AMP for deeper firm tools.</p>";
     body.innerHTML = html;
+    var pd = placeDrawApi();
+    if (pd && isAspectOn("place_draw")) {
+      try { pd.ensureScaffold(); pd.refreshPanel(); } catch (e) {}
+    }
   }
 
   function updateTitle() {
@@ -1227,7 +1244,7 @@
     tip.style.top = y + "px";
   }
 
-  function placeDrawApi() { return w.AMPPlaceDraw || null; }
+  function placeDrawApi() { return w.AmpMiPlaceDraw || null; }
   function syncAspectMapChrome() {
     var wrap = $("ridge-map-wrap");
     if (!wrap) return;
@@ -1262,42 +1279,16 @@
     if (isAspectOn("cms")) bits.push("CMS · triangulation only — not Baseline $");
     banner.hidden = !bits.length;
     banner.innerHTML = bits.length ? bits.map(function (b) { return "<span>" + b + "</span>"; }).join("") : "";
-    var hoverBar = $("ridge-pd-hover-toggle");
-    if (hoverBar) hoverBar.hidden = !isAspectOn("place_draw");
-    var jumps = $("ridge-pd-litmus");
-    if (jumps) jumps.hidden = !isAspectOn("place_draw");
-    var pd = placeDrawApi();
-    if (hoverBar && pd) {
-      hoverBar.querySelectorAll("[data-hover]").forEach(function (btn) {
-        var on = (btn.getAttribute("data-hover") === "on") === (!!pd.isHoverCardOn && pd.isHoverCardOn());
-        btn.classList.toggle("active", on);
-      });
-    }
   }
   function applyAspectLayers() {
+    document.documentElement.setAttribute("data-look", "light");
     var pd = placeDrawApi();
-    var host = $("ridge-map-container");
-    var wrap = $("ridge-map-wrap");
     var placeOn = isAspectOn("place_draw");
     var tip = $("ridge-map-tooltip");
     if (tip && placeOn) { tip.hidden = true; tip.innerHTML = ""; }
-    if (pd && host) {
-      pd.mount({
-        host: host,
-        wrap: wrap,
-        bands: getAmpBands(),
-        onPinChange: function () { try { renderSidebar(); } catch (e) {} },
-        onStateFromPin: function (code) {
-          if (!code || !placeOn) return;
-          if (!accessAllowsState(code)) return;
-          if (!state.selected[code] && !state.multi) {
-            state.selected = {};
-            state.selected[code] = true;
-          }
-        }
-      });
-      pd.setBands(getAmpBands());
-      pd.setEnabled(placeOn);
+    if (pd) {
+      if (placeOn) pd.enable();
+      else pd.disable();
     }
     syncAspectMapChrome();
     paintSupplyDots();
@@ -1325,7 +1316,7 @@
     });
     if (!max) return;
     svg.querySelectorAll("path[data-state]").forEach(function (el) {
-      if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline"))) return;
+      if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#placeDrawSelectionOutline") || el.closest("#placeDrawPinLayer"))) return;
       var code = el.getAttribute("data-state");
       var n = h.rediByState[code];
       if (n == null) return;
@@ -1415,10 +1406,8 @@
     var fingerDrag = false;
 
     function applyHover(e, el) {
-      var pd = placeDrawApi();
-      if (isAspectOn("place_draw") && pd) {
-        if (e) pd.scheduleHoverFromEvent(e);
-        else pd.hideHover();
+      if (isAspectOn("place_draw")) {
+        showTooltip(null, null);
         return;
       }
       if (!el) {
@@ -1437,20 +1426,8 @@
     }
 
     root.addEventListener("pointerdown", function (e) {
-      var pd = placeDrawApi();
-      if (isAspectOn("place_draw") && pd && (e.pointerType === "touch" || e.pointerType === "pen" || e.pointerType === "mouse")) {
-        if (e.pointerType === "touch" || e.pointerType === "pen") {
-          fingerDrag = true;
-          try { root.setPointerCapture(e.pointerId); } catch (err) {}
-          e.preventDefault();
-        }
-        if (e.pointerType === "mouse" && e.button === 0) {
-          pd._live && (pd._live.dragging = true);
-          pd.placePinAtEvent(e);
-        } else if (e.pointerType !== "mouse") {
-          pd.placePinAtEvent(e);
-        }
-        applyHover(e, null);
+      if (isAspectOn("place_draw")) {
+        showTooltip(null, null);
         return;
       }
       if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
@@ -1473,13 +1450,8 @@
     });
 
     root.addEventListener("pointermove", function (e) {
-      var pd = placeDrawApi();
-      if (isAspectOn("place_draw") && pd) {
-        if (fingerDrag || (pd._live && pd._live.dragging)) {
-          if (fingerDrag) e.preventDefault();
-          pd.placePinAtEvent(e);
-        }
-        applyHover(e, null);
+      if (isAspectOn("place_draw")) {
+        showTooltip(null, null);
         return;
       }
       var el;
@@ -1495,8 +1467,6 @@
     }, { passive: false });
 
     function endFinger(e) {
-      var pd = placeDrawApi();
-      if (pd && pd._live) pd._live.dragging = false;
       if (!fingerDrag) return;
       fingerDrag = false;
       try { if (e && e.pointerId != null) root.releasePointerCapture(e.pointerId); } catch (err) {}
@@ -1506,19 +1476,14 @@
 
     root.addEventListener("pointerleave", function () {
       if (fingerDrag) return;
-      var pd = placeDrawApi();
-      if (isAspectOn("place_draw") && pd) { pd.hideHover(); return; }
+      if (isAspectOn("place_draw")) { showTooltip(null, null); return; }
       if (!state.hover) return;
       state.hover = null;
       paintMap();
       showTooltip(null, null);
     });
     root.addEventListener("click", function (e) {
-      var pd = placeDrawApi();
-      if (isAspectOn("place_draw") && pd) {
-        pd.placePinAtEvent(e);
-        return;
-      }
+      if (isAspectOn("place_draw")) return;
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
       e.preventDefault();
@@ -1599,34 +1564,7 @@
     root.setAttribute("data-ridge-chrome", "1");
 
     try { bindAspectsV1(); } catch (e) {}
-
-    var hoverBar = $("ridge-pd-hover-toggle");
-    if (hoverBar && !hoverBar.getAttribute("data-bound")) {
-      hoverBar.setAttribute("data-bound", "1");
-      hoverBar.addEventListener("click", function (e) {
-        var btn = e.target.closest("[data-hover]");
-        if (!btn) return;
-        var pd = placeDrawApi();
-        if (!pd) return;
-        pd.setHoverCardOn(btn.getAttribute("data-hover") === "on");
-        syncAspectMapChrome();
-      });
-    }
-    var jumps = $("ridge-pd-litmus");
-    if (jumps && !jumps.getAttribute("data-bound")) {
-      jumps.setAttribute("data-bound", "1");
-      jumps.addEventListener("click", function (e) {
-        var btn = e.target.closest("[data-jump]");
-        if (!btn) return;
-        var pd = placeDrawApi();
-        if (!pd || !isAspectOn("place_draw")) return;
-        pd.jumpTo(btn.getAttribute("data-jump"));
-        jumps.querySelectorAll("[data-jump]").forEach(function (b) {
-          b.classList.toggle("active", b === btn);
-        });
-        renderSidebar();
-      });
-    }
+    document.documentElement.setAttribute("data-look", "light");
 
     var bar = $("ridge-metric-bar");
     if (bar) {
@@ -1825,6 +1763,17 @@
     if (picks.length) return picks;
     return [];
   }
+
+  w.AMPRidgeCurrentSpec = currentSpec;
+  w.AmpMiPlaceDrawOnPinState = function (code) {
+    if (!code || !isAspectOn("place_draw")) return;
+    if (!accessAllowsState(code)) return;
+    if (!state.selected[code] && !state.multi) {
+      state.selected = {};
+      state.selected[code] = true;
+    }
+    try { renderSidebar(); } catch (e) {}
+  };
 
   w.AMPRidgeWorkbench = {
     init: init,

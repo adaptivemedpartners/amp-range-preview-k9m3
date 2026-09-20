@@ -10317,33 +10317,34 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
 }
 
-/* ========== amp-build:2156-mi-place-draw-heat — public MI Aspects + Place draw ========== */
-.ridge-workbench .map-wrap.pd-heat-on {
+/* ========== amp-build:2156-mi-place-draw-heat — public MI Aspects + AmpMiPlaceDraw 20260919b ========== */
+html.mi-place-draw-on .ridge-workbench .map-wrap,
+html.mi-place-draw-on .ridge-map-container {
   background:
     radial-gradient(ellipse at 50% 40%, rgba(42,155,181,.08), transparent 55%),
     linear-gradient(180deg,#ffffff 0%,#eef2f6 100%);
 }
-.ridge-map-container.pd-heat-on path[data-state],
-.ridge-map-container.pd-heat-on circle[data-state] {
+html.mi-place-draw-on .ridge-map-container path[data-state],
+html.mi-place-draw-on .ridge-map-container circle[data-state] {
   fill: #b7c4d4 !important;
   stroke: #8fa0b5;
 }
-.ridge-map-container.pd-heat-on path[data-state].selected,
-.ridge-map-container.pd-heat-on circle[data-state].selected,
-.ridge-map-container.pd-heat-on path[data-state].is-hover,
-.ridge-map-container.pd-heat-on circle[data-state].is-hover,
-.ridge-map-container.pd-heat-on path[data-state].pd-selected {
+html.mi-place-draw-on .ridge-map-container path[data-state].selected,
+html.mi-place-draw-on .ridge-map-container circle[data-state].selected,
+html.mi-place-draw-on .ridge-map-container path[data-state].is-hover,
+html.mi-place-draw-on .ridge-map-container circle[data-state].is-hover,
+html.mi-place-draw-on .ridge-map-container path[data-state].pd-pin-selected,
+html.mi-place-draw-on .ridge-map-container circle[data-state].pd-pin-selected {
   fill: #b7c4d4 !important;
   filter: none !important;
   -webkit-filter: none !important;
   animation: none;
 }
-.ridge-map-container #heatLayer {
+#placeDrawHeatLayer {
   pointer-events: none;
-  opacity: 0.58;
 }
-.ridge-map-container #selectionOutline path,
-.ridge-map-container #selectionOutline .sel-outline {
+html.mi-place-draw-on #placeDrawSelectionOutline .pd-outline,
+html.mi-place-draw-on #placeDrawSelectionOutline path {
   fill: none !important;
   stroke: #0B3A4D !important;
   stroke-width: 2.8px !important;
@@ -10447,24 +10448,34 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   border-color: #2a9bb5;
   color: #0B3A4D;
 }
-.pd-map-tools {
+#mi-place-draw-chrome {
   display: flex; flex-wrap: wrap; gap: 8px 12px;
   align-items: center; margin: 8px 0 0;
+  font-size: 11px; color: #334155;
 }
-.pd-hover-toggle, .pd-litmus {
+#mi-place-draw-chrome .pd-chrome-label {
+  font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #0B3A4D;
+  width: 100%;
+}
+#mi-place-draw-chrome .pd-chrome-row {
   display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
 }
-.pd-hover-toggle[hidden], .pd-litmus[hidden] { display: none !important; }
-.pd-hover-toggle span {
-  font-size: 11px; font-weight: 700; color: var(--ridge-muted); letter-spacing: .04em; text-transform: uppercase;
-}
-.pd-hover-toggle button, .pd-litmus button {
+#hoverCardToggle button, #miPlaceDrawJumps button {
   border: 1px solid var(--ridge-border); background: #fff; color: var(--ridge-muted);
   border-radius: 999px; padding: 5px 10px; font-size: 11px; font-weight: 650; cursor: pointer;
 }
-.pd-hover-toggle button.active, .pd-litmus button.active {
+#hoverCardToggle button.active, #miPlaceDrawJumps button.active {
   background: rgba(42,155,181,.16); border-color: #2a9bb5; color: #0B3A4D;
 }
+#mi-place-draw-panel {
+  margin: 0 0 12px; padding: 10px 12px;
+  border: 1px solid var(--ridge-border, #e2e8f0); border-radius: 12px;
+  background: rgba(42,155,181,.06);
+}
+#mi-place-draw-panel .pd-panel-head { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #0e7490; }
+#mi-place-draw-panel .pd-score { margin: 6px 0 4px; font-size: 13px; }
+#mi-place-draw-panel .pd-bands { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; font-size: 11px; margin: 6px 0; }
+#mi-place-draw-panel .pd-note { font-size: 11px; color: #64748b; }
 #placeHoverCard {
   position: absolute; z-index: 9;
   width: min(320px, calc(100% - 28px));
