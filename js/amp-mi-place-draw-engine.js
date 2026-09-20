@@ -5,7 +5,7 @@
  */
 (function (global) {
   "use strict";
-  if (global.AmpMiPlaceDraw && global.AmpMiPlaceDraw.__version === "20260919c") return;
+  if (global.AmpMiPlaceDraw && global.AmpMiPlaceDraw.__version === "20260919d") return;
 
 const PROJ = {
     x: [2759.8538078730785, 24.915358690648933, -14.953439595594197, -0.0007039183835004792, -0.06417214636590662, -0.21364840651961714],
@@ -548,6 +548,53 @@ function isLightLook() {
   var hoverRaf = 0, hoverPending = null;
   var bound = false;
   var pinState = null;
+  var committedStates = null;
+
+  function committedStateCodes() {
+    var out = [];
+    try {
+      var api = global.AMPRidgeAccess;
+      if (api && typeof api.oneStateUnit === "function") {
+        var unit = api.oneStateUnit();
+        if (unit) return [String(unit).toLowerCase()];
+      }
+      if (api && typeof api.allowedStates === "function") {
+        var allowed = api.allowedStates();
+        if (Array.isArray(allowed) && allowed.length) {
+          return allowed.map(function (code) { return String(code || "").toLowerCase(); }).filter(Boolean);
+        }
+      }
+    } catch (e0) {}
+    try {
+      if (global.AMPRidgeWorkbench && typeof global.AMPRidgeWorkbench.getSelectedCodes === "function") {
+        out = global.AMPRidgeWorkbench.getSelectedCodes() || [];
+      }
+    } catch (e) {}
+    try {
+      if ((!out || !out.length) && typeof selectedStates !== "undefined" && Array.isArray(selectedStates)) {
+        out = selectedStates.slice();
+      }
+    } catch (e2) {}
+    return (out || []).map(function (code) { return String(code || "").toLowerCase(); }).filter(Boolean);
+  }
+
+  function commitStateScope() {
+    var picks = committedStateCodes();
+    if (!picks.length) {
+      var xy = pin.svgX != null && pin.svgY != null ? [pin.svgX, pin.svgY] : lonLatToSvg(pin.lon, pin.lat);
+      var initial = stateAtSvg(xy[0], xy[1]);
+      if (initial) picks = [initial];
+    }
+    committedStates = picks;
+  }
+
+  function stateIsCommitted(st) {
+    if (!st) return false;
+    var code = String(st).toLowerCase();
+    var live = committedStateCodes();
+    if (live && live.length) return live.indexOf(code) >= 0;
+    return Array.isArray(committedStates) && committedStates.indexOf(code) >= 0;
+  }
 
   function mapSvg() {
     return document.querySelector("#map-container svg")
@@ -586,6 +633,25 @@ function isLightLook() {
         '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
         '<feMerge><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>';
       defs.appendChild(glow);
+    }
+    if (!svg.querySelector("#ampStateBorderGlowMobile")) {
+      var mobileGlow = document.createElementNS("http://www.w3.org/2000/svg", "filter");
+      mobileGlow.setAttribute("id", "ampStateBorderGlowMobile");
+      mobileGlow.setAttribute("x", "-100%"); mobileGlow.setAttribute("y", "-100%");
+      mobileGlow.setAttribute("width", "300%"); mobileGlow.setAttribute("height", "300%");
+      mobileGlow.setAttribute("color-interpolation-filters", "sRGB");
+      mobileGlow.innerHTML =
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="0.9" result="b1"/>' +
+        '<feFlood flood-color="#ffffff" flood-opacity="0.72" result="f1"/>' +
+        '<feComposite in="f1" in2="b1" operator="in" result="g1"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b2"/>' +
+        '<feFlood flood-color="#5ec8e0" flood-opacity="0.55" result="f2"/>' +
+        '<feComposite in="f2" in2="b2" operator="in" result="g2"/>' +
+        '<feGaussianBlur in="SourceAlpha" stdDeviation="4.5" result="b3"/>' +
+        '<feFlood flood-color="#2a9bb5" flood-opacity="0.32" result="f3"/>' +
+        '<feComposite in="f3" in2="b3" operator="in" result="g3"/>' +
+        '<feMerge><feMergeNode in="g3"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>';
+      defs.appendChild(mobileGlow);
     }
     if (!svg.querySelector("#conusClip")) {
       var clip = document.createElementNS("http://www.w3.org/2000/svg", "clipPath");
@@ -661,7 +727,7 @@ function isLightLook() {
         '<span><span class="t-magnet">Magnet</span> <b id="hcMagnet">—</b></span>' +
         '<span><span class="t-dest">Destination</span> <b id="hcDest">—</b></span></div>' +
         '<p class="hc-blurb" id="hcBlurb"></p>' +
-        '<div class="hc-mobile-hint" id="hcMobileHint">Tap unlocked state to pin · card only inside committed sample · ✕ or Hover card Off</div></div>';
+        '<div class="hc-mobile-hint" id="hcMobileHint">Tap map to move pin · card stays until ✕ or Hover card Off</div></div>';
       wrap.appendChild(card);
     }
     if (!document.getElementById("mi-place-draw-panel")) {
@@ -758,12 +824,12 @@ function isLightLook() {
     if (!svg || !outline) return;
     var px = pin.svgX != null ? pin.svgX : lonLatToSvg(pin.lon, pin.lat)[0];
     var py = pin.svgY != null ? pin.svgY : lonLatToSvg(pin.lon, pin.lat)[1];
-    var st = stateAtSvg(px, py);
+    var rawState = stateAtSvg(px, py);
+    var st = stateIsCommitted(rawState) ? rawState : null;
     pinState = st;
     svg.querySelectorAll(".pd-pin-selected").forEach(function (el) { el.classList.remove("pd-pin-selected"); });
     outline.innerHTML = "";
     if (!st) return;
-    if (hasAccessGate() && !isUnlockedState(st)) return;
     var el = svg.querySelector('path[data-state="' + st + '"], circle[data-state="' + st + '"]');
     if (!el) return;
     el.classList.add("pd-pin-selected");
@@ -789,8 +855,7 @@ function isLightLook() {
   function renderAll() {
     if (!enabled) return;
     syncSpecialtyFromMI();
-    seedPinForUnlock();
-    syncJumpLocks();
+    commitStateScope();
     try { renderHeat(); } catch (e) { console.warn("place-draw heat", e); }
     renderPin();
     updateSelectedState();
@@ -812,90 +877,9 @@ function isLightLook() {
     var xy = lonLatToSvg(lon, lat);
     pin.svgX = xy[0]; pin.svgY = xy[1];
   }
-  function accessApi() {
-    return global.AMPRidgeAccess || null;
-  }
-  function hasAccessGate() {
-    var api = accessApi();
-    return !!(api && typeof api.canState === "function");
-  }
-  /* Mike 2157: hover/pin card only inside the committed sample / unlocked state. */
-  function isUnlockedState(st) {
-    if (!st) return false;
-    var api = accessApi();
-    if (!api || typeof api.canState !== "function") return true;
-    try {
-      if (typeof api.normState === "function") st = api.normState(st);
-      else st = String(st).toLowerCase();
-      return !!api.canState(st);
-    } catch (e) { return true; }
-  }
-  function cardAllowedAtSvg(sx, sy) {
-    if (!hasAccessGate()) return true;
-    return isUnlockedState(stateAtSvg(sx, sy));
-  }
-  function seedPinForUnlock() {
-    var api = accessApi();
-    if (!api) return;
-    var unit = "";
-    try {
-      if (typeof api.oneStateUnit === "function") unit = api.oneStateUnit() || "";
-      if (!unit && typeof api.allowedStates === "function") {
-        var list = api.allowedStates();
-        if (list && list.length === 1) unit = list[0];
-      }
-    } catch (e) {}
-    if (!unit) return;
-    unit = String(unit).toLowerCase();
-    var cur = (pin.svgX != null && pin.svgY != null) ? stateAtSvg(pin.svgX, pin.svgY) : null;
-    if (cur && isUnlockedState(cur)) return;
-    var seeds = {
-      tx: { lat: 32.78, lon: -96.80 },
-      fl: { lat: 25.76, lon: -80.19 },
-      ca: { lat: 34.05, lon: -118.25 },
-      ny: { lat: 40.71, lon: -74.01 }
-    };
-    if (seeds[unit]) { setPinLonLat(seeds[unit].lat, seeds[unit].lon); return; }
-    for (var i = 0; i < METROS.length; i++) {
-      var xy = lonLatToSvg(METROS[i].lon, METROS[i].lat);
-      if (stateAtSvg(xy[0], xy[1]) === unit) {
-        setPinLonLat(METROS[i].lat, METROS[i].lon);
-        return;
-      }
-    }
-  }
-  var JUMP_STATE = {
-    mia: "fl", ftl: "fl", wpb: "fl", jax: "fl", tpa: "fl",
-    dfw: "tx", la: "ca", rnd: "nd", wtx: "tx"
-  };
-  function jumpStateAllowed(id, lon, lat) {
-    if (!hasAccessGate()) return true;
-    if (JUMP_STATE[id]) return isUnlockedState(JUMP_STATE[id]);
-    if (lon == null || lat == null) return true;
-    var xy = lonLatToSvg(lon, lat);
-    var st = stateAtSvg(xy[0], xy[1]);
-    return !st || isUnlockedState(st);
-  }
-  function syncJumpLocks() {
-    var jumps = document.getElementById("miPlaceDrawJumps");
-    if (!jumps) return;
-    jumps.querySelectorAll("button[data-jump]").forEach(function (btn) {
-      var id = btn.getAttribute("data-jump");
-      var m = METROS.find(function (x) { return x.id === id; });
-      var ok = jumpStateAllowed(id, m && m.lon, m && m.lat);
-      btn.disabled = !ok;
-      btn.setAttribute("aria-disabled", ok ? "false" : "true");
-      if (!ok) btn.title = "Hover/pin card only inside the unlocked state";
-      else btn.removeAttribute("title");
-    });
-  }
   function placePinAtEvent(evt) {
     var sp = clientToSvg(evt.clientX, evt.clientY);
     if (!sp) return;
-    if (!cardAllowedAtSvg(sp.x, sp.y)) {
-      setHoverCardVisible(false);
-      return;
-    }
     pin.svgX = sp.x; pin.svgY = sp.y;
     var ll = svgToLonLat(sp.x, sp.y);
     pin.lat = clamp(ll.lat, 24, 49.5);
@@ -942,11 +926,11 @@ function isLightLook() {
   }
   function updateHoverCardAt(lat, lon, sx, sy, clientX, clientY) {
     if (!hoverCardOn || !enabled) { setHoverCardVisible(false); return; }
-    if (!cardAllowedAtSvg(sx, sy)) { setHoverCardVisible(false); return; }
+    var st = stateAtSvg(sx, sy);
+    if (!stateIsCommitted(st)) { setHoverCardVisible(false); return; }
     var s = sampleField(lat, lon);
     var b = computeBands(s, lat, lon);
     var near = nearestMetro(lat, lon);
-    var st = stateAtSvg(sx, sy);
     var loc = near ? near.label : "—";
     if (st) loc += " · " + st.toUpperCase();
     function set(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
@@ -980,13 +964,13 @@ function isLightLook() {
   function updateMiPlacePanel() {
     var box = document.getElementById("mi-place-draw-panel");
     if (!box || !enabled) return;
-    if (hasAccessGate() && pinState && !isUnlockedState(pinState)) {
-      box.innerHTML =
-        '<div class="pd-panel-head">Place draw · pin</div>' +
-        '<div class="pd-note">Hover/pin card only inside the committed sample / unlocked state. Tap that state to pin. No MGMA.</div>';
+    syncSpecialtyFromMI();
+    var pinSt = pinState || stateAtSvg(pin.svgX, pin.svgY);
+    if (!stateIsCommitted(pinSt)) {
+      box.innerHTML = '<div class="pd-panel-head">Place draw · pin</div>' +
+        '<p class="pd-note">Pin stats unlock inside the committed demo state.</p>';
       return;
     }
-    syncSpecialtyFromMI();
     var s = sampleField(pin.lat, pin.lon);
     var b = computeBands(s, pin.lat, pin.lon);
     var near = nearestMetro(pin.lat, pin.lon);
@@ -1129,11 +1113,10 @@ function isLightLook() {
     if (jumps) {
       jumps.addEventListener("click", function (e) {
         var btn = e.target.closest("button[data-jump]");
-        if (!btn || !enabled || btn.disabled) return;
+        if (!btn || !enabled) return;
         var id = btn.getAttribute("data-jump");
         var m = METROS.find(function (x) { return x.id === id; });
         if (!m) return;
-        if (!jumpStateAllowed(id, m.lon, m.lat)) { setHoverCardVisible(false); return; }
         setPinLonLat(m.lat, m.lon);
         jumps.querySelectorAll("button").forEach(function (b) { b.classList.toggle("active", b === btn); });
         renderAll();
@@ -1167,8 +1150,7 @@ function isLightLook() {
     bindOnce(); /* bindOnce is idempotent per SVG */
     setLayersVisible(true);
     if (pin.svgX == null) setPinLonLat(25.76, -80.19);
-    seedPinForUnlock();
-    syncJumpLocks();
+    commitStateScope();
     heatCache = null;
     try {
       if (typeof document !== "undefined" && document.body && document.body.classList.contains("mi-mobile")) {
@@ -1182,6 +1164,8 @@ function isLightLook() {
   function disable() {
     enabled = false;
     dragging = false;
+    committedStates = null;
+    pinState = null;
     setHoverCardVisible(false);
     setLayersVisible(false);
     var svg = mapSvg();
@@ -1192,7 +1176,7 @@ function isLightLook() {
   }
 
   global.AmpMiPlaceDraw = {
-    __version: "20260919c",
+    __version: "20260919d",
     enable: enable,
     disable: disable,
     isEnabled: function () { return !!enabled; },
@@ -1200,18 +1184,19 @@ function isLightLook() {
     jumpTo: function (id) {
       var m = METROS.find(function (x) { return x.id === id; });
       if (!m) return false;
-      if (!jumpStateAllowed(id, m.lon, m.lat)) { setHoverCardVisible(false); return false; }
       setPinLonLat(m.lat, m.lon);
       if (enabled) renderAll();
       return true;
     },
-    cardAllowedForState: isUnlockedState,
     getPinBands: function () {
+      var st = pinState || stateAtSvg(pin.svgX, pin.svgY);
+      if (!stateIsCommitted(st)) return null;
       syncSpecialtyFromMI();
       var s = sampleField(pin.lat, pin.lon);
       return computeBands(s, pin.lat, pin.lon);
     },
     getPin: function () { return { lat: pin.lat, lon: pin.lon, state: pinState }; },
+    stateIsCommitted: stateIsCommitted,
     setHoverCardOn: function (v) { hoverCardOn = !!v; if (!hoverCardOn) setHoverCardVisible(false); },
     ensureScaffold: ensureScaffold,
     refreshPanel: updateMiPlacePanel,

@@ -1,7 +1,7 @@
 /* amp-build:2157-mi-map-pinch-zoom
    amp-build:2156-mi-place-draw-heat
    amp-build:2153 Market Intelligence workbench — Aspects v1 + AMP bands.
-   Place-draw heat via AmpMiPlaceDraw engine 20260919c (js/amp-mi-place-draw-engine.js).
+   Place-draw heat via AmpMiPlaceDraw engine 20260919d (js/amp-mi-place-draw-engine.js).
    Map host owns pinch-to-zoom / pan so heat + state paths + pin share one SVG transform.
    Place-draw hover/pin card only inside the committed sample / unlocked state.
    No firm iframe. No MGMA. No Look/theme switcher. Firm guts stay behind Ask AMP. */
