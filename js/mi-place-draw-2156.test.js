@@ -16,15 +16,19 @@ function read(rel) {
 
 function checkHtml(rel) {
   var html = read(rel);
-  assert(html.indexOf("<!-- amp-build:2156-mi-place-draw-heat -->") !== -1, rel + " missing 2156 stamp comment");
-  assert(html.indexOf("amp-build 2156-mi-place-draw-heat") !== -1, rel + " missing 2156 chip");
-  assert(html.indexOf('href="css/site.css?v=2156"') !== -1, rel + " css not ?v=2156");
-  assert(html.indexOf('src="js/app.js?v=2156"') !== -1, rel + " app.js not ?v=2156");
-  assert(html.indexOf('src="js/amp-mi-place-draw-engine.js?v=20260919c"') !== -1, rel + " official engine 20260919c missing");
+  assert(html.indexOf("<!-- amp-build:2157-mi-map-pinch-zoom -->") !== -1, rel + " missing 2157 stamp comment");
+  assert(html.indexOf("amp-build 2157-mi-map-pinch-zoom") !== -1, rel + " missing 2157 chip");
+  assert(html.indexOf('href="css/site.css?v=2157"') !== -1, rel + " css not ?v=2157");
+  assert(html.indexOf('src="js/app.js?v=2157"') !== -1, rel + " app.js not ?v=2157");
+  assert(
+    html.indexOf('src="js/amp-mi-place-draw-engine.js?v=20260919c') !== -1 ||
+      html.indexOf('src="js/amp-mi-place-draw-engine.js?v=20260919d') !== -1,
+    rel + " official engine 20260919c/d missing"
+  );
   assert(html.indexOf("20260919b") === -1, rel + " leftover engine 20260919b");
   assert(html.indexOf("js/mi-place-draw.js") === -1, rel + " leftover second heat module");
-  assert(html.indexOf('src="js/ridge-workbench.js?v=2156"') !== -1, rel + " workbench not ?v=2156");
-  assert(html.indexOf('src="js/mi-aspect-hooks-v1.js?v=2156"') !== -1, rel + " aspect hooks not ?v=2156");
+  assert(html.indexOf('src="js/ridge-workbench.js?v=2157"') !== -1, rel + " workbench not ?v=2157");
+  assert(html.indexOf('src="js/mi-aspect-hooks-v1.js?v=2157"') !== -1, rel + " aspect hooks not ?v=2157");
   assert(html.indexOf("AMP-Market-Intelligence.html") === -1, rel + " must not mirror hub");
   var bench = html.slice(html.indexOf('id="ridge-workbench"'), html.indexOf('id="mi-lite-toolbar"'));
   assert(bench.indexOf("<iframe") === -1, rel + " firm iframe leaked into public MI workbench");
@@ -40,7 +44,7 @@ assert(!fs.existsSync(path.join(ROOT, "AMP-Market-Intelligence.html")), "hub fil
 assert(!fs.existsSync(path.join(ROOT, "js/mi-place-draw.js")), "second heat implementation must be removed");
 
 var app = read("js/app.js");
-assert(app.indexOf('window.__AMP_BUILD = "2156-mi-place-draw-heat"') !== -1, "app.js build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2157-mi-map-pinch-zoom"') !== -1, "app.js build stamp");
 
 var css = read("css/site.css");
 assert(css.indexOf("amp-build:2156-mi-place-draw-heat") !== -1, "css missing 2156 stamp");
@@ -87,8 +91,9 @@ assert(hooks.indexOf("cmsByLabel") !== -1, "hooks missing CMS map");
 assert(hooks.indexOf("rediByStateByLabel") !== -1, "hooks missing Redi-by-state");
 
 var pdSrc = read("js/amp-mi-place-draw-engine.js");
-assert(pdSrc.indexOf('__version === "20260919c"') !== -1, "engine version lock missing");
-assert(pdSrc.indexOf('__version: "20260919c"') !== -1, "engine export version missing");
+var engineVer = /__version:\s*"(20260919[cd])"/.exec(pdSrc);
+assert(engineVer, "engine export version missing (want 20260919c or 20260919d)");
+assert(pdSrc.indexOf('__version === "' + engineVer[1] + '"') !== -1, "engine version lock missing");
 assert(pdSrc.indexOf("20260919b") === -1, "engine leftover 20260919b");
 assert(pdSrc.indexOf("placeDrawHeatLayer") !== -1, "engine missing official heat layer id");
 assert(pdSrc.indexOf("pd-docked") !== -1, "engine missing docked phone card");
@@ -101,7 +106,7 @@ assert(!/\bMGMA\b/.test(pdSrc.replace(/[Nn]o MGMA/g, "")), "engine must not ship
 var ctx = { window: {}, document: undefined, requestAnimationFrame: function () {}, console: console };
 vm.runInNewContext(pdSrc, ctx);
 var pd = ctx.window.AmpMiPlaceDraw;
-assert(pd && pd.__version === "20260919c", "AmpMiPlaceDraw 20260919c not exported");
+assert(pd && (pd.__version === "20260919c" || pd.__version === "20260919d"), "AmpMiPlaceDraw 20260919c/d not exported");
 assert(pd.enable && pd.disable && pd.isEnabled, "engine API missing enable/disable");
 assert(pd.SPECIALTIES && pd.SPECIALTIES.fm && pd.SPECIALTIES.fm.baseline === 306520, "FM Competitive lock drifted");
 assert(pd.SPECIALTIES.fm.ampBands.redAlert === 255433, "FM red alert lock drifted");
