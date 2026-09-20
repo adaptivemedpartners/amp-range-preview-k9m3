@@ -10322,7 +10322,7 @@ main .view.page.funnel.on > .view-chrome > .hero-band,
   }
 }
 
-/* ========== amp-build:2156-mi-place-draw-heat — public MI Aspects + AmpMiPlaceDraw 20260919b ========== */
+/* ========== amp-build:2156-mi-place-draw-heat — public MI Aspects + AmpMiPlaceDraw 20260919c ========== */
 html.mi-place-draw-on .ridge-workbench .map-wrap,
 html.mi-place-draw-on .ridge-map-container {
   background:
@@ -10519,6 +10519,23 @@ html.mi-place-draw-on #placeDrawSelectionOutline path {
 #placeHoverCard .hc-bands .t-dest { color: #a78bfa; font-weight: 700; font-style: normal; }
 #placeHoverCard .hc-bands b { color: #fff; font-weight: 650; }
 #placeHoverCard .hc-blurb { margin: 0; font-size: 11.5px; line-height: 1.45; color: rgba(255,255,255,.92); }
+#placeHoverCard .hc-dismiss {
+  position: absolute; top: 8px; right: 8px;
+  width: 32px; height: 32px; border: 0; border-radius: 999px;
+  background: rgba(255,255,255,.12); color: #fff;
+  font-size: 14px; line-height: 1; cursor: pointer;
+  pointer-events: auto;
+}
+#placeHoverCard .hc-inner { position: relative; padding-right: 36px; }
+#placeHoverCard .hc-mobile-hint { display: none; margin: 8px 0 0; font-size: 11px; color: rgba(255,255,255,.78); }
+#placeHoverCard.pd-docked,
+body.mi-mobile #placeHoverCard.show {
+  left: 8px !important; right: 8px !important; top: auto !important; bottom: 8px !important;
+  width: auto !important; max-width: none;
+  pointer-events: auto;
+}
+body.mi-mobile #placeHoverCard .hc-mobile-hint,
+#placeHoverCard.pd-docked .hc-mobile-hint { display: block; }
 .ridge-workbench .aspects-story .as-item.as-live .as-name { color: #0e7490; }
 
 /* Phone ~390: MI map + Aspects usable; desktop rules above stay as designed */

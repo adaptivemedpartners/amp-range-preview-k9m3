@@ -1,6 +1,6 @@
 /* amp-build:2156-mi-place-draw-heat
    amp-build:2153 Market Intelligence workbench — Aspects v1 + AMP bands.
-   Place-draw heat via AmpMiPlaceDraw engine 20260919b (js/amp-mi-place-draw-engine.js).
+   Place-draw heat via AmpMiPlaceDraw engine 20260919c (js/amp-mi-place-draw-engine.js).
    No firm iframe. No MGMA. No Look/theme switcher. Firm guts stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -1282,6 +1282,10 @@
   }
   function applyAspectLayers() {
     document.documentElement.setAttribute("data-look", "light");
+    try {
+      var mobile = window.matchMedia && window.matchMedia("(max-width: 430px)").matches;
+      if (document.body) document.body.classList.toggle("mi-mobile", !!mobile);
+    } catch (eMob) {}
     var pd = placeDrawApi();
     var placeOn = isAspectOn("place_draw");
     var tip = $("ridge-map-tooltip");
@@ -1565,6 +1569,15 @@
 
     try { bindAspectsV1(); } catch (e) {}
     document.documentElement.setAttribute("data-look", "light");
+    if (!window.__ampMiMobileBound) {
+      window.__ampMiMobileBound = true;
+      window.addEventListener("resize", function () {
+        try {
+          var mobile = window.matchMedia && window.matchMedia("(max-width: 430px)").matches;
+          if (document.body) document.body.classList.toggle("mi-mobile", !!mobile);
+        } catch (eR) {}
+      });
+    }
 
     var bar = $("ridge-metric-bar");
     if (bar) {

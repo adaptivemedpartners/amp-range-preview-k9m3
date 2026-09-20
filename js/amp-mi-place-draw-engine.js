@@ -5,7 +5,7 @@
  */
 (function (global) {
   "use strict";
-  if (global.AmpMiPlaceDraw && global.AmpMiPlaceDraw.__version === "20260919b") return;
+  if (global.AmpMiPlaceDraw && global.AmpMiPlaceDraw.__version === "20260919c") return;
 
 const PROJ = {
     x: [2759.8538078730785, 24.915358690648933, -14.953439595594197, -0.0007039183835004792, -0.06417214636590662, -0.21364840651961714],
@@ -643,7 +643,7 @@ function isLightLook() {
         '<button type="button" data-jump="la">LA</button>' +
         '<button type="button" data-jump="rnd">Rural ND</button>' +
         '<button type="button" data-jump="wtx">West TX</button></div>' +
-        '<div style="margin-top:6px;font-size:10px;opacity:0.85">Tap to pin on phone · click/drag on desktop · border glow only · AMP YOUR Baseline cash · no MGMA</div>';
+        '<div class="pd-chrome-hint" style="margin-top:6px;font-size:10px;opacity:0.85">Tap map to pin · drag to fine-tune · border glow · AMP YOUR Baseline · no MGMA</div>';
       wrap.appendChild(chrome);
     }
     if (wrap && !document.getElementById("placeHoverCard")) {
@@ -651,7 +651,8 @@ function isLightLook() {
       card.id = "placeHoverCard";
       card.setAttribute("aria-hidden", "true");
       card.innerHTML =
-        '<div class="hc-inner"><div class="hc-loc" id="hcLoc">—</div>' +
+        '<div class="hc-inner"><button type="button" class="hc-dismiss" id="hcDismiss" aria-label="Close pin card">✕</button>' +
+        '<div class="hc-loc" id="hcLoc">—</div>' +
         '<div class="hc-score"><strong id="hcDraw">—</strong><span class="hc-mode" id="hcMode">—</span></div>' +
         '<div class="hc-amenity">Amenity <b id="hcAmenity">—</b></div>' +
         '<div class="hc-bands">' +
@@ -659,7 +660,8 @@ function isLightLook() {
         '<span><span class="t-comp">Competitive</span> <b id="hcComp">—</b></span>' +
         '<span><span class="t-magnet">Magnet</span> <b id="hcMagnet">—</b></span>' +
         '<span><span class="t-dest">Destination</span> <b id="hcDest">—</b></span></div>' +
-        '<p class="hc-blurb" id="hcBlurb"></p></div>';
+        '<p class="hc-blurb" id="hcBlurb"></p>' +
+        '<div class="hc-mobile-hint" id="hcMobileHint">Tap map to move pin · card stays until ✕ or Hover card Off</div></div>';
       wrap.appendChild(card);
     }
     if (!document.getElementById("mi-place-draw-panel")) {
@@ -830,6 +832,20 @@ function isLightLook() {
     var card = document.getElementById("placeHoverCard");
     var wrap = mapWrapEl();
     if (!card || !wrap) return;
+    if (isCoarsePointer()) {
+      card.classList.add("pd-docked");
+      card.style.left = "8px";
+      card.style.right = "8px";
+      card.style.top = "auto";
+      card.style.bottom = "8px";
+      card.style.width = "auto";
+      return;
+    }
+    card.classList.remove("pd-docked");
+    card.style.right = "";
+    card.style.bottom = "";
+    card.style.width = "";
+    if (clientX == null || clientY == null) return;
     var wr = wrap.getBoundingClientRect();
     var x = clientX - wr.left + 14;
     var y = clientY - wr.top + 14;
@@ -859,7 +875,7 @@ function isLightLook() {
     set("hcAmenity", String(Math.round(s.amenity)));
     set("hcBlurb", whySentence(s, lat, lon));
     setHoverCardVisible(true);
-    if (clientX != null) positionHoverCard(clientX, clientY);
+    if (clientX != null || isCoarsePointer()) positionHoverCard(clientX, clientY);
   }
   function scheduleHoverFromEvent(evt) {
     if (!enabled || !hoverCardOn) { setHoverCardVisible(false); return; }
@@ -900,47 +916,50 @@ function isLightLook() {
       '<div class="pd-note">AMP YOUR Baseline · ORDER Red &lt; Comp &lt; Magnet &lt; Dest · no MGMA</div>';
   }
 
-  function isTouchPtr(e) {
-    return !!(e && (e.pointerType === "touch" || e.pointerType === "pen"));
+  function isCoarsePointer() {
+    try {
+      if (window.matchMedia && window.matchMedia("(hover: none), (pointer: coarse)").matches) return true;
+    } catch (e) {}
+    try {
+      if (document.body && document.body.classList.contains("mi-mobile")) return true;
+    } catch (e2) {}
+    return false;
   }
-  var touchTap = null;
-  var lastPtrTouch = false;
+  var dragStart = null;
+  var TAP_SLOP = 12;
   function onPointerDown(e) {
     if (!enabled) return;
     if (e.button != null && e.button !== 0) return;
-    if (e.target && e.target.closest && e.target.closest(".aspect-chip, .metric-btn, button, a, input, select, #mi-place-draw-chrome")) return;
-    lastPtrTouch = isTouchPtr(e);
-    if (lastPtrTouch) {
-      /* Phone: tap-to-pin. Do not drag the pin with the finger. */
-      touchTap = { x: e.clientX, y: e.clientY, moved: false };
-      dragging = false;
-      try { e.preventDefault(); } catch (err) {}
-      return;
-    }
-    dragging = true;
+    if (e.target && e.target.closest && e.target.closest(".aspect-chip, .metric-btn, button, a, input, select, #mi-place-draw-chrome, #placeHoverCard")) return;
+    var coarse = isCoarsePointer() || e.pointerType === "touch" || e.pointerType === "pen";
+    dragStart = { x: e.clientX, y: e.clientY, coarse: coarse };
+    /* Tap-first on phone: place immediately; drag only after slop. Desktop keeps click/drag. */
     placePinAtEvent(e);
-    try { e.preventDefault(); } catch (err) {}
+    if (coarse) {
+      dragging = false;
+      try { if (e.currentTarget && e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+    } else {
+      dragging = true;
+      try { e.preventDefault(); } catch (err2) {}
+    }
   }
   function onPointerMove(e) {
     if (!enabled) return;
-    if (touchTap && isTouchPtr(e)) {
-      var dx = e.clientX - touchTap.x, dy = e.clientY - touchTap.y;
-      if (dx * dx + dy * dy > 576) touchTap.moved = true; /* 24px slop */
-      return;
+    if (dragStart && !dragging) {
+      var dx = e.clientX - dragStart.x, dy = e.clientY - dragStart.y;
+      if ((dx * dx + dy * dy) > (TAP_SLOP * TAP_SLOP)) dragging = true;
     }
     if (dragging) placePinAtEvent(e);
-    else scheduleHoverFromEvent(e);
+    else if (!dragStart || !dragStart.coarse) scheduleHoverFromEvent(e);
   }
-  function onPointerUp(e) {
-    if (touchTap) {
-      if (!touchTap.moved && e && e.clientX != null) placePinAtEvent(e);
-      touchTap = null;
-    }
+  function onPointerUp() {
     dragging = false;
+    dragStart = null;
   }
   function onPointerLeave() {
-    if (lastPtrTouch) return; /* keep tap card on phone */
-    if (!dragging) setHoverCardVisible(false);
+    if (dragging) return;
+    if (isCoarsePointer()) return; /* keep pin card on touch until dismiss / Off */
+    setHoverCardVisible(false);
   }
 
   var boundSvg = null;
@@ -950,12 +969,13 @@ function isLightLook() {
     if (bound && boundSvg === svg) return;
     bound = true;
     boundSvg = svg;
-    svg.addEventListener("pointerdown", onPointerDown, { passive: false });
-    svg.addEventListener("pointermove", onPointerMove, { passive: false });
+    svg.addEventListener("pointerdown", onPointerDown);
+    svg.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
     svg.addEventListener("pointerleave", onPointerLeave);
     var ht = document.getElementById("hoverCardToggle");
-    if (ht) {
+    if (ht && !ht.__pdBound) {
+      ht.__pdBound = true;
       ht.addEventListener("click", function (e) {
         var btn = e.target.closest("button[data-hover]");
         if (!btn) return;
@@ -964,7 +984,24 @@ function isLightLook() {
           b.classList.toggle("active", (b.getAttribute("data-hover") === "on") === hoverCardOn);
         });
         if (!hoverCardOn) setHoverCardVisible(false);
+        else if (enabled) {
+          var sp = { x: pin.svgX, y: pin.svgY };
+          if (sp.x != null) updateHoverCardAt(pin.lat, pin.lon, sp.x, sp.y, null, null);
+        }
       });
+    }
+    var dismiss = document.getElementById("hcDismiss");
+    if (dismiss && !dismiss.__pdBound) {
+      dismiss.__pdBound = true;
+      dismiss.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        setHoverCardVisible(false);
+      });
+    }
+    var cardEl = document.getElementById("placeHoverCard");
+    if (cardEl && !cardEl.__pdBound) {
+      cardEl.__pdBound = true;
+      cardEl.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
     }
     var jumps = document.getElementById("miPlaceDrawJumps");
     if (jumps) {
@@ -1008,6 +1045,13 @@ function isLightLook() {
     setLayersVisible(true);
     if (pin.svgX == null) setPinLonLat(25.76, -80.19);
     heatCache = null;
+    try {
+      if (typeof document !== "undefined" && document.body && document.body.classList.contains("mi-mobile")) {
+        document.body.classList.remove("mi-sheet-open");
+        var mw = document.querySelector(".map-wrap") || document.getElementById("ridge-map-wrap");
+        if (mw && mw.scrollIntoView) mw.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    } catch (eMob) {}
     requestAnimationFrame(function () { renderAll(); });
   }
   function disable() {
@@ -1023,7 +1067,7 @@ function isLightLook() {
   }
 
   global.AmpMiPlaceDraw = {
-    __version: "20260919b",
+    __version: "20260919c",
     enable: enable,
     disable: disable,
     isEnabled: function () { return !!enabled; },
