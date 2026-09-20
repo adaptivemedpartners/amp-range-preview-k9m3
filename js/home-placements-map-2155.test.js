@@ -32,12 +32,12 @@ function sliceStep3(html) {
 
 function checkHtml(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
-  assert(html.indexOf("<!-- amp-build:2155-home-placements-map -->") !== -1, rel + " missing 2155 stamp comment");
-  assert(html.indexOf("amp-build 2155-home-placements-map") !== -1, rel + " missing 2155 chip");
-  assert(html.indexOf('href="css/site.css?v=2155"') !== -1, rel + " css not ?v=2155");
-  assert(html.indexOf('src="js/app.js?v=2155"') !== -1, rel + " app.js not ?v=2155");
-  assert(html.indexOf('src="js/home-placements-map.js?v=2155"') !== -1, rel + " placements map js missing");
-  assert(html.indexOf('src="js/hero-ret-rotator.js?v=2155"') !== -1, rel + " rotator js missing");
+  assert(html.indexOf("<!-- amp-build:2156-mi-place-draw-heat -->") !== -1, rel + " missing 2156 stamp comment");
+  assert(html.indexOf("amp-build 2156-mi-place-draw-heat") !== -1, rel + " missing 2156 chip");
+  assert(html.indexOf('href="css/site.css?v=2156"') !== -1, rel + " css not ?v=2156");
+  assert(html.indexOf('src="js/app.js?v=2156"') !== -1, rel + " app.js not ?v=2156");
+  assert(html.indexOf('src="js/home-placements-map.js?v=2156"') !== -1, rel + " placements map js missing");
+  assert(html.indexOf('src="js/hero-ret-rotator.js?v=2156"') !== -1, rel + " rotator js missing");
   assert(html.indexOf(">RETENTION-LED<") !== -1, rel + " lost RETENTION-LED eyebrow");
   assert(
     html.indexOf('<h1 class="explore-title">Permanent recruitment measured in years — not placements.</h1>') !== -1,
@@ -85,7 +85,7 @@ checkHtml("index.html");
 checkHtml("404.html");
 
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('window.__AMP_BUILD = "2155-home-placements-map"') !== -1, "app.js build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2156-mi-place-draw-heat"') !== -1, "app.js build stamp");
 assert(app.indexOf("h1 intentionally omitted") !== -1, "SEO H1 lock comment missing");
 assert(app.indexOf("never overwrite homepage explore-title H1") !== -1, "SEO explore-title guard missing");
 

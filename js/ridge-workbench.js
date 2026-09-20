@@ -1,5 +1,6 @@
-/* amp-build:2155-home-placements-map
+/* amp-build:2156-mi-place-draw-heat
    amp-build:2153 Market Intelligence workbench — Aspects v1 + AMP bands.
+   Place-draw national metro heat when Aspects Place draw is ON (locked mock 2026-09-19).
    No Look/theme switcher. Firm guts (Live AMP / Bullhorn / MPC / Outfitter) stay behind Ask AMP. */
 (function (w) {
   "use strict";
@@ -34,10 +35,10 @@
       weight: "qualitative v1" },
     { id: "cah", label: "CAH",
       move: "Critical access (≤25 beds) / CAH-heavy markets often need higher cash on top of geo.",
-      weight: "pending Mike weights · facility overlay not yet wired" },
+      weight: "pending Mike weights · HPSA pressure highlight · facility pins pending" },
     { id: "fqhc", label: "FQHC",
       move: "Medicaid PPS / change-in-scope rules. Not “more FQHC sites = higher pay.”",
-      weight: "pending Mike weights" },
+      weight: "pending Mike weights · HPSA pressure highlight · facility pins pending" },
     { id: "cms", label: "CMS",
       move: "Revenue/collections triangulation. Subtypes inherit parent. Not auto-Baseline $.",
       weight: "pending Mike weights — triangulation language only" }
@@ -94,6 +95,9 @@
     aspectsV1Active = normalizeAspectsList(aspectsV1Active);
     saveAspectsV1();
     syncAspectsUi();
+    try { applyAspectLayers(); } catch (e) {}
+    try { renderBenchCards(); } catch (e) {}
+    try { paintMap(); } catch (e) {}
     try { renderSidebar(); } catch (e) {}
   }
   function aspectHooksForSpecialty(s) {
@@ -129,14 +133,27 @@
       if (amp && amp.competitive != null) bits.push("Data: YOUR Baseline (Competitive) " + fmtMoney(amp.competitive));
       else bits.push("Data: AMP bands pending — no invented $");
     } else if (id === "place_draw") {
-      if (picks.length) {
+      var pd = w.AMPPlaceDraw;
+      if (pd && pd.isEnabled && pd.isEnabled()) {
+        var pin = pd.readPinState ? pd.readPinState() : null;
+        if (pin && pin.metro) {
+          bits.push("Pin: " + pin.metro.label +
+            (pin.state ? (" · " + pin.state.toUpperCase()) : "") +
+            " · draw " + pin.field.draw +
+            " · " + (pin.bands.placeMode === "compress" ? "metro compress" : "cool-field amplify"));
+          bits.push("Cash: Red " + pd.formatMoney(pin.bands.red) +
+            " · Comp " + pd.formatMoney(pin.bands.competitive) +
+            " · Magnet " + pd.formatMoney(pin.bands.magnet) +
+            " · Dest " + pd.formatMoney(pin.bands.destination));
+        }
+      } else if (picks.length) {
         var parts = [];
         picks.slice(0, 6).forEach(function (code) {
           var rpp = STATE_RPP[code];
           if (rpp != null) parts.push((stateNames()[code] || code.toUpperCase()) + " COL " + rpp);
         });
         if (parts.length) bits.push("Data: " + parts.join(" · "));
-      } else bits.push("Data: select state(s) for COL (RPP) context");
+      } else bits.push("Turn Place draw ON for national metro heat · COL (RPP) still available on selected states");
     } else if (id === "specialty_supply") {
       if (picks.length && h.rediByState) {
         var sum = 0, have = 0;
@@ -155,6 +172,20 @@
           (h.cms.relIndex != null ? (" · rel index " + h.cms.relIndex) : "") +
           " — triangulation only, not Baseline $");
       } else bits.push("Data: CMS context not mapped for this label");
+    } else if (id === "day_load") {
+      bits.push("Read: patients/day and schedule shift effective cash vs headline package — qualitative v1, no invented $");
+    } else if (id === "support") {
+      bits.push("Read: culture / admin burden / unspoken value — qualitative v1, no invented $");
+    } else if (id === "cah") {
+      var cahN = hpsaPressureCodes().length;
+      bits.push("Overlay pending: no public CAH pin file in this surface. " +
+        (cahN ? ("HPSA pressure highlight on " + cahN + " states (need-met <50% or PC needed ≥200).") : "HPSA pressure table pending.") +
+        " Not a facility directory.");
+    } else if (id === "fqhc") {
+      var fqN = hpsaPressureCodes().length;
+      bits.push("Overlay pending: no public FQHC pin file in this surface. " +
+        (fqN ? ("Same HPSA pressure corridor on " + fqN + " states — not “more sites = higher pay.”") : "HPSA pressure table pending.") +
+        " Medicaid PPS language only.");
     } else {
       bits.push("Data hook: qualitative in v1");
     }
@@ -170,7 +201,7 @@
     aspectsV1Active.forEach(function (id) {
       var def = aspectDef(id);
       if (!def) return;
-      html += '<div class="as-item"><div class="as-name">' + def.label + "</div>";
+      html += '<div class="as-item as-live" data-aspect="' + id + '"><div class="as-name">' + def.label + "</div>";
       html += '<div class="as-move">' + def.move + "</div>";
       var hook = aspectHookHtml(id, s);
       if (hook) html += '<div class="as-hook">' + hook + "</div>";
@@ -378,12 +409,27 @@
     }
     return { count: g._national, type: g._type, national: g._national };
   }
+  function isFmSpecialty(s) {
+    if (!s) return false;
+    var k = String(s.key || "").toLowerCase();
+    return k === "family_medicine_without_ob" || k === "family_medicine_with_ob" ||
+      k === "family_medicine_ambulatory_only_no_inpatient_work";
+  }
   function getAmpBands(s) {
     s = s || currentSpec();
-    if (!s || !s.ampBands) return null;
-    var b = s.ampBands;
-    if (b.competitive == null && b.redAlert == null) return null;
-    return b;
+    if (s && s.ampBands && (s.ampBands.competitive != null || s.ampBands.redAlert != null)) return s.ampBands;
+    var pd = w.AMPPlaceDraw;
+    if (isFmSpecialty(s) && pd && pd.FM_BANDS) return pd.FM_BANDS;
+    return null;
+  }
+  function hpsaPressureCodes() {
+    var out = [];
+    Object.keys(HPSA_BY_STATE).forEach(function (code) {
+      var h = HPSA_BY_STATE[code];
+      if (!h) return;
+      if ((h.pctMet != null && h.pctMet < 50) || (h.needed != null && h.needed >= 200)) out.push(code);
+    });
+    return out;
   }
 
   /** Public MI: AMP market bands only. Never MGMA percentiles on this surface. */
@@ -556,21 +602,57 @@
     return { min: min, max: max };
   }
 
+  function rawLegendBit() {
+    var amp = getAmpBands();
+    return amp && amp.competitive != null
+      ? '<span class="ridge-legend-metric">Raw · YOUR Baseline ' + fmtMoney(amp.competitive) + "</span>"
+      : '<span class="ridge-legend-metric">Raw · AMP bands pending</span>';
+  }
+
   function paintMap() {
     var root = $("ridge-map-container");
     if (!root) return;
+    var placeOn = isAspectOn("place_draw");
+    var supplyOn = isAspectOn("specialty_supply");
+    var rawOn = isAspectOn("raw");
     var ext = metricExtent();
+    var supplyExt = null;
+    var h = aspectHooksForSpecialty(currentSpec());
+    if (supplyOn && h.rediByState) {
+      var svals = Object.keys(h.rediByState).map(function (k) { return h.rediByState[k]; })
+        .filter(function (v) { return typeof v === "number" && v > 0; });
+      if (svals.length) supplyExt = { min: Math.min.apply(null, svals), max: Math.max.apply(null, svals) };
+    }
+    var pressure = {};
+    if (isAspectOn("cah") || isAspectOn("fqhc")) {
+      hpsaPressureCodes().forEach(function (c) { pressure[c] = 1; });
+    }
     var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
     nodes.forEach(function (el) {
-      if (el.closest && el.closest("#outline-layer")) return;
+      if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
       var code = el.getAttribute("data-state");
-      var v = metricValueFor(code);
-      var t = (v - ext.min) / (ext.max - ext.min);
-      if (!v || isNaN(v)) t = 0.08;
-      el.style.fill = lerpColor(t);
-      el.classList.toggle("selected", !!state.selected[code]);
-      el.classList.toggle("is-hover", state.hover === code);
+      if (placeOn) {
+        /* Light uncalled slate — never paint teal selected fill over metro heat */
+        el.style.fill = "#b7c4d4";
+      } else if (supplyOn && supplyExt && h.rediByState && h.rediByState[code] != null) {
+        var sv = h.rediByState[code];
+        var st = (sv - supplyExt.min) / Math.max(1, supplyExt.max - supplyExt.min);
+        el.style.fill = lerpColor(st);
+      } else if (rawOn && state.mapMetric === "comp") {
+        var v0 = metricValueFor(code);
+        var t0 = (v0 - ext.min) / (ext.max - ext.min);
+        if (!v0 || isNaN(v0)) t0 = 0.08;
+        el.style.fill = lerpColor(t0);
+      } else {
+        var v = metricValueFor(code);
+        var t = (v - ext.min) / (ext.max - ext.min);
+        if (!v || isNaN(v)) t = 0.08;
+        el.style.fill = lerpColor(t);
+      }
+      el.classList.toggle("selected", !placeOn && !!state.selected[code]);
+      el.classList.toggle("is-hover", !placeOn && state.hover === code);
       el.classList.toggle("ridge-geo-locked", !accessAllowsState(code));
+      el.classList.toggle("aspect-hpsa-pressure", !!pressure[code]);
       /* Avoid double-filter black blobs on AK/HI */
       if (code === "ak" || code === "hi") {
         el.style.filter = "none";
@@ -580,13 +662,36 @@
     });
     var legend = $("ridge-map-legend-dynamic");
     if (legend) {
-      legend.innerHTML =
-        '<span class="ridge-legend-metric">' + metricLabelForActive() + '</span>' +
-        '<span class="ridge-legend-scale"><i class="lo"></i> Lower</span>' +
-        '<span class="ridge-legend-scale"><i class="hi"></i> Higher</span>' +
-        '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>';
+      if (placeOn) {
+        legend.innerHTML =
+          '<span class="ridge-legend-metric">Place draw · metro heat</span>' +
+          '<span class="ridge-legend-scale"><i class="lo"></i> Cool-field</span>' +
+          '<span class="ridge-legend-scale"><i class="hi"></i> Metro glow</span>' +
+          '<span class="ridge-legend-scale"><i class="sel"></i> Border only</span>' +
+          (rawOn ? rawLegendBit() : "");
+      } else if (supplyOn && supplyExt) {
+        legend.innerHTML =
+          '<span class="ridge-legend-metric">Specialty supply · Redi residence</span>' +
+          '<span class="ridge-legend-scale"><i class="lo"></i> Thinner bench</span>' +
+          '<span class="ridge-legend-scale"><i class="hi"></i> Deeper bench</span>' +
+          '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>' +
+          (rawOn ? rawLegendBit() : "");
+      } else {
+        legend.innerHTML =
+          '<span class="ridge-legend-metric">' + metricLabelForActive() + '</span>' +
+          '<span class="ridge-legend-scale"><i class="lo"></i> Lower</span>' +
+          '<span class="ridge-legend-scale"><i class="hi"></i> Higher</span>' +
+          '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>' +
+          (rawOn ? rawLegendBit() : "");
+      }
     }
-    redrawOutlines();
+    if (placeOn) {
+      var ol = root.querySelector("#outline-layer");
+      if (ol) ol.innerHTML = "";
+    } else {
+      redrawOutlines();
+    }
+    try { syncAspectMapChrome(); } catch (e) {}
   }
 
   function pctCells(obj, fmt) {
@@ -615,11 +720,14 @@
     var html = "";
 
     /* Row 1: AMP market bands only on public (Competitive = YOUR Baseline). Pending if gap. */
-    html += '<div class="bench-card comp bench-featured"><div class="title">AMP cash bands (market read)</div>';
+    var rawOn = isAspectOn("raw");
+    html += '<div class="bench-card comp bench-featured' + (rawOn ? " raw-aspect-on" : "") + '">';
+    html += '<div class="title">' + (rawOn ? "AMP cash bands (YOUR Baseline)" : "AMP cash bands (market read)") + "</div>";
     if (amp && amp.competitive != null) {
-      html += '<div class="hero">' + show(fmtMoney(amp.competitive), "n/a") + "<small>Competitive</small></div>";
+      html += '<div class="hero">' + show(fmtMoney(amp.competitive), "n/a") +
+        "<small>" + (rawOn ? "YOUR Baseline · Competitive" : "Competitive") + "</small></div>";
     } else {
-      html += '<div class="hero">Pending<small>YOUR Baseline</small></div>';
+      html += '<div class="hero">Pending<small>' + (rawOn ? "Raw on · AMP bands pending" : "YOUR Baseline") + "</small></div>";
     }
     html += ampBandsHtml(amp, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · public · EXAMPLE" });
     if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
@@ -755,9 +863,18 @@
     html += '<div class="row"><span class="k">Speed-to-fill</span><span class="v"><strong>~' + ttfDays +
       " days</strong></span></div>";
 
-    if (s && (s.ampBands || s.totalComp)) {
-      html += '<div class="section-title">AMP cash bands (market read)</div>';
-      html += ampBandsHtml(getAmpBands(s), { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
+    if (s && (s.ampBands || s.totalComp || getAmpBands(s))) {
+      var sideAmp = getAmpBands(s);
+      html += '<div class="section-title">' + (isAspectOn("raw") ? "AMP cash bands (YOUR Baseline)" : "AMP cash bands (market read)") + "</div>";
+      html += ampBandsHtml(sideAmp, { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
+      if (isAspectOn("raw")) {
+        html += sideAmp && sideAmp.competitive != null
+          ? '<div class="note raw-cash-note">Raw on · YOUR Baseline (Competitive) ' + fmtMoney(sideAmp.competitive) + " — AMP bands, not invented $</div>"
+          : '<div class="note raw-cash-note">Raw on · AMP bands pending — no invented $</div>';
+      }
+      if (isAspectOn("cms")) {
+        html += '<div class="note cms-tri-note">CMS is triangulation only — not Baseline $</div>';
+      }
       if (s.compRatio && s.compRatio.p50 != null)
         html += '<div class="row"><span class="k">Comp / wRVU</span><span class="v">' + show(fmtNum(s.compRatio.p50, 2), "—") + "</span></div>";
       if (s.workRVUs && s.workRVUs.p50 != null)
@@ -1110,6 +1227,123 @@
     tip.style.top = y + "px";
   }
 
+  function placeDrawApi() { return w.AMPPlaceDraw || null; }
+  function syncAspectMapChrome() {
+    var wrap = $("ridge-map-wrap");
+    if (!wrap) return;
+    var ids = ["raw", "place_draw", "day_load", "specialty_supply", "support", "cah", "fqhc", "cms"];
+    var wb = $("ridge-workbench");
+    ids.forEach(function (id) {
+      var cls = "aspect-" + id.replace("_", "-") + "-on";
+      var on = isAspectOn(id);
+      wrap.classList.toggle(cls, on);
+      if (wb) wb.classList.toggle(cls, on);
+    });
+    var banner = $("ridge-aspect-map-banner");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "ridge-aspect-map-banner";
+      banner.className = "ridge-aspect-map-banner";
+      wrap.appendChild(banner);
+    }
+    var bits = [];
+    var amp = getAmpBands();
+    if (isAspectOn("raw")) {
+      bits.push(amp && amp.competitive != null
+        ? ("Raw · YOUR Baseline " + fmtMoney(amp.competitive) + " (Competitive)")
+        : "Raw · AMP bands pending — no invented $");
+    }
+    if (isAspectOn("place_draw")) bits.push("Place draw · national metro heat · border-only selection");
+    if (isAspectOn("day_load")) bits.push("Day load · schedule / patients-per-day framing (qualitative v1)");
+    if (isAspectOn("specialty_supply")) bits.push("Specialty supply · Redi residence density");
+    if (isAspectOn("support")) bits.push("Support · culture / admin burden (qualitative v1)");
+    if (isAspectOn("cah")) bits.push("CAH · overlay pending · HPSA pressure highlight (not facility pins)");
+    if (isAspectOn("fqhc")) bits.push("FQHC · overlay pending · HPSA pressure highlight (not “more sites = higher pay”)");
+    if (isAspectOn("cms")) bits.push("CMS · triangulation only — not Baseline $");
+    banner.hidden = !bits.length;
+    banner.innerHTML = bits.length ? bits.map(function (b) { return "<span>" + b + "</span>"; }).join("") : "";
+    var hoverBar = $("ridge-pd-hover-toggle");
+    if (hoverBar) hoverBar.hidden = !isAspectOn("place_draw");
+    var jumps = $("ridge-pd-litmus");
+    if (jumps) jumps.hidden = !isAspectOn("place_draw");
+    var pd = placeDrawApi();
+    if (hoverBar && pd) {
+      hoverBar.querySelectorAll("[data-hover]").forEach(function (btn) {
+        var on = (btn.getAttribute("data-hover") === "on") === (!!pd.isHoverCardOn && pd.isHoverCardOn());
+        btn.classList.toggle("active", on);
+      });
+    }
+  }
+  function applyAspectLayers() {
+    var pd = placeDrawApi();
+    var host = $("ridge-map-container");
+    var wrap = $("ridge-map-wrap");
+    var placeOn = isAspectOn("place_draw");
+    var tip = $("ridge-map-tooltip");
+    if (tip && placeOn) { tip.hidden = true; tip.innerHTML = ""; }
+    if (pd && host) {
+      pd.mount({
+        host: host,
+        wrap: wrap,
+        bands: getAmpBands(),
+        onPinChange: function () { try { renderSidebar(); } catch (e) {} },
+        onStateFromPin: function (code) {
+          if (!code || !placeOn) return;
+          if (!accessAllowsState(code)) return;
+          if (!state.selected[code] && !state.multi) {
+            state.selected = {};
+            state.selected[code] = true;
+          }
+        }
+      });
+      pd.setBands(getAmpBands());
+      pd.setEnabled(placeOn);
+    }
+    syncAspectMapChrome();
+    paintSupplyDots();
+  }
+  function paintSupplyDots() {
+    var host = $("ridge-map-container");
+    if (!host) return;
+    var svg = host.querySelector("svg");
+    if (!svg) return;
+    var layer = svg.querySelector("#aspectSupplyDots");
+    if (!layer) {
+      layer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      layer.setAttribute("id", "aspectSupplyDots");
+      layer.setAttribute("pointer-events", "none");
+      svg.appendChild(layer);
+    }
+    layer.innerHTML = "";
+    if (!isAspectOn("specialty_supply")) return;
+    var h = aspectHooksForSpecialty(currentSpec());
+    if (!h.rediByState) return;
+    var max = 0;
+    Object.keys(h.rediByState).forEach(function (k) {
+      if (k === "other" || k === "us_total") return;
+      if (typeof h.rediByState[k] === "number") max = Math.max(max, h.rediByState[k]);
+    });
+    if (!max) return;
+    svg.querySelectorAll("path[data-state]").forEach(function (el) {
+      if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline"))) return;
+      var code = el.getAttribute("data-state");
+      var n = h.rediByState[code];
+      if (n == null) return;
+      var bb;
+      try { bb = el.getBBox(); } catch (e) { return; }
+      if (!bb || !bb.width) return;
+      var cx = bb.x + bb.width / 2;
+      var cy = bb.y + bb.height / 2;
+      var r = 2.2 + 6.5 * Math.sqrt(n / max);
+      var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", String(r));
+      c.setAttribute("fill", "rgba(14,116,144,0.28)");
+      c.setAttribute("stroke", "rgba(14,116,144,0.55)");
+      c.setAttribute("stroke-width", "0.8");
+      layer.appendChild(c);
+    });
+  }
+
   function ensureMapGlow(host) {
     if (!host) return;
     var svg = host.querySelector("svg");
@@ -1181,6 +1415,12 @@
     var fingerDrag = false;
 
     function applyHover(e, el) {
+      var pd = placeDrawApi();
+      if (isAspectOn("place_draw") && pd) {
+        if (e) pd.scheduleHoverFromEvent(e);
+        else pd.hideHover();
+        return;
+      }
       if (!el) {
         if (!state.hover) return;
         state.hover = null;
@@ -1197,6 +1437,22 @@
     }
 
     root.addEventListener("pointerdown", function (e) {
+      var pd = placeDrawApi();
+      if (isAspectOn("place_draw") && pd && (e.pointerType === "touch" || e.pointerType === "pen" || e.pointerType === "mouse")) {
+        if (e.pointerType === "touch" || e.pointerType === "pen") {
+          fingerDrag = true;
+          try { root.setPointerCapture(e.pointerId); } catch (err) {}
+          e.preventDefault();
+        }
+        if (e.pointerType === "mouse" && e.button === 0) {
+          pd._live && (pd._live.dragging = true);
+          pd.placePinAtEvent(e);
+        } else if (e.pointerType !== "mouse") {
+          pd.placePinAtEvent(e);
+        }
+        applyHover(e, null);
+        return;
+      }
       if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
       fingerDrag = true;
       try { root.setPointerCapture(e.pointerId); } catch (err) {}
@@ -1217,6 +1473,15 @@
     });
 
     root.addEventListener("pointermove", function (e) {
+      var pd = placeDrawApi();
+      if (isAspectOn("place_draw") && pd) {
+        if (fingerDrag || (pd._live && pd._live.dragging)) {
+          if (fingerDrag) e.preventDefault();
+          pd.placePinAtEvent(e);
+        }
+        applyHover(e, null);
+        return;
+      }
       var el;
       if (fingerDrag || e.pointerType === "touch" || e.pointerType === "pen") {
         if (fingerDrag) e.preventDefault();
@@ -1230,6 +1495,8 @@
     }, { passive: false });
 
     function endFinger(e) {
+      var pd = placeDrawApi();
+      if (pd && pd._live) pd._live.dragging = false;
       if (!fingerDrag) return;
       fingerDrag = false;
       try { if (e && e.pointerId != null) root.releasePointerCapture(e.pointerId); } catch (err) {}
@@ -1239,12 +1506,19 @@
 
     root.addEventListener("pointerleave", function () {
       if (fingerDrag) return;
+      var pd = placeDrawApi();
+      if (isAspectOn("place_draw") && pd) { pd.hideHover(); return; }
       if (!state.hover) return;
       state.hover = null;
       paintMap();
       showTooltip(null, null);
     });
     root.addEventListener("click", function (e) {
+      var pd = placeDrawApi();
+      if (isAspectOn("place_draw") && pd) {
+        pd.placePinAtEvent(e);
+        return;
+      }
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
       e.preventDefault();
@@ -1264,7 +1538,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2005")
+    fetch("assets/ridge-usa-map.svg?v=2156")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -1313,6 +1587,7 @@
     syncDemoTools();
     updateMetricButtons();
     renderBenchCards();
+    try { applyAspectLayers(); } catch (e) {}
     paintMap();
     renderSidebar();
     updateTitle();
@@ -1324,6 +1599,34 @@
     root.setAttribute("data-ridge-chrome", "1");
 
     try { bindAspectsV1(); } catch (e) {}
+
+    var hoverBar = $("ridge-pd-hover-toggle");
+    if (hoverBar && !hoverBar.getAttribute("data-bound")) {
+      hoverBar.setAttribute("data-bound", "1");
+      hoverBar.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-hover]");
+        if (!btn) return;
+        var pd = placeDrawApi();
+        if (!pd) return;
+        pd.setHoverCardOn(btn.getAttribute("data-hover") === "on");
+        syncAspectMapChrome();
+      });
+    }
+    var jumps = $("ridge-pd-litmus");
+    if (jumps && !jumps.getAttribute("data-bound")) {
+      jumps.setAttribute("data-bound", "1");
+      jumps.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-jump]");
+        if (!btn) return;
+        var pd = placeDrawApi();
+        if (!pd || !isAspectOn("place_draw")) return;
+        pd.jumpTo(btn.getAttribute("data-jump"));
+        jumps.querySelectorAll("[data-jump]").forEach(function (b) {
+          b.classList.toggle("active", b === btn);
+        });
+        renderSidebar();
+      });
+    }
 
     var bar = $("ridge-metric-bar");
     if (bar) {
@@ -1530,6 +1833,8 @@
     getSpecialtyKey: function () { return state.specialtyKey; },
     setSpecialtyKey: setSpecialty,
     getSelectedCodes: selectedCodes,
+    isAspectOn: isAspectOn,
+    applyAspectLayers: applyAspectLayers,
     selectState: function (code, additive) { toggleState(code, additive); },
     ensureUnitSelection: function () {
       ensureForcedSelection();
