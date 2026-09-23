@@ -1,3 +1,4 @@
+/* amp-build:2169-years-rotate-bridge */
 /* amp-build:2168-mi-photo-title-clear */
 /* amp-build:2167-l1-wallpaper-under-header */
 /* amp-build:2166-tuck-opaque-soft */
@@ -11113,7 +11114,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   background-image:
     linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
     linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2161");
+    url("../assets/home-hero-clinic-consult.jpg?v=2169");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -11431,7 +11432,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   background-image:
     linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
     linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2168");
+    url("../assets/home-hero-clinic-consult.jpg?v=2169");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -12352,5 +12353,302 @@ main .view.page.on > .hero-band,
   .home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill span {
     white-space: normal;
   }
+}
+
+/* ========== amp-build:2169-years-rotate-bridge ==========
+   Hero: serif years cadence LEFT, big rotating still-there cards RIGHT.
+   Bridge: full-width glass card directly above the Row2 parent.
+   Vertical rhythm is open on purpose — phrase, cards, and bridge are not
+   compressed into the 2168 footprint. Row2 locks, title clearance, and the
+   under-header fade (z-index 280) are unchanged. */
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(380px, 520px);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  padding-top: calc(var(--amp-title-clear) - 68px);
+  padding-bottom: clamp(36px, 5vh, 72px);
+  padding-left: clamp(22px, 4.2vw, 64px);
+  padding-right: clamp(18px, 3vw, 48px);
+}
+.home-stage.v3-home .v3-hero-split > script {
+  display: none !important;
+}
+.home-stage.v3-home .v3-years-copy {
+  min-width: 0;
+  grid-column: 1;
+}
+.home-stage.v3-home .v3-still-rotator {
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title.v3-years-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.02em;
+  margin: 8px 0 0;
+  max-width: none;
+  font-family: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+  font-weight: 560;
+  font-size: clamp(2rem, 3.55vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  color: #fff;
+  background: none;
+  -webkit-text-fill-color: #fff;
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  animation: none;
+  filter: none;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
+}
+.home-stage.v3-home .v3-years-w {
+  display: block;
+  white-space: nowrap;
+}
+.home-stage.v3-home .v3-years-mint {
+  color: #8fcebb;
+  -webkit-text-fill-color: #8fcebb;
+}
+
+.v3-still-stage {
+  display: grid;
+}
+.v3-still-card {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 176px;
+  padding: 26px 28px 24px;
+  border-radius: 18px;
+  border-left: 3px solid #8fcebb;
+  background: #35373b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+.v3-still-card.is-on {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+  pointer-events: auto;
+}
+.v3-still-photo {
+  width: 136px;
+  height: 136px;
+  flex: 0 0 136px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: #2a2c30;
+}
+.v3-still-copy {
+  min-width: 0;
+}
+.v3-still-year {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  color: #8fcebb;
+  line-height: 1.25;
+}
+.v3-still-facility {
+  margin: 6px 0 0;
+  font-size: clamp(1.2rem, 1.5vw, 1.45rem);
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  color: #fff;
+  line-height: 1.15;
+}
+.v3-still-place {
+  margin: 5px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(232, 236, 240, 0.78);
+  line-height: 1.3;
+}
+.v3-still-line {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b7bcc4;
+  line-height: 1.35;
+}
+.v3-still-dots {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+  padding-right: 6px;
+}
+.v3-still-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.38);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.v3-still-dot.is-on {
+  background: #6BE0AD;
+  box-shadow: 0 0 0 1px rgba(107, 224, 173, 0.35);
+}
+.v3-still-dot:focus-visible {
+  outline: 2px solid #78C4E5;
+  outline-offset: 3px;
+}
+.v3-still-rotator.is-static .v3-still-card {
+  transition: none;
+}
+
+/* Full-width bridge — glass/navy/mint, same bleed as the Row2 parent */
+.home-stage.v3-home .v3-stay-bridge {
+  position: relative;
+  z-index: 2;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 4px;
+  margin-bottom: clamp(18px, 2.4vh, 28px);
+  padding: clamp(36px, 5vh, 64px) clamp(12px, 2.2vw, 28px);
+  box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.82) 0%, rgba(26, 44, 63, 0.74) 100%);
+  border-top: 1px solid rgba(143, 206, 187, 0.32);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.v3-stay-bridge-inner {
+  width: 100%;
+  margin: 0;
+}
+.v3-stay-title {
+  margin: 0;
+  font-family: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+  font-weight: 560;
+  font-size: clamp(1.75rem, 3.1vw, 2.65rem);
+  line-height: 1.16;
+  letter-spacing: -0.022em;
+  color: #fff;
+}
+.v3-stay-title span {
+  display: block;
+}
+.v3-stay-mint {
+  color: #8fcebb;
+}
+.v3-stay-sub {
+  margin: 16px 0 0;
+  max-width: 44rem;
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
+  line-height: 1.5;
+  color: rgba(213, 224, 234, 0.9);
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    align-items: stretch;
+    padding-top: max(72px, calc(var(--amp-title-clear) - 82px));
+    padding-bottom: 28px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .home-stage.v3-home .v3-years-copy,
+  .home-stage.v3-home .v3-still-rotator {
+    grid-column: 1;
+  }
+  .home-stage.v3-home .v3-years-w {
+    white-space: normal;
+  }
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title.v3-years-title {
+    font-size: clamp(1.85rem, 8.2vw, 2.6rem);
+  }
+  .v3-still-card {
+    min-height: 0;
+    padding: 16px;
+    gap: 14px;
+  }
+  .v3-still-photo {
+    width: 104px;
+    height: 104px;
+    flex-basis: 104px;
+  }
+  .v3-still-facility {
+    font-size: 1.25rem;
+  }
+  .home-stage.v3-home .v3-stay-bridge {
+    padding: 28px 18px 32px;
+    margin-bottom: 16px;
+  }
+  .v3-stay-title {
+    font-size: clamp(1.45rem, 6.4vw, 2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-still-card {
+    transition: none;
+  }
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title.v3-years-title {
+    animation: none;
+  }
+}
+
+/* amp-build:2169 — facility/specialty Continue stays reachable.
+   The trailhead sheet used overflow-y:hidden, so .v3-ctx pushed Continue
+   below the clip. The card list scrolls; Continue stays in the sheet. */
+.view.funnel.trailhead[data-route="client"] .hire-sheet,
+.view.funnel.trailhead[data-route="client-specialty"] .hire-sheet {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - var(--amp-title-clear) - 12px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+}
+.view.funnel.trailhead[data-route="client"] .hire-sheet > :not(.hire-card-list),
+.view.funnel.trailhead[data-route="client-specialty"] .hire-sheet > :not(.hire-card-list) {
+  flex-shrink: 0;
+}
+.view.funnel.trailhead[data-route="client"] .hire-card-list,
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+.view.funnel.trailhead[data-route="client"] .client-spec-continue-wrap,
+.view.funnel.trailhead[data-route="client-specialty"] .client-spec-continue-wrap {
+  position: sticky;
+  bottom: 0;
+  z-index: 6;
+  flex: 0 0 auto;
+  margin-top: 12px;
+  padding: 10px 0 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 42%);
+}
+.view.funnel.trailhead[data-route="client"] #client-facility-continue,
+.view.funnel.trailhead[data-route="client-specialty"] #client-spec-continue {
+  visibility: visible;
 }
 

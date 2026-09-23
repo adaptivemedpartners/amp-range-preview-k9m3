@@ -1,13 +1,62 @@
-/* amp-build:2155-home-placements-map
+/* amp-build:2169-years-rotate-bridge
+   amp-build:2155-home-placements-map
    amp-build:2154-hero-cleanup-kansas
    amp-build:2153-hero-rotator-mobile-slim
-   Compact homepage hero retention rotator. Self-contained.
-   Soft crossfade ~3.8s, pause on hover/focus, static first card if reduced-motion. */
+   Homepage still-there rotator. Big cards are painted from #amp-still-there-examples
+   (swap that array; card chrome stays). Soft crossfade ~3.8s, pause on hover/focus,
+   static first card if reduced-motion. */
 (function () {
   "use strict";
 
   var INTERVAL_MS = 3800;
   var REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
+  var CACHE_V = "2169";
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /* Cards come from #amp-still-there-examples. Photos stay optional — do not invent portraits. */
+  function renderStillThere(root) {
+    if (!root || root.getAttribute("data-still-there-mount") == null) return;
+    var dataEl = document.getElementById("amp-still-there-examples");
+    if (!dataEl) return;
+    var items;
+    try {
+      items = JSON.parse(dataEl.textContent);
+    } catch (err) {
+      return;
+    }
+    if (!items || !items.length) return;
+
+    var html = '<div class="v3-still-stage">';
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var on = i === 0;
+      html += '<article class="v3-still-card' + (on ? " is-on" : "") + '" data-hero-ret-slide aria-hidden="' + (on ? "false" : "true") + '">';
+      if (it.photo) {
+        html += '<img class="v3-still-photo" src="' + esc(it.photo) + "?v=" + CACHE_V + '" alt="' + esc(it.alt || "") + '" width="136" height="136" />';
+      }
+      html += '<div class="v3-still-copy">';
+      html += '<p class="v3-still-year">' + esc(it.year) + " · " + esc(it.specialty) + "</p>";
+      html += '<p class="v3-still-facility">' + esc(it.facility) + "</p>";
+      if (it.place) html += '<p class="v3-still-place">' + esc(it.place) + "</p>";
+      html += '<p class="v3-still-line">' + esc(it.still) + "</p>";
+      html += "</div></article>";
+    }
+    html += "</div>";
+    html += '<div class="v3-still-dots">';
+    for (var d = 0; d < items.length; d++) {
+      var dotOn = d === 0;
+      html += '<button type="button" class="v3-still-dot' + (dotOn ? " is-on" : "") + '" data-hero-ret-dot aria-label="Show still-there story ' + (d + 1) + '"' + (dotOn ? ' aria-current="true"' : "") + "></button>";
+    }
+    html += "</div>";
+    root.innerHTML = html;
+  }
 
   function prefersReduced() {
     return window.matchMedia && window.matchMedia(REDUCE_QUERY).matches;
@@ -101,7 +150,10 @@
 
   function init() {
     var nodes = document.querySelectorAll("[data-hero-ret-rotator]");
-    for (var i = 0; i < nodes.length; i++) bindRotator(nodes[i]);
+    for (var i = 0; i < nodes.length; i++) {
+      renderStillThere(nodes[i]);
+      bindRotator(nodes[i]);
+    }
   }
 
   if (document.readyState === "loading") {

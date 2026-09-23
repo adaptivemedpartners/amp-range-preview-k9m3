@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2168-mi-photo-title-clear";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2169-years-rotate-bridge";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2637,10 +2637,11 @@
       if (hint) {
         hint.textContent = on
           ? "Tap specialties to select, then Continue below."
-          : "Tap a specialty to continue. Need more than one? Turn on multi-select first.";
+          : "Select a specialty to see a matched stay story, then Continue.";
       }
-      var contWrap = document.querySelector(".client-spec-continue-wrap");
-      if (contWrap) contWrap.style.display = on ? "" : "none";
+      /* Keep Continue on the specialty sheet in both modes. Do not hide the facility Continue. */
+      var specWrap = document.querySelector('[data-route="client-specialty"] .client-spec-continue-wrap');
+      if (specWrap) specWrap.style.display = "";
       paintClientSpecSelection();
     }
     box.addEventListener("change", syncHint);
@@ -4989,6 +4990,8 @@ function syncGuideRoute(route) {
         state.facilityCustom = null;
         closeFacilityOtherPop();
         paintClientFacilityCtx();
+        /* amp-build:2169 — selecting a facility advances. Continue stays as backup. */
+        go("client-specialty", { trail: true });
         return;
       }
       var cs = raw.closest("[data-client-spec]");
