@@ -30,7 +30,7 @@ assert(css.indexOf("amp-build:2173-confirm-guide-name") !== -1, "css stamp");
 assert(css.indexOf("amp-build:2172-client-top-clean") !== -1, "2172 css stamp kept");
 assert(html.indexOf("?v=2172") === -1, "html still on 2172 cache");
 assert(fallback.indexOf("?v=2172") === -1, "404 still on 2172 cache");
-assert(app.indexOf('__AMP_BUILD = "2175-ok-tn-pca-partners"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2176-specialty-still-there-examples"') !== -1, "app build stamp");
 
 var confirm = sliceBetween(html, 'data-route="confirm-client"', 'data-route="mpc"', "confirm step");
 assert(confirm.indexOf("Aaron") === -1, "confirm template hardcodes Aaron");
