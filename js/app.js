@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2157-mi-map-pinch-zoom";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2158-v3-home-client-funnel";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2089,6 +2089,148 @@
     }
   }
 
+  /* amp-build:2158 — facility/specialty retention cards swap on selection.
+     Homepage keeps the 2015 peds story once. FQHC uses 2021 Kansas.
+     Critical Access and rural hospital use the 2018 CAH story.
+     Family Medicine on step 3 uses that 2018 story; Pediatrics may reuse 2015. */
+  var V3_RET = {
+    peds2015: {
+      img: "assets/story-2015-peds-ne.jpg",
+      alt: "Pediatrician who stayed at a Nebraska FQHC",
+      year: "2015 · Pediatrician",
+      role: "Nebraska FQHC",
+      meta: "90 days to identify & place · still serving",
+      foot: "11 YEARS LATER. STILL THERE."
+    },
+    ks2021: {
+      img: "assets/story-2021-physician-ks.jpg",
+      alt: "Physician who stayed at a Kansas FQHC",
+      year: "FQHC fit · 2021",
+      role: "Physician · Kansas FQHC",
+      meta: "Placed for fit — still serving the same community",
+      foot: "YEARS LATER. STILL THERE."
+    },
+    fm2018: {
+      img: "assets/story-2018-fm-ne-cah.jpg",
+      alt: "Family Medicine physician who stayed at a Nebraska Critical Access Hospital",
+      year: "2018 · Family Medicine",
+      role: "Nebraska Critical Access Hospital",
+      meta: "174 days to identify & place · still serving",
+      foot: "8 YEARS LATER. STILL THERE."
+    },
+    fm2018cah: {
+      img: "assets/story-2018-fm-ne-cah.jpg",
+      alt: "Family Medicine physician who stayed at a Nebraska Critical Access Hospital",
+      year: "CAH fit · 2018",
+      role: "Family Medicine · Nebraska Critical Access Hospital",
+      meta: "174 days to identify & place · still serving",
+      foot: "8 YEARS LATER. STILL THERE."
+    },
+    fm2018rural: {
+      img: "assets/story-2018-fm-ne-cah.jpg",
+      alt: "Family Medicine physician who stayed at a Nebraska Critical Access Hospital",
+      year: "Rural hospital fit · 2018",
+      role: "Family Medicine · Nebraska Critical Access Hospital",
+      meta: "174 days to identify & place · still serving",
+      foot: "8 YEARS LATER. STILL THERE."
+    },
+    proof: {
+      img: "assets/home-hero-clinic-consult.jpg",
+      alt: "Clinic consult",
+      year: "Retention proof",
+      role: "87% still there at three years",
+      meta: "1.7 avg interviews per hire · rural hospitals, FQHCs, and CAHs",
+      foot: "YEARS, NOT PLACEMENTS"
+    }
+  };
+
+  function v3StoryForFacility(id) {
+    if (id === "fqhc") return V3_RET.ks2021;
+    if (id === "cah") return V3_RET.fm2018cah;
+    if (id === "community") return V3_RET.fm2018rural;
+    return V3_RET.proof;
+  }
+
+  function v3StoryForSpecialty(id) {
+    var s = String(id || "");
+    if (!s) return null;
+    if (s.indexOf("custom:") === 0) return V3_RET.proof;
+    if (s === "fm" || s.indexOf("family_medicine") === 0 || s === "hospitalist_family_medicine") return V3_RET.fm2018;
+    if (s.indexOf("pediatr") === 0) return V3_RET.peds2015;
+    return V3_RET.proof;
+  }
+
+  function paintV3Ctx(root, story) {
+    if (!root) return;
+    var media = root.querySelector("[data-ctx-media]");
+    var year = root.querySelector("[data-ctx-year]");
+    var role = root.querySelector("[data-ctx-role]");
+    var meta = root.querySelector("[data-ctx-meta]");
+    var foot = root.querySelector("[data-ctx-foot]");
+    var specialty = root.id === "client-specialty-ctx";
+    if (!story) {
+      root.classList.add("is-waiting");
+      if (media) {
+        media.style.backgroundImage = "";
+        media.setAttribute("aria-label", "");
+      }
+      if (year) year.textContent = "Matched retention";
+      if (role) role.textContent = specialty ? "Select a specialty" : "Select a facility";
+      if (meta) meta.textContent = specialty
+        ? "A stay story matched to that specialty appears here."
+        : "A stay story matched to that facility type appears here.";
+      if (foot) foot.textContent = "STILL THERE.";
+      return;
+    }
+    root.classList.remove("is-waiting");
+    if (media) {
+      media.style.backgroundImage = "url('" + story.img + "?v=2158')";
+      media.setAttribute("aria-label", story.alt || "");
+    }
+    if (year) year.textContent = story.year;
+    if (role) role.textContent = story.role;
+    if (meta) meta.textContent = story.meta;
+    if (foot) foot.textContent = story.foot;
+  }
+
+  function paintClientFacilityCtx() {
+    var id = state.facility || "";
+    document.querySelectorAll('[data-route="client"] [data-facility]').forEach(function (btn) {
+      var on = !!id && btn.getAttribute("data-facility") === id;
+      btn.classList.toggle("is-selected", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    paintV3Ctx($("#client-facility-ctx"), id ? v3StoryForFacility(id) : null);
+    var cont = $("#client-facility-continue");
+    if (cont) {
+      var label = "";
+      if (id === "other" && state.facilityCustom) label = state.facilityCustom;
+      else if (id && window.AMP_CONTENT && AMP_CONTENT.facilities) {
+        var fac = AMP_CONTENT.facilities.find(function (f) { return f.id === id; });
+        label = (fac && fac.label) || id;
+      }
+      cont.disabled = !id;
+      cont.textContent = id ? ("Continue with " + label + " →") : "Select a facility to continue";
+    }
+  }
+
+  function paintClientSpecialtyCtx() {
+    var list = Array.isArray(state.clientSpecialties) ? state.clientSpecialties : [];
+    var id = list.length ? list[list.length - 1] : "";
+    paintV3Ctx($("#client-specialty-ctx"), id ? v3StoryForSpecialty(id) : null);
+  }
+
+  function bindClientFacilityContinue() {
+    var cont = $("#client-facility-continue");
+    if (!cont || cont.getAttribute("data-bound-fac") === "1") return;
+    cont.setAttribute("data-bound-fac", "1");
+    cont.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      if (!state.facility) return;
+      go("client-specialty", { trail: true });
+    });
+  }
+
   function renderFacilitySignpost() {
     if (!window.AMP_CONTENT || !AMP_CONTENT.facilities) return;
     var byId = {};
@@ -2098,6 +2240,8 @@
     renderSignpost($("#facility-signpost"), $("#facility-rail"), items, "facility", { exactLabel: true });
     wireOtherHot($("#facility-signpost"), "facility", openFacilityOtherPop);
     wireOtherHot($("#facility-rail"), "facility", openFacilityOtherPop);
+    paintClientFacilityCtx();
+    bindClientFacilityContinue();
   }
 
   function closeFacilityOtherPop() {
@@ -2162,7 +2306,7 @@
         state.facilityCustom = null;
       }
       closeFacilityOtherPop();
-      go("client-specialty", { trail: true });
+      paintClientFacilityCtx();
     };
     if (q && !q._ampWired) {
       q._ampWired = true;
@@ -2550,6 +2694,7 @@
         ? "Select at least one specialty"
         : (n === 1 ? "Continue with 1 specialty →" : ("Continue with " + n + " specialties →"));
     }
+    paintClientSpecialtyCtx();
   }
 
   function toggleClientSpecialty(id) {
@@ -2588,11 +2733,10 @@
           toggleClientSpecialty(csid);
           return;
         }
-        /* Smooth single-select: set this specialty and continue */
+        /* Select in place so the matched retention card can swap before continue */
         state.clientSpecialties = [csid];
         syncClientSpecialtyCompat();
         paintClientSpecSelection();
-        continueClientSpecialties();
       }, true);
     });
     var cont = $("#client-spec-continue");
@@ -3059,7 +3203,6 @@
         syncClientSpecialtyCompat();
         try { closeClientSpecOtherPop(); } catch (err) {}
         paintClientSpecSelection();
-        continueClientSpecialties();
       }
     };
     if (q && !q._ampWired) {
@@ -4845,7 +4988,7 @@ function syncGuideRoute(route) {
         state.facility = fid;
         state.facilityCustom = null;
         closeFacilityOtherPop();
-        go("client-specialty", { trail: true });
+        paintClientFacilityCtx();
         return;
       }
       var cs = raw.closest("[data-client-spec]");
@@ -4865,7 +5008,6 @@ function syncGuideRoute(route) {
         state.clientSpecialties = [csid];
         syncClientSpecialtyCompat();
         paintClientSpecSelection();
-        continueClientSpecialties();
         return;
       }
       var blog = raw.closest("[data-blog]");

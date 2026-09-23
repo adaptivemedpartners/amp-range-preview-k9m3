@@ -16,15 +16,15 @@ function read(rel) {
 
 function checkHtml(rel) {
   var html = read(rel);
-  assert(html.indexOf("<!-- amp-build:2157-mi-map-pinch-zoom -->") !== -1, rel + " missing 2157 stamp comment");
-  assert(html.indexOf("amp-build 2157-mi-map-pinch-zoom") !== -1, rel + " missing 2157 chip");
-  assert(html.indexOf('href="css/site.css?v=2157"') !== -1, rel + " css not ?v=2157");
-  assert(html.indexOf('src="js/app.js?v=2157"') !== -1, rel + " app.js not ?v=2157");
+  assert(html.indexOf("<!-- amp-build:2158-v3-home-client-funnel -->") !== -1, rel + " missing 2158 stamp comment");
+  assert(html.indexOf("amp-build 2158-v3-home-client-funnel") !== -1, rel + " missing 2158 chip");
+  assert(html.indexOf('href="css/site.css?v=2158"') !== -1, rel + " css not ?v=2158");
+  assert(html.indexOf('src="js/app.js?v=2158"') !== -1, rel + " app.js not ?v=2158");
   assert(html.indexOf('src="js/amp-mi-place-draw-engine.js?v=20260919d"') !== -1, rel + " official engine 20260919d missing");
   assert(html.indexOf("20260919b") === -1, rel + " leftover engine 20260919b");
   assert(html.indexOf("js/mi-place-draw.js") === -1, rel + " leftover second heat module");
-  assert(html.indexOf('src="js/ridge-workbench.js?v=2157"') !== -1, rel + " workbench not ?v=2157");
-  assert(html.indexOf('src="js/mi-aspect-hooks-v1.js?v=2157"') !== -1, rel + " aspect hooks not ?v=2157");
+  assert(html.indexOf('src="js/ridge-workbench.js?v=2158"') !== -1, rel + " workbench not ?v=2158");
+  assert(html.indexOf('src="js/mi-aspect-hooks-v1.js?v=2158"') !== -1, rel + " aspect hooks not ?v=2158");
   assert(html.indexOf("AMP-Market-Intelligence.html") === -1, rel + " must not mirror hub");
   var bench = html.slice(html.indexOf('id="ridge-workbench"'), html.indexOf('id="mi-lite-toolbar"'));
   assert(bench.indexOf("<iframe") === -1, rel + " firm iframe leaked into public MI workbench");
@@ -40,7 +40,7 @@ assert(!fs.existsSync(path.join(ROOT, "AMP-Market-Intelligence.html")), "hub fil
 assert(!fs.existsSync(path.join(ROOT, "js/mi-place-draw.js")), "second heat implementation must be removed");
 
 var app = read("js/app.js");
-assert(app.indexOf('window.__AMP_BUILD = "2157-mi-map-pinch-zoom"') !== -1, "app.js build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2158-v3-home-client-funnel"') !== -1, "app.js build stamp");
 
 var css = read("css/site.css");
 assert(css.indexOf("amp-build:2156-mi-place-draw-heat") !== -1, "css missing 2156 stamp");
