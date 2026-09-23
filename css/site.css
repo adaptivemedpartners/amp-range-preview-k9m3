@@ -1,3 +1,4 @@
+/* amp-build:2172-client-top-clean */
 /* amp-build:2171-bridge-blue-stretch */
 /* amp-build:2170-place-stay-bridge-steps */
 /* amp-build:2168-mi-photo-title-clear */
@@ -12974,5 +12975,43 @@ main .view.page.on > .hero-band,
     width: 100%;
     gap: 12px;
   }
+}
+
+/* ========== amp-build:2172-client-top-clean ==========
+   Client territory and the meeting card were starting inside the fixed
+   under-header fade (solid through 72px / 56px, clear at 148px / 132px).
+   Park both sheets on the same --amp-title-clear lock as other pages.
+   Territory keeps one title. The map's duplicate heading and
+   "Hiring path · territory" kicker are not a second header.
+   Facility · specialty stays one compact line under that title.
+   Meeting form fields are unchanged. */
+
+.view.funnel[data-route="client-region"] > .view-chrome,
+.view.funnel[data-route="client-meeting"] > .view-chrome {
+  padding-top: var(--amp-title-clear) !important;
+  box-sizing: border-box;
+}
+.view.funnel[data-route="client-region"] > .view-chrome > .funnel-panel.client-step-card,
+.view.funnel[data-route="client-meeting"] > .view-chrome > .funnel-panel.client-step-card {
+  margin-top: 0 !important;
+}
+.view[data-route="client-region"] .client-region-context {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: #0f766e;
+}
+/* Map keeps the selected-region legend. The intro copy is the duplicate title. */
+.view[data-route="client-region"] .client-territory-map .region-map-intro > div:first-child,
+.view[data-route="client-region"] .region-map-kicker,
+.view[data-route="client-region"] .region-map-intro h2,
+.view[data-route="client-region"] .region-map-help {
+  display: none !important;
+}
+.view[data-route="client-region"] .client-territory-map .region-map-intro {
+  justify-content: flex-end;
+  margin-bottom: 4px;
 }
 

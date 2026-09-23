@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2171-bridge-blue-stretch";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2172-client-top-clean";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2821,6 +2821,7 @@
         bits.push(clientSpecLabel(state.clientSpecialty));
       }
       facLine.textContent = bits.length ? bits.join(" · ") : "";
+      facLine.hidden = !bits.length;
     }
 
     var root = $("#client-region-grid");
@@ -3313,15 +3314,10 @@
     if (clientMode) root.classList.add("is-client-region");
     else root.classList.remove("is-client-region");
 
-    /* Client copy — hide physician Continue-to-roles chrome */
-    var kicker = root.querySelector(".region-map-kicker");
-    var help = root.querySelector(".region-map-help");
-    var h2 = root.querySelector(".region-map-intro h2");
-    if (clientMode) {
-      if (kicker) kicker.textContent = "Hiring path · territory";
-      if (h2) h2.textContent = "Where should we search?";
-      if (help) help.textContent = "Tap a region, then your state.";
-    }
+    /* Client territory already has the page title. Do not repeat it, or the
+       "Hiring path · territory" kicker, inside the map. Physician map keeps both. */
+    var introCopy = root.querySelector(".region-map-intro > div:first-child");
+    if (introCopy) introCopy.hidden = !!clientMode;
 
     var svg = root.querySelector(".amp-region-map");
     /* Plateau re-order causes jumpy maps — skip in calm/client mode */
