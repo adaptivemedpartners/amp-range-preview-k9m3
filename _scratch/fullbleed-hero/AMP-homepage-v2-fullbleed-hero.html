@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AMP · Homepage hero full-bleed mock (from V2)</title>
+<title>AMP · Homepage continuous page wallpaper (from V2)</title>
 <style>
   :root {
     --navy: #152332; --navy-2: #1e3a55; --sky: #78c4e5; --mint: #7dcfb6;
@@ -11,7 +11,30 @@
     --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: var(--font); background: #0b1220; color: #e8eef5; line-height: 1.45; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: var(--font); color: #e8eef5; line-height: 1.45;
+    background: transparent;
+  }
+
+  /* —— Single continuous PAGE-LEVEL wallpaper (fixed layer; Safari/Chrome safe) —— */
+  .page-wallpaper {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #1a2a3a;
+    background-image:
+      linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
+      linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
+      url('assets/home-hero-clinic-consult.jpg?v=2160');
+    background-size: cover, cover, cover;
+    background-position: center, center, center right;
+    background-repeat: no-repeat;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
   .banner {
     position: sticky; top: 0; z-index: 40; background: #1e3a55; color: #fff;
     text-align: center; font-weight: 700; font-size: 12px; padding: 10px 14px; letter-spacing: .04em;
@@ -22,24 +45,9 @@
   }
   .delta strong { color: var(--mint); }
 
-  /* —— Full-bleed stage —— */
-  .stage { position: relative; width: 100%; overflow: hidden; }
+  .stage { position: relative; width: 100%; z-index: 1; }
 
-  /* Hero sits behind everything — edge to edge */
-  .hero-bleed {
-    position: absolute; inset: 0; z-index: 0;
-    background: #1a2a3a center/cover no-repeat;
-    background-image: url('assets/home-hero-clinic-consult.jpg?v=2159');
-    min-height: 100%;
-  }
-  .hero-bleed::after {
-    content: ""; position: absolute; inset: 0;
-    background:
-      linear-gradient(180deg, rgba(11,18,32,.55) 0%, rgba(11,18,32,.25) 28%, rgba(11,18,32,.55) 62%, rgba(11,18,32,.92) 100%),
-      linear-gradient(105deg, rgba(15,27,40,.88) 0%, rgba(15,27,40,.45) 42%, rgba(15,27,40,.15) 100%);
-  }
-
-  /* Floating top nav over the photo — not boxed */
+  /* Floating top nav over the wallpaper — not boxed */
   .top-nav {
     position: relative; z-index: 3;
     display: flex; align-items: center; justify-content: space-between;
@@ -62,17 +70,12 @@
     padding: 7px 12px; border-radius: 999px; font-weight: 800 !important;
   }
 
-  /* Logo + retention-led band — full page width */
   .brand-band {
     position: relative; z-index: 3;
     width: 100%;
     padding: 10px clamp(18px, 4vw, 48px) 6px;
     display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
   }
-  .brand-band .logo-lockup {
-    display: flex; align-items: center; gap: 12px;
-  }
-  .brand-band .logo-lockup img { height: 48px; width: auto; display: block; filter: drop-shadow(0 2px 10px rgba(0,0,0,.35)); }
   .brand-band .eyebrow {
     display: block; width: 100%;
     font-size: 12px; font-weight: 800; letter-spacing: .16em; color: var(--sky);
@@ -81,11 +84,21 @@
     border-top: 1px solid rgba(120,196,229,.28);
   }
 
-  /* Hero copy — same composition as V2 Hero A */
+  /* Hero copy only — NO photo band; soft veil fades out so wallpaper continues */
   .hero-copy {
     position: relative; z-index: 2;
-    padding: 18px clamp(18px, 4vw, 48px) 28px;
-    max-width: 620px;
+    padding: 18px clamp(18px, 4vw, 48px) 8px;
+    max-width: 560px;
+  }
+  .hero-copy::before {
+    content: "";
+    position: absolute; inset: -8px -12px -24px -8px;
+    background:
+      linear-gradient(105deg, rgba(15,27,40,.82) 0%, rgba(15,27,40,.4) 46%, rgba(15,27,40,0) 100%),
+      linear-gradient(180deg, rgba(11,18,32,.3) 0%, rgba(11,18,32,0) 100%);
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 0 18px 18px 0;
   }
   .hero-copy h1 {
     margin: 0 0 10px; font-size: clamp(1.7rem, 4.2vw, 2.35rem);
@@ -105,22 +118,31 @@
   .stat strong { display: block; font-size: 1.35rem; color: #fff; }
   .stat span { font-size: 11px; color: #b7c6d6; }
 
-  /* Mid-page cards float over the hero (same V2 card styling) */
+  /* Doors: higher, slightly right, wider — under desk (right) area of wallpaper */
   .float-deck {
     position: relative; z-index: 3;
-    margin: 8px clamp(14px, 3vw, 40px) 0;
-    padding-bottom: 48px;
+    margin: -36px clamp(12px, 2.5vw, 32px) 48px auto;
+    margin-left: max(48px, 8vw);
+    max-width: min(1320px, 94vw);
+    width: min(1320px, calc(100% - max(48px, 8vw) - clamp(12px, 2.5vw, 32px)));
+    transform: translateX(clamp(0px, 1.5vw, 28px));
+    padding-bottom: 24px;
   }
   .float-panel {
-    background: var(--mist); color: var(--ink);
+    background: rgba(255,255,255,.96); color: var(--ink);
     border-radius: 18px; overflow: hidden;
     box-shadow: 0 22px 60px rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.1);
-    max-width: 1100px; margin: 0 auto;
+    width: 100%;
   }
 
-  .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px 18px; background: #fff; }
+  .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 18px 20px; background: transparent; }
   @media (max-width: 640px) {
     .doors { grid-template-columns: 1fr; }
+    .float-deck {
+      margin: 8px clamp(12px, 3vw, 24px) 40px;
+      margin-left: clamp(12px, 3vw, 24px);
+      width: auto; max-width: none; transform: none;
+    }
   }
   .door {
     border-radius: 16px; overflow: hidden; border: 1px solid rgba(21,35,50,.1);
@@ -148,7 +170,7 @@
   .mi-title { font-size: 15px; font-weight: 700; margin: 0; }
   .mi-sub { font-size: 12px; color: #b7c6d6; margin: 0; }
   .mi-cta { font-size: 12px; font-weight: 800; color: var(--sky); white-space: nowrap; }
-  .proof-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 18px 16px; background: #fff; }
+  .proof-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 18px 16px; background: transparent; }
   .proof-pill {
     flex: 1; min-width: 140px; background: #f3f7fb; border: 1px solid rgba(148,163,184,.25);
     border-radius: 12px; padding: 10px 12px; text-align: center;
@@ -157,7 +179,7 @@
   .proof-pill span { font-size: 11px; color: var(--muted); }
 
   .home-retention {
-    padding: 4px 18px 18px; background: #fff; border-top: 1px solid rgba(148,163,184,.2);
+    padding: 4px 18px 18px; background: transparent; border-top: 1px solid rgba(148,163,184,.2);
   }
   .home-retention .hr-label {
     font-size: 10px; font-weight: 800; letter-spacing: .1em; color: var(--muted);
@@ -176,7 +198,20 @@
     text-align: center; font-size: 11px; font-weight: 800; letter-spacing: .08em; padding: 8px;
   }
 
-  .after { height: 80px; background: #0b1220; }
+  /* Extra scroll length so wallpaper continuity is obvious — no second bg strip */
+  .more-float {
+    max-width: min(1200px, calc(100% - 2 * clamp(14px, 3vw, 40px)));
+    margin: 0 auto 80px;
+    padding: 22px 18px;
+    border-radius: 18px;
+    background: rgba(8,15,28,.55);
+    border: 1px solid rgba(148,163,184,.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.28);
+  }
+  .more-float h2 { margin: 0 0 8px; color: #fff; font-size: 1.25rem; }
+  .more-float p { margin: 0; color: #c5d3e0; font-size: .95rem; }
 
   /* V2 explore/door title shimmer (white ↔ sky ↔ mint) */
   .door-body h3.door-title-shimmer {
@@ -189,13 +224,8 @@
     animation: exploreDoorShimmer 3.6s ease-in-out infinite alternate;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35))
             drop-shadow(0 0 16px rgba(120, 196, 229, 0.35));
-    text-shadow:
-      0 0 18px rgba(255, 255, 255, 0.35),
-      0 0 36px rgba(107, 224, 173, 0.25);
   }
-  /* On light door cards, use navy-tinted base so shimmer reads; keep gradient clip */
   .doors .door-body h3.door-title-shimmer {
-    /* dark door-body needs readable shimmer — use navy→sky→mint on white cards */
     background: linear-gradient(90deg, #152332, #1e3a55 35%, #78C4E5 70%, #6BE0AD);
     background-size: 220% auto;
     -webkit-background-clip: text;
@@ -218,15 +248,14 @@
 </style>
 </head>
 <body>
-  <div class="banner">MOCK · Full-bleed hero from V2 · Review only · Not live</div>
-  <p class="delta"><strong>What changed from V2:</strong> opened the centered ~1040px frame to a full-width page. Hero photo and the logo + “retention-led recruiting” band now run edge to edge. Top nav floats over the photo (no boxed bar). Entry / MI / retention cards keep V2 styling and float over the lower hero instead of living inside a clipped card frame.</p>
+  <div class="page-wallpaper" aria-hidden="true"></div>
+  <div class="banner">MOCK · Continuous page wallpaper from V2 · Review only · Not live</div>
+  <p class="delta"><strong>What changed:</strong> one fixed clinic wallpaper behind the entire page (content scrolls over it). No discrete hero photo band / edge gap. Entry doors sit higher, slightly right, and wider — under the desk where the two people stand. Cards float over the wallpaper.</p>
 
   <div class="stage" id="fullbleed-hero">
-    <div class="hero-bleed" aria-hidden="true"></div>
-
     <nav class="top-nav" aria-label="Primary">
       <a class="brand brand-lockup brand-glow-white" href="#" aria-label="AMP Adaptive Medical Partners home">
-        <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2159" alt="Adaptive Medical Partners" width="304" height="68" />
+        <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2160" alt="Adaptive Medical Partners" width="304" height="68" />
       </a>
       <div class="links">
         <a href="#">Physicians</a>
@@ -245,7 +274,7 @@
       <h1>We place physicians who stay.</h1>
       <p class="sub">Adaptive Medical Partners — rural and community healthcare recruiting measured in years, not placements.</p>
       <div class="story-chip">
-        <img src="assets/story-2015-peds-ne.jpg?v=2159" alt="" />
+        <img src="assets/story-2015-peds-ne.jpg?v=2160" alt="" />
         <div>
           <p class="y">2015 · Pediatrician</p>
           <p class="r">Nebraska FQHC</p>
@@ -262,7 +291,7 @@
       <div class="float-panel">
         <div class="doors">
           <article class="door">
-            <div class="door-media" style="background-image:url('assets/amp-path-cand-nurses.jpg?v=2159')"><span class="tag">PHYSICIANS</span></div>
+            <div class="door-media" style="background-image:url('assets/amp-path-cand-nurses.jpg?v=2160')"><span class="tag">PHYSICIANS</span></div>
             <div class="door-body">
               <h3 class="door-title-shimmer">Find your next chapter</h3>
               <p>Confidential career options for physicians exploring rural and community practice.</p>
@@ -270,7 +299,7 @@
             </div>
           </article>
           <article class="door">
-            <div class="door-media" style="background-image:url('assets/amp-path-client-hallway.jpg?v=2159')"><span class="tag">HIRING ORGS</span></div>
+            <div class="door-media" style="background-image:url('assets/amp-path-client-hallway.jpg?v=2160')"><span class="tag">HIRING ORGS</span></div>
             <div class="door-body">
               <h3 class="door-title-shimmer">Fill seats that stick</h3>
               <p>Investment search for FQHCs, CAHs, and rural systems — measured in years.</p>
@@ -294,7 +323,7 @@
         <div class="home-retention">
           <p class="hr-label">Homepage proof · early retention strip</p>
           <article class="ctx-card slim">
-            <div class="media" style="background-image:url('assets/story-2015-peds-ne.jpg?v=2159')"></div>
+            <div class="media" style="background-image:url('assets/story-2015-peds-ne.jpg?v=2160')"></div>
             <div class="body">
               <p class="year">2015 · Pediatrician</p>
               <p class="role">Nebraska FQHC</p>
@@ -305,7 +334,11 @@
         </div>
       </div>
     </div>
+
+    <div class="more-float">
+      <h2>Wallpaper keeps going</h2>
+      <p>Scroll — the clinic photo stays as one unbroken page wallpaper. Frosted panels float on top; no hero edge, no second background strip.</p>
+    </div>
   </div>
-  <div class="after"></div>
 </body>
 </html>

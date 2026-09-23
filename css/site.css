@@ -1,3 +1,4 @@
+/* amp-build:2160-v3-home-page-wallpaper */
 /* amp-build:2158-v3-home-client-funnel */
 /* amp-build:2157-mi-map-pinch-zoom */
 /* amp-build:2156-mi-place-draw-heat */
@@ -11083,4 +11084,152 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
 @media (max-width: 640px) {
   .home-stage.v3-home .v3-hero { min-height: 0; }
   .home-stage.v3-home .v3-doors { margin-top: -16px; }
+}
+
+
+/* ========== amp-build:2160-v3-home-page-wallpaper — continuous fixed page wallpaper + door desk placement ========== */
+/* One unbroken clinic wallpaper behind the ENTIRE homepage. Content scrolls over it.
+   Approach: fixed full-viewport .home-pro-bg layer (Safari/Chrome-safe; better than background-attachment:fixed on iOS).
+   No discrete hero photo band — .v3-hero is transparent content only. */
+
+.home-stage.v3-home {
+  background: transparent;
+}
+
+/* Restore V2 clinic wallpaper as the single page-level fixed layer */
+.home-stage.v3-home .home-pro-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #1a2a3a;
+  background-image:
+    linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
+    linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
+    url("../assets/home-hero-clinic-consult.jpg?v=2160");
+  background-size: cover, cover, cover;
+  background-position: center, center, center right;
+  background-repeat: no-repeat;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Soft mist only — no solid strip that reveals an edge under the hero */
+.home-stage.v3-home .home-mist {
+  background: linear-gradient(180deg, rgba(11,18,32,.12) 0%, rgba(11,18,32,.04) 40%, rgba(11,18,32,.22) 100%) !important;
+  pointer-events: none;
+}
+
+/* Hero is NOT a photo band — transparent content shell over the wallpaper */
+.home-stage.v3-home .v3-hero {
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  background: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border-radius: 0;
+}
+.home-stage.v3-home .v3-hero::after {
+  /* readable veil that fades out — no hard bottom edge */
+  background:
+    linear-gradient(105deg, rgba(15,27,40,.82) 0%, rgba(15,27,40,.4) 46%, rgba(15,27,40,.08) 100%),
+    linear-gradient(180deg, rgba(11,18,32,.35) 0%, rgba(11,18,32,.08) 70%, rgba(11,18,32,0) 100%);
+  pointer-events: none;
+}
+.home-stage.v3-home .v3-hero-inner {
+  padding: 22px clamp(18px, 4vw, 48px) 12px;
+  max-width: 560px;
+}
+
+/* Frame stays transparent so wallpaper shows through gaps between floating panels */
+.home-stage.v3-home .v3-frame {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+/* —— Entry doors: higher, slightly right, wider, under desk (right) area —— */
+.home-stage.v3-home .v3-doors,
+.home-stage.v3-home .v3-mi,
+.home-stage.v3-home .v3-proof {
+  position: relative;
+  z-index: 2;
+  align-self: flex-end;
+  width: min(1320px, calc(100% - clamp(20px, 3vw, 36px) - clamp(40px, 7vw, 110px)));
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: clamp(12px, 2.5vw, 32px);
+  box-sizing: border-box;
+}
+.home-stage.v3-home .v3-doors {
+  /* Pull up under the desk / people (right side of wallpaper) */
+  margin-top: -36px;
+  margin-bottom: 0;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+  /* slight extra right bias toward desk */
+  transform: translateX(clamp(0px, 1.5vw, 28px));
+}
+.home-stage.v3-home .v3-mi {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  transform: translateX(clamp(0px, 1.5vw, 28px));
+}
+.home-stage.v3-home .v3-proof {
+  margin-top: 0;
+  margin-bottom: 28px;
+  padding: 0 20px 18px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+  transform: translateX(clamp(0px, 1.5vw, 28px));
+}
+
+/* Partners / Job2 already frosted — keep them floating over wallpaper, slightly wider */
+.home-stage.v3-home .v3-partners,
+.home-stage.v3-home .home-partners {
+  width: min(1200px, calc(100% - 2 * clamp(14px, 3vw, 40px)));
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 2;
+}
+.home-stage.v3-home .home-job2,
+.home-stage.v3-home .home-learn {
+  position: relative;
+  z-index: 2;
+  width: min(1200px, calc(100% - 2 * clamp(14px, 3vw, 40px)));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-doors,
+  .home-stage.v3-home .v3-mi,
+  .home-stage.v3-home .v3-proof {
+    align-self: center;
+    width: calc(100% - 2 * clamp(12px, 3vw, 24px));
+    max-width: none;
+    margin-left: clamp(12px, 3vw, 24px);
+    margin-right: clamp(12px, 3vw, 24px);
+    transform: none;
+  }
+  .home-stage.v3-home .v3-doors {
+    margin-top: 8px;
+  }
+}
+@media (max-width: 640px) {
+  .home-stage.v3-home .v3-hero-inner { padding-bottom: 8px; }
+  .home-stage.v3-home .v3-doors { margin-top: 4px; padding: 14px 14px; }
 }
