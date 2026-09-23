@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2158-v3-home-client-funnel";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2159-v3-home-fullbleed-shimmer";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2089,7 +2089,7 @@
     }
   }
 
-  /* amp-build:2158 — facility/specialty retention cards swap on selection.
+  /* amp-build:2159 — facility/specialty retention cards swap on selection.
      Homepage keeps the 2015 peds story once. FQHC uses 2021 Kansas.
      Critical Access and rural hospital use the 2018 CAH story.
      Family Medicine on step 3 uses that 2018 story; Pediatrics may reuse 2015. */

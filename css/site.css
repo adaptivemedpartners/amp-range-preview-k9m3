@@ -10655,7 +10655,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   }
 }
 
-/* ========== amp-build:2158-v3-home-client-funnel — locked V3 homepage + contextual cards ========== */
+/* ========== amp-build:2158-v3-home-client-funnel — locked V3 homepage + contextual cards (superseded visually by 2159 full-bleed) ========== */
 .home-stage.v3-home .home-pro-bg {
   background-image: none;
   background-color: #0e1824;
@@ -10957,3 +10957,130 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   .v3-ctx.slim { grid-template-columns: 84px 1fr; }
 }
 
+
+
+/* ========== amp-build:2159-v3-home-fullbleed — full-bleed hero + door shimmer ========== */
+/* Open the boxed ~1040px frame: hero photo runs edge-to-edge; entry cards float over lower hero. */
+.home-stage.v3-home .v3-frame {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: transparent;
+  color: #0f1b28;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+}
+.home-stage.v3-home .v3-hero {
+  position: relative;
+  min-height: min(72vh, 620px);
+  width: 100%;
+  border-radius: 0;
+  background-color: #1a2a3a;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.home-stage.v3-home .v3-hero::after {
+  background:
+    linear-gradient(180deg, rgba(11,18,32,.55) 0%, rgba(11,18,32,.25) 28%, rgba(11,18,32,.55) 62%, rgba(11,18,32,.92) 100%),
+    linear-gradient(105deg, rgba(15,27,40,.88) 0%, rgba(15,27,40,.45) 42%, rgba(15,27,40,.15) 100%);
+}
+.home-stage.v3-home .v3-hero-inner {
+  padding: 28px clamp(18px, 4vw, 48px) 36px;
+  max-width: 620px;
+}
+/* Restore V2 white↔sky↔mint shimmer on "We place physicians who stay" */
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title,
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title-shimmer {
+  background: linear-gradient(90deg, #ffffff, #78C4E5 55%, #6BE0AD);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: exploreDoorShimmer 3.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35))
+          drop-shadow(0 0 16px rgba(120, 196, 229, 0.35));
+  text-shadow:
+    0 0 18px rgba(255, 255, 255, 0.35),
+    0 0 36px rgba(107, 224, 173, 0.25);
+  font-size: clamp(1.7rem, 4.2vw, 2.35rem);
+}
+/* Physician / hiring entry door titles — same V2 shimmer (navy→sky→mint on light cards) */
+.home-stage.v3-home .v3-door-body h2.explore-title.v3-door-title {
+  background: linear-gradient(90deg, #152332, #1e3a55 35%, #78C4E5 70%, #6BE0AD);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: exploreDoorShimmer 3.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 8px rgba(120, 196, 229, 0.25));
+  text-shadow: none;
+  font-size: 1.05rem;
+  font-weight: 750;
+  margin: 0 0 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title,
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title-shimmer,
+  .home-stage.v3-home .v3-door-body h2.explore-title.v3-door-title {
+    animation: none;
+    background-position: 50% center;
+  }
+}
+/* Float mid cards over lower hero (doors / MI / proof) */
+.home-stage.v3-home .v3-doors,
+.home-stage.v3-home .v3-mi,
+.home-stage.v3-home .v3-proof {
+  position: relative;
+  z-index: 2;
+}
+.home-stage.v3-home .v3-doors {
+  margin: -28px clamp(14px, 3vw, 40px) 0;
+  padding: 16px 18px;
+  background: #fff;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+  max-width: 1100px;
+  width: auto;
+}
+.home-stage.v3-home .v3-mi {
+  margin: 0 clamp(14px, 3vw, 40px) 0;
+  max-width: 1100px;
+  width: auto;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+.home-stage.v3-home .v3-proof {
+  margin: 0 clamp(14px, 3vw, 40px) 28px;
+  padding: 0 18px 18px;
+  background: #fff;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+  max-width: 1100px;
+  width: auto;
+  box-sizing: border-box;
+}
+/* Center the floating deck as a column */
+.home-stage.v3-home .v3-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.home-stage.v3-home .v3-doors,
+.home-stage.v3-home .v3-mi,
+.home-stage.v3-home .v3-proof {
+  align-self: center;
+  width: calc(100% - 2 * clamp(14px, 3vw, 40px));
+  max-width: 1100px;
+}
+.home-stage.v3-home .v3-partners {
+  width: min(1100px, calc(100% - 2 * clamp(14px, 3vw, 40px)));
+  margin: 0 auto 28px;
+}
+@media (max-width: 640px) {
+  .home-stage.v3-home .v3-hero { min-height: 0; }
+  .home-stage.v3-home .v3-doors { margin-top: -16px; }
+}

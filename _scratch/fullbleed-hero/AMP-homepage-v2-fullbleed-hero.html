@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AMP · Homepage hero full-bleed mock (from V2)</title>
+<style>
+  :root {
+    --navy: #152332; --navy-2: #1e3a55; --sky: #78c4e5; --mint: #7dcfb6;
+    --mist: #eef3f7; --ink: #0f1b28; --muted: #5b6b7c;
+    --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font); background: #0b1220; color: #e8eef5; line-height: 1.45; }
+  .banner {
+    position: sticky; top: 0; z-index: 40; background: #1e3a55; color: #fff;
+    text-align: center; font-weight: 700; font-size: 12px; padding: 10px 14px; letter-spacing: .04em;
+  }
+  .delta {
+    max-width: 920px; margin: 18px auto 0; padding: 0 18px;
+    color: #a9b7c8; font-size: .92rem;
+  }
+  .delta strong { color: var(--mint); }
+
+  /* —— Full-bleed stage —— */
+  .stage { position: relative; width: 100%; overflow: hidden; }
+
+  /* Hero sits behind everything — edge to edge */
+  .hero-bleed {
+    position: absolute; inset: 0; z-index: 0;
+    background: #1a2a3a center/cover no-repeat;
+    background-image: url('assets/home-hero-clinic-consult.jpg?v=2159');
+    min-height: 100%;
+  }
+  .hero-bleed::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(11,18,32,.55) 0%, rgba(11,18,32,.25) 28%, rgba(11,18,32,.55) 62%, rgba(11,18,32,.92) 100%),
+      linear-gradient(105deg, rgba(15,27,40,.88) 0%, rgba(15,27,40,.45) 42%, rgba(15,27,40,.15) 100%);
+  }
+
+  /* Floating top nav over the photo — not boxed */
+  .top-nav {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 18px; padding: 18px clamp(18px, 4vw, 48px) 8px;
+  }
+  .top-nav .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+  .top-nav .brand img,
+  .top-nav .brand-lockup-img { height: 36px; width: auto; display: block; filter: drop-shadow(0 2px 10px rgba(0,0,0,.35)); }
+  .brand-glow-white { filter: drop-shadow(0 0 10px rgba(255,255,255,.28)); }
+  .top-nav .links {
+    display: flex; gap: clamp(12px, 2.2vw, 28px); align-items: center; flex-wrap: wrap; justify-content: flex-end;
+  }
+  .top-nav .links a {
+    color: #fff; text-decoration: none; font-size: 13px; font-weight: 650;
+    text-shadow: 0 1px 10px rgba(0,0,0,.4); opacity: .92;
+  }
+  .top-nav .links a:hover { opacity: 1; color: var(--sky); }
+  .top-nav .cta {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    padding: 7px 12px; border-radius: 999px; font-weight: 800 !important;
+  }
+
+  /* Logo + retention-led band — full page width */
+  .brand-band {
+    position: relative; z-index: 3;
+    width: 100%;
+    padding: 10px clamp(18px, 4vw, 48px) 6px;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  }
+  .brand-band .logo-lockup {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand-band .logo-lockup img { height: 48px; width: auto; display: block; filter: drop-shadow(0 2px 10px rgba(0,0,0,.35)); }
+  .brand-band .eyebrow {
+    display: block; width: 100%;
+    font-size: 12px; font-weight: 800; letter-spacing: .16em; color: var(--sky);
+    text-transform: uppercase; margin: 0;
+    padding: 8px 0 0;
+    border-top: 1px solid rgba(120,196,229,.28);
+  }
+
+  /* Hero copy — same composition as V2 Hero A */
+  .hero-copy {
+    position: relative; z-index: 2;
+    padding: 18px clamp(18px, 4vw, 48px) 28px;
+    max-width: 620px;
+  }
+  .hero-copy h1 {
+    margin: 0 0 10px; font-size: clamp(1.7rem, 4.2vw, 2.35rem);
+    line-height: 1.12; color: #fff; letter-spacing: -.02em;
+  }
+  .hero-copy .sub { color: #d5e0ea; font-size: 1rem; margin: 0 0 18px; max-width: 42ch; }
+  .story-chip {
+    display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(120,196,229,.35); border-radius: 14px; padding: 10px 12px; max-width: 360px;
+    backdrop-filter: blur(6px);
+  }
+  .story-chip img { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; }
+  .story-chip .y { font-size: 12px; font-weight: 800; color: var(--mint); margin: 0; }
+  .story-chip .r { margin: 2px 0 0; font-size: 13px; color: #fff; font-weight: 650; }
+  .story-chip .f { margin: 2px 0 0; font-size: 11px; color: #c5d3e0; letter-spacing: .06em; font-weight: 700; }
+  .stat-row { display: flex; gap: 18px; margin-top: 20px; flex-wrap: wrap; }
+  .stat strong { display: block; font-size: 1.35rem; color: #fff; }
+  .stat span { font-size: 11px; color: #b7c6d6; }
+
+  /* Mid-page cards float over the hero (same V2 card styling) */
+  .float-deck {
+    position: relative; z-index: 3;
+    margin: 8px clamp(14px, 3vw, 40px) 0;
+    padding-bottom: 48px;
+  }
+  .float-panel {
+    background: var(--mist); color: var(--ink);
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 22px 60px rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.1);
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px 18px; background: #fff; }
+  @media (max-width: 640px) {
+    .doors { grid-template-columns: 1fr; }
+  }
+  .door {
+    border-radius: 16px; overflow: hidden; border: 1px solid rgba(21,35,50,.1);
+    background: #fff; display: flex; flex-direction: column; min-height: 210px;
+    box-shadow: 0 8px 24px rgba(21,35,50,.08);
+  }
+  .door-media { height: 110px; background: center/cover no-repeat; position: relative; }
+  .door-media .tag {
+    position: absolute; left: 10px; top: 10px; background: rgba(15,27,40,.78); color: #fff;
+    font-size: 10px; font-weight: 800; letter-spacing: .08em; padding: 4px 8px; border-radius: 999px;
+  }
+  .door-body { padding: 12px 14px 14px; flex: 1; display: flex; flex-direction: column; }
+  .door-body h3 { margin: 0 0 4px; font-size: 1.02rem; color: var(--navy); }
+  .door-body p { margin: 0; font-size: 12.5px; color: var(--muted); flex: 1; }
+  .door-cta { margin-top: 10px; font-size: 12px; font-weight: 800; color: var(--navy-2); }
+
+  .mi-strip {
+    margin: 0 18px 14px; padding: 14px 16px; border-radius: 14px;
+    background: linear-gradient(105deg, #152332 0%, #1e3a55 100%);
+    color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    border: 1px solid rgba(120,196,229,.35);
+    box-shadow: 0 8px 22px rgba(21,35,50,.18);
+  }
+  .mi-kicker { font-size: 10px; font-weight: 800; letter-spacing: .1em; color: var(--sky); text-transform: uppercase; }
+  .mi-title { font-size: 15px; font-weight: 700; margin: 0; }
+  .mi-sub { font-size: 12px; color: #b7c6d6; margin: 0; }
+  .mi-cta { font-size: 12px; font-weight: 800; color: var(--sky); white-space: nowrap; }
+  .proof-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 18px 16px; background: #fff; }
+  .proof-pill {
+    flex: 1; min-width: 140px; background: #f3f7fb; border: 1px solid rgba(148,163,184,.25);
+    border-radius: 12px; padding: 10px 12px; text-align: center;
+  }
+  .proof-pill strong { display: block; font-size: 1.15rem; color: var(--navy); }
+  .proof-pill span { font-size: 11px; color: var(--muted); }
+
+  .home-retention {
+    padding: 4px 18px 18px; background: #fff; border-top: 1px solid rgba(148,163,184,.2);
+  }
+  .home-retention .hr-label {
+    font-size: 10px; font-weight: 800; letter-spacing: .1em; color: var(--muted);
+    text-transform: uppercase; margin: 10px 0 8px;
+  }
+  .ctx-card { border-radius: 16px; overflow: hidden; border: 1px solid rgba(148,163,184,.25);
+    box-shadow: 0 12px 28px rgba(21,35,50,.12); background: #fff; }
+  .ctx-card.slim { display: grid; grid-template-columns: 100px 1fr; }
+  .ctx-card .media { min-height: 100%; background: center/cover no-repeat; }
+  .ctx-card .body { padding: 12px 14px; }
+  .ctx-card .year { margin:0; font-size:12px; font-weight:800; color: var(--navy-2); }
+  .ctx-card .role { margin:4px 0 0; font-weight:700; }
+  .ctx-card .meta { margin:2px 0 0; font-size:12px; color: var(--muted); }
+  .ctx-card .foot {
+    grid-column: 1 / -1; background: var(--navy); color: var(--mint);
+    text-align: center; font-size: 11px; font-weight: 800; letter-spacing: .08em; padding: 8px;
+  }
+
+  .after { height: 80px; background: #0b1220; }
+
+  /* V2 explore/door title shimmer (white ↔ sky ↔ mint) */
+  .door-body h3.door-title-shimmer {
+    background: linear-gradient(90deg, #ffffff, #78C4E5 55%, #6BE0AD);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: exploreDoorShimmer 3.6s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35))
+            drop-shadow(0 0 16px rgba(120, 196, 229, 0.35));
+    text-shadow:
+      0 0 18px rgba(255, 255, 255, 0.35),
+      0 0 36px rgba(107, 224, 173, 0.25);
+  }
+  /* On light door cards, use navy-tinted base so shimmer reads; keep gradient clip */
+  .doors .door-body h3.door-title-shimmer {
+    /* dark door-body needs readable shimmer — use navy→sky→mint on white cards */
+    background: linear-gradient(90deg, #152332, #1e3a55 35%, #78C4E5 70%, #6BE0AD);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(120, 196, 229, 0.25));
+    text-shadow: none;
+  }
+  @keyframes exploreDoorShimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 100% center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .door-body h3.door-title-shimmer {
+      animation: none;
+      background-position: 50% center;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="banner">MOCK · Full-bleed hero from V2 · Review only · Not live</div>
+  <p class="delta"><strong>What changed from V2:</strong> opened the centered ~1040px frame to a full-width page. Hero photo and the logo + “retention-led recruiting” band now run edge to edge. Top nav floats over the photo (no boxed bar). Entry / MI / retention cards keep V2 styling and float over the lower hero instead of living inside a clipped card frame.</p>
+
+  <div class="stage" id="fullbleed-hero">
+    <div class="hero-bleed" aria-hidden="true"></div>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a class="brand brand-lockup brand-glow-white" href="#" aria-label="AMP Adaptive Medical Partners home">
+        <img class="brand-lockup-img is-white" src="assets/amp-lockup-nav.png?v=2159" alt="Adaptive Medical Partners" width="304" height="68" />
+      </a>
+      <div class="links">
+        <a href="#">Physicians</a>
+        <a href="#">Hiring orgs</a>
+        <a href="#">Market Intelligence</a>
+        <a href="#">About</a>
+        <a class="cta" href="#">Talk to us</a>
+      </div>
+    </nav>
+
+    <div class="brand-band">
+      <p class="eyebrow">retention-led recruiting</p>
+    </div>
+
+    <div class="hero-copy">
+      <h1>We place physicians who stay.</h1>
+      <p class="sub">Adaptive Medical Partners — rural and community healthcare recruiting measured in years, not placements.</p>
+      <div class="story-chip">
+        <img src="assets/story-2015-peds-ne.jpg?v=2159" alt="" />
+        <div>
+          <p class="y">2015 · Pediatrician</p>
+          <p class="r">Nebraska FQHC</p>
+          <p class="f">11 YEARS LATER. STILL THERE.</p>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><strong>87%</strong><span>still there at 3 years</span></div>
+        <div class="stat"><strong>1.7</strong><span>avg interviews per hire</span></div>
+      </div>
+    </div>
+
+    <div class="float-deck">
+      <div class="float-panel">
+        <div class="doors">
+          <article class="door">
+            <div class="door-media" style="background-image:url('assets/amp-path-cand-nurses.jpg?v=2159')"><span class="tag">PHYSICIANS</span></div>
+            <div class="door-body">
+              <h3 class="door-title-shimmer">Find your next chapter</h3>
+              <p>Confidential career options for physicians exploring rural and community practice.</p>
+              <div class="door-cta">I'm a physician →</div>
+            </div>
+          </article>
+          <article class="door">
+            <div class="door-media" style="background-image:url('assets/amp-path-client-hallway.jpg?v=2159')"><span class="tag">HIRING ORGS</span></div>
+            <div class="door-body">
+              <h3 class="door-title-shimmer">Fill seats that stick</h3>
+              <p>Investment search for FQHCs, CAHs, and rural systems — measured in years.</p>
+              <div class="door-cta">I'm hiring →</div>
+            </div>
+          </article>
+        </div>
+        <div class="mi-strip">
+          <div>
+            <span class="mi-kicker">Market Intelligence</span>
+            <p class="mi-title">See demand signals before you post a seat</p>
+            <p class="mi-sub">Specialty heat, facility type, and regional retention trends — clickable teaser.</p>
+          </div>
+          <span class="mi-cta">Explore MI →</span>
+        </div>
+        <div class="proof-row">
+          <div class="proof-pill"><strong>87%</strong><span>still there at 3 years</span></div>
+          <div class="proof-pill"><strong>1.7</strong><span>avg interviews per hire</span></div>
+          <div class="proof-pill"><strong>Rural hospitals</strong><span>FQHCs · CAHs · community systems</span></div>
+        </div>
+        <div class="home-retention">
+          <p class="hr-label">Homepage proof · early retention strip</p>
+          <article class="ctx-card slim">
+            <div class="media" style="background-image:url('assets/story-2015-peds-ne.jpg?v=2159')"></div>
+            <div class="body">
+              <p class="year">2015 · Pediatrician</p>
+              <p class="role">Nebraska FQHC</p>
+              <p class="meta">90 days to identify &amp; place · still serving the same community</p>
+            </div>
+            <div class="foot">11 YEARS LATER. STILL THERE.</div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="after"></div>
+</body>
+</html>
