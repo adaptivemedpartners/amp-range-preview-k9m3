@@ -1,3 +1,4 @@
+/* amp-build:2180-footer-no-overscroll-mobile */
 /* amp-build:2179-footer-no-overscroll */
 /* amp-build:2178-hero-first-stack */
 /* amp-build:2177-zach-scope-strip */
@@ -13269,5 +13270,82 @@ body {
 }
 .site-footer {
   margin-bottom: 0;
+}
+
+/* ========== amp-build:2180-footer-no-overscroll-mobile ==========
+   Phones still scrolled past .site-footer into the fixed wallpaper.
+   iOS sizes 100vh/100dvh and bottom:0 / inset:0 fixed layers to the large
+   layout viewport (the area under the URL bar). .home-pro-bg kept
+   inset:0 !important and translateZ(0); --home-bg-vh added 6% overscan and
+   ignored address-bar resizes. WebKit then treats that extra as document
+   scroll, so the footer rides up and the wallpaper shows underneath.
+   100svh is the stable small viewport: never taller than the screen with
+   the toolbar showing, and it does not grow when the bar hides.
+   Bottom anchors are removed so layers cannot stretch to the layout viewport.
+   translateZ is dropped only on these full-viewport layers (that compositing
+   hint is what makes WebKit add them to scrollable overflow).
+   html keeps overflow-y visible so L2 document scroll is not trapped.
+   Body clips only descendant overflow past its own box. Footer padding unchanged. */
+@media (max-width: 900px) {
+  html {
+    min-height: 0;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  body {
+    min-height: 0;
+    overflow-x: clip;
+    overflow-y: clip;
+  }
+  #app {
+    min-height: 0;
+  }
+  .view.on,
+  .view.walk-forward,
+  .view.funnel.trailhead,
+  .trailhead-stage,
+  .view.funnel > .view-chrome,
+  .home-overlay,
+  .home-stage {
+    min-height: 100svh;
+  }
+  .home-stage {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .home-stage.v3-home .home-pro-bg,
+  .home-stage.on .home-poster,
+  .home-stage.on #home-video,
+  .home-stage.on .home-mist,
+  .home-layer-soft-fade,
+  .view.funnel:not(.trailhead) > .shot {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100svh !important;
+    max-height: 100svh !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  .amp-chat-root {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+  }
+  .amp-chat-launcher {
+    top: calc(100svh - 80px - env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+    bottom: auto !important;
+  }
 }
 
