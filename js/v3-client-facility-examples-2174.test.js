@@ -13,10 +13,10 @@ var content = fs.readFileSync(path.join(ROOT, "js/content.js"), "utf8");
 var html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 
-assert(app.indexOf('window.__AMP_BUILD = "2180-footer-no-overscroll-mobile"') !== -1, "app build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2181-still-there-swipe"') !== -1, "app build stamp");
 assert(html.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "html build stamp");
 assert(css.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "css build stamp");
-assert(html.indexOf("?v=2180") !== -1, "html cache bust");
+assert(html.indexOf("?v=2181") !== -1, "html cache bust");
 assert(html.indexOf("webflow") === -1 && html.indexOf("Webflow") === -1, "no Webflow");
 
 /* Facility → unique specialty wiring (scrubbed, no physician names) */

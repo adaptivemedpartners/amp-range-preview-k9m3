@@ -19,19 +19,19 @@ function sliceBetween(html, startNeedle, endNeedle, label) {
 }
 
 var expected = [
-  ["assets/partners/adventist-health.png?v=2180", "Adventist Health"],
-  ["assets/partners/okpca.png?v=2180", "Oklahoma Primary Care Association"],
-  ["assets/partners/tenet-health.png?v=2180", "Tenet Health"],
-  ["assets/partners/chs.png?v=2180", "Community Health Systems"],
-  ["assets/partners/tpca.png?v=2180", "Tennessee Primary Care Association"],
-  ["assets/partners/shriners.png?v=2180", "Shriners Hospitals for Children"]
+  ["assets/partners/adventist-health.png?v=2181", "Adventist Health"],
+  ["assets/partners/okpca.png?v=2181", "Oklahoma Primary Care Association"],
+  ["assets/partners/tenet-health.png?v=2181", "Tenet Health"],
+  ["assets/partners/chs.png?v=2181", "Community Health Systems"],
+  ["assets/partners/tpca.png?v=2181", "Tennessee Primary Care Association"],
+  ["assets/partners/shriners.png?v=2181", "Shriners Hospitals for Children"]
 ];
 
 function checkPartners(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
   assert(html.indexOf("<!-- amp-build:2175-ok-tn-pca-partners -->") !== -1, rel + " missing 2175 stamp");
   assert(html.indexOf("<!-- amp-build:2174-facility-still-there-examples -->") !== -1, rel + " lost 2174 stamp");
-  assert(html.indexOf("amp-build 2180-footer-no-overscroll-mobile") !== -1, rel + " chip");
+  assert(html.indexOf("amp-build 2181-still-there-swipe") !== -1, rel + " chip");
   assert(html.indexOf("?v=2174") === -1, rel + " still on 2174 cache");
   var grid = sliceBetween(html, 'class="home-partners-grid"', "</div>", rel + " partners");
   var logos = grid.match(/<img class="partner-logo"[^>]*>/g) || [];
@@ -56,7 +56,7 @@ var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(css.indexOf("amp-build:2175-ok-tn-pca-partners") !== -1, "css 2175 stamp");
 assert(css.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "css lost 2174 stamp");
-assert(app.indexOf('__AMP_BUILD = "2180-footer-no-overscroll-mobile"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2181-still-there-swipe"') !== -1, "app build stamp");
 assert(app.indexOf("V3_FACILITY_STORY") !== -1, "2174 facility stories removed");
 assert(app.indexOf("amp-build:2174 — real still-there") !== -1, "2174 facility comment removed");
 

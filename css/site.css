@@ -1,3 +1,4 @@
+/* amp-build:2181-still-there-swipe */
 /* amp-build:2180-footer-no-overscroll-mobile */
 /* amp-build:2179-footer-no-overscroll */
 /* amp-build:2178-hero-first-stack */
@@ -13347,5 +13348,32 @@ body {
     right: 14px !important;
     bottom: auto !important;
   }
+}
+
+/* ========== amp-build:2181-still-there-swipe ==========
+   Placement cards follow a horizontal drag, then snap.
+   touch-action: pan-y keeps vertical page scroll. */
+.v3-still-stage {
+  touch-action: pan-y;
+  overflow: hidden;
+  cursor: grab;
+}
+.v3-still-rotator.is-dragging .v3-still-stage {
+  cursor: grabbing;
+}
+.v3-still-rotator.is-dragging,
+.v3-still-rotator.is-settling {
+  user-select: none;
+}
+.v3-still-rotator.is-dragging .v3-still-card {
+  transition: none;
+}
+.v3-still-dot {
+  position: relative;
+}
+.v3-still-dot::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
 }
 
