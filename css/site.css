@@ -1,4 +1,4 @@
-/* amp-build:2160-v3-home-page-wallpaper */
+/* amp-build:2161-stats-mi-row */
 /* amp-build:2158-v3-home-client-funnel */
 /* amp-build:2157-mi-map-pinch-zoom */
 /* amp-build:2156-mi-place-draw-heat */
@@ -11109,7 +11109,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   background-image:
     linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
     linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2160");
+    url("../assets/home-hero-clinic-consult.jpg?v=2161");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -11232,4 +11232,148 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
 @media (max-width: 640px) {
   .home-stage.v3-home .v3-hero-inner { padding-bottom: 8px; }
   .home-stage.v3-home .v3-doors { margin-top: 4px; padding: 14px 14px; }
+}
+
+
+/* ========== amp-build:2161-stats-mi-row — MI + 4 proof pills in one white card; doors below ========== */
+/* One wide white card: navy Market Intelligence (~25%) | four compact proof pills (~75%).
+   Physician / hiring doors sit BELOW that row. Keep fixed .home-pro-bg wallpaper + glass nav. */
+
+.v3-stats-mi {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.25fr) minmax(0, 0.75fr);
+  gap: 12px;
+  align-items: stretch;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+  box-sizing: border-box;
+}
+
+.v3-stats-mi-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 100%;
+  padding: 16px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(160deg, #152332 0%, #1e3a55 100%);
+  border: 1px solid rgba(120, 196, 229, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.v3-stats-mi-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  color: #fff;
+  text-transform: none;
+}
+
+.home-stage.v3-home .v3-stats-mi .v3-proof,
+.v3-stats-mi .v3-proof {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: stretch;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  transform: none !important;
+  align-self: auto !important;
+}
+
+.v3-stats-mi .v3-proof-pill {
+  flex: 1 1 0;
+  min-width: 0;
+  /* keep pill scale close to prior — do not inflate */
+  padding: 10px 10px;
+}
+
+.home-stage.v3-home .v3-stats-mi,
+.home-stage.v3-home .v3-doors {
+  position: relative;
+  z-index: 2;
+  align-self: flex-end;
+  width: min(1320px, calc(100% - clamp(20px, 3vw, 36px) - clamp(40px, 7vw, 110px)));
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: clamp(12px, 2.5vw, 32px);
+  box-sizing: border-box;
+  transform: translateX(clamp(0px, 1.5vw, 28px));
+}
+
+/* Stats/MI row takes the former door pull-up under the desk */
+.home-stage.v3-home .v3-stats-mi {
+  margin-top: -36px;
+  margin-bottom: 12px;
+}
+
+/* Doors sit BELOW the stats row as their own white card */
+.home-stage.v3-home .v3-doors {
+  margin-top: 0;
+  margin-bottom: 28px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+}
+
+/* Legacy MI strip / proof deck rules no longer apply as stacked card ends */
+.home-stage.v3-home .v3-mi,
+.home-stage.v3-home > .v3-proof {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-stats-mi,
+  .home-stage.v3-home .v3-doors {
+    align-self: center;
+    width: calc(100% - 2 * clamp(12px, 3vw, 24px));
+    max-width: none;
+    margin-left: clamp(12px, 3vw, 24px);
+    margin-right: clamp(12px, 3vw, 24px);
+    transform: none;
+  }
+  .home-stage.v3-home .v3-stats-mi {
+    margin-top: 8px;
+    grid-template-columns: 1fr;
+  }
+  .v3-stats-mi .v3-proof {
+    flex-wrap: wrap;
+  }
+  .v3-stats-mi .v3-proof-pill {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-stage.v3-home .v3-stats-mi {
+    margin-top: 4px;
+    padding: 12px;
+    gap: 10px;
+  }
+  .home-stage.v3-home .v3-doors {
+    margin-top: 0;
+    padding: 14px;
+  }
+  .v3-stats-mi-panel {
+    padding: 14px 16px;
+    min-height: 56px;
+  }
 }
