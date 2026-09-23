@@ -1,4 +1,4 @@
-/* amp-build:2164-header-tuck-fade */
+/* amp-build:2165-row2-nested-tuck */
 /* amp-build:2161-stats-mi-row */
 /* amp-build:2158-v3-home-client-funnel */
 /* amp-build:2157-mi-map-pinch-zoom */
@@ -11405,22 +11405,45 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   display: none !important;
 }
 
-/* Soft fade strip under header — soft only, not an opaque bar (2164: taller/stronger tuck) */
+/* Soft tuck under header (2165): wallpaper clone + soft mask edge.
+   2164 failed because (1) translucent navy tint still showed white cards sliding
+   under transparent header, and (2) mask-image on #composed-homepage is
+   element-relative — it scrolls away with L2, so it never stays under the nav. */
 .home-layer-soft-fade {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: calc(64px + 88px);
+  height: calc(64px + 72px);
   z-index: 250;
   pointer-events: none;
-  background: linear-gradient(
+  /* Match Layer1 wallpaper so content is covered by scene pixels, not a tint bar */
+  background-color: #1a2a3a;
+  background-image:
+    linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
+    linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
+    url("../assets/home-hero-clinic-consult.jpg?v=2165");
+  background-size: cover, cover, cover;
+  background-position: center, center, center right;
+  background-repeat: no-repeat;
+  /* Soft bottom — no hard opaque cut bar */
+  -webkit-mask-image: linear-gradient(
     180deg,
-    rgba(11, 18, 32, 0.62) 0%,
-    rgba(11, 18, 32, 0.42) 18%,
-    rgba(11, 18, 32, 0.22) 42%,
-    rgba(11, 18, 32, 0.08) 68%,
-    rgba(11, 18, 32, 0) 100%
+    #000 0,
+    #000 56px,
+    rgba(0, 0, 0, 0.92) 72px,
+    rgba(0, 0, 0, 0.55) 100px,
+    rgba(0, 0, 0, 0.2) 120px,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0,
+    #000 56px,
+    rgba(0, 0, 0, 0.92) 72px,
+    rgba(0, 0, 0, 0.55) 100px,
+    rgba(0, 0, 0, 0.2) 120px,
+    transparent 100%
   );
 }
 
@@ -11450,30 +11473,16 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
 
 .home-stage.v3-home .home-overlay {
   z-index: 2;
-  /* room under fixed header */
-  padding-top: 72px;
+  /* room under fixed header — keep clearance, Row2 raise comes from shorter place card */
+  padding-top: 68px;
 }
 
-/* Soft mask — L2 vanishes before fixed header bottom (2164 tuck) */
+/* 2165: do NOT mask #composed-homepage — element-relative masks scroll away
+   with content and never hold a fixed under-header tuck band. Tuck is owned
+   by fixed .home-layer-soft-fade (wallpaper clone) above. */
 .home-stage.v3-home #composed-homepage {
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    transparent 0,
-    transparent 48px,
-    rgba(0, 0, 0, 0.2) 64px,
-    rgba(0, 0, 0, 0.55) 88px,
-    #000 120px,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    180deg,
-    transparent 0,
-    transparent 48px,
-    rgba(0, 0, 0, 0.2) 64px,
-    rgba(0, 0, 0, 0.55) 88px,
-    #000 120px,
-    #000 100%
-  );
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 /* 3-column stats: dominant MI | Physicians pills | Hiring Orgs pills */
@@ -11623,7 +11632,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
     min-width: 120px;
   }
   .home-layer-soft-fade {
-    height: calc(56px + 64px);
+    height: calc(56px + 56px);
   }
 }
 
@@ -11656,7 +11665,8 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   align-self: stretch;
   margin: 0;
   border-radius: 0;
-  min-height: min(52vh, 480px);
+  /* 2165: shorter place band so Row2 parent sits higher; leaves room for client partners below */
+  min-height: 0;
   background: transparent !important; /* wallpaper shows through; card = gradient only */
   box-shadow: none;
   overflow: visible;
@@ -11675,7 +11685,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   position: relative;
   z-index: 1;
   max-width: 620px;
-  padding: 28px clamp(18px, 4vw, 48px) 36px;
+  padding: 18px clamp(18px, 4vw, 48px) 16px;
 }
 
 /* ROW 2 — full viewport width parent card */
@@ -11686,9 +11696,11 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+  margin-top: 4px;
+  margin-bottom: 10px;
   align-self: stretch;
   box-sizing: border-box;
-  padding: 16px clamp(12px, 2.2vw, 28px);
+  padding: 12px clamp(12px, 2.2vw, 28px);
   background: rgba(255, 255, 255, 0.96);
   border-radius: 0;
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
@@ -11859,5 +11871,33 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   .home-stage.v3-home .v3-stats-col-stack {
     min-height: 0;
   }
+}
+
+/* ========== amp-build:2165-row2-nested-tuck — Row2 = nested stats only; wallpaper tuck fade ========== */
+/*
+  Mike bottom screenshot = leftover .v3-doors photo pair (Physicians | Hiring Orgs).
+  Those are NOT Row2. Row2 is .v3-stats-parent (MI + entry-over-pills). Photo doors removed from HTML;
+  hide any remnant. Tuck fade: fixed wallpaper clone under transparent header (see .home-layer-soft-fade).
+*/
+.home-stage.v3-home .v3-doors,
+.home-stage.v3-home #home-doors {
+  display: none !important;
+}
+
+/* Entry cards in Row2 own the physician/hiring CTAs (swoop via data-approach) */
+.home-stage.v3-home .v3-stats-parent {
+  position: relative;
+  z-index: 3;
+}
+
+/* 2165: keep client reference / partners strip visible below raised Row2 */
+.home-stage.v3-home .home-partners.v3-partners {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative;
+  z-index: 2;
+  margin-top: 18px;
+  margin-bottom: 12px;
 }
 
