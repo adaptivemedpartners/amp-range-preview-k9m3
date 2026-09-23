@@ -1,4 +1,4 @@
-/* amp-build:2163-nested-stats-card */
+/* amp-build:2164-header-tuck-fade */
 /* amp-build:2161-stats-mi-row */
 /* amp-build:2158-v3-home-client-funnel */
 /* amp-build:2157-mi-map-pinch-zoom */
@@ -11405,20 +11405,21 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   display: none !important;
 }
 
-/* Soft fade strip under header — soft only, not an opaque bar */
+/* Soft fade strip under header — soft only, not an opaque bar (2164: taller/stronger tuck) */
 .home-layer-soft-fade {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: calc(64px + 56px);
+  height: calc(64px + 88px);
   z-index: 250;
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(11, 18, 32, 0.42) 0%,
-    rgba(11, 18, 32, 0.22) 28%,
-    rgba(11, 18, 32, 0.08) 58%,
+    rgba(11, 18, 32, 0.62) 0%,
+    rgba(11, 18, 32, 0.42) 18%,
+    rgba(11, 18, 32, 0.22) 42%,
+    rgba(11, 18, 32, 0.08) 68%,
     rgba(11, 18, 32, 0) 100%
   );
 }
@@ -11453,20 +11454,24 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   padding-top: 72px;
 }
 
-/* Soft mask at top of composed homepage so cards dissolve under header zone */
+/* Soft mask — L2 vanishes before fixed header bottom (2164 tuck) */
 .home-stage.v3-home #composed-homepage {
   -webkit-mask-image: linear-gradient(
     180deg,
     transparent 0,
-    rgba(0, 0, 0, 0.35) 12px,
-    #000 48px,
+    transparent 48px,
+    rgba(0, 0, 0, 0.2) 64px,
+    rgba(0, 0, 0, 0.55) 88px,
+    #000 120px,
     #000 100%
   );
   mask-image: linear-gradient(
     180deg,
     transparent 0,
-    rgba(0, 0, 0, 0.35) 12px,
-    #000 48px,
+    transparent 48px,
+    rgba(0, 0, 0, 0.2) 64px,
+    rgba(0, 0, 0, 0.55) 88px,
+    #000 120px,
     #000 100%
   );
 }
@@ -11618,7 +11623,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
     min-width: 120px;
   }
   .home-layer-soft-fade {
-    height: calc(56px + 40px);
+    height: calc(56px + 64px);
   }
 }
 
@@ -11774,3 +11779,85 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
     padding: 12px 10px;
   }
 }
+
+
+/* ========== amp-build:2164-header-tuck-fade — MI full-height + entry-over-pills stack + stronger L2 tuck ========== */
+/*
+  Col1 MI stretches full parent height.
+  Col2/3: entry card on TOP; two pills STACKED below (not one wrapped subcard).
+  L2 tuck: stronger soft-fade + header-height mask (above).
+*/
+.home-stage.v3-home .v3-stats-parent .v3-stats-3col,
+.home-stage.v3-home .v3-stats-parent .v3-stats-nested {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+
+/* MI: fill entire parent section height */
+.home-stage.v3-home .v3-stats-parent .v3-stats-mi-panel,
+.home-stage.v3-home .v3-stats-parent .v3-stats-col-mi {
+  align-self: stretch;
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+/* Column stacks: no outer gray wrapper — entry card then pills */
+.home-stage.v3-home .v3-stats-col-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  min-height: 100%;
+  align-self: stretch;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.home-stage.v3-home .v3-stats-entry-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 14px;
+  border-radius: 14px;
+  background: #f3f7fb;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  flex: 0 0 auto;
+}
+
+.home-stage.v3-home .v3-stats-entry-card:hover {
+  border-color: rgba(120, 196, 229, 0.55);
+}
+
+/* Pills stacked vertically under the entry card */
+.home-stage.v3-home .v3-stats-parent .v3-proof-stack,
+.home-stage.v3-home .v3-stats-col-stack .v3-proof {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  gap: 8px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+.home-stage.v3-home .v3-stats-parent .v3-proof-stack .v3-proof-pill {
+  flex: 0 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-stats-parent .v3-stats-mi-panel,
+  .home-stage.v3-home .v3-stats-parent .v3-stats-col-mi {
+    min-height: 88px;
+    height: auto;
+  }
+  .home-stage.v3-home .v3-stats-col-stack {
+    min-height: 0;
+  }
+}
+
