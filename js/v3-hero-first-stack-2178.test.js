@@ -24,9 +24,9 @@ function checkPage(rel) {
   assert(html.indexOf("<!-- amp-build:2178-hero-first-stack -->") !== -1, rel + " missing 2178 stamp");
   assert(html.indexOf("<!-- amp-build:2177-zach-scope-strip -->") !== -1, rel + " lost 2177 stamp");
   assert(html.indexOf("<!-- amp-build:2176-specialty-still-there-examples -->") !== -1, rel + " lost 2176 stamp");
-  assert(html.indexOf("amp-build 2178-hero-first-stack") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2178"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2178"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2179-footer-no-overscroll") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2179"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2179"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2177") === -1, rel + " still on 2177 cache");
   assert(html.indexOf("?v=2176") === -1, rel + " still on 2176 cache");
   assert(html.indexOf('href="/physician" data-go="physician">Physicians</a>') !== -1, rel + " nav physicians link");
@@ -76,7 +76,7 @@ var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(css.indexOf("amp-build:2178-hero-first-stack") !== -1, "css 2178 stamp");
 assert(css.indexOf("amp-build:2177-zach-scope-strip") !== -1, "css 2177 stamp");
-assert(app.indexOf('__AMP_BUILD = "2178-hero-first-stack"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2179-footer-no-overscroll"') !== -1, "app build stamp");
 assert(css.indexOf(".home-layer-soft-fade") !== -1, "under-header fade remains");
 assert(css.indexOf("transparent 148px") !== -1, "desktop fade falloff unchanged");
 assert(css.indexOf("z-index: 280") !== -1, "fade layer lock");
@@ -87,7 +87,9 @@ assert(b2177.indexOf("translateY(-8px)") !== -1, "entry card lift kept in 2177")
 assert(b2177.indexOf("0 10px 24px rgba(12, 21, 32, 0.22)") !== -1, "MI shadow kept");
 assert(b2177.indexOf("1px solid rgba(30, 58, 85, 0.35)") !== -1, "entry hairline kept");
 
-var b2178 = css.slice(css.indexOf("========== amp-build:2178-hero-first-stack"));
+var b2178Start = css.indexOf("========== amp-build:2178-hero-first-stack");
+var b2179Start = css.indexOf("========== amp-build:2179-footer-no-overscroll");
+var b2178 = css.slice(b2178Start, b2179Start === -1 ? undefined : b2179Start);
 assert(b2178.indexOf("========== amp-build:2178-hero-first-stack") === 0, "2178 block");
 assert(b2178.indexOf("opacity: 1") !== -1, "place hero stays opaque");
 assert(b2178.indexOf("padding-top: calc(var(--amp-title-clear) - 68px)") !== -1, "desktop title-below-fade pad on the hero");

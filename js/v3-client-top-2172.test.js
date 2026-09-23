@@ -24,14 +24,14 @@ var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 
 assert(html.indexOf("<!-- amp-build:2172-client-top-clean -->") !== -1, "html stamp");
 assert(html.indexOf("<!-- amp-build:2171-bridge-blue-stretch -->") !== -1, "2171 stamp kept");
-assert(html.indexOf('href="css/site.css?v=2178"') !== -1, "css cache bust 2178");
+assert(html.indexOf('href="css/site.css?v=2179"') !== -1, "css cache bust 2179");
 var fallback = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
 assert(fallback.indexOf("<!-- amp-build:2172-client-top-clean -->") !== -1, "404 fallback stamp");
-assert(fallback.indexOf('href="css/site.css?v=2178"') !== -1, "404 css cache");
+assert(fallback.indexOf('href="css/site.css?v=2179"') !== -1, "404 css cache");
 assert(sliceBetween(fallback, 'data-route="client-region"', 'data-route="client-retained"', "404 territory").split("Where should we search?").length === 2, "404 one territory title");
 assert(html.indexOf("?v=2171") === -1, "html still on 2171 cache");
 assert(css.indexOf("amp-build:2172-client-top-clean") !== -1, "css stamp");
-assert(app.indexOf('__AMP_BUILD = "2178-hero-first-stack"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2179-footer-no-overscroll"') !== -1, "app build stamp");
 assert(app.indexOf('h2.textContent = "Where should we search?"') === -1, "map must not repeat the territory title");
 assert(app.indexOf('kicker.textContent = "Hiring path · territory"') === -1, "map path kicker removed");
 assert(app.indexOf("introCopy.hidden = !!clientMode") !== -1, "client map intro copy stays hidden");

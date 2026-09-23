@@ -1,3 +1,4 @@
+/* amp-build:2179-footer-no-overscroll */
 /* amp-build:2178-hero-first-stack */
 /* amp-build:2177-zach-scope-strip */
 /* amp-build:2176-specialty-still-there-examples */
@@ -13189,5 +13190,84 @@ main .view.page.on > .hero-band,
     padding-top: 8px;
     padding-bottom: 4px;
   }
+}
+
+/* ========== amp-build:2179-footer-no-overscroll ==========
+   Document scroll ends at .site-footer.
+   body and .home-stage set overflow-x:hidden, which computes overflow-y to auto
+   and turns them into scrollports. Fixed full-viewport layers then join that
+   scrollable overflow. .home-layer-soft-fade lived after </footer> at height
+   100dvh (wallpaper clone), so engines that keep a fixed box's static position
+   in the scroll height left a viewport of wallpaper below the footer on every
+   route. .home-mist was 6% taller than the viewport (--home-bg-vh) with a
+   translateZ, the same class of runway on home.
+   clip keeps horizontal clipping without a vertical scrollport.
+   100dvh min-height applies only while a view is active.
+   Chat stays a fixed zero box — no body padding-bottom.
+   Footer padding (36px 20px 48px) is unchanged. */
+
+html {
+  overflow-x: clip;
+  overscroll-behavior-y: none;
+}
+body {
+  overflow-x: clip;
+  overscroll-behavior-y: none;
+}
+.view {
+  min-height: 0;
+}
+.view:not(.on):not(.walk-forward) {
+  min-height: 0 !important;
+}
+.view.on,
+.view.walk-forward {
+  min-height: 100dvh;
+}
+.home-stage {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+.home-layer-soft-fade {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+}
+/* Anchor viewport layers to the top edge so a tall scrollport cannot stretch them. */
+.view.funnel > .shot {
+  bottom: auto;
+  height: 100dvh;
+  max-height: 100dvh;
+}
+.home-stage.on .home-mist {
+  top: 0;
+  bottom: auto;
+  height: 100dvh;
+  max-height: 100dvh;
+}
+@media (max-width: 760px) {
+  .home-stage.on .home-mist {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+}
+/* Launcher and panel stay position:fixed. The root must not sit in flow after the footer. */
+.amp-chat-root {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  overflow: visible;
+  z-index: 2147483000;
+}
+.site-footer {
+  margin-bottom: 0;
 }
 
