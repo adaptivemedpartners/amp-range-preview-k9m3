@@ -1,3 +1,4 @@
+/* amp-build:2168-mi-photo-title-clear */
 /* amp-build:2167-l1-wallpaper-under-header */
 /* amp-build:2166-tuck-opaque-soft */
 /* amp-build:2165-row2-nested-tuck */
@@ -11430,7 +11431,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   background-image:
     linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
     linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2167");
+    url("../assets/home-hero-clinic-consult.jpg?v=2168");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -11939,5 +11940,417 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
 .home-stage.v3-home .v3-frame,
 .home-stage.v3-home .v3-stats-parent {
   z-index: 2;
+}
+
+/* ========== amp-build:2168-mi-photo-title-clear ==========
+   1. Row2 MI = colorway C enrich (deeper navy, electric sky on Competitive + radar).
+   2. Physicians / Hiring Orgs = photo doors + one thin pill row.
+   3. Shared title clearance so H1s sit below the under-header fade.
+   The L1 wallpaper clone and .home-layer-soft-fade mask stops are unchanged. */
+
+:root {
+  /* Mirrors the existing desktop mask: solid through 72px, transparent at 148px, plus air. */
+  --amp-header-block: 72px;
+  --amp-fade-falloff: 76px;
+  --amp-fade-air: 16px;
+  --amp-title-clear: calc(var(--amp-header-block) + var(--amp-fade-falloff) + var(--amp-fade-air));
+}
+@media (max-width: 900px) {
+  :root {
+    /* Mobile mask: solid through 56px, transparent at 132px. */
+    --amp-header-block: 56px;
+    --amp-fade-falloff: 76px;
+    --amp-title-clear: calc(var(--amp-header-block) + var(--amp-fade-falloff) + var(--amp-fade-air));
+  }
+}
+
+/* Every page hero. Must beat amp-build:2141 `.site-nav.is-home ~ main …` (0,6,1)
+   which pinned funnel titles at ~72px — inside the fade. */
+.hero-band,
+.view.funnel .hero-band,
+.view.page .hero-band,
+.confirm-band.hero-band,
+.view[data-route="client-region"] .hero-band,
+.site-nav.is-home ~ main .view.funnel > .view-chrome > .hero-band,
+.site-nav.is-home ~ main .view.page > .view-chrome > .hero-band,
+.site-nav.is-home ~ main .view.page > .hero-band,
+main .view.funnel.on > .view-chrome > .hero-band,
+main .view.page.funnel.on > .view-chrome > .hero-band,
+main .view.page.on > .hero-band,
+.view.funnel.on > .view-chrome > .hero-band,
+.view.page.on > .hero-band,
+.view.guides-view.on > .view-chrome > .hero-band,
+.view.funnel.on .hero-band,
+.guides-view .hero-band,
+.view[data-route="physician-jobs"] .hero-band,
+.view[data-route="guides"] .hero-band,
+.view[data-route="education"] .hero-band,
+.view[data-route="residents"] .hero-band,
+.view[data-route="mi-lite"] .hero-band,
+.view[data-route="amp-score"] .hero-band,
+.view[data-route="blog"] .hero-band,
+.view[data-route="mpc"] .hero-band,
+.view[data-route="confirm-client"] .hero-band,
+.view[data-route="confirm-mess"] .hero-band {
+  padding-top: var(--amp-title-clear) !important;
+}
+/* Blog articles use a section, not a hero band */
+.view.page[data-route="blog-post"] > .section {
+  padding-top: var(--amp-title-clear) !important;
+}
+/* Trailhead sheets (Physicians / Hiring) pin to the bottom of the photo.
+   Keep that, but don't let the hire title climb into the fade. */
+.view.funnel.trailhead .trailhead-sheet-stage,
+.view.funnel.trailhead.on .trailhead-sheet-stage {
+  padding-top: var(--amp-title-clear) !important;
+}
+.view.funnel.trailhead .hire-sheet {
+  max-height: calc(100dvh - var(--amp-title-clear) - 16px);
+  overflow: auto;
+}
+/* Homepage eyebrow: overlay already pads 68px under the fixed header.
+   Extra inner pad puts RETENTION-LED RECRUITING fully past the fade falloff.
+   Headline ↔ 2015 story card spacing below the eyebrow is unchanged. */
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner {
+  padding-top: calc(var(--amp-title-clear) - 68px);
+}
+
+/* —— MI colorway C —— */
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  height: auto;
+  min-height: max(100%, min-content);
+  align-self: stretch;
+  padding: 18px 18px 16px;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(165deg, #0c1520 0%, #152332 55%, #1a2c3f 100%);
+  border: 1px solid rgba(94, 184, 224, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich:hover,
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich:focus-visible {
+  color: #fff;
+}
+.v3-stats-mi-panel .mi-glow {
+  position: absolute;
+  right: -20px;
+  top: -30px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(94, 184, 224, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.v3-stats-mi-panel .mi-radar {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 28px;
+  height: 28px;
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(94, 184, 224, 0.7));
+  z-index: 1;
+}
+.v3-stats-mi-panel .mi-radar svg { width: 100%; height: 100%; display: block; }
+.v3-stats-mi-panel .mi-radar .ring { stroke: #5eb8e0; }
+.v3-stats-mi-panel .mi-radar .sweep { stroke: #5eb8e0; fill: rgba(94, 184, 224, 0.25); }
+.v3-stats-mi-panel .mi-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(120, 196, 229, 0.75);
+  position: relative;
+  z-index: 1;
+}
+.v3-stats-mi-panel .mi-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  max-width: 22ch;
+}
+.v3-stats-mi-panel .mi-sub {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(183, 198, 214, 0.78);
+  line-height: 1.35;
+  position: relative;
+  z-index: 1;
+  max-width: 34ch;
+}
+.v3-stats-mi-panel .mi-cta {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(120, 196, 229, 0.85);
+  position: relative;
+  z-index: 1;
+  margin-top: 2px;
+}
+.v3-stats-mi-panel .mi-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  position: relative;
+  z-index: 1;
+  margin-top: 2px;
+}
+.v3-stats-mi-panel .mi-chip {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(120, 196, 229, 0.22);
+  color: rgba(213, 224, 234, 0.8);
+  white-space: nowrap;
+}
+.v3-stats-mi-panel .mi-visual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 4px;
+}
+.v3-stats-mi-panel .heat-blotch {
+  position: relative;
+  width: 78px;
+  height: 52px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(120, 196, 229, 0.35);
+  background: linear-gradient(160deg, #1a2c3f, #152332);
+}
+.v3-stats-mi-panel .heat-blotch svg { width: 100%; height: 100%; display: block; opacity: 0.95; }
+.v3-stats-mi-panel .example-stamp {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(21, 35, 50, 0.55);
+  white-space: nowrap;
+  display: block;
+  margin: 0;
+}
+.v3-stats-mi-panel .mi-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.v3-stats-mi-panel .mi-example-line {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(183, 198, 214, 0.92);
+  text-transform: uppercase;
+}
+.v3-stats-mi-panel .band-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.v3-stats-mi-panel .band-pill {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(94, 184, 224, 0.28);
+  border: 1px solid #5eb8e0;
+  box-shadow: 0 0 14px rgba(94, 184, 224, 0.45);
+}
+.v3-stats-mi-panel .sparkline {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+.v3-stats-mi-panel .sparkline i {
+  display: block;
+  width: 3px;
+  border-radius: 1px;
+  background: rgba(120, 196, 229, 0.55);
+  font-style: normal;
+}
+.v3-stats-mi-panel.cw-c .sparkline i:nth-child(even) { background: #5eb8e0; }
+.v3-stats-mi-panel .density {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.v3-stats-mi-panel .density span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(120, 196, 229, 0.45);
+}
+.v3-stats-mi-panel.cw-c .density span.on {
+  background: #5eb8e0;
+  box-shadow: 0 0 8px rgba(94, 184, 224, 0.7);
+}
+
+/* —— Photo doors + thin pills inside the white Row2 parent —— */
+.home-stage.v3-home .v3-stats-col-stack .v3-photo-door {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #152332;
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 10px 28px rgba(21, 35, 50, 0.1);
+}
+.home-stage.v3-home .v3-photo-door:hover,
+.home-stage.v3-home .v3-photo-door:focus-visible {
+  color: #152332;
+  border-color: rgba(120, 196, 229, 0.55);
+}
+.v3-photo-door-media {
+  position: relative;
+  flex: 1 1 124px;
+  min-height: 118px;
+  background-color: #1a2a3a;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 2px solid #1e3a55;
+}
+.v3-photo-door-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 16, 28, 0.42) 0%, rgba(8, 16, 28, 0.16) 46%, rgba(8, 16, 28, 0.5) 100%);
+  pointer-events: none;
+}
+.v3-photo-door-tag {
+  position: absolute;
+  z-index: 1;
+  left: 12px;
+  top: 12px;
+  background: rgba(12, 20, 32, 0.82);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.v3-photo-door-body {
+  padding: 14px 14px 13px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.v3-photo-door-body .v3-stats-entry-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #152332;
+  line-height: 1.2;
+}
+.v3-photo-door-body .v3-stats-entry-sub {
+  margin: 5px 0 0;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: #5b6b7c;
+}
+.v3-photo-door-body .v3-stats-entry-cta {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e3a55;
+}
+.v3-photo-door:hover .v3-stats-entry-cta,
+.v3-photo-door:focus-visible .v3-stats-entry-cta {
+  color: #78c4e5;
+}
+
+.home-stage.v3-home .v3-stats-parent .v3-stats-col-stack .v3-proof.v3-proof-thin {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  text-align: left;
+}
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill strong {
+  display: inline;
+  font-size: 13px;
+  line-height: 1.15;
+  color: #152332;
+}
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill span {
+  font-size: 10.5px;
+  line-height: 1.15;
+  color: #5b6b7c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-stats-parent .v3-stats-mi-panel.mi-enrich {
+    min-height: 0;
+    height: auto;
+  }
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner {
+    /* Phone overlay pad is ~nav clear, already larger than 68px. Keep the eyebrow under the shorter mask. */
+    padding-top: max(72px, calc(var(--amp-title-clear) - 82px));
+  }
+}
+@media (max-width: 640px) {
+  .v3-stats-mi-panel .mi-visual { flex-wrap: wrap; }
+  .home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill span {
+    white-space: normal;
+  }
 }
 
