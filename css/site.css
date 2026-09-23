@@ -9161,9 +9161,18 @@ img[src*="amp-logo-mark"] {
   .view.funnel.client-spec-sheet .hire-card {
     display: flex;
     flex-direction: column;
-    height: 100%;
     padding: 12px 14px 11px;
+  }
+  /* Facility cards can equalize in the grid. Specialty cards must not:
+     min-height:0 + height:100% was collapsing them under the 16/9 stay story. */
+  .view.funnel.trailhead[data-route="client"] .hire-card {
+    height: 100%;
     min-height: 0;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-card,
+  .view.funnel.client-spec-sheet .hire-card {
+    height: auto;
+    min-height: 96px;
   }
   .view.funnel.trailhead[data-route="client"] .hire-card h3,
   .view.funnel.trailhead[data-route="client-specialty"] .hire-card h3,
@@ -12913,9 +12922,29 @@ main .view.page.on > .hero-band,
   white-space: nowrap;
 }
 
-/* Specialty cards: the 900px step grid set min-height:0 and height:100%,
-   which let a short row crush the specialty list under the stay story.
-   Keep a real card row. */
+/* Specialty cards: do not revive the 2169 flex-collapse
+   (hire-card-list { flex:1; min-height:0 } plus flex-shrink:0 on every
+   non-list sibling). That let the 16/9 .v3-ctx eat the list.
+   The sheet scrolls. Cards keep a natural height. Continue stays sticky. */
+.view.funnel.trailhead[data-route="client-specialty"] .hire-sheet,
+.view.funnel.client-spec-sheet .hire-sheet {
+  display: block;
+  max-height: calc(100dvh - var(--amp-title-clear) - 12px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
+.view.funnel.client-spec-sheet .hire-card-list {
+  flex: none;
+  height: auto;
+  min-height: 180px;
+  overflow: visible;
+}
+.view.funnel.trailhead[data-route="client-specialty"] .v3-ctx,
+.view.funnel.client-spec-sheet .v3-ctx {
+  flex: none;
+  height: auto;
+}
 @media (min-width: 900px) {
   .view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
   .view.funnel.client-spec-sheet .hire-card-list {
