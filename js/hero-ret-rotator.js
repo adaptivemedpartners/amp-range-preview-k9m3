@@ -10,7 +10,7 @@
 
   var INTERVAL_MS = 3800;
   var REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
-  var CACHE_V = "2169";
+  var CACHE_V = "2171";
 
   function esc(s) {
     return String(s == null ? "" : s)

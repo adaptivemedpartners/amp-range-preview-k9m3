@@ -1,3 +1,4 @@
+/* amp-build:2171-bridge-blue-stretch */
 /* amp-build:2170-place-stay-bridge-steps */
 /* amp-build:2168-mi-photo-title-clear */
 /* amp-build:2167-l1-wallpaper-under-header */
@@ -12820,6 +12821,129 @@ main .view.page.on > .hero-band,
 @media (max-width: 640px) {
   .v3-bridge-steps {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ========== amp-build:2171-bridge-blue-stretch ==========
+   Left column grows (eyebrow + place-who-stay headline) so it balances
+   the still-there card. Card size and placement stay the 2170 lock.
+   Rotator becomes navy/sky glass (not a charcoal slab, not mint).
+   Bridge band uses the side space. 01–03 steps stretch and go glass.
+   MI title is the locked compensation line; "specialty × state" must
+   not crush inside the old 22ch title measure. */
+
+.home-stage.v3-home .v3-hero .v3-eyebrow {
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+}
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title,
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title-shimmer {
+  font-size: clamp(2.55rem, 4vw, 3.35rem);
+  line-height: 1.05;
+  max-width: 12.5em;
+  margin: 0 0 12px;
+}
+.home-stage.v3-home .v3-hero .v3-sub {
+  font-size: 1.08rem;
+  line-height: 1.45;
+  max-width: 32rem;
+}
+
+/* Still-there card: theme glass + sky/MI blue accents. Dimensions untouched. */
+.v3-still-card {
+  background: rgba(21, 35, 50, 0.38);
+  border: 1px solid rgba(120, 196, 229, 0.34);
+  box-shadow:
+    0 16px 36px rgba(12, 21, 32, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+.v3-still-year {
+  color: #5eb8e0;
+}
+.v3-still-dot.is-on {
+  background: #5eb8e0;
+  box-shadow: 0 0 0 1px rgba(94, 184, 224, 0.5), 0 0 10px rgba(94, 184, 224, 0.55);
+}
+
+/* Bridge uses the side negative space. Title size stays the 2170 clamp. */
+.home-stage.v3-home .v3-stay-bridge {
+  background: linear-gradient(180deg, rgba(21, 35, 50, 0.4) 0%, rgba(26, 44, 63, 0.3) 100%);
+  border-top: 1px solid rgba(120, 196, 229, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: clamp(16px, 1.6vw, 28px);
+  padding-right: clamp(16px, 1.6vw, 28px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.v3-stay-bridge-inner {
+  width: min(1720px, 100%);
+  grid-template-columns: minmax(280px, 0.78fr) minmax(560px, 1.4fr);
+  gap: 16px 48px;
+}
+.v3-stay-mint {
+  color: #5eb8e0;
+}
+.v3-bridge-steps {
+  gap: 18px;
+}
+.v3-bridge-step {
+  padding: 12px 16px 14px;
+  background: rgba(21, 35, 50, 0.22);
+  border: 1px solid rgba(120, 196, 229, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.v3-bridge-num {
+  color: #5eb8e0;
+}
+
+/* MI locked line — drop the 22ch crush so specialty × state stays intact. */
+.home-stage.v3-home .v3-stats-parent .v3-stats-mi-panel .mi-title {
+  max-width: none;
+  width: 100%;
+  padding-right: 38px;
+  font-size: 1.02rem;
+  line-height: 1.28;
+}
+.home-stage.v3-home .v3-stats-parent .mi-spec-state {
+  white-space: nowrap;
+}
+
+/* Specialty cards: the 900px step grid set min-height:0 and height:100%,
+   which let a short row crush the specialty list under the stay story.
+   Keep a real card row. */
+@media (min-width: 900px) {
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
+  .view.funnel.client-spec-sheet .hire-card-list {
+    align-content: start;
+    grid-auto-rows: minmax(112px, auto);
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-card,
+  .view.funnel.client-spec-sheet .hire-card {
+    height: auto;
+    min-height: 112px;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-hero .v3-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+  }
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title,
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title-shimmer {
+    font-size: clamp(1.9rem, 7.8vw, 2.5rem);
+    max-width: none;
+  }
+  .v3-stay-bridge-inner {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 12px;
   }
 }
 
