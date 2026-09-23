@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2172-client-top-clean";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2173-confirm-guide-name";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -32,7 +32,9 @@
     miLiteUnlocked: false,
     jobViews: 0,
     jobWhispered: false,
-    guidePathText: ""
+    guidePathText: "",
+    guide: null,
+    clientMeetingStateTouched: false
   ,
     browseGeo: null,
     softMatch: null,
@@ -1864,16 +1866,6 @@
         try { paintConfirmClientDiscuss(); } catch (err) {}
         var c = document.getElementById("mess-client-mock");
         var bd = state.clientBd;
-        var ownerChip = document.getElementById("confirm-bd-owner-chip");
-        var routeNote = document.getElementById("confirm-bd-route-note");
-        if (ownerChip && bd && bd.ownerLabel) {
-          ownerChip.innerHTML = '<span class="dot"></span> hiring guide · ' + bd.ownerLabel;
-        }
-        if (routeNote) {
-          routeNote.textContent = bd && bd.state
-            ? (bd.state + " · hiring guide " + bd.ownerName)
-            : "";
-        }
         if (c && !c.innerHTML.trim()) {
           var needBit = clientNeedsStamp();
           var messLine = bd
@@ -2361,10 +2353,29 @@
   }
 
   function currentHiringGuide() {
-    if (state.clientBd && state.clientBd.ownerId && BD_OWNER_META[state.clientBd.ownerId]) {
-      return BD_OWNER_META[state.clientBd.ownerId];
-    }
+    var id = (state.guide && state.guide.id) || (state.clientBd && state.clientBd.ownerId) || "";
+    if (id && BD_OWNER_META[id]) return BD_OWNER_META[id];
     return resolveBdOwner(state.clientState || (state.clientBd && state.clientBd.state));
+  }
+
+  /* Territory pick and the meeting state control share this object.
+     Confirmation reads it — it does not keep a separate Aaron default. */
+  function rememberHiringGuide(owner, stateCode) {
+    if (!owner) return null;
+    var prev = state.clientBd || {};
+    var st = String(stateCode || state.clientState || "").toUpperCase();
+    state.guide = BD_OWNER_META[owner.id] || owner;
+    if (st) state.clientState = st;
+    state.clientBd = {
+      state: state.clientState || null,
+      region: state.clientRegion || prev.region || null,
+      ownerId: state.guide.id,
+      ownerName: state.guide.name,
+      ownerLabel: state.guide.label,
+      cc: prev.cc || BD_CC_ALWAYS.slice(),
+      ccEmails: prev.ccEmails || null
+    };
+    return state.guide;
   }
 
   function hiringGuideFirstName(owner) {
@@ -2552,12 +2563,25 @@
   function paintConfirmClientDiscuss() {
     var owner = currentHiringGuide();
     var first = hiringGuideFirstName(owner);
+    var st = String((state.clientBd && state.clientBd.state) || state.clientState || "").toUpperCase();
     var title = $("#confirm-client-title");
     var lede = $("#confirm-client-lede");
     var discussTitle = $("#client-discuss-title");
+    var ownerChip = $("#confirm-bd-owner-chip");
+    var routeNote = $("#confirm-bd-route-note");
     if (title) title.textContent = first ? (first + " has your meeting request.") : "You’re on the list";
     if (lede && owner) {
       lede.innerHTML = "A <strong>hiring guide</strong> owns the next step. You wait; AMP works.";
+    }
+    if (ownerChip) {
+      ownerChip.innerHTML = owner && owner.label
+        ? ('<span class="dot"></span> hiring guide · ' + owner.label)
+        : '<span class="dot"></span> Your hiring guide';
+    }
+    if (routeNote) {
+      routeNote.textContent = st && owner && owner.name
+        ? (st + " · hiring guide " + owner.name)
+        : "";
     }
     if (discussTitle) {
       discussTitle.textContent = first
@@ -2581,6 +2605,11 @@
     var chip = $("#client-bd-owner-chip");
     var note = $("#client-bd-route-note");
     if (!sel || !chip) return;
+    /* name=state is an address autofill token. A restored TX value would
+       swap the territory guide for Aaron without a visitor choice. */
+    if (!state.clientMeetingStateTouched && state.clientBd && state.clientBd.state && sel.value && sel.value !== state.clientBd.state) {
+      sel.value = state.clientBd.state;
+    }
     var owner = resolveBdOwner(sel.value);
     if (!owner) {
       chip.innerHTML = '<span class="dot"></span> Pick a state';
@@ -2592,6 +2621,9 @@
       note.textContent = owner.id === "randy"
         ? "We'll connect you with a hiring guide for this state."
         : "A named hiring guide will stay with you from the first conversation.";
+    }
+    if (state.clientMeetingStateTouched || !state.clientBd) {
+      rememberHiringGuide(owner, sel.value);
     }
   }
 
@@ -2794,15 +2826,8 @@
     if (fullDet) fullDet.open = false;
     if (note) note.textContent = "Your hiring guide stays with you from the first conversation.";
     try { syncClientRidgeCtas(); } catch (e) {}
-    state.clientBd = {
-      state: String(stateCode).toUpperCase(),
-      region: state.clientRegion || null,
-      ownerId: owner.id,
-      ownerName: owner.name,
-      ownerLabel: owner.label,
-      cc: BD_CC_ALWAYS
-    };
-    state.clientState = String(stateCode).toUpperCase();
+    state.clientMeetingStateTouched = false;
+    rememberHiringGuide(owner, stateCode);
     try { stampConciergePath("client-region"); } catch (e) {}
     try { paintClientNeedSelection(); } catch (e1) {}
   }
@@ -5117,6 +5142,13 @@ function syncGuideRoute(route) {
     if (clientForm) {
       var stateSel = $("#client-meeting-state");
       if (stateSel) {
+        stateSel.addEventListener("pointerdown", function () {
+          state.clientMeetingStateTouched = true;
+        }, true);
+        stateSel.addEventListener("keydown", function (ev) {
+          if (ev && (ev.key === "Tab" || ev.key === "Shift" || ev.key === "Escape")) return;
+          state.clientMeetingStateTouched = true;
+        }, true);
         stateSel.addEventListener("change", syncClientBdRoutePreview);
         syncClientBdRoutePreview();
       }
@@ -5128,21 +5160,20 @@ function syncGuideRoute(route) {
           state.clientNeeds = String(fd.get("needs")).split(",").filter(Boolean);
         }
         var needsLabel = clientNeedsStamp() || "Hiring consult";
-        var stCode = String(fd.get("state") || "").toUpperCase();
-        var owner = resolveBdOwner(stCode);
+        var stCode = String((stateSel && stateSel.value) || "").toUpperCase();
+        if (!state.clientMeetingStateTouched && state.clientState) {
+          stCode = String(state.clientState).toUpperCase();
+          if (stateSel) stateSel.value = stCode;
+        }
+        var owner = resolveBdOwner(stCode) || currentHiringGuide();
         if (!owner) {
           if (stateSel) stateSel.focus();
           return;
         }
+        rememberHiringGuide(owner, stCode);
         var cc = hiringGuideCcFields();
-        state.clientBd = {
-          state: stCode,
-          ownerId: owner.id,
-          ownerName: owner.name,
-          ownerLabel: owner.label,
-          cc: cc.cc,
-          ccEmails: cc.ccEmails
-        };
+        state.clientBd.cc = cc.cc;
+        state.clientBd.ccEmails = cc.ccEmails;
         state.clientState = stCode;
         var payload = {
           name: String(fd.get("name") || "").trim(),
