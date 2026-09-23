@@ -222,7 +222,7 @@ window.AMP_CONTENT = {
   ],
   facilitySpecialtyRanks: {
     "fqhc": [
-      { id: "fm", label: "Family Medicine", blurb: "Most common physician hire at FQHCs / CHCs." },
+      { id: "fm", label: "Family Medicine", blurb: "Still-there example: Wayne Memorial Health System (Honesdale, PA)." },
       { id: "pediatrics_general", label: "Pediatrics", blurb: "Core primary-care panel alongside family medicine." },
       { id: "dental", label: "Dentistry", blurb: "On-site dental is a frequent FQHC / CHC seat." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Women’s health — often part-time or contracted." },
@@ -232,6 +232,7 @@ window.AMP_CONTENT = {
       { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Prescriber pool for mental health and SUD." },
     ],
     "cah": [
+      { id: "family_medicine_with_ob", label: "Family Medicine w/ OB", blurb: "Still-there example: Frio Regional Hospital CAH (Pearsall, TX)." },
       { id: "fm", label: "Family Medicine", blurb: "Clinic + a lot of ED coverage in CAH markets." },
       { id: "hospitalist_internal_medicine", label: "Hospitalist", blurb: "Inpatient coverage for ≤25-bed CAHs." },
       { id: "emergency_medicine", label: "Emergency Medicine", blurb: "24/7 ED — employed, locums, or mixed FM/EM." },
@@ -242,9 +243,9 @@ window.AMP_CONTENT = {
       { id: "nurse_practitioner_emergency_medicine", label: "ED NP / PA", blurb: "ED advanced practice coverage." },
     ],
     "community": [
+      { id: "emergency_medicine", label: "Emergency Medicine", blurb: "Still-there example: VCU Community Memorial (South Hill, VA)." },
       { id: "fm", label: "Family Medicine", blurb: "Core for community / rural hospitals." },
       { id: "hospitalist_internal_medicine", label: "Hospitalist / IM", blurb: "Employed inpatient coverage." },
-      { id: "emergency_medicine", label: "Emergency Medicine", blurb: "Consistent ED staffing need." },
       { id: "surgery_general", label: "General Surgery", blurb: "More consistent surgery than CAH." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "OB programs that stay open." },
       { id: "orthopedic_surgery_general", label: "Orthopedics", blurb: "High-demand specialty hire." },
@@ -253,6 +254,7 @@ window.AMP_CONTENT = {
       { id: "gi", label: "Gastroenterology", blurb: "Procedure-heavy community demand." },
     ],
     "system": [
+      { id: "surgery_general", label: "General Surgery", blurb: "Still-there example: Baptist Regional Medical Center (Corbin, KY)." },
       { id: "hospitalist_internal_medicine", label: "Hospitalist / IM", blurb: "Highest-volume employed hospital search." },
       { id: "fm", label: "Family Medicine", blurb: "Employed medical group primary care." },
       { id: "emergency_medicine", label: "Emergency Medicine", blurb: "System ED coverage." },
@@ -261,23 +263,22 @@ window.AMP_CONTENT = {
       { id: "anesthesiology", label: "Anesthesiology", blurb: "Hospital-based anesthesia." },
       { id: "gi", label: "Gastroenterology", blurb: "Procedural demand across the system." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Employed OB/GYN seats." },
-      { id: "surgery_general", label: "General Surgery", blurb: "System surgical coverage." },
       { id: "psychiatry_general", label: "Psychiatry", blurb: "Behavioral health inside the system." },
     ],
     "bh": [
+      { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Still-there example: Family Services of Chemung County (Elmira, NY)." },
       { id: "psychiatry_general", label: "Psychiatry (adult)", blurb: "Hardest physician hire in BH settings." },
       { id: "psychiatry_child_and_adolescent", label: "Child & Adolescent Psychiatry", blurb: "High-need, short supply." },
       { id: "psychiatry_addiction_medicine", label: "Addiction Medicine", blurb: "Addiction programs and CCBHCs." },
       { id: "psychiatry_geriatric", label: "Geriatric Psychiatry", blurb: "Growing older-adult BH need." },
       { id: "fm", label: "Family Medicine (integrated BH)", blurb: "Integrated primary care + BH models." },
-      { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Often the largest prescriber pool." },
       { id: "physician_assistant_psychiatry", label: "PA — Psychiatry", blurb: "Smaller share than PMHNPs." },
       { id: "nurse_practitioner_family_medicine_without_ob", label: "Family NP (integrated)", blurb: "Primary care + BH integration." },
     ],
     "group": [
+      { id: "pediatrics_general", label: "Pediatrics", blurb: "Still-there example: Alliance Pediatrics (Keller, TX)." },
       { id: "fm", label: "Family Medicine", blurb: "Outpatient multi-specialty core." },
       { id: "internal_medicine_general", label: "Internal Medicine", blurb: "Adult primary care feeders." },
-      { id: "pediatrics_general", label: "Pediatrics", blurb: "Panel and referral base." },
       { id: "cards", label: "Cardiology", blurb: "Referral + procedure specialty." },
       { id: "orthopedic_surgery_general", label: "Orthopedics", blurb: "High outpatient procedural volume." },
       { id: "gi", label: "Gastroenterology", blurb: "Procedure and clinic mix." },
@@ -286,6 +287,7 @@ window.AMP_CONTENT = {
       { id: "nurse_practitioner_family_medicine_without_ob", label: "Family NP / PA", blurb: "Largest APP cluster in groups." },
     ],
     "hospital": [
+      { id: "surgery_general", label: "General Surgery", blurb: "Still-there example: Baptist Regional Medical Center (Corbin, KY)." },
       { id: "hospitalist_internal_medicine", label: "Hospitalist / IM", blurb: "Highest-volume employed hospital search." },
       { id: "fm", label: "Family Medicine", blurb: "Employed medical group primary care." },
       { id: "emergency_medicine", label: "Emergency Medicine", blurb: "System ED coverage." },
@@ -294,13 +296,7 @@ window.AMP_CONTENT = {
       { id: "anesthesiology", label: "Anesthesiology", blurb: "Hospital-based anesthesia." },
       { id: "gi", label: "Gastroenterology", blurb: "Procedural demand across the system." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Employed OB/GYN seats." },
-      { id: "surgery_general", label: "General Surgery", blurb: "System surgical coverage." },
       { id: "psychiatry_general", label: "Psychiatry", blurb: "Behavioral health inside the system." },
-    ],
-    "dental": [
-      { id: "dental", label: "Dentistry", blurb: "Dental and DSO seats." },
-      { id: "dental_hygienist", label: "Dental Hygienist", blurb: "Hygiene support roles." },
-      { id: "oral_maxillofacial_surgery", label: "Oral & Maxillofacial Surgery", blurb: "Surgical dental specialty." },
     ],
     "other": [
       { id: "fm", label: "Family Medicine", blurb: "Most common starting point." },

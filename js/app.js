@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2173-confirm-guide-name";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2174-facility-still-there-examples";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2081,50 +2081,64 @@
     }
   }
 
-  /* amp-build:2159 — facility/specialty retention cards swap on selection.
-     Homepage keeps the 2015 peds story once. FQHC uses 2021 Kansas.
-     Critical Access and rural hospital use the 2018 CAH story.
-     Family Medicine on step 3 uses that 2018 story; Pediatrics may reuse 2015. */
+  /* amp-build:2174 — real still-there examples per facility type (unique specialty each).
+     Sources: still-there-5yr-sample-20260923.json PASS scrub + BehavioralHealth/Clinic pool.
+     No physician names/portraits — match homepage rotator scrub style.
+     Frio Regional verified CAH (Flex Monitoring / CMS) though xlsx has no CAH column. */
   var V3_RET = {
-    peds2015: {
-      img: "assets/story-2015-peds-ne.jpg",
-      alt: "Pediatrician who stayed at a Nebraska FQHC",
-      year: "2015 · Pediatrician",
-      role: "Nebraska FQHC",
-      meta: "90 days to identify & place · still serving",
-      foot: "11 YEARS LATER. STILL THERE."
-    },
-    ks2021: {
+    fqhcWayne: {
       img: "assets/story-2021-physician-ks.jpg",
-      alt: "Physician who stayed at a Kansas FQHC",
-      year: "FQHC fit · 2021",
-      role: "Physician · Kansas FQHC",
-      meta: "Placed for fit — still serving the same community",
-      foot: "YEARS LATER. STILL THERE."
+      alt: "Family Medicine placement still serving at an FQHC partner",
+      year: "2013 · Family Medicine",
+      role: "Wayne Memorial Health System",
+      meta: "Honesdale, PA",
+      foot: "12 YEARS LATER. STILL THERE.",
+      specialtyIds: ["fm"]
     },
-    fm2018: {
+    cahFrio: {
       img: "assets/story-2018-fm-ne-cah.jpg",
-      alt: "Family Medicine physician who stayed at a Nebraska Critical Access Hospital",
-      year: "2018 · Family Medicine",
-      role: "Nebraska Critical Access Hospital",
-      meta: "174 days to identify & place · still serving",
-      foot: "8 YEARS LATER. STILL THERE."
+      alt: "Family Medicine with OB placement still serving at a Critical Access Hospital",
+      year: "2013 · Family Medicine w/ OB",
+      role: "Frio Regional Hospital",
+      meta: "Pearsall, TX · Critical Access",
+      foot: "13 YEARS LATER. STILL THERE.",
+      specialtyIds: ["family_medicine_with_ob"]
     },
-    fm2018cah: {
-      img: "assets/story-2018-fm-ne-cah.jpg",
-      alt: "Family Medicine physician who stayed at a Nebraska Critical Access Hospital",
-      year: "CAH fit · 2018",
-      role: "Family Medicine · Nebraska Critical Access Hospital",
-      meta: "174 days to identify & place · still serving",
-      foot: "8 YEARS LATER. STILL THERE."
+    communityVcu: {
+      img: "assets/home-hero-clinic-consult.jpg",
+      alt: "Emergency Medicine placement still serving at a community hospital",
+      year: "2013 · Emergency Medicine",
+      role: "VCU Community Memorial Hospital",
+      meta: "South Hill, VA",
+      foot: "13 YEARS LATER. STILL THERE.",
+      specialtyIds: ["emergency_medicine"]
     },
-    fm2018rural: {
-      img: "assets/story-2018-fm-ne-cah.jpg",
-      alt: "Family Medicine physician who stayed at a Nebraska Critical Access Hospital",
-      year: "Rural hospital fit · 2018",
-      role: "Family Medicine · Nebraska Critical Access Hospital",
-      meta: "174 days to identify & place · still serving",
-      foot: "8 YEARS LATER. STILL THERE."
+    systemBaptist: {
+      img: "assets/story-2015-peds-ne.jpg",
+      alt: "General Surgery placement still serving at a health-system hospital",
+      year: "2012 · General Surgery",
+      role: "Baptist Regional Medical Center",
+      meta: "Corbin, KY",
+      foot: "14 YEARS LATER. STILL THERE.",
+      specialtyIds: ["surgery_general"]
+    },
+    bhChemung: {
+      img: "assets/home-hero-clinic-consult.jpg",
+      alt: "Psychiatric NP placement still serving at a behavioral health organization",
+      year: "2017 · Psychiatric NP",
+      role: "Family Services of Chemung County",
+      meta: "Elmira, NY",
+      foot: "8 YEARS LATER. STILL THERE.",
+      specialtyIds: ["nurse_practitioner_psychiatry"]
+    },
+    groupAlliance: {
+      img: "assets/story-2015-peds-ne.jpg",
+      alt: "Pediatrics placement still serving at a multi-specialty group",
+      year: "2012 · Pediatrics",
+      role: "Alliance Pediatrics",
+      meta: "Keller, TX",
+      foot: "14 YEARS LATER. STILL THERE.",
+      specialtyIds: ["pediatrics_general"]
     },
     proof: {
       img: "assets/home-hero-clinic-consult.jpg",
@@ -2136,19 +2150,38 @@
     }
   };
 
+  var V3_FACILITY_STORY = {
+    fqhc: "fqhcWayne",
+    cah: "cahFrio",
+    community: "communityVcu",
+    system: "systemBaptist",
+    hospital: "systemBaptist",
+    bh: "bhChemung",
+    group: "groupAlliance"
+  };
+
   function v3StoryForFacility(id) {
-    if (id === "fqhc") return V3_RET.ks2021;
-    if (id === "cah") return V3_RET.fm2018cah;
-    if (id === "community") return V3_RET.fm2018rural;
-    return V3_RET.proof;
+    var key = V3_FACILITY_STORY[id];
+    return (key && V3_RET[key]) || V3_RET.proof;
+  }
+
+  function v3StoryMatchesSpecialty(story, specialtyId) {
+    if (!story || !story.specialtyIds) return false;
+    var s = String(specialtyId || "");
+    for (var i = 0; i < story.specialtyIds.length; i++) {
+      if (s === story.specialtyIds[i]) return true;
+    }
+    return false;
   }
 
   function v3StoryForSpecialty(id) {
     var s = String(id || "");
     if (!s) return null;
     if (s.indexOf("custom:") === 0) return V3_RET.proof;
-    if (s === "fm" || s.indexOf("family_medicine") === 0 || s === "hospitalist_family_medicine") return V3_RET.fm2018;
-    if (s.indexOf("pediatr") === 0) return V3_RET.peds2015;
+    var facStory = v3StoryForFacility(state.facility || "");
+    if (facStory && facStory !== V3_RET.proof && v3StoryMatchesSpecialty(facStory, s)) {
+      return facStory;
+    }
     return V3_RET.proof;
   }
 
