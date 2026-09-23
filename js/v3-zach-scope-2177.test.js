@@ -1,5 +1,5 @@
-/* Node smoke: 2177 Zach scope strip, retention order, provider card copy.
-   Finding-someone leads, then the pipe strip, then place-who-stay.
+/* Node smoke: 2177 Zach scope strip, provider card copy, raised row2.
+   2178 puts the place hero first; this file still locks the strip copy.
    Run: node js/v3-zach-scope-2177.test.js */
 var fs = require("fs");
 var path = require("path");
@@ -25,8 +25,8 @@ function checkPage(rel) {
   assert(html.indexOf("<!-- amp-build:2176-specialty-still-there-examples -->") !== -1, rel + " lost 2176 stamp");
   assert(html.indexOf("<!-- amp-build:2175-ok-tn-pca-partners -->") !== -1, rel + " lost 2175 stamp");
   assert(html.indexOf("<!-- amp-build:2174-facility-still-there-examples -->") !== -1, rel + " lost 2174 stamp");
-  assert(html.indexOf("amp-build 2177-zach-scope-strip") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2177"') !== -1, rel + " css cache");
+  assert(html.indexOf("amp-build 2178-hero-first-stack") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2178"') !== -1, rel + " css cache");
   assert(html.indexOf("?v=2176") === -1, rel + " still on 2176 cache");
   assert(html.indexOf("?v=2175") === -1, rel + " still on 2175 cache");
   assert(html.indexOf(">Physicians<") !== -1, rel + " site nav Physicians removed");
@@ -39,8 +39,8 @@ function checkPage(rel) {
   var steps = home.indexOf('class="v3-bridge-steps"');
   var row = home.indexOf('class="v3-stats-parent"');
   assert(finding !== -1 && stripAt !== -1 && hero !== -1, rel + " stack markers");
-  assert(finding < stripAt && stripAt < hero, rel + " finding-someone, Zach strip, then place-who-stay");
-  assert(steps !== -1 && steps < stripAt && hero < row, rel + " steps stay, hero before row2");
+  assert(hero < finding && finding < stripAt && stripAt < row, rel + " place hero, stay line, Zach strip, then row2");
+  assert(steps !== -1 && finding < steps && steps < stripAt, rel + " steps sit with the stay bridge");
   assert(home.indexOf("Finding someone who stays is another.") !== -1, rel + " mint stay line");
   assert(home.indexOf(">01<") !== -1 && home.indexOf(">UNDERSTAND<") !== -1, rel + " step 01");
   assert(home.indexOf(">02<") !== -1 && home.indexOf(">FIND<") !== -1, rel + " step 02");
@@ -79,7 +79,7 @@ assert(css.indexOf("amp-build:2177-zach-scope-strip") !== -1, "css 2177 stamp");
 assert(css.indexOf("amp-build:2176-specialty-still-there-examples") !== -1, "css 2176 stamp");
 assert(css.indexOf("amp-build:2175-ok-tn-pca-partners") !== -1, "css 2175 stamp");
 assert(css.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "css 2174 stamp");
-assert(app.indexOf('__AMP_BUILD = "2177-zach-scope-strip"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2178-hero-first-stack"') !== -1, "app build stamp");
 assert(app.indexOf("amp-build:2174 — real still-there") !== -1, "2174 facility comment");
 assert(css.indexOf(".home-layer-soft-fade") !== -1, "under-header fade remains");
 assert(css.indexOf("transparent 148px") !== -1, "desktop fade falloff unchanged");

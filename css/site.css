@@ -1,3 +1,4 @@
+/* amp-build:2178-hero-first-stack */
 /* amp-build:2177-zach-scope-strip */
 /* amp-build:2176-specialty-still-there-examples */
 /* amp-build:2175-ok-tn-pca-partners */
@@ -13142,6 +13143,51 @@ main .view.page.on > .hero-band,
   .home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich,
   .home-stage.v3-home .v3-stats-parent .v3-photo-door {
     transition: none;
+  }
+}
+
+/* ========== amp-build:2178-hero-first-stack ==========
+   Place hero leads again. Title-below-fade padding returns to the place
+   card (overlay already pads 68px; inner pad finishes past the fade).
+   Stay bridge + Zach scope strip sit tight under that hero — the 2177
+   clearance margin stays off the bridge. Hero copy stays fully opaque.
+   Row2 raise, under-header fade, and layer locks are unchanged. */
+
+.home-stage.v3-home .v3-hero.v3-place-card,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-copy,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-still-rotator {
+  opacity: 1;
+}
+
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+  padding-top: calc(var(--amp-title-clear) - 68px);
+  padding-bottom: 8px;
+}
+
+.home-stage.v3-home .v3-stay-bridge {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+
+.home-stage.v3-home .v3-zach-scope.amp-zach-scope-strip {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner,
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+    padding-top: max(72px, calc(var(--amp-title-clear) - 82px));
+    padding-bottom: 8px;
+  }
+  .home-stage.v3-home .v3-stay-bridge {
+    margin-top: 0;
+    padding-top: 8px;
+    padding-bottom: 4px;
   }
 }
 

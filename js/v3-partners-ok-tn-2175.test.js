@@ -19,19 +19,19 @@ function sliceBetween(html, startNeedle, endNeedle, label) {
 }
 
 var expected = [
-  ["assets/partners/adventist-health.png?v=2177", "Adventist Health"],
-  ["assets/partners/okpca.png?v=2177", "Oklahoma Primary Care Association"],
-  ["assets/partners/tenet-health.png?v=2177", "Tenet Health"],
-  ["assets/partners/chs.png?v=2177", "Community Health Systems"],
-  ["assets/partners/tpca.png?v=2177", "Tennessee Primary Care Association"],
-  ["assets/partners/shriners.png?v=2177", "Shriners Hospitals for Children"]
+  ["assets/partners/adventist-health.png?v=2178", "Adventist Health"],
+  ["assets/partners/okpca.png?v=2178", "Oklahoma Primary Care Association"],
+  ["assets/partners/tenet-health.png?v=2178", "Tenet Health"],
+  ["assets/partners/chs.png?v=2178", "Community Health Systems"],
+  ["assets/partners/tpca.png?v=2178", "Tennessee Primary Care Association"],
+  ["assets/partners/shriners.png?v=2178", "Shriners Hospitals for Children"]
 ];
 
 function checkPartners(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
   assert(html.indexOf("<!-- amp-build:2175-ok-tn-pca-partners -->") !== -1, rel + " missing 2175 stamp");
   assert(html.indexOf("<!-- amp-build:2174-facility-still-there-examples -->") !== -1, rel + " lost 2174 stamp");
-  assert(html.indexOf("amp-build 2177-zach-scope-strip") !== -1, rel + " chip");
+  assert(html.indexOf("amp-build 2178-hero-first-stack") !== -1, rel + " chip");
   assert(html.indexOf("?v=2174") === -1, rel + " still on 2174 cache");
   var grid = sliceBetween(html, 'class="home-partners-grid"', "</div>", rel + " partners");
   var logos = grid.match(/<img class="partner-logo"[^>]*>/g) || [];
@@ -56,7 +56,7 @@ var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(css.indexOf("amp-build:2175-ok-tn-pca-partners") !== -1, "css 2175 stamp");
 assert(css.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "css lost 2174 stamp");
-assert(app.indexOf('__AMP_BUILD = "2177-zach-scope-strip"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2178-hero-first-stack"') !== -1, "app build stamp");
 assert(app.indexOf("V3_FACILITY_STORY") !== -1, "2174 facility stories removed");
 assert(app.indexOf("amp-build:2174 — real still-there") !== -1, "2174 facility comment removed");
 
