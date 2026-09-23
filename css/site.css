@@ -12614,35 +12614,38 @@ main .view.page.on > .hero-band,
   }
 }
 
-/* amp-build:2169 — facility/specialty Continue stays reachable.
-   The trailhead sheet used overflow-y:hidden, so .v3-ctx pushed Continue
-   below the clip. The card list scrolls; Continue stays in the sheet. */
+/* amp-build:2170 — sheet scrolls; the card list keeps its own height.
+   The old flex column let the Step 3 stay story consume the sheet and
+   shrink the specialty cards to a blank band above “Matched retention”.
+   Cards stay in normal flow. Continue is sticky. */
 .view.funnel.trailhead[data-route="client"] .hire-sheet,
 .view.funnel.trailhead[data-route="client-specialty"] .hire-sheet {
-  display: flex;
-  flex-direction: column;
+  display: block;
   max-height: calc(100dvh - var(--amp-title-clear) - 12px);
   overflow-x: hidden;
   overflow-y: auto;
   padding-bottom: 14px;
   scrollbar-width: thin;
 }
-.view.funnel.trailhead[data-route="client"] .hire-sheet > :not(.hire-card-list),
-.view.funnel.trailhead[data-route="client-specialty"] .hire-sheet > :not(.hire-card-list) {
-  flex-shrink: 0;
-}
 .view.funnel.trailhead[data-route="client"] .hire-card-list,
-.view.funnel.trailhead[data-route="client-specialty"] .hire-card-list {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
+.view.funnel.client-spec-sheet .hire-card-list {
+  flex: none;
+  height: auto;
+  min-height: 180px;
+  overflow: visible;
+}
+.view.funnel.trailhead[data-route="client"] .hire-card,
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card,
+.view.funnel.client-spec-sheet .hire-card {
+  height: auto;
+  min-height: 88px;
 }
 .view.funnel.trailhead[data-route="client"] .client-spec-continue-wrap,
 .view.funnel.trailhead[data-route="client-specialty"] .client-spec-continue-wrap {
   position: sticky;
   bottom: 0;
   z-index: 6;
-  flex: 0 0 auto;
   margin-top: 12px;
   padding: 10px 0 8px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 42%);
@@ -12764,25 +12767,8 @@ main .view.page.on > .hero-band,
   color: rgba(213, 224, 234, 0.88);
 }
 
-/* Specialty list was flex-shrinking to 0 under the 16/9 stay story.
-   Keep a real card row, cap that story, and leave Continue sticky. */
-.view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
-.view.funnel.client-spec-sheet .hire-card-list {
-  flex: 1 1 auto;
-  min-height: 220px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  align-content: start;
-  grid-auto-rows: minmax(96px, auto);
-}
-.view.funnel.trailhead[data-route="client"] .hire-card-list {
-  min-height: 160px;
-}
-.view.funnel.trailhead[data-route="client-specialty"] .hire-card,
-.view.funnel.client-spec-sheet .hire-card {
-  height: auto;
-  min-height: 96px;
-}
+/* Cap the Step 3 stay story so it does not tower over the cards.
+   The list itself is not a flex child fighting that story for height. */
 .view.funnel.trailhead[data-route="client-specialty"] .client-spec-more,
 .view.funnel.client-spec-sheet .client-spec-more {
   grid-column: 1 / -1;
@@ -12834,10 +12820,6 @@ main .view.page.on > .hero-band,
 @media (max-width: 640px) {
   .v3-bridge-steps {
     grid-template-columns: 1fr;
-  }
-  .view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
-  .view.funnel.client-spec-sheet .hire-card-list {
-    min-height: 180px;
   }
 }
 

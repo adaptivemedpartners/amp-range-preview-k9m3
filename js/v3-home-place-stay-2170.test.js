@@ -24,13 +24,14 @@ var rot = fs.readFileSync(path.join(ROOT, "js/hero-ret-rotator.js"), "utf8");
 var content = fs.readFileSync(path.join(ROOT, "js/content.js"), "utf8");
 
 assert(html.indexOf("<!-- amp-build:2170-place-stay-bridge-steps -->") !== -1, "html stamp");
-assert(html.indexOf('href="css/site.css?v=2170"') !== -1, "css cache bust");
-assert(html.indexOf('src="js/app.js?v=2170"') !== -1, "app cache bust");
-assert(html.indexOf('src="js/hero-ret-rotator.js?v=2170"') !== -1, "rotator cache bust");
+assert(html.indexOf('href="css/site.css?v=2170b"') !== -1, "css cache bust");
+assert(html.indexOf('src="js/app.js?v=2170b"') !== -1, "app cache bust");
+assert(html.indexOf('src="js/hero-ret-rotator.js?v=2170b"') !== -1, "rotator cache bust");
 assert(html.indexOf("amp-build 2170-place-stay-bridge-steps") !== -1, "chip");
 assert(app.indexOf('__AMP_BUILD = "2170-place-stay-bridge-steps"') !== -1, "app build stamp");
 assert(css.indexOf("amp-build:2170-place-stay-bridge-steps") !== -1, "css stamp");
 assert(html.indexOf("?v=2169") === -1, "html still on 2169 cache");
+assert(html.indexOf("?v=2170\"") === -1 && html.indexOf("?v=2170'") === -1, "html assets still on unbusted 2170");
 assert(rot.indexOf("INTERVAL_MS = 3800") !== -1, "fade interval ~3.8s");
 assert(rot.indexOf("mouseenter") !== -1 && rot.indexOf("paused = true") !== -1, "pause on hover");
 
@@ -76,8 +77,8 @@ assert(home.indexOf(">01<") !== -1 && home.indexOf(">02<") !== -1 && home.indexO
 var row = sliceBetween(html, 'class="v3-stats-parent"', 'class="home-partners', "row2");
 assert(row.indexOf("mi-enrich cw-c") !== -1, "colorway C class");
 assert(row.indexOf('href="/market-intelligence"') !== -1, "MI href");
-assert(row.indexOf("amp-path-cand-nurses.jpg?v=2170") !== -1, "physician photo");
-assert(row.indexOf("amp-path-client-hallway.jpg?v=2170") !== -1, "hiring photo");
+assert(row.indexOf("amp-path-cand-nurses.jpg?v=2170b") !== -1, "physician photo");
+assert(row.indexOf("amp-path-client-hallway.jpg?v=2170b") !== -1, "hiring photo");
 assert(row.indexOf("v3-proof-thin") !== -1, "thin pills");
 assert(row.indexOf("<strong>87%</strong>") !== -1, "87 pill");
 assert(row.indexOf("<strong>1.7</strong>") !== -1, "1.7 pill");
@@ -99,13 +100,18 @@ assert(css.indexOf(".v3-bridge-steps") !== -1, "bridge step rules");
 assert(css.indexOf("font-size: clamp(1.15rem, 1.7vw, 1.45rem)") !== -1, "smaller bridge title");
 assert(css.indexOf('url("../assets/home-hero-clinic-consult.jpg?v=2170")') !== -1, "wallpaper cache");
 
-var specList = css.indexOf('[data-route="client-specialty"] .hire-card-list');
-assert(specList !== -1, "specialty list rule");
-assert(css.indexOf("min-height: 220px") !== -1, "specialty cards keep a real row");
+var sheetFix = css.slice(css.indexOf("amp-build:2170 — sheet scrolls"));
+assert(sheetFix.indexOf("amp-build:2170 — sheet scrolls") === 0, "sheet fix present");
+assert(sheetFix.indexOf("min-height: 0") === -1, "card list must not flex-collapse to 0");
+assert(sheetFix.indexOf("flex: 1 1 auto") === -1, "card list must not flex-grow against the stay story");
+assert(sheetFix.indexOf("flex-shrink: 0") === -1, "siblings must not lock the story at full height");
+assert(sheetFix.indexOf("overflow-y: auto") !== -1, "sheet scrolls");
+assert(sheetFix.indexOf("min-height: 180px") !== -1, "card list keeps a visible row");
+assert(sheetFix.indexOf("flex: none") !== -1, "card list stays in normal flow");
 assert(css.indexOf("max-height: 110px") !== -1, "specialty stay story is capped");
 assert(css.indexOf("#client-spec-continue") !== -1, "specialty continue stays addressable");
 assert(css.indexOf("#client-facility-continue") !== -1, "facility continue stays addressable");
-assert(css.indexOf("position: sticky") !== -1, "continue wrap stays on screen");
+assert(sheetFix.indexOf("position: sticky") !== -1, "continue wrap stays on screen");
 
 var facHandler = app.slice(app.indexOf('var fac = raw.closest("[data-facility]")'), app.indexOf('var cs = raw.closest("[data-client-spec]")'));
 assert(facHandler.indexOf("paintClientFacilityCtx()") !== -1, "facility context still paints");
