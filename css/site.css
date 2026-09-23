@@ -1,3 +1,4 @@
+/* amp-build:2167-l1-wallpaper-under-header */
 /* amp-build:2166-tuck-opaque-soft */
 /* amp-build:2165-row2-nested-tuck */
 /* amp-build:2161-stats-mi-row */
@@ -11406,38 +11407,55 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   display: none !important;
 }
 
-/* Soft tuck under header (2166): FIXED overlay ABOVE L2 (z 280), BELOW nav (300).
-   2165 wallpaper+mask still let cards show under nav — mask softened too early and
-   hit-testing hid the real paint issue. Use OPAQUE scene color through nav height,
-   then soft alpha fade (no mask-image). Soft edge — not a hard cut bar. */
+/* Soft tuck under header (2167): FIXED overlay ABOVE L2 (z 280), BELOW nav (300).
+   2166 opaque #152332 slab through nav height chopped the clinic photo into a hard
+   navy band that read as "picture is part of L3 / cut off."
+   Also: a short-height wallpaper clone with background-size:cover re-zooms the photo
+   vs full-viewport L1 — that mid-image chop made the scene look glued to the header.
+   Fix: full-viewport wallpaper clone (same cover/position as L1) + mask that only
+   reveals the under-header band. L2 cards still tuck; L1 reads continuous. No opaque slab. */
 .home-layer-soft-fade {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: calc(72px + 56px);
+  /* MUST match L1 viewport height so cover + center-right align pixel-for-pixel */
+  height: 100%;
+  height: 100dvh;
   z-index: 280;
   pointer-events: none;
   isolation: isolate;
-  -webkit-mask-image: none;
-  mask-image: none;
-  /* Layered: opaque veil through header, soft dissolve below, wallpaper match */
-  background-color: #152332;
+  /* Exact L1 wallpaper match — scene pixels, not a navy chop bar */
+  background-color: #1a2a3a;
   background-image:
-    linear-gradient(
-      180deg,
-      #152332 0%,
-      #152332 64px,
-      rgba(21, 35, 50, 0.92) 78px,
-      rgba(21, 35, 50, 0.55) 96px,
-      rgba(21, 35, 50, 0.2) 112px,
-      rgba(21, 35, 50, 0) 100%
-    ),
-    linear-gradient(105deg, rgba(15,27,40,.55) 0%, rgba(15,27,40,.2) 50%, rgba(15,27,40,0) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2166");
-  background-size: auto, cover, cover;
+    linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
+    linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
+    url("../assets/home-hero-clinic-consult.jpg?v=2167");
+  background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
+  /* Only the top band paints; rest of full-viewport clone is masked away.
+     Solid through nav height so L2 cannot show under chrome; soft dissolve below. */
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0,
+    #000 72px,
+    rgba(0, 0, 0, 0.94) 86px,
+    rgba(0, 0, 0, 0.55) 104px,
+    rgba(0, 0, 0, 0.18) 122px,
+    transparent 148px,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0,
+    #000 72px,
+    rgba(0, 0, 0, 0.94) 86px,
+    rgba(0, 0, 0, 0.55) 104px,
+    rgba(0, 0, 0, 0.18) 122px,
+    transparent 148px,
+    transparent 100%
+  );
 }
 
 /* Layer 1: wallpaper stays fixed full viewport */
@@ -11624,8 +11642,30 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
     flex: 1 1 calc(50% - 8px);
     min-width: 120px;
   }
+  /* Keep full-viewport height (cover alignment with L1); shorten mask for shorter nav */
   .home-layer-soft-fade {
-    height: calc(56px + 56px);
+    height: 100%;
+    height: 100dvh;
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      #000 0,
+      #000 56px,
+      rgba(0, 0, 0, 0.94) 70px,
+      rgba(0, 0, 0, 0.55) 90px,
+      rgba(0, 0, 0, 0.18) 108px,
+      transparent 132px,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      #000 0,
+      #000 56px,
+      rgba(0, 0, 0, 0.94) 70px,
+      rgba(0, 0, 0, 0.55) 90px,
+      rgba(0, 0, 0, 0.18) 108px,
+      transparent 132px,
+      transparent 100%
+    );
   }
 }
 
@@ -11894,7 +11934,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   margin-bottom: 12px;
 }
 
-/* amp-build:2166 — reinforce fade above any L2 stacking */
+/* amp-build:2167 — reinforce fade above any L2 stacking */
 .home-stage.v3-home .home-overlay,
 .home-stage.v3-home .v3-frame,
 .home-stage.v3-home .v3-stats-parent {
