@@ -1,3 +1,4 @@
+/* amp-build:2177-zach-scope-strip */
 /* amp-build:2176-specialty-still-there-examples */
 /* amp-build:2175-ok-tn-pca-partners */
 /* amp-build:2174-facility-still-there-examples */
@@ -13017,5 +13018,130 @@ main .view.page.on > .hero-band,
 .view[data-route="client-region"] .client-territory-map .region-map-intro {
   justify-content: flex-end;
   margin-bottom: 4px;
+}
+
+/* ========== amp-build:2177-zach-scope-strip ==========
+   Stay line leads. Zach scope pipe sits under that block.
+   Place-who-stay hero + still-there rotator follow, pulled up.
+   Place-card copy stays fully opaque. Under-header fade is unchanged.
+   Row2 MI + provider + hiring cards get a slight raise and a soft shadow. */
+
+.home-stage.v3-home .v3-stay-bridge {
+  margin-top: calc(var(--amp-title-clear) - 68px);
+  margin-bottom: 0;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+
+.home-stage.v3-home .v3-zach-scope.amp-zach-scope-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: min(1720px, 100%);
+  margin: 10px auto 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: clamp(12.5px, 1.15vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.045em;
+  line-height: 1.4;
+  color: rgba(226, 232, 240, 0.82);
+  cursor: default;
+  user-select: none;
+  text-shadow: 0 1px 2px rgba(8, 14, 22, 0.45);
+}
+
+.v3-zach-scope .v3-zach-item {
+  white-space: nowrap;
+}
+
+.v3-zach-scope .v3-zach-pipe {
+  display: inline-block;
+  margin: 0 0.62em;
+  color: rgba(226, 232, 240, 0.42);
+  font-weight: 300;
+}
+
+.home-stage.v3-home .v3-hero.v3-place-card,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-copy,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-still-rotator {
+  opacity: 1;
+}
+
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner,
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+  padding-top: 6px;
+  padding-bottom: 8px;
+}
+
+.home-stage.v3-home .v3-stats-parent {
+  padding-top: 18px;
+}
+
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich,
+.home-stage.v3-home .v3-stats-parent .v3-photo-door {
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich {
+  transform: translateY(-4px);
+  border: 1px solid rgba(198, 224, 240, 0.55);
+  box-shadow:
+    0 10px 24px rgba(12, 21, 32, 0.22),
+    0 2px 4px rgba(12, 21, 32, 0.12);
+}
+
+.home-stage.v3-home .v3-stats-parent .v3-photo-door {
+  transform: translateY(-8px);
+  border: 1px solid rgba(30, 58, 85, 0.35);
+  box-shadow:
+    0 12px 26px rgba(12, 21, 32, 0.2),
+    0 2px 5px rgba(12, 21, 32, 0.1);
+}
+
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich:hover,
+.home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich:focus-visible {
+  transform: translateY(-6px);
+  box-shadow:
+    0 16px 34px rgba(12, 21, 32, 0.28),
+    0 2px 6px rgba(12, 21, 32, 0.12);
+}
+
+.home-stage.v3-home .v3-stats-parent .v3-photo-door:hover,
+.home-stage.v3-home .v3-stats-parent .v3-photo-door:focus-visible {
+  transform: translateY(-10px);
+  border-color: rgba(30, 58, 85, 0.55);
+  box-shadow:
+    0 18px 36px rgba(12, 21, 32, 0.26),
+    0 3px 8px rgba(12, 21, 32, 0.12);
+}
+
+@media (max-width: 720px) {
+  .home-stage.v3-home .v3-zach-scope.amp-zach-scope-strip {
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    row-gap: 4px;
+  }
+  .v3-zach-scope .v3-zach-pipe {
+    margin: 0 0.38em;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner,
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+    padding-top: 6px;
+    padding-bottom: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-stage.v3-home .v3-stats-parent a.v3-stats-mi-panel.mi-enrich,
+  .home-stage.v3-home .v3-stats-parent .v3-photo-door {
+    transition: none;
+  }
 }
 
