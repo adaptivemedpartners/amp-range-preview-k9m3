@@ -1,4 +1,4 @@
-/* amp-build:2169-years-rotate-bridge */
+/* amp-build:2170-place-stay-bridge-steps */
 /* amp-build:2168-mi-photo-title-clear */
 /* amp-build:2167-l1-wallpaper-under-header */
 /* amp-build:2166-tuck-opaque-soft */
@@ -11114,7 +11114,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   background-image:
     linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
     linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2169");
+    url("../assets/home-hero-clinic-consult.jpg?v=2170");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -11432,7 +11432,7 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   background-image:
     linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
     linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2169");
+    url("../assets/home-hero-clinic-consult.jpg?v=2170");
   background-size: cover, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
@@ -12650,5 +12650,194 @@ main .view.page.on > .hero-band,
 .view.funnel.trailhead[data-route="client"] #client-facility-continue,
 .view.funnel.trailhead[data-route="client-specialty"] #client-spec-continue {
   visibility: visible;
+}
+
+/* ========== amp-build:2170-place-stay-bridge-steps ==========
+   Hero: 2168-scale "We place physicians who stay." + classic v3-sub.
+   Rotator stays the large 2169 card, pulled into the headline band.
+   Bridge: smaller stay line LEFT, 01 Understand / 02 Find / 03 Match RIGHT.
+   Row2 parent moves up. Specialty cards must not collapse under the stay story. */
+
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+  grid-template-columns: minmax(260px, 1fr) minmax(380px, 470px);
+  justify-content: start;
+  align-items: center;
+  width: min(1040px, calc(100% - 8px));
+  max-width: 1040px;
+  margin-left: clamp(4px, 1.6vw, 28px);
+  margin-right: auto;
+  gap: 18px 32px;
+  padding-top: calc(var(--amp-title-clear) - 68px);
+  padding-bottom: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  box-sizing: border-box;
+}
+.home-stage.v3-home .v3-hero-split > .v3-hero-copy,
+.home-stage.v3-home .v3-years-copy {
+  grid-column: 1;
+  min-width: 0;
+}
+.home-stage.v3-home .v3-still-rotator {
+  grid-column: 2;
+  width: 100%;
+  max-width: 470px;
+  justify-self: start;
+}
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title,
+.home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title-shimmer {
+  display: block;
+  margin: 0 0 10px;
+  max-width: 18em;
+  font-family: inherit;
+  font-weight: 650;
+  font-size: clamp(1.7rem, 4.2vw, 2.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.home-stage.v3-home .v3-hero .v3-sub {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #d5e0ea;
+}
+
+.home-stage.v3-home .v3-stay-bridge {
+  margin-top: 0;
+  margin-bottom: 8px;
+  padding: 12px clamp(14px, 2vw, 28px);
+}
+.v3-stay-bridge-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.95fr);
+  gap: 10px 28px;
+  align-items: center;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+.v3-stay-title {
+  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+  line-height: 1.2;
+}
+.v3-stay-sub {
+  margin: 6px 0 0;
+  max-width: 38rem;
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+.v3-bridge-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v3-bridge-step {
+  margin: 0;
+  padding: 8px 10px 9px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(143, 206, 187, 0.32);
+}
+.v3-bridge-num {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #8fcebb;
+}
+.v3-bridge-name {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+.v3-bridge-blurb {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  line-height: 1.3;
+  color: rgba(213, 224, 234, 0.88);
+}
+
+/* Specialty list was flex-shrinking to 0 under the 16/9 stay story.
+   Keep a real card row, cap that story, and leave Continue sticky. */
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
+.view.funnel.client-spec-sheet .hire-card-list {
+  flex: 1 1 auto;
+  min-height: 220px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  align-content: start;
+  grid-auto-rows: minmax(96px, auto);
+}
+.view.funnel.trailhead[data-route="client"] .hire-card-list {
+  min-height: 160px;
+}
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card,
+.view.funnel.client-spec-sheet .hire-card {
+  height: auto;
+  min-height: 96px;
+}
+.view.funnel.trailhead[data-route="client-specialty"] .client-spec-more,
+.view.funnel.client-spec-sheet .client-spec-more {
+  grid-column: 1 / -1;
+}
+.view.funnel.trailhead[data-route="client-specialty"] .v3-ctx:not(.slim) .v3-ctx-media,
+.view.funnel.client-spec-sheet .v3-ctx:not(.slim) .v3-ctx-media {
+  aspect-ratio: auto;
+  height: 96px;
+  min-height: 88px;
+  max-height: 110px;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner.v3-hero-split {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    gap: 18px;
+    padding-top: max(72px, calc(var(--amp-title-clear) - 82px));
+    padding-bottom: 18px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .home-stage.v3-home .v3-hero-split > .v3-hero-copy,
+  .home-stage.v3-home .v3-years-copy,
+  .home-stage.v3-home .v3-still-rotator {
+    grid-column: 1;
+    max-width: none;
+  }
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title,
+  .home-stage.v3-home .v3-hero h1.explore-title.v3-hero-title-shimmer {
+    max-width: none;
+    font-size: clamp(1.65rem, 7.4vw, 2.15rem);
+  }
+  .v3-stay-bridge-inner {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .home-stage.v3-home .v3-stay-bridge {
+    padding: 14px 16px 16px;
+    margin-bottom: 8px;
+  }
+  .v3-stay-title {
+    font-size: clamp(1.12rem, 4.8vw, 1.4rem);
+  }
+}
+@media (max-width: 640px) {
+  .v3-bridge-steps {
+    grid-template-columns: 1fr;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
+  .view.funnel.client-spec-sheet .hire-card-list {
+    min-height: 180px;
+  }
 }
 
