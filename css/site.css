@@ -1,3 +1,4 @@
+/* amp-build:2166-tuck-opaque-soft */
 /* amp-build:2165-row2-nested-tuck */
 /* amp-build:2161-stats-mi-row */
 /* amp-build:2158-v3-home-client-funnel */
@@ -11405,46 +11406,38 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   display: none !important;
 }
 
-/* Soft tuck under header (2165): wallpaper clone + soft mask edge.
-   2164 failed because (1) translucent navy tint still showed white cards sliding
-   under transparent header, and (2) mask-image on #composed-homepage is
-   element-relative — it scrolls away with L2, so it never stays under the nav. */
+/* Soft tuck under header (2166): FIXED overlay ABOVE L2 (z 280), BELOW nav (300).
+   2165 wallpaper+mask still let cards show under nav — mask softened too early and
+   hit-testing hid the real paint issue. Use OPAQUE scene color through nav height,
+   then soft alpha fade (no mask-image). Soft edge — not a hard cut bar. */
 .home-layer-soft-fade {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: calc(64px + 72px);
-  z-index: 250;
+  height: calc(72px + 56px);
+  z-index: 280;
   pointer-events: none;
-  /* Match Layer1 wallpaper so content is covered by scene pixels, not a tint bar */
-  background-color: #1a2a3a;
+  isolation: isolate;
+  -webkit-mask-image: none;
+  mask-image: none;
+  /* Layered: opaque veil through header, soft dissolve below, wallpaper match */
+  background-color: #152332;
   background-image:
-    linear-gradient(180deg, rgba(11,18,32,.42) 0%, rgba(11,18,32,.18) 32%, rgba(11,18,32,.28) 58%, rgba(11,18,32,.55) 100%),
-    linear-gradient(105deg, rgba(15,27,40,.78) 0%, rgba(15,27,40,.38) 42%, rgba(15,27,40,.12) 100%),
-    url("../assets/home-hero-clinic-consult.jpg?v=2165");
-  background-size: cover, cover, cover;
+    linear-gradient(
+      180deg,
+      #152332 0%,
+      #152332 64px,
+      rgba(21, 35, 50, 0.92) 78px,
+      rgba(21, 35, 50, 0.55) 96px,
+      rgba(21, 35, 50, 0.2) 112px,
+      rgba(21, 35, 50, 0) 100%
+    ),
+    linear-gradient(105deg, rgba(15,27,40,.55) 0%, rgba(15,27,40,.2) 50%, rgba(15,27,40,0) 100%),
+    url("../assets/home-hero-clinic-consult.jpg?v=2166");
+  background-size: auto, cover, cover;
   background-position: center, center, center right;
   background-repeat: no-repeat;
-  /* Soft bottom — no hard opaque cut bar */
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    #000 0,
-    #000 56px,
-    rgba(0, 0, 0, 0.92) 72px,
-    rgba(0, 0, 0, 0.55) 100px,
-    rgba(0, 0, 0, 0.2) 120px,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    180deg,
-    #000 0,
-    #000 56px,
-    rgba(0, 0, 0, 0.92) 72px,
-    rgba(0, 0, 0, 0.55) 100px,
-    rgba(0, 0, 0, 0.2) 120px,
-    transparent 100%
-  );
 }
 
 /* Layer 1: wallpaper stays fixed full viewport */
@@ -11899,5 +11892,12 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   z-index: 2;
   margin-top: 18px;
   margin-bottom: 12px;
+}
+
+/* amp-build:2166 — reinforce fade above any L2 stacking */
+.home-stage.v3-home .home-overlay,
+.home-stage.v3-home .v3-frame,
+.home-stage.v3-home .v3-stats-parent {
+  z-index: 2;
 }
 
