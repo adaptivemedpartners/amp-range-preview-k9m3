@@ -1,3 +1,4 @@
+/* amp-build:2163-nested-stats-card */
 /* amp-build:2161-stats-mi-row */
 /* amp-build:2158-v3-home-client-funnel */
 /* amp-build:2157-mi-map-pinch-zoom */
@@ -11631,5 +11632,145 @@ body.mi-mobile #placeHoverCard .hc-mobile-hint,
   .v3-stats-3col .v3-stats-mi-panel {
     padding: 14px 16px;
     min-height: 56px;
+  }
+}
+
+
+/* ========== amp-build:2163-nested-stats-card — full-bleed place card + full-width parent nesting 3 subcards ========== */
+/*
+  ROW 1 — .v3-place-card / .v3-hero: one big card stretched across full viewport; place copy fades into wallpaper.
+  ROW 2 — .v3-stats-parent: ONE full-viewport-width parent card. Inside: three nested subcards
+           (MI navy | Physicians entry + pills under | Hiring Orgs entry + pills under).
+  Layers unchanged: L1 fixed wallpaper, L2 scrolling content, L3 fixed header + soft fade.
+*/
+
+/* ROW 1 — full-bleed place card that dissolves into wallpaper (not a hard panel) */
+.home-stage.v3-home .v3-hero.v3-place-card {
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+  margin: 0;
+  border-radius: 0;
+  min-height: min(52vh, 480px);
+  background: transparent !important; /* wallpaper shows through; card = gradient only */
+  box-shadow: none;
+  overflow: visible;
+}
+.home-stage.v3-home .v3-hero.v3-place-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(105deg, rgba(15,27,40,.88) 0%, rgba(15,27,40,.48) 40%, rgba(15,27,40,.14) 68%, rgba(15,27,40,0) 100%),
+    linear-gradient(180deg, rgba(11,18,32,.22) 0%, rgba(11,18,32,.06) 55%, rgba(11,18,32,0) 100%);
+  border-radius: 0;
+}
+.home-stage.v3-home .v3-hero.v3-place-card .v3-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  padding: 28px clamp(18px, 4vw, 48px) 36px;
+}
+
+/* ROW 2 — full viewport width parent card */
+.home-stage.v3-home .v3-stats-parent {
+  position: relative;
+  z-index: 3;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  align-self: stretch;
+  box-sizing: border-box;
+  padding: 16px clamp(12px, 2.2vw, 28px);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 0;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Nested grid lives inside the full-bleed parent — not free-floating page columns */
+.home-stage.v3-home .v3-stats-parent .v3-stats-3col,
+.home-stage.v3-home .v3-stats-parent .v3-stats-nested {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+  align-self: stretch !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: grid;
+  grid-template-columns: minmax(180px, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+}
+
+.home-stage.v3-home .v3-stats-subcard,
+.home-stage.v3-home .v3-stats-col.v3-stats-subcard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px;
+  border-radius: 14px;
+  background: #f3f7fb;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+}
+
+.v3-stats-entry {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 2px;
+}
+.v3-stats-entry-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #152332;
+}
+.v3-stats-entry-sub {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: #5b6b7c;
+}
+.v3-stats-entry-cta {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e3a55;
+}
+.v3-stats-entry:hover .v3-stats-entry-cta {
+  color: #78c4e5;
+}
+
+/* Keep MI dominant navy nested subcard */
+.home-stage.v3-home .v3-stats-parent .v3-stats-mi-panel {
+  min-height: 100%;
+}
+
+/* Doors stay below row 2 — keep prior desk placement, not full-bleed */
+.home-stage.v3-home .v3-doors {
+  margin-top: 14px;
+}
+
+@media (max-width: 900px) {
+  .home-stage.v3-home .v3-stats-parent .v3-stats-3col,
+  .home-stage.v3-home .v3-stats-parent .v3-stats-nested {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .home-stage.v3-home .v3-hero.v3-place-card {
+    min-height: 0;
+  }
+  .home-stage.v3-home .v3-stats-parent {
+    padding: 12px 10px;
   }
 }
