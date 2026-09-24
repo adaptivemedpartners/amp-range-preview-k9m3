@@ -1,3 +1,4 @@
+/* amp-build:2188-client-spec-side-by-side */
 /* amp-build:2187-client-spec-3x3-other-row */
 /* amp-build:2185-drop-nationwide-specialty-strip */
 /* amp-build:2184-specialty-under-sub-sky-bridge-restore */
@@ -13483,3 +13484,185 @@ body.amp-footer-endcap::after {
    Client step 3 (#client-specialty-ctx) photo band: 96→180px (max 220).
    Shared by all specialty still-there paints (Alliance Pediatrics + siblings).
    background-position center top kept so faces stay in frame. */
+
+
+/* ========== amp-build:2188-client-spec-side-by-side ==========
+   Client path steps 3/4/5: full 16:9 desktop width + left/right columns
+   so specialty picker, territory, and meeting form fit a laptop without
+   stacking the critical preview off-screen. Mobile stays single column.
+   SoftMess untouched. 2187 3×3+Other ranks unchanged. */
+
+/* —— Step 3 · client-specialty: picker left, still-there preview right —— */
+.client-spec-split {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 4px;
+  min-width: 0;
+}
+.client-spec-picker,
+.client-spec-preview {
+  min-width: 0;
+}
+.client-spec-preview .v3-ctx {
+  margin: 0;
+  height: auto;
+}
+@media (min-width: 900px) {
+  .view.funnel.trailhead[data-route="client-specialty"] .trailhead-sheet-stage,
+  .view.funnel.client-spec-sheet .trailhead-sheet-stage {
+    max-width: min(1440px, 98vw);
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-sheet,
+  .view.funnel.client-spec-sheet .hire-sheet {
+    width: min(1360px, 96vw);
+    max-width: 1360px;
+    padding: 20px 22px 18px;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .client-spec-split,
+  .view.funnel.client-spec-sheet .client-spec-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.78fr);
+    gap: 16px 22px;
+    align-items: start;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .client-spec-preview,
+  .view.funnel.client-spec-sheet .client-spec-preview {
+    position: sticky;
+    top: 8px;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .client-spec-preview .v3-ctx,
+  .view.funnel.client-spec-sheet .client-spec-preview .v3-ctx {
+    width: 100%;
+  }
+}
+
+/* —— Step 4 · client-region: territory sheet left, retention pepper right —— */
+@media (min-width: 1100px) {
+  .view[data-route="client-region"] > .view-chrome {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(300px, 400px);
+    gap: 16px 22px;
+    align-items: start;
+    width: min(1440px, calc(100% - 28px));
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 14px;
+    padding-right: 14px;
+    box-sizing: border-box;
+  }
+  .view[data-route="client-region"] .funnel-panel.client-combined-stage {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region {
+    width: 100%;
+    max-width: none;
+    margin: 18px 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: sticky;
+    top: calc(var(--amp-title-clear, 88px) + 8px);
+    align-self: start;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-sell-rail {
+    display: flex;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards {
+    width: 100%;
+    margin: 0;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card--desktop {
+    display: flex;
+  }
+}
+
+/* —— Step 5 · client-meeting: form left, proof card right; full desktop width —— */
+.client-meeting-sheet {
+  max-width: min(1180px, calc(100% - 24px));
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.client-meeting-split {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
+  min-width: 0;
+}
+.client-meeting-main,
+.client-meeting-preview {
+  min-width: 0;
+}
+.client-meeting-proof {
+  padding: 16px 16px 14px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2, #1e3a55) 55%, #1e3a55 100%);
+  border: 1px solid rgba(120, 196, 229, 0.28);
+  box-shadow: 0 12px 28px rgba(21, 35, 50, 0.22);
+  color: #f8fafc;
+  margin-bottom: 12px;
+}
+.client-meeting-proof-kicker {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sky, #78c4e5);
+}
+.client-meeting-proof-line {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+.client-meeting-proof-sub {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: rgba(248, 250, 252, 0.88);
+}
+.client-meeting-proof-card {
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .client-meeting-sheet {
+    max-width: min(1280px, 96vw);
+    padding: 22px 24px 28px;
+  }
+  .client-meeting-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.72fr);
+    gap: 18px 24px;
+    align-items: start;
+  }
+  .client-meeting-preview {
+    position: sticky;
+    top: calc(var(--amp-title-clear, 88px) + 8px);
+  }
+  .view[data-route="client-meeting"] .client-meeting-sheet .form-grid.two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 899px) {
+  .client-spec-split,
+  .client-meeting-split {
+    display: flex;
+    flex-direction: column;
+  }
+  .client-meeting-sheet {
+    max-width: calc(100% - 20px);
+  }
+}
