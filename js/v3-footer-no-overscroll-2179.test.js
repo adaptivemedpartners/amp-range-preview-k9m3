@@ -13,9 +13,9 @@ function checkPage(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
   assert(html.indexOf("<!-- amp-build:2179-footer-no-overscroll -->") !== -1, rel + " missing 2179 stamp");
   assert(html.indexOf("<!-- amp-build:2178-hero-first-stack -->") !== -1, rel + " lost 2178 stamp");
-  assert(html.indexOf("amp-build 2182-footer-wallpaper-bleed") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2182"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2182"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2183-bridge-under-sub-inter-teal-faces") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2183"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2183"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2178") === -1, rel + " still on 2178 cache");
   var fade = html.indexOf('class="home-layer-soft-fade"');
   var footer = html.indexOf('class="site-footer"');
@@ -30,7 +30,7 @@ checkPage("404.html");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('__AMP_BUILD = "2182-footer-wallpaper-bleed"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2183-bridge-under-sub-inter-teal-faces"') !== -1, "app build stamp");
 assert(css.indexOf(".site-footer {\n  background: #0b1220; color: #94a3b8; padding: 36px 20px 48px;") !== -1, "footer padding kept");
 assert(css.indexOf(".home-layer-soft-fade") !== -1, "under-header fade remains");
 assert(css.indexOf("position: fixed") !== -1, "fixed layers remain");
@@ -57,6 +57,6 @@ var hero = home.indexOf('class="v3-hero v3-place-card"');
 var bridge = home.indexOf("v3-stay-bridge");
 var zach = home.indexOf("amp-zach-scope-strip");
 var row2 = home.indexOf("v3-stats-parent");
-assert(hero !== -1 && hero < bridge && bridge < zach && zach < row2, "2178 hero-first stack order");
+assert(hero !== -1 && hero < zach && zach < bridge && bridge < row2, "hero, specialty strip, steps, then row2");
 
 console.log("ok — 2179 footer ends the document");

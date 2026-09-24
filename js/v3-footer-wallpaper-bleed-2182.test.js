@@ -14,9 +14,9 @@ function checkPage(rel) {
   assert(html.indexOf("<!-- amp-build:2182-footer-wallpaper-bleed -->") !== -1, rel + " missing 2182 stamp");
   assert(html.indexOf("<!-- amp-build:2181-still-there-swipe -->") !== -1, rel + " lost 2181 stamp");
   assert(html.indexOf("<!-- amp-build:2180-footer-no-overscroll-mobile -->") !== -1, rel + " lost 2180 stamp");
-  assert(html.indexOf("amp-build 2182-footer-wallpaper-bleed") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2182"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2182"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2183-bridge-under-sub-inter-teal-faces") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2183"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2183"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2181") === -1, rel + " still on 2181 cache");
   assert(html.indexOf("AMP-Mess-Soft") === -1, rel + " SoftMess must stay out of this page");
 }
@@ -26,7 +26,7 @@ checkPage("404.html");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('__AMP_BUILD = "2182-footer-wallpaper-bleed"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2183-bridge-under-sub-inter-teal-faces"') !== -1, "app build stamp");
 assert(app.indexOf("function syncFooterWallpaperCap()") !== -1, "gap cap");
 assert(app.indexOf('classList.add("amp-footer-endcap")') !== -1, "end cap class");
 assert(app.indexOf('setProperty("--home-bg-vh", "100svh")') !== -1, "2180 phone viewport cap kept");
@@ -55,6 +55,6 @@ var hero = home.indexOf('class="v3-hero v3-place-card"');
 var bridge = home.indexOf("v3-stay-bridge");
 var zach = home.indexOf("amp-zach-scope-strip");
 var row2 = home.indexOf("v3-stats-parent");
-assert(hero !== -1 && hero < bridge && bridge < zach && zach < row2, "2178 hero-first stack order");
+assert(hero !== -1 && hero < zach && zach < bridge && bridge < row2, "hero, specialty strip, steps, then row2");
 
 console.log("ok — 2182 footer covers the wallpaper");

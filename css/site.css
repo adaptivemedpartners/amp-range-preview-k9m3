@@ -1,3 +1,4 @@
+/* amp-build:2183-bridge-under-sub-inter-teal-faces */
 /* amp-build:2182-footer-wallpaper-bleed */
 /* amp-build:2181-still-there-swipe */
 /* amp-build:2180-footer-no-overscroll-mobile */
@@ -12415,7 +12416,7 @@ main .view.page.on > .hero-band,
   gap: 0.02em;
   margin: 8px 0 0;
   max-width: none;
-  font-family: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+  font-family: var(--font);
   font-weight: 560;
   font-size: clamp(2rem, 3.55vw, 3.2rem);
   line-height: 1.08;
@@ -12563,7 +12564,7 @@ main .view.page.on > .hero-band,
 }
 .v3-stay-title {
   margin: 0;
-  font-family: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+  font-family: var(--font);
   font-weight: 560;
   font-size: clamp(1.75rem, 3.1vw, 2.65rem);
   line-height: 1.16;
@@ -12574,7 +12575,7 @@ main .view.page.on > .hero-band,
   display: block;
 }
 .v3-stay-mint {
-  color: #8fcebb;
+  color: var(--teal);
 }
 .v3-stay-sub {
   margin: 16px 0 0;
@@ -12904,7 +12905,7 @@ main .view.page.on > .hero-band,
   gap: 16px 48px;
 }
 .v3-stay-mint {
-  color: #5eb8e0;
+  color: var(--teal);
 }
 .v3-bridge-steps {
   gap: 18px;
@@ -13420,5 +13421,36 @@ body.amp-footer-endcap::after {
   background: #0b1220;
   z-index: 4;
   pointer-events: none;
+}
+
+/* ========== amp-build:2183-bridge-under-sub-inter-teal-faces ==========
+   Bridge headline sits in the hero copy column under .v3-sub.
+   Family is the site Inter stack. Size and weight stay.
+   The mint line uses Allied teal. Zach strip follows that headline,
+   then the 01–03 steps, then Row2.
+   Story and pepper photos keep their frames and sit toward the top
+   so a cover crop does not cut off the tops of heads. */
+.home-stage.v3-home .v3-years-copy .v3-stay-title {
+  margin-top: 12px;
+  font-family: var(--font);
+}
+.v3-stay-mint {
+  color: var(--teal);
+}
+.home-stage.v3-home .v3-zach-scope.amp-zach-scope-strip {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.home-stage.v3-home .v3-stay-bridge .v3-stay-bridge-inner {
+  grid-template-columns: 1fr;
+}
+.v3-ctx-media {
+  background-position: center top;
+  background-size: cover;
+}
+.amp-ret-card-media img,
+.v3-still-photo {
+  object-fit: cover;
+  object-position: center top;
 }
 
