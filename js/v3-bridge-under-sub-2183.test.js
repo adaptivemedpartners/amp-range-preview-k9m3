@@ -22,9 +22,9 @@ function checkPage(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
   assert(html.indexOf("<!-- amp-build:" + STAMP + " -->") !== -1, rel + " missing 2183 stamp");
   assert(html.indexOf("<!-- amp-build:2182-footer-wallpaper-bleed -->") !== -1, rel + " lost 2182 stamp");
-  assert(html.indexOf("amp-build " + STAMP) !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2183"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2183"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2184-specialty-under-sub-sky-bridge-restore") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2184"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2184"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2182") === -1, rel + " still on 2182 cache");
   assert(html.indexOf("family=Caveat:wght@600;700") !== -1, rel + " Caveat stays");
   assert(html.indexOf("Source+Serif") === -1, rel + " Source Serif link removed");
@@ -33,11 +33,9 @@ function checkPage(rel) {
   var home = sliceBetween(html, 'data-route="home"', 'class="home-job2"', rel + " homepage");
   var copy = sliceBetween(home, 'class="v3-years-copy', "data-hero-ret-rotator", rel + " hero copy");
   var sub = copy.indexOf('class="v3-sub"');
-  var title = copy.indexOf('class="v3-stay-title"');
-  assert(sub !== -1 && title !== -1 && sub < title, rel + " stay title sits under .v3-sub");
-  assert(copy.indexOf("Finding someone is one thing.") !== -1, rel + " bridge line 1");
-  assert(copy.indexOf('class="v3-stay-mint"') !== -1, rel + " mint hook");
-  assert(copy.indexOf("Finding someone who stays is another.") !== -1, rel + " bridge line 2");
+  var stripInCopy = copy.indexOf("amp-zach-scope-strip");
+  assert(sub !== -1 && stripInCopy !== -1 && sub < stripInCopy, rel + " specialty strip sits under .v3-sub");
+  assert(copy.indexOf("Finding someone is one thing.") === -1, rel + " stay headline is not in the hero copy");
 
   var titleAt = home.indexOf('class="v3-stay-title"');
   var strip = home.indexOf("amp-zach-scope-strip");
@@ -45,7 +43,7 @@ function checkPage(rel) {
   var steps = home.indexOf('class="v3-bridge-steps"');
   var row = home.indexOf('class="v3-stats-parent"');
   assert(titleAt !== -1 && strip !== -1 && bridge !== -1 && steps !== -1 && row !== -1, rel + " stack markers");
-  assert(titleAt < strip && strip < bridge && bridge < steps && steps < row, rel + " strip, steps, then row2");
+  assert(strip < bridge && bridge < titleAt && titleAt < steps && steps < row, rel + " stay headline is back in the bridge");
   assert(home.indexOf(">UNDERSTAND<") !== -1 && home.indexOf(">FIND<") !== -1 && home.indexOf(">MATCH<") !== -1, rel + " 01-03 kept");
   assert(home.indexOf("A placement is a moment.") !== -1, rel + " stay sub kept with the steps");
 
@@ -71,7 +69,7 @@ function checkPage(rel) {
       role: "Emergency Medicine",
       place: "VCU Community Memorial Hospital · South Hill, VA",
       footer: "13 YEARS LATER. STILL THERE.",
-      img: "assets/story-2015-peds-ne.jpg?v=2183",
+      img: "assets/story-2015-peds-ne.jpg?v=2184",
       alt: "Emergency Medicine placement still serving at VCU Community Memorial Hospital",
       desktop: true
     },
@@ -81,7 +79,7 @@ function checkPage(rel) {
       role: "Dentistry",
       place: "Winn Community Health Center · Winnfield, LA",
       footer: "9 YEARS LATER. STILL THERE.",
-      img: "assets/story-2018-fm-ne-cah.jpg?v=2183",
+      img: "assets/story-2018-fm-ne-cah.jpg?v=2184",
       alt: "Dentistry placement still serving at Winn Community Health Center"
     },
     {
@@ -90,7 +88,7 @@ function checkPage(rel) {
       role: "Vascular Surgery",
       place: "Peterson Regional Medical Center · Kerrville, TX",
       footer: "9 YEARS LATER. STILL THERE.",
-      img: "assets/story-2021-physician-ks.jpg?v=2183",
+      img: "assets/story-2021-physician-ks.jpg?v=2184",
       alt: "Vascular Surgery placement still serving at Peterson Regional Medical Center"
     }
   ];
@@ -117,9 +115,9 @@ checkPage("404.html");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(css.indexOf("/* amp-build:" + STAMP + " */") === 0, "css header stamp");
+assert(css.indexOf("/* amp-build:" + STAMP + " */") !== -1, "css 2183 stamp kept");
 assert(css.indexOf("========== amp-build:" + STAMP) !== -1, "css 2183 block");
-assert(app.indexOf('window.__AMP_BUILD = "' + STAMP + '"') !== -1, "app build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2184-specialty-under-sub-sky-bridge-restore"') !== -1, "app build stamp");
 assert(css.indexOf("Source Serif") === -1, "Source Serif family gone from css");
 
 var titleRule = css.slice(css.indexOf(".v3-stay-title {"), css.indexOf(".v3-stay-title span"));
