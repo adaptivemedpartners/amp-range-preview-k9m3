@@ -1,3 +1,4 @@
+/* amp-build:2192-em-er-photo */
 /* amp-build:2191-client-region-years-align-four */
 /* amp-build:2190-client-region-mike-plan */
 /* amp-build:2189-client-region-tighten */
@@ -14124,6 +14125,90 @@ body.amp-footer-endcap::after {
   .view.funnel.client-spec-sheet .client-spec-preview {
     position: sticky;
     top: 8px;
+  }
+}
+
+/* ========== amp-build:2192-em-er-photo ==========
+   Step 4: EM card gets ER doctor+patient photo (Alliance peds unchanged);
+           lift ENTIRE right pepper stack flush with left stage card top
+           (zero sticky + zero margin; align-items:start).
+   Confirm-client: thin discuss topic cards so MI + Why AMP CTAs fit one screen.
+   SoftMess untouched. */
+
+/* —— Step 4 · whole right stack flush with left stage card top —— */
+@media (min-width: 1100px) {
+  .view[data-route="client-region"] > .view-chrome {
+    align-items: start;
+  }
+  .view[data-route="client-region"] .funnel-panel.client-combined-stage.client-step-card {
+    margin-top: 0 !important;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 12px;
+    align-self: start;
+    position: relative; /* 2192: was sticky — kept whole stack below card top */
+    top: auto;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-sell-rail--thin {
+    margin-top: 0;
+  }
+}
+
+/* —— Confirm-client · thinner topic cards so bottom CTAs stay on-screen ——
+   Do NOT pull into under-header fade — keep title-clear padding; compress cards. */
+@media (min-width: 900px) {
+  .view[data-route="confirm-client"] .client-discuss {
+    margin: 0 0 10px;
+    padding: 12px 14px 10px;
+  }
+  .view[data-route="confirm-client"] .client-discuss-title,
+  .view[data-route="confirm-client"] #client-discuss-title {
+    margin: 0 0 4px;
+    font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+    line-height: 1.25;
+  }
+  .view[data-route="confirm-client"] .client-discuss-lede {
+    margin: 0 0 8px;
+    font-size: 12.5px;
+    line-height: 1.3;
+  }
+  .view[data-route="confirm-client"] .client-discuss-grid {
+    gap: 6px;
+  }
+  .view[data-route="confirm-client"] .client-discuss-grid .hire-card {
+    padding: 7px 9px 6px;
+    min-height: 0;
+    gap: 2px;
+  }
+  .view[data-route="confirm-client"] .client-discuss-grid .hire-card h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    margin: 0 0 2px;
+  }
+  .view[data-route="confirm-client"] .client-discuss-grid .hire-card p {
+    margin: 0 0 4px;
+    font-size: 11px;
+    line-height: 1.25;
+    -webkit-line-clamp: 2;
+  }
+  .view[data-route="confirm-client"] .client-discuss-grid .hire-card .hire-select {
+    font-size: 11px;
+    margin-top: 0;
+  }
+  .view[data-route="confirm-client"] .client-discuss-send-wrap {
+    margin-top: 8px;
+    gap: 4px;
+  }
+  .view[data-route="confirm-client"] .client-discuss-send-wrap .btn {
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+  .view[data-route="confirm-client"] .client-confirm-discuss-wrap > .btn-row {
+    margin-top: 10px !important;
+    margin-bottom: 4px;
+    gap: 10px;
   }
 }
 
