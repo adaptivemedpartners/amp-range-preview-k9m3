@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2186-specialty-ctx-photo-taller";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2187-client-spec-3x3-other-row";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -1908,7 +1908,8 @@
     var id = facId || state.facility || "fqhc";
     if (id === "hospital") id = "system";
     var rows = ranks[id] || ranks.other || [];
-    return rows.slice();
+    /* Uniform primary grid is 9; extra ranks stay in content until Mike cuts. */
+    return rows.slice(0, 9);
   }
 
   function CLIENT_SIGN_SPEC_IDS_DYNAMIC() {
@@ -2304,7 +2305,7 @@
       role: "Concho County Hospital",
       meta: "Eden, TX",
       foot: "7 YEARS LATER. STILL THERE.",
-      specialtyIds: ["physician_assistant_psychiatry"]
+      specialtyIds: ["physician_assistant_psychiatry", "physician_assistant_primary_care", "physician_assistant_family_medicine_without_ob"]
     },
     specNBaptist: {
       img: "assets/home-hero-clinic-consult.jpg",
@@ -2359,9 +2360,12 @@
     anesthesiology: "specAKansas",
     gi: "specGiAdvent",
     physician_assistant_psychiatry: "specPaConcho",
+    physician_assistant_primary_care: "specPaConcho",
+    physician_assistant_family_medicine_without_ob: "specPaConcho",
     neuro: "specNBaptist",
     neurology: "specNBaptist",
-    dermatology: "proof"
+    dermatology: "proof",
+    licensed_clinical_social_worker: "proof"
   };
 
   function v3StoryForFacility(id) {
@@ -2415,7 +2419,7 @@
     }
     root.classList.remove("is-waiting");
     if (media) {
-      media.style.backgroundImage = "url('" + story.img + "?v=2186')";
+      media.style.backgroundImage = "url('" + story.img + "?v=2187')";
       media.setAttribute("aria-label", story.alt || "");
     }
     if (year) year.textContent = story.year;
@@ -3374,10 +3378,8 @@
     if (state.clientSpecialty && state.clientSpecialties.indexOf(state.clientSpecialty) < 0) {
       state.clientSpecialties = [state.clientSpecialty];
     }
-    var ranks = clientSpecRanksForFacility();
-    var TOP_N = 4; /* keep sheet scannable — rest under More */
-    var top = ranks.slice(0, TOP_N);
-    var more = ranks.slice(TOP_N);
+    /* amp-build:2187 — uniform 3×3 primary specialties; Other full-width row; no More expand */
+    var ranks = clientSpecRanksForFacility().slice(0, 9);
     var list = $("#client-spec-cards");
     if (list) {
       function cardHtml(s) {
@@ -3385,12 +3387,7 @@
           "<h3>" + s.label + "</h3><p>" + (s.blurb || "") + "</p>" +
           '<span class="hire-select">Select →</span></button>';
       }
-      var html = top.map(cardHtml).join("");
-      if (more.length) {
-        html += '<details class="client-spec-more">' +
-          "<summary>More common for this facility <span class=\"muted\">(" + more.length + ")</span></summary>" +
-          '<div class="client-spec-more-list">' + more.map(cardHtml).join("") + "</div></details>";
-      }
+      var html = ranks.map(cardHtml).join("");
       html += '<button type="button" class="hire-card hire-card-other" data-client-spec="other" aria-pressed="false">' +
         "<h3>Other</h3><p>Search every specialty — or type your own.</p>" +
         '<span class="hire-select">Browse all →</span></button>';

@@ -1,4 +1,4 @@
-/* amp-build:2186-specialty-ctx-photo-taller */
+/* amp-build:2187-client-spec-3x3-other-row */
 /* amp-build:2185-drop-nationwide-specialty-strip */
 /* amp-build:2184-specialty-under-sub-sky-bridge-restore */
 /* amp-build:2183-bridge-under-sub-inter-teal-faces */
@@ -6964,42 +6964,28 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 
-/* amp-build:2079 — client specialty: top cards + More + Other (uncluttered) */
-.client-spec-more {
-  margin: 4px 0 10px;
-  border-radius: 14px;
-  border: 1px dashed rgba(13, 148, 136, 0.35);
-  background: rgba(240, 253, 250, 0.45);
-  padding: 0 12px;
-}
-.client-spec-more > summary {
-  cursor: pointer;
-  list-style: none;
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #0f766e;
-  padding: 12px 2px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.client-spec-more > summary::-webkit-details-marker { display: none; }
-.client-spec-more > summary::after {
-  content: " →";
-  font-weight: 900;
-  margin-left: auto;
-}
-.client-spec-more[open] > summary::after { content: " ↑"; }
-.client-spec-more-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 0 0 12px;
-}
+/* amp-build:2187 — client specialty: 3×3 primary grid + Other full-width row (no More) */
+.client-spec-more { display: none; } /* retired TOP_N expand */
 .hire-card-other {
   border-style: dashed;
   border-color: #cbd5e1;
   background: #f8fafc;
+}
+.view.funnel.trailhead[data-route="client-specialty"] .hire-card-other,
+.view.funnel.client-spec-sheet .hire-card-other {
+  grid-column: 1 / -1;
+}
+@media (max-width: 899px) {
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-card-list,
+  .view.funnel.client-spec-sheet .hire-card-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-card-other,
+  .view.funnel.client-spec-sheet .hire-card-other {
+    grid-column: 1 / -1;
+  }
 }
 
 
@@ -13493,7 +13479,7 @@ body.amp-footer-endcap::after {
    frees a little vertical room above References/partners.
    Keep flex-wrap for narrow phones; no forced nowrap. */
 
-/* ========== amp-build:2186-specialty-ctx-photo-taller ==========
+/* ========== amp-build:2187-client-spec-3x3-other-row ==========
    Client step 3 (#client-specialty-ctx) photo band: 96→180px (max 220).
    Shared by all specialty still-there paints (Alliance Pediatrics + siblings).
    background-position center top kept so faces stay in frame. */

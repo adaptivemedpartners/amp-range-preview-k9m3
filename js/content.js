@@ -230,6 +230,7 @@ window.AMP_CONTENT = {
       { id: "psychiatry_general", label: "Psychiatry", blurb: "Still-there example: Regional Medical Center (Anniston, AL)." },
       { id: "nurse_practitioner_family_medicine_without_ob", label: "Family NP", blurb: "Still-there example: Northern Cochise Community Hospital (Willcox, AZ)." },
       { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Prescriber pool for mental health and SUD." },
+      { id: "physician_assistant_primary_care", label: "Physician Assistant", blurb: "Outpatient APP coverage for FQHC / CHC panels." },
     ],
     "cah": [
       { id: "family_medicine_with_ob", label: "Family Medicine w/ OB", blurb: "Still-there example: Frio Regional Hospital CAH (Pearsall, TX)." },
@@ -263,7 +264,7 @@ window.AMP_CONTENT = {
       { id: "anesthesiology", label: "Anesthesiology", blurb: "Hospital-based anesthesia." },
       { id: "gi", label: "Gastroenterology", blurb: "Procedural demand across the system." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Employed OB/GYN seats." },
-      { id: "psychiatry_general", label: "Psychiatry", blurb: "Behavioral health inside the system." },
+
     ],
     "bh": [
       { id: "nurse_practitioner_psychiatry", label: "Psych NP (PMHNP)", blurb: "Still-there example: Family Services of Chemung County (Elmira, NY)." },
@@ -274,6 +275,7 @@ window.AMP_CONTENT = {
       { id: "fm", label: "Family Medicine (integrated BH)", blurb: "Integrated primary care + BH models." },
       { id: "physician_assistant_psychiatry", label: "PA — Psychiatry", blurb: "Still-there example: Concho County Hospital (Eden, TX)." },
       { id: "nurse_practitioner_family_medicine_without_ob", label: "Family NP (integrated)", blurb: "Primary care + BH integration." },
+      { id: "licensed_clinical_social_worker", label: "LCSW", blurb: "Therapy and case management backbone for BH programs." },
     ],
     "group": [
       { id: "pediatrics_general", label: "Pediatrics", blurb: "Still-there example: Alliance Pediatrics (Keller, TX)." },
@@ -296,7 +298,7 @@ window.AMP_CONTENT = {
       { id: "anesthesiology", label: "Anesthesiology", blurb: "Hospital-based anesthesia." },
       { id: "gi", label: "Gastroenterology", blurb: "Procedural demand across the system." },
       { id: "obg", label: "Obstetrics & Gynecology", blurb: "Employed OB/GYN seats." },
-      { id: "psychiatry_general", label: "Psychiatry", blurb: "Behavioral health inside the system." },
+
     ],
     "other": [
       { id: "fm", label: "Family Medicine", blurb: "Most common starting point." },
