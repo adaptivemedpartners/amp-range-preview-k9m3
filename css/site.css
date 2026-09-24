@@ -1,3 +1,4 @@
+/* amp-build:2189-client-region-tighten */
 /* amp-build:2188-client-spec-side-by-side */
 /* amp-build:2187-client-spec-3x3-other-row */
 /* amp-build:2185-drop-nationwide-specialty-strip */
@@ -13664,5 +13665,95 @@ body.amp-footer-endcap::after {
   }
   .client-meeting-sheet {
     max-width: calc(100% - 20px);
+  }
+}
+
+/* ========== amp-build:2189-client-region-tighten ==========
+   Step 4 client-region: one How we help only (teal 6-step climb).
+   Dark .client-how-help parked/hidden. Map + state are the left hero;
+   reduce vertical chrome so 16:9 side-by-side can fit one laptop screen.
+   2188 specialty/meeting splits and SoftMess untouched. */
+
+/* Belt + suspenders: dark How-we-help never paints on this step */
+.view[data-route="client-region"] .client-how-help {
+  display: none !important;
+}
+
+/* Compact left chrome — map/state get the height */
+.view[data-route="client-region"] .funnel-panel.client-combined-stage {
+  padding: 12px 16px 18px;
+}
+.view[data-route="client-region"] .funnel-panel {
+  padding-bottom: 28px;
+}
+.view[data-route="client-region"] .client-step-on-card {
+  margin: 0 0 4px;
+}
+.view[data-route="client-region"] .hire-title {
+  margin: 0 0 4px;
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+}
+.view[data-route="client-region"] .client-card-lede {
+  margin: 0 0 8px;
+  font-size: 13.5px;
+  line-height: 1.35;
+  max-width: 62ch;
+}
+.view[data-route="client-region"] .client-region-context {
+  margin: 0 0 4px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Territory hero: taller map, tighter band */
+.view[data-route="client-region"] .client-territory-band {
+  margin: 0 0 10px;
+  gap: 12px 14px;
+}
+.view[data-route="client-region"] .client-territory-map .amp-region-map {
+  max-height: 300px;
+}
+.view[data-route="client-region"] .client-territory-map .region-map-wrap {
+  padding: 4px 4px 6px;
+}
+
+/* Compact climb strip (kept = the single How we help) */
+.view[data-route="client-region"] .client-climb-band[data-climb-option="A"] {
+  margin: 2px 0 6px;
+  padding: 8px 10px 10px;
+}
+.view[data-route="client-region"] .client-climb-line {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  min-height: 0;
+}
+.view[data-route="client-region"] .client-climb-name {
+  font-size: 11px;
+}
+.view[data-route="client-region"] .client-climb-num {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+.view[data-route="client-region"] .client-climb-trail::before {
+  top: 15px;
+}
+
+@media (min-width: 1100px) {
+  .view[data-route="client-region"] .client-territory-map .amp-region-map {
+    max-height: 340px;
+  }
+  /* Keep 2188 side-by-side; left stays search, right stays pepper */
+  .view[data-route="client-region"] > .view-chrome {
+    align-items: start;
+  }
+}
+
+@media (max-width: 1099px) {
+  /* Mobile / narrow: 2188 grid does not apply; keep flex column stack */
+  .view[data-route="client-region"] .client-territory-map .amp-region-map {
+    max-height: none;
   }
 }

@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2188-client-spec-side-by-side";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2189-client-region-tighten";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2419,7 +2419,7 @@
     }
     root.classList.remove("is-waiting");
     if (media) {
-      media.style.backgroundImage = "url('" + story.img + "?v=2188')";
+      media.style.backgroundImage = "url('" + story.img + "?v=2189')";
       media.setAttribute("aria-label", story.alt || "");
     }
     if (year) year.textContent = story.year;
@@ -3084,7 +3084,12 @@
         if (fac) bits.push(fac.label);
       } catch (e) {}
       if (state.clientSpecialties && state.clientSpecialties.length) {
-        bits.push(state.clientSpecialties.map(clientSpecLabel).filter(Boolean).join(", "));
+        var labels = state.clientSpecialties.map(clientSpecLabel).filter(Boolean);
+        if (labels.length > 3) {
+          bits.push(labels.slice(0, 3).join(", ") + " +" + (labels.length - 3) + " more");
+        } else {
+          bits.push(labels.join(", "));
+        }
       } else if (state.clientSpecialty) {
         bits.push(clientSpecLabel(state.clientSpecialty));
       }
@@ -3378,7 +3383,7 @@
     if (state.clientSpecialty && state.clientSpecialties.indexOf(state.clientSpecialty) < 0) {
       state.clientSpecialties = [state.clientSpecialty];
     }
-    /* amp-build:2188 — picker/preview side-by-side on desktop; 2187 3×3+Other ranks unchanged */
+    /* amp-build:2189 — region: one How we help (climb); 2188 splits kept */
     /* amp-build:2187 — uniform 3×3 primary specialties; Other full-width row; no More expand */
     var ranks = clientSpecRanksForFacility().slice(0, 9);
     var list = $("#client-spec-cards");
