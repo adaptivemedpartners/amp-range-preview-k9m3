@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2181-still-there-swipe";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2182-footer-wallpaper-bleed";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -6670,6 +6670,48 @@ function syncGuideRoute(route) {
     setTimeout(applyHomeBgVh, 280);
   });
   window.addEventListener("resize", onResize, { passive: true });
+})();
+
+/* amp-build:2182-footer-wallpaper-bleed
+   If the footer stops short of the visual bottom, paint footer navy
+   in that gap only. A zero gap leaves the hero wallpaper alone. */
+(function () {
+  var ticking = false;
+  function syncFooterWallpaperCap() {
+    var footer = document.querySelector(".site-footer");
+    if (!footer || !document.body) return;
+    var vv = window.visualViewport;
+    var viewBottom = vv ? vv.offsetTop + vv.height : (window.innerHeight || 0);
+    var rect = footer.getBoundingClientRect();
+    var gap = viewBottom - rect.bottom;
+    var nearBottom = rect.top < viewBottom && rect.bottom > viewBottom * 0.4;
+    if (nearBottom && gap > 0.5 && gap < 180) {
+      document.documentElement.style.setProperty("--amp-end-top", rect.bottom + "px");
+      document.documentElement.style.setProperty("--amp-end-gap", Math.ceil(gap + 1) + "px");
+      document.body.classList.add("amp-footer-endcap");
+    } else if (document.body.classList.contains("amp-footer-endcap")) {
+      document.body.classList.remove("amp-footer-endcap");
+    }
+  }
+  function scheduleFooterWallpaperCap() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      syncFooterWallpaperCap();
+    });
+  }
+  window.addEventListener("scroll", scheduleFooterWallpaperCap, { passive: true });
+  window.addEventListener("resize", scheduleFooterWallpaperCap, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", scheduleFooterWallpaperCap, { passive: true });
+    window.visualViewport.addEventListener("scroll", scheduleFooterWallpaperCap, { passive: true });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleFooterWallpaperCap);
+  } else {
+    scheduleFooterWallpaperCap();
+  }
 })();
 
 /* amp-build:2042-home-guides-path — climb toggle flips recruiting vs hiring guides */

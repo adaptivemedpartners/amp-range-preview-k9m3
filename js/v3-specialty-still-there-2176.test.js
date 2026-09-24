@@ -64,19 +64,19 @@ var html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 var fallback = fs.readFileSync(path.join(ROOT, "404.html"), "utf8");
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 
-assert(app.indexOf('window.__AMP_BUILD = "2181-still-there-swipe"') !== -1, "app build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2182-footer-wallpaper-bleed"') !== -1, "app build stamp");
 assert(html.indexOf("<!-- amp-build:2176-specialty-still-there-examples -->") !== -1, "html stamp");
 assert(fallback.indexOf("<!-- amp-build:2176-specialty-still-there-examples -->") !== -1, "404 stamp");
 assert(css.indexOf("amp-build:2176-specialty-still-there-examples") !== -1, "css stamp");
-assert(html.indexOf("amp-build 2181-still-there-swipe") !== -1, "chip");
-assert(html.indexOf("?v=2181") !== -1, "cache bust");
+assert(html.indexOf("amp-build 2182-footer-wallpaper-bleed") !== -1, "chip");
+assert(html.indexOf("?v=2182") !== -1, "cache bust");
 assert(html.indexOf("?v=2176") === -1, "html still on 2176 cache");
 assert(html.indexOf("?v=2175") === -1, "html still on 2175 cache");
 assert(fallback.indexOf("?v=2175") === -1, "404 still on 2175 cache");
 assert(html.indexOf("<!-- amp-build:2175-ok-tn-pca-partners -->") !== -1, "2175 stamp kept");
 assert(html.indexOf("<!-- amp-build:2174-facility-still-there-examples -->") !== -1, "2174 stamp kept");
-assert(html.indexOf("assets/partners/okpca.png?v=2181") !== -1, "OK PCA logo kept");
-assert(html.indexOf("assets/partners/tpca.png?v=2181") !== -1, "TN PCA logo kept");
+assert(html.indexOf("assets/partners/okpca.png?v=2182") !== -1, "OK PCA logo kept");
+assert(html.indexOf("assets/partners/tpca.png?v=2182") !== -1, "TN PCA logo kept");
 assert(app.indexOf("V3_FACILITY_STORY") !== -1, "facility stories stay");
 assert(app.indexOf("V3_SPECIALTY_STORY") !== -1, "specialty story map");
 

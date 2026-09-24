@@ -1,3 +1,4 @@
+/* amp-build:2182-footer-wallpaper-bleed */
 /* amp-build:2181-still-there-swipe */
 /* amp-build:2180-footer-no-overscroll-mobile */
 /* amp-build:2179-footer-no-overscroll */
@@ -13375,5 +13376,49 @@ body {
   content: "";
   position: absolute;
   inset: -10px;
+}
+
+/* ========== amp-build:2182-footer-wallpaper-bleed ==========
+   Scrolled to the end, a full-width sliver of the clinic wallpaper
+   still painted across the footer. .home-layer-soft-fade is a fixed
+   full-viewport clone of Layer 1 at z-index 280, above the in-flow
+   footer. The mask is meant to show only the under-header tuck. On
+   phones the bottom edge of that clone still paints (about a safe-area
+   tall), so the desk/floor shows through while the scrollbar is already
+   at the end.
+   Clip the clone to the tuck band. The mask is already transparent by
+   148px desktop / 132px mobile, so the clip does not change the fade.
+   Layer 1 is position:fixed with z-index 0, which paints after in-flow
+   boxes. Its bottom edge (the desk) therefore shows through the footer's
+   padding even when the footer box reaches the viewport. position:relative
+   and z-index 1 puts the footer above that wallpaper and above interior
+   .shot layers, and still under the sticky nav (100), the tuck (280),
+   and the header (300).
+   Footer padding grows only by the safe area, still on the footer color.
+   The end cap is a fixed navy fill for a real gap under the footer
+   (rubber-band or visual-viewport) and is added only while that gap
+   exists, so the hero never gets a permanent navy bar. */
+.home-layer-soft-fade {
+  -webkit-clip-path: inset(0 0 calc(100% - 180px) 0);
+  clip-path: inset(0 0 calc(100% - 180px) 0);
+}
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+}
+html {
+  background-color: #0b1220;
+}
+body.amp-footer-endcap::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--amp-end-top, 100%);
+  height: var(--amp-end-gap, 0px);
+  background: #0b1220;
+  z-index: 4;
+  pointer-events: none;
 }
 
