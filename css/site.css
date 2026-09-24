@@ -1,3 +1,4 @@
+/* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
 /* amp-build:2193-step3-sbs-step4-cards-confirm-legible */
 /* amp-build:2192-em-er-photo */
 /* amp-build:2191-client-region-years-align-four */
@@ -14405,5 +14406,249 @@ body.amp-footer-endcap::after {
   .view[data-route="confirm-client"] .confirm-hero h1,
   .view[data-route="confirm-client"] #confirm-client-title {
     font-size: clamp(1.35rem, 2.8vw, 1.7rem);
+  }
+}
+
+/* ========== amp-build:2194-polish-step4-wide-howwehelp-specialty-photos ==========
+   Step 4: wider placement rail + left stage reaches further left (2x2 from 900 kept).
+   How we help: visual refresh (navy + sky #78C4E5, Inter, soft glass card),
+                heading hierarchy + air above the number line. Behavior untouched
+                (2191 document delegation, hover paint, click pin).
+   Step 3: NOT touched. */
+
+/* —— Step 4 · wider rail + wider chrome (keeps 2193 2x2 from 900px) —— */
+@media (min-width: 900px) {
+  .view[data-route="client-region"] > .view-chrome {
+    grid-template-columns: minmax(0, 1fr) clamp(360px, 40vw, 740px) !important;
+    gap: 16px 22px !important;
+    width: min(1880px, calc(100% - 20px)) !important;
+    max-width: 1880px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards {
+    gap: 12px !important;
+  }
+}
+@media (min-width: 1280px) {
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card-media {
+    height: clamp(128px, 9.6vw, 196px) !important;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card-media img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover;
+  }
+}
+
+/* —— How we help · refreshed block —— */
+.view[data-route="client-region"] .client-climb-band[data-climb-option="A"] {
+  --hwh-navy: #0b1f3a;
+  --hwh-navy-2: #16345c;
+  --hwh-sky: #78c4e5;
+  --hwh-sky-ink: #2a7fa8;
+  position: relative;
+  margin: 10px 0 10px;
+  padding: 18px 20px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(120, 196, 229, 0.42);
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(120, 196, 229, 0.20), rgba(120, 196, 229, 0) 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 249, 253, 0.95));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 28px rgba(11, 31, 58, 0.08),
+    0 2px 6px rgba(11, 31, 58, 0.05);
+  overflow: hidden;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.view[data-route="client-region"] .client-climb-band[data-climb-option="A"]::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--hwh-navy), var(--hwh-sky) 55%, rgba(120, 196, 229, 0.15));
+  pointer-events: none;
+}
+.view[data-route="client-region"] .client-climb-band > .tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-transform: none;
+  color: var(--hwh-navy);
+}
+.view[data-route="client-region"] .client-climb-band > .tag::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 22px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--hwh-sky-ink), var(--hwh-sky));
+}
+/* number line */
+.view[data-route="client-region"] .client-climb-band .client-climb-trail {
+  gap: 6px;
+  margin: 0 0 16px;
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-trail::before {
+  top: 18px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(120, 196, 229, 0.25), rgba(42, 127, 168, 0.55), rgba(120, 196, 229, 0.25));
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-station {
+  gap: 7px;
+  padding: 0 2px 2px;
+  transition: transform 0.15s ease;
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-num {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--hwh-navy);
+  background: #fff;
+  border: 1.5px solid rgba(22, 52, 92, 0.22);
+  box-shadow: 0 3px 10px rgba(11, 31, 58, 0.08);
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-station:hover .client-climb-num,
+.view[data-route="client-region"] .client-climb-band .client-climb-station:focus-visible .client-climb-num,
+.view[data-route="client-region"] .client-climb-band .client-climb-station.is-lit .client-climb-num {
+  background: linear-gradient(145deg, var(--hwh-navy-2), var(--hwh-navy));
+  border-color: var(--hwh-navy);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(120, 196, 229, 0.35), 0 8px 18px rgba(11, 31, 58, 0.22);
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-station:hover {
+  transform: translateY(-1px);
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-station:focus-visible {
+  outline: 2px solid var(--hwh-sky);
+}
+@media (min-width: 901px) {
+  /* show station names under the numbers (was visually hidden in 2190) */
+  .view[data-route="client-region"] .client-climb-band .client-climb-name {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    font-size: 11.5px;
+    font-weight: 650;
+    line-height: 1.25;
+    color: #475569;
+    letter-spacing: -0.005em;
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-station:hover .client-climb-name,
+  .view[data-route="client-region"] .client-climb-band .client-climb-station.is-lit .client-climb-name {
+    color: var(--hwh-navy);
+    font-weight: 750;
+  }
+}
+/* detail card */
+.view[data-route="client-region"] .client-climb-band .client-climb-detail {
+  position: relative;
+  padding: 14px 16px 14px 18px;
+  min-height: 96px;
+  border-radius: 14px;
+  border: 1px solid rgba(22, 52, 92, 0.10);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(11, 31, 58, 0.06);
+  overflow: hidden;
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-detail::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--hwh-sky), var(--hwh-sky-ink));
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-detail.is-active,
+.view[data-route="client-region"] .client-climb-band .client-climb-detail.is-pinned {
+  border-color: rgba(120, 196, 229, 0.6);
+  box-shadow: 0 0 0 3px rgba(120, 196, 229, 0.18), 0 8px 22px rgba(11, 31, 58, 0.08);
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-detail.is-active::before,
+.view[data-route="client-region"] .client-climb-band .client-climb-detail.is-pinned::before {
+  opacity: 1;
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-detail-kicker {
+  margin: 0 0 4px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--hwh-sky-ink);
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-detail-title,
+.view[data-route="client-region"] .client-climb-band .client-climb-detail.is-idle .client-climb-detail-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.012em;
+  color: var(--hwh-navy);
+}
+.view[data-route="client-region"] .client-climb-band .client-climb-detail-body {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #334155;
+  max-width: 72ch;
+}
+/* phone / narrow: swipe cards in the same language */
+@media (max-width: 900px) {
+  .view[data-route="client-region"] .client-climb-band[data-climb-option="A"] {
+    padding: 16px 14px 14px;
+  }
+  .view[data-route="client-region"] .client-climb-band > .tag {
+    flex-wrap: wrap;
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-swipe {
+    margin: 0 0 12px;
+    color: var(--hwh-sky-ink);
+    background: rgba(120, 196, 229, 0.16);
+    border-color: rgba(120, 196, 229, 0.5);
+  }
+  .view[data-route="client-region"] .client-climb-band[data-climb-option="A"]::after {
+    top: 88px;
+    bottom: auto;
+    height: 68px;
+    background: linear-gradient(90deg, rgba(244, 249, 253, 0), #f4f9fd 78%);
+    border-radius: 0;
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-station {
+    border: 1px solid rgba(22, 52, 92, 0.10);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 4px 12px rgba(11, 31, 58, 0.06);
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-station.is-lit {
+    border-color: rgba(120, 196, 229, 0.7);
+    background: #f2f9fd;
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-station:hover {
+    transform: none;
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-name {
+    color: var(--hwh-navy);
+    font-weight: 700;
+  }
+  .view[data-route="client-region"] .client-climb-band .client-climb-detail {
+    min-height: 0;
   }
 }

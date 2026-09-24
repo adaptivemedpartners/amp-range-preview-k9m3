@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2193-step3-sbs-step4-cards-confirm-legible";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2194-polish-step4-wide-howwehelp-specialty-photos";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -2080,7 +2080,7 @@
      Frio Regional verified CAH (Flex Monitoring / CMS) though xlsx has no CAH column. */
   var V3_RET = {
     fqhcWayne: {
-      img: "assets/story-2021-physician-ks.jpg",
+      img: "assets/specialty/family-medicine.webp",
       alt: "Family Medicine placement still serving at an FQHC partner",
       year: "2013 · Family Medicine",
       role: "Wayne Memorial Health System",
@@ -2089,7 +2089,7 @@
       specialtyIds: ["fm"]
     },
     cahFrio: {
-      img: "assets/story-2018-fm-ne-cah.jpg",
+      img: "assets/specialty/family-medicine-ob.webp",
       alt: "Family Medicine with OB placement still serving at a Critical Access Hospital",
       year: "2013 · Family Medicine w/ OB",
       role: "Frio Regional Hospital",
@@ -2098,7 +2098,7 @@
       specialtyIds: ["family_medicine_with_ob"]
     },
     communityVcu: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/emergency-medicine-er-bay.webp",
       alt: "Emergency Medicine placement still serving at a community hospital",
       year: "2013 · Emergency Medicine",
       role: "VCU Community Memorial Hospital",
@@ -2107,7 +2107,7 @@
       specialtyIds: ["emergency_medicine"]
     },
     systemBaptist: {
-      img: "assets/story-2015-peds-ne.jpg",
+      img: "assets/specialty/general-surgery.webp",
       alt: "General Surgery placement still serving at a health-system hospital",
       year: "2012 · General Surgery",
       role: "Baptist Regional Medical Center",
@@ -2116,7 +2116,7 @@
       specialtyIds: ["surgery_general"]
     },
     bhChemung: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/psych-np.webp",
       alt: "Psychiatric NP placement still serving at a behavioral health organization",
       year: "2017 · Psychiatric NP",
       role: "Family Services of Chemung County",
@@ -2125,7 +2125,7 @@
       specialtyIds: ["nurse_practitioner_psychiatry"]
     },
     groupAlliance: {
-      img: "assets/story-2015-peds-ne.jpg",
+      img: "assets/specialty/pediatrics.webp",
       alt: "Pediatrics placement still serving at a multi-specialty group",
       year: "2012 · Pediatrics",
       role: "Alliance Pediatrics",
@@ -2138,7 +2138,7 @@
        Psych subtypes without their own 5yr card reuse Anniston Psychiatry.
        Dermatology has no eligible 5yr still-there and stays on proof. */
     specFmWayne: {
-      img: "assets/story-2021-physician-ks.jpg",
+      img: "assets/specialty/family-medicine.webp",
       alt: "Family Medicine placement still serving",
       year: "2013 · Family Medicine",
       role: "Wayne Memorial Health System",
@@ -2147,7 +2147,7 @@
       specialtyIds: ["fm"]
     },
     specPdAlliance: {
-      img: "assets/story-2015-peds-ne.jpg",
+      img: "assets/specialty/pediatrics.webp",
       alt: "Pediatrics placement still serving",
       year: "2012 · Pediatrics",
       role: "Alliance Pediatrics",
@@ -2156,7 +2156,7 @@
       specialtyIds: ["pediatrics_general"]
     },
     specDdsWinn: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/dentistry.webp",
       alt: "Dentistry placement still serving",
       year: "2016 · Dentistry",
       role: "Winn Community Health Center",
@@ -2165,7 +2165,7 @@
       specialtyIds: ["dental"]
     },
     specObgChrist: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/obgyn.webp",
       alt: "OB/GYN placement still serving",
       year: "2015 · OB/GYN",
       role: "Christ Community Health Services",
@@ -2174,7 +2174,7 @@
       specialtyIds: ["obg"]
     },
     specImCentral: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/internal-medicine.webp",
       alt: "Internal Medicine placement still serving",
       year: "2019 · Internal Medicine",
       role: "Central Counties Health Centers",
@@ -2183,7 +2183,7 @@
       specialtyIds: ["internal_medicine_general"]
     },
     specPAnniston: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/psychiatry.webp",
       alt: "Psychiatry placement still serving",
       year: "2014 · Psychiatry",
       role: "Regional Medical Center",
@@ -2192,7 +2192,7 @@
       specialtyIds: ["psychiatry_general"]
     },
     specNpCochise: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/family-np-pa.webp",
       alt: "Nurse Practitioner placement still serving",
       year: "2013 · Nurse Practitioner",
       role: "Northern Cochise Community Hospital",
@@ -2201,7 +2201,7 @@
       specialtyIds: ["nurse_practitioner_family_medicine_without_ob"]
     },
     specPnpChemung: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/psych-np.webp",
       alt: "Psychiatric NP placement still serving",
       year: "2017 · Psychiatric NP",
       role: "Family Services of Chemung County",
@@ -2210,7 +2210,7 @@
       specialtyIds: ["nurse_practitioner_psychiatry"]
     },
     specFpobFrio: {
-      img: "assets/story-2018-fm-ne-cah.jpg",
+      img: "assets/specialty/family-medicine-ob.webp",
       alt: "Family Medicine w/ OB placement still serving",
       year: "2013 · Family Medicine w/ OB",
       role: "Frio Regional Hospital",
@@ -2219,7 +2219,7 @@
       specialtyIds: ["family_medicine_with_ob"]
     },
     specHosBaptist: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/hospitalist.webp",
       alt: "Hospitalist placement still serving",
       year: "2014 · Hospitalist",
       role: "Baptist - Richmond",
@@ -2228,7 +2228,7 @@
       specialtyIds: ["hospitalist_internal_medicine"]
     },
     specEmVcu: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/emergency-medicine-er-bay.webp",
       alt: "Emergency Medicine placement still serving",
       year: "2013 · Emergency Medicine",
       role: "VCU Community Memorial Hospital",
@@ -2237,7 +2237,7 @@
       specialtyIds: ["emergency_medicine"]
     },
     specGsBaptist: {
-      img: "assets/story-2015-peds-ne.jpg",
+      img: "assets/specialty/general-surgery.webp",
       alt: "General Surgery placement still serving",
       year: "2012 · General Surgery",
       role: "Baptist Regional Medical Center",
@@ -2246,7 +2246,7 @@
       specialtyIds: ["surgery_general"]
     },
     specCdFrancis: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/cardiology.webp",
       alt: "Cardiology placement still serving",
       year: "2016 · Cardiology",
       role: "Saint Francis Medical Center",
@@ -2255,7 +2255,7 @@
       specialtyIds: ["cards"]
     },
     specNpWillcox: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/ed-np-pa.webp",
       alt: "Nurse Practitioner placement still serving",
       year: "2013 · Nurse Practitioner",
       role: "Northern Cochise Community Hospital",
@@ -2264,7 +2264,7 @@
       specialtyIds: ["nurse_practitioner_emergency_medicine"]
     },
     specOrsHenry: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/orthopedic-surgery.webp",
       alt: "Orthopedic Surgery placement still serving",
       year: "2014 · Orthopedic Surgery",
       role: "Henry County Medical Center",
@@ -2273,7 +2273,7 @@
       specialtyIds: ["orthopedic_surgery_general"]
     },
     specAKansas: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/anesthesiology.webp",
       alt: "Anesthesiology placement still serving",
       year: "2018 · Anesthesiology",
       role: "Kansas Heart Hospital",
@@ -2282,7 +2282,7 @@
       specialtyIds: ["anesthesiology"]
     },
     specGiAdvent: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/gastroenterology.webp",
       alt: "Gastroenterology placement still serving",
       year: "2019 · Gastroenterology",
       role: "AdventHealth Medical Group",
@@ -2291,22 +2291,96 @@
       specialtyIds: ["gi"]
     },
     specPaConcho: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/physician-assistant.webp",
       alt: "Physician Assistant placement still serving",
       year: "2019 · Physician Assistant",
       role: "Concho County Hospital",
       meta: "Eden, TX",
       foot: "7 YEARS LATER. STILL THERE.",
-      specialtyIds: ["physician_assistant_psychiatry", "physician_assistant_primary_care", "physician_assistant_family_medicine_without_ob"]
+      specialtyIds: ["physician_assistant_primary_care", "physician_assistant_family_medicine_without_ob"]
     },
     specNBaptist: {
-      img: "assets/home-hero-clinic-consult.jpg",
+      img: "assets/specialty/neurology.webp",
       alt: "Neurology placement still serving",
       year: "2012 · Neurology",
       role: "Baptist Health - Richmond, Pattie A. Clay",
       meta: "Richmond, KY",
       foot: "13 YEARS LATER. STILL THERE.",
       specialtyIds: ["neuro", "neurology"]
+    },
+    /* amp-build:2194 — distinct licensed photo per specialty (see 2194-polish-report.md).
+       Subtypes keep their parent still-there copy; only the photo is their own. */
+    specPChildAnniston: {
+      img: "assets/specialty/child-adolescent-psychiatry.webp",
+      alt: "Child and adolescent psychiatry placement still serving",
+      year: "2014 · Psychiatry",
+      role: "Regional Medical Center",
+      meta: "Anniston, AL",
+      foot: "12 YEARS LATER. STILL THERE.",
+      specialtyIds: ["psychiatry_child_and_adolescent"]
+    },
+    specPAddictAnniston: {
+      img: "assets/specialty/addiction-medicine.webp",
+      alt: "Addiction medicine placement still serving",
+      year: "2014 · Psychiatry",
+      role: "Regional Medical Center",
+      meta: "Anniston, AL",
+      foot: "12 YEARS LATER. STILL THERE.",
+      specialtyIds: ["psychiatry_addiction_medicine"]
+    },
+    specPGeriAnniston: {
+      img: "assets/specialty/geriatric-psychiatry.webp",
+      alt: "Geriatric psychiatry placement still serving",
+      year: "2014 · Psychiatry",
+      role: "Regional Medical Center",
+      meta: "Anniston, AL",
+      foot: "12 YEARS LATER. STILL THERE.",
+      specialtyIds: ["psychiatry_geriatric"]
+    },
+    specPaPsychConcho: {
+      img: "assets/specialty/pa-psychiatry.webp",
+      alt: "Physician Assistant (psychiatry) placement still serving",
+      year: "2019 · Physician Assistant",
+      role: "Concho County Hospital",
+      meta: "Eden, TX",
+      foot: "7 YEARS LATER. STILL THERE.",
+      specialtyIds: ["physician_assistant_psychiatry"]
+    },
+    specDermProof: {
+      img: "assets/specialty/dermatology.webp",
+      alt: "Dermatology consult",
+      year: "Retention proof",
+      role: "87% still there at three years",
+      meta: "1.7 avg interviews per hire · rural hospitals, FQHCs, and CAHs",
+      foot: "YEARS, NOT PLACEMENTS",
+      specialtyIds: ["dermatology"]
+    },
+    specLcswProof: {
+      img: "assets/specialty/lcsw.webp",
+      alt: "Licensed clinical social worker in session",
+      year: "Retention proof",
+      role: "87% still there at three years",
+      meta: "1.7 avg interviews per hire · rural hospitals, FQHCs, and CAHs",
+      foot: "YEARS, NOT PLACEMENTS",
+      specialtyIds: ["licensed_clinical_social_worker"]
+    },
+    specHygProof: {
+      img: "assets/specialty/dental-hygienist.webp",
+      alt: "Dental hygienist with a patient",
+      year: "Retention proof",
+      role: "87% still there at three years",
+      meta: "1.7 avg interviews per hire · rural hospitals, FQHCs, and CAHs",
+      foot: "YEARS, NOT PLACEMENTS",
+      specialtyIds: ["dental_hygienist"]
+    },
+    specOmfsProof: {
+      img: "assets/specialty/oral-maxillofacial-surgery.webp",
+      alt: "Oral and maxillofacial surgeon reviewing a panoramic X-ray",
+      year: "Retention proof",
+      role: "87% still there at three years",
+      meta: "1.7 avg interviews per hire · rural hospitals, FQHCs, and CAHs",
+      foot: "YEARS, NOT PLACEMENTS",
+      specialtyIds: ["oral_maxillofacial_surgery"]
     },
     proof: {
       img: "assets/home-hero-clinic-consult.jpg",
@@ -2337,9 +2411,9 @@
     obg: "specObgChrist",
     internal_medicine_general: "specImCentral",
     psychiatry_general: "specPAnniston",
-    psychiatry_child_and_adolescent: "specPAnniston",
-    psychiatry_addiction_medicine: "specPAnniston",
-    psychiatry_geriatric: "specPAnniston",
+    psychiatry_child_and_adolescent: "specPChildAnniston",
+    psychiatry_addiction_medicine: "specPAddictAnniston",
+    psychiatry_geriatric: "specPGeriAnniston",
     nurse_practitioner_family_medicine_without_ob: "specNpCochise",
     nurse_practitioner_psychiatry: "specPnpChemung",
     nurse_practitioner_emergency_medicine: "specNpWillcox",
@@ -2351,13 +2425,15 @@
     orthopedic_surgery_general: "specOrsHenry",
     anesthesiology: "specAKansas",
     gi: "specGiAdvent",
-    physician_assistant_psychiatry: "specPaConcho",
+    physician_assistant_psychiatry: "specPaPsychConcho",
     physician_assistant_primary_care: "specPaConcho",
     physician_assistant_family_medicine_without_ob: "specPaConcho",
     neuro: "specNBaptist",
     neurology: "specNBaptist",
-    dermatology: "proof",
-    licensed_clinical_social_worker: "proof"
+    dermatology: "specDermProof",
+    licensed_clinical_social_worker: "specLcswProof",
+    dental_hygienist: "specHygProof",
+    oral_maxillofacial_surgery: "specOmfsProof"
   };
 
   function v3StoryForFacility(id) {
@@ -2411,7 +2487,7 @@
     }
     root.classList.remove("is-waiting");
     if (media) {
-      media.style.backgroundImage = "url('" + story.img + "?v=2189')";
+      media.style.backgroundImage = "url('" + story.img + "?v=2194')";
       media.setAttribute("aria-label", story.alt || "");
     }
     if (year) year.textContent = story.year;
@@ -3309,9 +3385,9 @@
     body: "We carry the work from the first profile through the close. Hover a number — click to pin."
   };
   var CLIMB_STATIONS = {
-    "1": { title: "On-site profile", body: "We walk the clinic week and the culture before anyone is briefed." },
-    "2": { title: "Opportunity creation", body: "We write a story candidates can trust — not a blast list." },
-    "3": { title: "Screen & present", body: "Only prepared people reach your leadership table." },
+    "1": { title: "On-site profile", body: "We walk the clinic week and the culture before anyone is briefed. Your guide learns the call schedule, patient mix, team, and community, so the search is built around the real seat and the people most likely to stay in it." },
+    "2": { title: "Opportunity creation", body: "We write a story candidates can trust — not a blast list. Practice, schedule, and life in your community become one honest opportunity profile we take directly to physicians and APPs who fit the region and the role." },
+    "3": { title: "Screen & present", body: "Only prepared people reach your leadership table. We screen for clinical fit, family and community fit, and real intent to stay — the retention-first vetting behind 87% still there at three years." },
     "4": { title: "Dossier + CV packet", body: "A clean dossier and CV packet, ready for the committee." },
     "5": { title: "AMP pre-interview", body: "We walk the candidate through interview prep before they meet you." },
     "6": { title: "Closing support", body: "We stay on the rope through the yes — and the first weeks after." }
