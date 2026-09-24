@@ -1,3 +1,4 @@
+/* amp-build:2195-pill-sky-step4-fit-refresh */
 /* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
 /* amp-build:2193-step3-sbs-step4-cards-confirm-legible */
 /* amp-build:2192-em-er-photo */
@@ -14650,5 +14651,71 @@ body.amp-footer-endcap::after {
   }
   .view[data-route="client-region"] .client-climb-band .client-climb-detail {
     min-height: 0;
+  }
+}
+
+/* ========== amp-build:2195-pill-sky-step4-fit-refresh ==========
+   (1) Homepage thin stat pills (87% / 1.7 · 700+ / 16): all pill text uses the
+       computed color of the "RETENTION-LED RECRUITING" eyebrow, rgb(120,196,229)
+       = #78C4E5. Color only — size/weight/background/spacing untouched.
+   (2) Step 4 client-region (≥900px): Step pill docks top-right so "Where should
+       we search?" moves up inside the card; map + guide card slightly shorter so
+       the Market Intelligence button stays on screen after a state pick. Card top
+       (YEARS top-align) unchanged. Step 3 untouched. */
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill strong,
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill span {
+  color: #78C4E5;
+}
+@media (min-width: 1100px) {
+  /* Step pill docks top-right → heading block moves up one row inside the card */
+  .view[data-route="client-region"] .funnel-panel.client-combined-stage {
+    position: relative;
+  }
+  .view[data-route="client-region"] .client-combined-stage > .client-step-on-card {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    margin: 0;
+    z-index: 2;
+  }
+  .view[data-route="client-region"] .client-combined-stage > h1.hire-title {
+    padding-right: 220px;
+  }
+  .view[data-route="client-region"] .client-combined-stage > .client-card-lede {
+    max-width: none;
+  }
+  /* Map card slightly shorter; guide reveal spacing tightened (copy unchanged) */
+  .view[data-route="client-region"] .client-territory-map .amp-region-map {
+    max-height: 212px;
+  }
+  .view[data-route="client-region"] .client-state-heading {
+    margin-bottom: 4px !important;
+  }
+  .view[data-route="client-region"] .client-guide-reveal {
+    padding: 4px 10px;
+  }
+  .view[data-route="client-region"] .client-guide-card {
+    padding: 4px 4px 0;
+  }
+  .view[data-route="client-region"] .client-guide-card .guide-full {
+    margin: 2px 0 4px;
+  }
+  .view[data-route="client-region"] .client-guide-card .guide-full summary {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .view[data-route="client-region"] #client-offers-continue {
+    margin-top: 12px;
+  }
+  .view[data-route="client-region"] .client-climb-band[data-climb-option="A"] {
+    margin-top: 6px;
+  }
+  /* Short screens: Market Intelligence button docks to the bottom edge of the
+     viewport while the card is in view, so it never drops off-screen. */
+  .view[data-route="client-region"] #client-ridge-cta-foot:not([hidden]) {
+    position: sticky;
+    bottom: 12px;
+    z-index: 3;
+    box-shadow: 0 10px 28px rgba(11, 31, 58, 0.28);
   }
 }
