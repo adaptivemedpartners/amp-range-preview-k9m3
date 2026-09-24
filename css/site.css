@@ -1,4 +1,4 @@
-/* amp-build:2195-pill-sky-step4-fit-refresh */
+/* amp-build:2196-pill-navy-bg */
 /* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
 /* amp-build:2193-step3-sbs-step4-cards-confirm-legible */
 /* amp-build:2192-em-er-photo */
@@ -14718,4 +14718,12 @@ body.amp-footer-endcap::after {
     z-index: 3;
     box-shadow: 0 10px 28px rgba(11, 31, 58, 0.28);
   }
+}
+
+/* ========== amp-build:2196-pill-navy-bg ==========
+   Homepage thin stat pills (87% / 1.7 · 700+ / 16): background navy (--navy #152332);
+   text stays sky #78C4E5 from 2195. Pill styling only. */
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill {
+  background: #152332;
+  border-color: #152332;
 }
