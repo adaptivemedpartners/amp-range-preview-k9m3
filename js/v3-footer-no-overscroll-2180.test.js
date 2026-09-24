@@ -14,9 +14,9 @@ function checkPage(rel) {
   assert(html.indexOf("<!-- amp-build:2180-footer-no-overscroll-mobile -->") !== -1, rel + " missing 2180 stamp");
   assert(html.indexOf("<!-- amp-build:2179-footer-no-overscroll -->") !== -1, rel + " lost 2179 stamp");
   assert(html.indexOf("<!-- amp-build:2178-hero-first-stack -->") !== -1, rel + " lost 2178 stamp");
-  assert(html.indexOf("amp-build 2185-drop-nationwide-specialty-strip") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2185"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2185"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2186-specialty-ctx-photo-taller") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2186"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2186"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2179") === -1, rel + " still on 2179 cache");
   var fade = html.indexOf('class="home-layer-soft-fade"');
   var footer = html.indexOf('class="site-footer"');
@@ -28,7 +28,7 @@ checkPage("404.html");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('__AMP_BUILD = "2185-drop-nationwide-specialty-strip"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2186-specialty-ctx-photo-taller"') !== -1, "app build stamp");
 assert(app.indexOf('setProperty("--home-bg-vh", "100svh")') !== -1, "phone wallpaper height is the small viewport");
 assert(app.indexOf("Math.ceil(h * 1.06)") !== -1, "desktop overscan kept");
 assert(css.indexOf(".site-footer {\n  background: #0b1220; color: #94a3b8; padding: 36px 20px 48px;") !== -1, "footer padding kept");

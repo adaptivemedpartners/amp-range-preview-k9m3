@@ -1,11 +1,11 @@
-/* Node smoke: 2185 drop Nationwide + trailing bar from specialty strip.
+/* Node smoke: 2186 drop Nationwide + trailing bar from specialty strip.
    Keep strip under the hero sub; sky bridge layout from 2184 stays.
-   Run: node js/v3-drop-nationwide-2185.test.js */
+   Run: node js/v3-drop-nationwide-2186.test.js */
 var fs = require("fs");
 var path = require("path");
 
 var ROOT = path.join(__dirname, "..");
-var STAMP = "2185-drop-nationwide-specialty-strip";
+var STAMP = "2186-specialty-ctx-photo-taller";
 var PREV = "2184-specialty-under-sub-sky-bridge-restore";
 
 function assert(cond, msg) {
@@ -21,11 +21,11 @@ function sliceBetween(html, startNeedle, endNeedle, label) {
 
 function checkPage(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
-  assert(html.indexOf("<!-- amp-build:" + STAMP + " -->") !== -1, rel + " missing 2185 stamp");
+  assert(html.indexOf("<!-- amp-build:" + STAMP + " -->") !== -1, rel + " missing 2186 stamp");
   assert(html.indexOf("<!-- amp-build:" + PREV + " -->") !== -1, rel + " lost 2184 stamp");
   assert(html.indexOf("amp-build " + STAMP) !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2185"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2185"') !== -1, rel + " app cache");
+  assert(html.indexOf('href="css/site.css?v=2186"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2186"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2184") === -1, rel + " still on 2184 cache");
 
   var home = sliceBetween(html, 'data-route="home"', 'class="home-job2"', rel + " homepage");
@@ -49,8 +49,8 @@ checkPage("404.html");
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(css.indexOf("/* amp-build:" + STAMP + " */") === 0, "css header stamp");
-assert(css.indexOf("========== amp-build:" + STAMP) !== -1, "css 2185 block");
+assert(css.indexOf("========== amp-build:" + STAMP) !== -1, "css 2186 block");
 assert(css.indexOf("========== amp-build:" + PREV) !== -1, "css 2184 block kept");
 assert(app.indexOf('window.__AMP_BUILD = "' + STAMP + '"') !== -1, "app build stamp");
 
-console.log("ok — 2185 Nationwide + trailing bar dropped from specialty strip");
+console.log("ok — 2186 Nationwide + trailing bar dropped from specialty strip");

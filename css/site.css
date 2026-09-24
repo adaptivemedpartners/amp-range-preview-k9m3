@@ -1,3 +1,4 @@
+/* amp-build:2186-specialty-ctx-photo-taller */
 /* amp-build:2185-drop-nationwide-specialty-strip */
 /* amp-build:2184-specialty-under-sub-sky-bridge-restore */
 /* amp-build:2183-bridge-under-sub-inter-teal-faces */
@@ -12792,7 +12793,10 @@ main .view.page.on > .hero-band,
 }
 
 /* Cap the Step 3 stay story so it does not tower over the cards.
-   The list itself is not a flex child fighting that story for height. */
+   The list itself is not a flex child fighting that story for height.
+   amp-build:2186 — Mike voice: photo band was too short (crowns only).
+   Taller strip + center-top so Alliance Pediatrics faces (and sibling
+   specialty still-there photos sharing this rule) read clearly. */
 .view.funnel.trailhead[data-route="client-specialty"] .client-spec-more,
 .view.funnel.client-spec-sheet .client-spec-more {
   grid-column: 1 / -1;
@@ -12800,9 +12804,11 @@ main .view.page.on > .hero-band,
 .view.funnel.trailhead[data-route="client-specialty"] .v3-ctx:not(.slim) .v3-ctx-media,
 .view.funnel.client-spec-sheet .v3-ctx:not(.slim) .v3-ctx-media {
   aspect-ratio: auto;
-  height: 96px;
-  min-height: 88px;
-  max-height: 110px;
+  height: 180px;
+  min-height: 160px;
+  max-height: 220px;
+  background-position: center top;
+  background-size: cover;
 }
 
 @media (max-width: 900px) {
@@ -13486,3 +13492,8 @@ body.amp-footer-endcap::after {
    so the specialty strip fits one line on Mike's viewport and
    frees a little vertical room above References/partners.
    Keep flex-wrap for narrow phones; no forced nowrap. */
+
+/* ========== amp-build:2186-specialty-ctx-photo-taller ==========
+   Client step 3 (#client-specialty-ctx) photo band: 96→180px (max 220).
+   Shared by all specialty still-there paints (Alliance Pediatrics + siblings).
+   background-position center top kept so faces stay in frame. */

@@ -13,10 +13,10 @@ var content = fs.readFileSync(path.join(ROOT, "js/content.js"), "utf8");
 var html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 
-assert(app.indexOf('window.__AMP_BUILD = "2185-drop-nationwide-specialty-strip"') !== -1, "app build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2186-specialty-ctx-photo-taller"') !== -1, "app build stamp");
 assert(html.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "html build stamp");
 assert(css.indexOf("amp-build:2174-facility-still-there-examples") !== -1, "css build stamp");
-assert(html.indexOf("?v=2185") !== -1, "html cache bust");
+assert(html.indexOf("?v=2186") !== -1, "html cache bust");
 assert(html.indexOf("webflow") === -1 && html.indexOf("Webflow") === -1, "no Webflow");
 
 /* Facility → unique specialty wiring (scrubbed, no physician names) */
