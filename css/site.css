@@ -1,3 +1,4 @@
+/* amp-build:2191-client-region-years-align-four */
 /* amp-build:2190-client-region-mike-plan */
 /* amp-build:2189-client-region-tighten */
 /* amp-build:2188-client-spec-side-by-side */
@@ -13566,7 +13567,7 @@ body.amp-footer-endcap::after {
   .view[data-route="client-region"] .client-ret-pepper--region {
     width: 100%;
     max-width: none;
-    margin: 18px 0 12px;
+    margin: 0 0 12px; /* 2191: was 18px — YEARS sat below Where-should-we-search */
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -13947,9 +13948,13 @@ body.amp-footer-endcap::after {
     padding: 7px 10px;
     font-size: 9.5px;
   }
-  /* Third card spans full width under the pair when odd count */
-  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards > .amp-ret-card:nth-child(3) {
+  /* Odd third spans full width only when it is the last card (3-card set).
+     With 4 cards, keep equal 2×2 — no stretch-to-fill. */
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards > .amp-ret-card:nth-child(3):last-child {
     grid-column: 1 / -1;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards > .amp-ret-card:nth-child(3):not(:last-child) {
+    grid-column: auto;
   }
 }
 
@@ -14052,3 +14057,73 @@ body.amp-footer-endcap::after {
 .view[data-route="confirm-client"] #mess-client-mock {
   display: none !important;
 }
+
+/* ========== amp-build:2191-client-region-years-align-four ==========
+   Step 4: raise YEARS top to align with Where-should-we-search card;
+           fourth still-there (Alliance Pediatrics) so 2×2 equal cards;
+           odd-third full-span only when 3 cards.
+   Step 3: re-assert 2188 full-width side-by-side (picker | preview) —
+           older 920px hire-sheet / 1100 stage caps must not win.
+   Step 5: 2×2 untouched. SoftMess untouched. */
+
+/* —— Step 4 · YEARS top-align with left search card —— */
+@media (min-width: 1100px) {
+  .view[data-route="client-region"] > .view-chrome {
+    align-items: start;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region {
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-top: 0;
+    align-self: start;
+    /* sticky offset kept, but initial paint must match left card top */
+    top: calc(var(--amp-title-clear, 88px) + 8px);
+  }
+  .view[data-route="client-region"] .funnel-panel.client-combined-stage {
+    margin-top: 0;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-sell-rail--thin {
+    margin-top: 0;
+  }
+  /* Four equal cards in 2×2 — no stretch of a single row-spanning card */
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards > .amp-ret-card {
+    height: auto;
+    min-height: 0;
+    align-self: stretch;
+  }
+}
+
+/* —— Step 3 · restore full-width 16:9 side-by-side (beats older 920/1100 caps) —— */
+@media (min-width: 900px) {
+  .view.funnel.trailhead[data-route="client-specialty"] .trailhead-sheet-stage,
+  .view.funnel.client-spec-sheet .trailhead-sheet-stage {
+    max-width: min(1440px, 98vw);
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .hire-sheet,
+  .view.funnel.client-spec-sheet .hire-sheet {
+    width: min(1360px, 96vw);
+    max-width: 1360px;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .client-spec-split,
+  .view.funnel.client-spec-sheet .client-spec-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.78fr);
+    gap: 16px 22px;
+    align-items: start;
+  }
+  .view.funnel.trailhead[data-route="client-specialty"] .client-spec-preview,
+  .view.funnel.client-spec-sheet .client-spec-preview {
+    position: sticky;
+    top: 8px;
+  }
+}
+

@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2190-client-region-mike-plan";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2191-client-region-years-align-four";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -3297,8 +3297,12 @@
     try { stampConciergePath("client-region"); } catch (e2) {}
   }
 
-  /* amp-build:2190 — compact How we help: number line + detail card at bottom.
-     Hover updates detail; click pins (stops following hover); click again clears. */
+  /* amp-build:2191 — How we help 1–6: document delegation + reset on route enter.
+     Cause of flaky hover/click after navigate: band-level bind-once left data-climb-lit
+     stuck after leave/re-enter (hover blocked while pinned); paint wiped is-pinned on
+     every hover paint. Fix: module pin state, reset on every client-region enter,
+     single document listeners that never die when views hide/show. */
+  /* amp-build:2190 — compact How we help: number line + detail card at bottom. */
   var CLIMB_DEFAULT = {
     kicker: "How we help",
     title: "You set the brief",
@@ -3312,8 +3316,16 @@
     "5": { title: "AMP pre-interview", body: "We walk the candidate through interview prep before they meet you." },
     "6": { title: "Closing support", body: "We stay on the rope through the yes — and the first weeks after." }
   };
+  var clientClimbPinned = "";
+  var clientClimbDocBound = false;
 
-  function paintClientClimbDetail(id) {
+  function activeClientClimbBand() {
+    var view = document.querySelector('.view.on[data-route="client-region"]');
+    if (!view) return null;
+    return view.querySelector("#client-climb-band") || $("#client-climb-band");
+  }
+
+  function paintClientClimbDetail(id, pinned) {
     var detail = $("#client-climb-detail");
     var kicker = $("#client-climb-detail-kicker");
     var title = $("#client-climb-detail-title");
@@ -3323,7 +3335,7 @@
     if (detail) {
       detail.classList.toggle("is-idle", !info);
       detail.classList.toggle("is-active", !!info);
-      detail.classList.toggle("is-pinned", false);
+      detail.classList.toggle("is-pinned", !!pinned && !!info);
     }
     if (info) {
       if (kicker) kicker.textContent = "Step " + id + " of 6";
@@ -3339,61 +3351,99 @@
   }
 
   function lightClientClimbStation(id, persist) {
-    var band = $("#client-climb-band");
+    var band = activeClientClimbBand() || $("#client-climb-band");
     if (!band) return;
+    if (persist) {
+      clientClimbPinned = id ? String(id) : "";
+      if (clientClimbPinned) band.setAttribute("data-climb-lit", clientClimbPinned);
+      else band.removeAttribute("data-climb-lit");
+    }
+    var showId = id ? String(id) : "";
     var stations = band.querySelectorAll(".client-climb-station");
     stations.forEach(function (btn) {
-      var on = id && btn.getAttribute("data-climb") === String(id);
+      var on = showId && btn.getAttribute("data-climb") === showId;
       btn.classList.toggle("is-lit", on);
       btn.setAttribute("aria-pressed", on ? "true" : "false");
     });
-    paintClientClimbDetail(id);
-    if (persist) {
-      band.setAttribute("data-climb-lit", id ? String(id) : "");
-      var detail = $("#client-climb-detail");
-      if (detail) detail.classList.toggle("is-pinned", !!id);
-    }
+    paintClientClimbDetail(showId, !!clientClimbPinned && clientClimbPinned === showId);
+  }
+
+  function resetClientClimbStations() {
+    clientClimbPinned = "";
+    var band = $("#client-climb-band");
+    if (band) band.removeAttribute("data-climb-lit");
+    lightClientClimbStation("", false);
   }
 
   function bindClientClimbStations() {
+    /* Always clear stuck pin when (re)entering client-region so hover works again */
+    resetClientClimbStations();
+
     var band = $("#client-climb-band");
-    if (!band) return;
-    if (band.getAttribute("data-bound-climb") === "1") return;
-    band.setAttribute("data-bound-climb", "1");
-    band.addEventListener("mouseover", function (ev) {
-      if (band.getAttribute("data-climb-lit")) return; /* pinned — stop following hover */
-      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
+    if (band) {
+      var trail = band.querySelector(".client-climb-trail");
+      if (trail && trail.getAttribute("data-bound-climb-scroll") !== "1") {
+        trail.setAttribute("data-bound-climb-scroll", "1");
+        var syncSwipe = function () {
+          var max = trail.scrollWidth - trail.clientWidth - 8;
+          var atEnd = max <= 0 || trail.scrollLeft >= max;
+          band.classList.toggle("is-climb-end", atEnd);
+        };
+        trail.addEventListener("scroll", syncSwipe, { passive: true });
+        syncSwipe();
+      }
+    }
+
+    if (clientClimbDocBound) return;
+    clientClimbDocBound = true;
+
+    document.addEventListener("pointerover", function (ev) {
+      var band = activeClientClimbBand();
+      if (!band) return;
+      if (clientClimbPinned) return; /* pinned — click another (or same) to change/clear */
+      var t = ev.target;
+      if (!t || typeof t.closest !== "function") return;
+      if (!band.contains(t)) return;
+      var btn = t.closest(".client-climb-station");
       if (!btn || !band.contains(btn)) return;
       lightClientClimbStation(btn.getAttribute("data-climb"), false);
-    });
-    band.addEventListener("mouseleave", function () {
-      var kept = band.getAttribute("data-climb-lit") || "";
-      lightClientClimbStation(kept, false);
-    });
-    band.addEventListener("focusin", function (ev) {
-      if (band.getAttribute("data-climb-lit")) return;
-      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
-      if (!btn) return;
+    }, true);
+
+    document.addEventListener("pointerout", function (ev) {
+      var band = activeClientClimbBand();
+      if (!band) return;
+      var t = ev.target;
+      var related = ev.relatedTarget;
+      if (!t || typeof t.closest !== "function") return;
+      /* Leaving the band entirely → restore pinned or idle */
+      if (!band.contains(t)) return;
+      if (related && band.contains(related)) return;
+      lightClientClimbStation(clientClimbPinned || "", false);
+    }, true);
+
+    document.addEventListener("focusin", function (ev) {
+      var band = activeClientClimbBand();
+      if (!band) return;
+      if (clientClimbPinned) return;
+      var t = ev.target;
+      if (!t || typeof t.closest !== "function") return;
+      var btn = t.closest(".client-climb-station");
+      if (!btn || !band.contains(btn)) return;
       lightClientClimbStation(btn.getAttribute("data-climb"), false);
-    });
-    band.addEventListener("click", function (ev) {
-      var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
-      if (!btn) return;
+    }, true);
+
+    document.addEventListener("click", function (ev) {
+      var band = activeClientClimbBand();
+      if (!band) return;
+      var t = ev.target;
+      if (!t || typeof t.closest !== "function") return;
+      var btn = t.closest(".client-climb-station");
+      if (!btn || !band.contains(btn)) return;
       ev.preventDefault();
       var id = btn.getAttribute("data-climb");
-      var already = band.getAttribute("data-climb-lit") === id;
+      var already = clientClimbPinned && clientClimbPinned === id;
       lightClientClimbStation(already ? "" : id, true);
-    });
-    var trail = band.querySelector(".client-climb-trail");
-    if (trail) {
-      var syncSwipe = function () {
-        var max = trail.scrollWidth - trail.clientWidth - 8;
-        var atEnd = max <= 0 || trail.scrollLeft >= max;
-        band.classList.toggle("is-climb-end", atEnd);
-      };
-      trail.addEventListener("scroll", syncSwipe, { passive: true });
-      syncSwipe();
-    }
+    }, true);
   }
 
   function renderClientSpecialty() {
