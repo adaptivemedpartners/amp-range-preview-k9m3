@@ -1,4 +1,4 @@
-/* amp-build:2196-pill-navy-bg */
+/* amp-build:2197-pill-blue-wash */
 /* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
 /* amp-build:2193-step3-sbs-step4-cards-confirm-legible */
 /* amp-build:2192-em-er-photo */
@@ -14726,4 +14726,15 @@ body.amp-footer-endcap::after {
 .home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill {
   background: #152332;
   border-color: #152332;
+}
+
+/* ========== amp-build:2197-pill-blue-wash ==========
+   Stat pills keep navy base but get a soft lighter-blue wash toward the top-right,
+   echoing the MI card glow. Text stays sky #78C4E5. Pill background only. */
+.home-stage.v3-home .v3-stats-parent .v3-proof-thin .v3-proof-pill {
+  background:
+    radial-gradient(120% 180% at 100% 0%, rgba(120, 196, 229, 0.22) 0%, rgba(120, 196, 229, 0.08) 38%, rgba(120, 196, 229, 0) 70%),
+    linear-gradient(165deg, #121f2d 0%, #152332 55%, #1c3044 100%);
+  border-color: rgba(94, 184, 224, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
