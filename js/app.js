@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2189-client-region-tighten";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2190-client-region-mike-plan";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -1864,15 +1864,7 @@
       }
       if (route === "confirm-client") {
         try { paintConfirmClientDiscuss(); } catch (err) {}
-        var c = document.getElementById("mess-client-mock");
-        var bd = state.clientBd;
-        if (c && !c.innerHTML.trim()) {
-          var needBit = clientNeedsStamp();
-          var messLine = bd
-            ? ("Meeting request · " + bd.state + " · " + bd.ownerName + (needBit ? " · " + needBit : "") + " → a hiring guide")
-            : "Meeting request → a hiring guide";
-          stampMess("client", messLine);
-        }
+        /* amp-build:2190 — client receipt mock removed (Mike: delete) */
       }
       if (route === "blog") renderBlogIndex();
     }
@@ -3305,19 +3297,49 @@
     try { stampConciergePath("client-region"); } catch (e2) {}
   }
 
-  var CLIMB_DEFAULT_LINE = "You set the brief. We carry the work from the first profile through the close.";
-  var CLIMB_STATION_LINES = {
-    "1": "We walk the clinic week and the culture before anyone is briefed.",
-    "2": "We write a story candidates can trust — not a blast list.",
-    "3": "Only prepared people reach your leadership table.",
-    "4": "A clean dossier and CV packet, ready for the committee.",
-    "5": "We walk the candidate through interview prep before they meet you.",
-    "6": "We stay on the rope through the yes — and the first weeks after."
+  /* amp-build:2190 — compact How we help: number line + detail card at bottom.
+     Hover updates detail; click pins (stops following hover); click again clears. */
+  var CLIMB_DEFAULT = {
+    kicker: "How we help",
+    title: "You set the brief",
+    body: "We carry the work from the first profile through the close. Hover a number — click to pin."
   };
+  var CLIMB_STATIONS = {
+    "1": { title: "On-site profile", body: "We walk the clinic week and the culture before anyone is briefed." },
+    "2": { title: "Opportunity creation", body: "We write a story candidates can trust — not a blast list." },
+    "3": { title: "Screen & present", body: "Only prepared people reach your leadership table." },
+    "4": { title: "Dossier + CV packet", body: "A clean dossier and CV packet, ready for the committee." },
+    "5": { title: "AMP pre-interview", body: "We walk the candidate through interview prep before they meet you." },
+    "6": { title: "Closing support", body: "We stay on the rope through the yes — and the first weeks after." }
+  };
+
+  function paintClientClimbDetail(id) {
+    var detail = $("#client-climb-detail");
+    var kicker = $("#client-climb-detail-kicker");
+    var title = $("#client-climb-detail-title");
+    var body = $("#client-climb-detail-body");
+    var line = $("#client-climb-line");
+    var info = (id && CLIMB_STATIONS[String(id)]) || null;
+    if (detail) {
+      detail.classList.toggle("is-idle", !info);
+      detail.classList.toggle("is-active", !!info);
+      detail.classList.toggle("is-pinned", false);
+    }
+    if (info) {
+      if (kicker) kicker.textContent = "Step " + id + " of 6";
+      if (title) title.textContent = info.title;
+      if (body) body.textContent = info.body;
+      if (line) line.textContent = info.body;
+    } else {
+      if (kicker) kicker.textContent = CLIMB_DEFAULT.kicker;
+      if (title) title.textContent = CLIMB_DEFAULT.title;
+      if (body) body.textContent = CLIMB_DEFAULT.body;
+      if (line) line.textContent = CLIMB_DEFAULT.body;
+    }
+  }
 
   function lightClientClimbStation(id, persist) {
     var band = $("#client-climb-band");
-    var line = $("#client-climb-line");
     if (!band) return;
     var stations = band.querySelectorAll(".client-climb-station");
     stations.forEach(function (btn) {
@@ -3325,8 +3347,12 @@
       btn.classList.toggle("is-lit", on);
       btn.setAttribute("aria-pressed", on ? "true" : "false");
     });
-    if (line) line.textContent = (id && CLIMB_STATION_LINES[String(id)]) || CLIMB_DEFAULT_LINE;
-    if (persist) band.setAttribute("data-climb-lit", id ? String(id) : "");
+    paintClientClimbDetail(id);
+    if (persist) {
+      band.setAttribute("data-climb-lit", id ? String(id) : "");
+      var detail = $("#client-climb-detail");
+      if (detail) detail.classList.toggle("is-pinned", !!id);
+    }
   }
 
   function bindClientClimbStations() {
@@ -3335,6 +3361,7 @@
     if (band.getAttribute("data-bound-climb") === "1") return;
     band.setAttribute("data-bound-climb", "1");
     band.addEventListener("mouseover", function (ev) {
+      if (band.getAttribute("data-climb-lit")) return; /* pinned — stop following hover */
       var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
       if (!btn || !band.contains(btn)) return;
       lightClientClimbStation(btn.getAttribute("data-climb"), false);
@@ -3344,6 +3371,7 @@
       lightClientClimbStation(kept, false);
     });
     band.addEventListener("focusin", function (ev) {
+      if (band.getAttribute("data-climb-lit")) return;
       var btn = ev.target && ev.target.closest ? ev.target.closest(".client-climb-station") : null;
       if (!btn) return;
       lightClientClimbStation(btn.getAttribute("data-climb"), false);
@@ -3383,7 +3411,7 @@
     if (state.clientSpecialty && state.clientSpecialties.indexOf(state.clientSpecialty) < 0) {
       state.clientSpecialties = [state.clientSpecialty];
     }
-    /* amp-build:2189 — region: one How we help (climb); 2188 splits kept */
+    /* amp-build:2190 — region: climb hover/pin detail; 2188 splits kept */
     /* amp-build:2187 — uniform 3×3 primary specialties; Other full-width row; no More expand */
     var ranks = clientSpecRanksForFacility().slice(0, 9);
     var list = $("#client-spec-cards");

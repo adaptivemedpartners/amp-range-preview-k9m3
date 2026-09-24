@@ -1,3 +1,4 @@
+/* amp-build:2190-client-region-mike-plan */
 /* amp-build:2189-client-region-tighten */
 /* amp-build:2188-client-spec-side-by-side */
 /* amp-build:2187-client-spec-3x3-other-row */
@@ -13756,4 +13757,298 @@ body.amp-footer-endcap::after {
   .view[data-route="client-region"] .client-territory-map .amp-region-map {
     max-height: none;
   }
+}
+
+/* ========== amp-build:2190-client-region-mike-plan ==========
+   Mike plan fold-in:
+   Step 4: compact How-we-help number line + bottom detail (hover/pin);
+           right YEARS wider/thinner; 2-col placement grid; one-screen desktop.
+   Step 5: same YEARS + 2-col placements; 2×2 equal card alignment
+           (search | YEARS / form | placements).
+   Step 3: taller specialty ctx media so FM full picture (not sky crop).
+   Confirm: Explore→MI; client receipt mock removed. SoftMess untouched. */
+
+/* —— Step 3 · taller specialty preview media (FM water-tower crop fix) —— */
+.view.funnel.trailhead[data-route="client-specialty"] .v3-ctx:not(.slim) .v3-ctx-media,
+.view.funnel.client-spec-sheet .v3-ctx:not(.slim) .v3-ctx-media,
+#client-specialty-ctx .v3-ctx-media {
+  aspect-ratio: auto;
+  height: 268px;
+  min-height: 240px;
+  max-height: 340px;
+  background-position: center 48%;
+  background-size: cover;
+}
+@media (min-width: 900px) {
+  .view.funnel.trailhead[data-route="client-specialty"] .client-spec-preview .v3-ctx:not(.slim) .v3-ctx-media,
+  .view.funnel.client-spec-sheet .client-spec-preview .v3-ctx:not(.slim) .v3-ctx-media {
+    height: min(32vh, 300px);
+    min-height: 248px;
+    max-height: 340px;
+  }
+}
+
+/* —— Step 4 · How we help: compact number line + detail card at bottom —— */
+.view[data-route="client-region"] .client-climb-band[data-climb-option="A"] {
+  margin: 4px 0 8px;
+  padding: 8px 12px 10px;
+}
+.view[data-route="client-region"] .client-climb-line {
+  display: none !important;
+}
+.view[data-route="client-region"] .client-climb-trail {
+  gap: 6px;
+  margin: 0 0 8px;
+}
+.view[data-route="client-region"] .client-climb-trail::before {
+  top: 14px;
+}
+.view[data-route="client-region"] .client-climb-station {
+  gap: 0;
+  padding: 2px 2px 4px;
+}
+.view[data-route="client-region"] .client-climb-num {
+  width: 30px;
+  height: 30px;
+  font-size: 12.5px;
+}
+@media (min-width: 901px) {
+  .view[data-route="client-region"] .client-climb-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+.client-climb-detail {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(13, 148, 136, 0.22);
+  background: linear-gradient(180deg, rgba(240, 253, 250, 0.92), #fff);
+  min-height: 64px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.client-climb-detail.is-active,
+.client-climb-detail.is-pinned {
+  border-color: rgba(13, 148, 136, 0.45);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+}
+.client-climb-detail-kicker {
+  margin: 0 0 2px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #0f766e;
+}
+.client-climb-detail-title {
+  margin: 0 0 2px;
+  font-size: 14px;
+  font-weight: 750;
+  color: #0f172a;
+  line-height: 1.25;
+}
+.client-climb-detail-body {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #334155;
+}
+.client-climb-detail.is-idle .client-climb-detail-title {
+  color: #0f766e;
+}
+
+/* —— Shared thin YEARS rail (step 4 + 5) —— */
+.client-ret-sell-rail--thin,
+.client-meeting-proof.client-ret-sell-rail--thin {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  padding: 10px 16px !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+.client-ret-sell-rail--thin .client-ret-sell-kicker,
+.client-meeting-proof.client-ret-sell-rail--thin .client-meeting-proof-kicker {
+  margin: 0;
+  flex: 0 0 auto;
+}
+.client-ret-sell-rail--thin .client-ret-sell-line,
+.client-meeting-proof.client-ret-sell-rail--thin .client-meeting-proof-line {
+  margin: 0;
+  flex: 1 1 180px;
+  font-size: 14px !important;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.client-ret-sell-rail--thin .client-ret-sell-proof,
+.client-meeting-proof.client-ret-sell-rail--thin .client-meeting-proof-sub {
+  margin: 0;
+  flex: 1 1 160px;
+  font-size: 11.5px !important;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+/* —— Step 4 · right rail: wider column, YEARS thin, 2-col placements —— */
+@media (min-width: 1100px) {
+  .view[data-route="client-region"] > .view-chrome {
+    grid-template-columns: minmax(0, 1.15fr) minmax(420px, 0.95fr);
+    gap: 14px 20px;
+    width: min(1480px, calc(100% - 24px));
+    max-width: 1480px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: none;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-sell-rail {
+    display: flex;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card--desktop,
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card--dense {
+    display: flex;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card-media {
+    aspect-ratio: 16 / 10;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-card-body {
+    padding: 8px 10px 6px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-year {
+    font-size: 17px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-role {
+    font-size: 12.5px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-place,
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-days {
+    font-size: 11px;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .amp-ret-footer {
+    padding: 7px 10px;
+    font-size: 9.5px;
+  }
+  /* Third card spans full width under the pair when odd count */
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards > .amp-ret-card:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* —— Step 5 · 2×2 equal alignment + YEARS thin + 2-col placements —— */
+.client-meeting-proof-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  min-width: 0;
+}
+@media (min-width: 900px) {
+  .client-meeting-sheet {
+    max-width: min(1360px, 96vw);
+    padding: 20px 22px 24px;
+  }
+  .view[data-route="client-meeting"] .client-meeting-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    gap: 14px 18px;
+    align-items: stretch;
+  }
+  .view[data-route="client-meeting"] .client-meeting-main,
+  .view[data-route="client-meeting"] .client-meeting-preview {
+    display: contents;
+  }
+  .view[data-route="client-meeting"] .picked-agreement {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0;
+    align-self: stretch;
+    min-height: 0;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 0;
+    align-self: stretch;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .view[data-route="client-meeting"] #client-meeting-form {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0 !important;
+    align-self: stretch;
+    height: 100%;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid {
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    align-self: stretch;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-card {
+    height: 100%;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-card-media {
+    aspect-ratio: 16 / 10;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-card-body {
+    padding: 8px 10px 6px;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-year {
+    font-size: 17px;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-role {
+    font-size: 12.5px;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-place,
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-days {
+    font-size: 11px;
+  }
+  .view[data-route="client-meeting"] .client-meeting-proof-grid .amp-ret-footer {
+    padding: 7px 10px;
+    font-size: 9.5px;
+  }
+  /* When search summary is hidden, YEARS still sits top-right; form spans full left */
+  .view[data-route="client-meeting"] .picked-agreement[hidden] {
+    display: none !important;
+  }
+}
+@media (max-width: 899px) {
+  .client-meeting-proof-grid {
+    grid-template-columns: 1fr;
+  }
+  .view[data-route="client-region"] .client-ret-pepper--region .client-ret-pepper-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Confirm-client: receipt mock gone — tighten discuss wrap spacing */
+.view[data-route="confirm-client"] #mess-client-mock {
+  display: none !important;
 }
