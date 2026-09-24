@@ -22,9 +22,9 @@ function checkPage(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
   assert(html.indexOf("<!-- amp-build:" + STAMP + " -->") !== -1, rel + " missing 2183 stamp");
   assert(html.indexOf("<!-- amp-build:2182-footer-wallpaper-bleed -->") !== -1, rel + " lost 2182 stamp");
-  assert(html.indexOf("amp-build 2184-specialty-under-sub-sky-bridge-restore") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2184"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2184"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2185-drop-nationwide-specialty-strip") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2185"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2185"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2182") === -1, rel + " still on 2182 cache");
   assert(html.indexOf("family=Caveat:wght@600;700") !== -1, rel + " Caveat stays");
   assert(html.indexOf("Source+Serif") === -1, rel + " Source Serif link removed");
@@ -69,7 +69,7 @@ function checkPage(rel) {
       role: "Emergency Medicine",
       place: "VCU Community Memorial Hospital · South Hill, VA",
       footer: "13 YEARS LATER. STILL THERE.",
-      img: "assets/story-2015-peds-ne.jpg?v=2184",
+      img: "assets/story-2015-peds-ne.jpg?v=2185",
       alt: "Emergency Medicine placement still serving at VCU Community Memorial Hospital",
       desktop: true
     },
@@ -79,7 +79,7 @@ function checkPage(rel) {
       role: "Dentistry",
       place: "Winn Community Health Center · Winnfield, LA",
       footer: "9 YEARS LATER. STILL THERE.",
-      img: "assets/story-2018-fm-ne-cah.jpg?v=2184",
+      img: "assets/story-2018-fm-ne-cah.jpg?v=2185",
       alt: "Dentistry placement still serving at Winn Community Health Center"
     },
     {
@@ -88,7 +88,7 @@ function checkPage(rel) {
       role: "Vascular Surgery",
       place: "Peterson Regional Medical Center · Kerrville, TX",
       footer: "9 YEARS LATER. STILL THERE.",
-      img: "assets/story-2021-physician-ks.jpg?v=2184",
+      img: "assets/story-2021-physician-ks.jpg?v=2185",
       alt: "Vascular Surgery placement still serving at Peterson Regional Medical Center"
     }
   ];
@@ -117,7 +117,7 @@ var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(css.indexOf("/* amp-build:" + STAMP + " */") !== -1, "css 2183 stamp kept");
 assert(css.indexOf("========== amp-build:" + STAMP) !== -1, "css 2183 block");
-assert(app.indexOf('window.__AMP_BUILD = "2184-specialty-under-sub-sky-bridge-restore"') !== -1, "app build stamp");
+assert(app.indexOf('window.__AMP_BUILD = "2185-drop-nationwide-specialty-strip"') !== -1, "app build stamp");
 assert(css.indexOf("Source Serif") === -1, "Source Serif family gone from css");
 
 var titleRule = css.slice(css.indexOf(".v3-stay-title {"), css.indexOf(".v3-stay-title span"));

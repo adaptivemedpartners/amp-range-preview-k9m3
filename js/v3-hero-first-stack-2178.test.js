@@ -17,16 +17,16 @@ function sliceBetween(html, startNeedle, endNeedle, label) {
   return html.slice(start, end);
 }
 
-var LABELS = ["Physicians", "APPs", "Dental", "Behavioral Health", "Allied Health", "Nationwide"];
+var LABELS = ["Physicians", "APPs", "Dental", "Behavioral Health", "Allied Health"];
 
 function checkPage(rel) {
   var html = fs.readFileSync(path.join(ROOT, rel), "utf8");
   assert(html.indexOf("<!-- amp-build:2178-hero-first-stack -->") !== -1, rel + " missing 2178 stamp");
   assert(html.indexOf("<!-- amp-build:2177-zach-scope-strip -->") !== -1, rel + " lost 2177 stamp");
   assert(html.indexOf("<!-- amp-build:2176-specialty-still-there-examples -->") !== -1, rel + " lost 2176 stamp");
-  assert(html.indexOf("amp-build 2184-specialty-under-sub-sky-bridge-restore") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2184"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2184"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2185-drop-nationwide-specialty-strip") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2185"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2185"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2177") === -1, rel + " still on 2177 cache");
   assert(html.indexOf("?v=2176") === -1, rel + " still on 2176 cache");
   assert(html.indexOf('href="/physician" data-go="physician">Physicians</a>') !== -1, rel + " nav physicians link");
@@ -52,7 +52,8 @@ function checkPage(rel) {
 
   var stripEnd = home.indexOf("</p>", stripAt);
   var strip = home.slice(stripAt, stripEnd);
-  assert(strip.indexOf('aria-label="Who we place: Physicians, APPs, Dental, Behavioral Health, Allied Health, Nationwide"') !== -1, rel + " who we place label");
+  assert(strip.indexOf('aria-label="Who we place: Physicians, APPs, Dental, Behavioral Health, Allied Health"') !== -1, rel + " who we place label");
+  assert(strip.indexOf("Nationwide") === -1, rel + " Nationwide gone");
   var cursor = 0;
   LABELS.forEach(function (label) {
     var at = strip.indexOf(label, cursor);
@@ -76,7 +77,7 @@ var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
 assert(css.indexOf("amp-build:2178-hero-first-stack") !== -1, "css 2178 stamp");
 assert(css.indexOf("amp-build:2177-zach-scope-strip") !== -1, "css 2177 stamp");
-assert(app.indexOf('__AMP_BUILD = "2184-specialty-under-sub-sky-bridge-restore"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2185-drop-nationwide-specialty-strip"') !== -1, "app build stamp");
 assert(css.indexOf(".home-layer-soft-fade") !== -1, "under-header fade remains");
 assert(css.indexOf("transparent 148px") !== -1, "desktop fade falloff unchanged");
 assert(css.indexOf("z-index: 280") !== -1, "fade layer lock");

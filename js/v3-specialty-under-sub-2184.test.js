@@ -24,10 +24,10 @@ function checkPage(rel) {
   assert(html.indexOf("<!-- amp-build:" + STAMP + " -->") !== -1, rel + " missing 2184 stamp");
   assert(html.indexOf("<!-- amp-build:2183-bridge-under-sub-inter-teal-faces -->") !== -1, rel + " lost 2183 stamp");
   assert(html.indexOf("<!-- amp-build:2182-footer-wallpaper-bleed -->") !== -1, rel + " lost 2182 stamp");
-  assert(html.indexOf("amp-build " + STAMP) !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2184"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2184"') !== -1, rel + " app cache");
-  assert(html.indexOf("?v=2183") === -1, rel + " still on 2183 cache");
+  assert(html.indexOf("amp-build 2185-drop-nationwide-specialty-strip") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2185"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2185"') !== -1, rel + " app cache");
+  assert(html.indexOf("?v=2184") === -1, rel + " still on 2184 cache");
 
   var home = sliceBetween(html, 'data-route="home"', 'class="home-job2"', rel + " homepage");
   var copy = sliceBetween(home, 'class="v3-years-copy', "data-hero-ret-rotator", rel + " hero copy");
@@ -35,7 +35,8 @@ function checkPage(rel) {
   var strip = copy.indexOf("amp-zach-scope-strip");
   assert(sub !== -1 && strip !== -1 && sub < strip, rel + " strip under the hero sub");
   assert(copy.indexOf("Finding someone is one thing.") === -1, rel + " stay headline left the hero");
-  assert(copy.indexOf("Physicians") !== -1 && copy.indexOf("Nationwide") !== -1, rel + " strip labels in the copy column");
+  assert(copy.indexOf("Physicians") !== -1 && copy.indexOf("Allied Health") !== -1, rel + " strip labels in the copy column");
+  assert(copy.indexOf("Nationwide") === -1, rel + " Nationwide dropped");
 
   var bridge = sliceBetween(home, 'class="v3-stay-bridge"', 'class="v3-stats-parent"', rel + " bridge");
   var title = bridge.indexOf('class="v3-stay-title"');
@@ -59,8 +60,9 @@ checkPage("404.html");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(css.indexOf("/* amp-build:" + STAMP + " */") === 0, "css header stamp");
-assert(app.indexOf('window.__AMP_BUILD = "' + STAMP + '"') !== -1, "app build stamp");
+assert(css.indexOf("/* amp-build:2185-drop-nationwide-specialty-strip */") === 0, "css header stamp");
+assert(css.indexOf("========== amp-build:" + STAMP) !== -1, "css 2184 block kept");
+assert(app.indexOf('window.__AMP_BUILD = "2185-drop-nationwide-specialty-strip"') !== -1, "app build stamp");
 
 var b2184 = css.slice(css.indexOf("========== amp-build:" + STAMP));
 assert(b2184.indexOf(".home-stage.v3-home .v3-years-copy .v3-zach-scope.amp-zach-scope-strip") !== -1, "strip lives in the copy column");

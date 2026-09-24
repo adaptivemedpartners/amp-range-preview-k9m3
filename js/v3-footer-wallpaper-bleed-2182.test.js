@@ -14,9 +14,9 @@ function checkPage(rel) {
   assert(html.indexOf("<!-- amp-build:2182-footer-wallpaper-bleed -->") !== -1, rel + " missing 2182 stamp");
   assert(html.indexOf("<!-- amp-build:2181-still-there-swipe -->") !== -1, rel + " lost 2181 stamp");
   assert(html.indexOf("<!-- amp-build:2180-footer-no-overscroll-mobile -->") !== -1, rel + " lost 2180 stamp");
-  assert(html.indexOf("amp-build 2184-specialty-under-sub-sky-bridge-restore") !== -1, rel + " chip");
-  assert(html.indexOf('href="css/site.css?v=2184"') !== -1, rel + " css cache");
-  assert(html.indexOf('src="js/app.js?v=2184"') !== -1, rel + " app cache");
+  assert(html.indexOf("amp-build 2185-drop-nationwide-specialty-strip") !== -1, rel + " chip");
+  assert(html.indexOf('href="css/site.css?v=2185"') !== -1, rel + " css cache");
+  assert(html.indexOf('src="js/app.js?v=2185"') !== -1, rel + " app cache");
   assert(html.indexOf("?v=2181") === -1, rel + " still on 2181 cache");
   assert(html.indexOf("AMP-Mess-Soft") === -1, rel + " SoftMess must stay out of this page");
 }
@@ -26,7 +26,7 @@ checkPage("404.html");
 
 var css = fs.readFileSync(path.join(ROOT, "css/site.css"), "utf8");
 var app = fs.readFileSync(path.join(ROOT, "js/app.js"), "utf8");
-assert(app.indexOf('__AMP_BUILD = "2184-specialty-under-sub-sky-bridge-restore"') !== -1, "app build stamp");
+assert(app.indexOf('__AMP_BUILD = "2185-drop-nationwide-specialty-strip"') !== -1, "app build stamp");
 assert(app.indexOf("function syncFooterWallpaperCap()") !== -1, "gap cap");
 assert(app.indexOf('classList.add("amp-footer-endcap")') !== -1, "end cap class");
 assert(app.indexOf('setProperty("--home-bg-vh", "100svh")') !== -1, "2180 phone viewport cap kept");

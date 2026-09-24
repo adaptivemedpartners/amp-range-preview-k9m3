@@ -1,3 +1,4 @@
+/* amp-build:2185-drop-nationwide-specialty-strip */
 /* amp-build:2184-specialty-under-sub-sky-bridge-restore */
 /* amp-build:2183-bridge-under-sub-inter-teal-faces */
 /* amp-build:2182-footer-wallpaper-bleed */
@@ -13480,3 +13481,8 @@ body.amp-footer-endcap::after {
   }
 }
 
+/* ========== amp-build:2185-drop-nationwide-specialty-strip ==========
+   Drop redundant Nationwide + trailing bar after Allied Health
+   so the specialty strip fits one line on Mike's viewport and
+   frees a little vertical room above References/partners.
+   Keep flex-wrap for narrow phones; no forced nowrap. */
