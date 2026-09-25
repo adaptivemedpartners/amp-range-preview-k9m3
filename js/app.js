@@ -1557,6 +1557,11 @@
     paintRdsDetail(on ? on.getAttribute("data-rds-tool") : RDS_TOUR[0].id);
   }
 
+  function stripeLinkFor(sku) {
+    var m = window.AMP_STRIPE_LINKS || {};
+    var u = m[String(sku || "").replace(/^ridge_/, "")];
+    return u && /^https:\/\/(buy|checkout)\.stripe\.com\//.test(u) ? u : "";
+  }
   function openRidgeCheckout(sku) {
     var api = ridgeAccess();
     sku = String(sku || "").replace(/^ridge_/, "");
@@ -1574,9 +1579,15 @@
     var note = $("#ridge-checkout-note");
     if (title) title.textContent = meta.label;
     if (amount) amount.textContent = "$" + Number(meta.amount).toLocaleString("en-US") + (meta.kind === "subscription" ? " / month" : " one-time");
+    var liveLink = stripeLinkFor(sku);
+    var tagEl = $("#ridge-checkout-tag"), confirmEl = $("#ridge-checkout-confirm");
     if (note) {
-      note.textContent = "Stripe Checkout is stubbed in V1 (test-mode hook). Simulate success to grant the seat locally. No card is charged.";
+      note.textContent = liveLink
+        ? "You'll finish payment on Stripe's secure checkout page, then come right back here with your access open."
+        : "Stripe Checkout is stubbed in V1 (test-mode hook). Simulate success to grant the seat locally. No card is charged.";
     }
+    if (tagEl) tagEl.textContent = liveLink ? "Secure checkout · Stripe" : "Stripe Checkout · test mode";
+    if (confirmEl) confirmEl.textContent = liveLink ? "Continue to secure checkout" : "Simulate successful payment";
     var portalState = $("#mi-lite-state-select");
     var portalRegion = $("#mi-lite-region-select");
     var statePick = $("#ridge-checkout-state");
@@ -1633,6 +1644,23 @@
     if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
       showMiMockToast("Extra polls ($15) are for poll package holders.");
       closeRidgeCheckout();
+      return;
+    }
+    var liveLink = stripeLinkFor(sku);
+    if (liveLink) {
+      var pend = {
+        sku: sku,
+        state: ($("#ridge-checkout-state") && $("#ridge-checkout-state").value) || ($("#mi-lite-state-select") && $("#mi-lite-state-select").value) || "",
+        specialty: ($("#ridge-checkout-specialty") && $("#ridge-checkout-specialty").value) || "",
+        at: new Date().toISOString()
+      };
+      if (sku === "oneoff" && (!pend.state || !pend.specialty)) {
+        showMiMockToast("Pick the specialty and state for your report first.");
+        return;
+      }
+      try { localStorage.setItem("amp_ridge_pending_checkout", JSON.stringify(pend)); } catch (eP) {}
+      var ref = (sku + "__" + (pend.specialty || "any") + "__" + (pend.state || "any")).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 190);
+      window.location.href = liveLink + (liveLink.indexOf("?") >= 0 ? "&" : "?") + "client_reference_id=" + encodeURIComponent(ref);
       return;
     }
     api.applyPaid({

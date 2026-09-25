@@ -518,12 +518,23 @@
         sku = params.get("ridge_checkout");
       }
       if (!sku) return null;
+      var pend = null;
+      try { pend = JSON.parse(w.localStorage.getItem("amp_ridge_pending_checkout") || "null"); } catch (eP) { pend = null; }
+      if (pend && String(pend.sku) !== String(sku).replace(/^ridge_/, "")) pend = null;
       var seat = applyPaid({
         sku: sku,
-        state: params.get("ridge_state") || params.get("state"),
+        state: params.get("ridge_state") || params.get("state") || (pend && pend.state),
         region: params.get("ridge_region") || params.get("region"),
-        specialty: params.get("ridge_specialty") || params.get("specialty")
+        specialty: params.get("ridge_specialty") || params.get("specialty") || (pend && pend.specialty)
       });
+      try { w.localStorage.removeItem("amp_ridge_pending_checkout"); } catch (eR) {}
+      if (params.get("session_id")) {
+        try {
+          ["ridge_checkout", "ridge_sku", "session_id"].forEach(function (k) { params.delete(k); });
+          var qs = params.toString();
+          w.history.replaceState(null, "", w.location.pathname + (qs ? "?" + qs : "") + w.location.hash);
+        } catch (eH) {}
+      }
       return seat;
     } catch (e) {
       return null;
