@@ -7,6 +7,7 @@
    No firm iframe. No MGMA. No Look/theme switcher. Firm guts stay behind Ask AMP. */
 (function (w) {
   "use strict";
+  function ampNppesFor(s){ try { return (s && window.AMP_MI_NPPES) ? (window.AMP_MI_NPPES[s.label] || null) : null; } catch(e){ return null; } }
 
   var METRICS = [
     { key: "physicians", label: "Physician supply" },
@@ -189,6 +190,12 @@
           (h.rediUs && h.rediUs.usTotal != null ? (" · U.S. " + fmtNum(h.rediUs.usTotal)) : ""));
       }
       if (s && s.physNational != null) bits.push("Data: national supply signal " + fmtNum(s.physNational));
+      var npA = ampNppesFor(s);
+      if (npA) {
+        var npSel = 0, npHave = 0;
+        picks.forEach(function (code) { var v = npA.byState[code]; if (v != null) { npSel += v; npHave++; } });
+        bits.push("Data: NPPES candidates " + fmtNum(npA.national) + " U.S." + (npHave ? (" · " + fmtNum(npSel) + " in selection") : "") + " (" + npA.conf + " confidence, Sep 2026)");
+      }
       if (!bits.length) bits.push("Data: Redi hook pending for this label");
     } else if (id === "cms") {
       if (h.cms && h.cms.avgAllowed != null) {
@@ -1021,6 +1028,8 @@
       html += '<div class="hero"><span class="na">n/a</span><small>limited public count</small></div>';
       html += '<div class="mean-line">' + wt.group + ' · supply snapshot · EXAMPLE</div>';
     }
+    var npB = ampNppesFor(s);
+    if (npB) html += '<div class="mean-line nppes-line" title="NPI registry (NPPES Sep 2026 V2)">NPPES candidates <strong>' + fmtNum(npB.national) + '</strong> · ' + npB.conf + ' confidence</div>';
     html += '</div>';
 
     html += '<div class="bench-card postings"><div class="title">Approx. live postings</div>';
@@ -1293,6 +1302,8 @@
         html += '<div class="st-name">' + (names[code] || code.toUpperCase()) + "</div>";
         html += '<div class="st-metrics">';
         html += '<div class="st-m"><span class="st-ml">' + wt.title + '</span><span class="st-mv">' + show(fmtNum(n), "—") + "</span></div>";
+        var npS = ampNppesFor(s);
+        if (npS && npS.byState[code] != null) html += '<div class="st-m nppes-line"><span class="st-ml">NPPES</span><span class="st-mv">' + fmtNum(npS.byState[code]) + "</span></div>";
         html += '<div class="st-m"><span class="st-ml">Per 100k</span><span class="st-mv">' + Number(dens).toFixed(1) + "</span></div>";
         html += '<div class="st-m"><span class="st-ml">~Jobs</span><span class="st-mv">' + show(fmtNum(p), "0") + "</span></div>";
         html += '<div class="st-m"><span class="st-ml">Difficulty</span><span class="st-mv">' + Number(diff).toFixed(1) + "</span></div>";
@@ -1308,6 +1319,7 @@
     } else if (s) {
       html += '<div class="section-title">National benchmarks</div>';
       html += '<div class="row"><span class="k">Active supply</span><span class="v">' + show(fmtNum(s.physNational), "—") + "</span></div>";
+      if (ampNppesFor(s)) html += '<div class="row"><span class="k">NPPES candidates</span><span class="v">' + fmtNum(ampNppesFor(s).national) + "</span></div>";
       html += '<div class="row"><span class="k">Approx. postings</span><span class="v">' + show(fmtNum(s.nationalPostings), "—") + "</span></div>";
       html += '<div class="row"><span class="k">Age 55+</span><span class="v">' + (s.age55Pct != null ? s.age55Pct.toFixed(1) + "%" : "—") + "</span></div>";
     }
