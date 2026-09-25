@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2206-mi-demo-sample-tour";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2207-mi-report-rebuild";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -1514,6 +1514,7 @@
     { id: "cah", label: "CAH", what: "Critical access hospitals are small rural hospitals with 25 beds or fewer. Markets heavy with them usually need more cash on top of location to land a provider.", youGet: "How many critical access hospitals are in the state and what that means for your offer." },
     { id: "fqhc", label: "FQHC", what: "Federally qualified health centers run on their own Medicaid payment rules and loan-repayment options, which change how an offer should be built. More sites does not simply mean higher pay.", youGet: "FQHC site counts for the state and the payment rules that shape the package." }
   ];
+  window.AMPRidgeTour = RDS_TOUR;
   function rdsMoney(n) { return "$" + Math.round(Number(n)).toLocaleString("en-US"); }
   function renderRidgeDemoSample(seat) {
     var api = ridgeAccess();
@@ -5905,17 +5906,20 @@ function syncGuideRoute(route) {
     if (miCompare) miCompare.addEventListener("click", function () {
       showMiMockToast("Compare · overlay is local only. A poll is one specialty × state.");
     });
-    var miDownload = $("#mi-lite-download");
-    if (miDownload) miDownload.addEventListener("click", function () {
+    function openMiReport() {
       var opened = false;
       try {
         if (window.AMPRidgeWorkbench && typeof AMPRidgeWorkbench.downloadReport === "function") {
           opened = !!AMPRidgeWorkbench.downloadReport();
         }
       } catch (err) { opened = false; }
-      if (opened) showMiMockToast("AMP-branded report opened. Print / Save PDF from the browser.");
-      else showMiMockToast("Allow pop-ups to open the AMP-branded print sheet.");
-    });
+      if (opened) showMiMockToast("Your report opened in a new tab. Print or save it as a PDF from there.");
+      else showMiMockToast("Allow pop-ups to open your report.");
+    }
+    var miDownload = $("#mi-lite-download");
+    if (miDownload) miDownload.addEventListener("click", openMiReport);
+    var rdsReport = $("#rds-download");
+    if (rdsReport) rdsReport.addEventListener("click", openMiReport);
     document.body.addEventListener("click", function (ev) {
       if (ev.target.closest("#mi-lite-subscribe")) {
         ev.preventDefault();

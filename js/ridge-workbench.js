@@ -2357,51 +2357,137 @@
     }
   }
 
-  function buildReportHtml() {
-    var s = currentSpec();
+  /* 2207: rebuilt report. Sample (demo) = the market they picked, Red alert + Competitive only, locked tiers, tool list. Paid = full state read. */
+  var __rwScriptSrc = (function () { try { var c = document.currentScript; return c && c.src ? c.src : ""; } catch (e) { return ""; } })();
+  function reportSiteBase() {
+    try {
+      if (__rwScriptSrc) return __rwScriptSrc.replace(/js\/ridge-workbench\.js.*$/, "");
+      var sc = document.querySelector('script[src*="ridge-workbench.js"]');
+      if (sc && sc.src) return sc.src.replace(/js\/ridge-workbench\.js.*$/, "");
+    } catch (e) {}
+    return window.location.origin + "/";
+  }
+  function specByKey(key) {
+    var list = specialties();
+    for (var i = 0; i < list.length; i++) if (list[i].key === key) return list[i];
+    return null;
+  }
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function reportContext() {
+    var api = accessApi();
+    var seat = api && api.getSeat ? api.getSeat() : null;
     var names = stateNames();
-    var logo = (function () {
-      try {
-        return new URL("assets/amp-lockup-nav-black.png?v=2114", window.location.href).href;
-      } catch (e) {
-        return "assets/amp-lockup-nav-black.png?v=2114";
-      }
-    })();
-    var rows = reportStateCodes();
-    var table = rows.map(function (code) {
-      return "<tr><td>" + (names[code] || code.toUpperCase()) + "</td><td>" + formatMetric(metricValueFor(code)) +
-        "</td><td>" + fmtNum(physCountFor(code)) + "</td><td>" + Number(difficultyFor(code)).toFixed(1) + "</td></tr>";
-    }).join("");
-    if (!rows.length) {
-      table = "<tr><td colspan='4'>No unlocked state in this report. Demo is 1 specialty × 1 state after you commit both.</td></tr>";
+    var demoOnly = false;
+    if (seat && seat.tier === "demo") {
+      var bought = (seat.oneOffs || []).some(function (o) { return o && o.specialty === seat.demoSpecialty && String(o.state || "").toLowerCase() === String(seat.demoState || "").toLowerCase(); });
+      demoOnly = !bought;
     }
-    var unit = rows.length === 1 ? rows[0] : null;
-    var supply = unit ? physCountFor(unit) : (s && s.physNational);
-    var postings = unit ? postingsFor(unit) : (s && s.nationalPostings);
-    var comp = unit ? realPayFor(unit) : (function(){ var a=getAmpBands(s); return a && a.competitive != null ? a.competitive : null; })();
-    var lens = unit ? ((names[unit] || unit.toUpperCase()) + " · 1×1") : metricLabelForActive();
-    return "<!doctype html><html><head><meta charset='utf-8'><title>Market Intelligence Report · Adaptive Medical Partners</title>" +
-      "<style>body{font-family:Inter,system-ui,sans-serif;color:#0f172a;padding:32px;max-width:900px;margin:0 auto}" +
-      ".logo{height:56px;width:auto;max-width:280px;margin-bottom:18px;display:block;opacity:1;filter:none;-webkit-filter:none}h1{font-size:22px;margin:0 0 6px}p{color:#475569}" +
-      "table{width:100%;border-collapse:collapse;margin-top:18px}th,td{border-bottom:1px solid #e2e8f0;padding:8px;text-align:left;font-size:13px}" +
-      ".stamp{display:inline-block;letter-spacing:.12em;font-size:11px;font-weight:800;color:#9a3412;background:#fff7ed;border:1px solid #fed7aa;padding:4px 8px;border-radius:999px}" +
-      ".cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0} .card{border:1px solid #e2e8f0;border-radius:12px;padding:12px} .card b{display:block;font-size:20px;margin-top:6px}" +
-      "@media print{.no-print{display:none}}</style></head><body>" +
-      '<img class="logo" src="' + logo + '" alt="Adaptive Medical Partners" />' +
-      '<div class="stamp">EXAMPLE / ILLUSTRATIVE</div>' +
-      "<h1>Market Intelligence market report</h1>" +
-      "<p><strong>" + (s ? s.label : "Specialty") + "</strong> · " + lens +
-      " · Generated from the Market Intelligence sample on Adaptive Medical Partners.</p>" +
-      '<div class="cards">' +
-      "<div class='card'>Active supply<b>" + show(fmtNum(supply), "n/a") + "</b></div>" +
-      "<div class='card'>Approx. postings<b>" + show(fmtNum(postings), "n/a") + "</b></div>" +
-      "<div class='card'>Median total comp<b>" + show(fmtMoney(comp), "n/a") + "</b></div>" +
-      "</div>" +
-      "<table><thead><tr><th>State</th><th>Map metric</th><th>Supply</th><th>Difficulty</th></tr></thead><tbody>" +
-      table + "</tbody></table>" +
-      "<p style='margin-top:24px;font-size:12px;color:#64748b'>Adaptive Medical Partners · Market Intelligence sample. Sample only. Ask AMP for guided recruiting next steps.</p>" +
-      '<p class="no-print"><button onclick="window.print()">Print / Save PDF</button></p>' +
-      "</body></html>";
+    var codes = reportStateCodes();
+    var specKey = state.specialtyKey;
+    if (demoOnly || !codes.length) {
+      var ds = seat && seat.demoState ? String(seat.demoState).toLowerCase() : "";
+      if (!codes.length && ds) codes = [ds];
+      if (demoOnly && seat && seat.demoSpecialty) specKey = seat.demoSpecialty;
+    }
+    var s = (specKey && specByKey(specKey)) || currentSpec();
+    return { demo: demoOnly, spec: s, codes: codes, names: names, api: api };
+  }
+  function stateNameOf(ctx, code) { return ctx.names[code] || (ctx.api && ctx.api.stateLabel ? ctx.api.stateLabel(code) : String(code).toUpperCase()); }
+  function reportBandsHtml(amp, locked) {
+    var rows = [
+      ["Red alert", amp && amp.redAlert, "#b91c1c", "Below this, expect the search to stall.", false],
+      ["Competitive", amp && amp.competitive, "#0f766e", "Where the market sits. You get looks, not always a yes.", false],
+      ["Magnet", amp && amp.magnet, "#1d4ed8", "Pulls candidates toward you.", locked],
+      ["Destination", amp && amp.destination, "#6d28d9", "Candidates come to you first.", locked]
+    ];
+    var max = Math.max((amp && amp.destination) || 0, (amp && amp.magnet) || 0, (amp && amp.competitive) || 0, 1);
+    return '<div class="bands">' + rows.map(function (r, i) {
+      var pct = locked && r[4] ? 0 : (r[1] != null ? Math.round(r[1] / max * 100) : 0);
+      var val = r[4] ? '<span class="lock">Locked in the full report</span>' : '<b>' + esc(show(fmtMoney(r[1]), "Pending")) + '</b>';
+      return '<div class="band' + (r[4] ? " is-locked" : "") + '"><div class="bhead"><span class="dot" style="background:' + r[2] + '"></span><strong>' + r[0] + '</strong>' + val + '</div>' +
+        '<div class="bar"><i style="width:' + (r[4] ? 100 : pct) + '%;background:' + (r[4] ? "repeating-linear-gradient(45deg,#e2e8f0 0 8px,#f1f5f9 8px 16px)" : r[2]) + '"></i></div>' +
+        '<p>' + r[3] + '</p></div>';
+    }).join("") + "</div>";
+  }
+  function buildReportHtml() {
+    var ctx = reportContext();
+    var s = ctx.spec;
+    var base = reportSiteBase();
+    var logo = base + "assets/amp-lockup-nav-black.png?v=2114";
+    try {
+      var li = [].slice.call(document.querySelectorAll("img")).filter(function (im) { return /amp-lockup-nav-black\.png/.test(im.src) && im.complete && im.naturalWidth; })[0];
+      if (li) {
+        var cv = document.createElement("canvas");
+        cv.width = li.naturalWidth; cv.height = li.naturalHeight;
+        cv.getContext("2d").drawImage(li, 0, 0);
+        logo = cv.toDataURL("image/png");
+      }
+    } catch (e) {}
+    var amp = getAmpBands(s);
+    var specName = s ? s.label : "Specialty";
+    var code = ctx.codes[0] || "";
+    var place = code ? stateNameOf(ctx, code) : "";
+    var multi = ctx.codes.length > 1;
+    var title = specName + (place ? (multi ? " · " + ctx.codes.length + " states" : " in " + place) : "");
+    var dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    var body = "";
+    if (ctx.demo) {
+      var tour = (w.AMPRidgeTour || []);
+      body += '<section><h2>Compensation bands</h2><p class="lede">AMP’s four market bands for ' + esc(specName) + (place ? " in " + esc(place) : "") + '. Your free sample includes the bottom two. Magnet and Destination, the levels where offers get accepted, are in the full report.</p>' +
+        reportBandsHtml(amp, true) + "</section>";
+      if (tour.length) {
+        body += '<section><h2>What the full report adds' + (place ? " for " + esc(place) : "") + '</h2><div class="tools">' + tour.map(function (t) {
+          return '<div class="tool"><strong>' + esc(t.label) + '</strong><span>' + esc(t.youGet) + "</span></div>";
+        }).join("") + "</div></section>";
+      }
+      body += '<section class="cta"><div><strong>Full report · $99</strong><span>One specialty in one state with every layer, including all four bands.</span></div>' +
+        '<div><strong>Poll packages</strong><span>15 polls $225 · 50 polls $650 · 100 polls $1,100 · 250 polls $2,250. Each poll opens one specialty in one state.</span></div></section>';
+    } else {
+      body += '<section><h2>Compensation bands</h2><p class="lede">AMP’s four market bands for ' + esc(specName) + '.</p>' + reportBandsHtml(amp, false) + "</section>";
+      if (ctx.codes.length) {
+        var cards = "";
+        if (!multi) {
+          var rpp = rppFor(code);
+          cards = '<div class="cards">' +
+            "<div class='card'><span>Candidates in " + esc(place) + "</span><b>" + esc(show(fmtNum(physCountFor(code)), "n/a")) + "</b></div>" +
+            "<div class='card'><span>Approx. open postings</span><b>" + esc(show(fmtNum(postingsFor(code)), "n/a")) + "</b></div>" +
+            "<div class='card'><span>Recruiting difficulty</span><b>" + Number(difficultyFor(code)).toFixed(0) + " / 100</b></div>" +
+            "<div class='card'><span>Cost of living vs U.S.</span><b>" + (rpp ? Number(rpp).toFixed(1) : "n/a") + "</b></div>" +
+            "<div class='card'><span>Competitive band in local buying power</span><b>" + esc(show(fmtMoney(realPayFor(code)), "n/a")) + "</b></div>" +
+            "</div>";
+          body += '<section><h2>' + esc(place) + ' market</h2>' + cards + "</section>";
+        } else {
+          body += '<section><h2>States in this report</h2><table><thead><tr><th>State</th><th>Candidates</th><th>Postings</th><th>Difficulty</th><th>Cost of living</th><th>Competitive, local buying power</th></tr></thead><tbody>' +
+            ctx.codes.map(function (c) {
+              return "<tr><td>" + esc(stateNameOf(ctx, c)) + "</td><td>" + esc(show(fmtNum(physCountFor(c)), "n/a")) + "</td><td>" + esc(show(fmtNum(postingsFor(c)), "n/a")) + "</td><td>" + Number(difficultyFor(c)).toFixed(0) + " / 100</td><td>" + Number(rppFor(c)).toFixed(1) + "</td><td>" + esc(show(fmtMoney(realPayFor(c)), "n/a")) + "</td></tr>";
+            }).join("") + "</tbody></table></section>";
+        }
+      }
+    }
+    var css = "*{box-sizing:border-box}body{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#0f172a;margin:0;background:#fff}" +
+      ".page{max-width:860px;margin:0 auto;padding:36px 40px 48px}" +
+      "header{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #0b2545;padding-bottom:16px}" +
+      ".logo{height:44px;width:auto}header .meta{text-align:right;font-size:12px;color:#64748b;line-height:1.5}header .meta b{display:block;color:#0b2545;font-size:13px;letter-spacing:.06em;text-transform:uppercase}" +
+      "h1{font-size:28px;margin:26px 0 4px;color:#0b2545}.sub{margin:0 0 8px;color:#475569;font-size:14px}" +
+      "section{margin-top:26px}h2{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:#0b2545;margin:0 0 8px}.lede{color:#475569;font-size:14px;margin:0 0 14px;line-height:1.55}" +
+      ".bands{display:grid;grid-template-columns:1fr 1fr;gap:12px}.band{border:1px solid #e2e8f0;border-radius:12px;padding:14px}.bhead{display:flex;align-items:center;gap:8px}.bhead b{margin-left:auto;font-size:20px}.dot{width:10px;height:10px;border-radius:50%}" +
+      ".bar{height:8px;border-radius:99px;background:#f1f5f9;margin:10px 0 8px;overflow:hidden}.bar i{display:block;height:100%;border-radius:99px}" +
+      ".band p{margin:0;font-size:12.5px;color:#64748b}.band.is-locked{background:#f8fafc}.lock{margin-left:auto;font-size:12px;font-weight:600;color:#64748b}" +
+      ".tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tool{border-left:3px solid #78c4e5;padding:6px 12px}.tool strong{display:block;font-size:14px}.tool span{font-size:12.5px;color:#475569;line-height:1.5}" +
+      ".cta{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f1f7fc;border-radius:12px;padding:16px}.cta strong{display:block;color:#0b2545}.cta span{font-size:13px;color:#475569}" +
+      ".cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.card{border:1px solid #e2e8f0;border-radius:12px;padding:12px}.card span{font-size:12px;color:#64748b}.card b{display:block;font-size:20px;margin-top:6px}" +
+      "table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:8px;text-align:left;font-size:13px}th{color:#64748b;font-weight:600}" +
+      "footer{margin-top:34px;padding-top:12px;border-top:1px solid #e2e8f0;font-size:11.5px;color:#64748b;display:flex;justify-content:space-between;gap:12px}" +
+      ".no-print{margin-top:18px}.no-print button{font:inherit;background:#0b2545;color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer}" +
+      "@media print{.no-print{display:none}.page{padding:0}}@media (max-width:640px){.page{padding:20px}.bands,.tools,.cta{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}";
+    return "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><base href='" + esc(base) + "'>" +
+      "<title>" + esc(title) + " · Market Intelligence · Adaptive Medical Partners</title><style>" + css + "</style></head><body><div class='page'>" +
+      "<header><img class='logo' src='" + esc(logo) + "' alt='Adaptive Medical Partners'><div class='meta'><b>Market Intelligence" + (ctx.demo ? " · Free sample" : "") + "</b>" + esc(dateStr) + "</div></header>" +
+      "<h1>" + esc(title) + "</h1><p class='sub'>" + (ctx.demo ? "Sample market report" : "Market report") + " prepared by Adaptive Medical Partners.</p>" +
+      body +
+      "<footer><span>Adaptive Medical Partners · adaptivemedicalpartners.com</span><span>Bands are AMP market ranges for this specialty.</span></footer>" +
+      "<div class='no-print'><button onclick='window.print()'>Print or save as PDF</button></div>" +
+      "</div></body></html>";
   }
 
   function downloadReport() {
