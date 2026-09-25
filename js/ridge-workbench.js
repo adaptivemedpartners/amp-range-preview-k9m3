@@ -2463,6 +2463,12 @@
   }
 
   w.AMPRidgeCurrentSpec = currentSpec;
+  /* 2206 demo sample: bands for one specialty key (demo shows Red alert + Competitive only). */
+  w.AMPRidgeBandsForKey = function (key) {
+    var list = specialties();
+    for (var i = 0; i < list.length; i++) if (list[i].key === key) return { spec: list[i], bands: getAmpBands(list[i]) };
+    return null;
+  };
   w.AmpMiPlaceDrawOnPinState = function (code) {
     if (!code || !isAspectOn("place_draw")) return;
     if (!accessAllowsState(code)) return;

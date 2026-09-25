@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2205-mi-poll-packages";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2206-mi-demo-sample-tour";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -1488,7 +1488,72 @@
     if (dash) dash.hidden = !ready;
     if (form) form.hidden = !ready;
     if (banner) banner.hidden = !ready;
+    /* 2206: anonymous demo = free sample (Red alert + Competitive) + tool tour. No workbench, no other-layer numbers. */
+    var seatD = api && api.getSeat ? api.getSeat() : null;
+    var boughtOneOff = !!(seatD && (seatD.oneOffs || []).some(function (o) { return o && o.specialty === seatD.demoSpecialty && String(o.state || "").toLowerCase() === String(seatD.demoState || "").toLowerCase(); }));
+    var sampleOn = !!(ready && seatD && seatD.tier === "demo" && !boughtOneOff);
+    var sample = $("#ridge-demo-sample");
+    if (sample) sample.hidden = !sampleOn;
+    if (sampleOn) {
+      if (dash) dash.hidden = true;
+      if (form) form.hidden = true;
+      if (banner) banner.hidden = true;
+      renderRidgeDemoSample(seatD);
+    }
+    var view = document.querySelector('[data-route="mi-lite-app"]');
+    if (view) view.classList.toggle("is-demo-sample", sampleOn);
     return ready;
+  }
+
+  var RDS_TOUR = [
+    { id: "place_draw", label: "Place draw", what: "Shows how much a location pulls candidates on its own: lifestyle, metro draw, schools and amenities. Strong-draw markets can recruit near the lower bands. Weak-draw markets need more cash to get the same yes.", youGet: "A heat map of metro draw across the state and where your site sits on it." },
+    { id: "col", label: "Cost of living", what: "Adjusts pay for what money actually buys in the state, using the federal regional price index. The same salary is worth more in a low-cost state than a high-cost one.", youGet: "The state's price level against the U.S. and the real value of the national pay line there." },
+    { id: "specialty_supply", label: "Specialty supply", what: "Counts the real candidates for this specialty in the state from the national provider registry, plus training programs feeding it. Thin supply means you compete harder for every candidate.", youGet: "Candidate counts for your specialty in the state and how that compares nationally." },
+    { id: "day_load", label: "Day load", what: "Turns a job's schedule into comparable pay: patients per day, days per week and hours. It shows the band per hour and per patient, and what your offer is really worth at full time.", youGet: "A worksheet that scores your offer against the bands at your real pace and hours." },
+    { id: "support", label: "Support", what: "Scores the staff around the provider: medical assistants, front desk and schedulers, counted fairly when shared. Thin support makes the same salary feel smaller to a candidate.", youGet: "A support score for your team and flags for tasks the provider carries." },
+    { id: "cah", label: "CAH", what: "Critical access hospitals are small rural hospitals with 25 beds or fewer. Markets heavy with them usually need more cash on top of location to land a provider.", youGet: "How many critical access hospitals are in the state and what that means for your offer." },
+    { id: "fqhc", label: "FQHC", what: "Federally qualified health centers run on their own Medicaid payment rules and loan-repayment options, which change how an offer should be built. More sites does not simply mean higher pay.", youGet: "FQHC site counts for the state and the payment rules that shape the package." }
+  ];
+  function rdsMoney(n) { return "$" + Math.round(Number(n)).toLocaleString("en-US"); }
+  function renderRidgeDemoSample(seat) {
+    var api = ridgeAccess();
+    if (!api || !seat) return;
+    var title = $("#rds-title"), bandsEl = $("#rds-bands"), tour = $("#rds-tour"), detail = $("#rds-tour-detail");
+    var spec = seat.demoSpecialty, st = seat.demoState;
+    if (title) title.textContent = api.specLabel(spec) + " · " + api.stateLabel(st);
+    var got = window.AMPRidgeBandsForKey ? window.AMPRidgeBandsForKey(spec) : null;
+    var b = got && got.bands;
+    function row(cls, name, val, locked, note) {
+      return '<div class="rds-band ' + cls + (locked ? " is-locked" : "") + '"><span class="rds-band-name">' + name + '</span>' +
+        (locked ? '<span class="rds-band-val rds-blur" aria-hidden="true">$000,000</span><span class="rds-lock">🔒 Locked</span>'
+                : '<span class="rds-band-val">' + val + '</span>') +
+        '<span class="rds-band-note">' + note + "</span></div>";
+    }
+    if (bandsEl) {
+      bandsEl.innerHTML =
+        row("t-red", "Red alert", b && b.redAlert != null ? rdsMoney(b.redAlert) : "Pending", false, "Below this, expect the search to stall.") +
+        row("t-comp", "Competitive", b && b.competitive != null ? rdsMoney(b.competitive) : "Pending", false, "Where the market sits. You'll get looks, not always a yes.") +
+        row("t-magnet", "Magnet", "", true, "Pulls candidates toward you.") +
+        row("t-dest", "Destination", "", true, "Candidates come to you first.");
+    }
+    if (tour && !tour.getAttribute("data-built")) {
+      tour.setAttribute("data-built", "1");
+      tour.innerHTML = RDS_TOUR.map(function (t, i) {
+        return '<button type="button" role="listitem" class="rds-tour-btn' + (i === 0 ? " is-on" : "") + '" data-rds-tool="' + t.id + '"><span>' + t.label + '</span><small>🔒 in full report</small></button>';
+      }).join("");
+      tour.addEventListener("click", function (ev) {
+        var btn = ev.target.closest("[data-rds-tool]");
+        if (!btn) return;
+        $all("#rds-tour .rds-tour-btn").forEach(function (x) { x.classList.toggle("is-on", x === btn); });
+        paintRdsDetail(btn.getAttribute("data-rds-tool"));
+      });
+    }
+    function paintRdsDetail(id) {
+      var t = RDS_TOUR.filter(function (x) { return x.id === id; })[0] || RDS_TOUR[0];
+      if (detail) detail.innerHTML = '<h4>' + t.label + '</h4><p>' + t.what + '</p><p class="rds-youget"><strong>In your report for ' + api.stateLabel(st) + ':</strong> ' + t.youGet + '</p><div class="rds-ghost" aria-hidden="true"><span></span><span></span><span></span></div><p class="rds-ghost-note">Numbers for this layer open with the $99 report or a poll package.</p>';
+    }
+    var on = document.querySelector("#rds-tour .rds-tour-btn.is-on");
+    paintRdsDetail(on ? on.getAttribute("data-rds-tool") : RDS_TOUR[0].id);
   }
 
   function openRidgeCheckout(sku) {
@@ -1546,6 +1611,11 @@
       }
       var specWrap = specPick.closest(".field");
       if (specWrap) specWrap.hidden = sku !== "oneoff";
+      var seatO = api && api.getSeat ? api.getSeat() : null;
+      if (sku === "oneoff" && seatO && seatO.demoSpecialty) {
+        specPick.value = seatO.demoSpecialty;
+        if (statePick && seatO.demoState) statePick.value = String(seatO.demoState).toUpperCase();
+      }
     }
   }
 
