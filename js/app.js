@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2204-mi-state-by-specialty-cleanup";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2205-mi-poll-packages";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -28,7 +28,7 @@
     mpcMetroOnly: true,
     mpcAmenities: [],
     mpcSelectedId: null,
-    miLitePlan: "region",
+    miLitePlan: "pack50",
     miLiteUnlocked: false,
     jobViews: 0,
     jobWhispered: false,
@@ -959,16 +959,16 @@
   var MI_PLAN_KEY = "amp_mi_lite_plan";
 
   function normalizeMiLitePlan(plan) {
-    if (plan === "state" || plan === "region" || plan === "national" || plan === "demo") return plan;
-    /* legacy monthly/annual EXAMPLE doors → default Region package */
-    if (plan === "monthly" || plan === "annual") return "region";
-    return plan || "region";
+    if (/^pack(15|50|100|250)$/.test(plan || "")) return plan;
+    if (plan === "state") return "pack15";
+    if (plan === "national") return "pack100";
+    return "pack50";
   }
 
   function readMiLiteUnlock() {
     try {
       state.miLiteUnlocked = localStorage.getItem(MI_UNLOCK_KEY) === "1";
-      state.miLitePlan = normalizeMiLitePlan(localStorage.getItem(MI_PLAN_KEY) || state.miLitePlan || "region");
+      state.miLitePlan = normalizeMiLitePlan(localStorage.getItem(MI_PLAN_KEY) || state.miLitePlan || "pack50");
     } catch (e) {
       state.miLiteUnlocked = !!state.miLiteUnlocked;
     }
@@ -980,7 +980,7 @@
     if (plan) state.miLitePlan = plan;
     try {
       localStorage.setItem(MI_UNLOCK_KEY, "1");
-      localStorage.setItem(MI_PLAN_KEY, state.miLitePlan || "region");
+      localStorage.setItem(MI_PLAN_KEY, state.miLitePlan || "pack50");
     } catch (e) {}
   }
 
@@ -1041,9 +1041,8 @@
     var plan = normalizeMiLitePlan(state.miLitePlan);
     var statePicker = $("#mi-lite-state-picker");
     var regionPicker = $("#mi-lite-region-picker");
-    if (statePicker) statePicker.hidden = plan !== "state";
-    if (regionPicker) regionPicker.hidden = plan !== "region";
-    if (plan === "region") updateMiLiteRegionStates();
+    if (statePicker) statePicker.hidden = true;
+    if (regionPicker) regionPicker.hidden = true;
   }
 
   function renderMILitePortal() {
@@ -1063,7 +1062,7 @@
     var api = ridgeAccess();
     seat = seat || (api && api.getSeat());
     if (api && api.isPaid) return !!api.isPaid(seat);
-    return !!(seat && (seat.tier === "state" || seat.tier === "region" || seat.tier === "national") && seat.grantedByCheckout);
+    return !!(seat && /^pack/.test(seat.tier || "") && seat.grantedByCheckout);
   }
 
   function ridgeCanGrantExtra(seat) {
@@ -1204,9 +1203,9 @@
   function applyRidgeSimulatePay(sku) {
     var api = ridgeAccess();
     if (!api) return;
-    sku = String(sku || "state").replace(/^ridge_/, "");
+    sku = String(sku || "pack15").replace(/^ridge_/, "");
     if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
-      showMiMockToast("Extra poll $9 is only for paid State / Region / National seats.");
+      showMiMockToast("Extra polls ($15) are for poll package holders.");
       return;
     }
     var region = ($("#mi-lite-region-select") && $("#mi-lite-region-select").value) || "southwest";
@@ -1250,11 +1249,11 @@
     if (tag) tag.textContent = copy.tag;
     if (title) title.textContent = copy.title;
     if (body) body.textContent = copy.body;
-    var reallyPaid = !!(paid && seat && (seat.tier === "state" || seat.tier === "region" || seat.tier === "national") && seat.grantedByCheckout);
+    var reallyPaid = !!(paid && seat && /^pack/.test(seat.tier || "") && seat.grantedByCheckout);
     if (polls) {
       if (reallyPaid && api) {
         polls.hidden = false;
-        polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " left this month";
+        polls.textContent = api.pollsLeft(seat) + " of " + api.pollLimit(seat) + " polls left";
         polls.classList.toggle("is-empty", api.pollsLeft(seat) <= 0);
       } else {
         polls.hidden = true;
@@ -1265,7 +1264,7 @@
     var simVerify = $("#ridge-simulate-verify-app");
     if (simVerify) simVerify.hidden = !(seat && seat.tier === "demo" && api && api.isDemoCommitted && api.isDemoCommitted(seat));
     var simPay = $("#ridge-sim-pay");
-    if (simPay) simPay.hidden = !!(seat && seat.tier === "national" && reallyPaid);
+    if (simPay) simPay.hidden = false;
     var tasteHint = $("#ridge-taste-hint");
     if (tasteHint) {
       if (seat && seat.tier === "verified" && api) {
@@ -1274,13 +1273,13 @@
         tasteHint.hidden = false;
         tasteHint.textContent = leftT
           ? ("Verified: pick " + leftT + " more specialty" + (leftT === 1 ? "" : "s") + " in " + api.stateLabel(seat.demoState) + " from the list. Same state only.")
-          : "Verified sample used — 3 tastes in. Subscribe to open another unit.";
+          : "Verified sample used — 3 tastes in. Buy a poll package to open another unit.";
       } else {
         tasteHint.hidden = true;
       }
     }
     if (verifyBtn) verifyBtn.hidden = !(seat && seat.tier === "demo");
-    if (upgradeBtn) upgradeBtn.hidden = !!(seat && seat.tier === "national" && reallyPaid);
+    if (upgradeBtn) upgradeBtn.hidden = false;
     if (extraBtn) extraBtn.hidden = !ridgeCanBuyExtra(seat);
     if (oneoffBtn) oneoffBtn.hidden = !!reallyPaid;
     syncRidgeExtraOffer(seat);
@@ -1317,14 +1316,14 @@
       if (oneoff) oneoff.hidden = true;
     } else if (reason === "paywall") {
       if (title) title.textContent = "Verified sample used — hard paywall.";
-      if (body) body.textContent = "Three specialty tastes are in. Subscribe for State / Region / National, or buy a $49 one-off report. Extra poll $9 is only after a paid plan.";
+      if (body) body.textContent = "Three specialty tastes are in. Buy a poll package (from 15 polls for $225), or a $99 one-off report.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
       if (oneoff) oneoff.hidden = false;
     } else if (reason === "geo") {
-      if (title) title.textContent = "Outside your plan geography.";
-      if (body) body.textContent = "This state is outside the unlocked AMP region or state. Upgrade geo, or buy a $49 one-off report.";
+      if (title) title.textContent = "This state isn’t unlocked yet.";
+      if (body) body.textContent = "Buy a poll package to open any state, or a $99 one-off report for this one.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = true;
@@ -1337,8 +1336,8 @@
       if (extra) extra.hidden = true;
       if (oneoff) oneoff.hidden = true;
     } else if (reason === "polls") {
-      if (title) title.textContent = "No polls left this month.";
-      if (body) body.textContent = "A poll is one specialty × state open. Extra poll $9, or upgrade the plan.";
+      if (title) title.textContent = "No polls left in your package.";
+      if (body) body.textContent = "A poll opens one specialty in one state. Buy an extra poll for $15, or another package.";
       if (verify) verify.hidden = true;
       if (upgrade) upgrade.hidden = false;
       if (extra) extra.hidden = !ridgeCanBuyExtra();
@@ -1496,7 +1495,7 @@
     var api = ridgeAccess();
     sku = String(sku || "").replace(/^ridge_/, "");
     if (sku === "extra_poll" && !ridgeCanBuyExtra()) {
-      showMiMockToast("Extra poll $9 is only after a paid State / Region / National allotment is used.");
+      showMiMockToast("Extra polls ($15) open once your poll package is used.");
       return;
     }
     var meta = api && api.SKUS && (api.SKUS[sku] || api.SKUS[String(sku).replace(/^ridge_/, "")]);
@@ -1508,7 +1507,7 @@
     var amount = $("#ridge-checkout-amount");
     var note = $("#ridge-checkout-note");
     if (title) title.textContent = meta.label;
-    if (amount) amount.textContent = meta.kind === "subscription" ? ("$" + meta.amount + " / month") : ("$" + meta.amount + " one-time");
+    if (amount) amount.textContent = "$" + Number(meta.amount).toLocaleString("en-US") + (meta.kind === "subscription" ? " / month" : " one-time");
     if (note) {
       note.textContent = "Stripe Checkout is stubbed in V1 (test-mode hook). Simulate success to grant the seat locally. No card is charged.";
     }
@@ -1528,12 +1527,12 @@
         });
       }
       var stateWrap = statePick.closest(".field");
-      if (stateWrap) stateWrap.hidden = !(plan === "state" || sku === "oneoff");
+      if (stateWrap) stateWrap.hidden = sku !== "oneoff";
       if (portalState && portalState.value) statePick.value = portalState.value;
     }
     if (regionPick) {
       var regionWrap = regionPick.closest(".field");
-      if (regionWrap) regionWrap.hidden = plan !== "region";
+      if (regionWrap) regionWrap.hidden = true;
       if (portalRegion && portalRegion.value) regionPick.value = portalRegion.value;
     }
     if (specPick) {
@@ -1559,9 +1558,9 @@
     var api = ridgeAccess();
     var modal = $("#ridge-checkout-modal");
     if (!api || !modal) return;
-    var sku = modal.getAttribute("data-ridge-sku") || "state";
+    var sku = modal.getAttribute("data-ridge-sku") || "pack15";
     if (sku === "extra_poll" && !ridgeCanGrantExtra()) {
-      showMiMockToast("Extra poll $9 is only for paid State / Region / National seats.");
+      showMiMockToast("Extra polls ($15) are for poll package holders.");
       closeRidgeCheckout();
       return;
     }
@@ -5238,7 +5237,7 @@ function syncGuideRoute(route) {
       if (raw.closest("#mi-lite-subscribe")) {
         e.preventDefault();
         var subPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-        openRidgeCheckout(subPlan ? subPlan.value : (state.miLitePlan || "region"));
+        openRidgeCheckout(subPlan ? subPlan.value : (state.miLitePlan || "pack50"));
         return;
       }
       var t = raw.closest("[data-go]");
@@ -5274,7 +5273,7 @@ function syncGuideRoute(route) {
           var sku = t.id === "mi-lite-subscribe" ? null : t.getAttribute("data-ridge-checkout");
           if (!sku) {
             var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-            sku = miPlan ? miPlan.value : (state.miLitePlan || "region");
+            sku = miPlan ? miPlan.value : (state.miLitePlan || "pack50");
           }
           openRidgeCheckout(sku);
           return;
@@ -5851,7 +5850,7 @@ function syncGuideRoute(route) {
       if (ev.target.closest("#mi-lite-subscribe")) {
         ev.preventDefault();
         var miPlan = document.querySelector('input[name="mi-lite-plan"]:checked');
-        openRidgeCheckout(miPlan ? miPlan.value : (state.miLitePlan || "region"));
+        openRidgeCheckout(miPlan ? miPlan.value : (state.miLitePlan || "pack50"));
         return;
       }
       var skuBtn = ev.target.closest("[data-ridge-checkout]");

@@ -1,4 +1,4 @@
-/* amp-build:2204-mi-state-by-specialty-cleanup */
+/* amp-build:2205-mi-poll-packages */
 /* amp-build:2201-mi-33-public */
 /* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
 /* amp-build:2193-step3-sbs-step4-cards-confirm-legible */
@@ -14757,3 +14757,8 @@ html.mi-place-draw-on #ridge-map-container circle[data-state]:not(.pd-in-selecti
   fill: #c5ced8 !important;
   opacity: 0.38 !important;
 }
+
+/* 2205 poll packages: 4-up grid */
+.mi-price-grid.mi-price-grid-4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+@media (max-width:1100px) { .mi-price-grid.mi-price-grid-4 { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:560px) { .mi-price-grid.mi-price-grid-4 { grid-template-columns:1fr; } }

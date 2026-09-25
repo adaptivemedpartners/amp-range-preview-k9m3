@@ -1,6 +1,6 @@
 /* amp-build:2116 Ridge V1 access — unit stairs (Mike lock 2026-09-16).
    Demo 1×1 → verify +2 specialties (same state) → paid geo + polls.
-   Extra $9 only after a paid State/Region/National allotment is used.
+   2205: poll packages 15/$225, 50/$650, 100/$1,100, 250/$2,250 (any state; 1 poll = 1 specialty × 1 state, all layers). Extra poll $15. One-off report $99.
    Stripe Checkout is stubbed (test-mode hooks). Public data only — no MGMA. */
 (function (w) {
   "use strict";
@@ -20,17 +20,20 @@
   var PLANS = {
     demo: { id: "demo", label: "Demo", price: 0, polls: 0, geo: "one-state" },
     verified: { id: "verified", label: "Verified sample", price: 0, polls: 0, geo: "one-state" },
-    state: { id: "state", label: "State", price: 99, polls: 15, geo: "one-state" },
-    region: { id: "region", label: "Region", price: 149, polls: 30, geo: "region" },
-    national: { id: "national", label: "National", price: 225, polls: 60, geo: "national" }
+    pack15: { id: "pack15", label: "15 polls", price: 225, polls: 15, geo: "national", paid: true },
+    pack50: { id: "pack50", label: "50 polls", price: 650, polls: 50, geo: "national", paid: true },
+    pack100: { id: "pack100", label: "100 polls", price: 1100, polls: 100, geo: "national", paid: true },
+    pack250: { id: "pack250", label: "250 polls", price: 2250, polls: 250, geo: "national", paid: true }
   };
+  var LEGACY_TIER = { state: "pack15", region: "pack50", national: "pack100" };
 
   var SKUS = {
-    state: { sku: "ridge_state", kind: "subscription", plan: "state", amount: 99, label: "Market Intelligence State · $99/mo" },
-    region: { sku: "ridge_region", kind: "subscription", plan: "region", amount: 149, label: "Market Intelligence Region · $149/mo" },
-    national: { sku: "ridge_national", kind: "subscription", plan: "national", amount: 225, label: "Market Intelligence National · $225/mo" },
-    extra_poll: { sku: "ridge_extra_poll", kind: "one_time", amount: 9, label: "Market Intelligence Extra Poll · $9" },
-    oneoff: { sku: "ridge_oneoff", kind: "one_time", amount: 49, label: "Market Intelligence One-off Report · $49" }
+    pack15: { sku: "ridge_pack15", kind: "one_time", plan: "pack15", amount: 225, label: "Market Intelligence · 15 polls · $225" },
+    pack50: { sku: "ridge_pack50", kind: "one_time", plan: "pack50", amount: 650, label: "Market Intelligence · 50 polls · $650" },
+    pack100: { sku: "ridge_pack100", kind: "one_time", plan: "pack100", amount: 1100, label: "Market Intelligence · 100 polls · $1,100" },
+    pack250: { sku: "ridge_pack250", kind: "one_time", plan: "pack250", amount: 2250, label: "Market Intelligence · 250 polls · $2,250" },
+    extra_poll: { sku: "ridge_extra_poll", kind: "one_time", amount: 15, label: "Market Intelligence Extra Poll · $15" },
+    oneoff: { sku: "ridge_oneoff", kind: "one_time", amount: 99, label: "Market Intelligence One-off Report · $99" }
   };
 
   var REGIONS = {
@@ -128,6 +131,7 @@
     if (!Array.isArray(seat.tastes)) seat.tastes = [];
     if (!Array.isArray(seat.polls)) seat.polls = [];
     if (!Array.isArray(seat.oneOffs)) seat.oneOffs = [];
+    if (LEGACY_TIER[seat.tier]) seat.tier = LEGACY_TIER[seat.tier];
     if (!PLANS[seat.tier]) seat.tier = "demo";
     seatCache = sanitizeSeat(seat);
     return seatCache;
@@ -159,7 +163,7 @@
 
   function isPaid(seat) {
     seat = seat || load();
-    return seat.tier === "state" || seat.tier === "region" || seat.tier === "national";
+    return !!(PLANS[seat.tier] && PLANS[seat.tier].paid);
   }
   function isDemoCommitted(seat) {
     seat = seat || load();
@@ -168,10 +172,7 @@
   }
   function oneStateUnit(seat) {
     seat = seat || load();
-    if (isPaid(seat)) {
-      if (seat.tier === "state") return normState(seat.paidState || seat.demoState);
-      return "";
-    }
+    if (isPaid(seat)) return "";
     if ((seat.tier === "demo" || seat.tier === "verified") && isDemoCommitted(seat) && seat.demoState) {
       return normState(seat.demoState);
     }
@@ -182,13 +183,13 @@
   }
   function allowsMulti(seat) {
     seat = seat || load();
-    return isPaid(seat) && seat.tier !== "state";
+    return isPaid(seat);
   }
   function pollLimit(seat) {
     seat = seat || load();
     if (!isPaid(seat)) return 0;
     var plan = PLANS[seat.tier];
-    var base = plan && plan.polls ? plan.polls : 0;
+    var base = Number(seat.pollCredits) || (plan && plan.polls ? plan.polls : 0);
     return base + (Number(seat.extraPolls) || 0);
   }
   function canGrantExtraPoll(seat) {
@@ -229,14 +230,7 @@
 
   function allowedStates(seat) {
     seat = seat || load();
-    if (seat.tier === "national") return null;
-    if (seat.tier === "region") {
-      var pack = REGIONS[seat.paidRegion];
-      return pack ? pack.states.map(normState) : [];
-    }
-    if (seat.tier === "state") {
-      return seat.paidState ? [normState(seat.paidState)] : [normState(seat.demoState || DEFAULT_STATE)];
-    }
+    if (isPaid(seat)) return null;
     if (seat.tier === "demo" && !isDemoCommitted(seat)) return [];
     return seat.demoState ? [normState(seat.demoState)] : [];
   }
@@ -366,7 +360,6 @@
         if (codes.length) return codes[0];
       }
     } catch (e) {}
-    if (isPaid(seat) && seat.tier === "state") return seat.paidState;
     return seat.demoState;
   }
 
@@ -470,8 +463,7 @@
   function seedPaidUnit(seat) {
     var spec = seat.demoSpecialty || currentSpecialty();
     var st = "";
-    if (seat.tier === "state") st = seat.paidState || seat.demoState;
-    else st = currentSelectedState(seat) || seat.demoState;
+    st = currentSelectedState(seat) || seat.demoState;
     if (spec && st && !hasPoll(seat, spec, st)) {
       seat.polls.push({ specialty: spec, state: normState(st), at: new Date().toISOString() });
     }
@@ -502,11 +494,14 @@
       }
       return save(seat);
     }
-    if (!PLANS[sku] || sku === "demo" || sku === "verified") return seat;
+    if (LEGACY_TIER[sku]) sku = LEGACY_TIER[sku];
+    if (!PLANS[sku] || !PLANS[sku].paid) return seat;
+    /* Packages stack: buying another adds its polls to what's left. */
+    var carry = isPaid(seat) ? pollLimit(seat) : 0;
+    seat.pollCredits = carry + PLANS[sku].polls;
+    seat.extraPolls = 0;
     seat.tier = sku;
     seat.grantedByCheckout = true;
-    if (sku === "state") seat.paidState = normState(opts.state || seat.paidState || seat.demoState || DEFAULT_STATE);
-    if (sku === "region") seat.paidRegion = String(opts.region || seat.paidRegion || "southwest");
     if (opts.specialty) seat.demoSpecialty = String(opts.specialty);
     seedPaidUnit(seat);
     return save(seat);
@@ -518,7 +513,7 @@
       var flag = params.get("ridge_checkout") || params.get("ridge_sku");
       if (!flag) return null;
       var sku = params.get("ridge_sku") || params.get("sku") || "";
-      if (params.get("ridge_checkout") === "success" && !sku) sku = params.get("plan") || "state";
+      if (params.get("ridge_checkout") === "success" && !sku) sku = params.get("plan") || "pack15";
       if (params.get("ridge_checkout") && params.get("ridge_checkout") !== "success" && !params.get("ridge_sku")) {
         sku = params.get("ridge_checkout");
       }
@@ -575,15 +570,15 @@
         title: used + " of " + VERIFIED_TASTE_CAP + " specialty tastes",
         body: leftTastes
           ? ("Pick " + leftTastes + " more specialty" + (leftTastes === 1 ? "" : "s") + " in " + stateLabel(seat.demoState) + ". Same state only. Then hard paywall.")
-          : "Three specialty tastes are in. Subscribe for geo + monthly polls, or buy a $49 one-off. Extra $9 is not on this stair."
+          : "Three specialty tastes are in. Buy a poll package, or a $99 one-off report."
       };
     }
     var left = pollsLeft(seat);
     var lim = pollLimit(seat);
     return {
-      tag: (PLANS[seat.tier] || {}).label + " · $" + ((PLANS[seat.tier] || {}).price || 0) + "/mo",
-      title: left + " of " + lim + " left this month",
-      body: "A poll is one specialty × state open inside your plan geography. Revisit is free. Extra poll $9 only after this month’s allotment is used."
+      tag: "Poll package · " + lim + " polls",
+      title: left + " of " + lim + " polls left",
+      body: "A poll opens one specialty in one state, any state, with every layer: pay bands, Place draw, cost of living and Aspects. Revisiting is free. Extra polls are $15 each once your package is used."
     };
   }
 
