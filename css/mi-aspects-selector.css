@@ -25,6 +25,35 @@
   gap: 4px;
   min-width: 0;
 }
+.mi-aspects-state {
+  flex: 0 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+}
+.mi-aspects-state span {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b3a4d;
+}
+.mi-aspects-state-sel {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #c5d0de;
+  border-radius: 10px;
+  background: #fff;
+  color: #152033;
+  font: inherit;
+  font-size: 15px;
+}
+.mi-aspects-top > .mi-aspects-switch { flex-basis: 100%; }
+@media (max-width: 800px) {
+  .mi-aspects-state-sel { font-size: 16px; }
+}
 .mi-aspects-search span {
   font-size: 11px;
   font-weight: 750;

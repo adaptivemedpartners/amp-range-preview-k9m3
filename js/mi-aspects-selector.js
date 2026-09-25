@@ -118,6 +118,9 @@
           '<input type="search" class="mi-aspects-spec" placeholder="Type a specialty" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" />' +
           '<ul class="mi-aspects-suggest" role="listbox" hidden></ul>' +
         "</label>" +
+        '<label class="mi-aspects-state"><span>State</span>' +
+          '<select class="mi-aspects-state-sel" aria-label="State"></select>' +
+        "</label>" +
         '<div class="mi-aspects-switch" role="group" aria-label="Aspect">' +
           '<div class="mi-aspects-group mi-aspects-group-core">' + CORE.map(lensBtn).join("") + "</div>" +
           '<div class="mi-aspects-group mi-aspects-group-facility" aria-label="Facility">' + FACILITY.map(lensBtn).join("") + "</div>" +
@@ -142,6 +145,29 @@
     var sentenceEl = root.querySelector("[data-mi-aspects-sentence]");
     var ranksEl = root.querySelector("[data-mi-aspects-ranks]");
     var cardEl = root.querySelector("[data-mi-aspects-card]");
+    var stateSel = root.querySelector(".mi-aspects-state-sel");
+
+    /* State picker beside specialty: host supplies getStates() -> [{code,name,locked}], getState() -> code, onState(code). */
+    function syncState() {
+      if (!stateSel) return;
+      var list = [];
+      if (typeof options.getStates === "function") { try { list = options.getStates() || []; } catch (e) {} }
+      var cur = "";
+      if (typeof options.getState === "function") { try { cur = options.getState() || ""; } catch (e2) {} }
+      var sig = list.map(function (r) { return r.code + (r.locked ? "!" : ""); }).join(",");
+      if (stateSel.getAttribute("data-sig") !== sig) {
+        stateSel.innerHTML = '<option value="">All states</option>' + list.map(function (r) {
+          return '<option value="' + esc(r.code) + '">' + esc(r.name) + (r.locked ? " (locked)" : "") + "</option>";
+        }).join("");
+        stateSel.setAttribute("data-sig", sig);
+      }
+      stateSel.value = cur || "";
+      if (stateSel.value !== (cur || "")) stateSel.value = "";
+    }
+    function onStateChange() {
+      if (typeof options.onState === "function") options.onState(stateSel.value);
+      syncState();
+    }
 
     function specialties() {
       if (typeof options.getSpecialties !== "function") return [];
@@ -194,7 +220,7 @@
       if (sentenceEl) sentenceEl.textContent = read.sentence || "";
       if (!ranksEl) return;
       var html = "";
-      if (read.pending) html += '<p class="mi-aspects-rank-note">Bands pending for this lens. Nothing invented.</p>';
+      if (read.pending) html += '<p class="mi-aspects-rank-note">Bands pending for this lens.</p>';
       if (read.mode === "rank") {
         html += '<h3 class="mi-aspects-rank-h">Top 5 · hardest</h3>' + rankButtons(read.top);
         html += '<h3 class="mi-aspects-rank-h">Bottom 5 · easier</h3>' + rankButtons(read.bottom);
@@ -280,6 +306,8 @@
 
     root.addEventListener("click", onClick);
     if (specInput) specInput.addEventListener("input", onInput);
+    if (stateSel) stateSel.addEventListener("change", onStateChange);
+    syncState();
 
     var handle = {
       setActive: function (id, opts) {
@@ -290,7 +318,8 @@
         if (!(opts && opts.silent) && typeof options.onSelect === "function") options.onSelect(active, byId[active]);
       },
       getActive: function () { return active; },
-      refresh: function () { syncSpecialty(); paintRead(); },
+      refresh: function () { syncSpecialty(); syncState(); paintRead(); },
+      syncState: function () { syncState(); },
       syncSpecialty: function () { syncSpecialty(); },
       setSpecialtyKey: function (key) { specialtyKey = key || ""; syncSpecialty(); },
       openState: function (code) {
@@ -304,6 +333,7 @@
       destroy: function () {
         root.removeEventListener("click", onClick);
         if (specInput) specInput.removeEventListener("input", onInput);
+        if (stateSel) stateSel.removeEventListener("change", onStateChange);
         root.innerHTML = "";
       }
     };

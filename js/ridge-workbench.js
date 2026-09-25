@@ -92,7 +92,7 @@
     if (note) {
       var n = aspectsV1Active.length;
       note.textContent = n
-        ? (n + " Aspect" + (n === 1 ? "" : "s") + " on · story panel follows · AMP bands when set · weights pending · Medicaid later")
+        ? (n + " Aspect" + (n === 1 ? "" : "s") + " on")
         : "No Aspects on — turn on Raw (or others) to shape the market read";
     }
   }
@@ -486,6 +486,18 @@
           return specialties().map(function (s) { return { key: s.key, label: s.label }; });
         },
         onSpecialty: function (key) { setSpecialty(key); },
+        getStates: function () {
+          var names = stateNames();
+          return Object.keys(names).filter(function (c) { return /^[a-z]{2}$/.test(c); }).sort(function (a, b) {
+            return String(names[a]).localeCompare(String(names[b]));
+          }).map(function (c) { return { code: c, name: names[c], locked: !accessAllowsPeek(c) }; });
+        },
+        getState: function () {
+          var picks = selectedCodes();
+          if (!picks.length) return "";
+          return (state.focus && state.selected[state.focus]) ? state.focus : picks[0];
+        },
+        onState: function (code) { pickOnlyState(code); },
         onSelect: function (id) { setAspectLens(id); },
         getRead: aspectRead,
         getCard: aspectCard,
@@ -731,7 +743,7 @@
     opts = opts || {};
     var cls = opts.className || "ridge-bars";
     if (!amp || amp.competitive == null) {
-      return '<div class="' + cls + ' ridge-bars-pending"><div class="bar-row"><span class="bar-lbl">AMP bands</span><span class="bar-val">Pending — Mike YOUR Baseline</span></div></div>';
+      return '<div class="' + cls + ' ridge-bars-pending"><div class="bar-row"><span class="bar-lbl">AMP bands</span><span class="bar-val">Pending</span></div></div>';
     }
     var maxComp = Math.max(amp.destination || 0, amp.magnet || 0, amp.competitive || 0, amp.redAlert || 0, 1);
     var html = '<div class="' + cls + '">';
@@ -1482,6 +1494,25 @@
     var appSel = $("mi-app-specialty");
     if (appSel) appSel.value = key;
     refresh();
+  }
+
+  /* State picker beside specialty: select exactly this state (or clear with ""). Same gates as map clicks. */
+  function pickOnlyState(code) {
+    var forced = forcedUnitState();
+    if (!code) {
+      if (forced) { ensureForcedSelection(); afterGeoChange(); return; }
+      state.selected = {};
+      afterGeoChange();
+      return;
+    }
+    var api = accessApi();
+    var norm = api && api.normState ? api.normState(code) : String(code).toLowerCase();
+    var picks = selectedCodes();
+    if (picks.length === 1 && picks[0] === norm) return;
+    if (forced && norm !== forced) { toggleState(norm, false); return; }
+    state.multi = false;
+    state.selected = {};
+    toggleState(norm, false);
   }
 
   function toggleState(code, additive) {
