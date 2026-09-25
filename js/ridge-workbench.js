@@ -47,7 +47,14 @@
       weight: "pending Mike weights — triangulation language only" }
   ];
   var ASPECTS_STORE_KEY = "amp_mi_aspects_v1";
-  var aspectsV1Active = ["raw"];
+  var aspectsV1Active = ["specialty_supply"];
+  /* Easy → hard. Colors match #placeHoverCard .t-dest / .t-magnet / .t-comp / .t-red. */
+  var ASPECT_LADDER = [
+    { band: "Destination", fill: "#a78bfa" },
+    { band: "Magnet", fill: "#60a5fa" },
+    { band: "Competitive", fill: "#fbbf24" },
+    { band: "Red", fill: "#f87171" }
+  ];
 
   function aspectDef(id) {
     for (var i = 0; i < ASPECTS_V1.length; i++) if (ASPECTS_V1[i].id === id) return ASPECTS_V1[i];
@@ -66,10 +73,11 @@
   function loadAspectsV1() {
     try {
       var raw = localStorage.getItem(ASPECTS_STORE_KEY);
-      if (!raw) return ["raw"];
+      if (!raw) return ["specialty_supply"];
       var list = normalizeAspectsList(JSON.parse(raw));
-      return list.length ? list : ["raw"];
-    } catch (e) { return ["raw"]; }
+      var id = list.length ? list[0] : "specialty_supply";
+      return [id];
+    } catch (e) { return ["specialty_supply"]; }
   }
   function saveAspectsV1() {
     try { localStorage.setItem(ASPECTS_STORE_KEY, JSON.stringify(aspectsV1Active)); } catch (e) {}
@@ -135,7 +143,8 @@
       var amp = getAmpBands(s);
       if (amp && amp.competitive != null) bits.push("Data: YOUR Baseline (Competitive) " + fmtMoney(amp.competitive));
       else bits.push("Data: AMP bands pending — no invented $");
-    } else if (id === "place_draw") {
+      } else if (id === "place_draw") {
+      bits.push("Read · " + selectionNames() + " only — neighboring regions stay outside this lens");
       var pd = placeDrawApi();
       if (pd && pd.isEnabled && pd.isEnabled()) {
         var pin = pd.getPin ? pd.getPin() : null;
@@ -227,19 +236,233 @@
     html += "</div>";
     return html;
   }
+  function lensId() { return aspectsV1Active[0] || "specialty_supply"; }
+
+  function hardnessFor(code, id) {
+    id = id || lensId();
+    if (id === "specialty_supply") {
+      var h = aspectHooksForSpecialty(currentSpec());
+      var pop = statePop()[code];
+      var redi = h.rediByState && typeof h.rediByState[code] === "number" ? h.rediByState[code] : null;
+      if (redi > 0 && pop) return pop / redi;
+      var dens = densityFor(code);
+      if (dens > 0) return 1 / dens;
+      return null;
+    }
+    if (id === "place_draw") {
+      var stay = retentionFor(code);
+      if (stay == null) return null;
+      return 100 - stay;
+    }
+    if (id === "cah") {
+      var row = hpsaFor(code);
+      if (!row || row.pctMet == null) return null;
+      return 100 - row.pctMet;
+    }
+    return null;
+  }
+
+  function bandTable(id) {
+    var rows = [];
+    allStateCodes().forEach(function (code) {
+      var hard = hardnessFor(code, id);
+      if (hard == null) return;
+      rows.push({ code: code, hard: hard });
+    });
+    rows.sort(function (a, b) { return a.hard - b.hard; });
+    var n = rows.length;
+    var byCode = {};
+    rows.forEach(function (row, i) {
+      var q = n <= 1 ? 2 : Math.min(3, Math.floor(i * 4 / n));
+      byCode[row.code] = { q: q, band: ASPECT_LADDER[q].band, fill: ASPECT_LADDER[q].fill };
+    });
+    return { rows: rows, byCode: byCode };
+  }
+
+  function rankRow(row, table) {
+    var info = table.byCode[row.code] || {};
+    return {
+      code: row.code,
+      name: stateNames()[row.code] || String(row.code).toUpperCase(),
+      band: info.band || "Pending"
+    };
+  }
+
+  function aspectRead(id) {
+    var s = currentSpec();
+    var label = (s && s.label) || "This specialty";
+    var sentence = label + " · ";
+    var pending = false;
+    var note = "";
+    if (id === "specialty_supply") {
+      sentence += "Specialty supply: candidates here. Red states have fewer of this specialty per person.";
+    } else if (id === "raw") {
+      sentence += "Raw: national baseline. States sit on Competitive. Red on the other Aspects is where recruiting is harder.";
+    } else if (id === "place_draw") {
+      sentence += "Place draw: roots, pool depth, and desirability inside " + selectionNames() + ". Heat stays in the selected state, and the pin marks its top metro. On the list, Red states keep fewer trainees.";
+    } else if (id === "day_load") {
+      sentence += "Day load: patients per day, schedule, and housing. Pending — no file, so this lens does not recolor the map.";
+      pending = true;
+    } else if (id === "support") {
+      sentence += "Support: culture and admin burden. Pending — no file, so this lens does not recolor the map.";
+      pending = true;
+    } else if (id === "cah") {
+      sentence += "CAH: critical-access pressure from primary-care need met. Red states have less of that need met. Not a facility directory.";
+    } else if (id === "fqhc") {
+      sentence += "FQHC: Medicaid PPS framing. Pending — no site file, so this lens does not recolor the map.";
+      pending = true;
+    } else {
+      sentence += "CMS: national collections context for this specialty. Not a state color and not a baseline dollar.";
+      pending = true;
+    }
+
+    if (id === "raw") {
+      return {
+        sentence: sentence,
+        pending: !getAmpBands(s),
+        mode: "sample",
+        top: [],
+        bottom: [],
+        note: "Raw is one national baseline, so there is no top and bottom five."
+      };
+    }
+
+    if (pending) {
+      var picks = selectedCodes().filter(accessAllowsState);
+      var names = stateNames();
+      return {
+        sentence: sentence,
+        pending: true,
+        mode: "sample",
+        top: picks.map(function (code) {
+          return { code: code, name: names[code] || String(code).toUpperCase(), band: "Pending" };
+        }),
+        bottom: [],
+        note: ""
+      };
+    }
+
+    var table = bandTable(id);
+    var unlocked = table.rows.filter(function (row) { return accessAllowsState(row.code); });
+    if (unlocked.length >= 5) {
+      var hardest = unlocked.slice().reverse();
+      var top = hardest.slice(0, 5).map(function (row) { return rankRow(row, table); });
+      var bottom = unlocked.slice(0, 5).map(function (row) { return rankRow(row, table); });
+      if (unlocked.length < 10) {
+        var used = {};
+        top.forEach(function (row) { used[row.code] = 1; });
+        bottom = bottom.filter(function (row) { return !used[row.code]; });
+      }
+      return { sentence: sentence, pending: false, mode: "rank", top: top, bottom: bottom, note: note };
+    }
+    var sample = unlocked.slice().reverse().map(function (row) { return rankRow(row, table); });
+    if (id === "place_draw" && !sample.length) {
+      var selNames = stateNames();
+      sample = selectedCodes().filter(accessAllowsState).map(function (code) {
+        return { code: code, name: selNames[code] || String(code).toUpperCase(), band: "Selected" };
+      });
+    }
+    return {
+      sentence: sentence,
+      pending: false,
+      mode: "sample",
+      top: sample,
+      bottom: [],
+      note: note || "A top and bottom five appears when more states are unlocked."
+    };
+  }
+
+  function isCahHeavy(code) {
+    var row = hpsaFor(code);
+    if (!row) return false;
+    return (row.pctMet != null && row.pctMet < 50) || (row.needed != null && row.needed >= 200);
+  }
+
+  function aspectCard(code) {
+    if (!code || !accessAllowsPeek(code)) return null;
+    var name = stateNames()[code] || String(code).toUpperCase();
+    var id = lensId();
+    var sentence;
+    if (id === "raw") {
+      sentence = name + " sits on Competitive, the national baseline.";
+    } else if (id === "day_load" || id === "support" || id === "fqhc" || id === "cms") {
+      sentence = name + " has no " + (aspectDef(id) ? aspectDef(id).label : "lens") + " band yet.";
+    } else if (id === "place_draw") {
+      var placeInfo = bandTable(id).byCode[code];
+      sentence = state.selected[code]
+        ? name + " is the selected place" + (placeInfo ? " and reads " + placeInfo.band + " for trainee roots" : "") + ". The pin marks its top metro."
+        : name + " is outside the selected place. Heat stays inside the selection.";
+    } else {
+      var info = bandTable(id).byCode[code];
+      sentence = name + " reads " + (info ? info.band : "Pending") + " for this specialty.";
+    }
+    var tags = [];
+    if (isCahHeavy(code)) tags.push("CAH-heavy");
+    var hooks = aspectHooksForSpecialty(currentSpec());
+    if (hooks.cms) tags.push("CMS");
+    return { name: name, sentence: sentence, tags: tags };
+  }
+
+  function syncAspectRead() {
+    var handle = w.AmpMiAspectsSelectorHandle;
+    if (handle && handle.setSpecialtyKey) handle.setSpecialtyKey(state.specialtyKey || "");
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) {
+      try { w.AmpMiAspectsSelector.refresh(); } catch (e) {}
+    }
+    var focus = state.focus;
+    if (focus && state.selected[focus] && accessAllowsPeek(focus) && w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.openState) {
+      try { w.AmpMiAspectsSelector.openState(focus); } catch (e2) {}
+    }
+  }
+
   function bindAspectsV1() {
     if (document._ridgeAspectsV1Bound) return;
     document._ridgeAspectsV1Bound = true;
     aspectsV1Active = loadAspectsV1();
-    var chips = $("ridge-aspects-chips");
-    if (chips) {
-      chips.addEventListener("click", function (e) {
-        var btn = e.target.closest(".aspect-chip");
-        if (!btn) return;
-        toggleAspectV1(btn.getAttribute("data-aspect"));
+    var host = $("mi-aspects-selector");
+    var wb = $("ridge-workbench");
+    if (wb) wb.classList.add("mi-aspects-on");
+    if (host && w.AmpMiAspectsSelector && host.getAttribute("data-mi-aspects-selector") !== "1") {
+      w.AmpMiAspectsSelector.mount(host, {
+        mapEl: $("ridge-map-wrap"),
+        active: aspectsV1Active[0] || "specialty_supply",
+        specialtyKey: state.specialtyKey,
+        exactValues: false,
+        getSpecialties: function () {
+          return specialties().map(function (s) { return { key: s.key, label: s.label }; });
+        },
+        onSpecialty: function (key) { setSpecialty(key); },
+        onSelect: function (id) { setAspectLens(id); },
+        getRead: aspectRead,
+        getCard: aspectCard,
+        onOpenState: function (code) {
+          if (!code) return;
+          var additive = accessAllowsMulti() && state.multi;
+          toggleState(code, additive);
+        }
       });
     }
     syncAspectsUi();
+  }
+
+  function setAspectLens(id) {
+    if (!aspectDef(id)) return;
+    aspectsV1Active = [id];
+    saveAspectsV1();
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.getActive && w.AmpMiAspectsSelector.getActive() !== id) {
+      w.AmpMiAspectsSelector.setActive(id, { silent: true });
+    }
+    try { applyAspectLayers(); } catch (e) {}
+    try { renderBenchCards(); } catch (e2) {}
+    try { paintMap(); } catch (e3) {}
+    try { renderSidebar(); } catch (e4) {}
+    try { updateTitle(); } catch (e5) {}
+    if (id === "place_draw") {
+      var pd = placeDrawApi();
+      if (pd && pd.syncSelection) { try { pd.syncSelection(); } catch (e6) {} }
+      maybeFitSelection(false);
+    }
+    syncAspectRead();
   }
 
 
@@ -283,6 +506,7 @@
     groupFilter: "all",
     search: "",
     hover: null,
+    focus: "",
     mapReady: false
   };
 
@@ -628,47 +852,31 @@
   function paintMap() {
     var root = $("ridge-map-container");
     if (!root) return;
-    var placeOn = isAspectOn("place_draw");
-    var supplyOn = isAspectOn("specialty_supply");
-    var rawOn = isAspectOn("raw");
-    var ext = metricExtent();
-    var supplyExt = null;
-    var h = aspectHooksForSpecialty(currentSpec());
-    if (supplyOn && h.rediByState) {
-      var svals = Object.keys(h.rediByState).map(function (k) { return h.rediByState[k]; })
-        .filter(function (v) { return typeof v === "number" && v > 0; });
-      if (svals.length) supplyExt = { min: Math.min.apply(null, svals), max: Math.max.apply(null, svals) };
-    }
-    var pressure = {};
-    if (isAspectOn("cah") || isAspectOn("fqhc")) {
-      hpsaPressureCodes().forEach(function (c) { pressure[c] = 1; });
-    }
+    var id = lensId();
+    var placeOn = id === "place_draw";
+    var choropleth = id === "specialty_supply" || id === "cah";
+    var table = choropleth ? bandTable(id) : null;
+    var rawFill = getAmpBands() ? "#fbbf24" : "#eef2f6";
     var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
     nodes.forEach(function (el) {
       if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#placeDrawSelectionOutline") || el.closest("#placeDrawPinLayer") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
       var code = el.getAttribute("data-state");
       if (placeOn) {
-        /* Light uncalled slate — never paint teal selected fill over metro heat */
-        el.style.fill = "#b7c4d4";
-      } else if (supplyOn && supplyExt && h.rediByState && h.rediByState[code] != null) {
-        var sv = h.rediByState[code];
-        var st = (sv - supplyExt.min) / Math.max(1, supplyExt.max - supplyExt.min);
-        el.style.fill = lerpColor(st);
-      } else if (rawOn && state.mapMetric === "comp") {
-        var v0 = metricValueFor(code);
-        var t0 = (v0 - ext.min) / (ext.max - ext.min);
-        if (!v0 || isNaN(v0)) t0 = 0.08;
-        el.style.fill = lerpColor(t0);
+        /* Border-only selection. Do not paint a gray/teal fill over metro heat. */
+        el.style.fill = "";
+      } else if (id === "raw") {
+        el.style.fill = rawFill;
+      } else if (table && table.byCode[code]) {
+        el.style.fill = table.byCode[code].fill;
       } else {
-        var v = metricValueFor(code);
-        var t = (v - ext.min) / (ext.max - ext.min);
-        if (!v || isNaN(v)) t = 0.08;
-        el.style.fill = lerpColor(t);
+        el.style.fill = "#eef2f6";
       }
+      el.classList.toggle("pd-in-selection", !!placeOn && !!state.selected[code]);
       el.classList.toggle("selected", !placeOn && !!state.selected[code]);
       el.classList.toggle("is-hover", !placeOn && state.hover === code);
       el.classList.toggle("ridge-geo-locked", !accessAllowsState(code));
-      el.classList.toggle("aspect-hpsa-pressure", !!pressure[code]);
+      el.classList.toggle("aspect-hpsa-pressure", false);
+      el.classList.toggle("mi-aspects-filter-out", false);
       /* Avoid double-filter black blobs on AK/HI */
       if (code === "ak" || code === "hi") {
         el.style.filter = "none";
@@ -678,28 +886,9 @@
     });
     var legend = $("ridge-map-legend-dynamic");
     if (legend) {
-      if (placeOn) {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">Place draw · metro heat</span>' +
-          '<span class="ridge-legend-scale"><i class="lo"></i> Cool-field</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Metro glow</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> Border only</span>' +
-          (rawOn ? rawLegendBit() : "");
-      } else if (supplyOn && supplyExt) {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">Specialty supply · Redi residence</span>' +
-          '<span class="ridge-legend-scale"><i class="lo"></i> Thinner bench</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Deeper bench</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>' +
-          (rawOn ? rawLegendBit() : "");
-      } else {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">' + metricLabelForActive() + '</span>' +
-          '<span class="ridge-legend-scale"><i class="lo"></i> Lower</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Higher</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>' +
-          (rawOn ? rawLegendBit() : "");
-      }
+      legend.innerHTML = placeOn
+        ? '<span class="ridge-legend-metric">Place draw · heat inside the selected state</span>'
+        : '<span class="ridge-legend-metric">Red is harder · Destination is easier</span>';
     }
     if (placeOn) {
       var ol = root.querySelector("#outline-layer");
@@ -812,6 +1001,126 @@
     return Object.keys(state.selected).filter(function (k) { return state.selected[k]; });
   }
 
+  function selectionNames() {
+    var names = stateNames();
+    var picks = selectedCodes();
+    if (!picks.length) return "No state selected";
+    return picks.map(function (c) { return names[c] || String(c).toUpperCase(); }).join(" · ");
+  }
+
+  function aspectSnapshot(id) {
+    var s = currentSpec();
+    var picks = selectedCodes();
+    var label = selectionNames();
+    var lens = aspectDef(id) || { label: id };
+    var numbers = [];
+    var legend = { title: lens.label, low: "", high: "", note: "" };
+    function pending(k) { numbers.push({ label: k, value: "Pending", pending: true }); }
+    if (id === "raw") {
+      var amp = getAmpBands(s);
+      legend.low = "Lower";
+      legend.high = "Higher";
+      legend.note = "Map uses the active supply metric. Cash is AMP bands only.";
+      if (amp && amp.competitive != null) {
+        numbers.push({ label: "Competitive", value: fmtMoney(amp.competitive) });
+        numbers.push({ label: "Red", value: amp.redAlert != null ? fmtMoney(amp.redAlert) : "Pending", pending: amp.redAlert == null });
+        numbers.push({ label: "Magnet", value: amp.magnet != null ? fmtMoney(amp.magnet) : "Pending", pending: amp.magnet == null });
+        numbers.push({ label: "Destination", value: amp.destination != null ? fmtMoney(amp.destination) : "Pending", pending: amp.destination == null });
+      } else pending("YOUR Baseline");
+      numbers.push({ label: "Selection", value: label });
+    } else if (id === "place_draw") {
+      legend.low = "Cool field";
+      legend.high = "Metro glow";
+      legend.note = "Heat stays inside " + label + ". Border only — no fill over the glow.";
+      var pd = placeDrawApi();
+      var pin = pd && pd.getPin ? pd.getPin() : null;
+      var bands = pd && pd.getPinBands ? pd.getPinBands() : null;
+      numbers.push({ label: "Selection", value: label });
+      if (pin && pin.state && picks.indexOf(String(pin.state).toLowerCase()) >= 0) {
+        var metros = (pd && pd.METROS) || [];
+        var near = null;
+        var bestD = Infinity;
+        for (var i = 0; i < metros.length; i++) {
+          var m = metros[i];
+          if (m.msaOf || m.coolField) continue;
+          var dd = Math.pow(pin.lat - m.lat, 2) + Math.pow(pin.lon - m.lon, 2);
+          if (dd < bestD) { bestD = dd; near = m; }
+        }
+        numbers.push({ label: "Pin", value: (near ? near.label : "In state") });
+      } else pending("Pin");
+      if (bands && bands.competitive != null) {
+        numbers.push({ label: "Red", value: fmtMoney(bands.red) });
+        numbers.push({ label: "Competitive", value: fmtMoney(bands.competitive) });
+        numbers.push({ label: "Magnet", value: fmtMoney(bands.magnet) });
+        numbers.push({ label: "Destination", value: fmtMoney(bands.destination) });
+      } else pending("Place-draw bands");
+    } else if (id === "specialty_supply") {
+      legend.low = "Thinner bench";
+      legend.high = "Deeper bench";
+      legend.note = "Redi residence counts for " + (s ? s.label : "this specialty") + " in " + label + ".";
+      var h = aspectHooksForSpecialty(s);
+      if (picks.length && h.rediByState) {
+        var sum = 0, have = 0;
+        picks.forEach(function (code) {
+          var v = h.rediByState[code];
+          if (typeof v === "number") { sum += v; have++; }
+        });
+        if (have) numbers.push({ label: "Redi in selection", value: fmtNum(sum) });
+        else pending("Redi in selection");
+        if (h.rediUs && h.rediUs.usTotal != null) numbers.push({ label: "U.S. total", value: fmtNum(h.rediUs.usTotal) });
+      } else pending("Redi in selection");
+      numbers.push({ label: "Selection", value: label });
+    } else if (id === "cah" || id === "fqhc") {
+      legend.low = "More need met";
+      legend.high = "Higher pressure";
+      legend.note = id === "fqhc"
+        ? "Same public HPSA need-met file. Not a site count and not higher pay."
+        : "Public primary-care HPSA need-met. Facility pins are pending.";
+      if (picks.length) {
+        var metSum = 0, metN = 0, needSum = 0;
+        picks.forEach(function (code) {
+          var row = hpsaFor(code);
+          if (!row) return;
+          if (row.pctMet != null) { metSum += row.pctMet; metN++; }
+          if (row.needed != null) needSum += row.needed;
+        });
+        if (metN) numbers.push({ label: "HPSA need met", value: (metSum / metN).toFixed(1) + "%" });
+        else pending("HPSA need met");
+        if (metN) numbers.push({ label: "PC practitioners needed", value: fmtNum(needSum) });
+      } else pending("HPSA need met");
+      numbers.push({ label: "Selection", value: label });
+      pending(id === "cah" ? "CAH facilities" : "FQHC sites");
+    } else if (id === "cms") {
+      legend.low = "Pending";
+      legend.high = "Pending";
+      legend.note = "CMS is a national triangulation for this specialty. No per-state map file — nothing invented.";
+      var cms = aspectHooksForSpecialty(s).cms;
+      if (cms && cms.avgAllowed != null) {
+        numbers.push({ label: "Avg allowed / provider", value: fmtMoney(cms.avgAllowed) });
+        numbers.push({ label: "Rel index", value: cms.relIndex != null ? String(cms.relIndex) : "Pending", pending: cms.relIndex == null });
+      } else pending("CMS avg allowed");
+      numbers.push({ label: "Selection", value: label });
+      pending("State CMS map");
+    } else if (id === "day_load") {
+      legend.low = "Pending";
+      legend.high = "Pending";
+      legend.note = "Day load is qualitative in v1. No patients-per-day file on this surface.";
+      pending("Patients / day");
+      pending("Schedule shift");
+      numbers.push({ label: "Selection", value: label });
+    } else if (id === "support") {
+      legend.low = "Pending";
+      legend.high = "Pending";
+      legend.note = "Support is qualitative in v1. No culture score file on this surface.";
+      pending("Culture / admin");
+      numbers.push({ label: "Selection", value: label });
+    } else {
+      legend.note = "Pending";
+      pending("Figure");
+    }
+    return { legend: legend, numbers: numbers };
+  }
+
   function renderSidebar() {
     var headName = $("ridge-side-name");
     var headSub = $("ridge-side-sub");
@@ -828,8 +1137,8 @@
       else headName.textContent = s ? s.label : "Market Insight";
     }
     if (headSub) {
-      if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + picks[0].toUpperCase() + " · EXAMPLE";
-      else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + metricLabelForActive() + " · EXAMPLE";
+      if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + selectionNames() + " · state read";
+      else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + selectionNames() + " · state read";
       else headSub.textContent = "Difficulty · speed-to-fill · Total Comp · public · EXAMPLE";
     }
 
@@ -1080,6 +1389,7 @@
     if (!forced) return forced;
     state.selected = {};
     state.selected[forced] = true;
+    if (!state.focus || !state.selected[state.focus]) state.focus = forced;
     return forced;
   }
   function gateSpecialty(key) {
@@ -1099,9 +1409,13 @@
     if (!gate.ok) {
       var sel = $("mi-app-specialty");
       if (sel && state.specialtyKey) sel.value = state.specialtyKey;
+      var handle = w.AmpMiAspectsSelectorHandle;
+      if (handle && handle.setSpecialtyKey) handle.setSpecialtyKey(state.specialtyKey);
       return;
     }
     state.specialtyKey = key;
+    var appSel = $("mi-app-specialty");
+    if (appSel) appSel.value = key;
     refresh();
   }
 
@@ -1115,17 +1429,9 @@
     }
     var forced = forcedUnitState();
     if (forced) {
-      if (norm !== forced) {
-        ensureForcedSelection();
-        paintMap();
-        renderSidebar();
-        updateTitle();
-        return;
-      }
       ensureForcedSelection();
-      paintMap();
-      renderSidebar();
-      updateTitle();
+      state.focus = forced;
+      afterGeoChange();
       return;
     }
     var willSelect = true;
@@ -1147,9 +1453,8 @@
         state.selected[norm] = true;
       }
     }
-    paintMap();
-    renderSidebar();
-    updateTitle();
+    state.focus = state.selected[norm] ? norm : (selectedCodes()[0] || "");
+    afterGeoChange();
   }
 
   function clearStates() {
@@ -1158,13 +1463,28 @@
     } else {
       state.selected = {};
     }
+    afterGeoChange();
+  }
+
+  function afterGeoChange() {
     paintMap();
     renderSidebar();
     updateTitle();
+    var pd = placeDrawApi();
+    if (pd && isAspectOn("place_draw") && pd.syncSelection) {
+      try { pd.syncSelection(); } catch (ePd) {}
+    }
+    maybeFitSelection(true);
+    syncAspectRead();
   }
 
   function showTooltip(evt, code) {
     var tip = $("ridge-map-tooltip");
+    var wb = $("ridge-workbench");
+    if (wb && wb.classList.contains("mi-aspects-on")) {
+      if (tip) { tip.hidden = true; tip.innerHTML = ""; }
+      return;
+    }
     if (!tip) return;
     if (!code) { tip.hidden = true; tip.innerHTML = ""; return; }
     var names = stateNames();
@@ -1266,6 +1586,11 @@
       banner.className = "ridge-aspect-map-banner";
       wrap.appendChild(banner);
     }
+    if (wb && wb.classList.contains("mi-aspects-on")) {
+      banner.hidden = true;
+      banner.innerHTML = "";
+      return;
+    }
     var bits = [];
     var amp = getAmpBands();
     if (isAspectOn("raw")) {
@@ -1273,7 +1598,7 @@
         ? ("Raw · YOUR Baseline " + fmtMoney(amp.competitive) + " (Competitive)")
         : "Raw · AMP bands pending — no invented $");
     }
-    if (isAspectOn("place_draw")) bits.push("Place draw · national metro heat · border-only selection");
+    if (isAspectOn("place_draw")) bits.push("Place draw · " + selectionNames() + " · heat inside selection · border only");
     if (isAspectOn("day_load")) bits.push("Day load · schedule / patients-per-day framing (qualitative v1)");
     if (isAspectOn("specialty_supply")) bits.push("Specialty supply · Redi residence density");
     if (isAspectOn("support")) bits.push("Support · culture / admin burden (qualitative v1)");
@@ -1313,6 +1638,8 @@
       svg.appendChild(layer);
     }
     layer.innerHTML = "";
+    var wbDots = $("ridge-workbench");
+    if (wbDots && wbDots.classList.contains("mi-aspects-on")) return;
     if (!isAspectOn("specialty_supply")) return;
     var h = aspectHooksForSpecialty(currentSpec());
     if (!h.rediByState) return;
@@ -1403,6 +1730,30 @@
   }
 
   var MI_MAP_VIEW = { scale: 1, x: 0, y: 0, min: 1, max: 3.6 };
+  var mapViewTouched = false;
+  var mapFitSel = "";
+  var mapFitOk = false;
+
+  function maybeFitSelection(force) {
+    var codes = selectedCodes();
+    var key = codes.slice().sort().join(",");
+    if (force) mapViewTouched = false;
+    if (!force && mapViewTouched && key === mapFitSel) return;
+    if (!force && mapFitOk && key === mapFitSel) return;
+    var n = 0;
+    function attempt() {
+      var api = w.__AMP_MI_MAP_VIEWPORT;
+      if (api && typeof api.fitToCodes === "function" && api.fitToCodes(codes)) {
+        mapFitSel = key;
+        mapFitOk = true;
+        return;
+      }
+      n += 1;
+      if (n < 40) requestAnimationFrame(attempt);
+      else if (n < 52) setTimeout(attempt, 160);
+    }
+    attempt();
+  }
 
   function bindMapViewport(root) {
     if (!root || root.getAttribute("data-mi-zoom-bound") === "1") return;
@@ -1436,7 +1787,8 @@
       var s = MI_MAP_VIEW.scale;
       if (s <= 1) { MI_MAP_VIEW.x = 0; MI_MAP_VIEW.y = 0; return; }
       var sw = w * s, sh = h * s;
-      var slack = 0.12;
+      /* Slack lets a fitted edge state (RI, CA, FL) sit in frame without flying off. */
+      var slack = 0.5;
       var maxX = w * slack;
       var minX = w - sw - w * slack;
       var maxY = h * slack;
@@ -1500,6 +1852,7 @@
       if (pinch && ptrCount() >= 2) {
         var m = pinchMetrics();
         var lp = localPoint(m.midX, m.midY);
+        mapViewTouched = true;
         zoomAt(lp.x, lp.y, pinch.scale * (m.dist / pinch.dist));
         try { e.preventDefault(); } catch (err) {}
         return;
@@ -1508,6 +1861,7 @@
         var dx = e.clientX - pan.x, dy = e.clientY - pan.y;
         if (!pan.moved && (dx * dx + dy * dy) < 100) return;
         pan.moved = true;
+        mapViewTouched = true;
         root.classList.add("is-panning", "did-pan");
         MI_MAP_VIEW.x = pan.vx + dx;
         MI_MAP_VIEW.y = pan.vy + dy;
@@ -1541,6 +1895,7 @@
       if (!e.ctrlKey && !e.metaKey) return;
       if (ignoreChrome(e)) return;
       e.preventDefault();
+      mapViewTouched = true;
       var lp = localPoint(e.clientX, e.clientY);
       zoomAt(lp.x, lp.y, MI_MAP_VIEW.scale * Math.exp(-e.deltaY * 0.002));
     }, { passive: false });
@@ -1560,9 +1915,59 @@
         applyView();
       },
       zoomAt: zoomAt,
-      apply: applyView
+      apply: applyView,
+      fitToCodes: fitToCodes
     };
     applyView();
+
+    function fitToCodes(codes) {
+      var svg = currentSvg();
+      if (!svg || root.clientWidth < 40 || root.clientHeight < 40) return false;
+      codes = (codes || []).filter(Boolean);
+      var prev = svg.style.transform;
+      svg.style.transform = "none";
+      if (!codes.length) {
+        MI_MAP_VIEW.scale = 1;
+        MI_MAP_VIEW.x = 0;
+        MI_MAP_VIEW.y = 0;
+        applyView();
+        root.setAttribute("data-map-fitted", "");
+        return true;
+      }
+      var minL = Infinity, minT = Infinity, maxR = -Infinity, maxB = -Infinity, found = 0;
+      codes.forEach(function (code) {
+        var el = svg.querySelector('g.state [data-state="' + code + '"], circle[data-state="' + code + '"]');
+        if (!el || !el.getBoundingClientRect) return;
+        var b = el.getBoundingClientRect();
+        if (!(b.width > 1) || !(b.height > 1)) return;
+        found += 1;
+        minL = Math.min(minL, b.left);
+        minT = Math.min(minT, b.top);
+        maxR = Math.max(maxR, b.right);
+        maxB = Math.max(maxB, b.bottom);
+      });
+      if (!found) {
+        svg.style.transform = prev;
+        return false;
+      }
+      var svgBox = svg.getBoundingClientRect();
+      var rr = root.getBoundingClientRect();
+      var cw = rr.width, ch = rr.height;
+      var bw = Math.max(8, maxR - minL);
+      var bh = Math.max(8, maxB - minT);
+      var S = Math.min((cw * 0.86) / bw, (ch * 0.86) / bh);
+      S = Math.max(1.08, Math.min(MI_MAP_VIEW.max, S));
+      var cx = ((minL + maxR) / 2) - svgBox.left;
+      var cy = ((minT + maxB) / 2) - svgBox.top;
+      var ox = svgBox.left - rr.left;
+      var oy = svgBox.top - rr.top;
+      MI_MAP_VIEW.scale = S;
+      MI_MAP_VIEW.x = (cw / 2) - ox - cx * S;
+      MI_MAP_VIEW.y = (ch / 2) - oy - cy * S;
+      applyView();
+      root.setAttribute("data-map-fitted", codes.slice().sort().join(","));
+      return MI_MAP_VIEW.scale > 1.02;
+    }
   }
 
   function bindMap() {
@@ -1655,7 +2060,6 @@
       showTooltip(null, null);
     });
     root.addEventListener("click", function (e) {
-      if (isAspectOn("place_draw")) return;
       if (root.classList.contains("is-pinching") || root.classList.contains("is-panning") ||
           root.classList.contains("did-pan") || root.classList.contains("did-pinch")) {
         e.preventDefault();
@@ -1663,9 +2067,19 @@
       }
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
+      var code = el.getAttribute("data-state");
+      if (isAspectOn("place_draw")) {
+        state.focus = code;
+        if (accessAllowsPeek(code) && w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.openState) {
+          w.AmpMiAspectsSelector.openState(code);
+        } else if (w.AmpMiAspectsSelectorHandle && w.AmpMiAspectsSelectorHandle.clearCard) {
+          w.AmpMiAspectsSelectorHandle.clearCard();
+        }
+        return;
+      }
       e.preventDefault();
       var additive = accessAllowsMulti() && (state.multi || e.metaKey || e.ctrlKey);
-      toggleState(el.getAttribute("data-state"), additive);
+      toggleState(code, additive);
     });
   }
 
@@ -1680,7 +2094,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2157")
+    fetch("assets/ridge-usa-map.svg?v=2200")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -1733,6 +2147,12 @@
     paintMap();
     renderSidebar();
     updateTitle();
+    var pdRefresh = placeDrawApi();
+    if (pdRefresh && isAspectOn("place_draw") && pdRefresh.syncSelection) {
+      try { pdRefresh.syncSelection(); } catch (ePd) {}
+    }
+    maybeFitSelection(false);
+    syncAspectRead();
   }
 
   function bindChrome() {
@@ -1825,16 +2245,12 @@
           var code = rem.getAttribute("data-remove-state");
           if (forcedUnitState()) {
             ensureForcedSelection();
-            paintMap();
-            renderSidebar();
-            updateTitle();
+            afterGeoChange();
             return;
           }
           if (state.selected[code]) {
             delete state.selected[code];
-            paintMap();
-            renderSidebar();
-            updateTitle();
+            afterGeoChange();
           }
           return;
         }

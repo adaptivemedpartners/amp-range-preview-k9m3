@@ -1,4 +1,4 @@
-/* amp-build:2197-pill-blue-wash */
+/* amp-build:2200-aspects-eight-bands */
 /* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
 /* amp-build:2193-step3-sbs-step4-cards-confirm-legible */
 /* amp-build:2192-em-er-photo */
@@ -14737,4 +14737,22 @@ body.amp-footer-endcap::after {
     linear-gradient(165deg, #121f2d 0%, #152332 55%, #1c3044 100%);
   border-color: rgba(94, 184, 224, 0.22);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ========== amp-build:2198-mi-state-place-aspects ==========
+   Place draw: border-only glow on the selected state. Heat shows through
+   (no gray/teal fill). States outside the selection are dimmed. */
+html.mi-place-draw-on .ridge-map-container path[data-state].pd-in-selection,
+html.mi-place-draw-on .ridge-map-container circle[data-state].pd-in-selection,
+html.mi-place-draw-on #ridge-map-container path[data-state].pd-in-selection,
+html.mi-place-draw-on #ridge-map-container circle[data-state].pd-in-selection {
+  fill: transparent !important;
+  opacity: 1 !important;
+}
+html.mi-place-draw-on .ridge-map-container path[data-state]:not(.pd-in-selection),
+html.mi-place-draw-on .ridge-map-container circle[data-state]:not(.pd-in-selection),
+html.mi-place-draw-on #ridge-map-container path[data-state]:not(.pd-in-selection),
+html.mi-place-draw-on #ridge-map-container circle[data-state]:not(.pd-in-selection) {
+  fill: #c5ced8 !important;
+  opacity: 0.38 !important;
 }

@@ -1,0 +1,254 @@
+/* mi-aspects-selector.css — self-contained. Mount with js/mi-aspects-selector.js
+   Eight Aspects, all visible. Core group, then a lighter facility group.
+   Map ~70%. Ranked rail ~30%. Phone: rail first, map second.
+   Four bands: Red, Competitive, Magnet, Destination. Red is harder. */
+
+.mi-aspects-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 8px;
+  color: #152033;
+  font-size: 14px;
+}
+.mi-aspects-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: flex-end;
+}
+.mi-aspects-search {
+  position: relative;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.mi-aspects-search span {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b3a4d;
+}
+.mi-aspects-spec {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #c5d0de;
+  border-radius: 10px;
+  background: #fff;
+  color: #152033;
+  font-size: 15px;
+}
+.mi-aspects-spec:focus {
+  outline: 2px solid #0e7490;
+  outline-offset: 1px;
+}
+.mi-aspects-suggest {
+  position: absolute;
+  z-index: 8;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 4px 0 0;
+  padding: 4px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #d5deea;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+.mi-aspects-suggest button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #152033;
+}
+.mi-aspects-suggest button:hover,
+.mi-aspects-suggest button:focus-visible {
+  background: #eef6f8;
+}
+.mi-aspects-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.mi-aspects-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.mi-aspects-group-facility {
+  padding-left: 8px;
+  border-left: 1px solid #e2e8f0;
+}
+.mi-aspects-lens,
+.mi-aspects-more {
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #c5d0de;
+  background: #fff;
+  color: #152033;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mi-aspects-lens.is-on {
+  background: #16324a;
+  border-color: #16324a;
+  color: #fff;
+}
+.mi-aspects-group-facility .mi-aspects-lens {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #64748b;
+  font-weight: 650;
+}
+.mi-aspects-group-facility .mi-aspects-lens.is-on {
+  background: #16324a;
+  border-color: #16324a;
+  color: #fff;
+}
+.mi-aspects-lens:focus-visible,
+.mi-aspects-more:focus-visible,
+.mi-aspects-rank:focus-visible {
+  outline: 2px solid #0e7490;
+  outline-offset: 2px;
+}
+.mi-aspects-sentence {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 650;
+  color: #0b3a4d;
+}
+.mi-aspects-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mi-aspects-key li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 750;
+  color: #16324a;
+}
+.mi-aspects-key i {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: block;
+}
+.mi-aspects-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(200px, 3fr);
+  gap: 12px;
+  align-items: start;
+}
+.mi-aspects-map { min-width: 0; }
+.mi-aspects-map .map-wrap { min-height: 360px; }
+.mi-aspects-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #d5deea;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+.mi-aspects-rank-h {
+  margin: 8px 0 4px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b3a4d;
+}
+.mi-aspects-rank {
+  display: grid;
+  grid-template-columns: 1.4em minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  margin: 0 0 4px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  color: #152033;
+}
+.mi-aspects-rank-n { font-weight: 750; color: #64748b; }
+.mi-aspects-rank-name { font-weight: 700; }
+.mi-aspects-rank-band {
+  font-size: 12px;
+  font-weight: 750;
+  color: #16324a;
+}
+.mi-aspects-rank-note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #475569;
+}
+.mi-aspects-card {
+  padding: 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #d5deea;
+}
+.mi-aspects-card h3 { margin: 0 0 4px; font-size: 16px; }
+.mi-aspects-card p { margin: 0; font-size: 14px; line-height: 1.4; }
+.mi-aspects-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mi-aspects-tag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #e7eef5;
+  color: #16324a;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* Host chrome that fights the one-question read. */
+.mi-aspects-on #ridge-metric-bar,
+.mi-aspects-on #ridge-map-legend-dynamic,
+.mi-aspects-on #ridge-map-tooltip,
+.mi-aspects-on #ridge-aspect-map-banner,
+.mi-aspects-on .ridge-main-stage,
+.mi-aspects-on #mi-aspects-numbers {
+  display: none !important;
+}
+
+@media (max-width: 800px) {
+  .mi-aspects-stage {
+    display: flex;
+    flex-direction: column;
+  }
+  .mi-aspects-rail { order: -1; }
+  .mi-aspects-map { order: 1; width: 100%; }
+  .mi-aspects-group-facility { padding-left: 0; border-left: 0; }
+  .mi-aspects-lens { min-height: 42px; }
+  .mi-aspects-sentence { font-size: 15px; }
+}
