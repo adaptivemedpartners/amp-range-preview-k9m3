@@ -1,0 +1,42 @@
+/* amp-build:2201-mi-33-public — 33 kept specialties selectable on public MI with approved Competitive. Run: node js/v3-2201.test.js */
+var fs = require("fs"), path = require("path");
+var root = path.join(__dirname, "..");
+var STAMP = "2201-mi-33-public";
+function assert(c, m) { if (!c) { console.error("FAIL:", m); process.exit(1); } }
+var html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+var fb = fs.readFileSync(path.join(root, "404.html"), "utf8");
+var css = fs.readFileSync(path.join(root, "css/site.css"), "utf8");
+var app = fs.readFileSync(path.join(root, "js/app.js"), "utf8");
+assert(html.indexOf("<!-- amp-build:" + STAMP + " -->") === html.indexOf("<!-- amp-build:"), "html tip stamp");
+assert(html.indexOf("?v=2200") === -1, "no stale 2200 cache");
+assert(html.indexOf("amp-build " + STAMP) !== -1, "footer chip");
+assert(app.indexOf('__AMP_BUILD = "' + STAMP + '"') !== -1, "app stamp");
+assert(css.indexOf("/* amp-build:" + STAMP + " */") === 0, "css tip");
+assert(fb === html, "404 == index");
+var iData = html.indexOf("js/ridge-mi-data.js"), iNp = html.indexOf("js/amp-mi-nppes-33.js"), i33 = html.indexOf("js/amp-mi-33-public.js"), iApp = html.indexOf("js/app.js?");
+assert(iData < iNp && iNp < i33 && i33 < iApp, "script order data, nppes, 33, app");
+assert(app.indexOf("return i < 80 || s.amp33;") !== -1, "demo picker includes the 33");
+global.window = global;
+require(path.join(root, "js/ridge-mi-data.js"));
+var firstKey = window.AMPRidgeMI.SPECIALTIES[0].key;
+require(path.join(root, "js/amp-mi-nppes-33.js"));
+require(path.join(root, "js/amp-mi-33-public.js"));
+var MI = window.AMPRidgeMI;
+assert(MI.AMP33 && MI.AMP33.keys.length === 33, "33 keys");
+assert(MI.AMP33.added === 26 && MI.AMP33.updated === 7, "26 new + 7 existing");
+assert(MI.SPECIALTIES[0].key === firstKey, "default specialty unchanged");
+var keys = MI.SPECIALTIES.map(function (s) { return s.key; });
+assert(new Set(keys).size === keys.length, "unique keys");
+var picker = MI.SPECIALTIES.filter(function (s, i) { return i < 80 || s.amp33; });
+MI.AMP33.keys.forEach(function (label) {
+  var s = MI.SPECIALTIES.filter(function (x) { return x.label === label; })[0];
+  assert(s, "missing " + label);
+  assert(picker.indexOf(s) !== -1, "not in picker " + label);
+  var b = s.ampBands;
+  assert(b && b.competitive > 0 && b.redAlert < b.competitive && b.competitive < b.magnet && b.magnet < b.destination, "bands " + label);
+});
+var ph = MI.SPECIALTIES.filter(function (x) { return x.label === "Pharmacist"; })[0];
+assert(ph.ampBands.competitive === 137000 && ph.physNational === 324077 && ph.totalComp === null, "Pharmacist approved comp + NPPES, no MGMA");
+var fm = MI.SPECIALTIES.filter(function (x) { return x.key === "family_medicine_without_ob"; })[0];
+assert(fm.ampBands.competitive === 306520 && !fm.amp33, "FM lock untouched");
+console.log("PASS v3-2201");

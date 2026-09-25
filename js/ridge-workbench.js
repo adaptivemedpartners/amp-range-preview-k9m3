@@ -1023,7 +1023,7 @@
     html += '<div class="bench-card phys"><div class="title">' + (wt.active || ("Active " + wt.title)) + '</div>';
     if (s.physCategory || (s.physNational != null && s.physNational > 0)) {
       html += '<div class="hero">' + show(fmtNum(s.physNational), "n/a") + '<small>national · ' + (s.physCategory || s.label || wt.title) + '</small></div>';
-      html += '<div class="mean-line">KFF May 2026 · EXAMPLE</div>';
+      html += '<div class="mean-line">' + (s && s.supplySource ? s.supplySource : "KFF May 2026") + ' · EXAMPLE</div>';
     } else {
       html += '<div class="hero"><span class="na">n/a</span><small>limited public count</small></div>';
       html += '<div class="mean-line">' + wt.group + ' · supply snapshot · EXAMPLE</div>';

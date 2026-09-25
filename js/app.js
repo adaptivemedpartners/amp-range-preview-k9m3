@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2200-aspects-eight-bands";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2201-mi-33-public";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -1367,7 +1367,7 @@
       blank.textContent = "Select a specialty…";
       sel.appendChild(blank);
     }
-    AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+    AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return i < 80 || s.amp33; }).forEach(function (s) {
       var opt = document.createElement("option");
       opt.value = s.key;
       opt.textContent = s.label;
@@ -1538,7 +1538,7 @@
     }
     if (specPick) {
       if (!specPick.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
-        AMPRidgeMI.SPECIALTIES.slice(0, 80).forEach(function (s) {
+        AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return i < 80 || s.amp33; }).forEach(function (s) {
           var opt = document.createElement("option");
           opt.value = s.key;
           opt.textContent = s.label;
