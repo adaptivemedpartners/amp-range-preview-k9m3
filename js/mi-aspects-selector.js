@@ -1,74 +1,85 @@
 /*! mi-aspects-selector.js — self-contained Market Intelligence Aspects layout.
  * Public surface mounts it. Internal MI can reuse the same mount later.
  *
- * The control answers one question: where is it hard to find this specialty?
- * Darker map bands mean harder to recruit. Place draw is the exception the
- * host still paints as metro heat inside the selected state.
+ * Eight Aspects, all visible, one tap. Core five, then a lighter facility group.
+ * The sentence above the map is the legend, paired with the four AMP bands:
+ * Red, Competitive, Magnet, Destination. Warmer Red is harder to recruit.
+ * Place draw heat is painted by the host, inside the selected state.
  *
  * Mount API
  * ----------
- * AmpMiAspectsSelector.PRIMARY
- *   Raw, Specialty supply, Place draw, Day load. These are the lenses.
- * AmpMiAspectsSelector.MORE
- *   Support is a lens. CAH, FQHC, and CMS are filters/tags, not recolor lenses.
+ * AmpMiAspectsSelector.CORE
+ *   Raw, Place draw, Day load, Specialty supply, Support.
+ * AmpMiAspectsSelector.FACILITY
+ *   CAH, FQHC, CMS. Same one-tap lenses, drawn lighter.
+ * AmpMiAspectsSelector.BANDS
+ *   Red #f87171, Competitive #fbbf24, Magnet #60a5fa, Destination #a78bfa.
+ *   These match the existing Place draw band colors. Red is the hard end.
  *
  * AmpMiAspectsSelector.mount(host, options) -> handle
  *   host: Element, or a string id (with or without "#").
  *   options.mapEl: Element moved into the 70% map column. Optional.
  *   options.active: lens id. Default "specialty_supply".
  *   options.specialtyKey: current specialty key.
+ *   options.exactValues: false on public. Internal may pass true to print
+ *     row.value and card.value beside the band. Rank labels stay either way.
  *   options.getSpecialties(): [{ key, label }]
  *   options.onSpecialty(key): host applies its own gate. This file does not.
- *   options.onSelect(id, lens): one tap on a lens. Not fired for filters.
- *   options.onFilters({ cah, fqhc, cms }): filter toggles. Not a recolor.
- *   options.getRead(id, filters): {
- *     sentence: string,          // one line above the map
+ *   options.onSelect(id, lens): one tap on any of the eight lenses.
+ *   options.getRead(id): {
+ *     sentence: string,
  *     pending: boolean,
  *     mode: "rank" | "sample",
- *     top: [{ code, name, band }],
- *     bottom: [{ code, name, band }],
+ *     top: [{ code, name, band, value? }],
+ *     bottom: [{ code, name, band, value? }],
  *     note: string
  *   }
  *   options.getCard(code): {
- *     name, sentence, tags: [string], locked: boolean
+ *     name, sentence, tags: [string], value?, locked: boolean
  *   } | null
  *   options.onOpenState(code): host selects the state (and enforces gating).
  *
  * handle.setActive(id, { silent: true })
  * handle.getActive()
- * handle.getFilters()
- * handle.refresh()       — re-reads getRead (sentence, ranks) and the search label
- * handle.syncSpecialty() — rewrites the search box from specialtyKey / getSpecialties
- * handle.openState(code) — one short card. No raw figures.
+ * handle.refresh()
+ * handle.syncSpecialty()
+ * handle.setSpecialtyKey(key)
+ * handle.openState(code)
  * handle.clearCard()
  * handle.destroy()
  *
- * Bands and rank only. This file does not print dollar amounts, city names,
- * or drive times.
+ * Public shows bands and rank. This file does not print dollar amounts, city
+ * names, or drive times unless options.exactValues is true and the host
+ * supplied a value string.
  */
 (function (global) {
   "use strict";
 
-  var PRIMARY = [
-    { id: "raw", label: "Raw", kind: "lens" },
-    { id: "specialty_supply", label: "Specialty supply", kind: "lens" },
-    { id: "place_draw", label: "Place draw", kind: "lens" },
-    { id: "day_load", label: "Day load", kind: "lens" }
+  var CORE = [
+    { id: "raw", label: "Raw", group: "core" },
+    { id: "place_draw", label: "Place draw", group: "core" },
+    { id: "day_load", label: "Day load", group: "core" },
+    { id: "specialty_supply", label: "Specialty supply", group: "core" },
+    { id: "support", label: "Support", group: "core" }
   ];
-  var MORE = [
-    { id: "support", label: "Support", kind: "lens" },
-    { id: "cah", label: "CAH", kind: "filter" },
-    { id: "fqhc", label: "FQHC", kind: "filter" },
-    { id: "cms", label: "CMS", kind: "filter" }
+  var FACILITY = [
+    { id: "cah", label: "CAH", group: "facility" },
+    { id: "fqhc", label: "FQHC", group: "facility" },
+    { id: "cms", label: "CMS", group: "facility" }
+  ];
+  var LENSES = CORE.concat(FACILITY);
+  var BANDS = [
+    { id: "red", label: "Red", fill: "#f87171" },
+    { id: "competitive", label: "Competitive", fill: "#fbbf24" },
+    { id: "magnet", label: "Magnet", fill: "#60a5fa" },
+    { id: "destination", label: "Destination", fill: "#a78bfa" }
   ];
   var byId = {};
-  PRIMARY.concat(MORE).forEach(function (item) { byId[item.id] = item; });
+  LENSES.forEach(function (item) { byId[item.id] = item; });
 
   function resolveEl(ref) {
     if (!ref) return null;
-    if (typeof ref === "string") {
-      return document.getElementById(ref.replace(/^#/, ""));
-    }
+    if (typeof ref === "string") return document.getElementById(ref.replace(/^#/, ""));
     return ref;
   }
 
@@ -84,11 +95,9 @@
     options = options || {};
     var root = resolveEl(host);
     if (!root) return null;
-    var active = byId[options.active] && byId[options.active].kind === "lens"
-      ? options.active
-      : "specialty_supply";
-    var filters = { cah: false, fqhc: false, cms: false };
+    var active = byId[options.active] ? options.active : "specialty_supply";
     var specialtyKey = options.specialtyKey || "";
+    var exactValues = !!options.exactValues;
     var mapEl = resolveEl(options.mapEl);
 
     root.classList.add("mi-aspects-selector");
@@ -100,27 +109,23 @@
         esc(item.label) + "</button>";
     }
 
+    var keyHtml = BANDS.map(function (band) {
+      return '<li><i style="background:' + band.fill + '"></i>' + esc(band.label) + "</li>";
+    }).join("");
+
     root.innerHTML =
       '<div class="mi-aspects-top">' +
         '<label class="mi-aspects-search"><span>Specialty</span>' +
           '<input type="search" class="mi-aspects-spec" placeholder="Type a specialty" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" />' +
           '<ul class="mi-aspects-suggest" role="listbox" hidden></ul>' +
         "</label>" +
-        '<div class="mi-aspects-switch" role="group" aria-label="Lens">' +
-          PRIMARY.map(lensBtn).join("") +
-          '<div class="mi-aspects-more-wrap">' +
-            '<button type="button" class="mi-aspects-more" aria-expanded="false" aria-haspopup="true">More</button>' +
-            '<div class="mi-aspects-more-menu" hidden>' +
-              '<button type="button" class="mi-aspects-lens mi-aspects-more-lens" data-aspect="support" aria-pressed="false">Support</button>' +
-              '<p class="mi-aspects-more-note">Filters and tags. They do not recolor the map.</p>' +
-              '<label class="mi-aspects-filter"><input type="checkbox" data-filter="cah" /> CAH</label>' +
-              '<label class="mi-aspects-filter"><input type="checkbox" data-filter="fqhc" /> FQHC</label>' +
-              '<label class="mi-aspects-filter"><input type="checkbox" data-filter="cms" /> CMS</label>' +
-            "</div>" +
-          "</div>" +
+        '<div class="mi-aspects-switch" role="group" aria-label="Aspect">' +
+          '<div class="mi-aspects-group mi-aspects-group-core">' + CORE.map(lensBtn).join("") + "</div>" +
+          '<div class="mi-aspects-group mi-aspects-group-facility" aria-label="Facility">' + FACILITY.map(lensBtn).join("") + "</div>" +
         "</div>" +
       "</div>" +
       '<p class="mi-aspects-sentence" data-mi-aspects-sentence="1"></p>' +
+      '<ul class="mi-aspects-key" aria-label="Red, Competitive, Magnet, Destination. Red is harder to recruit.">' + keyHtml + "</ul>" +
       '<div class="mi-aspects-stage">' +
         '<div class="mi-aspects-map" data-mi-aspects-map="1"></div>' +
         '<aside class="mi-aspects-rail" aria-label="Hardest and easiest states">' +
@@ -137,8 +142,6 @@
     var sentenceEl = root.querySelector("[data-mi-aspects-sentence]");
     var ranksEl = root.querySelector("[data-mi-aspects-ranks]");
     var cardEl = root.querySelector("[data-mi-aspects-card]");
-    var moreBtn = root.querySelector(".mi-aspects-more");
-    var moreMenu = root.querySelector(".mi-aspects-more-menu");
 
     function specialties() {
       if (typeof options.getSpecialties !== "function") return [];
@@ -165,7 +168,11 @@
         btn.classList.toggle("is-on", on);
         btn.setAttribute("aria-pressed", on ? "true" : "false");
       });
-      if (moreBtn) moreBtn.classList.toggle("is-on", active === "support");
+    }
+
+    function valueBit(row) {
+      if (!exactValues || !row || row.value == null || row.value === "") return "";
+      return '<span class="mi-aspects-rank-value">' + esc(row.value) + "</span>";
     }
 
     function rankButtons(rows) {
@@ -174,6 +181,7 @@
           '<span class="mi-aspects-rank-n">' + (i + 1) + "</span>" +
           '<span class="mi-aspects-rank-name">' + esc(row.name) + "</span>" +
           '<span class="mi-aspects-rank-band">' + esc(row.band || "Pending") + "</span>" +
+          valueBit(row) +
           "</button>";
       }).join("");
     }
@@ -181,14 +189,12 @@
     function paintRead() {
       var read = { sentence: "", top: [], bottom: [], mode: "sample", note: "", pending: false };
       if (typeof options.getRead === "function") {
-        try { read = options.getRead(active, filters) || read; } catch (e) {}
+        try { read = options.getRead(active) || read; } catch (e) {}
       }
       if (sentenceEl) sentenceEl.textContent = read.sentence || "";
       if (!ranksEl) return;
       var html = "";
-      if (read.pending) {
-        html += '<p class="mi-aspects-rank-note">Bands pending for this lens. Nothing invented.</p>';
-      }
+      if (read.pending) html += '<p class="mi-aspects-rank-note">Bands pending for this lens. Nothing invented.</p>';
       if (read.mode === "rank") {
         html += '<h3 class="mi-aspects-rank-h">Top 5 · hardest</h3>' + rankButtons(read.top);
         html += '<h3 class="mi-aspects-rank-h">Bottom 5 · easier</h3>' + rankButtons(read.bottom);
@@ -209,10 +215,12 @@
       var tags = (card.tags || []).map(function (tag) {
         return '<li class="mi-aspects-tag">' + esc(tag) + "</li>";
       }).join("");
+      var fig = exactValues && card.value ? '<p class="mi-aspects-card-value">' + esc(card.value) + "</p>" : "";
       cardEl.hidden = false;
       cardEl.innerHTML =
         "<h3>" + esc(card.name || "State") + "</h3>" +
         "<p>" + esc(card.sentence || "") + "</p>" +
+        fig +
         (tags ? '<ul class="mi-aspects-tags">' + tags + "</ul>" : "");
     }
 
@@ -238,16 +246,6 @@
       if (specInput) specInput.setAttribute("aria-expanded", "true");
     }
 
-    function closeMore() {
-      if (!moreMenu || !moreBtn) return;
-      moreMenu.hidden = true;
-      moreBtn.setAttribute("aria-expanded", "false");
-    }
-
-    function emitFilters() {
-      if (typeof options.onFilters === "function") options.onFilters({ cah: !!filters.cah, fqhc: !!filters.fqhc, cms: !!filters.cms });
-    }
-
     paintPressed();
     syncSpecialty();
     paintRead();
@@ -268,55 +266,30 @@
         else handle.openState(code);
         return;
       }
-      var more = e.target && e.target.closest ? e.target.closest(".mi-aspects-more") : null;
-      if (more && root.contains(more)) {
-        var open = moreMenu.hidden;
-        moreMenu.hidden = !open;
-        moreBtn.setAttribute("aria-expanded", open ? "true" : "false");
-        return;
-      }
       var btn = e.target && e.target.closest ? e.target.closest(".mi-aspects-lens") : null;
       if (!btn || !root.contains(btn)) return;
       var id = btn.getAttribute("data-aspect");
-      if (!byId[id] || byId[id].kind !== "lens") return;
-      closeMore();
-      if (id === active) return;
+      if (!byId[id] || id === active) return;
       active = id;
       paintPressed();
       paintRead();
       if (typeof options.onSelect === "function") options.onSelect(active, byId[active]);
     }
 
-    function onInput() {
-      openSuggest(specInput.value);
-    }
-
-    function onFilter(e) {
-      var input = e.target;
-      if (!input || !input.getAttribute || !input.getAttribute("data-filter")) return;
-      filters[input.getAttribute("data-filter")] = !!input.checked;
-      emitFilters();
-      paintRead();
-    }
+    function onInput() { openSuggest(specInput.value); }
 
     root.addEventListener("click", onClick);
     if (specInput) specInput.addEventListener("input", onInput);
-    if (moreMenu) moreMenu.addEventListener("change", onFilter);
-    function onDoc(e) {
-      if (!root.contains(e.target)) closeMore();
-    }
-    document.addEventListener("click", onDoc);
 
     var handle = {
       setActive: function (id, opts) {
-        if (!byId[id] || byId[id].kind !== "lens") return;
+        if (!byId[id]) return;
         active = id;
         paintPressed();
         paintRead();
         if (!(opts && opts.silent) && typeof options.onSelect === "function") options.onSelect(active, byId[active]);
       },
       getActive: function () { return active; },
-      getFilters: function () { return { cah: !!filters.cah, fqhc: !!filters.fqhc, cms: !!filters.cms }; },
       refresh: function () { syncSpecialty(); paintRead(); },
       syncSpecialty: function () { syncSpecialty(); },
       setSpecialtyKey: function (key) { specialtyKey = key || ""; syncSpecialty(); },
@@ -331,8 +304,6 @@
       destroy: function () {
         root.removeEventListener("click", onClick);
         if (specInput) specInput.removeEventListener("input", onInput);
-        if (moreMenu) moreMenu.removeEventListener("change", onFilter);
-        document.removeEventListener("click", onDoc);
         root.innerHTML = "";
       }
     };
@@ -341,9 +312,10 @@
   }
 
   global.AmpMiAspectsSelector = {
-    PRIMARY: PRIMARY,
-    MORE: MORE,
-    LENSES: PRIMARY.concat(MORE),
+    CORE: CORE,
+    FACILITY: FACILITY,
+    LENSES: LENSES,
+    BANDS: BANDS,
     mount: mount,
     setActive: function (id, opts) {
       if (global.AmpMiAspectsSelectorHandle) global.AmpMiAspectsSelectorHandle.setActive(id, opts || { silent: true });

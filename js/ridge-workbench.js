@@ -48,9 +48,13 @@
   ];
   var ASPECTS_STORE_KEY = "amp_mi_aspects_v1";
   var aspectsV1Active = ["specialty_supply"];
-  var aspectFilters = { cah: false, fqhc: false, cms: false };
-  var ASPECT_BANDS = ["Easier", "Moderate", "Tight", "Hard", "Hardest"];
-  var ASPECT_FILLS = ["#d9e3ee", "#b7c8da", "#7f9bb8", "#3e6488", "#16324a"];
+  /* Easy → hard. Colors match #placeHoverCard .t-dest / .t-magnet / .t-comp / .t-red. */
+  var ASPECT_LADDER = [
+    { band: "Destination", fill: "#a78bfa" },
+    { band: "Magnet", fill: "#60a5fa" },
+    { band: "Competitive", fill: "#fbbf24" },
+    { band: "Red", fill: "#f87171" }
+  ];
 
   function aspectDef(id) {
     for (var i = 0; i < ASPECTS_V1.length; i++) if (ASPECTS_V1[i].id === id) return ASPECTS_V1[i];
@@ -72,7 +76,6 @@
       if (!raw) return ["specialty_supply"];
       var list = normalizeAspectsList(JSON.parse(raw));
       var id = list.length ? list[0] : "specialty_supply";
-      if (id === "cah" || id === "fqhc" || id === "cms") return ["specialty_supply"];
       return [id];
     } catch (e) { return ["specialty_supply"]; }
   }
@@ -246,9 +249,15 @@
       if (dens > 0) return 1 / dens;
       return null;
     }
-    if (id === "raw") {
-      var d = difficultyFor(code);
-      return d > 0 ? d : null;
+    if (id === "place_draw") {
+      var stay = retentionFor(code);
+      if (stay == null) return null;
+      return 100 - stay;
+    }
+    if (id === "cah") {
+      var row = hpsaFor(code);
+      if (!row || row.pctMet == null) return null;
+      return 100 - row.pctMet;
     }
     return null;
   }
@@ -264,8 +273,8 @@
     var n = rows.length;
     var byCode = {};
     rows.forEach(function (row, i) {
-      var q = n <= 1 ? 2 : Math.min(4, Math.floor(i * 5 / n));
-      byCode[row.code] = { q: q, band: ASPECT_BANDS[q] };
+      var q = n <= 1 ? 2 : Math.min(3, Math.floor(i * 4 / n));
+      byCode[row.code] = { q: q, band: ASPECT_LADDER[q].band, fill: ASPECT_LADDER[q].fill };
     });
     return { rows: rows, byCode: byCode };
   }
@@ -279,42 +288,57 @@
     };
   }
 
-  function aspectRead(id, filters) {
-    filters = filters || aspectFilters;
+  function aspectRead(id) {
     var s = currentSpec();
     var label = (s && s.label) || "This specialty";
     var sentence = label + " · ";
     var pending = false;
     var note = "";
     if (id === "specialty_supply") {
-      sentence += "Specialty supply: darker states have fewer of this specialty per person";
+      sentence += "Specialty supply: candidates here. Red states have fewer of this specialty per person.";
     } else if (id === "raw") {
-      sentence += "Raw: darker states are harder to recruit";
+      sentence += "Raw: national baseline. States sit on Competitive. Red on the other Aspects is where recruiting is harder.";
     } else if (id === "place_draw") {
-      sentence += "Place draw: darker ground inside " + selectionNames() + " is the harder place. Heat stays in the selected state, and the pin marks its top metro.";
+      sentence += "Place draw: roots, pool depth, and desirability inside " + selectionNames() + ". Heat stays in the selected state, and the pin marks its top metro. On the list, Red states keep fewer trainees.";
     } else if (id === "day_load") {
-      sentence += "Day load: pending. No patients-per-day file, so this lens does not recolor the map.";
+      sentence += "Day load: patients per day, schedule, and housing. Pending — no file, so this lens does not recolor the map.";
+      pending = true;
+    } else if (id === "support") {
+      sentence += "Support: culture and admin burden. Pending — no file, so this lens does not recolor the map.";
+      pending = true;
+    } else if (id === "cah") {
+      sentence += "CAH: critical-access pressure from primary-care need met. Red states have less of that need met. Not a facility directory.";
+    } else if (id === "fqhc") {
+      sentence += "FQHC: Medicaid PPS framing. Pending — no site file, so this lens does not recolor the map.";
       pending = true;
     } else {
-      sentence += "Support: pending. No culture file, so this lens does not recolor the map.";
+      sentence += "CMS: national collections context for this specialty. Not a state color and not a baseline dollar.";
       pending = true;
     }
-    if (filters.cah) note = "CAH filter keeps CAH-heavy states in view.";
-    if (filters.fqhc) note = (note ? note + " " : "") + "FQHC filter is pending. No site file, so the map is not dimmed.";
-    if (filters.cms) note = (note ? note + " " : "") + "CMS is a specialty signal, not a state color.";
 
-    if (id === "place_draw" || pending) {
+    if (id === "raw") {
+      return {
+        sentence: sentence,
+        pending: !getAmpBands(s),
+        mode: "sample",
+        top: [],
+        bottom: [],
+        note: "Raw is one national baseline, so there is no top and bottom five."
+      };
+    }
+
+    if (pending) {
       var picks = selectedCodes().filter(accessAllowsState);
       var names = stateNames();
       return {
         sentence: sentence,
-        pending: pending,
+        pending: true,
         mode: "sample",
         top: picks.map(function (code) {
-          return { code: code, name: names[code] || String(code).toUpperCase(), band: "Selected" };
+          return { code: code, name: names[code] || String(code).toUpperCase(), band: "Pending" };
         }),
         bottom: [],
-        note: note || (id === "place_draw" ? "Place draw stays inside the selected state." : "")
+        note: ""
       };
     }
 
@@ -332,6 +356,12 @@
       return { sentence: sentence, pending: false, mode: "rank", top: top, bottom: bottom, note: note };
     }
     var sample = unlocked.slice().reverse().map(function (row) { return rankRow(row, table); });
+    if (id === "place_draw" && !sample.length) {
+      var selNames = stateNames();
+      sample = selectedCodes().filter(accessAllowsState).map(function (code) {
+        return { code: code, name: selNames[code] || String(code).toUpperCase(), band: "Selected" };
+      });
+    }
     return {
       sentence: sentence,
       pending: false,
@@ -353,12 +383,15 @@
     var name = stateNames()[code] || String(code).toUpperCase();
     var id = lensId();
     var sentence;
-    if (id === "place_draw") {
+    if (id === "raw") {
+      sentence = name + " sits on Competitive, the national baseline.";
+    } else if (id === "day_load" || id === "support" || id === "fqhc" || id === "cms") {
+      sentence = name + " has no " + (aspectDef(id) ? aspectDef(id).label : "lens") + " band yet.";
+    } else if (id === "place_draw") {
+      var placeInfo = bandTable(id).byCode[code];
       sentence = state.selected[code]
-        ? name + " is the selected place. Darker ground is harder to recruit, and the pin marks its top metro."
+        ? name + " is the selected place" + (placeInfo ? " and reads " + placeInfo.band + " for trainee roots" : "") + ". The pin marks its top metro."
         : name + " is outside the selected place. Heat stays inside the selection.";
-    } else if (id === "day_load" || id === "support") {
-      sentence = name + " has no " + (id === "day_load" ? "day-load" : "support") + " band yet.";
     } else {
       var info = bandTable(id).byCode[code];
       sentence = name + " reads " + (info ? info.band : "Pending") + " for this specialty.";
@@ -366,7 +399,7 @@
     var tags = [];
     if (isCahHeavy(code)) tags.push("CAH-heavy");
     var hooks = aspectHooksForSpecialty(currentSpec());
-    if (hooks.cms) tags.push("CMS signal");
+    if (hooks.cms) tags.push("CMS");
     return { name: name, sentence: sentence, tags: tags };
   }
 
@@ -394,15 +427,12 @@
         mapEl: $("ridge-map-wrap"),
         active: aspectsV1Active[0] || "specialty_supply",
         specialtyKey: state.specialtyKey,
+        exactValues: false,
         getSpecialties: function () {
           return specialties().map(function (s) { return { key: s.key, label: s.label }; });
         },
         onSpecialty: function (key) { setSpecialty(key); },
         onSelect: function (id) { setAspectLens(id); },
-        onFilters: function (f) {
-          aspectFilters = { cah: !!f.cah, fqhc: !!f.fqhc, cms: !!f.cms };
-          try { paintMap(); } catch (e) {}
-        },
         getRead: aspectRead,
         getCard: aspectCard,
         onOpenState: function (code) {
@@ -417,7 +447,6 @@
 
   function setAspectLens(id) {
     if (!aspectDef(id)) return;
-    if (id === "cah" || id === "fqhc" || id === "cms") return;
     aspectsV1Active = [id];
     saveAspectsV1();
     if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.getActive && w.AmpMiAspectsSelector.getActive() !== id) {
@@ -825,10 +854,9 @@
     if (!root) return;
     var id = lensId();
     var placeOn = id === "place_draw";
-    var table = (id === "raw" || id === "specialty_supply") ? bandTable(id) : null;
-    var cahOn = !!(aspectFilters && aspectFilters.cah);
-    var pressure = {};
-    if (cahOn) hpsaPressureCodes().forEach(function (c) { pressure[c] = 1; });
+    var choropleth = id === "specialty_supply" || id === "cah";
+    var table = choropleth ? bandTable(id) : null;
+    var rawFill = getAmpBands() ? "#fbbf24" : "#eef2f6";
     var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
     nodes.forEach(function (el) {
       if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#placeDrawSelectionOutline") || el.closest("#placeDrawPinLayer") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
@@ -836,10 +864,10 @@
       if (placeOn) {
         /* Border-only selection. Do not paint a gray/teal fill over metro heat. */
         el.style.fill = "";
-      } else if (id === "day_load" || id === "support") {
-        el.style.fill = "#eef2f6";
+      } else if (id === "raw") {
+        el.style.fill = rawFill;
       } else if (table && table.byCode[code]) {
-        el.style.fill = ASPECT_FILLS[table.byCode[code].q];
+        el.style.fill = table.byCode[code].fill;
       } else {
         el.style.fill = "#eef2f6";
       }
@@ -848,7 +876,7 @@
       el.classList.toggle("is-hover", !placeOn && state.hover === code);
       el.classList.toggle("ridge-geo-locked", !accessAllowsState(code));
       el.classList.toggle("aspect-hpsa-pressure", false);
-      el.classList.toggle("mi-aspects-filter-out", !!(cahOn && !pressure[code]));
+      el.classList.toggle("mi-aspects-filter-out", false);
       /* Avoid double-filter black blobs on AK/HI */
       if (code === "ak" || code === "hi") {
         el.style.filter = "none";
@@ -860,7 +888,7 @@
     if (legend) {
       legend.innerHTML = placeOn
         ? '<span class="ridge-legend-metric">Place draw · heat inside the selected state</span>'
-        : '<span class="ridge-legend-metric">Darker means harder</span>';
+        : '<span class="ridge-legend-metric">Red is harder · Destination is easier</span>';
     }
     if (placeOn) {
       var ol = root.querySelector("#outline-layer");
@@ -2066,7 +2094,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2199")
+    fetch("assets/ridge-usa-map.svg?v=2200")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
