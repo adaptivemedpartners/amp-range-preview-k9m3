@@ -1178,6 +1178,12 @@
   }
 
   function renderSidebar() {
+    try {
+      if (w.AmpMiWorksheets) w.AmpMiWorksheets.sync({
+        host: $("mi-worksheets"), dayLoad: isAspectOn("day_load"), support: isAspectOn("support"), spec: currentSpec(),
+        openMobile: function () { var h = $("mi-worksheets"); if (h && w.matchMedia && w.matchMedia("(max-width: 900px)").matches) { try { h.scrollIntoView({ block: "start", behavior: "smooth" }); } catch (eS) {} } }
+      });
+    } catch (eWs) {}
     var headName = $("ridge-side-name");
     var headSub = $("ridge-side-sub");
     var body = $("ridge-side-body");

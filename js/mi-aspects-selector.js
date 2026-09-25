@@ -128,6 +128,7 @@
       '<div class="mi-aspects-stage">' +
         '<div class="mi-aspects-map" data-mi-aspects-map="1"></div>' +
         '<aside class="mi-aspects-rail" aria-label="Hardest and easiest states">' +
+          '<div id="mi-worksheets" class="mi-aspects-worksheets" hidden></div>' +
           '<div class="mi-aspects-ranks" data-mi-aspects-ranks="1"></div>' +
           '<article class="mi-aspects-card" data-mi-aspects-card="1" hidden></article>' +
         "</aside>" +

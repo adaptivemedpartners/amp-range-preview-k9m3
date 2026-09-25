@@ -1,0 +1,21 @@
+/* 2203: Day load worksheet + Support layer wired into Aspects rail */
+const fs = require("fs"); const assert = require("assert");
+const idx = fs.readFileSync(__dirname + "/../index.html", "utf8");
+const sel = fs.readFileSync(__dirname + "/mi-aspects-selector.js", "utf8");
+const wb = fs.readFileSync(__dirname + "/ridge-workbench.js", "utf8");
+const N="2203-mi-dayload-support-worksheets";
+assert(idx.indexOf("<!-- amp-build:"+N+" -->")===idx.indexOf("<!-- amp-build:"), "html tip stamp");
+assert(fs.readFileSync(__dirname+"/../404.html","utf8")===idx, "404 == index");
+assert(fs.readFileSync(__dirname+"/app.js","utf8").indexOf('__AMP_BUILD = "'+N+'"')!==-1, "app stamp");
+assert(/amp-mi-worksheets\.js\?v=2203/.test(idx), "worksheets script loaded");
+assert(/id="mi-worksheets"/.test(sel), "host in aspects rail");
+assert(/AmpMiWorksheets\.sync/.test(wb), "renderSidebar syncs worksheets");
+global.window = {}; global.localStorage = { getItem() { return null; }, setItem() {} };
+require("./amp-mi-worksheets.js");
+const W = global.window.AmpMiWorksheets; const st = W._state();
+st.day = { patients: "20", per: "day", days: "3", hours: "8", weeks: "48", salary: "225000" };
+const r = W._computeDay({ key: "fm", label: "FM", ampBands: { redAlert: 255433, competitive: 306520, magnet: 370889, destination: 448776 } });
+assert(Math.abs(r.bandHourly - 159.645) < 0.01 && Math.abs(r.yourHourly - 195.3125) < 0.001 && r.fte === 375000, "day math");
+st.sup = { ma: "1", floatN: "1", floatShare: "3", fd: "0", fdShare: "1", sched: "0", schedShare: "1", other: "0", otherShare: "1", tasks: {} };
+assert(Math.abs(W._computeSup().total - 1.3333) < 0.001, "support 1 MA + float/3 = 1.33");
+console.log("PASS v3-2203");
