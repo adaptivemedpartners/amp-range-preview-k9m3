@@ -314,6 +314,11 @@
     if (hasPoll(seat, spec, st)) return { consumed: false };
     if (pollsLeft(seat) <= 0) return { consumed: false, blocked: true };
     seat.polls.push({ specialty: spec, state: normState(st), at: new Date().toISOString() });
+    if (accountsOn()) {
+      w.AMPMiAccounts.usePoll(spec, normState(st)).then(function (r) {
+        if (r && r.error) w.AMPMiAccounts.syncSeat(); /* server said no: snap back to the server's numbers */
+      });
+    }
     return { consumed: true };
   }
 
@@ -507,7 +512,33 @@
     return save(seat);
   }
 
+  /* Accounts on: the server is the source of truth for purchases and polls. */
+  function accountsOn() { return !!(w.AMPMiAccounts && w.AMPMiAccounts.enabled); }
+
+  function applyServerSeat(data) {
+    data = data || {};
+    var purchases = data.purchases || [], polls = data.polls || [];
+    var seat = load();
+    var packs = purchases.filter(function (p) { return /^pack/.test(p.sku); });
+    seat.oneOffs = purchases.filter(function (p) { return p.sku === "oneoff" && p.specialty && p.state; })
+      .map(function (p) { return { specialty: p.specialty, state: normState(p.state), at: p.created_at }; });
+    if (!packs.length) {
+      if (isPaid(seat)) { seat.tier = seat.seat ? "verified" : "demo"; }
+      seat.grantedByCheckout = false; seat.pollCredits = 0; seat.polls = []; seat.extraPolls = 0;
+      return save(seat);
+    }
+    var biggest = packs.slice().sort(function (a, b) { return (b.polls_granted || 0) - (a.polls_granted || 0); })[0];
+    seat.tier = PLANS[biggest.sku] ? biggest.sku : "pack15";
+    seat.pollCredits = purchases.reduce(function (n, p) { return n + (Number(p.polls_granted) || 0); }, 0);
+    seat.extraPolls = 0;
+    seat.polls = polls.map(function (u) { return { specialty: u.specialty, state: normState(u.state), at: u.created_at }; });
+    seat.grantedByCheckout = true;
+    seat.checkoutStub = false;
+    return save(seat);
+  }
+
   function consumeCheckoutQuery() {
+    if (accountsOn()) return null; /* mi-accounts.js verifies the Stripe session on the server instead */
     try {
       var params = new URLSearchParams(w.location.search || "");
       var flag = params.get("ridge_checkout") || params.get("ridge_sku");
@@ -632,6 +663,7 @@
     simulateVerify: simulateVerify,
     openUnits: openUnits,
     applyPaid: applyPaid,
+    applyServerSeat: applyServerSeat,
     consumeCheckoutQuery: consumeCheckoutQuery,
     specLabel: specLabel,
     stateLabel: stateLabel,

@@ -1659,8 +1659,15 @@
         return;
       }
       try { localStorage.setItem("amp_ridge_pending_checkout", JSON.stringify(pend)); } catch (eP) {}
-      var ref = (sku + "__" + (pend.specialty || "any") + "__" + (pend.state || "any")).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 190);
-      window.location.href = liveLink + (liveLink.indexOf("?") >= 0 ? "&" : "?") + "client_reference_id=" + encodeURIComponent(ref);
+      var goStripe = function (acct) {
+        /* With accounts on, the account id leads the reference so the server ties the payment to this login. */
+        var ref = ((acct ? acct.id + "__" : "") + sku + "__" + (pend.specialty || "any") + "__" + (pend.state || "any")).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 190);
+        var url = liveLink + (liveLink.indexOf("?") >= 0 ? "&" : "?") + "client_reference_id=" + encodeURIComponent(ref);
+        if (acct && acct.email) url += "&prefilled_email=" + encodeURIComponent(acct.email);
+        window.location.href = url;
+      };
+      if (window.AMPMiAccounts && AMPMiAccounts.enabled) { AMPMiAccounts.requireAccount(goStripe); return; }
+      goStripe(null);
       return;
     }
     api.applyPaid({
