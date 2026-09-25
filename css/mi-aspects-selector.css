@@ -1,166 +1,247 @@
-/* mi-aspects-selector.css — self-contained. Mount with js/mi-aspects-selector.js */
+/* mi-aspects-selector.css — self-contained. Mount with js/mi-aspects-selector.js
+   One question: where is it hard to find this specialty?
+   Map ~70%. Ranked rail ~30%. Phone: rail first, map second.
+   One hue, five bands, darker = harder. No raw figures in this chrome. */
+
 .mi-aspects-selector {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  margin: 0 0 8px;
+  color: #152033;
+  font-size: 14px;
+}
+.mi-aspects-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: flex-end;
+}
+.mi-aspects-search {
+  position: relative;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.mi-aspects-search span {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b3a4d;
+}
+.mi-aspects-spec {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #c5d0de;
+  border-radius: 10px;
+  background: #fff;
+  color: #152033;
+  font-size: 15px;
+}
+.mi-aspects-spec:focus {
+  outline: 2px solid #0e7490;
+  outline-offset: 1px;
+}
+.mi-aspects-suggest {
+  position: absolute;
+  z-index: 8;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 4px 0 0;
+  padding: 4px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #d5deea;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+.mi-aspects-suggest button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #152033;
+}
+.mi-aspects-suggest button:hover,
+.mi-aspects-suggest button:focus-visible {
+  background: #eef6f8;
+}
+.mi-aspects-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.mi-aspects-lens,
+.mi-aspects-more {
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #c5d0de;
+  background: #fff;
+  color: #152033;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mi-aspects-lens.is-on,
+.mi-aspects-more.is-on {
+  background: #16324a;
+  border-color: #16324a;
+  color: #fff;
+}
+.mi-aspects-lens:focus-visible,
+.mi-aspects-more:focus-visible,
+.mi-aspects-rank:focus-visible {
+  outline: 2px solid #0e7490;
+  outline-offset: 2px;
+}
+.mi-aspects-more-wrap { position: relative; }
+.mi-aspects-more-menu {
+  position: absolute;
+  z-index: 9;
+  right: 0;
+  top: calc(100% + 6px);
+  width: min(240px, 80vw);
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #d5deea;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+}
+.mi-aspects-more-menu .mi-aspects-lens { width: 100%; border-radius: 8px; text-align: left; }
+.mi-aspects-more-note {
+  margin: 8px 4px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #475569;
+}
+.mi-aspects-filter {
+  display: flex;
+  align-items: center;
   gap: 8px;
-  margin: 0 0 12px;
+  min-height: 36px;
+  padding: 4px 6px;
+  font-size: 14px;
+  font-weight: 650;
+}
+.mi-aspects-sentence {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 650;
+  color: #0b3a4d;
+}
+.mi-aspects-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(200px, 3fr);
+  gap: 12px;
+  align-items: start;
+}
+.mi-aspects-map { min-width: 0; }
+.mi-aspects-map .map-wrap { min-height: 360px; }
+.mi-aspects-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 10px;
   border: 1px solid #d5deea;
   border-radius: 14px;
   background: #f8fafc;
 }
-.mi-aspects-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 12px;
-}
-.mi-aspects-kicker {
+.mi-aspects-rank-h {
+  margin: 8px 0 4px;
   font-size: 11px;
-  font-weight: 750;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #0b3a4d;
 }
-.mi-aspects-hint {
-  font-size: 12px;
-  color: #475569;
-}
-.mi-aspects-grid {
+.mi-aspects-rank {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 1.4em minmax(0, 1fr) auto;
   gap: 8px;
-}
-.mi-aspects-lens {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  text-align: left;
-  min-height: 64px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  border: 1px solid #d5deea;
-  background: #fff;
-  color: #152033;
-  cursor: pointer;
-}
-.mi-aspects-lens-name {
-  font-size: 13px;
-  font-weight: 750;
-  line-height: 1.2;
-}
-.mi-aspects-lens-blurb {
-  font-size: 11.5px;
-  line-height: 1.35;
-  color: #475569;
-}
-.mi-aspects-lens.is-on {
-  border-color: #0e7490;
-  background: #ecfeff;
-  box-shadow: inset 0 0 0 1px #0e7490;
-}
-.mi-aspects-lens.is-on .mi-aspects-lens-name { color: #0b3a4d; }
-.mi-aspects-lens:focus-visible {
-  outline: 2px solid #0e7490;
-  outline-offset: 2px;
-}
-
-.mi-aspects-numbers {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0 0 12px;
-  padding: 10px 12px;
-  border: 1px solid #d5deea;
-  border-radius: 12px;
-  background: #fff;
-}
-.mi-aspects-legend-title {
-  font-size: 12px;
-  font-weight: 750;
-  color: #0b3a4d;
-  margin-bottom: 6px;
-}
-.mi-aspects-scale {
-  height: 10px;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
-}
-.mi-aspects-scale i {
-  display: block;
-  height: 100%;
+  align-items: center;
   width: 100%;
-  background: linear-gradient(90deg, #d7e0ea, #7dd3fc);
-}
-.mi-aspects-scale[data-lens="place_draw"] i {
-  background: linear-gradient(90deg, #e8eef3, #2a9bb5 55%, #5eead4);
-}
-.mi-aspects-scale[data-lens="specialty_supply"] i,
-.mi-aspects-scale[data-lens="raw"] i {
-  background: linear-gradient(90deg, #dbe7ef, #0f766e);
-}
-.mi-aspects-scale[data-lens="cah"] i,
-.mi-aspects-scale[data-lens="fqhc"] i {
-  background: linear-gradient(90deg, #fde68a, #c2410c);
-}
-.mi-aspects-scale[data-lens="cms"] i {
-  background: linear-gradient(90deg, #e0f2fe, #0369a1);
-}
-.mi-aspects-scale[data-lens="day_load"] i {
-  background: linear-gradient(90deg, #ffedd5, #c2410c);
-}
-.mi-aspects-scale[data-lens="support"] i {
-  background: linear-gradient(90deg, #ede9fe, #6d28d9);
-}
-.mi-aspects-scale-labels {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 4px;
-  font-size: 10.5px;
-  color: #64748b;
-}
-.mi-aspects-legend-note {
-  margin: 6px 0 0;
-  font-size: 11.5px;
-  line-height: 1.4;
-  color: #334155;
-}
-.mi-aspects-num-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-.mi-aspects-num {
+  min-height: 40px;
+  margin: 0 0 4px;
   padding: 6px 8px;
+  border: 0;
   border-radius: 8px;
-  background: #f8fafc;
-  border: 1px solid #e8eef5;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  color: #152033;
 }
-.mi-aspects-num-k {
-  display: block;
-  font-size: 10.5px;
-  color: #64748b;
-  margin-bottom: 2px;
-}
-.mi-aspects-num strong {
-  font-size: 14px;
+.mi-aspects-rank-n { font-weight: 750; color: #64748b; }
+.mi-aspects-rank-name { font-weight: 700; }
+.mi-aspects-rank-band {
+  font-size: 12px;
   font-weight: 750;
-  color: #0f172a;
+  color: #16324a;
 }
-.mi-aspects-num.is-pending strong { color: #64748b; font-weight: 650; }
+.mi-aspects-rank-note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #475569;
+}
+.mi-aspects-card {
+  padding: 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #d5deea;
+}
+.mi-aspects-card h3 { margin: 0 0 4px; font-size: 16px; }
+.mi-aspects-card p { margin: 0; font-size: 14px; line-height: 1.4; }
+.mi-aspects-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mi-aspects-tag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #e7eef5;
+  color: #16324a;
+  font-size: 11px;
+  font-weight: 750;
+}
 
-@media (max-width: 900px) {
-  .mi-aspects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* Host chrome that fights the one-question read. */
+.mi-aspects-on #ridge-metric-bar,
+.mi-aspects-on #ridge-map-legend-dynamic,
+.mi-aspects-on #ridge-map-tooltip,
+.mi-aspects-on #ridge-aspect-map-banner,
+.mi-aspects-on #placeHoverCard,
+.mi-aspects-on #placeHoverCard.show,
+.mi-aspects-on .ridge-main-stage,
+.mi-aspects-on #mi-aspects-numbers {
+  display: none !important;
 }
-@media (max-width: 430px) {
-  .mi-aspects-selector { padding: 8px; gap: 6px; }
-  .mi-aspects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
-  .mi-aspects-lens { min-height: 58px; padding: 8px; }
-  .mi-aspects-lens-name { font-size: 13px; }
-  .mi-aspects-lens-blurb { font-size: 11px; }
-  .mi-aspects-num-list { grid-template-columns: 1fr 1fr; }
-  .mi-aspects-numbers { padding: 8px; }
+.mi-aspects-on .ridge-map-container path.mi-aspects-filter-out,
+.mi-aspects-on .ridge-map-container circle.mi-aspects-filter-out {
+  opacity: 0.2 !important;
+}
+
+@media (max-width: 800px) {
+  .mi-aspects-stage {
+    display: flex;
+    flex-direction: column;
+  }
+  .mi-aspects-rail { order: -1; }
+  .mi-aspects-map { order: 1; width: 100%; }
+  .mi-aspects-lens,
+  .mi-aspects-more { min-height: 42px; }
+  .mi-aspects-sentence { font-size: 15px; }
 }

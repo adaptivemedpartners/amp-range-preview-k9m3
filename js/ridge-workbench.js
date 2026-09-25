@@ -47,7 +47,10 @@
       weight: "pending Mike weights — triangulation language only" }
   ];
   var ASPECTS_STORE_KEY = "amp_mi_aspects_v1";
-  var aspectsV1Active = ["raw"];
+  var aspectsV1Active = ["specialty_supply"];
+  var aspectFilters = { cah: false, fqhc: false, cms: false };
+  var ASPECT_BANDS = ["Easier", "Moderate", "Tight", "Hard", "Hardest"];
+  var ASPECT_FILLS = ["#d9e3ee", "#b7c8da", "#7f9bb8", "#3e6488", "#16324a"];
 
   function aspectDef(id) {
     for (var i = 0; i < ASPECTS_V1.length; i++) if (ASPECTS_V1[i].id === id) return ASPECTS_V1[i];
@@ -66,10 +69,12 @@
   function loadAspectsV1() {
     try {
       var raw = localStorage.getItem(ASPECTS_STORE_KEY);
-      if (!raw) return ["raw"];
+      if (!raw) return ["specialty_supply"];
       var list = normalizeAspectsList(JSON.parse(raw));
-      return list.length ? [list[0]] : ["raw"];
-    } catch (e) { return ["raw"]; }
+      var id = list.length ? list[0] : "specialty_supply";
+      if (id === "cah" || id === "fqhc" || id === "cms") return ["specialty_supply"];
+      return [id];
+    } catch (e) { return ["specialty_supply"]; }
   }
   function saveAspectsV1() {
     try { localStorage.setItem(ASPECTS_STORE_KEY, JSON.stringify(aspectsV1Active)); } catch (e) {}
@@ -228,17 +233,183 @@
     html += "</div>";
     return html;
   }
+  function lensId() { return aspectsV1Active[0] || "specialty_supply"; }
+
+  function hardnessFor(code, id) {
+    id = id || lensId();
+    if (id === "specialty_supply") {
+      var h = aspectHooksForSpecialty(currentSpec());
+      var pop = statePop()[code];
+      var redi = h.rediByState && typeof h.rediByState[code] === "number" ? h.rediByState[code] : null;
+      if (redi > 0 && pop) return pop / redi;
+      var dens = densityFor(code);
+      if (dens > 0) return 1 / dens;
+      return null;
+    }
+    if (id === "raw") {
+      var d = difficultyFor(code);
+      return d > 0 ? d : null;
+    }
+    return null;
+  }
+
+  function bandTable(id) {
+    var rows = [];
+    allStateCodes().forEach(function (code) {
+      var hard = hardnessFor(code, id);
+      if (hard == null) return;
+      rows.push({ code: code, hard: hard });
+    });
+    rows.sort(function (a, b) { return a.hard - b.hard; });
+    var n = rows.length;
+    var byCode = {};
+    rows.forEach(function (row, i) {
+      var q = n <= 1 ? 2 : Math.min(4, Math.floor(i * 5 / n));
+      byCode[row.code] = { q: q, band: ASPECT_BANDS[q] };
+    });
+    return { rows: rows, byCode: byCode };
+  }
+
+  function rankRow(row, table) {
+    var info = table.byCode[row.code] || {};
+    return {
+      code: row.code,
+      name: stateNames()[row.code] || String(row.code).toUpperCase(),
+      band: info.band || "Pending"
+    };
+  }
+
+  function aspectRead(id, filters) {
+    filters = filters || aspectFilters;
+    var s = currentSpec();
+    var label = (s && s.label) || "This specialty";
+    var sentence = label + " · ";
+    var pending = false;
+    var note = "";
+    if (id === "specialty_supply") {
+      sentence += "Specialty supply: darker states have fewer of this specialty per person";
+    } else if (id === "raw") {
+      sentence += "Raw: darker states are harder to recruit";
+    } else if (id === "place_draw") {
+      sentence += "Place draw: darker ground inside " + selectionNames() + " is the harder place. Heat stays in the selected state, and the pin marks its top metro.";
+    } else if (id === "day_load") {
+      sentence += "Day load: pending. No patients-per-day file, so this lens does not recolor the map.";
+      pending = true;
+    } else {
+      sentence += "Support: pending. No culture file, so this lens does not recolor the map.";
+      pending = true;
+    }
+    if (filters.cah) note = "CAH filter keeps CAH-heavy states in view.";
+    if (filters.fqhc) note = (note ? note + " " : "") + "FQHC filter is pending. No site file, so the map is not dimmed.";
+    if (filters.cms) note = (note ? note + " " : "") + "CMS is a specialty signal, not a state color.";
+
+    if (id === "place_draw" || pending) {
+      var picks = selectedCodes().filter(accessAllowsState);
+      var names = stateNames();
+      return {
+        sentence: sentence,
+        pending: pending,
+        mode: "sample",
+        top: picks.map(function (code) {
+          return { code: code, name: names[code] || String(code).toUpperCase(), band: "Selected" };
+        }),
+        bottom: [],
+        note: note || (id === "place_draw" ? "Place draw stays inside the selected state." : "")
+      };
+    }
+
+    var table = bandTable(id);
+    var unlocked = table.rows.filter(function (row) { return accessAllowsState(row.code); });
+    if (unlocked.length >= 5) {
+      var hardest = unlocked.slice().reverse();
+      var top = hardest.slice(0, 5).map(function (row) { return rankRow(row, table); });
+      var bottom = unlocked.slice(0, 5).map(function (row) { return rankRow(row, table); });
+      if (unlocked.length < 10) {
+        var used = {};
+        top.forEach(function (row) { used[row.code] = 1; });
+        bottom = bottom.filter(function (row) { return !used[row.code]; });
+      }
+      return { sentence: sentence, pending: false, mode: "rank", top: top, bottom: bottom, note: note };
+    }
+    var sample = unlocked.slice().reverse().map(function (row) { return rankRow(row, table); });
+    return {
+      sentence: sentence,
+      pending: false,
+      mode: "sample",
+      top: sample,
+      bottom: [],
+      note: note || "A top and bottom five appears when more states are unlocked."
+    };
+  }
+
+  function isCahHeavy(code) {
+    var row = hpsaFor(code);
+    if (!row) return false;
+    return (row.pctMet != null && row.pctMet < 50) || (row.needed != null && row.needed >= 200);
+  }
+
+  function aspectCard(code) {
+    if (!code || !accessAllowsPeek(code)) return null;
+    var name = stateNames()[code] || String(code).toUpperCase();
+    var id = lensId();
+    var sentence;
+    if (id === "place_draw") {
+      sentence = state.selected[code]
+        ? name + " is the selected place. Darker ground is harder to recruit, and the pin marks its top metro."
+        : name + " is outside the selected place. Heat stays inside the selection.";
+    } else if (id === "day_load" || id === "support") {
+      sentence = name + " has no " + (id === "day_load" ? "day-load" : "support") + " band yet.";
+    } else {
+      var info = bandTable(id).byCode[code];
+      sentence = name + " reads " + (info ? info.band : "Pending") + " for this specialty.";
+    }
+    var tags = [];
+    if (isCahHeavy(code)) tags.push("CAH-heavy");
+    var hooks = aspectHooksForSpecialty(currentSpec());
+    if (hooks.cms) tags.push("CMS signal");
+    return { name: name, sentence: sentence, tags: tags };
+  }
+
+  function syncAspectRead() {
+    var handle = w.AmpMiAspectsSelectorHandle;
+    if (handle && handle.setSpecialtyKey) handle.setSpecialtyKey(state.specialtyKey || "");
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) {
+      try { w.AmpMiAspectsSelector.refresh(); } catch (e) {}
+    }
+    var focus = state.focus;
+    if (focus && state.selected[focus] && accessAllowsPeek(focus) && w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.openState) {
+      try { w.AmpMiAspectsSelector.openState(focus); } catch (e2) {}
+    }
+  }
+
   function bindAspectsV1() {
     if (document._ridgeAspectsV1Bound) return;
     document._ridgeAspectsV1Bound = true;
     aspectsV1Active = loadAspectsV1();
     var host = $("mi-aspects-selector");
+    var wb = $("ridge-workbench");
+    if (wb) wb.classList.add("mi-aspects-on");
     if (host && w.AmpMiAspectsSelector && host.getAttribute("data-mi-aspects-selector") !== "1") {
       w.AmpMiAspectsSelector.mount(host, {
-        numbersHost: $("mi-aspects-numbers"),
-        active: aspectsV1Active[0] || "raw",
+        mapEl: $("ridge-map-wrap"),
+        active: aspectsV1Active[0] || "specialty_supply",
+        specialtyKey: state.specialtyKey,
+        getSpecialties: function () {
+          return specialties().map(function (s) { return { key: s.key, label: s.label }; });
+        },
+        onSpecialty: function (key) { setSpecialty(key); },
         onSelect: function (id) { setAspectLens(id); },
-        getSnapshot: aspectSnapshot
+        onFilters: function (f) {
+          aspectFilters = { cah: !!f.cah, fqhc: !!f.fqhc, cms: !!f.cms };
+          try { paintMap(); } catch (e) {}
+        },
+        getRead: aspectRead,
+        getCard: aspectCard,
+        onOpenState: function (code) {
+          if (!code) return;
+          var additive = accessAllowsMulti() && state.multi;
+          toggleState(code, additive);
+        }
       });
     }
     syncAspectsUi();
@@ -246,6 +417,7 @@
 
   function setAspectLens(id) {
     if (!aspectDef(id)) return;
+    if (id === "cah" || id === "fqhc" || id === "cms") return;
     aspectsV1Active = [id];
     saveAspectsV1();
     if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.getActive && w.AmpMiAspectsSelector.getActive() !== id) {
@@ -261,7 +433,7 @@
       if (pd && pd.syncSelection) { try { pd.syncSelection(); } catch (e6) {} }
       maybeFitSelection(false);
     }
-    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) w.AmpMiAspectsSelector.refresh();
+    syncAspectRead();
   }
 
 
@@ -305,6 +477,7 @@
     groupFilter: "all",
     search: "",
     hover: null,
+    focus: "",
     mapReady: false
   };
 
@@ -650,54 +823,32 @@
   function paintMap() {
     var root = $("ridge-map-container");
     if (!root) return;
-    var placeOn = isAspectOn("place_draw");
-    var supplyOn = isAspectOn("specialty_supply");
-    var rawOn = isAspectOn("raw");
-    var ext = metricExtent();
-    var supplyExt = null;
-    var h = aspectHooksForSpecialty(currentSpec());
-    if (supplyOn && h.rediByState) {
-      var svals = Object.keys(h.rediByState).map(function (k) { return h.rediByState[k]; })
-        .filter(function (v) { return typeof v === "number" && v > 0; });
-      if (svals.length) supplyExt = { min: Math.min.apply(null, svals), max: Math.max.apply(null, svals) };
-    }
+    var id = lensId();
+    var placeOn = id === "place_draw";
+    var table = (id === "raw" || id === "specialty_supply") ? bandTable(id) : null;
+    var cahOn = !!(aspectFilters && aspectFilters.cah);
     var pressure = {};
-    if (isAspectOn("cah") || isAspectOn("fqhc")) {
-      hpsaPressureCodes().forEach(function (c) { pressure[c] = 1; });
-    }
+    if (cahOn) hpsaPressureCodes().forEach(function (c) { pressure[c] = 1; });
     var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
     nodes.forEach(function (el) {
       if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#placeDrawSelectionOutline") || el.closest("#placeDrawPinLayer") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
       var code = el.getAttribute("data-state");
-      var lensId = aspectsV1Active[0] || "raw";
       if (placeOn) {
         /* Border-only selection. Do not paint a gray/teal fill over metro heat. */
         el.style.fill = "";
-      } else if ((lensId === "cah" || lensId === "fqhc") && hpsaFor(code) && hpsaFor(code).pctMet != null) {
-        var pressureT = 1 - Math.max(0, Math.min(100, hpsaFor(code).pctMet)) / 100;
-        el.style.fill = lerpColor(pressureT);
-      } else if (lensId === "day_load" || lensId === "support" || lensId === "cms") {
-        el.style.fill = "#d7e0ea";
-      } else if (supplyOn && supplyExt && h.rediByState && h.rediByState[code] != null) {
-        var sv = h.rediByState[code];
-        var st = (sv - supplyExt.min) / Math.max(1, supplyExt.max - supplyExt.min);
-        el.style.fill = lerpColor(st);
-      } else if (rawOn && state.mapMetric === "comp") {
-        var v0 = metricValueFor(code);
-        var t0 = (v0 - ext.min) / (ext.max - ext.min);
-        if (!v0 || isNaN(v0)) t0 = 0.08;
-        el.style.fill = lerpColor(t0);
+      } else if (id === "day_load" || id === "support") {
+        el.style.fill = "#eef2f6";
+      } else if (table && table.byCode[code]) {
+        el.style.fill = ASPECT_FILLS[table.byCode[code].q];
       } else {
-        var v = metricValueFor(code);
-        var t = (v - ext.min) / (ext.max - ext.min);
-        if (!v || isNaN(v)) t = 0.08;
-        el.style.fill = lerpColor(t);
+        el.style.fill = "#eef2f6";
       }
       el.classList.toggle("pd-in-selection", !!placeOn && !!state.selected[code]);
       el.classList.toggle("selected", !placeOn && !!state.selected[code]);
       el.classList.toggle("is-hover", !placeOn && state.hover === code);
       el.classList.toggle("ridge-geo-locked", !accessAllowsState(code));
-      el.classList.toggle("aspect-hpsa-pressure", !!pressure[code]);
+      el.classList.toggle("aspect-hpsa-pressure", false);
+      el.classList.toggle("mi-aspects-filter-out", !!(cahOn && !pressure[code]));
       /* Avoid double-filter black blobs on AK/HI */
       if (code === "ak" || code === "hi") {
         el.style.filter = "none";
@@ -707,38 +858,9 @@
     });
     var legend = $("ridge-map-legend-dynamic");
     if (legend) {
-      if (placeOn) {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">Place draw · ' + selectionNames() + '</span>' +
-          '<span class="ridge-legend-scale"><i class="lo"></i> Cool-field</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Metro glow</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> Border only</span>' +
-          (rawOn ? rawLegendBit() : "");
-      } else if ((aspectsV1Active[0] === "cah" || aspectsV1Active[0] === "fqhc")) {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">' + (aspectsV1Active[0] === "cah" ? "CAH" : "FQHC") + " · HPSA need-met</span>" +
-          '<span class="ridge-legend-scale"><i class="lo"></i> More need met</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Higher pressure</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> ' + selectionNames() + "</span>";
-      } else if (aspectsV1Active[0] === "cms" || aspectsV1Active[0] === "day_load" || aspectsV1Active[0] === "support") {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">' + (aspectDef(aspectsV1Active[0]) || {}).label + " · state map pending</span>" +
-          '<span class="ridge-legend-scale"><i class="sel"></i> ' + selectionNames() + "</span>";
-      } else if (supplyOn && supplyExt) {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">Specialty supply · Redi residence</span>' +
-          '<span class="ridge-legend-scale"><i class="lo"></i> Thinner bench</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Deeper bench</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>' +
-          (rawOn ? rawLegendBit() : "");
-      } else {
-        legend.innerHTML =
-          '<span class="ridge-legend-metric">' + metricLabelForActive() + '</span>' +
-          '<span class="ridge-legend-scale"><i class="lo"></i> Lower</span>' +
-          '<span class="ridge-legend-scale"><i class="hi"></i> Higher</span>' +
-          '<span class="ridge-legend-scale"><i class="sel"></i> Selected</span>' +
-          (rawOn ? rawLegendBit() : "");
-      }
+      legend.innerHTML = placeOn
+        ? '<span class="ridge-legend-metric">Place draw · heat inside the selected state</span>'
+        : '<span class="ridge-legend-metric">Darker means harder</span>';
     }
     if (placeOn) {
       var ol = root.querySelector("#outline-layer");
@@ -1239,6 +1361,7 @@
     if (!forced) return forced;
     state.selected = {};
     state.selected[forced] = true;
+    if (!state.focus || !state.selected[state.focus]) state.focus = forced;
     return forced;
   }
   function gateSpecialty(key) {
@@ -1258,9 +1381,13 @@
     if (!gate.ok) {
       var sel = $("mi-app-specialty");
       if (sel && state.specialtyKey) sel.value = state.specialtyKey;
+      var handle = w.AmpMiAspectsSelectorHandle;
+      if (handle && handle.setSpecialtyKey) handle.setSpecialtyKey(state.specialtyKey);
       return;
     }
     state.specialtyKey = key;
+    var appSel = $("mi-app-specialty");
+    if (appSel) appSel.value = key;
     refresh();
   }
 
@@ -1275,6 +1402,7 @@
     var forced = forcedUnitState();
     if (forced) {
       ensureForcedSelection();
+      state.focus = forced;
       afterGeoChange();
       return;
     }
@@ -1297,6 +1425,7 @@
         state.selected[norm] = true;
       }
     }
+    state.focus = state.selected[norm] ? norm : (selectedCodes()[0] || "");
     afterGeoChange();
   }
 
@@ -1318,13 +1447,16 @@
       try { pd.syncSelection(); } catch (ePd) {}
     }
     maybeFitSelection(true);
-    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) {
-      try { w.AmpMiAspectsSelector.refresh(); } catch (eAs) {}
-    }
+    syncAspectRead();
   }
 
   function showTooltip(evt, code) {
     var tip = $("ridge-map-tooltip");
+    var wb = $("ridge-workbench");
+    if (wb && wb.classList.contains("mi-aspects-on")) {
+      if (tip) { tip.hidden = true; tip.innerHTML = ""; }
+      return;
+    }
     if (!tip) return;
     if (!code) { tip.hidden = true; tip.innerHTML = ""; return; }
     var names = stateNames();
@@ -1426,6 +1558,11 @@
       banner.className = "ridge-aspect-map-banner";
       wrap.appendChild(banner);
     }
+    if (wb && wb.classList.contains("mi-aspects-on")) {
+      banner.hidden = true;
+      banner.innerHTML = "";
+      return;
+    }
     var bits = [];
     var amp = getAmpBands();
     if (isAspectOn("raw")) {
@@ -1473,6 +1610,8 @@
       svg.appendChild(layer);
     }
     layer.innerHTML = "";
+    var wbDots = $("ridge-workbench");
+    if (wbDots && wbDots.classList.contains("mi-aspects-on")) return;
     if (!isAspectOn("specialty_supply")) return;
     var h = aspectHooksForSpecialty(currentSpec());
     if (!h.rediByState) return;
@@ -1893,7 +2032,6 @@
       showTooltip(null, null);
     });
     root.addEventListener("click", function (e) {
-      if (isAspectOn("place_draw")) return;
       if (root.classList.contains("is-pinching") || root.classList.contains("is-panning") ||
           root.classList.contains("did-pan") || root.classList.contains("did-pinch")) {
         e.preventDefault();
@@ -1901,9 +2039,19 @@
       }
       var el = e.target.closest("[data-state]");
       if (!el || !root.contains(el)) return;
+      var code = el.getAttribute("data-state");
+      if (isAspectOn("place_draw")) {
+        state.focus = code;
+        if (accessAllowsPeek(code) && w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.openState) {
+          w.AmpMiAspectsSelector.openState(code);
+        } else if (w.AmpMiAspectsSelectorHandle && w.AmpMiAspectsSelectorHandle.clearCard) {
+          w.AmpMiAspectsSelectorHandle.clearCard();
+        }
+        return;
+      }
       e.preventDefault();
       var additive = accessAllowsMulti() && (state.multi || e.metaKey || e.ctrlKey);
-      toggleState(el.getAttribute("data-state"), additive);
+      toggleState(code, additive);
     });
   }
 
@@ -1918,7 +2066,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2198")
+    fetch("assets/ridge-usa-map.svg?v=2199")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -1976,9 +2124,7 @@
       try { pdRefresh.syncSelection(); } catch (ePd) {}
     }
     maybeFitSelection(false);
-    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) {
-      try { w.AmpMiAspectsSelector.refresh(); } catch (eAs) {}
-    }
+    syncAspectRead();
   }
 
   function bindChrome() {
