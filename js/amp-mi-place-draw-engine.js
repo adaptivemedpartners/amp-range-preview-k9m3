@@ -534,35 +534,62 @@ function isLightLook() {
   function buildSelectionMask(codes, W, H) {
     if (!codes || !codes.length || typeof document === "undefined") return null;
     var nodes = selectionPathNodes(codes);
-    if (!nodes.length) return null;
+    var svg = mapSvg();
+    if (!nodes.length || !svg) return null;
     var canvas = document.createElement("canvas");
     canvas.width = W; canvas.height = H;
     var ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return null;
-    ctx.fillStyle = "#ffffff";
+    var minX = W, minY = H, maxX = 0, maxY = 0, boxed = 0;
     nodes.forEach(function (el) {
-      var d = el.getAttribute("d");
-      if (d && typeof Path2D !== "undefined") {
-        try { ctx.fill(new Path2D(d)); } catch (e) {}
-        return;
-      }
-      if ((el.tagName || "").toLowerCase() === "circle") {
-        var cx = parseFloat(el.getAttribute("cx") || "0");
-        var cy = parseFloat(el.getAttribute("cy") || "0");
-        var r = parseFloat(el.getAttribute("r") || "0");
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      if (!el.getBBox) return;
+      var b = el.getBBox();
+      if (!(b.width > 0) || !(b.height > 0)) return;
+      boxed += 1;
+      minX = Math.min(minX, b.x);
+      minY = Math.min(minY, b.y);
+      maxX = Math.max(maxX, b.x + b.width);
+      maxY = Math.max(maxY, b.y + b.height);
     });
-    try { return ctx.getImageData(0, 0, W, H).data; } catch (e2) { return null; }
+    if (!boxed) return null;
+    minX = Math.max(0, Math.floor(minX));
+    minY = Math.max(0, Math.floor(minY));
+    maxX = Math.min(W - 1, Math.ceil(maxX));
+    maxY = Math.min(H - 1, Math.ceil(maxY));
+    var pt;
+    try { pt = svg.createSVGPoint(); } catch (ePt) { return null; }
+    /* CSS zoom changes isPointInFill in Chrome. Sample in the unscaled map. */
+    var prevTransform = svg.style.transform;
+    svg.style.transform = "none";
+    var img = ctx.createImageData(W, H);
+    var data = img.data;
+    for (var y = minY; y <= maxY; y++) {
+      for (var x = minX; x <= maxX; x++) {
+        pt.x = x + 0.5;
+        pt.y = y + 0.5;
+        var hit = false;
+        for (var n = 0; n < nodes.length; n++) {
+          var el = nodes[n];
+          try {
+            if (typeof el.isPointInFill === "function" && el.isPointInFill(pt)) { hit = true; break; }
+          } catch (eHit) {}
+        }
+        if (!hit) continue;
+        var i = (y * W + x) * 4;
+        data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; data[i + 3] = 255;
+      }
+    }
+    svg.style.transform = prevTransform;
+    ctx.putImageData(img, 0, 0);
+    return { data: data, canvas: canvas };
   }
 
   function pixelInSelectionMask(mask, W, H, x, y) {
-    if (!mask) return false;
+    var data = mask && mask.data ? mask.data : mask;
+    if (!data) return false;
     var ix = Math.max(0, Math.min(W - 1, Math.round(x)));
     var iy = Math.max(0, Math.min(H - 1, Math.round(y)));
-    return mask[(iy * W + ix) * 4 + 3] > 8;
+    return data[(iy * W + ix) * 4 + 3] > 8;
   }
 
   function syncSelectionClip(codes) {
@@ -684,6 +711,12 @@ function isLightLook() {
       octx.filter = "blur(1.6px)";
       octx.drawImage(out, 0, 0);
       octx.filter = "none";
+    }
+    /* Upscale smoothing must not bleed glow into a neighboring state. */
+    if (mask && mask.canvas) {
+      octx.globalCompositeOperation = "destination-in";
+      octx.drawImage(mask.canvas, 0, 0, W, H);
+      octx.globalCompositeOperation = "source-over";
     }
     heatCache = out.toDataURL("image/png");
     heatCacheKey = key;

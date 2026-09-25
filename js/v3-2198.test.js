@@ -34,6 +34,8 @@ assert(fb === html, "404 == index");
 assert(engine.indexOf("miPlaceDrawJumps") === -1, "engine does not build city jump pills");
 assert(engine.indexOf("placeDrawSelectionClip") !== -1, "heat clip path");
 assert(engine.indexOf("pixelInSelectionMask") !== -1, "heat mask");
+assert(engine.indexOf('globalCompositeOperation = "destination-in"') !== -1, "heat clipped after smoothing");
+assert(engine.indexOf("isPointInFill") !== -1, "mask uses svg hit test");
 assert(engine.indexOf("function selectionCodes") !== -1, "selection codes");
 assert(engine.indexOf('__version: "20260919d"') !== -1, "engine version lock");
 assert(engine.indexOf("baseline: 306520") !== -1, "FM competitive lock");
