@@ -42,10 +42,7 @@
       weight: "CMS CAH counts by state when facility file present · else HPSA need-met" },
     { id: "fqhc", label: "FQHC",
       move: "Medicaid PPS / change-in-scope rules. Not “more FQHC sites = higher pay.”",
-      weight: "HRSA site counts by state when facility file present · else pending" },
-    { id: "cms", label: "CMS",
-      move: "Revenue/collections triangulation. Subtypes inherit parent. Not auto-Baseline $.",
-      weight: "pending Mike weights — triangulation language only" }
+      weight: "HRSA site counts by state when facility file present · else pending" }
   ];
   var ASPECTS_STORE_KEY = "amp_mi_aspects_v1";
   var aspectsV1Active = ["specialty_supply"];
@@ -1633,7 +1630,7 @@
   function syncAspectMapChrome() {
     var wrap = $("ridge-map-wrap");
     if (!wrap) return;
-    var ids = ["raw", "place_draw", "day_load", "specialty_supply", "support", "cah", "fqhc", "cms"];
+    var ids = ["raw", "place_draw", "day_load", "specialty_supply", "support", "cah", "fqhc"];
     var wb = $("ridge-workbench");
     ids.forEach(function (id) {
       var cls = "aspect-" + id.replace("_", "-") + "-on";

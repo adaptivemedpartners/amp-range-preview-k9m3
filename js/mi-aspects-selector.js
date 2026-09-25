@@ -11,7 +11,7 @@
  * AmpMiAspectsSelector.CORE
  *   Raw, Place draw, Day load, Specialty supply, Support.
  * AmpMiAspectsSelector.FACILITY
- *   CAH, FQHC, CMS. Same one-tap lenses, drawn lighter.
+ *   CAH, FQHC. Same one-tap lenses, drawn lighter.
  * AmpMiAspectsSelector.BANDS
  *   Red #f87171, Competitive #fbbf24, Magnet #60a5fa, Destination #a78bfa.
  *   These match the existing Place draw band colors. Red is the hard end.
@@ -64,8 +64,7 @@
   ];
   var FACILITY = [
     { id: "cah", label: "CAH", group: "facility" },
-    { id: "fqhc", label: "FQHC", group: "facility" },
-    { id: "cms", label: "CMS", group: "facility" }
+    { id: "fqhc", label: "FQHC", group: "facility" }
   ];
   var LENSES = CORE.concat(FACILITY);
   var BANDS = [
