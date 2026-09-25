@@ -68,7 +68,7 @@
       var raw = localStorage.getItem(ASPECTS_STORE_KEY);
       if (!raw) return ["raw"];
       var list = normalizeAspectsList(JSON.parse(raw));
-      return list.length ? list : ["raw"];
+      return list.length ? [list[0]] : ["raw"];
     } catch (e) { return ["raw"]; }
   }
   function saveAspectsV1() {
@@ -135,7 +135,8 @@
       var amp = getAmpBands(s);
       if (amp && amp.competitive != null) bits.push("Data: YOUR Baseline (Competitive) " + fmtMoney(amp.competitive));
       else bits.push("Data: AMP bands pending — no invented $");
-    } else if (id === "place_draw") {
+      } else if (id === "place_draw") {
+      bits.push("Read · " + selectionNames() + " only — neighboring regions stay outside this lens");
       var pd = placeDrawApi();
       if (pd && pd.isEnabled && pd.isEnabled()) {
         var pin = pd.getPin ? pd.getPin() : null;
@@ -231,15 +232,36 @@
     if (document._ridgeAspectsV1Bound) return;
     document._ridgeAspectsV1Bound = true;
     aspectsV1Active = loadAspectsV1();
-    var chips = $("ridge-aspects-chips");
-    if (chips) {
-      chips.addEventListener("click", function (e) {
-        var btn = e.target.closest(".aspect-chip");
-        if (!btn) return;
-        toggleAspectV1(btn.getAttribute("data-aspect"));
+    var host = $("mi-aspects-selector");
+    if (host && w.AmpMiAspectsSelector && host.getAttribute("data-mi-aspects-selector") !== "1") {
+      w.AmpMiAspectsSelector.mount(host, {
+        numbersHost: $("mi-aspects-numbers"),
+        active: aspectsV1Active[0] || "raw",
+        onSelect: function (id) { setAspectLens(id); },
+        getSnapshot: aspectSnapshot
       });
     }
     syncAspectsUi();
+  }
+
+  function setAspectLens(id) {
+    if (!aspectDef(id)) return;
+    aspectsV1Active = [id];
+    saveAspectsV1();
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.getActive && w.AmpMiAspectsSelector.getActive() !== id) {
+      w.AmpMiAspectsSelector.setActive(id, { silent: true });
+    }
+    try { applyAspectLayers(); } catch (e) {}
+    try { renderBenchCards(); } catch (e2) {}
+    try { paintMap(); } catch (e3) {}
+    try { renderSidebar(); } catch (e4) {}
+    try { updateTitle(); } catch (e5) {}
+    if (id === "place_draw") {
+      var pd = placeDrawApi();
+      if (pd && pd.syncSelection) { try { pd.syncSelection(); } catch (e6) {} }
+      maybeFitSelection(false);
+    }
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) w.AmpMiAspectsSelector.refresh();
   }
 
 
@@ -647,9 +669,15 @@
     nodes.forEach(function (el) {
       if (el.closest && (el.closest("#outline-layer") || el.closest("#selectionOutline") || el.closest("#placeDrawSelectionOutline") || el.closest("#placeDrawPinLayer") || el.closest("#pdLabelLayer") || el.closest("#pdPinLayer"))) return;
       var code = el.getAttribute("data-state");
+      var lensId = aspectsV1Active[0] || "raw";
       if (placeOn) {
-        /* Light uncalled slate — never paint teal selected fill over metro heat */
-        el.style.fill = "#b7c4d4";
+        /* Border-only selection. Do not paint a gray/teal fill over metro heat. */
+        el.style.fill = "";
+      } else if ((lensId === "cah" || lensId === "fqhc") && hpsaFor(code) && hpsaFor(code).pctMet != null) {
+        var pressureT = 1 - Math.max(0, Math.min(100, hpsaFor(code).pctMet)) / 100;
+        el.style.fill = lerpColor(pressureT);
+      } else if (lensId === "day_load" || lensId === "support" || lensId === "cms") {
+        el.style.fill = "#d7e0ea";
       } else if (supplyOn && supplyExt && h.rediByState && h.rediByState[code] != null) {
         var sv = h.rediByState[code];
         var st = (sv - supplyExt.min) / Math.max(1, supplyExt.max - supplyExt.min);
@@ -665,6 +693,7 @@
         if (!v || isNaN(v)) t = 0.08;
         el.style.fill = lerpColor(t);
       }
+      el.classList.toggle("pd-in-selection", !!placeOn && !!state.selected[code]);
       el.classList.toggle("selected", !placeOn && !!state.selected[code]);
       el.classList.toggle("is-hover", !placeOn && state.hover === code);
       el.classList.toggle("ridge-geo-locked", !accessAllowsState(code));
@@ -680,11 +709,21 @@
     if (legend) {
       if (placeOn) {
         legend.innerHTML =
-          '<span class="ridge-legend-metric">Place draw · metro heat</span>' +
+          '<span class="ridge-legend-metric">Place draw · ' + selectionNames() + '</span>' +
           '<span class="ridge-legend-scale"><i class="lo"></i> Cool-field</span>' +
           '<span class="ridge-legend-scale"><i class="hi"></i> Metro glow</span>' +
           '<span class="ridge-legend-scale"><i class="sel"></i> Border only</span>' +
           (rawOn ? rawLegendBit() : "");
+      } else if ((aspectsV1Active[0] === "cah" || aspectsV1Active[0] === "fqhc")) {
+        legend.innerHTML =
+          '<span class="ridge-legend-metric">' + (aspectsV1Active[0] === "cah" ? "CAH" : "FQHC") + " · HPSA need-met</span>" +
+          '<span class="ridge-legend-scale"><i class="lo"></i> More need met</span>' +
+          '<span class="ridge-legend-scale"><i class="hi"></i> Higher pressure</span>' +
+          '<span class="ridge-legend-scale"><i class="sel"></i> ' + selectionNames() + "</span>";
+      } else if (aspectsV1Active[0] === "cms" || aspectsV1Active[0] === "day_load" || aspectsV1Active[0] === "support") {
+        legend.innerHTML =
+          '<span class="ridge-legend-metric">' + (aspectDef(aspectsV1Active[0]) || {}).label + " · state map pending</span>" +
+          '<span class="ridge-legend-scale"><i class="sel"></i> ' + selectionNames() + "</span>";
       } else if (supplyOn && supplyExt) {
         legend.innerHTML =
           '<span class="ridge-legend-metric">Specialty supply · Redi residence</span>' +
@@ -812,6 +851,126 @@
     return Object.keys(state.selected).filter(function (k) { return state.selected[k]; });
   }
 
+  function selectionNames() {
+    var names = stateNames();
+    var picks = selectedCodes();
+    if (!picks.length) return "No state selected";
+    return picks.map(function (c) { return names[c] || String(c).toUpperCase(); }).join(" · ");
+  }
+
+  function aspectSnapshot(id) {
+    var s = currentSpec();
+    var picks = selectedCodes();
+    var label = selectionNames();
+    var lens = aspectDef(id) || { label: id };
+    var numbers = [];
+    var legend = { title: lens.label, low: "", high: "", note: "" };
+    function pending(k) { numbers.push({ label: k, value: "Pending", pending: true }); }
+    if (id === "raw") {
+      var amp = getAmpBands(s);
+      legend.low = "Lower";
+      legend.high = "Higher";
+      legend.note = "Map uses the active supply metric. Cash is AMP bands only.";
+      if (amp && amp.competitive != null) {
+        numbers.push({ label: "Competitive", value: fmtMoney(amp.competitive) });
+        numbers.push({ label: "Red", value: amp.redAlert != null ? fmtMoney(amp.redAlert) : "Pending", pending: amp.redAlert == null });
+        numbers.push({ label: "Magnet", value: amp.magnet != null ? fmtMoney(amp.magnet) : "Pending", pending: amp.magnet == null });
+        numbers.push({ label: "Destination", value: amp.destination != null ? fmtMoney(amp.destination) : "Pending", pending: amp.destination == null });
+      } else pending("YOUR Baseline");
+      numbers.push({ label: "Selection", value: label });
+    } else if (id === "place_draw") {
+      legend.low = "Cool field";
+      legend.high = "Metro glow";
+      legend.note = "Heat stays inside " + label + ". Border only — no fill over the glow.";
+      var pd = placeDrawApi();
+      var pin = pd && pd.getPin ? pd.getPin() : null;
+      var bands = pd && pd.getPinBands ? pd.getPinBands() : null;
+      numbers.push({ label: "Selection", value: label });
+      if (pin && pin.state && picks.indexOf(String(pin.state).toLowerCase()) >= 0) {
+        var metros = (pd && pd.METROS) || [];
+        var near = null;
+        var bestD = Infinity;
+        for (var i = 0; i < metros.length; i++) {
+          var m = metros[i];
+          if (m.msaOf || m.coolField) continue;
+          var dd = Math.pow(pin.lat - m.lat, 2) + Math.pow(pin.lon - m.lon, 2);
+          if (dd < bestD) { bestD = dd; near = m; }
+        }
+        numbers.push({ label: "Pin", value: (near ? near.label : "In state") });
+      } else pending("Pin");
+      if (bands && bands.competitive != null) {
+        numbers.push({ label: "Red", value: fmtMoney(bands.red) });
+        numbers.push({ label: "Competitive", value: fmtMoney(bands.competitive) });
+        numbers.push({ label: "Magnet", value: fmtMoney(bands.magnet) });
+        numbers.push({ label: "Destination", value: fmtMoney(bands.destination) });
+      } else pending("Place-draw bands");
+    } else if (id === "specialty_supply") {
+      legend.low = "Thinner bench";
+      legend.high = "Deeper bench";
+      legend.note = "Redi residence counts for " + (s ? s.label : "this specialty") + " in " + label + ".";
+      var h = aspectHooksForSpecialty(s);
+      if (picks.length && h.rediByState) {
+        var sum = 0, have = 0;
+        picks.forEach(function (code) {
+          var v = h.rediByState[code];
+          if (typeof v === "number") { sum += v; have++; }
+        });
+        if (have) numbers.push({ label: "Redi in selection", value: fmtNum(sum) });
+        else pending("Redi in selection");
+        if (h.rediUs && h.rediUs.usTotal != null) numbers.push({ label: "U.S. total", value: fmtNum(h.rediUs.usTotal) });
+      } else pending("Redi in selection");
+      numbers.push({ label: "Selection", value: label });
+    } else if (id === "cah" || id === "fqhc") {
+      legend.low = "More need met";
+      legend.high = "Higher pressure";
+      legend.note = id === "fqhc"
+        ? "Same public HPSA need-met file. Not a site count and not higher pay."
+        : "Public primary-care HPSA need-met. Facility pins are pending.";
+      if (picks.length) {
+        var metSum = 0, metN = 0, needSum = 0;
+        picks.forEach(function (code) {
+          var row = hpsaFor(code);
+          if (!row) return;
+          if (row.pctMet != null) { metSum += row.pctMet; metN++; }
+          if (row.needed != null) needSum += row.needed;
+        });
+        if (metN) numbers.push({ label: "HPSA need met", value: (metSum / metN).toFixed(1) + "%" });
+        else pending("HPSA need met");
+        if (metN) numbers.push({ label: "PC practitioners needed", value: fmtNum(needSum) });
+      } else pending("HPSA need met");
+      numbers.push({ label: "Selection", value: label });
+      pending(id === "cah" ? "CAH facilities" : "FQHC sites");
+    } else if (id === "cms") {
+      legend.low = "Pending";
+      legend.high = "Pending";
+      legend.note = "CMS is a national triangulation for this specialty. No per-state map file — nothing invented.";
+      var cms = aspectHooksForSpecialty(s).cms;
+      if (cms && cms.avgAllowed != null) {
+        numbers.push({ label: "Avg allowed / provider", value: fmtMoney(cms.avgAllowed) });
+        numbers.push({ label: "Rel index", value: cms.relIndex != null ? String(cms.relIndex) : "Pending", pending: cms.relIndex == null });
+      } else pending("CMS avg allowed");
+      numbers.push({ label: "Selection", value: label });
+      pending("State CMS map");
+    } else if (id === "day_load") {
+      legend.low = "Pending";
+      legend.high = "Pending";
+      legend.note = "Day load is qualitative in v1. No patients-per-day file on this surface.";
+      pending("Patients / day");
+      pending("Schedule shift");
+      numbers.push({ label: "Selection", value: label });
+    } else if (id === "support") {
+      legend.low = "Pending";
+      legend.high = "Pending";
+      legend.note = "Support is qualitative in v1. No culture score file on this surface.";
+      pending("Culture / admin");
+      numbers.push({ label: "Selection", value: label });
+    } else {
+      legend.note = "Pending";
+      pending("Figure");
+    }
+    return { legend: legend, numbers: numbers };
+  }
+
   function renderSidebar() {
     var headName = $("ridge-side-name");
     var headSub = $("ridge-side-sub");
@@ -828,8 +987,8 @@
       else headName.textContent = s ? s.label : "Market Insight";
     }
     if (headSub) {
-      if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + picks[0].toUpperCase() + " · EXAMPLE";
-      else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + metricLabelForActive() + " · EXAMPLE";
+      if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + selectionNames() + " · state read";
+      else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + selectionNames() + " · state read";
       else headSub.textContent = "Difficulty · speed-to-fill · Total Comp · public · EXAMPLE";
     }
 
@@ -1115,17 +1274,8 @@
     }
     var forced = forcedUnitState();
     if (forced) {
-      if (norm !== forced) {
-        ensureForcedSelection();
-        paintMap();
-        renderSidebar();
-        updateTitle();
-        return;
-      }
       ensureForcedSelection();
-      paintMap();
-      renderSidebar();
-      updateTitle();
+      afterGeoChange();
       return;
     }
     var willSelect = true;
@@ -1147,9 +1297,7 @@
         state.selected[norm] = true;
       }
     }
-    paintMap();
-    renderSidebar();
-    updateTitle();
+    afterGeoChange();
   }
 
   function clearStates() {
@@ -1158,9 +1306,21 @@
     } else {
       state.selected = {};
     }
+    afterGeoChange();
+  }
+
+  function afterGeoChange() {
     paintMap();
     renderSidebar();
     updateTitle();
+    var pd = placeDrawApi();
+    if (pd && isAspectOn("place_draw") && pd.syncSelection) {
+      try { pd.syncSelection(); } catch (ePd) {}
+    }
+    maybeFitSelection(true);
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) {
+      try { w.AmpMiAspectsSelector.refresh(); } catch (eAs) {}
+    }
   }
 
   function showTooltip(evt, code) {
@@ -1273,7 +1433,7 @@
         ? ("Raw · YOUR Baseline " + fmtMoney(amp.competitive) + " (Competitive)")
         : "Raw · AMP bands pending — no invented $");
     }
-    if (isAspectOn("place_draw")) bits.push("Place draw · national metro heat · border-only selection");
+    if (isAspectOn("place_draw")) bits.push("Place draw · " + selectionNames() + " · heat inside selection · border only");
     if (isAspectOn("day_load")) bits.push("Day load · schedule / patients-per-day framing (qualitative v1)");
     if (isAspectOn("specialty_supply")) bits.push("Specialty supply · Redi residence density");
     if (isAspectOn("support")) bits.push("Support · culture / admin burden (qualitative v1)");
@@ -1403,6 +1563,30 @@
   }
 
   var MI_MAP_VIEW = { scale: 1, x: 0, y: 0, min: 1, max: 3.6 };
+  var mapViewTouched = false;
+  var mapFitSel = "";
+  var mapFitOk = false;
+
+  function maybeFitSelection(force) {
+    var codes = selectedCodes();
+    var key = codes.slice().sort().join(",");
+    if (force) mapViewTouched = false;
+    if (!force && mapViewTouched && key === mapFitSel) return;
+    if (!force && mapFitOk && key === mapFitSel) return;
+    var n = 0;
+    function attempt() {
+      var api = w.__AMP_MI_MAP_VIEWPORT;
+      if (api && typeof api.fitToCodes === "function" && api.fitToCodes(codes)) {
+        mapFitSel = key;
+        mapFitOk = true;
+        return;
+      }
+      n += 1;
+      if (n < 40) requestAnimationFrame(attempt);
+      else if (n < 52) setTimeout(attempt, 160);
+    }
+    attempt();
+  }
 
   function bindMapViewport(root) {
     if (!root || root.getAttribute("data-mi-zoom-bound") === "1") return;
@@ -1436,7 +1620,8 @@
       var s = MI_MAP_VIEW.scale;
       if (s <= 1) { MI_MAP_VIEW.x = 0; MI_MAP_VIEW.y = 0; return; }
       var sw = w * s, sh = h * s;
-      var slack = 0.12;
+      /* Slack lets a fitted edge state (RI, CA, FL) sit in frame without flying off. */
+      var slack = 0.5;
       var maxX = w * slack;
       var minX = w - sw - w * slack;
       var maxY = h * slack;
@@ -1500,6 +1685,7 @@
       if (pinch && ptrCount() >= 2) {
         var m = pinchMetrics();
         var lp = localPoint(m.midX, m.midY);
+        mapViewTouched = true;
         zoomAt(lp.x, lp.y, pinch.scale * (m.dist / pinch.dist));
         try { e.preventDefault(); } catch (err) {}
         return;
@@ -1508,6 +1694,7 @@
         var dx = e.clientX - pan.x, dy = e.clientY - pan.y;
         if (!pan.moved && (dx * dx + dy * dy) < 100) return;
         pan.moved = true;
+        mapViewTouched = true;
         root.classList.add("is-panning", "did-pan");
         MI_MAP_VIEW.x = pan.vx + dx;
         MI_MAP_VIEW.y = pan.vy + dy;
@@ -1541,6 +1728,7 @@
       if (!e.ctrlKey && !e.metaKey) return;
       if (ignoreChrome(e)) return;
       e.preventDefault();
+      mapViewTouched = true;
       var lp = localPoint(e.clientX, e.clientY);
       zoomAt(lp.x, lp.y, MI_MAP_VIEW.scale * Math.exp(-e.deltaY * 0.002));
     }, { passive: false });
@@ -1560,9 +1748,59 @@
         applyView();
       },
       zoomAt: zoomAt,
-      apply: applyView
+      apply: applyView,
+      fitToCodes: fitToCodes
     };
     applyView();
+
+    function fitToCodes(codes) {
+      var svg = currentSvg();
+      if (!svg || root.clientWidth < 40 || root.clientHeight < 40) return false;
+      codes = (codes || []).filter(Boolean);
+      var prev = svg.style.transform;
+      svg.style.transform = "none";
+      if (!codes.length) {
+        MI_MAP_VIEW.scale = 1;
+        MI_MAP_VIEW.x = 0;
+        MI_MAP_VIEW.y = 0;
+        applyView();
+        root.setAttribute("data-map-fitted", "");
+        return true;
+      }
+      var minL = Infinity, minT = Infinity, maxR = -Infinity, maxB = -Infinity, found = 0;
+      codes.forEach(function (code) {
+        var el = svg.querySelector('g.state [data-state="' + code + '"], circle[data-state="' + code + '"]');
+        if (!el || !el.getBoundingClientRect) return;
+        var b = el.getBoundingClientRect();
+        if (!(b.width > 1) || !(b.height > 1)) return;
+        found += 1;
+        minL = Math.min(minL, b.left);
+        minT = Math.min(minT, b.top);
+        maxR = Math.max(maxR, b.right);
+        maxB = Math.max(maxB, b.bottom);
+      });
+      if (!found) {
+        svg.style.transform = prev;
+        return false;
+      }
+      var svgBox = svg.getBoundingClientRect();
+      var rr = root.getBoundingClientRect();
+      var cw = rr.width, ch = rr.height;
+      var bw = Math.max(8, maxR - minL);
+      var bh = Math.max(8, maxB - minT);
+      var S = Math.min((cw * 0.86) / bw, (ch * 0.86) / bh);
+      S = Math.max(1.08, Math.min(MI_MAP_VIEW.max, S));
+      var cx = ((minL + maxR) / 2) - svgBox.left;
+      var cy = ((minT + maxB) / 2) - svgBox.top;
+      var ox = svgBox.left - rr.left;
+      var oy = svgBox.top - rr.top;
+      MI_MAP_VIEW.scale = S;
+      MI_MAP_VIEW.x = (cw / 2) - ox - cx * S;
+      MI_MAP_VIEW.y = (ch / 2) - oy - cy * S;
+      applyView();
+      root.setAttribute("data-map-fitted", codes.slice().sort().join(","));
+      return MI_MAP_VIEW.scale > 1.02;
+    }
   }
 
   function bindMap() {
@@ -1680,7 +1918,7 @@
       if (cb) cb();
       return;
     }
-    fetch("assets/ridge-usa-map.svg?v=2157")
+    fetch("assets/ridge-usa-map.svg?v=2198")
       .then(function (r) {
         if (!r.ok) throw new Error("map " + r.status);
         return r.text();
@@ -1733,6 +1971,14 @@
     paintMap();
     renderSidebar();
     updateTitle();
+    var pdRefresh = placeDrawApi();
+    if (pdRefresh && isAspectOn("place_draw") && pdRefresh.syncSelection) {
+      try { pdRefresh.syncSelection(); } catch (ePd) {}
+    }
+    maybeFitSelection(false);
+    if (w.AmpMiAspectsSelector && w.AmpMiAspectsSelector.refresh) {
+      try { w.AmpMiAspectsSelector.refresh(); } catch (eAs) {}
+    }
   }
 
   function bindChrome() {
@@ -1825,16 +2071,12 @@
           var code = rem.getAttribute("data-remove-state");
           if (forcedUnitState()) {
             ensureForcedSelection();
-            paintMap();
-            renderSidebar();
-            updateTitle();
+            afterGeoChange();
             return;
           }
           if (state.selected[code]) {
             delete state.selected[code];
-            paintMap();
-            renderSidebar();
-            updateTitle();
+            afterGeoChange();
           }
           return;
         }
