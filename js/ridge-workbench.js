@@ -38,10 +38,10 @@
       weight: "qualitative v1" },
     { id: "cah", label: "CAH",
       move: "Critical access (≤25 beds) / CAH-heavy markets often need higher cash on top of geo.",
-      weight: "pending Mike weights · HPSA pressure highlight · facility pins pending" },
+      weight: "CMS CAH counts by state when facility file present · else HPSA need-met" },
     { id: "fqhc", label: "FQHC",
       move: "Medicaid PPS / change-in-scope rules. Not “more FQHC sites = higher pay.”",
-      weight: "pending Mike weights · HPSA pressure highlight · facility pins pending" },
+      weight: "HRSA site counts by state when facility file present · else pending" },
     { id: "cms", label: "CMS",
       move: "Revenue/collections triangulation. Subtypes inherit parent. Not auto-Baseline $.",
       weight: "pending Mike weights — triangulation language only" }
@@ -238,6 +238,7 @@
   }
   function lensId() { return aspectsV1Active[0] || "specialty_supply"; }
 
+  function facilityData() { return w.MI_FACILITY_STATE_DATA || null; }
   function hardnessFor(code, id) {
     id = id || lensId();
     if (id === "specialty_supply") {
@@ -255,9 +256,22 @@
       return 100 - stay;
     }
     if (id === "cah") {
+      var fac = facilityData();
+      if (fac && typeof fac.cahCount === "function") {
+        var cahN = fac.cahCount(code);
+        if (cahN != null) return cahN; /* higher CAH count = harder corridor pressure */
+      }
       var row = hpsaFor(code);
       if (!row || row.pctMet == null) return null;
       return 100 - row.pctMet;
+    }
+    if (id === "fqhc") {
+      var fac2 = facilityData();
+      if (fac2 && typeof fac2.fqhcCount === "function") {
+        var fq = fac2.fqhcCount(code);
+        if (fq != null) return fq; /* higher site count = harder FQHC corridor pressure */
+      }
+      return null;
     }
     return null;
   }
@@ -281,11 +295,24 @@
 
   function rankRow(row, table) {
     var info = table.byCode[row.code] || {};
-    return {
+    var out = {
       code: row.code,
       name: stateNames()[row.code] || String(row.code).toUpperCase(),
       band: info.band || "Pending"
     };
+    var fac = facilityData();
+    var id = lensId();
+    if (fac) {
+      if (id === "cah" && fac.cahCount) {
+        var cn = fac.cahCount(row.code);
+        if (cn != null) out.value = String(cn);
+      }
+      if (id === "fqhc" && fac.fqhcCount) {
+        var fn = fac.fqhcCount(row.code);
+        if (fn != null) out.value = String(fn);
+      }
+    }
+    return out;
   }
 
   function aspectRead(id) {
@@ -307,10 +334,18 @@
       sentence += "Support: culture and admin burden. Pending — no file, so this lens does not recolor the map.";
       pending = true;
     } else if (id === "cah") {
-      sentence += "CAH: critical-access pressure from primary-care need met. Red states have less of that need met. Not a facility directory.";
+      if (facilityData() && facilityData().cahByState) {
+        sentence += "CAH: Critical Access Hospital counts by state (CMS Hospital General Information). Red states have more CAHs — harder rural corridor pressure. Not a pin directory.";
+      } else {
+        sentence += "CAH: critical-access pressure from primary-care need met. Red states have less of that need met. Not a facility directory.";
+      }
     } else if (id === "fqhc") {
-      sentence += "FQHC: Medicaid PPS framing. Pending — no site file, so this lens does not recolor the map.";
-      pending = true;
+      if (facilityData() && facilityData().fqhcSitesByState) {
+        sentence += "FQHC: HRSA health-center service delivery site counts by state. Red states have more sites — denser FQHC corridor (not “more sites = higher pay”).";
+      } else {
+        sentence += "FQHC: Medicaid PPS framing. Pending — no site file, so this lens does not recolor the map.";
+        pending = true;
+      }
     } else {
       sentence += "CMS: national collections context for this specialty. Not a state color and not a baseline dollar.";
       pending = true;
@@ -373,6 +408,8 @@
   }
 
   function isCahHeavy(code) {
+    var fac = facilityData();
+    if (fac && fac.isCahHeavyByCount && fac.isCahHeavyByCount(code)) return true;
     var row = hpsaFor(code);
     if (!row) return false;
     return (row.pctMet != null && row.pctMet < 50) || (row.needed != null && row.needed >= 200);
@@ -385,8 +422,10 @@
     var sentence;
     if (id === "raw") {
       sentence = name + " sits on Competitive, the national baseline.";
-    } else if (id === "day_load" || id === "support" || id === "fqhc" || id === "cms") {
+    } else if (id === "day_load" || id === "support" || id === "cms") {
       sentence = name + " has no " + (aspectDef(id) ? aspectDef(id).label : "lens") + " band yet.";
+    } else if (id === "fqhc" && !(facilityData() && facilityData().fqhcSitesByState)) {
+      sentence = name + " has no FQHC band yet.";
     } else if (id === "place_draw") {
       var placeInfo = bandTable(id).byCode[code];
       sentence = state.selected[code]
@@ -398,9 +437,20 @@
     }
     var tags = [];
     if (isCahHeavy(code)) tags.push("CAH-heavy");
+    var facTag = facilityData();
+    if (facTag && facTag.isFqhcHeavy && facTag.isFqhcHeavy(code)) tags.push("FQHC-heavy");
     var hooks = aspectHooksForSpecialty(currentSpec());
     if (hooks.cms) tags.push("CMS");
-    return { name: name, sentence: sentence, tags: tags };
+    var value = null;
+    if (id === "cah" && facTag && facTag.cahCount) {
+      var cn = facTag.cahCount(code);
+      if (cn != null) value = cn + " CAHs";
+    }
+    if (id === "fqhc" && facTag && facTag.fqhcCount) {
+      var fn = facTag.fqhcCount(code);
+      if (fn != null) value = fn + " FQHC sites";
+    }
+    return { name: name, sentence: sentence, tags: tags, value: value };
   }
 
   function syncAspectRead() {
@@ -854,7 +904,7 @@
     if (!root) return;
     var id = lensId();
     var placeOn = id === "place_draw";
-    var choropleth = id === "specialty_supply" || id === "cah";
+    var choropleth = id === "specialty_supply" || id === "cah" || id === "fqhc";
     var table = choropleth ? bandTable(id) : null;
     var rawFill = getAmpBands() ? "#fbbf24" : "#eef2f6";
     var nodes = root.querySelectorAll(".state [data-state], circle[data-state]");
