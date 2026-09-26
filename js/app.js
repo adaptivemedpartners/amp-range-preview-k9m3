@@ -1419,7 +1419,7 @@
       blank.textContent = "Select a specialty…";
       sel.appendChild(blank);
     }
-    AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return i < 80 || s.amp33 || !!(s.ampBands && s.ampBands.competitive != null); }).forEach(function (s) {
+    AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return !!(s.ampBands && s.ampBands.competitive != null); }).forEach(function (s) {
       var opt = document.createElement("option");
       opt.value = s.key;
       opt.textContent = s.label;
@@ -1667,7 +1667,7 @@
     }
     if (specPick) {
       if (!specPick.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
-        AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return i < 80 || s.amp33 || !!(s.ampBands && s.ampBands.competitive != null); }).forEach(function (s) {
+        AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return !!(s.ampBands && s.ampBands.competitive != null); }).forEach(function (s) {
           var opt = document.createElement("option");
           opt.value = s.key;
           opt.textContent = s.label;

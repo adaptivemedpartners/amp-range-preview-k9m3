@@ -483,7 +483,7 @@
         specialtyKey: state.specialtyKey,
         exactValues: false,
         getSpecialties: function () {
-          return specialties().map(function (s) { return { key: s.key, label: s.label }; });
+          return menuSpecialties().map(function (s) { return { key: s.key, label: s.label }; });
         },
         onSpecialty: function (key) { setSpecialty(key); },
         getStates: function () {
@@ -579,6 +579,8 @@
   function $(id) { return document.getElementById(id); }
   function data() { return w.AMPRidgeMI || {}; }
   function specialties() { return (data().SPECIALTIES || []); }
+  /* 2225: public menus list only specialties with AMP pay bands (unbanded stay internal). */
+  function menuSpecialties() { return specialties().filter(function (s) { return !!(s.ampBands && s.ampBands.competitive != null); }); }
   function stateNames() { return data().STATE_NAMES || {}; }
   function statePop() { return data().STATE_POP || {}; }
 
@@ -1395,7 +1397,7 @@
       "Allied Health": [],
       "Dentistry": []
     };
-    specialties().forEach(function (s) {
+    menuSpecialties().forEach(function (s) {
       if (q && (s.label || "").toLowerCase().indexOf(q) < 0 && (s.key || "").toLowerCase().indexOf(q) < 0) return;
       var g = ampSpecGroup(s);
       if (state.groupFilter && state.groupFilter !== "all" && g !== state.groupFilter) return;
