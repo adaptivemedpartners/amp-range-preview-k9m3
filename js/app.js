@@ -1173,13 +1173,66 @@
     } catch (e2) {}
     curSt = curSt || (seat && (seat.paidState || seat.demoState)) || "";
     host.hidden = false;
-    host.innerHTML = units.map(function (u) {
+    function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+    var rows = units.map(function (u) {
       var spec = u.specialty || "";
       var st = api.normState(u.state || seat.demoState);
-      var on = spec === curSpec && st === api.normState(curSt);
-      var label = api.specLabel(spec) + " × " + api.stateLabel(st);
-      return '<button type="button" class="ridge-unit-chip' + (on ? " is-on" : "") + '" data-ridge-unit-spec="' + spec + '" data-ridge-unit-state="' + st + '">' + label + "</button>";
-    }).join("");
+      return { spec: spec, st: st, specL: api.specLabel(spec), stL: api.stateLabel(st), on: spec === curSpec && st === api.normState(curSt) };
+    });
+    function chip(r, text) {
+      return '<button type="button" class="ridge-unit-chip' + (r.on ? " is-on" : "") + '" data-ridge-unit-spec="' + esc(r.spec) + '" data-ridge-unit-state="' + esc(r.st) + '" data-q="' + esc((r.specL + " " + r.stL).toLowerCase()) + '">' + esc(text) + "</button>";
+    }
+    /* 2221: small lists stay as pills; 7+ polls get a searchable picker grouped by specialty so 100+ stays manageable. */
+    if (rows.length <= 6) {
+      host.classList.remove("is-picker");
+      host.innerHTML = rows.map(function (r) { return chip(r, r.specL + " × " + r.stL); }).join("");
+      return;
+    }
+    host.classList.add("is-picker");
+    var cur = rows.filter(function (r) { return r.on; })[0];
+    var groups = {};
+    rows.forEach(function (r) { (groups[r.specL] = groups[r.specL] || []).push(r); });
+    var names = Object.keys(groups).sort(function (a, b) { return a.localeCompare(b); });
+    var st8 = window.__ridgeUnitPicker || (window.__ridgeUnitPicker = { open: false, q: "" });
+    var html = '<div class="ridge-unit-picker-top">' +
+      '<span class="ridge-unit-cur">' + (cur ? "Showing: <strong>" + esc(cur.specL + " × " + cur.stL) + "</strong>" : "Pick one of your polls") + "</span>" +
+      '<input type="search" class="ridge-unit-search" id="ridge-unit-search" placeholder="Search your ' + rows.length + ' polls (specialty or state)" value="' + esc(st8.q) + '" autocomplete="off" />' +
+      '<button type="button" class="ridge-unit-toggle" id="ridge-unit-toggle" aria-expanded="' + (st8.open ? "true" : "false") + '">' + (st8.open ? "Hide list" : "Browse all " + rows.length) + "</button></div>" +
+      '<div class="ridge-unit-list" id="ridge-unit-list"' + (st8.open || st8.q ? "" : " hidden") + ">";
+    names.forEach(function (n) {
+      var g = groups[n].sort(function (a, b) { return a.stL.localeCompare(b.stL); });
+      html += '<div class="ridge-unit-group"><div class="ridge-unit-group-name">' + esc(n) + ' <span>' + g.length + "</span></div><div class=\"ridge-unit-group-chips\">" +
+        g.map(function (r) { return chip(r, r.stL); }).join("") + "</div></div>";
+    });
+    html += '<p class="ridge-unit-empty" id="ridge-unit-empty" hidden>No polls match that search.</p></div>';
+    host.innerHTML = html;
+    var input = host.querySelector("#ridge-unit-search");
+    var list = host.querySelector("#ridge-unit-list");
+    var toggle = host.querySelector("#ridge-unit-toggle");
+    function filter() {
+      var q = st8.q.trim().toLowerCase();
+      var words = q ? q.split(/\s+/) : [];
+      var any = false;
+      host.querySelectorAll(".ridge-unit-group").forEach(function (g) {
+        var shown = 0;
+        g.querySelectorAll(".ridge-unit-chip").forEach(function (c) {
+          var hay = c.getAttribute("data-q") || "";
+          var ok = words.every(function (w) { return hay.indexOf(w) !== -1; });
+          c.hidden = !ok; if (ok) shown++;
+        });
+        g.hidden = !shown; if (shown) any = true;
+      });
+      var empty = host.querySelector("#ridge-unit-empty"); if (empty) empty.hidden = any;
+      list.hidden = !(st8.open || q);
+    }
+    input.addEventListener("input", function () { st8.q = input.value; filter(); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { var first = host.querySelector(".ridge-unit-list .ridge-unit-chip:not([hidden])"); if (first) { e.preventDefault(); first.click(); } }
+      if (e.key === "Escape") { st8.q = ""; st8.open = false; input.value = ""; filter(); }
+    });
+    toggle.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); st8.open = !st8.open; toggle.textContent = st8.open ? "Hide list" : "Browse all " + rows.length; toggle.setAttribute("aria-expanded", st8.open ? "true" : "false"); filter(); });
+    list.addEventListener("click", function (e) { if (e.target.closest("[data-ridge-unit-spec]")) { st8.open = false; st8.q = ""; } }, true);
+    filter();
   }
 
   function applyRidgeSimulateVerify() {

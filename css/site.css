@@ -5311,6 +5311,20 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   min-height: 36px;
 }
 .ridge-unit-chip.is-on { background: var(--teal); color: #fff; border-color: var(--teal); }
+/* 2221: scalable poll picker (7+ polls) */
+.ridge-open-units.is-picker { display: block; }
+.ridge-unit-picker-top { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.ridge-unit-cur { font-size: 13px; color: #115e59; }
+.ridge-unit-search { flex: 1 1 240px; min-width: 200px; min-height: 36px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(13,148,136,.45); font: 500 13px/1.2 Inter, system-ui, sans-serif; background: #fff; color: #0b2a44; }
+.ridge-unit-toggle { min-height: 36px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--teal); background: #fff; color: #115e59; font-size: 12px; font-weight: 750; cursor: pointer; }
+.ridge-unit-list { margin-top: 10px; max-height: 280px; overflow: auto; padding: 8px 10px; border: 1px solid rgba(13,148,136,.25); border-radius: 12px; background: #f8fffc; }
+.ridge-unit-list[hidden], .ridge-unit-group[hidden], .ridge-unit-chip[hidden], .ridge-unit-empty[hidden] { display: none !important; }
+.ridge-unit-group + .ridge-unit-group { margin-top: 10px; }
+.ridge-unit-group-name { font-size: 12px; font-weight: 800; color: #0b2a44; margin-bottom: 6px; }
+.ridge-unit-group-name span { font-weight: 600; color: var(--muted); }
+.ridge-unit-group-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ridge-unit-group-chips .ridge-unit-chip { min-height: 30px; padding: 5px 10px; }
+.ridge-unit-empty { margin: 4px 0; font-size: 13px; color: var(--muted); }
 .ridge-taste-hint { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
 .ridge-sim-pay { flex-wrap: wrap; margin-top: 12px; }
 .ridge-sim-pay .btn { min-height: 44px; }
