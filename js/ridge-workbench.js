@@ -755,7 +755,7 @@
     if (opts.mean !== false) {
       html += '<div class="mean-line' + (opts.meanRow ? " mean-row" : "") + '">';
       if (opts.meanRow) html += '<span class="k">Baseline</span><span class="v"><strong>Competitive</strong></span>';
-      else html += "Competitive = YOUR Baseline" + (opts.meanSuffix || " · public · EXAMPLE");
+      else html += "Competitive = YOUR Baseline" + (opts.meanSuffix || " · AMP");
       html += "</div>";
     }
     return html;
@@ -1000,7 +1000,7 @@
     } else {
       html += '<div class="hero">Pending<small>' + (rawOn ? "Raw on · AMP bands pending" : "YOUR Baseline") + "</small></div>";
     }
-    html += ampBandsHtml(amp, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · public · EXAMPLE" });
+    html += ampBandsHtml(amp, { className: "ridge-bars ridge-bars-hud", mean: true, meanSuffix: " · AMP placement data" });
     if (ratio.p50 != null || (rvu && rvu.p50 != null)) {
       html += '<div class="bench-extra">';
       if (ratio.p50 != null) html += '<span>Comp / wRVU <b>' + show(fmtNum(ratio.p50, 2), "n/a") + "</b></span>";
@@ -1359,7 +1359,7 @@
     var lens = picks.length ? picks.map(function (c) { return names[c] || c.toUpperCase(); }).join(" · ") : "national lens";
     if (title) title.textContent = (s ? s.label : "Specialty") + " · " + lens;
     if (copy) copy.textContent = "Full Market Intelligence workbench for " + (s ? s.label : "specialty") +
-      " — map, HUD cards, and state rail. EXAMPLE signals for planning; Ask AMP for deeper firm tools.";
+      " — map, HUD cards, and state rail. Layers still marked EXAMPLE are placeholders; Ask AMP for deeper firm tools.";
   }
 
   function updateMetricButtons() {

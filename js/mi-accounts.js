@@ -272,7 +272,7 @@
     d.body.classList.toggle("mi-owner", owner);
     if (!d.getElementById("mi-owner-css")) {
       var css = d.createElement("style"); css.id = "mi-owner-css";
-      css.textContent = "body.mi-owner #ridge-verify-cta,body.mi-owner #ridge-simulate-verify-app,body.mi-owner #ridge-oneoff-cta,body.mi-owner #mi-lite-lock-again,body.mi-owner #ridge-sim-pay,body.mi-owner #ridge-seat-line,body.mi-owner .ridge-access-actions,body.mi-owner #mi-lite-lock-banner{display:none!important}" +
+      css.textContent = "body.mi-owner #ridge-verify-cta,body.mi-owner #ridge-simulate-verify-app,body.mi-owner #ridge-oneoff-cta,body.mi-owner #mi-lite-lock-again,body.mi-owner #ridge-sim-pay,body.mi-owner #ridge-seat-line,body.mi-owner .ridge-access-actions,body.mi-owner #mi-lite-lock-banner,body.mi-owner .mi-dashboard-head .example-stamp{display:none!important}" +
         "body.mi-owner #ridge-demo-door:not(.mi-open){display:none!important}" +
         "#mi-try-other{display:none;margin:4px 16px 14px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#0b2a44;text-decoration:underline;cursor:pointer;background:none;border:0;padding:0}body.mi-owner #mi-try-other{display:inline-block}";
       d.head.appendChild(css);
