@@ -249,8 +249,37 @@
     open: openModal, signOut: signOut, verifyCheckout: verifyCheckout, usePoll: usePoll, syncSeat: syncSeat,
     onChange: function (f) { listeners.push(f); }
   };
+  /* Visible account bar on the MI page + ?account=signin|signup deep link (2209). */
+  function accountBar() {
+    var host = d.querySelector('.view[data-route="mi-lite"]');
+    if (!host) return;
+    var bar = d.getElementById("mi-acct-bar");
+    if (!bar) {
+      bar = d.createElement("div"); bar.id = "mi-acct-bar";
+      bar.style.cssText = "display:flex;justify-content:flex-end;gap:12px;align-items:center;padding:10px 16px;font:14px/1.3 Inter,system-ui,sans-serif";
+      host.insertBefore(bar, host.firstChild);
+    }
+    bar.innerHTML = "";
+    if (user) {
+      var who = d.createElement("span"); who.textContent = "Signed in as " + (user.email || "");
+      var out = d.createElement("a"); out.href = "#"; out.textContent = "Sign out"; out.style.textDecoration = "underline";
+      out.onclick = function (e) { e.preventDefault(); signOut(); };
+      bar.appendChild(who); bar.appendChild(out);
+    } else {
+      [["signin", "Sign in"], ["signup", "Create account"]].forEach(function (l) {
+        var a = d.createElement("a"); a.href = "#"; a.textContent = l[1]; a.style.textDecoration = "underline";
+        a.onclick = function (e) { e.preventDefault(); openModal(l[0]); };
+        bar.appendChild(a);
+      });
+    }
+  }
+  function accountDeepLink() {
+    var v = new URLSearchParams(w.location.search || "").get("account");
+    if (!user && (v === "signin" || v === "signup")) openModal(v);
+  }
   if (enabled) {
-    if (d.readyState === "loading") d.addEventListener("DOMContentLoaded", function () { init().then(handleReturn); });
-    else init().then(handleReturn);
+    var boot = function () { listeners.push(accountBar); init().then(function () { accountBar(); accountDeepLink(); handleReturn(); }); };
+    if (d.readyState === "loading") d.addEventListener("DOMContentLoaded", boot);
+    else boot();
   }
 })(window, document);
