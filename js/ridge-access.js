@@ -537,6 +537,26 @@
     return save(seat);
   }
 
+  /* 2219: the account remembers the free level + sample market; mirror it into this browser. */
+  function applyFreeLevel(p) {
+    p = p || {};
+    var seat = load();
+    if (isPaid(seat)) return seat;
+    if (p.sample_specialty && p.sample_state && !(seat.demoSpecialty && seat.demoState)) {
+      seat.demoSpecialty = String(p.sample_specialty);
+      seat.demoState = normState(p.sample_state);
+      seat.demoCommitted = true;
+    }
+    if (p.free_level === "verified" && seat.demoSpecialty && seat.demoState && seat.tier !== "verified") {
+      seat.tier = "verified";
+      seat.demoCommitted = true;
+      ensureTaste(seat, seat.demoSpecialty, seat.demoState);
+    } else if (seat.tier !== "verified" && !(seat.demoSpecialty && seat.demoState)) {
+      return seat;
+    }
+    return save(seat);
+  }
+
   function consumeCheckoutQuery() {
     if (accountsOn()) return null; /* mi-accounts.js verifies the Stripe session on the server instead */
     try {
@@ -671,6 +691,7 @@
     openUnits: openUnits,
     applyPaid: applyPaid,
     applyServerSeat: applyServerSeat,
+    applyFreeLevel: applyFreeLevel,
     consumeCheckoutQuery: consumeCheckoutQuery,
     specLabel: specLabel,
     stateLabel: stateLabel,

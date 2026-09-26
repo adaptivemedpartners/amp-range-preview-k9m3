@@ -5,6 +5,27 @@
   var cfg = w.AMP_MI_ACCOUNTS || {};
   var enabled = !!(cfg.url && cfg.anonKey);
   var sb = null, user = null, ready = null, listeners = [], lastSeat = null;
+  /* 2219: came back from the confirmation email (hash from Supabase, or our ?welcome=1). Read before supabase-js strips the hash. */
+  var fromConfirm = /type=(signup|email)/.test(w.location.hash || "") || new URLSearchParams(w.location.search || "").get("welcome") === "1";
+  var PACK_LABEL = { pack15: "15-poll package", pack50: "50-poll package", pack100: "100-poll package", pack250: "250-poll package" };
+  function ra() { return w.AMPRidgeAccess || null; }
+  /* The free-sample market this browser picked (specialty key + state code), if any. */
+  function localSample() {
+    var api = ra(), seat = api && api.load ? api.load() : null;
+    return seat && seat.demoSpecialty && seat.demoState ? { spec: seat.demoSpecialty, st: String(seat.demoState).toUpperCase() } : null;
+  }
+  function accountSample() {
+    var pr = lastSeat && lastSeat.profile;
+    if (pr && pr.sample_specialty && pr.sample_state) return { spec: pr.sample_specialty, st: String(pr.sample_state).toUpperCase() };
+    var meta = (user && user.user_metadata) || {};
+    if (meta.sample_specialty && meta.sample_state) return { spec: meta.sample_specialty, st: String(meta.sample_state).toUpperCase() };
+    return localSample();
+  }
+  /* Plain-English description of the free Verified sample. */
+  function sampleText(smp) {
+    if (smp) { var st = stateLabel(smp.st).replace(/\s*\([A-Z]{2}\)\s*$/, ""); return specLabel(smp.spec) + " in " + st + ", plus 2 more specialties in " + st; }
+    return "1 specialty in 1 state of your choice, plus 2 more specialties in that state";
+  }
 
   function fnUrl(name) { return cfg.url.replace(/\/$/, "") + "/functions/v1/" + name; }
   function emit() { listeners.forEach(function (f) { try { f(user); } catch (e) {} }); }
@@ -27,7 +48,7 @@
         user = session ? session.user : null;
         if (evt === "PASSWORD_RECOVERY") openModal("reset");
         emit();
-        if (user) syncSeat();
+        if (user) (evt === "SIGNED_IN" ? ensureProfile(user).catch(function () {}) : Promise.resolve()).then(syncSeat);
       });
       return sb.auth.getSession().then(function (r) {
         user = r.data.session ? r.data.session.user : null;
@@ -51,19 +72,26 @@
   }
 
   /* Pull purchases + polls from the server and mirror them into the page's seat so the existing UI renders them. */
+  var syncing = false;
   function syncSeat() {
     if (!sb || !user) return Promise.resolve(null);
-    return Promise.all([
+    syncing = true;
+    return ensureProfile(user).catch(function () {}).then(function () { return Promise.all([
       sb.from("mi_purchases").select("sku,polls_granted,specialty,state,created_at"),
-      sb.from("mi_polls").select("specialty,state,created_at")
+      sb.from("mi_polls").select("specialty,state,created_at"),
+      sb.from("mi_customers").select("full_name,free_level,sample_specialty,sample_state").eq("user_id", user.id).maybeSingle()
     ]).then(function (rs) {
-      var purchases = rs[0].data || [], polls = rs[1].data || [];
-      lastSeat = { purchases: purchases, polls: polls };
+      var purchases = rs[0].data || [], polls = rs[1].data || [], profile = rs[2].data || null;
+      lastSeat = { purchases: purchases, polls: polls, profile: profile };
+      var api = w.AMPRidgeAccess, out = null;
+      if (api && api.applyServerSeat) out = api.applyServerSeat({ purchases: purchases, polls: polls });
+      if (api && api.applyFreeLevel && profile) { try { api.applyFreeLevel(profile); } catch (eF) {} }
+      syncing = false;
+      rememberSample();
       try { accountBar(); } catch (eBar) {}
-      var api = w.AMPRidgeAccess;
-      if (!api || !api.applyServerSeat) return null;
-      return api.applyServerSeat({ purchases: purchases, polls: polls });
-    });
+      maybeWelcome();
+      return out;
+    }); });
   }
 
   function verifyCheckout(sessionId) {
@@ -96,6 +124,7 @@
       ".mi-acct-card label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}.mi-acct-card input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #cfd6dd;border-radius:8px;font-size:15px}" +
       ".mi-acct-card button[type=submit]{margin-top:16px;width:100%;padding:12px;border:0;border-radius:8px;background:#0f2a3d;color:#fff;font-weight:600;font-size:15px;cursor:pointer}" +
       ".mi-acct-x{position:absolute;top:10px;right:14px;border:0;background:none;font-size:24px;cursor:pointer}.mi-acct-msg{font-size:14px;margin:12px 0 0;min-height:1em}.mi-acct-msg.err{color:#b3261e}" +
+      ".mi-acct-get{display:flex;flex-direction:column;gap:4px;margin:0 0 8px;padding:12px 14px;border-radius:10px;background:#e7f7ef;border:1px solid #6BE0AD;color:#0b3d2a;font-size:14px;line-height:1.35}.mi-acct-get[hidden]{display:none}" +
       ".mi-acct-links{font-size:14px;margin:10px 0 0}.mi-acct-links a{color:#1a6fa3;cursor:pointer;margin-right:14px}";
     d.head.appendChild(css);
     return modal;
@@ -103,7 +132,7 @@
 
   var VIEWS = {
     signup: {
-      title: "Create your account", sub: "Your purchases and polls stay on this account, on any device.",
+      title: "Create your free account", sub: "Your free sample, purchases and polls stay on this account, on any device.",
       fields: [["full_name", "Full name", "text", "name"], ["organization", "Organization", "text", "organization"],
         ["email", "Work email", "email", "email"], ["phone", "Phone", "tel", "tel"], ["password", "Password (8+ characters)", "password", "new-password"]],
       cta: "Create account", links: [["signin", "I already have an account"]]
@@ -132,6 +161,15 @@
     var v = VIEWS[view];
     modal.querySelector("h2").textContent = v.title;
     modal.querySelector(".mi-acct-sub").textContent = v.sub;
+    var get = modal.querySelector(".mi-acct-get");
+    if (!get) { get = d.createElement("div"); get.className = "mi-acct-get"; modal.querySelector(".mi-acct-sub").after(get); }
+    get.hidden = view !== "signup";
+    if (view === "signup") {
+      get.innerHTML = "";
+      var g1 = d.createElement("strong"); g1.textContent = "You're getting: Free Verified sample";
+      var g2 = d.createElement("span"); g2.textContent = sampleText(localSample()) + ". Real pay bands, no card needed.";
+      get.appendChild(g1); get.appendChild(g2);
+    }
     var form = modal.querySelector("form");
     form.innerHTML = v.fields.map(function (f) {
       return '<label for="mi-acct-' + f[0] + '">' + f[1] + '</label><input id="mi-acct-' + f[0] + '" name="' + f[0] + '" type="' + f[2] + '" autocomplete="' + f[3] + '" required>';
@@ -160,17 +198,20 @@
     init().then(function () {
       if (view === "signup") {
         var email = val(form, "email"), pw = val(form, "password");
-        var prof = { full_name: val(form, "full_name"), organization: val(form, "organization"), phone: val(form, "phone") };
+        var smp = localSample();
+        var prof = { full_name: val(form, "full_name"), organization: val(form, "organization"), phone: val(form, "phone"),
+          free_level: "verified", sample_specialty: smp ? smp.spec : "", sample_state: smp ? smp.st : "",
+          sample_label: "Free Verified sample: " + sampleText(smp) };
         if (!prof.full_name || !prof.organization || !email) { msg("Please fill in name, organization and work email.", true); return done(); }
         if (w.AMPRidgeAccess && AMPRidgeAccess.isWorkEmail && !AMPRidgeAccess.isWorkEmail(email)) { msg("Please use your work email, not a personal one.", true); return done(); }
         if (pw.length < 8) { msg("Password needs at least 8 characters.", true); return done(); }
-        return sb.auth.signUp({ email: email, password: pw, options: { data: prof, emailRedirectTo: redirect } }).then(function (r) {
+        return sb.auth.signUp({ email: email, password: pw, options: { data: prof, emailRedirectTo: redirect + "?welcome=1" } }).then(function (r) {
           done();
           if (r.error) return msg(r.error.message, true);
           if (r.data.session) { saveProfile(prof, email).then(finish); }
           else {
             try { localStorage.setItem("amp_mi_pending_profile", JSON.stringify({ email: email, prof: prof })); } catch (e) {}
-            msg("Check your email to confirm your account, then sign in here.");
+            msg("Almost done. Check your email and tap the confirmation link. It brings you right back here with your free sample ready.");
           }
         });
       }
@@ -199,7 +240,8 @@
   }
 
   function saveProfile(prof, email) {
-    return sb.from("mi_customers").upsert({ user_id: user.id, full_name: prof.full_name, organization: prof.organization, phone: prof.phone || null, work_email: email });
+    return sb.from("mi_customers").upsert({ user_id: user.id, full_name: prof.full_name, organization: prof.organization, phone: prof.phone || null, work_email: email,
+      free_level: prof.free_level || "verified", sample_specialty: prof.sample_specialty || null, sample_state: prof.sample_state || null });
   }
   /* First sign-in after email confirmation: write the profile captured at sign-up. */
   function ensureProfile(u) {
@@ -207,7 +249,8 @@
     return sb.from("mi_customers").select("user_id").eq("user_id", u.id).maybeSingle().then(function (r) {
       if (r.data) return;
       var meta = u.user_metadata || {};
-      return saveProfile({ full_name: meta.full_name || "", organization: meta.organization || "", phone: meta.phone || "" }, u.email);
+      return saveProfile({ full_name: meta.full_name || "", organization: meta.organization || "", phone: meta.phone || "",
+        free_level: meta.free_level || "verified", sample_specialty: meta.sample_specialty || "", sample_state: meta.sample_state || "" }, u.email);
     });
   }
   function finish() {
@@ -245,6 +288,70 @@
         if (w.AMPRidgeWorkbench && AMPRidgeWorkbench.refresh) { try { AMPRidgeWorkbench.refresh(); } catch (e) {} }
       });
     });
+  }
+
+  /* 2219: if the account has no sample market yet and this browser picks one, save it to the account. */
+  function rememberSample() {
+    if (!sb || !user || syncing || !lastSeat || !lastSeat.profile) return;
+    var pr = lastSeat.profile, smp = localSample();
+    if (!smp || (pr.sample_specialty && pr.sample_state)) return;
+    pr.sample_specialty = smp.spec; pr.sample_state = smp.st;
+    sb.from("mi_customers").update({ sample_specialty: smp.spec, sample_state: smp.st }).eq("user_id", user.id).then(function () {});
+    var api = ra(); if (api && api.applyFreeLevel) { try { api.applyFreeLevel(pr); } catch (e) {} }
+    try { accountBar(); } catch (e2) {}
+  }
+  function goRoute(route) {
+    var a = d.createElement("a"); a.setAttribute("data-go", route); a.href = "#"; a.style.display = "none";
+    d.body.appendChild(a); a.click(); a.remove();
+  }
+  function maybeWelcome() {
+    if (!fromConfirm || !user || !lastSeat) return;
+    fromConfirm = false;
+    try {
+      var p = new URLSearchParams(w.location.search || ""); p.delete("welcome");
+      var qs = p.toString(); w.history.replaceState(null, "", w.location.pathname + (qs ? "?" + qs : ""));
+    } catch (e) {}
+    buildModal();
+    var old = d.getElementById("mi-welcome"); if (old) old.remove();
+    var smp = accountSample();
+    var first = String((lastSeat.profile && lastSeat.profile.full_name) || (user.user_metadata || {}).full_name || "").split(" ")[0];
+    var wrap = el('<div class="mi-acct-modal" id="mi-welcome" role="dialog" aria-modal="true" aria-labelledby="mi-welcome-h"><div class="mi-acct-card">' +
+      '<button type="button" class="mi-acct-x" aria-label="Close">×</button><h2 id="mi-welcome-h"></h2><p class="mi-acct-sub"></p>' +
+      '<div class="mi-acct-get"></div><button type="button" class="mi-welcome-go"></button><p class="mi-welcome-more"></p></div></div>');
+    wrap.querySelector("h2").textContent = "\u2713 You're verified" + (first ? ", " + first : "") + ".";
+    wrap.querySelector(".mi-acct-sub").textContent = "Your email is confirmed and your account is ready. Here's what you signed up for:";
+    var get = wrap.querySelector(".mi-acct-get");
+    var g1 = d.createElement("strong"); g1.textContent = "Your free sample";
+    var g2 = d.createElement("span"); g2.textContent = sampleText(smp) + ".";
+    var g3 = d.createElement("span"); g3.textContent = "You see the real Red alert and Competitive pay bands. Free, no card needed.";
+    get.appendChild(g1); get.appendChild(g2); get.appendChild(g3);
+    var go = wrap.querySelector(".mi-welcome-go");
+    go.textContent = smp ? "Open my free sample" : "Pick my free sample";
+    go.style.cssText = "margin-top:14px;width:100%;padding:12px;border:0;border-radius:8px;background:#0f2a3d;color:#fff;font-weight:600;font-size:15px;cursor:pointer";
+    var more = wrap.querySelector(".mi-welcome-more");
+    more.style.cssText = "font-size:14px;color:#555;margin:14px 0 0;line-height:1.4";
+    more.appendChild(d.createTextNode("Want every layer? Get one full report for $99, or a poll package: 15 polls for $225, 50 for $650, 100 for $1,100 or 250 for $2,250. "));
+    var see = d.createElement("a"); see.href = "#"; see.textContent = "See options"; see.style.cssText = "color:#1a6fa3";
+    more.appendChild(see);
+    var close = function () { wrap.remove(); };
+    wrap.querySelector(".mi-acct-x").onclick = close;
+    wrap.addEventListener("click", function (e) { if (e.target === wrap) close(); });
+    go.onclick = function () { close(); if (smp) openOwned(smp.spec, smp.st); else { goRoute("mi-lite"); setTimeout(function () { var dr = d.getElementById("ridge-demo-door"); if (dr) dr.scrollIntoView({ behavior: "smooth", block: "center" }); }, 350); } };
+    see.onclick = function (e) { e.preventDefault(); close(); goRoute("mi-lite-portal"); };
+    d.body.appendChild(wrap);
+  }
+  /* One friendly line describing the account's current level. */
+  function planText() {
+    var ps = (lastSeat && lastSeat.purchases) || [];
+    var packs = ps.filter(function (p) { return /^pack/.test(p.sku); });
+    if (packs.length) {
+      var big = packs.slice().sort(function (a, b) { return (b.polls_granted || 0) - (a.polls_granted || 0); })[0];
+      var granted = ps.reduce(function (n, p) { return n + (Number(p.polls_granted) || 0); }, 0);
+      var left = Math.max(0, granted - ((lastSeat.polls || []).length));
+      return { name: PACK_LABEL[big.sku] || "Poll package", detail: left + " of " + granted + " polls left. Each poll opens one specialty in one state, every layer.", paid: true };
+    }
+    var reports = ps.filter(function (p) { return p.sku === "oneoff"; }).length;
+    return { name: "Free Verified sample" + (reports ? " + " + reports + " full report" + (reports > 1 ? "s" : "") : ""), detail: sampleText(accountSample()) + ".", paid: false };
   }
 
   w.AMPMiAccounts = {
@@ -320,12 +427,19 @@
           var reports = ps.filter(function (p) { return p.sku === "oneoff" && p.specialty && p.state; });
           var granted = ps.reduce(function (n, p) { return n + (Number(p.polls_granted) || 0); }, 0);
           var left2 = Math.max(0, granted - (lastSeat.polls || []).length);
-          var head = d.createElement("strong"); head.textContent = "Your balance";
+          var plan = planText();
+          var head = d.createElement("div"); head.id = "mi-your-plan";
+          var hs = d.createElement("strong"); hs.textContent = "Your plan: " + plan.name;
+          var hd = d.createElement("div"); hd.textContent = plan.detail;
+          head.appendChild(hs); head.appendChild(hd);
           bal.appendChild(head);
-          var pl = d.createElement("div");
-          pl.textContent = ps.some(function (p) { return /^pack/.test(p.sku); }) ? ("Polls left: " + left2 + " of " + granted) : "Polls left: 0 (no poll package yet)";
-          bal.appendChild(pl);
-          if (!reports.length) { var none = d.createElement("div"); none.textContent = "Reports owned: none yet"; bal.appendChild(none); }
+          if (!plan.paid) {
+            var up = d.createElement("div"); up.style.cssText = "font-size:14px;opacity:.9";
+            up.appendChild(d.createTextNode("Want every layer? $99 for one full report, or poll packages of 15, 50, 100 or 250 polls. "));
+            var upa = d.createElement("a"); upa.href = "#"; upa.textContent = "See options"; upa.style.cssText = "text-decoration:underline;color:inherit";
+            upa.onclick = function (e) { e.preventDefault(); goRoute("mi-lite-portal"); };
+            up.appendChild(upa); bal.appendChild(up);
+          }
           reports.forEach(function (r) {
             var row = d.createElement("div"); row.style.cssText = "display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center";
             var t = d.createElement("span"); t.textContent = "\u2713 $99 report: " + specLabel(r.specialty) + " \u00b7 " + stateLabel(r.state);
@@ -373,7 +487,8 @@
     if (!user && (v === "signin" || v === "signup")) openModal(v);
   }
   if (enabled) {
-    var boot = function () { listeners.push(accountBar); init().then(function () { accountBar(); accountDeepLink(); handleReturn(); }); };
+    var boot = function () { listeners.push(accountBar);
+      var api0 = ra(); if (api0 && api0.onChange) api0.onChange(function () { if (user && !syncing) rememberSample(); }); init().then(function () { accountBar(); accountDeepLink(); handleReturn(); }); };
     if (d.readyState === "loading") d.addEventListener("DOMContentLoaded", boot);
     else boot();
   }
