@@ -1,3 +1,4 @@
+/* amp-build:2218-pull-to-refresh */
 /* amp-build:2207-mi-report-rebuild */
 /* amp-build:2201-mi-33-public */
 /* amp-build:2194-polish-step4-wide-howwehelp-specialty-photos */
@@ -14791,3 +14792,14 @@ html.mi-place-draw-on #ridge-map-container circle[data-state]:not(.pd-in-selecti
 .rds-final { margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px 20px; background:#f1f7fc; }
 .rds-final > div:not(.btn-row) { display:flex; flex-direction:column; gap:4px; } .rds-final .btn-row { grid-column:1/-1; }
 @media (max-width:900px) { .rds-bands { grid-template-columns:repeat(2,minmax(0,1fr)); } .rds-tour-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .rds-final { grid-template-columns:1fr; } }
+
+/* ========== amp-build:2218-pull-to-refresh ==========
+   2179 set overscroll-behavior-y:none on html/body to stop rubber-banding
+   past the footer. That also disabled the phone browser's native
+   pull-down-to-refresh at the top. Restore default overscroll. The
+   bottom gap is already covered by 2182 (html navy background and the
+   .amp-footer-endcap fill), so a bounce shows footer color, not wallpaper. */
+html,
+body {
+  overscroll-behavior-y: auto;
+}
