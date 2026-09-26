@@ -1013,7 +1013,7 @@
     if (s.pipelineFilled != null) {
       html += '<div class="hero">' + show(fmtNum(s.pipelineFilled), "n/a") + '<small>PGY-1 filled / year</small></div>';
       html += '<div class="mean-line">' + show(fmtNum(s.pipelineOffered), "") + " offered · " +
-        (s.pipelineFillRate != null ? s.pipelineFillRate + "% fill" : "") + " · 2025 Match · EXAMPLE</div>";
+        (s.pipelineFillRate != null ? s.pipelineFillRate + "% fill" : "") + " · 2025 NRMP Main Match</div>";
     } else {
       html += '<div class="hero"><span class="na">n/a</span><small>no PGY-1 match breakout</small></div>';
       html += '<div class="mean-line">Subspecialties often lack separate Match counts · EXAMPLE</div>';
