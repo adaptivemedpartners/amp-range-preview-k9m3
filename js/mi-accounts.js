@@ -256,11 +256,13 @@
     var bar = d.getElementById("mi-acct-bar");
     if (host && !bar) {
       bar = d.createElement("div"); bar.id = "mi-acct-bar";
-      host.insertBefore(bar, host.firstChild);
+      var hero = host.querySelector(".hero-band");
+      if (hero && hero.parentNode) hero.parentNode.insertBefore(bar, hero.nextSibling);
+      else host.insertBefore(bar, host.firstChild);
     }
     if (bar) {
       bar.innerHTML = "";
-      bar.style.cssText = "display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:12px auto;max-width:1100px;padding:12px 18px;border-radius:12px;font:600 15px/1.3 Inter,system-ui,sans-serif;" +
+      bar.style.cssText = "display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;align-items:center;position:relative;z-index:5;margin:14px 16px;padding:12px 18px;border-radius:12px;font:600 15px/1.3 Inter,system-ui,sans-serif;" +
         (user ? "background:#e7f7ef;border:1px solid #6BE0AD;color:#0b3d2a" : "background:#eef6fb;border:1px solid #78C4E5;color:#0b2a44");
       var left = d.createElement("span");
       var right = d.createElement("span"); right.style.cssText = "display:flex;gap:16px";
@@ -293,8 +295,8 @@
       chip.textContent = user ? "\u2713 Signed in" : "Sign in";
       chip.title = user ? (user.email || "") : "Sign in to Market Intelligence";
       chip.style.background = user ? "#6BE0AD" : "transparent";
-      chip.style.color = user ? "#0b3d2a" : "inherit";
-      chip.style.border = user ? "1px solid #6BE0AD" : "1px solid currentColor";
+      chip.style.color = user ? "#0b3d2a" : "#ffffff";
+      chip.style.border = user ? "1px solid #6BE0AD" : "1px solid rgba(255,255,255,.85)";
     }
   }
   function accountDeepLink() {
