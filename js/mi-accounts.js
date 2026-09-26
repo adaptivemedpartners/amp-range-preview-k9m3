@@ -266,6 +266,30 @@
     var a = d.createElement("a"); a.setAttribute("data-go", "mi-lite-app"); a.href = "#"; a.style.display = "none";
     d.body.appendChild(a); a.click(); a.remove();
   }
+  function ownerView() {
+    var ps = (user && lastSeat && lastSeat.purchases) || [];
+    var owner = ps.some(function (p) { return p.sku === "oneoff" || /^pack/.test(p.sku); });
+    d.body.classList.toggle("mi-owner", owner);
+    if (!d.getElementById("mi-owner-css")) {
+      var css = d.createElement("style"); css.id = "mi-owner-css";
+      css.textContent = "body.mi-owner #ridge-verify-cta,body.mi-owner #ridge-simulate-verify-app,body.mi-owner #ridge-oneoff-cta,body.mi-owner #mi-lite-lock-again,body.mi-owner #ridge-sim-pay,body.mi-owner #ridge-seat-line{display:none!important}" +
+        "body.mi-owner #ridge-demo-door:not(.mi-open){display:none!important}" +
+        "#mi-try-other{display:none;margin:4px 16px 14px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#0b2a44;text-decoration:underline;cursor:pointer;background:none;border:0;padding:0}body.mi-owner #mi-try-other{display:inline-block}";
+      d.head.appendChild(css);
+    }
+    var door = d.getElementById("ridge-demo-door");
+    if (door && !d.getElementById("mi-try-other")) {
+      var t = d.createElement("button"); t.type = "button"; t.id = "mi-try-other";
+      t.textContent = "Try a free sample of another market \u25be";
+      t.onclick = function () { var o = door.classList.toggle("mi-open"); t.textContent = o ? "Hide free sample \u25b4" : "Try a free sample of another market \u25be"; };
+      door.parentNode.insertBefore(t, door);
+    }
+    var lede = d.querySelector('.view[data-route="mi-lite-app"] .hero-inner .lede');
+    if (lede) {
+      if (!lede.getAttribute("data-orig")) lede.setAttribute("data-orig", lede.textContent);
+      lede.textContent = owner ? "Your purchased report, with every layer open." : lede.getAttribute("data-orig");
+    }
+  }
   function accountBar() {
     if (!user) lastSeat = null;
     var host = d.querySelector('.view[data-route="mi-lite"]');
@@ -320,6 +344,7 @@
       }
       bar.insertBefore(right, bar.firstChild); bar.insertBefore(left, bar.firstChild);
     }
+    ownerView();
     /* Top nav: show signed-in state on every page. */
     var nav = d.getElementById("site-nav");
     var chip = d.getElementById("mi-acct-nav");

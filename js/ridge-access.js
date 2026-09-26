@@ -598,6 +598,13 @@
           body: "The workbench stays closed until you commit one specialty × one state. Then that unit is unlocked."
         };
       }
+      if (hasOneOff(seat, seat.demoSpecialty, seat.demoState)) {
+        return {
+          tag: "Your $99 report",
+          title: specLabel(seat.demoSpecialty) + " × " + stateLabel(seat.demoState),
+          body: "Every layer is open for this market: all four pay bands, Place draw, cost of living, supply, Day load, Support, CAH and FQHC."
+        };
+      }
       return {
         tag: "Free demo · 1×1",
         title: specLabel(seat.demoSpecialty) + " × " + stateLabel(seat.demoState),
