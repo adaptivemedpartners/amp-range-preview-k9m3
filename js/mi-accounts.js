@@ -210,6 +210,7 @@
   }
   function finish() {
     closeModal();
+    var t = d.getElementById("mi-lite-mock-toast"); if (t) { t.textContent = "You're signed in."; t.hidden = false; setTimeout(function () { t.hidden = true; }, 4000); }
     syncSeat();
     var cb = pendingAfter; pendingAfter = null;
     if (cb) cb(user);
@@ -252,25 +253,48 @@
   /* Visible account bar on the MI page + ?account=signin|signup deep link (2209). */
   function accountBar() {
     var host = d.querySelector('.view[data-route="mi-lite"]');
-    if (!host) return;
     var bar = d.getElementById("mi-acct-bar");
-    if (!bar) {
+    if (host && !bar) {
       bar = d.createElement("div"); bar.id = "mi-acct-bar";
-      bar.style.cssText = "display:flex;justify-content:flex-end;gap:12px;align-items:center;padding:10px 16px;font:14px/1.3 Inter,system-ui,sans-serif";
       host.insertBefore(bar, host.firstChild);
     }
-    bar.innerHTML = "";
-    if (user) {
-      var who = d.createElement("span"); who.textContent = "Signed in as " + (user.email || "");
-      var out = d.createElement("a"); out.href = "#"; out.textContent = "Sign out"; out.style.textDecoration = "underline";
-      out.onclick = function (e) { e.preventDefault(); signOut(); };
-      bar.appendChild(who); bar.appendChild(out);
-    } else {
-      [["signin", "Sign in"], ["signup", "Create account"]].forEach(function (l) {
-        var a = d.createElement("a"); a.href = "#"; a.textContent = l[1]; a.style.textDecoration = "underline";
-        a.onclick = function (e) { e.preventDefault(); openModal(l[0]); };
-        bar.appendChild(a);
-      });
+    if (bar) {
+      bar.innerHTML = "";
+      bar.style.cssText = "display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:12px auto;max-width:1100px;padding:12px 18px;border-radius:12px;font:600 15px/1.3 Inter,system-ui,sans-serif;" +
+        (user ? "background:#e7f7ef;border:1px solid #6BE0AD;color:#0b3d2a" : "background:#eef6fb;border:1px solid #78C4E5;color:#0b2a44");
+      var left = d.createElement("span");
+      var right = d.createElement("span"); right.style.cssText = "display:flex;gap:16px";
+      if (user) {
+        left.textContent = "\u2713 You're signed in as " + (user.email || "");
+        var out = d.createElement("a"); out.href = "#"; out.textContent = "Sign out"; out.style.cssText = "text-decoration:underline;color:inherit";
+        out.onclick = function (e) { e.preventDefault(); signOut(); };
+        right.appendChild(out);
+      } else {
+        left.textContent = "Have an account? Sign in to see your purchases.";
+        [["signin", "Sign in"], ["signup", "Create account"]].forEach(function (l) {
+          var a = d.createElement("a"); a.href = "#"; a.textContent = l[1]; a.style.cssText = "text-decoration:underline;color:inherit";
+          a.onclick = function (e) { e.preventDefault(); openModal(l[0]); };
+          right.appendChild(a);
+        });
+      }
+      bar.appendChild(left); bar.appendChild(right);
+    }
+    /* Top nav: show signed-in state on every page. */
+    var nav = d.getElementById("site-nav");
+    var chip = d.getElementById("mi-acct-nav");
+    if (nav && !chip) {
+      chip = d.createElement("a"); chip.id = "mi-acct-nav"; chip.href = "#";
+      chip.style.cssText = "margin-left:10px;padding:6px 12px;border-radius:999px;font:600 13px/1 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap";
+      chip.onclick = function (e) { e.preventDefault(); if (!user) openModal("signin"); else if (confirm("Sign out of " + (user.email || "your account") + "?")) signOut(); };
+      var cta = nav.querySelector('[data-go="mi-lite"]');
+      (cta && cta.parentNode ? cta.parentNode : nav).appendChild(chip);
+    }
+    if (chip) {
+      chip.textContent = user ? "\u2713 Signed in" : "Sign in";
+      chip.title = user ? (user.email || "") : "Sign in to Market Intelligence";
+      chip.style.background = user ? "#6BE0AD" : "transparent";
+      chip.style.color = user ? "#0b3d2a" : "inherit";
+      chip.style.border = user ? "1px solid #6BE0AD" : "1px solid currentColor";
     }
   }
   function accountDeepLink() {
