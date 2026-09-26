@@ -4,7 +4,7 @@
   "use strict";
   var cfg = w.AMP_MI_ACCOUNTS || {};
   var enabled = !!(cfg.url && cfg.anonKey);
-  var sb = null, user = null, ready = null, listeners = [];
+  var sb = null, user = null, ready = null, listeners = [], lastSeat = null;
 
   function fnUrl(name) { return cfg.url.replace(/\/$/, "") + "/functions/v1/" + name; }
   function emit() { listeners.forEach(function (f) { try { f(user); } catch (e) {} }); }
@@ -58,6 +58,8 @@
       sb.from("mi_polls").select("specialty,state,created_at")
     ]).then(function (rs) {
       var purchases = rs[0].data || [], polls = rs[1].data || [];
+      lastSeat = { purchases: purchases, polls: polls };
+      try { accountBar(); } catch (eBar) {}
       var api = w.AMPRidgeAccess;
       if (!api || !api.applyServerSeat) return null;
       return api.applyServerSeat({ purchases: purchases, polls: polls });
@@ -251,7 +253,21 @@
     onChange: function (f) { listeners.push(f); }
   };
   /* Visible account bar on the MI page + ?account=signin|signup deep link (2209). */
+  function optLabel(id, v) {
+    var sel = d.getElementById(id);
+    if (sel) for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === v) return sel.options[i].textContent;
+    return "";
+  }
+  function specLabel(k) { return optLabel("ridge-demo-specialty", k) || String(k || "").replace(/_/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
+  function stateLabel(k) { return optLabel("ridge-demo-state", String(k || "").toUpperCase()) || String(k || "").toUpperCase(); }
+  function openOwned(spec, st) {
+    var api = w.AMPRidgeAccess;
+    if (api && api.startDemo) { try { api.startDemo({ specialty: spec, state: st }); } catch (e) {} }
+    var a = d.createElement("a"); a.setAttribute("data-go", "mi-lite-app"); a.href = "#"; a.style.display = "none";
+    d.body.appendChild(a); a.click(); a.remove();
+  }
   function accountBar() {
+    if (!user) lastSeat = null;
     var host = d.querySelector('.view[data-route="mi-lite"]');
     var bar = d.getElementById("mi-acct-bar");
     if (host && !bar) {
@@ -268,6 +284,29 @@
       var right = d.createElement("span"); right.style.cssText = "display:flex;gap:16px";
       if (user) {
         left.textContent = "\u2713 You're signed in as " + (user.email || "");
+        if (lastSeat) {
+          var bal = d.createElement("div");
+          bal.style.cssText = "flex-basis:100%;display:flex;flex-direction:column;gap:8px;font-weight:500;border-top:1px solid rgba(11,61,42,.15);padding-top:10px";
+          var ps = lastSeat.purchases || [];
+          var reports = ps.filter(function (p) { return p.sku === "oneoff" && p.specialty && p.state; });
+          var granted = ps.reduce(function (n, p) { return n + (Number(p.polls_granted) || 0); }, 0);
+          var left2 = Math.max(0, granted - (lastSeat.polls || []).length);
+          var head = d.createElement("strong"); head.textContent = "Your balance";
+          bal.appendChild(head);
+          var pl = d.createElement("div");
+          pl.textContent = ps.some(function (p) { return /^pack/.test(p.sku); }) ? ("Polls left: " + left2 + " of " + granted) : "Polls left: 0 (no poll package yet)";
+          bal.appendChild(pl);
+          if (!reports.length) { var none = d.createElement("div"); none.textContent = "Reports owned: none yet"; bal.appendChild(none); }
+          reports.forEach(function (r) {
+            var row = d.createElement("div"); row.style.cssText = "display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center";
+            var t = d.createElement("span"); t.textContent = "\u2713 $99 report: " + specLabel(r.specialty) + " \u00b7 " + stateLabel(r.state);
+            var b = d.createElement("button"); b.type = "button"; b.textContent = "Open report";
+            b.style.cssText = "padding:6px 14px;border-radius:999px;border:0;background:#0b3d2a;color:#fff;font:600 14px/1 Inter,system-ui,sans-serif;cursor:pointer";
+            b.onclick = function () { openOwned(r.specialty, r.state); };
+            row.appendChild(t); row.appendChild(b); bal.appendChild(row);
+          });
+          bar.appendChild(bal);
+        }
         var out = d.createElement("a"); out.href = "#"; out.textContent = "Sign out"; out.style.cssText = "text-decoration:underline;color:inherit";
         out.onclick = function (e) { e.preventDefault(); signOut(); };
         right.appendChild(out);
@@ -279,7 +318,7 @@
           right.appendChild(a);
         });
       }
-      bar.appendChild(left); bar.appendChild(right);
+      bar.insertBefore(right, bar.firstChild); bar.insertBefore(left, bar.firstChild);
     }
     /* Top nav: show signed-in state on every page. */
     var nav = d.getElementById("site-nav");
