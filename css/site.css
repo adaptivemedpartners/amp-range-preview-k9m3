@@ -5204,9 +5204,9 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 /* Ridge MGMA percentile bars (national Total Comp) */
 .ridge-workbench .ridge-bars { display:flex; flex-direction:column; gap:7px; margin-top:6px; }
 .ridge-workbench .ridge-bars .bar-row {
-  display:grid; grid-template-columns:40px 1fr 92px; gap:8px; align-items:center; font-size:12px;
+  display:grid; grid-template-columns:82px 1fr 84px; gap:8px; align-items:center; font-size:12px;
 }
-.ridge-workbench .ridge-bars .bar-lbl { color:var(--ridge-muted); font-weight:700; font-size:11px; }
+.ridge-workbench .ridge-bars .bar-lbl { color:var(--ridge-muted); font-weight:700; font-size:11px; white-space:nowrap; }
 .ridge-workbench .ridge-bars .bar-val { text-align:right; font-weight:750; color:var(--ridge-text); font-variant-numeric:tabular-nums; }
 .ridge-workbench .ridge-bars .bar {
   height:7px; border-radius:999px; background:rgba(13,148,136,.12); overflow:hidden;
@@ -5215,7 +5215,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
   display:block; height:100%; border-radius:999px;
   background:linear-gradient(90deg,#0f766e,#14b8a6);
 }
-.ridge-workbench .ridge-bars-hud .bar-row { grid-template-columns:36px 1fr 84px; font-size:11px; }
+.ridge-workbench .ridge-bars-hud .bar-row { grid-template-columns:78px 1fr 74px; column-gap:8px; font-size:11px; }
 .ridge-workbench .mean-line.mean-row {
   display:flex; justify-content:space-between; align-items:baseline; gap:10px;
   margin-top:10px; padding-top:8px; border-top:1px solid var(--ridge-border);
