@@ -230,5 +230,11 @@
     s.amp33 = true;
     s.ampBandsNote = "Competitive approved 2026-09-25 (" + c.conf + " confidence)";
   });
+  /* 2222: core rows whose AMP bands exist on internal MI (same method, e.g. FM matches) but were never copied to public. */
+  var CORE = { ob_gyn_general: { redAlert: 341958, competitive: 405430, magnet: 496403, destination: 607788 } };
+  list.forEach(function (s) {
+    var b = CORE[s.key];
+    if (b && !(s.ampBands && s.ampBands.competitive != null)) { s.ampBands = b; s.ampBandsNote = "AMP bands from internal MI (same method)"; }
+  });
   MI.AMP33 = { added: added, updated: updated, keys: Object.keys(COMP) };
 })(window);
