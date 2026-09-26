@@ -272,7 +272,7 @@
     d.body.classList.toggle("mi-owner", owner);
     if (!d.getElementById("mi-owner-css")) {
       var css = d.createElement("style"); css.id = "mi-owner-css";
-      css.textContent = "body.mi-owner #ridge-verify-cta,body.mi-owner #ridge-simulate-verify-app,body.mi-owner #ridge-oneoff-cta,body.mi-owner #mi-lite-lock-again,body.mi-owner #ridge-sim-pay,body.mi-owner #ridge-seat-line{display:none!important}" +
+      css.textContent = "body.mi-owner #ridge-verify-cta,body.mi-owner #ridge-simulate-verify-app,body.mi-owner #ridge-oneoff-cta,body.mi-owner #mi-lite-lock-again,body.mi-owner #ridge-sim-pay,body.mi-owner #ridge-seat-line,body.mi-owner .ridge-access-actions,body.mi-owner #mi-lite-lock-banner{display:none!important}" +
         "body.mi-owner #ridge-demo-door:not(.mi-open){display:none!important}" +
         "#mi-try-other{display:none;margin:4px 16px 14px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#0b2a44;text-decoration:underline;cursor:pointer;background:none;border:0;padding:0}body.mi-owner #mi-try-other{display:inline-block}";
       d.head.appendChild(css);
@@ -283,6 +283,11 @@
       t.textContent = "Try a free sample of another market \u25be";
       t.onclick = function () { var o = door.classList.toggle("mi-open"); t.textContent = o ? "Hide free sample \u25b4" : "Try a free sample of another market \u25be"; };
       door.parentNode.insertBefore(t, door);
+    }
+    var wtag = d.querySelector('.mi-dashboard-head .tag');
+    if (wtag) {
+      if (!wtag.getAttribute("data-orig")) wtag.setAttribute("data-orig", wtag.textContent);
+      wtag.textContent = owner ? "Market Intelligence \u00b7 your report" : wtag.getAttribute("data-orig");
     }
     var lede = d.querySelector('.view[data-route="mi-lite-app"] .hero-inner .lede');
     if (lede) {
