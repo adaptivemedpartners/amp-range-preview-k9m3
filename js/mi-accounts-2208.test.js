@@ -25,5 +25,5 @@ assert(!api.isPaid(seat), "no server purchases = not paid");
 const src = fs.readFileSync(__dirname + "/app.js", "utf8");
 assert(/AMPMiAccounts\.requireAccount\(goStripe\)/.test(src), "checkout requires account when accounts on");
 const cfg = fs.readFileSync(__dirname + "/mi-accounts-config.js", "utf8");
-assert(/url: ""/.test(cfg), "accounts stay off until the customer project exists");
+assert(/url: "https:\/\/bschlmhjsqvtxlkgrulc\.supabase\.co"/.test(cfg) && /anonKey: "eyJ/.test(cfg), "accounts point at AMP Market Intelligence project (anon key only)");
 console.log("mi-accounts-2208 ok");
