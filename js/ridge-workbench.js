@@ -1018,26 +1018,26 @@
         (s.pipelineFillRate != null ? s.pipelineFillRate + "% fill" : "") + " · 2025 NRMP Main Match</div>";
     } else {
       html += '<div class="hero"><span class="na">n/a</span><small>no PGY-1 match breakout</small></div>';
-      html += '<div class="mean-line">Subspecialties often lack separate Match counts · EXAMPLE</div>';
+      html += '<div class="mean-line">Subspecialties often lack separate Match counts</div>';
     }
     html += '</div>';
 
     html += '<div class="bench-card aging"><div class="title">Workforce age 55+</div>';
     if (s.age55Pct != null) {
       html += '<div class="hero">' + s.age55Pct.toFixed(1) + '%<small>national specialty signal</small></div>';
-      html += '<div class="mean-line">AAMC workforce reports · retirement pressure · EXAMPLE</div>';
+      html += '<div class="mean-line">AAMC workforce reports · retirement pressure</div>';
     } else {
-      html += '<div class="hero"><span class="na">n/a</span></div><div class="mean-line">EXAMPLE</div>';
+      html += '<div class="hero"><span class="na">n/a</span></div><div class="mean-line">Not available for this specialty</div>';
     }
     html += '</div>';
 
     html += '<div class="bench-card phys"><div class="title">' + (wt.active || ("Active " + wt.title)) + '</div>';
     if (s.physCategory || (s.physNational != null && s.physNational > 0)) {
       html += '<div class="hero">' + show(fmtNum(s.physNational), "n/a") + '<small>national · ' + (s.physCategory || s.label || wt.title) + '</small></div>';
-      html += '<div class="mean-line">' + (s && s.supplySource ? s.supplySource : "KFF May 2026") + ' · EXAMPLE</div>';
+      html += '<div class="mean-line">' + (s && s.supplySource ? s.supplySource : "KFF May 2026") + '</div>';
     } else {
       html += '<div class="hero"><span class="na">n/a</span><small>limited public count</small></div>';
-      html += '<div class="mean-line">' + wt.group + ' · supply snapshot · EXAMPLE</div>';
+      html += '<div class="mean-line">' + wt.group + ' · supply snapshot</div>';
     }
     var npB = ampNppesFor(s);
     if (npB) html += '<div class="mean-line nppes-line" title="NPI registry (NPPES Sep 2026 V2)">NPPES candidates <strong>' + fmtNum(npB.national) + '</strong> · ' + npB.conf + ' confidence</div>';
@@ -1046,10 +1046,10 @@
     html += '<div class="bench-card postings"><div class="title">Approx. live postings</div>';
     if (s.nationalPostings) {
       html += '<div class="hero">' + show(fmtNum(s.nationalPostings), "n/a") + '<small>national JAMA</small></div>';
-      html += '<div class="mean-line">' + (s.postingCategory || "") + (s.postingDemand ? " · demand " + s.postingDemand : "") + " · EXAMPLE</div>";
+      html += '<div class="mean-line">' + (s.postingCategory || "") + (s.postingDemand ? " · demand " + s.postingDemand : "") + "</div>";
     } else {
       html += '<div class="hero"><span class="na">n/a</span><small>limited public count</small></div>';
-      html += '<div class="mean-line">Not broken out on JAMA snapshot · EXAMPLE</div>';
+      html += '<div class="mean-line">Not broken out on JAMA snapshot</div>';
     }
     html += '</div>';
 
@@ -1057,10 +1057,10 @@
     if (s.openingsPerPhysician != null) {
       var per100 = s.openingsPerPhysician * 100;
       html += '<div class="hero">' + per100.toFixed(2) + '<small>openings / 100 ' + wt.plural + '</small></div>';
-      html += '<div class="mean-line">≈ ' + show(fmtNum(s.physiciansPerOpening, 1), "n/a") + " " + wt.plural + " per opening · EXAMPLE</div>";
+      html += '<div class="mean-line">≈ ' + show(fmtNum(s.physiciansPerOpening, 1), "n/a") + " " + wt.plural + " per opening</div>";
     } else {
       html += '<div class="hero"><span class="na">n/a</span><small>need postings + supply</small></div>';
-      html += '<div class="mean-line">Ratio needs postings and ' + wt.vsSupply + " · EXAMPLE</div>";
+      html += '<div class="mean-line">Ratio needs postings and ' + wt.vsSupply + "</div>";
     }
     html += '</div>';
 
@@ -1215,7 +1215,7 @@
     if (headSub) {
       if (picks.length === 1) headSub.textContent = (s ? s.label + " · " : "") + selectionNames() + " · state read";
       else if (picks.length > 1) headSub.textContent = (s ? s.label + " · " : "") + selectionNames() + " · state read";
-      else headSub.textContent = "Difficulty · speed-to-fill · Total Comp · public · EXAMPLE";
+      else headSub.textContent = "Difficulty · speed-to-fill · Total Comp · public";
     }
 
     var html = "";
@@ -1297,7 +1297,7 @@
       html += '<div class="cell"><div class="lbl">Quarterly</div><div class="val">' + fmtMoney(vac.quarterly) + "</div></div>";
       html += '<div class="cell"><div class="lbl">Annual</div><div class="val">' + fmtMoney(vac.annual) + "</div></div>";
       html += "</div>";
-      html += '<div class="note">TTF is a specialty benchmark. Revenue is directional professional medical revenue · EXAMPLE.</div>';
+      html += '<div class="note">TTF is a specialty benchmark. Revenue is directional professional medical revenue.</div>';
       html += "</div>";
     }
 
@@ -1341,7 +1341,7 @@
       html += '<div class="row"><span class="k">Age 55+</span><span class="v">' + (s.age55Pct != null ? s.age55Pct.toFixed(1) + "%" : "—") + "</span></div>";
     }
 
-    html += '<p class="ridge-side-note">EXAMPLE / ILLUSTRATIVE · ' +
+    html += '<p class="ridge-side-note">' +
       (forcedUnitState() ? "Demo is locked to one committed state. Verify or upgrade to open another unit. "
         : "Selection stays on the map. Multi-select toggle or Cmd/Ctrl+click to compare. ") +
       "No client names or search IDs. Ask AMP for deeper firm tools.</p>";
@@ -1361,7 +1361,7 @@
     var lens = picks.length ? picks.map(function (c) { return names[c] || c.toUpperCase(); }).join(" · ") : "national lens";
     if (title) title.textContent = (s ? s.label : "Specialty") + " · " + lens;
     if (copy) copy.textContent = "Full Market Intelligence workbench for " + (s ? s.label : "specialty") +
-      " — map, HUD cards, and state rail. Layers still marked EXAMPLE are placeholders; Ask AMP for deeper firm tools.";
+      " — map, HUD cards, and state rail. Ask AMP for deeper firm tools.";
   }
 
   function updateMetricButtons() {
