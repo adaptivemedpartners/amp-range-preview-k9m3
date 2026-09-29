@@ -5140,23 +5140,10 @@
     }
   }
 
-  /* amp-build:2111-public-forms — Typeform live embeds + ACH wired to live Webflow */
+  /* amp-build:2235-ach-stripe — Typeform live embeds; Easy Pay ACH via Stripe Checkout (setup mode).
+     Bank numbers are entered on Stripe's hosted page only; nothing goes to Webflow. */
   var TYPEFORM_SRC = "https://embed.typeform.com/next/embed.js";
-  var ACH_LIVE_URL = "https://www.adaptivemedicalpartners.com/easy-pay-authorization";
-  var ACH_WF_SITE = "68ae8c1190abe2fd7be13740";
-  var ACH_FIELD_KEYS = {
-    "ABA-Number": "ABA Number",
-    "Bank-Account-Number": "Bank Account Number",
-    "Bank-Account-Type": "Bank Account Type",
-    "First-Name": "First-Name",
-    "Last-Name": "Last-Name",
-    "Title": "Title",
-    "Organization": "Organization",
-    "Signature": "Signature",
-    "Billing-Contact-Email": "Billing Contact Email",
-    "Billing-Contact-Phone": "Billing Contact Phone",
-    "Acceptance": "Acceptance"
-  };
+  var ACH_SETUP_URL = "https://bschlmhjsqvtxlkgrulc.supabase.co/functions/v1/ach-setup";
 
   function loadTypeformScript(cb) {
     if (window.tf) {
@@ -5200,40 +5187,26 @@
     status.classList.toggle("is-error", !!isErr);
   }
 
-  function achOnWwwHost() {
-    return /(^|\.)adaptivemedicalpartners\.com$/i.test(location.hostname || "");
-  }
-
   function hydrateEasyPay() {
     bindEasyPayForm();
-    var wrap = $("[data-amp-ach-frame-wrap]");
-    var frame = $("[data-amp-ach-frame]");
-    var form = $("#wf-form-ACH-Form");
-    if (!wrap || !frame || !form) return;
-    wrap.hidden = true;
-    form.hidden = false;
-    /* After mountain owns www, iframing this path would recurse. Live Webflow
-       also sends X-Frame-Options: SAMEORIGIN, so preview hosts fall back to
-       the mountain clone that posts to the same Webflow form handler. */
-    if (achOnWwwHost()) return;
-    if (frame.getAttribute("data-amp-src-set") === "1") return;
-    frame.setAttribute("data-amp-src-set", "1");
-    frame.src = ACH_LIVE_URL;
-    frame.addEventListener("load", function () {
-      try {
-        var href = frame.contentWindow && frame.contentWindow.location.href;
-        if (!href || href === "about:blank") return;
-        var doc = frame.contentDocument;
-        if (!doc || !doc.body) return;
-      } catch (err) {
-        wrap.hidden = false;
-        form.hidden = true;
-      }
-    }, { once: true });
+    var form = $("#amp-ach-form");
+    var done = $("#amp-ach-done");
+    if (!form) return;
+    var q = new URLSearchParams(location.search || "");
+    var state = q.get("ach");
+    if (state === "done") {
+      form.hidden = true;
+      if (done) done.hidden = false;
+      setAchStatus("", false);
+    } else {
+      form.hidden = false;
+      if (done) done.hidden = true;
+      if (state === "cancel") setAchStatus("Bank link was not finished. You can continue again whenever you’re ready.", true);
+    }
   }
 
   function bindEasyPayForm() {
-    var form = $("#wf-form-ACH-Form");
+    var form = $("#amp-ach-form");
     if (!form || form.__ampBound) return;
     form.__ampBound = true;
     form.addEventListener("submit", function (e) {
@@ -5244,58 +5217,50 @@
 
   function submitEasyPay(form) {
     var accept = form.querySelector('[name="Acceptance"]');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
     if (accept && !accept.checked) {
       setAchStatus("Please accept the terms to authorize payment.", true);
       accept.focus();
       return;
     }
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
     var fd = new FormData(form);
-    var body = new URLSearchParams();
-    body.set("name", "ACH Form");
-    body.set("source", ACH_LIVE_URL);
-    body.set("test", "false");
-    Object.keys(ACH_FIELD_KEYS).forEach(function (name) {
-      var val = fd.get(name);
-      if (val == null || val === "") return;
-      if (name === "Acceptance") val = "true";
-      body.set("fields[" + ACH_FIELD_KEYS[name] + "]", String(val));
-    });
-
+    function v(n) { return String(fd.get(n) || "").trim(); }
+    var payload = {
+      first: v("First-Name"),
+      last: v("Last-Name"),
+      title: v("Title"),
+      org: v("Organization"),
+      signature: v("Signature"),
+      email: v("Billing-Contact-Email"),
+      phone: v("Billing-Contact-Phone"),
+      accept: !!(accept && accept.checked),
+      path: location.pathname || "/easy-pay-authorization"
+    };
     var submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.setAttribute("data-label", submitBtn.textContent);
-      submitBtn.textContent = "Submitting…";
+      submitBtn.textContent = "Opening secure bank link…";
     }
-    setAchStatus("Transmitting securely…", false);
-
-    fetch("https://webflow.com/api/v1/form/" + ACH_WF_SITE, {
+    setAchStatus("", false);
+    fetch(ACH_SETUP_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-      body: body.toString(),
-      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
       credentials: "omit",
       cache: "no-store"
     }).then(function (res) {
-      if (!res.ok) throw new Error("ach-http");
-      form.reset();
-      form.hidden = true;
-      var done = $("#amp-ach-done");
-      if (done) done.hidden = false;
-      setAchStatus("", false);
+      return res.json().then(function (j) { if (!res.ok || !j || !j.url) throw new Error("ach"); return j; });
+    }).then(function (j) {
+      location.href = j.url;
     }).catch(function () {
-      setAchStatus("We could not finish this authorization here. Use Open on AMP so banking details post to the proven live form.", true);
-      var fallback = $("#amp-ach-fallback");
-      if (fallback) fallback.hidden = false;
-    }).then(function () {
+      setAchStatus("We couldn’t open the secure bank link. Please try again, or contact us and we’ll help.", true);
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Submit authorization";
+        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Continue to secure bank link";
       }
     });
   }
@@ -6279,7 +6244,7 @@ function syncGuideRoute(route) {
        /interview-expense-form   → form-interview-expense
        /easy-pay-authorization   → form-easy-pay
        KEEP public form paths stay; Typeform embeds inline; ACH posts to the
-       live Webflow handler (no Mess/localStorage banking, no fake success).
+       Stripe hosted bank link (no Mess/localStorage banking, no fake success).
        /job/{slug}               → job/{slug}
        /blog-posts/{slug}        → blog/{slug}
        /market-intelligence      → mi-lite   (/ridge, /mi-lite alias → rewrite here)
