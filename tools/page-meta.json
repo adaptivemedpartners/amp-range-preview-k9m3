@@ -64,7 +64,7 @@
  },
  "/easy-pay-authorization": {
   "title": "Easy Pay Authorization | Adaptive Medical Partners",
-  "desc": "Secure ACH payment authorization for Adaptive Medical Partners organizations. Details are transmitted securely.",
+  "desc": "Secure payment authorization for Adaptive Medical Partners organizations, by bank account (ACH) or card through Stripe.",
   "robots": "index,follow",
   "canon": "https://www.adaptivemedicalpartners.com/easy-pay-authorization",
   "jobld": null
@@ -662,6 +662,13 @@
   "desc": "Free 5-minute assessment reveals how your physician opening ranks against regional and national competitors.",
   "robots": "index,follow",
   "canon": "https://www.adaptivemedicalpartners.com/blog-posts/how-does-your-physician-search-stack-up-against-the-competition",
+  "jobld": null
+ },
+ "/pay-invoice": {
+  "title": "Pay an Invoice | Adaptive Medical Partners",
+  "desc": "Pay an Adaptive Medical Partners invoice online by bank account (ACH) or card through Stripe's secure checkout.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/pay-invoice",
   "jobld": null
  }
 }

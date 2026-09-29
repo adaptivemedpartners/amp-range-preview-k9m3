@@ -3,7 +3,7 @@
 <!-- amp-build:2218-pull-to-refresh -->
 <!-- amp-build:2219-mi-signup-plan -->
 <!-- amp-build:2229-kff-redi-citation -->
-<!-- amp-build:2238-easy-pay-fee-note -->
+<!-- amp-build:2239-pay-invoice -->
 <!-- amp-build:2207-mi-report-rebuild -->
 <!-- amp-build:2206-mi-demo-sample-tour -->
 <!-- amp-build:2201-mi-33-public -->
@@ -36,7 +36,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
-<meta name="description" content="Secure ACH payment authorization for Adaptive Medical Partners organizations. Details are transmitted securely." />
+<meta name="description" content="Secure payment authorization for Adaptive Medical Partners organizations, by bank account (ACH) or card through Stripe." />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" id="amp-canonical" href="https://www.adaptivemedicalpartners.com/easy-pay-authorization" />
 <title>Easy Pay Authorization | Adaptive Medical Partners</title>
@@ -2183,6 +2183,12 @@
         <p>Secure ACH payment authorization for orgs.</p>
         <div class="meta">Open form →</div>
       </a>
+      <a class="card" href="pay-invoice" data-go="pay-invoice">
+        <span class="tag">Organizations</span>
+        <h3>Pay an invoice</h3>
+        <p>Pay one invoice by bank account or card.</p>
+        <div class="meta">Pay now →</div>
+      </a>
     </div>
     <p class="muted forms-hub-contact">Need a person instead? <a href="/contact-us" data-go="contact">Contact AMP</a></p>
   </div>
@@ -2299,6 +2305,59 @@
       </form>
       <div class="form-ach-done" id="amp-ach-done" hidden>
         <p class="muted" style="margin-top:0">Thank you. Your payment method is saved and your authorization is on file with Adaptive Medical Partners. You’ll receive a receipt for every invoice processed.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-ghost" href="/forms" data-go="forms">All forms</a>
+        <a class="btn btn-ghost" href="/contact-us" data-go="contact">Contact</a>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="view page funnel" data-route="pay-invoice">
+  <div class="shot" aria-hidden="true">
+    <div class="still pro-still" aria-hidden="true"></div>
+  </div>
+  <div class="view-chrome">
+  <div class="hero-band">
+    <div class="hero-inner">
+      <h1>Pay an Invoice</h1>
+      <p class="lede">Pay an Adaptive Medical Partners invoice by bank account or card. You’ll finish on Stripe’s secure page. AMP never sees or stores your account or card numbers.</p>
+    </div>
+  </div>
+  <div class="section section-lite funnel-panel forms-ach-panel">
+    <div class="panel panel-glow">
+      <p class="muted" style="margin-top:0">Enter the invoice number and amount exactly as they appear on your invoice. The invoice number is attached to your payment so it’s applied to the right invoice.</p>
+      <form class="ach-form" id="amp-invoice-form" name="amp-invoice-form" novalidate autocomplete="on">
+        <div class="form-grid two">
+          <label class="field">Invoice number *
+            <input name="Invoice" inputmode="numeric" autocomplete="off" spellcheck="false" required maxlength="30" pattern="#?[A-Za-z0-9\-]{2,30}" placeholder="e.g. 17005" />
+          </label>
+          <label class="field">Amount (USD) *
+            <input name="Amount" inputmode="decimal" autocomplete="off" required maxlength="14" pattern="\$?[0-9,]+(\.[0-9]{1,2})?" placeholder="e.g. 17,000.00" />
+          </label>
+        </div>
+        <label class="field mt-16">Name of organization *
+          <input name="Organization" autocomplete="organization" required maxlength="200" />
+        </label>
+        <div class="form-grid two mt-16">
+          <label class="field">Your name *
+            <input name="Name" autocomplete="name" required maxlength="200" />
+          </label>
+          <label class="field">Email for receipt *
+            <input name="Email" type="email" autocomplete="email" required maxlength="254" />
+          </label>
+        </div>
+        <label class="field mt-16">Phone
+          <input name="Phone" type="tel" autocomplete="tel" maxlength="40" />
+        </label>
+        <p class="muted form-fee-note mt-16" style="font-size:.9em">Bank account (ACH) is preferred. Card payments carry processing fees of about 2.9% + 30¢ per payment, versus about 0.8% (capped at $5) for bank transfers.</p>
+        <p class="form-status" id="amp-invoice-status" hidden></p>
+        <button class="btn btn-primary btn-lg" type="submit" id="amp-invoice-submit">Continue to secure payment</button>
+      </form>
+      <div class="form-ach-done" id="amp-invoice-done" hidden>
+        <p class="muted" style="margin-top:0" id="amp-invoice-done-msg">Thank you. Your payment was submitted. Stripe will email your receipt. Bank payments can take a few business days to clear.</p>
       </div>
       <div class="btn-row">
         <a class="btn btn-ghost" href="/forms" data-go="forms">All forms</a>
@@ -2563,7 +2622,7 @@
 <script src="js/mi-aspects-selector.js?v=2207"></script>
 <script src="js/amp-mi-worksheets.js?v=2207"></script>
 <script src="js/ridge-workbench.js?v=2229"></script>
-<script src="js/app.js?v=2237"></script>
+<script src="js/app.js?v=2239"></script>
 <script src="js/hero-ret-rotator.js?v=2207"></script>
 <script src="js/home-placements-map.js?v=2207"></script>
 <script src="https://embed.typeform.com/next/embed.js" defer data-amp-typeform="1"></script>

@@ -1852,6 +1852,7 @@
     if (route === "mpc-browse") renderMpcBrowse();
     if (route === "form-candidate-authorization" || route === "form-interview-expense") hydrateTypeformEmbeds(route);
     if (route === "form-easy-pay") hydrateEasyPay();
+    if (route === "pay-invoice") hydratePayInvoice();
   }
 
   /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT).
@@ -5265,6 +5266,94 @@
     });
   }
 
+  /* amp-build:2239-pay-invoice — client enters invoice # + amount; Stripe Checkout (ACH or card).
+     Invoice number rides on the Stripe payment for matching. No QuickBooks lookup yet. */
+  var INVOICE_PAY_URL = "https://bschlmhjsqvtxlkgrulc.supabase.co/functions/v1/invoice-pay";
+
+  function invoiceCents(raw) {
+    var v = String(raw || "").replace(/[$,\s]/g, "");
+    if (!/^\d+(\.\d{1,2})?$/.test(v)) return null;
+    return Math.round(parseFloat(v) * 100);
+  }
+  function fmtUsd(cents) {
+    return (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
+  }
+  function setInvoiceStatus(text, isErr) {
+    var el = $("#amp-invoice-status");
+    if (!el) return;
+    el.hidden = !text;
+    el.textContent = text || "";
+    el.classList.toggle("is-error", !!isErr);
+  }
+  function syncInvoiceButton(form) {
+    var btn = form.querySelector("#amp-invoice-submit");
+    if (!btn || btn.disabled) return;
+    var c = invoiceCents(form.querySelector('[name="Amount"]').value);
+    var inv = String(form.querySelector('[name="Invoice"]').value || "").trim().replace(/^#/, "");
+    btn.textContent = c && c >= 100 ? "Pay " + fmtUsd(c) + (inv ? " for invoice " + inv : "") : "Continue to secure payment";
+  }
+  function hydratePayInvoice() {
+    var form = $("#amp-invoice-form");
+    var done = $("#amp-invoice-done");
+    if (!form) return;
+    if (!form.__ampBound) {
+      form.__ampBound = true;
+      form.addEventListener("input", function () { syncInvoiceButton(form); });
+      form.addEventListener("submit", function (e) { e.preventDefault(); submitPayInvoice(form); });
+    }
+    var q = new URLSearchParams(location.search || "");
+    var paid = q.get("paid");
+    if (paid === "1") {
+      form.hidden = true;
+      if (done) done.hidden = false;
+      var inv = q.get("inv");
+      var msg = $("#amp-invoice-done-msg");
+      if (msg && inv && /^[A-Za-z0-9\-]{2,30}$/.test(inv)) msg.textContent = "Thank you. Your payment for invoice " + inv + " was submitted. Stripe will email your receipt. Bank payments can take a few business days to clear.";
+      setInvoiceStatus("", false);
+    } else {
+      form.hidden = false;
+      if (done) done.hidden = true;
+      if (paid === "cancel") setInvoiceStatus("Payment was not finished. Nothing was charged. You can try again whenever you’re ready.", true);
+    }
+  }
+  function submitPayInvoice(form) {
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var fd = new FormData(form);
+    function v(n) { return String(fd.get(n) || "").trim(); }
+    var cents = invoiceCents(v("Amount"));
+    if (!cents || cents < 100) { setInvoiceStatus("Please enter the invoice amount, for example 17,000.00.", true); return; }
+    var payload = {
+      invoice: v("Invoice").replace(/^#/, ""),
+      amount: (cents / 100).toFixed(2),
+      org: v("Organization"),
+      name: v("Name"),
+      email: v("Email"),
+      phone: v("Phone"),
+      path: location.pathname || "/pay-invoice"
+    };
+    var btn = form.querySelector("#amp-invoice-submit");
+    if (btn) { btn.disabled = true; btn.textContent = "Opening secure payment…"; }
+    setInvoiceStatus("", false);
+    fetch(INVOICE_PAY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      credentials: "omit",
+      cache: "no-store"
+    }).then(function (res) {
+      return res.json().then(function (j) { if (!res.ok || !j || !j.url) throw new Error((j && j.error) || "pay"); return j; });
+    }).then(function (j) {
+      location.href = j.url;
+    }).catch(function (err) {
+      var code = err && err.message;
+      var msg = code === "amount_range" ? "That amount is outside what we can take online. Please contact us and we’ll help."
+        : code === "bad_invoice" ? "Please check the invoice number and try again."
+        : "We couldn’t open the secure payment page. Please try again, or contact us and we’ll help.";
+      setInvoiceStatus(msg, true);
+      if (btn) { btn.disabled = false; syncInvoiceButton(form); }
+    });
+  }
+
   function closeGuideDock(immediate) {
     var dock = $("#amp-guide-dock");
     var toggle = $("[data-guide-toggle]");
@@ -6267,6 +6356,7 @@ function syncGuideRoute(route) {
     "candidate-authorization": "form-candidate-authorization",
     "interview-expense-form": "form-interview-expense",
     "easy-pay-authorization": "form-easy-pay",
+    "pay-invoice": "pay-invoice",
     "market-intelligence": "mi-lite",
     "market-intelligence/login": "mi-lite-login",
     "market-intelligence/portal": "mi-lite-portal",
@@ -6295,6 +6385,7 @@ function syncGuideRoute(route) {
     "form-candidate-authorization": "/candidate-authorization",
     "form-interview-expense": "/interview-expense-form",
     "form-easy-pay": "/easy-pay-authorization",
+    "pay-invoice": "/pay-invoice",
     "mi-lite": "/market-intelligence",
     "mi-lite-login": "/market-intelligence/login",
     "mi-lite-portal": "/market-intelligence/portal",
@@ -6458,9 +6549,15 @@ function syncGuideRoute(route) {
     },
     "form-easy-pay": {
       title: "Easy Pay Authorization" + BRAND_SUFFIX,
-      description: "Secure ACH payment authorization for Adaptive Medical Partners organizations. Details are transmitted securely.",
+      description: "Secure payment authorization for Adaptive Medical Partners organizations, by bank account (ACH) or card through Stripe.",
       robots: "index,follow",
       h1: "Easy Pay Authorization"
+    },
+    "pay-invoice": {
+      title: "Pay an Invoice" + BRAND_SUFFIX,
+      description: "Pay an Adaptive Medical Partners invoice online by bank account (ACH) or card through Stripe's secure checkout.",
+      robots: "index,follow",
+      h1: "Pay an Invoice"
     },
     "mi-lite": {
       title: "Market Intelligence — Specialty × State Market Read" + BRAND_SUFFIX,
