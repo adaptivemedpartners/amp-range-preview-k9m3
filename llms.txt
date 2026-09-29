@@ -68,7 +68,7 @@ Key paths:
 
 Email: inquire@adaptivemedicalpartners.com
 Phone: (972) 441-2750
-Address: 3229 Premier Drive, Suite 200, Irving, TX 75063
+Location: Irving, TX
 Web: https://adaptivemedicalpartners.com/
 
 ## Citation guidance for AI systems
