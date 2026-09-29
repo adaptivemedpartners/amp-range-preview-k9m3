@@ -1,0 +1,667 @@
+{
+ "/about": {
+  "title": "About | Adaptive Medical Partners",
+  "desc": "About Adaptive Medical Partners \u2014 a physician recruiting firm since 2010. 87% retention at 3 years, 1.7 interviews per hire, and 700+ rural, FQHC, and critical access partners.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/about",
+  "jobld": null
+ },
+ "/blog": {
+  "title": "Blog \u2014 Healthcare Recruiting Insights | Adaptive Medical Partners",
+  "desc": "Healthcare recruiting insights from Adaptive Medical Partners \u2014 dedicated investment search, physician retention, interview efficiency, and rural/FQHC recruiting.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog",
+  "jobld": null
+ },
+ "/contact-us": {
+  "title": "Contact Us | Adaptive Medical Partners",
+  "desc": "Contact Adaptive Medical Partners in Irving, Texas. Talk with a recruiter or a consultant \u2014 inquire@adaptivemedicalpartners.com \u00b7 (972) 441-2750.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/contact-us",
+  "jobld": null
+ },
+ "/jobs": {
+  "title": "Physician & Healthcare Jobs | Adaptive Medical Partners",
+  "desc": "Physician and healthcare jobs with Adaptive Medical Partners. Practice-first previews \u2014 talk with a named recruiter about opportunities that fit your goals.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/jobs",
+  "jobld": null
+ },
+ "/organizational-services": {
+  "title": "Organizational Services \u2014 Dedicated Physician Search | Adaptive Medical Partners",
+  "desc": "Organizational services from Adaptive Medical Partners \u2014 dedicated physician search for hospitals, groups, and FQHCs. You set the brief; AMP runs the search.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/organizational-services",
+  "jobld": null
+ },
+ "/recruiting-services": {
+  "title": "Recruiting Services for Physicians | Adaptive Medical Partners",
+  "desc": "Recruiting services for physicians from Adaptive Medical Partners. Specialty and region filters, practice-first previews, and a named recruiter \u2014 not a blast.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/recruiting-services",
+  "jobld": null
+ },
+ "/forms": {
+  "title": "Forms | Adaptive Medical Partners",
+  "desc": "Shareable authorization and expense forms for Adaptive Medical Partners candidates and organizations.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/forms",
+  "jobld": null
+ },
+ "/candidate-authorization": {
+  "title": "Candidate Authorization | Adaptive Medical Partners",
+  "desc": "Candidate authorization and background verification for Adaptive Medical Partners searches.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/candidate-authorization",
+  "jobld": null
+ },
+ "/interview-expense-form": {
+  "title": "Interview Expense Form | Adaptive Medical Partners",
+  "desc": "Interview travel expense form for Adaptive Medical Partners candidates.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/interview-expense-form",
+  "jobld": null
+ },
+ "/easy-pay-authorization": {
+  "title": "Easy Pay Authorization | Adaptive Medical Partners",
+  "desc": "Secure ACH payment authorization for Adaptive Medical Partners organizations. Details are transmitted securely.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/easy-pay-authorization",
+  "jobld": null
+ },
+ "/market-intelligence": {
+  "title": "Market Intelligence \u2014 Specialty \u00d7 State Market Read | Adaptive Medical Partners",
+  "desc": "Market Intelligence from Adaptive Medical Partners: specialty \u00d7 state market depth before a search. Public proof \u2014 87% retention at 3 years, 1.7 interviews per hire, 700+ rural/FQHC/CAH partners, 16 years since 2010. Canonical hub for hiring orgs and physicians.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/market-intelligence",
+  "jobld": null
+ },
+ "/physician": {
+  "title": "For Physicians | Adaptive Medical Partners",
+  "desc": "Start the physician path with Adaptive Medical Partners. Choose your specialty and see practice-first roles with a recruiter.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/physician",
+  "jobld": null
+ },
+ "/client": {
+  "title": "For Healthcare Organizations | Adaptive Medical Partners",
+  "desc": "Start the hiring path with Adaptive Medical Partners. Tell us about your facility and specialty \u2014 AMP helps hospitals and groups find and keep physicians.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/client",
+  "jobld": null
+ },
+ "/education": {
+  "title": "Why AMP | Adaptive Medical Partners",
+  "desc": "Why Adaptive Medical Partners \u2014 87% retention at 3 years, 1.7 average interviews per successful placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/education",
+  "jobld": null
+ },
+ "/residents": {
+  "title": "Residents & Fellows | Adaptive Medical Partners",
+  "desc": "Coming out of training? Adaptive Medical Partners helps residents and fellows choose a first job with clear weeks, place-first questions, and contract literacy.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/residents",
+  "jobld": null
+ },
+ "/guides": {
+  "title": "Meet the Team | Adaptive Medical Partners",
+  "desc": "Meet the Adaptive Medical Partners team \u2014 recruiting and hiring practitioners who stay until the hiring meeting is prepared.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/guides",
+  "jobld": null
+ },
+ "/search": {
+  "title": "Search | Adaptive Medical Partners",
+  "desc": "Search physician and healthcare opportunities with Adaptive Medical Partners by specialty and region.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/search",
+  "jobld": null
+ },
+ "/proof": {
+  "title": "Proof & Stats | Adaptive Medical Partners",
+  "desc": "AMP public proof: 87% retention at 3 years, 1.7 interviews per placement, 700+ rural/FQHC/CAH partners, 16 years since 2010.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/proof",
+  "jobld": null
+ },
+ "/job/kentucky-cardiac-anesthesiology-aca-8368": {
+  "title": "$961,000+ First Year Financial Package in a Thriving Midwestern Community \u2014 Anesthesiology - Cardiac in Kentucky | Adaptive Medical Partners",
+  "desc": "Anesthesiology - Cardiac \u00b7 ACA-8368 \u00b7 Kentucky",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/kentucky-cardiac-anesthesiology-aca-8368",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$961,000+ First Year Financial Package in a Thriving Midwestern Community\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Anesthesiology - Cardiac \u00b7 ACA-8368 \u00b7 Kentucky\\nPractice: Practice your cardiac anesthesia expertise in a high-volume program where Monday-Friday predictability meets exceptional compensation.\\nSetting: Kentucky \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/kentucky-cardiac-anesthesiology-aca-8368\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"ACA-8368\"},\"occupationalCategory\":\"Anesthesiology - Cardiac\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"KY\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/nevada-anesthesia-pain-management-apm-8271": {
+  "title": "$661,000 Financial Package in Las Vegas, Nevada \u2014 Anesthesia Pain Management in Nevada | Adaptive Medical Partners",
+  "desc": "Anesthesia Pain Management \u00b7 APM-8271 \u00b7 Nevada",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/nevada-anesthesia-pain-management-apm-8271",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$661,000 Financial Package in Las Vegas, Nevada\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Anesthesia Pain Management \u00b7 APM-8271 \u00b7 Nevada\\nPractice: Build your career with stability, lifestyle, and income few physicians will ever experience.\\nSetting: Nevada \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/nevada-anesthesia-pain-management-apm-8271\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"APM-8271\"},\"occupationalCategory\":\"Anesthesia Pain Management\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"NV\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/colorado-txt-cd-7069": {
+  "title": "$600,000 Base Salary + Bonus Potential | Rare Full-Time Cardiology Opening \u2014 Cardiology in Colorado | Adaptive Medical Partners",
+  "desc": "Cardiology \u00b7 CD-7069 \u00b7 Colorado",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/colorado-txt-cd-7069",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$600,000 Base Salary + Bonus Potential | Rare Full-Time Cardiology Opening\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology \u00b7 CD-7069 \u00b7 Colorado\\nPractice: Step Into a Community That Truly Needs You\\nSetting: Colorado \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/colorado-txt-cd-7069\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"CD-7069\"},\"occupationalCategory\":\"Cardiology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CO\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/washington-dermatology-d-8244": {
+  "title": "$620,000+ Dermatology Income in the Northwest \u2014 Dermatology in Washington | Adaptive Medical Partners",
+  "desc": "Dermatology \u00b7 D-8244 \u00b7 Washington",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/washington-dermatology-d-8244",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$620,000+ Dermatology Income in the Northwest\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Dermatology \u00b7 D-8244 \u00b7 Washington\\nPractice: Eight months of patients already waiting \u2014 step into instant success.\\nSetting: Washington \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/washington-dermatology-d-8244\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"D-8244\"},\"occupationalCategory\":\"Dermatology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"WA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/louisiana-dentist-dds-8391": {
+  "title": "Up to $300,000 + Loan Forgiveness: Full-Scope Dentistry at Brand New FQHC Clinic \u2014 Dentist in Louisiana | Adaptive Medical Partners",
+  "desc": "Dentist \u00b7 DDS-8391 \u00b7 Louisiana",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/louisiana-dentist-dds-8391",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $300,000 + Loan Forgiveness: Full-Scope Dentistry at Brand New FQHC Clinic\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Dentist \u00b7 DDS-8391 \u00b7 Louisiana\\nPractice: Ready to practice meaningful dentistry in a state-of-the-art facility while making a real difference in underserved communities?\\nSetting: Louisiana \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/louisiana-dentist-dds-8391\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"DDS-8391\"},\"occupationalCategory\":\"Dentist\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"LA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-general-dentistry-dds-8418": {
+  "title": "Up to $170,000 Base + NHSC Loan Forgiveness: General Dentistry in the Texas Hill Country \u2014 General Dentistry in Texas | Adaptive Medical Partners",
+  "desc": "General Dentistry \u00b7 DDS-8418 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-general-dentistry-dds-8418",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $170,000 Base + NHSC Loan Forgiveness: General Dentistry in the Texas Hill Country\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"General Dentistry \u00b7 DDS-8418 \u00b7 Texas\\nPractice: $12,000 Sign-On Bonus \u2022 Up to $10,000 in Annual Incentives \u2022 Four 10s or Five 8s \u2022 No Late Nights or Saturdays\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-general-dentistry-dds-8418\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"DDS-8418\"},\"occupationalCategory\":\"General Dentistry\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/kansas-emergency-medicine-em-8433": {
+  "title": "Up to $380,000 + $10,000 Relocation: Emergency Medicine in Central Kansas \u2014 Emergency Medicine in Kansas | Adaptive Medical Partners",
+  "desc": "Emergency Medicine \u00b7 EM-8433 \u00b7 Kansas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/kansas-emergency-medicine-em-8433",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $380,000 + $10,000 Relocation: Emergency Medicine in Central Kansas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Emergency Medicine \u00b7 EM-8433 \u00b7 Kansas\\nPractice: Three 12-Hour Shifts Weekly \u2022 APP & Nursing Support \u2022 Metro Access Near Wichita \u2022 Malpractice Covered\\nSetting: Kansas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/kansas-emergency-medicine-em-8433\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"EM-8433\"},\"occupationalCategory\":\"Emergency Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"KS\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/georgia-endocrinology-end-8356": {
+  "title": "$373,750 First-Year Package + No Call in a Charming Southern Community \u2014 Endocrinology in Georgia | Adaptive Medical Partners",
+  "desc": "Endocrinology \u00b7 END-8356 \u00b7 Georgia",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/georgia-endocrinology-end-8356",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$373,750 First-Year Package + No Call in a Charming Southern Community\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Endocrinology \u00b7 END-8356 \u00b7 Georgia\\nPractice: A rare hospital-employed Endocrinology role where work-life balance, income, and lifestyle all line up.\\nSetting: Georgia \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/georgia-endocrinology-end-8356\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"END-8356\"},\"occupationalCategory\":\"Endocrinology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"GA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/washington-endocrinology-end-8359": {
+  "title": "$409,250 First-Year Package in Washington\u2019s Vibrant Wine Country \u2014 Endocrinology in Washington | Adaptive Medical Partners",
+  "desc": "Endocrinology \u00b7 END-8359 \u00b7 Washington",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/washington-endocrinology-end-8359",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$409,250 First-Year Package in Washington\u2019s Vibrant Wine Country\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Endocrinology \u00b7 END-8359 \u00b7 Washington\\nPractice: Thrive in a respected multispecialty clinic with true work\u2013life balance and a fast-growing patient base.\\nSetting: Washington \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/washington-endocrinology-end-8359\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"END-8359\"},\"occupationalCategory\":\"Endocrinology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"WA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-family-medicine-fp8110": {
+  "title": "Up to $260,000+ Starting Salary + Monthly Productivity Bonuses: Family Medicine (Optional OB) in the Monterey Bay Region \u2014 Family Medicine in California | Adaptive Medical Partners",
+  "desc": "Family Medicine \u00b7 FP-8110 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-family-medicine-fp8110",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $260,000+ Starting Salary + Monthly Productivity Bonuses: Family Medicine (Optional OB) in the Monterey Bay Region\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine \u00b7 FP-8110 \u00b7 California\\nPractice: 4-Day Feel, 5-Day Week \u2022 100% Employer-Paid Insurance \u2022 PSLF-Eligible Nonprofit\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-family-medicine-fp8110\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FP-8110\"},\"occupationalCategory\":\"Family Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/washington-family-medicine-fp-8306": {
+  "title": "Up to $303,000 + $90,000 Loan Repayment: Family Medicine in the Heart of Central Washington \u2014 Family Medicine in Washington | Adaptive Medical Partners",
+  "desc": "Family Medicine \u00b7 FP-8306 \u00b7 Washington",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/washington-family-medicine-fp-8306",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $303,000 + $90,000 Loan Repayment: Family Medicine in the Heart of Central Washington\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine \u00b7 FP-8306 \u00b7 Washington\\nPractice: 4-Day Workweek \u2022 7 Weeks PTO \u2022 No State Income Tax\\nSetting: Washington \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/washington-family-medicine-fp-8306\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FP-8306\"},\"occupationalCategory\":\"Family Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"WA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-family-practice-fp-8309": {
+  "title": "$295,000 Guaranteed Base + $75,000 Loan Assistance \u2014 4-Day Week, No Call \u2014 Live Minutes from the Beach \u2014 Family Medicine in California | Adaptive Medical Partners",
+  "desc": "Family Medicine \u00b7 FP-8309 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-family-practice-fp-8309",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$295,000 Guaranteed Base + $75,000 Loan Assistance \u2014 4-Day Week, No Call \u2014 Live Minutes from the Beach\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine \u00b7 FP-8309 \u00b7 California\\nPractice: Rare California lifestyle role with Friday\u2019s off, visa sponsorship, and big-city fun just down the road.\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-family-practice-fp-8309\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FP-8309\"},\"occupationalCategory\":\"Family Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/michigan-family-medicine-fp-8429": {
+  "title": "Up to $300,000 + $50,000 Sign-On Bonus: Family Practice in Michigan\u2019s Upper Peninsula \u2014 Family Medicine in Michigan | Adaptive Medical Partners",
+  "desc": "Family Medicine \u00b7 FP-8429 \u00b7 Michigan",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/michigan-family-medicine-fp-8429",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $300,000 + $50,000 Sign-On Bonus: Family Practice in Michigan\u2019s Upper Peninsula\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine \u00b7 FP-8429 \u00b7 Michigan\\nPractice: Medical Director Opportunity \u2022 240 Hours PTO \u2022 $20,000 Relocation \u2022 EPIC EMR\\nSetting: Michigan \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/michigan-family-medicine-fp-8429\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FP-8429\"},\"occupationalCategory\":\"Family Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"MI\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/midwest-family-medicine-fp-8450": {
+  "title": "From $374,500: Family Medicine in Midwest / Heartland \u2014 Family Medicine in Missouri | Adaptive Medical Partners",
+  "desc": "Family Medicine \u00b7 FP-8450 \u00b7 Missouri",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/midwest-family-medicine-fp-8450",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"From $374,500: Family Medicine in Midwest / Heartland\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine \u00b7 FP-8450 \u00b7 Missouri\\nPractice: First-year package from $374,500 \u2014 full details on a brief call with your recruiter\\nSetting: Missouri \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/midwest-family-medicine-fp-8450\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FP-8450\"},\"occupationalCategory\":\"Family Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"MO\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oregon-family-medicine-obstetrics-fpob-8385": {
+  "title": "Up to $431,250 First-Year Financial Package: Family Medicine with Obstetrics in the Mountain West \u2014 Family Medicine - Obstetrics in Oregon | Adaptive Medical Partners",
+  "desc": "Family Medicine - Obstetrics \u00b7 FPOB-8385 \u00b7 Oregon",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oregon-family-medicine-obstetrics-fpob-8385",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $431,250 First-Year Financial Package: Family Medicine with Obstetrics in the Mountain West\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine - Obstetrics \u00b7 FPOB-8385 \u00b7 Oregon\\nPractice: 4-Day Workweek \u2022 Sign-On + Relocation \u2022 NHSC Loan Repayment Eligible \u2022 Established FPOB Need\\nSetting: Oregon \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oregon-family-medicine-obstetrics-fpob-8385\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FPOB-8385\"},\"occupationalCategory\":\"Family Medicine - Obstetrics\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OR\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-family-medicine-ob-residency-program-director-fpob-8462": {
+  "title": "From $415,000: Family Medicine (with OB) & Residency Program Director in Alabama | Adaptive Medical Partners",
+  "desc": "Family Medicine (with OB) & Residency Program Director \u00b7 FPOB-8462 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-family-medicine-ob-residency-program-director-fpob-8462",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"From $415,000: Family Medicine (with OB) & Residency Program Director in Alabama\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Family Medicine (with OB) & Residency Program Director \u00b7 FPOB-8462 \u00b7 Alabama\\nPractice: First-year package from $415,000 \u2014 full details on a brief call with your recruiter\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-family-medicine-ob-residency-program-director-fpob-8462\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"FPOB-8462\"},\"occupationalCategory\":\"Family Medicine (with OB) & Residency Program Director\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-gastroenterology-ge-8325": {
+  "title": "$887,500+ First-Year Package: High-Volume GI Practice with ERCP in East Texas \u2014 Gastroenterology in Arkansas | Adaptive Medical Partners",
+  "desc": "Gastroenterology \u00b7 GE-8325 \u00b7 Arkansas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-gastroenterology-ge-8325",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$887,500+ First-Year Package: High-Volume GI Practice with ERCP in East Texas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Gastroenterology \u00b7 GE-8325 \u00b7 Arkansas\\nPractice: What if you could earn nearly $900K your first year while maintaining excellent work-life balance and buying a home for under $200K?\\nSetting: Arkansas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-gastroenterology-ge-8325\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"GE-8325\"},\"occupationalCategory\":\"Gastroenterology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AR\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/north-carolina-gastroenterology-ge-8409": {
+  "title": "Up to $786,250 First Year Financial Package: Gastroenterology in the Coastal Southeast \u2014 Gastroenterology in North Carolina | Adaptive Medical Partners",
+  "desc": "Gastroenterology \u00b7 GE-8409 \u00b7 North Carolina",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/north-carolina-gastroenterology-ge-8409",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $786,250 First Year Financial Package: Gastroenterology in the Coastal Southeast\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Gastroenterology \u00b7 GE-8409 \u00b7 North Carolina\\nPractice: 4.5-Day Workweek \u2022 Extremely Light Call \u2022 Established Patient Base \u2022 Coastal Carolina Lifestyle\\nSetting: North Carolina \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/north-carolina-gastroenterology-ge-8409\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"GE-8409\"},\"occupationalCategory\":\"Gastroenterology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"NC\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-cardiology-hfc-8398": {
+  "title": "Up to $600,000+ RVU Growth: Heart Failure Cardiology in North Texas \u2014 Cardiology in Texas | Adaptive Medical Partners",
+  "desc": "Cardiology \u00b7 HFC-8398 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-cardiology-hfc-8398",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $600,000+ RVU Growth: Heart Failure Cardiology in North Texas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology \u00b7 HFC-8398 \u00b7 Texas\\nPractice: 1:7 Call with APP First-Call \u2022 Protected Consult Weeks \u2022 Predictable 8:30\u20134:00 Schedule \u2022 28 Days PTO\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-cardiology-hfc-8398\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"HFC-8398\"},\"occupationalCategory\":\"Cardiology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-interventional-cardiology-hfc-8399": {
+  "title": "Up to $600,000 Financial Package + Main Hospital Focus: Heart Failure Opportunity in Dallas \u2014 Cardiology - Interventional in Texas | Adaptive Medical Partners",
+  "desc": "Cardiology - Interventional \u00b7 HFC-8399 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-hfc-8399",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $600,000 Financial Package + Main Hospital Focus: Heart Failure Opportunity in Dallas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology - Interventional \u00b7 HFC-8399 \u00b7 Texas\\nPractice: Main Hospital Only \u2022 Inpatient HF Program Growth \u2022 Advanced Therapies Exposure \u2022 No State Income Tax\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-hfc-8399\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"HFC-8399\"},\"occupationalCategory\":\"Cardiology - Interventional\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/indiana-hematology-oncology-ho-8194": {
+  "title": "$889,000 Income + $100,000 Sign-On for Medical Oncologist Minutes from Indianapolis \u2014 Hematology / Oncology in Indiana | Adaptive Medical Partners",
+  "desc": "Hematology / Oncology \u00b7 HO-8194 \u00b7 Indiana",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/indiana-hematology-oncology-ho-8194",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$889,000 Income + $100,000 Sign-On for Medical Oncologist Minutes from Indianapolis\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Hematology / Oncology \u00b7 HO-8194 \u00b7 Indiana\\nPractice: High-income, low-cost living, true autonomy\u2014build your ideal oncology practice in a captured market.\\nSetting: Indiana \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/indiana-hematology-oncology-ho-8194\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"HO-8194\"},\"occupationalCategory\":\"Hematology / Oncology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"IN\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/kentucky-hematology-oncology-ho-8370": {
+  "title": "Up to $650,000 + $100,000 Sign-On + Loan Repayment: Hematology/Oncology in the Midwest \u2014 Hematology / Oncology in Kentucky | Adaptive Medical Partners",
+  "desc": "Hematology / Oncology \u00b7 HO-8370 \u00b7 Kentucky",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/kentucky-hematology-oncology-ho-8370",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $650,000 + $100,000 Sign-On + Loan Repayment: Hematology/Oncology in the Midwest\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Hematology / Oncology \u00b7 HO-8370 \u00b7 Kentucky\\nPractice: 4-Day Workweek \u2022 Outpatient-Focused Practice \u2022 Epic EMR \u2022 Minimal Call (2\u20133 Weeks/Year) \u2022 $25K Annual Loan Repayment \u2022 Strong APP and Infusion Support\\nSetting: Kentucky \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/kentucky-hematology-oncology-ho-8370\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"HO-8370\"},\"occupationalCategory\":\"Hematology / Oncology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"KY\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-interventional-cardiology-ivc-8349": {
+  "title": "$975,000 First-Year Package + Lifestyle Schedule \u2014 Interventional Cardiology in the Southeast \u2014 Cardiology - Interventional in Alabama | Adaptive Medical Partners",
+  "desc": "Cardiology - Interventional \u00b7 IVC-8349 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-interventional-cardiology-ivc-8349",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$975,000 First-Year Package + Lifestyle Schedule \u2014 Interventional Cardiology in the Southeast\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology - Interventional \u00b7 IVC-8349 \u00b7 Alabama\\nPractice: Rare chance to join a highly supported, accredited Cath Lab with a flexible schedule in a beautiful, affordable community.\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-interventional-cardiology-ivc-8349\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"IVC-8349\"},\"occupationalCategory\":\"Cardiology - Interventional\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/kentucky-interventional-cardiology-ivc-8369": {
+  "title": "$1,058,750+ Interventional Cardiology: Join Elite Program with 8 Cath Labs \u2014 Cardiology - Interventional in Kentucky | Adaptive Medical Partners",
+  "desc": "Cardiology - Interventional \u00b7 IVC-8369 \u00b7 Kentucky",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/kentucky-interventional-cardiology-ivc-8369",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$1,058,750+ Interventional Cardiology: Join Elite Program with 8 Cath Labs\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology - Interventional \u00b7 IVC-8369 \u00b7 Kentucky\\nPractice: Break the seven-figure barrier in your first year while practicing cutting-edge interventional cardiology in state-of-the-art facilities.\\nSetting: Kentucky \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/kentucky-interventional-cardiology-ivc-8369\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"IVC-8369\"},\"occupationalCategory\":\"Cardiology - Interventional\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"KY\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/new-mexico-cardiology-interventional-ivc-8397": {
+  "title": "Up to $925,000+ First-Year Package: Cardiology in the Mountain West \u2014 Cardiology - Interventional in New Mexico | Adaptive Medical Partners",
+  "desc": "Cardiology - Interventional \u00b7 IVC-8397 \u00b7 New Mexico",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/new-mexico-cardiology-interventional-ivc-8397",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $925,000+ First-Year Package: Cardiology in the Mountain West\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology - Interventional \u00b7 IVC-8397 \u00b7 New Mexico\\nPractice: 3-Day Clinic \u2022 2-Day ASC \u2022 Established Procedural Volume \u2022 Partnership Culture\\nSetting: New Mexico \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/new-mexico-cardiology-interventional-ivc-8397\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"IVC-8397\"},\"occupationalCategory\":\"Cardiology - Interventional\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"NM\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-interventional-cardiology-ivc-8404": {
+  "title": "Up to $700,000 Base + Partnership Track: Interventional Cardiology in East Texas \u2014 Cardiology - Interventional in Texas | Adaptive Medical Partners",
+  "desc": "Cardiology - Interventional \u00b7 IVC-8404 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-ivc-8404",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $700,000 Base + Partnership Track: Interventional Cardiology in East Texas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Cardiology - Interventional \u00b7 IVC-8404 \u00b7 Texas\\nPractice: High Demand \u2022 New Cath Lab \u2022 Rapid Ramp-Up \u2022 Private Practice\u2013Aligned Model\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-ivc-8404\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"IVC-8404\"},\"occupationalCategory\":\"Cardiology - Interventional\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/midwest-licensed-clinical-social-worker-lcsw-8451": {
+  "title": "From $108,625: Licensed Clinical Social Worker in Midwest / Heartland \u2014 Licensed Clinical Social Worker in Missouri | Adaptive Medical Partners",
+  "desc": "Licensed Clinical Social Worker \u00b7 LCSW-8451 \u00b7 Missouri",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/midwest-licensed-clinical-social-worker-lcsw-8451",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"From $108,625: Licensed Clinical Social Worker in Midwest / Heartland\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Licensed Clinical Social Worker \u00b7 LCSW-8451 \u00b7 Missouri\\nPractice: First-year package from $108,625 \u2014 full details on a brief call with your recruiter\\nSetting: Missouri \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/midwest-licensed-clinical-social-worker-lcsw-8451\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"LCSW-8451\"},\"occupationalCategory\":\"Licensed Clinical Social Worker\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"MO\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oregon-medical-director-primary-care-physician-md-8459": {
+  "title": "From $329,720: Medical Director/ Primary Care Physician in Oregon \u2014 Medical Director / Primary Care Physician in Oregon | Adaptive Medical Partners",
+  "desc": "Medical Director / Primary Care Physician \u00b7 MD-8459 \u00b7 Oregon",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oregon-medical-director-primary-care-physician-md-8459",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"From $329,720: Medical Director/ Primary Care Physician in Oregon\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Medical Director / Primary Care Physician \u00b7 MD-8459 \u00b7 Oregon\\nPractice: First-year package from $329,720 \u2014 full details on a brief call with your recruiter\\nSetting: Oregon \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oregon-medical-director-primary-care-physician-md-8459\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"MD-8459\"},\"occupationalCategory\":\"Medical Director / Primary Care Physician\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OR\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-mfm-8461": {
+  "title": "Up to $665,000: MFM in Alabama \u2014 Maternal-Fetal Medicine in Alabama | Adaptive Medical Partners",
+  "desc": "Maternal-Fetal Medicine \u00b7 MFM-8461 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-mfm-8461",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $665,000: MFM in Alabama\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Maternal-Fetal Medicine \u00b7 MFM-8461 \u00b7 Alabama\\nPractice: First-year package up to $665,000 \u2014 full details on a brief call with your recruiter\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-mfm-8461\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"MFM-8461\"},\"occupationalCategory\":\"Maternal-Fetal Medicine\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-neurology-n-8347": {
+  "title": "$487,250 First Year Financial Package in the Southeast \u2014 Neurology in Alabama | Adaptive Medical Partners",
+  "desc": "Neurology \u00b7 N-8347 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-neurology-n-8347",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$487,250 First Year Financial Package in the Southeast\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Neurology \u00b7 N-8347 \u00b7 Alabama\\nPractice: Four-Day Work Week + Scenic Riverfront Community Living\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-neurology-n-8347\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"N-8347\"},\"occupationalCategory\":\"Neurology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/georgia-neurology-n-8358": {
+  "title": "$593,750 + Zero Call: Outpatient Neurology with Friday Half-Days in Southeast \u2014 Neurology in Georgia | Adaptive Medical Partners",
+  "desc": "Neurology \u00b7 N-8358 \u00b7 Georgia",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/georgia-neurology-n-8358",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$593,750 + Zero Call: Outpatient Neurology with Friday Half-Days in Southeast\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Neurology \u00b7 N-8358 \u00b7 Georgia\\nPractice: Imagine practicing neurology with no hospital call, high procedure volume, and your clinic closing by noon every Friday.\\nSetting: Georgia \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/georgia-neurology-n-8358\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"N-8358\"},\"occupationalCategory\":\"Neurology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"GA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-neurology-n-8411": {
+  "title": "Up to $375,000 Base + wRVU Bonus: Outpatient Neurology in West Texas (Midland Area) \u2014 Neurology in Texas | Adaptive Medical Partners",
+  "desc": "Neurology \u00b7 N-8411 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-neurology-n-8411",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $375,000 Base + wRVU Bonus: Outpatient Neurology in West Texas (Midland Area)\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Neurology \u00b7 N-8411 \u00b7 Texas\\nPractice: 4.5-Day Week \u2022 Fridays End at Noon \u2022 100% Outpatient \u2022 Minimal Call\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-neurology-n-8411\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"N-8411\"},\"occupationalCategory\":\"Neurology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-nurse-practitioner-np-8224": {
+  "title": "$263,000 First-Year Package in Beautiful Central California \u2014 Nurse Practitioner in California | Adaptive Medical Partners",
+  "desc": "Nurse Practitioner \u00b7 NP-8224 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8224",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$263,000 First-Year Package in Beautiful Central California\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Nurse Practitioner \u00b7 NP-8224 \u00b7 California\\nPractice: Live minutes from Monterey, Pebble Beach, and Carmel while making a true community impact!\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8224\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"NP-8224\"},\"occupationalCategory\":\"Nurse Practitioner\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-nurse-practitioner-np-8229": {
+  "title": "$179,087 First-Year Package + 6 Weeks PTO in Central Washington \u2014 Nurse Practitioner in California | Adaptive Medical Partners",
+  "desc": "Nurse Practitioner \u00b7 NP-8229 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8229",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$179,087 First-Year Package + 6 Weeks PTO in Central Washington\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Nurse Practitioner \u00b7 NP-8229 \u00b7 California\\nPractice: Thrive in a supportive, team-based Primary Care practice while enjoying the lifestyle you deserve.\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8229\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"NP-8229\"},\"occupationalCategory\":\"Nurse Practitioner\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-nurse-practitioner-np-8250": {
+  "title": "Bay Area Family Nurse Practitioner\u20144- or 5-Day Week, No Call, and Six Weeks PTO \u2014 Nurse Practitioner in California | Adaptive Medical Partners",
+  "desc": "Nurse Practitioner \u00b7 NP-8250 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8250",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Bay Area Family Nurse Practitioner\u20144- or 5-Day Week, No Call, and Six Weeks PTO\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Nurse Practitioner \u00b7 NP-8250 \u00b7 California\\nPractice: Join a patient-centered, fast-growing healthcare organization where work-life balance isn\u2019t a perk\u2014it\u2019s the plan.\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8250\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"NP-8250\"},\"occupationalCategory\":\"Nurse Practitioner\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/indiana-obstetrics-and-gynecology-obg-8180": {
+  "title": "$475,000 OBGYN Lakeside Lifestyle \u2013 Before Bonuses! \u2014 Obstetrics and Gynecology in Indiana | Adaptive Medical Partners",
+  "desc": "Obstetrics and Gynecology \u00b7 OBG-8180 \u00b7 Indiana",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/indiana-obstetrics-and-gynecology-obg-8180",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$475,000 OBGYN Lakeside Lifestyle \u2013 Before Bonuses!\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Obstetrics and Gynecology \u00b7 OBG-8180 \u00b7 Indiana\\nPractice: Flexible schedule, robotic access, and an award-winning birthing center await.\\nSetting: Indiana \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/indiana-obstetrics-and-gynecology-obg-8180\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OBG-8180\"},\"occupationalCategory\":\"Obstetrics and Gynecology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"IN\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oklahoma-obstetrics-and-gynecology-obg-8316": {
+  "title": "OBGYN Opportunity in Scenic Oklahoma \u2013 Competitive Compensation + True Work-Life Balance \u2014 Obstetrics and Gynecology in Oklahoma | Adaptive Medical Partners",
+  "desc": "Obstetrics and Gynecology \u00b7 OBG-8316 \u00b7 Oklahoma",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oklahoma-obstetrics-and-gynecology-obg-8316",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"OBGYN Opportunity in Scenic Oklahoma \u2013 Competitive Compensation + True Work-Life Balance\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Obstetrics and Gynecology \u00b7 OBG-8316 \u00b7 Oklahoma\\nPractice: Practice medicine without production pressure in a community that values your expertise.\\nSetting: Oklahoma \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oklahoma-obstetrics-and-gynecology-obg-8316\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OBG-8316\"},\"occupationalCategory\":\"Obstetrics and Gynecology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OK\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/tennessee-obstetrics-and-gynecology-obg-8321": {
+  "title": "Up to $350,000 + RVU Upside: OB/GYN in Central Texas (90 Minutes from DFW) \u2014 Obstetrics and Gynecology in Texas | Adaptive Medical Partners",
+  "desc": "Obstetrics and Gynecology \u00b7 OBG-8321 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/tennessee-obstetrics-and-gynecology-obg-8321",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $350,000 + RVU Upside: OB/GYN in Central Texas (90 Minutes from DFW)\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Obstetrics and Gynecology \u00b7 OBG-8321 \u00b7 Texas\\nPractice: 1:4 Call \u2022 28 Days PTO \u2022 Da Vinci XI \u2022 Only OB Group in the Region\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/tennessee-obstetrics-and-gynecology-obg-8321\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OBG-8321\"},\"occupationalCategory\":\"Obstetrics and Gynecology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-obstetrics-and-gynecology-obg-8422": {
+  "title": "Up to $500,000 Guaranteed + $100,000 Loan Repayment: OB/GYN in North Alabama \u2014 Obstetrics and Gynecology in Alabama | Adaptive Medical Partners",
+  "desc": "Obstetrics and Gynecology \u00b7 OBG-8422 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-obstetrics-and-gynecology-obg-8422",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $500,000 Guaranteed + $100,000 Loan Repayment: OB/GYN in North Alabama\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Obstetrics and Gynecology \u00b7 OBG-8422 \u00b7 Alabama\\nPractice: $500,000 Guaranteed Base \u2022 $30,000 Sign-On Bonus \u2022 Robotics Available \u2022 29 Days PTO + CME\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-obstetrics-and-gynecology-obg-8422\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OBG-8422\"},\"occupationalCategory\":\"Obstetrics and Gynecology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/midwest-obstetrics-and-gynecology-obg-8449": {
+  "title": "From $812,000: OB/GYN in Midwest \u2014 Obstetrics and Gynecology in Missouri | Adaptive Medical Partners",
+  "desc": "Obstetrics and Gynecology \u00b7 OBG-8449 \u00b7 Missouri",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/midwest-obstetrics-and-gynecology-obg-8449",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"From $812,000: OB/GYN in Midwest\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Obstetrics and Gynecology \u00b7 OBG-8449 \u00b7 Missouri\\nPractice: Monday\u2013Friday 7:30 am\u20134:00 pm\\nSetting: Missouri \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/midwest-obstetrics-and-gynecology-obg-8449\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OBG-8449\"},\"occupationalCategory\":\"Obstetrics and Gynecology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"MO\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/louisiana-optometry-od-8364": {
+  "title": "$150,000-$175,000: Found Your Own Optometry Program in Brand New Clinic \u2014 Optometry in Louisiana | Adaptive Medical Partners",
+  "desc": "Optometry \u00b7 OD-8364 \u00b7 Louisiana",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/louisiana-optometry-od-8364",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$150,000-$175,000: Found Your Own Optometry Program in Brand New Clinic\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Optometry \u00b7 OD-8364 \u00b7 Louisiana\\nPractice: Shape the future of vision care for thousands of Louisiana families while building your ideal practice from day one.\\nSetting: Louisiana \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/louisiana-optometry-od-8364\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OD-8364\"},\"occupationalCategory\":\"Optometry\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"LA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oregon-occupational-therapy": {
+  "title": "Up to $58/hr + $15,000 Retention Bonus: Occupational Therapist in Eastern Oregon\u2019s Blue Mountain Region \u2014 Occupational Therapy in Oregon | Adaptive Medical Partners",
+  "desc": "Occupational Therapy \u00b7 OT-8388 \u00b7 Oregon",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oregon-occupational-therapy",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $58/hr + $15,000 Retention Bonus: Occupational Therapist in Eastern Oregon\u2019s Blue Mountain Region\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Occupational Therapy \u00b7 OT-8388 \u00b7 Oregon\\nPractice: 1:1 Patient Care \u2022 45\u201360 Minute Sessions \u2022 $2K CME + 5% Match \u2022 Affordable Mountain Living\\nSetting: Oregon \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oregon-occupational-therapy\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OT-8388\"},\"occupationalCategory\":\"Occupational Therapy\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OR\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/kentucky-otolaryngology-oto-8371": {
+  "title": "$682,500 ENT Position: 3 Clinic Days, 2 OR Days in Tri-State Region \u2014 Otolaryngology in Kentucky | Adaptive Medical Partners",
+  "desc": "Otolaryngology \u00b7 OTO-8371 \u00b7 Kentucky",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/kentucky-otolaryngology-oto-8371",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$682,500 ENT Position: 3 Clinic Days, 2 OR Days in Tri-State Region\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Otolaryngology \u00b7 OTO-8371 \u00b7 Kentucky\\nPractice: High-volume ENT practice meets exceptional work-life balance\u2014finally, a role where you can excel professionally without sacrificing your personal life.\\nSetting: Kentucky \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/kentucky-otolaryngology-oto-8371\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"OTO-8371\"},\"occupationalCategory\":\"Otolaryngology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"KY\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/arizona-psychiatry-p-8191": {
+  "title": "$380,000 Forensic Psychiatry Position: 50-Year Established Program in Tucson \u2014 Psychiatry in Arizona | Adaptive Medical Partners",
+  "desc": "Psychiatry \u00b7 P-8191 \u00b7 Arizona",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/arizona-psychiatry-p-8191",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$380,000 Forensic Psychiatry Position: 50-Year Established Program in Tucson\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Psychiatry \u00b7 P-8191 \u00b7 Arizona\\nPractice: Tired of the same outpatient cases? Ready for intellectually stimulating forensic work with exceptional benefits?\\nSetting: Arizona \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/arizona-psychiatry-p-8191\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"P-8191\"},\"occupationalCategory\":\"Psychiatry\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AZ\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-physician-assistant-pa-8226": {
+  "title": "$242,500 First-Year Financial Package in Beautiful Monterey County, California \u2014 Physician Assistant in California | Adaptive Medical Partners",
+  "desc": "Physician Assistant \u00b7 PA-8226 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-physician-assistant-pa-8226",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$242,500 First-Year Financial Package in Beautiful Monterey County, California\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Physician Assistant \u00b7 PA-8226 \u00b7 California\\nPractice: Make a lasting impact while living the coastal California lifestyle you\u2019ve always dreamed of.\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-physician-assistant-pa-8226\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"PA-8226\"},\"occupationalCategory\":\"Physician Assistant\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-pediatrics-pd-8403": {
+  "title": "Up to $250,000 Base + Productivity Bonuses: Pediatrics in Northeast Texas \u2014 Pediatrics in Texas | Adaptive Medical Partners",
+  "desc": "Pediatrics \u00b7 PD-8403 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-pediatrics-pd-8403",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $250,000 Base + Productivity Bonuses: Pediatrics in Northeast Texas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Pediatrics \u00b7 PD-8403 \u00b7 Texas\\nPractice: 4\u20135 Day Workweek Options \u2022 Predictable Call \u2022 FQHC Loan Repayment up to $50,000/Year\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-pediatrics-pd-8403\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"PD-8403\"},\"occupationalCategory\":\"Pediatrics\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oregon-physical-therapy-pt-8387": {
+  "title": "Up to $58/Hour + $10,000 Retention Bonus: Physical Therapist in Eastern Oregon Mountain Valley \u2014 Physical Therapy in Oregon | Adaptive Medical Partners",
+  "desc": "Physical Therapy \u00b7 PT-8387 \u00b7 Oregon",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oregon-physical-therapy-pt-8387",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $58/Hour + $10,000 Retention Bonus: Physical Therapist in Eastern Oregon Mountain Valley\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Physical Therapy \u00b7 PT-8387 \u00b7 Oregon\\nPractice: Four-Day Workweek Available \u2022 100% One-on-One Care \u2022 5 Paid Admin Hours Weekly \u2022 $2,000 CE + Education Time \u2022 Interdisciplinary Team \u2022 Relocation Support\\nSetting: Oregon \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oregon-physical-therapy-pt-8387\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"PT-8387\"},\"occupationalCategory\":\"Physical Therapy\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OR\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-pulmonology-pud-8348": {
+  "title": "$566,250 First-Year Package + 4-Day Work Week in the Heart of the Southeast \u2014 Pulmonology in Alabama | Adaptive Medical Partners",
+  "desc": "Pulmonology \u00b7 PUD-8348 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-pulmonology-pud-8348",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$566,250 First-Year Package + 4-Day Work Week in the Heart of the Southeast\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Pulmonology \u00b7 PUD-8348 \u00b7 Alabama\\nPractice: Rare lifestyle-friendly pulmonology opportunity with immediate volume, procedures, and a supportive, well-funded team.\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-pulmonology-pud-8348\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"PUD-8348\"},\"occupationalCategory\":\"Pulmonology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/georgia-pulmonology-pud-8355": {
+  "title": "Earn $596,250 First Year \u2014 No Call + Half-Day Fridays in a Southern Gateway City \u2014 Pulmonology in Georgia | Adaptive Medical Partners",
+  "desc": "Pulmonology \u00b7 PUD-8355 \u00b7 Georgia",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/georgia-pulmonology-pud-8355",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Earn $596,250 First Year \u2014 No Call + Half-Day Fridays in a Southern Gateway City\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Pulmonology \u00b7 PUD-8355 \u00b7 Georgia\\nPractice: No call plus a half-day Friday for true work-life balance\\nSetting: Georgia \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/georgia-pulmonology-pud-8355\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"PUD-8355\"},\"occupationalCategory\":\"Pulmonology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"GA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/california-radiology-rad-8256": {
+  "title": "$744,000 First-Year Package Just Minutes from Southern California \u2014 Radiology in California | Adaptive Medical Partners",
+  "desc": "Radiology \u00b7 RAD-8256 \u00b7 California",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/california-radiology-rad-8256",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$744,000 First-Year Package Just Minutes from Southern California\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Radiology \u00b7 RAD-8256 \u00b7 California\\nPractice: A rare chance to join a thriving radiology group offering partnership after just one year!\\nSetting: California \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/california-radiology-rad-8256\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"RAD-8256\"},\"occupationalCategory\":\"Radiology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"CA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/alabama-rheumatology-rhu-8345": {
+  "title": "$389,750 First Year Package in Scenic Southeast Alabama \u2014 Rheumatology in Alabama | Adaptive Medical Partners",
+  "desc": "Rheumatology \u00b7 RHU-8345 \u00b7 Alabama",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/alabama-rheumatology-rhu-8345",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$389,750 First Year Package in Scenic Southeast Alabama\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Rheumatology \u00b7 RHU-8345 \u00b7 Alabama\\nPractice: Four-day work week, no competition, and immediate patient demand.\\nSetting: Alabama \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/alabama-rheumatology-rhu-8345\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"RHU-8345\"},\"occupationalCategory\":\"Rheumatology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AL\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/louisiana-rheumatology-rhu-8365": {
+  "title": "Up to $350,000: Build Your Own Rheumatology Program from Day One \u2014 Rheumatology in Louisiana | Adaptive Medical Partners",
+  "desc": "Rheumatology \u00b7 RHU-8365 \u00b7 Louisiana",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/louisiana-rheumatology-rhu-8365",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $350,000: Build Your Own Rheumatology Program from Day One\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Rheumatology \u00b7 RHU-8365 \u00b7 Louisiana\\nPractice: Be the only rheumatologist serving six Louisiana parishes\u2014with zero competition, built-in referrals, and modern facilities waiting for you.\\nSetting: Louisiana \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/louisiana-rheumatology-rhu-8365\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"RHU-8365\"},\"occupationalCategory\":\"Rheumatology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"LA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-radiology-technician-rtech-8273": {
+  "title": "$109,200 First Year Financial Package in West Texas \u2014 Radiology Technician in Texas | Adaptive Medical Partners",
+  "desc": "Radiology Technician \u00b7 RTECH-8273 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-radiology-technician-rtech-8273",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$109,200 First Year Financial Package in West Texas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Radiology Technician \u00b7 RTECH-8273 \u00b7 Texas\\nPractice: Rewarding work, no call, and a community that feels like home.\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-radiology-technician-rtech-8273\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"RTECH-8273\"},\"occupationalCategory\":\"Radiology Technician\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/arizona-rtech-radiology-technician-rtech8447": {
+  "title": "CT Tech: $115,000+ First Year Financial Package \u2014 RTECH: Radiology Technician in Arizona | Adaptive Medical Partners",
+  "desc": "RTECH: Radiology Technician \u00b7 RTECH-8447 \u00b7 Arizona",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/arizona-rtech-radiology-technician-rtech8447",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"CT Tech: $115,000+ First Year Financial Package\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"RTECH: Radiology Technician \u00b7 RTECH-8447 \u00b7 Arizona\\nPractice: Practice: Established and Well-Funded Organization\\nSetting: Arizona \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/arizona-rtech-radiology-technician-rtech8447\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"RTECH-8447\"},\"occupationalCategory\":\"RTECH: Radiology Technician\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"AZ\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oklahoma-speech-therapy-st-8313": {
+  "title": "HYBRID Schedule \u2013 Only 2 Days Onsite Per Week! \u2014 Speech Therapy in Oklahoma | Adaptive Medical Partners",
+  "desc": "Speech Therapy \u00b7 ST-8313 \u00b7 Oklahoma",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oklahoma-speech-therapy-st-8313",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"HYBRID Schedule \u2013 Only 2 Days Onsite Per Week!\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Speech Therapy \u00b7 ST-8313 \u00b7 Oklahoma\\nPractice: Enjoy flexibility, support, and growth in a uniquely rewarding practice.\\nSetting: Oklahoma \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oklahoma-speech-therapy-st-8313\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"ST-8313\"},\"occupationalCategory\":\"Speech Therapy\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OK\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/oregon-speech-language-pathology-st-8389": {
+  "title": "Up to $58/Hour + $15,000 Retention Bonus: Speech Language Pathologist in Eastern Oregon \u2014 Speech Language Pathology in Oregon | Adaptive Medical Partners",
+  "desc": "Speech Language Pathology \u00b7 ST-8389 \u00b7 Oregon",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/oregon-speech-language-pathology-st-8389",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $58/Hour + $15,000 Retention Bonus: Speech Language Pathologist in Eastern Oregon\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Speech Language Pathology \u00b7 ST-8389 \u00b7 Oregon\\nPractice: 4-Day Workweek \u2022 5 Hours Paid Admin Time Weekly \u2022 Family-Like Rehab Team \u2022 No Competition in the Area\\nSetting: Oregon \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/oregon-speech-language-pathology-st-8389\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"ST-8389\"},\"occupationalCategory\":\"Speech Language Pathology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"OR\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/georgia-urology-u-8357": {
+  "title": "$943,750 First-Year Package + Minimal Call in a Modern, Well-Resourced Southeastern Health System \u2014 Urology in Georgia | Adaptive Medical Partners",
+  "desc": "Urology \u00b7 U-8357 \u00b7 Georgia",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/georgia-urology-u-8357",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"$943,750 First-Year Package + Minimal Call in a Modern, Well-Resourced Southeastern Health System\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Urology \u00b7 U-8357 \u00b7 Georgia\\nPractice: Rare urology role with blockbuster bonuses, robotic support, and true lifestyle flexibility in a thriving Southern community.\\nSetting: Georgia \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/georgia-urology-u-8357\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"U-8357\"},\"occupationalCategory\":\"Urology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"GA\",\"addressCountry\":\"US\"}}}"
+ },
+ "/job/texas-urology-u-8410": {
+  "title": "Up to $750,000 Base + Paid Call + Future ASC Buy-In: Urology in West Texas \u2014 Urology in Texas | Adaptive Medical Partners",
+  "desc": "Urology \u00b7 U-8410 \u00b7 Texas",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/job/texas-urology-u-8410",
+  "jobld": "{\"@context\":\"https://schema.org\",\"@type\":\"JobPosting\",\"title\":\"Up to $750,000 Base + Paid Call + Future ASC Buy-In: Urology in West Texas\",\"hiringOrganization\":{\"@type\":\"Organization\",\"@id\":\"https://www.adaptivemedicalpartners.com/#organization\",\"name\":\"Adaptive Medical Partners\",\"url\":\"https://www.adaptivemedicalpartners.com/\",\"email\":\"inquire@adaptivemedicalpartners.com\",\"telephone\":\"+1-972-441-2750\"},\"description\":\"Urology \u00b7 U-8410 \u00b7 Texas\\nPractice: Robotics + Aquablation \u2022 1\u20132 OR Days/Week \u2022 No State Income Tax \u2022 $30K Sign-On + $15K Relocation\\nSetting: Texas \u00b7 location sprinkle, not the whole pitch\\nPackage: Full compensation details on a short call with your recruiter\\nNext: Tap to Talk / Text / Email \u2014 AMP routes you to the right recruiter\",\"url\":\"https://www.adaptivemedicalpartners.com/job/texas-urology-u-8410\",\"identifier\":{\"@type\":\"PropertyValue\",\"name\":\"Adaptive Medical Partners\",\"value\":\"U-8410\"},\"occupationalCategory\":\"Urology\",\"jobLocation\":{\"@type\":\"Place\",\"address\":{\"@type\":\"PostalAddress\",\"addressRegion\":\"TX\",\"addressCountry\":\"US\"}}}"
+ },
+ "/blog-posts/first-job-shortfalls-residents-fellows": {
+  "title": "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign | Adaptive Medical Partners",
+  "desc": "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first role.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/first-job-shortfalls-residents-fellows",
+  "jobld": null
+ },
+ "/blog-posts/place-first-without-regret": {
+  "title": "Place First Without Regret: Choose the Life Around the Practice | Adaptive Medical Partners",
+  "desc": "How residents and fellows can evaluate place-first fit without inventing a town story or falling for a postcard.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/place-first-without-regret",
+  "jobld": null
+ },
+ "/blog-posts/two-year-test-before-you-sign": {
+  "title": "The Two-Year Test Before You Sign Your First Physician Contract | Adaptive Medical Partners",
+  "desc": "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your next-move signal.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/two-year-test-before-you-sign",
+  "jobld": null
+ },
+ "/blog-posts/mpc-when-location-leads": {
+  "title": "MPC: When Location Leads the Conversation | Adaptive Medical Partners",
+  "desc": "A practical guide to MPC when place is the first filter\u2014and when a dedicated recruiter makes the search safer.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/mpc-when-location-leads",
+  "jobld": null
+ },
+ "/blog-posts/coordinator-share-pack-grads": {
+  "title": "A Coordinator\u2019s Share Pack for New Graduates | Adaptive Medical Partners",
+  "desc": "A short, practical share pack program coordinators can give graduating residents and fellows before the first job search.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/coordinator-share-pack-grads",
+  "jobld": null
+ },
+ "/blog-posts/physician-retention-3-year-kpi": {
+  "title": "Why Is 3-Year Physician Retention the Real KPI \u2014 Not Just \u2018Filled\u2019? | Adaptive Medical Partners",
+  "desc": "Why do stay rates beat time-to-fill? Adaptive Medical Partners cites 87% physician retention at three years \u2014 the retention KPI that protects patients, budgets, and culture.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/physician-retention-3-year-kpi",
+  "jobld": null
+ },
+ "/blog-posts/interview-to-placement-efficiency": {
+  "title": "What Does 1.7 Interviews per Placement Mean for Hospitals? | Adaptive Medical Partners",
+  "desc": "What does AMP\u2019s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume \u2014 and how dedicated recruiters stage prepared candidates ready to hire.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/interview-to-placement-efficiency",
+  "jobld": null
+ },
+ "/blog-posts/rural-fqhc-critical-access-recruiting": {
+  "title": "How Do You Recruit for Rural, FQHC & Critical Access Roles? | Adaptive Medical Partners",
+  "desc": "How should hospitals approach rural, FQHC, and critical access physician recruiting? AMP cites 700+ community partnerships \u2014 a practical guide without invented town names.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/rural-fqhc-critical-access-recruiting",
+  "jobld": null
+ },
+ "/blog-posts/amp-history-16-years": {
+  "title": "16 Years of Physician Recruiting Craft \u2014 AMP History Since 2010 | Adaptive Medical Partners",
+  "desc": "Adaptive Medical Partners\u2019 public timeline from 2010 founding through a 2026 boutique rebirth \u2014 16 years of physician recruiting craft, drawn from About Us.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/amp-history-16-years",
+  "jobld": null
+ },
+ "/blog-posts/retained-vs-contingent-physician-search": {
+  "title": "Dedicated investment or contingent Physician Search: Which Model Should Hospitals Choose? | Adaptive Medical Partners",
+  "desc": "Which physician search model fits \u2014 dedicated investment or contingent? Compare accountability, marketing, and how Adaptive Medical Partners guides both sides of the search.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/retained-vs-contingent-physician-search",
+  "jobld": null
+ },
+ "/blog-posts/evaluate-obgyn-opportunities": {
+  "title": "How to Evaluate OB/GYN Opportunities Without Getting Lost in the Brochure | Adaptive Medical Partners",
+  "desc": "A physician-first checklist for evaluating OB/GYN jobs: schedule reality, call burden, income structure, and when to talk to a recruiter like AMP before deciding.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/evaluate-obgyn-opportunities",
+  "jobld": null
+ },
+ "/blog-posts/amp-score-explained": {
+  "title": "What Is AMP Score \u2014 and How Does It Rank Opportunity Fit? | Adaptive Medical Partners",
+  "desc": "What is AMP Score? How physicians and organizations quantify fit across lifestyle, practice design, compensation clarity, and culture \u2014 without dumping full dossiers publicly.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/amp-score-explained",
+  "jobld": null
+ },
+ "/blog-posts/midwest-lifestyle-for-physicians": {
+  "title": "What Does Midwest Lifestyle for Physicians Usually Leave Out? | Adaptive Medical Partners",
+  "desc": "What does Midwest physician lifestyle marketing usually leave out? Commute reality, schools, weekday endings, and how to pressure-test community roles with a dedicated recruiter.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/midwest-lifestyle-for-physicians",
+  "jobld": null
+ },
+ "/blog-posts/what-hospitals-should-ask-retained-firm": {
+  "title": "What Hospitals Should Ask a Dedicated Physician Search Firm Before Signing | Adaptive Medical Partners",
+  "desc": "Twelve questions hospitals and medical groups should ask any dedicated search firm \u2014 including AMP \u2014 about process, marketing, candidate quality, and hiring meeting readiness.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/what-hospitals-should-ask-retained-firm",
+  "jobld": null
+ },
+ "/blog-posts/candidate-interview-prep-without-leaks": {
+  "title": "How Do You Prep for Physician Interviews Without Leaking Confidential Details? | Adaptive Medical Partners",
+  "desc": "How can physicians prep for interviews without leaking client-specific details? AMP\u2019s no-leaks playbook for confident, ethical conversations.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/candidate-interview-prep-without-leaks",
+  "jobld": null
+ },
+ "/blog-posts/virtual-interview-how-to": {
+  "title": "Virtual Interview How-To | Adaptive Medical Partners",
+  "desc": "Essential checklists for both sides of the screen\u2014so nothing falls through the cracks.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/virtual-interview-how-to",
+  "jobld": null
+ },
+ "/blog-posts/rural-recruiting-keeping-candidates-open-minded": {
+  "title": "Rural Recruiting - Keeping Candidates Open-Minded | Adaptive Medical Partners",
+  "desc": "Stop asking about location\u2014start asking about lifestyle (and watch resistance melt away).",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/rural-recruiting-keeping-candidates-open-minded",
+  "jobld": null
+ },
+ "/blog-posts/can-you-zoom-to-success-in-physician-recruiting": {
+  "title": "Can you Zoom to Success in Physician Recruiting? | Adaptive Medical Partners",
+  "desc": "Should virtual interviews still be part of the standard physician recruiting process? AMP on when Zoom helps \u2014 and when it costs the hire.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/can-you-zoom-to-success-in-physician-recruiting",
+  "jobld": null
+ },
+ "/blog-posts/how-does-your-physician-search-stack-up-against-the-competition": {
+  "title": "How does your physician search stack up against the competition? | Adaptive Medical Partners",
+  "desc": "Free 5-minute assessment reveals how your physician opening ranks against regional and national competitors.",
+  "robots": "index,follow",
+  "canon": "https://www.adaptivemedicalpartners.com/blog-posts/how-does-your-physician-search-stack-up-against-the-competition",
+  "jobld": null
+ }
+}

@@ -6548,6 +6548,7 @@ function syncGuideRoute(route) {
     var spec = String((j && j.specialtyLabel) || "").trim();
     var city = jobPlace(j);
     var mid = spec && city ? spec + " in " + city : (spec || (city ? "Role in " + city : ""));
+    if (mid && title.toLowerCase().indexOf(mid.toLowerCase()) !== -1) mid = "";
     return (mid ? title + " — " + mid : title) + BRAND_SUFFIX;
   }
 
