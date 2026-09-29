@@ -5201,7 +5201,7 @@
     } else {
       form.hidden = false;
       if (done) done.hidden = true;
-      if (state === "cancel") setAchStatus("Bank link was not finished. You can continue again whenever you’re ready.", true);
+      if (state === "cancel") setAchStatus("Payment setup was not finished. You can continue again whenever you’re ready.", true);
     }
   }
 
@@ -5243,7 +5243,7 @@
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.setAttribute("data-label", submitBtn.textContent);
-      submitBtn.textContent = "Opening secure bank link…";
+      submitBtn.textContent = "Opening secure payment setup…";
     }
     setAchStatus("", false);
     fetch(ACH_SETUP_URL, {
@@ -5257,10 +5257,10 @@
     }).then(function (j) {
       location.href = j.url;
     }).catch(function () {
-      setAchStatus("We couldn’t open the secure bank link. Please try again, or contact us and we’ll help.", true);
+      setAchStatus("We couldn’t open the secure payment setup. Please try again, or contact us and we’ll help.", true);
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Continue to secure bank link";
+        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Continue to secure payment setup";
       }
     });
   }

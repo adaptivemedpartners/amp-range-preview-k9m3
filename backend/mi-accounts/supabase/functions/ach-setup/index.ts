@@ -1,4 +1,4 @@
-// Easy Pay (ACH) authorization. Replaces the old Webflow form handler.
+// Easy Pay authorization (bank account via ACH, or card). Replaces the old Webflow form handler.
 // The browser sends contact details only. Bank routing/account numbers are entered on
 // Stripe's hosted page (Checkout, setup mode, us_bank_account) and never touch AMP systems.
 // Stripe creates a Customer and saves the bank account with a mandate so accounting can
@@ -47,6 +47,7 @@ Deno.serve(async (req) => {
   p.set("mode", "setup");
   p.set("currency", "usd");
   p.append("payment_method_types[]", "us_bank_account");
+  p.append("payment_method_types[]", "card");
   p.set("customer_creation", "always");
   p.set("customer_email", email);
   p.set("payment_method_options[us_bank_account][verification_method]", "automatic");
@@ -57,7 +58,7 @@ Deno.serve(async (req) => {
     p.set(`metadata[${k}]`, v);
     p.set(`setup_intent_data[metadata][${k}]`, v);
   }
-  p.set("setup_intent_data[description]", `ACH authorization · ${org}`.slice(0, 200));
+  p.set("setup_intent_data[description]", `Easy Pay authorization · ${org}`.slice(0, 200));
 
   const r = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
