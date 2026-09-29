@@ -1,12 +1,18 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2245",
-  "label": "2245-version-json-headshots",
-  "deployed": "2026-09-29 5:41 PM CT",
+  "build": "2246",
+  "label": "2246-job-lead-recruiter",
+  "deployed": "2026-09-29 5:48 PM CT",
   "changes": [
-    "Added this version file (kept out of search via robots.txt)",
-    "Fixed stale in-script build label (was 2207)",
-    "Team headshots resized and recompressed (about 3.3 MB down to about 0.4 MB)",
-    "Typeform script now loads only on the two form pages"
-  ]
+    "Job page interest form now routes the lead to that job's recruiter (was always Mike)"
+  ],
+  "previous": {
+    "build": "2245",
+    "changes": [
+      "Added this version file (kept out of search via robots.txt)",
+      "Fixed stale in-script build label (was 2207)",
+      "Team headshots resized and recompressed",
+      "Typeform script now loads only on the two form pages"
+    ]
+  }
 }

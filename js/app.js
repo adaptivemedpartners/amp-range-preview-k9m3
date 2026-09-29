@@ -1,7 +1,7 @@
 /* AMP Mountain Site — SPA router + video settle + shared trail transitions */
 (function () {
   "use strict";
-  window.__AMP_BUILD = "2245-version-json-headshots";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
+  window.__AMP_BUILD = "2246-job-lead-recruiter";    /* Imagine winner lock 2026-09-09 ~12:49 CT: whole ~6s clip; HTML picker soft-fades late. */
   var SETTLE = 6.0;
   var FREEZE_END = 6.0; /* end of whole clip — do not freeze early */
   var OVERLAY_AT = 1.5; /* Mike lock 1:28 CT: fade from 1.5s */
@@ -5731,6 +5731,19 @@ function syncGuideRoute(route) {
           owner: "mfreeman",
           formId: "job-interest-form"
         };
+        /* amp-build:2246-job-lead-recruiter — a job page lead goes to that job's recruiter (was always Mike). */
+        try {
+          var jobForLead = state.jobId ? jobById(state.jobId) : null;
+          if (jobForLead && jobForLead.recruiter) {
+            var recTag = (guideProfileForRecruiter(jobForLead.recruiter) || {}).tag;
+            if (recTag) {
+              payload.recruiterTag = recTag;
+              payload.recruiter = recTag;
+              payload.owner = "";
+              payload.jobLabel = jobForLead.code || payload.jobLabel;
+            }
+          }
+        } catch (eRec) {}
         setFormBusy(jobForm, true);
         postLeadHandoff(payload).then(function () {
           setFormBusy(jobForm, false);
