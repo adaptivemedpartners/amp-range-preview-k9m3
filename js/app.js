@@ -3292,7 +3292,6 @@
     if (blurb) blurb.textContent = owner.blurb || "";
     if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
     if (fullDet) fullDet.open = false;
-    if (note) note.textContent = "Your consultant stays with you from the first conversation.";
     try { syncClientRidgeCtas(); } catch (e) {}
     state.clientMeetingStateTouched = false;
     rememberHiringGuide(owner, stateCode);
