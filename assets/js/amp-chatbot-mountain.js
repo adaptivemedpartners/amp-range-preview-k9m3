@@ -1,5 +1,5 @@
 /**
- * AMP Ask-a-guide Widget — mountain preview theme (from live Concierge)
+ * AMP Ask AMP Widget — mountain preview theme (from live Concierge)
  * Self-contained IIFE: injects CSS + bottom-right bubble/panel + soft funnel.
  * Entry fork: candidate (specialty → region → soft handoff) | client BD (need → contact → BD Hub).
  *
@@ -184,11 +184,11 @@
       "</span>" +
       '<span class="amp-launcher-close" aria-hidden="true">×</span>' +
     "</button>" +
-    '<div id="amp-chat-panel" class="amp-chat-panel amp-hidden" role="dialog" aria-label="Ask a guide" aria-modal="false">' +
+    '<div id="amp-chat-panel" class="amp-chat-panel amp-hidden" role="dialog" aria-label="Ask AMP" aria-modal="false">' +
       '<header class="amp-chat-header">' +
         '<div class="amp-avatar" aria-hidden="true">AMP</div>' +
         '<div class="amp-meta">' +
-          '<div class="amp-name">Ask a guide</div>' +
+          '<div class="amp-name">Ask AMP</div>' +
           '<div class="amp-status">Online</div>' +
         "</div>" +
         '<button type="button" class="amp-chat-close" aria-label="Close chat">×</button>' +
@@ -526,7 +526,7 @@
     state.audience = "client";
     if (state.specialty) {
       return addBot(
-        "Thanks — we’ll route you to a hiring guide for this search." +
+        "Thanks — we’ll route you to a consultant for this search." +
           (contextStripHtml ? contextStripHtml() : ""),
         500
       ).then(function () {
@@ -540,7 +540,7 @@
       });
     }
     return addBot(
-      "Thanks — we’ll route you to a hiring guide. What <strong>specialty or role</strong> are you looking to fill?",
+      "Thanks — we’ll route you to a consultant. What <strong>specialty or role</strong> are you looking to fill?",
       550
     ).then(function () {
       showSpecialtyChips(onSpecialtyPicked);
@@ -849,12 +849,12 @@
     state.owner = resolvedRecruiterOwner;
 
     return addBot(
-      "Hi — <strong>Adaptive Medical Partners</strong> is your guide.",
+      "Hi — this is <strong>Adaptive Medical Partners</strong>.",
       isRestart ? 300 : 400
     ).then(function () {
       if (state.audience === "client") {
         return addBot(
-          "You’re on the <strong>hiring path</strong> — we’ll connect you with a hiring guide.",
+          "You’re on the <strong>hiring path</strong> — we’ll connect you with a consultant.",
           450
         ).then(function () {
           return startClientPath();
@@ -862,7 +862,7 @@
       }
       if (state.audience === "candidate") {
         return addBot(
-          "You’re on the <strong>candidate path</strong> — we’ll connect you with a recruiting guide.",
+          "You’re on the <strong>candidate path</strong> — we’ll connect you with a recruiter.",
           450
         ).then(function () {
           return startCandidatePath();

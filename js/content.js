@@ -196,7 +196,7 @@ window.AMP_CONTENT = {
     { id: "nuclear_medicine_technologist", label: "Nuclear Medicine Technologist" },
     { id: "medical_laboratory_scientist", label: "Medical Laboratory Scientist" },
     { id: "audiologist", label: "Audiologist" },
-    { id: "other", label: "Other", blurb: "Tell us what you need — we route you to the right guide." }
+    { id: "other", label: "Other", blurb: "Tell us what you need — we route you to the right recruiter." }
   ],
   /* Mock membership uses common regional groupings; no town or hospital names are implied. */
   regions: [
@@ -323,8 +323,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Practice your cardiac anesthesia expertise in a high-volume program where Monday-Friday predictability meets exceptional compensation." },
         { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -350,8 +350,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Build your career with stability, lifestyle, and income few physicians will ever experience." },
         { k: "Setting", v: "Nevada · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -377,8 +377,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Step Into a Community That Truly Needs You" },
         { k: "Setting", v: "Colorado · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -404,8 +404,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Eight months of patients already waiting — step into instant success." },
         { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -431,8 +431,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Ready to practice meaningful dentistry in a state-of-the-art facility while making a real difference in underserved communities?" },
         { k: "Setting", v: "Louisiana · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -458,8 +458,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "$12,000 Sign-On Bonus • Up to $10,000 in Annual Incentives • Four 10s or Five 8s • No Late Nights or Saturdays" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -485,8 +485,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Three 12-Hour Shifts Weekly • APP & Nursing Support • Metro Access Near Wichita • Malpractice Covered" },
         { k: "Setting", v: "Kansas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -512,8 +512,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "A rare hospital-employed Endocrinology role where work-life balance, income, and lifestyle all line up." },
         { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -539,8 +539,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Thrive in a respected multispecialty clinic with true work–life balance and a fast-growing patient base." },
         { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -566,8 +566,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4-Day Feel, 5-Day Week • 100% Employer-Paid Insurance • PSLF-Eligible Nonprofit" },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -593,8 +593,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4-Day Workweek • 7 Weeks PTO • No State Income Tax" },
         { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -620,8 +620,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Rare California lifestyle role with Friday’s off, visa sponsorship, and big-city fun just down the road." },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -647,8 +647,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Medical Director Opportunity • 240 Hours PTO • $20,000 Relocation • EPIC EMR" },
         { k: "Setting", v: "Michigan · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -674,8 +674,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "First-year package from $374,500 — full details on a brief call with your recruiter" },
         { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -701,8 +701,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4-Day Workweek • Sign-On + Relocation • NHSC Loan Repayment Eligible • Established FPOB Need" },
         { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -728,8 +728,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "First-year package from $415,000 — full details on a brief call with your recruiter" },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -755,8 +755,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "What if you could earn nearly $900K your first year while maintaining excellent work-life balance and buying a home for under $200K?" },
         { k: "Setting", v: "Arkansas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -782,8 +782,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4.5-Day Workweek • Extremely Light Call • Established Patient Base • Coastal Carolina Lifestyle" },
         { k: "Setting", v: "North Carolina · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -809,8 +809,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "1:7 Call with APP First-Call • Protected Consult Weeks • Predictable 8:30–4:00 Schedule • 28 Days PTO" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -836,8 +836,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Main Hospital Only • Inpatient HF Program Growth • Advanced Therapies Exposure • No State Income Tax" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -863,8 +863,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "High-income, low-cost living, true autonomy—build your ideal oncology practice in a captured market." },
         { k: "Setting", v: "Indiana · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -890,8 +890,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4-Day Workweek • Outpatient-Focused Practice • Epic EMR • Minimal Call (2–3 Weeks/Year) • $25K Annual Loan Repayment • Strong APP and Infusion Support" },
         { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -917,8 +917,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Rare chance to join a highly supported, accredited Cath Lab with a flexible schedule in a beautiful, affordable community." },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -944,8 +944,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Break the seven-figure barrier in your first year while practicing cutting-edge interventional cardiology in state-of-the-art facilities." },
         { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -971,8 +971,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "3-Day Clinic • 2-Day ASC • Established Procedural Volume • Partnership Culture" },
         { k: "Setting", v: "New Mexico · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -998,8 +998,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "High Demand • New Cath Lab • Rapid Ramp-Up • Private Practice–Aligned Model" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1025,8 +1025,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "First-year package from $108,625 — full details on a brief call with your recruiter" },
         { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1052,8 +1052,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "First-year package from $329,720 — full details on a brief call with your recruiter" },
         { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1079,8 +1079,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "First-year package up to $665,000 — full details on a brief call with your recruiter" },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1106,8 +1106,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Four-Day Work Week + Scenic Riverfront Community Living" },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -1133,8 +1133,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Imagine practicing neurology with no hospital call, high procedure volume, and your clinic closing by noon every Friday." },
         { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -1160,8 +1160,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4.5-Day Week • Fridays End at Noon • 100% Outpatient • Minimal Call" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1187,8 +1187,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Live minutes from Monterey, Pebble Beach, and Carmel while making a true community impact!" },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -1214,8 +1214,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Thrive in a supportive, team-based Primary Care practice while enjoying the lifestyle you deserve." },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1241,8 +1241,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Join a patient-centered, fast-growing healthcare organization where work-life balance isn’t a perk—it’s the plan." },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1268,8 +1268,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Flexible schedule, robotic access, and an award-winning birthing center await." },
         { k: "Setting", v: "Indiana · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1295,8 +1295,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Practice medicine without production pressure in a community that values your expertise." },
         { k: "Setting", v: "Oklahoma · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1322,8 +1322,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "1:4 Call • 28 Days PTO • Da Vinci XI • Only OB Group in the Region" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -1349,8 +1349,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "$500,000 Guaranteed Base • $30,000 Sign-On Bonus • Robotics Available • 29 Days PTO + CME" },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1376,8 +1376,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Monday–Friday 7:30 am–4:00 pm" },
         { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1403,8 +1403,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Shape the future of vision care for thousands of Louisiana families while building your ideal practice from day one." },
         { k: "Setting", v: "Louisiana · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1430,8 +1430,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "1:1 Patient Care • 45–60 Minute Sessions • $2K CME + 5% Match • Affordable Mountain Living" },
         { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1457,8 +1457,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "High-volume ENT practice meets exceptional work-life balance—finally, a role where you can excel professionally without sacrificing your personal life." },
         { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1484,8 +1484,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Tired of the same outpatient cases? Ready for intellectually stimulating forensic work with exceptional benefits?" },
         { k: "Setting", v: "Arizona · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -1511,8 +1511,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Make a lasting impact while living the coastal California lifestyle you’ve always dreamed of." },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -1538,8 +1538,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4–5 Day Workweek Options • Predictable Call • FQHC Loan Repayment up to $50,000/Year" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1565,8 +1565,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Four-Day Workweek Available • 100% One-on-One Care • 5 Paid Admin Hours Weekly • $2,000 CE + Education Time • Interdisciplinary Team • Relocation Support" },
         { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1592,8 +1592,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Rare lifestyle-friendly pulmonology opportunity with immediate volume, procedures, and a supportive, well-funded team." },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -1619,8 +1619,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "No call plus a half-day Friday for true work-life balance" },
         { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -1646,8 +1646,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "A rare chance to join a thriving radiology group offering partnership after just one year!" },
         { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Mike Freeman",
@@ -1673,8 +1673,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Four-day work week, no competition, and immediate patient demand." },
         { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -1700,8 +1700,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Be the only rheumatologist serving six Louisiana parishes—with zero competition, built-in referrals, and modern facilities waiting for you." },
         { k: "Setting", v: "Louisiana · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1727,8 +1727,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Rewarding work, no call, and a community that feels like home." },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Nate Smith",
@@ -1754,8 +1754,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Practice: Established and Well-Funded Organization" },
         { k: "Setting", v: "Arizona · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1781,8 +1781,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Enjoy flexibility, support, and growth in a uniquely rewarding practice." },
         { k: "Setting", v: "Oklahoma · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1808,8 +1808,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "4-Day Workweek • 5 Hours Paid Admin Time Weekly • Family-Like Rehab Team • No Competition in the Area" },
         { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Amy Myers",
@@ -1835,8 +1835,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Rare urology role with blockbuster bonuses, robotic support, and true lifestyle flexibility in a thriving Southern community." },
         { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Hadley Herrera",
@@ -1862,8 +1862,8 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Robotics + Aquablation • 1–2 OR Days/Week • No State Income Tax • $30K Sign-On + $15K Relocation" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
-        { k: "Package", v: "Full compensation details on a short call with your guide" },
-        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right guide" },
+        { k: "Package", v: "Full compensation details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
         name: "Stephanie Youngblood",
@@ -1881,7 +1881,7 @@ window.AMP_CONTENT = {
     { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first role.", byline: "Mike Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
     { slug: "place-first-without-regret", title: "Place First Without Regret: Choose the Life Around the Practice", meta: "How residents and fellows can evaluate place-first fit without inventing a town story or falling for a postcard.", byline: "Randy Keeth", tags: ["Residents", "Place", "Career"], mins: 7 },
     { slug: "two-year-test-before-you-sign", title: "The Two-Year Test Before You Sign Your First Physician Contract", meta: "A two-year audit for residents and fellows: test the week, contract mechanics, support, and your next-move signal.", byline: "Mike Freeman", tags: ["Contracts", "Residents", "Education"], mins: 8 },
-    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A practical guide to MPC when place is the first filter—and when a dedicated guide makes the search safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
+    { slug: "mpc-when-location-leads", title: "MPC: When Location Leads the Conversation", meta: "A practical guide to MPC when place is the first filter—and when a dedicated recruiter makes the search safer.", byline: "Mike Freeman", tags: ["MPC", "Place", "Residents"], mins: 7 },
     { slug: "coordinator-share-pack-grads", title: "A Coordinator’s Share Pack for New Graduates", meta: "A short, practical share pack program coordinators can give graduating residents and fellows before the first job search.", byline: "Adaptive Medical Partners", tags: ["Coordinators", "Graduates", "Education"], mins: 5 },
     {
       slug: "physician-retention-3-year-kpi",
@@ -1893,7 +1893,7 @@ window.AMP_CONTENT = {
     {
       slug: "interview-to-placement-efficiency",
       title: "What Does 1.7 Interviews per Placement Mean for Hospitals?",
-      meta: "What does AMP’s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume — and how dedicated guides stage prepared candidates ready to hire.",
+      meta: "What does AMP’s 1.7 average interviews per successful placement mean? Why interview efficiency beats resume volume — and how dedicated recruiters stage prepared candidates ready to hire.",
       tags: ["Interview efficiency", "Dedicated investment search", "Education"],
       mins: 10
     },
@@ -1921,7 +1921,7 @@ window.AMP_CONTENT = {
     {
       slug: "evaluate-obgyn-opportunities",
       title: "How to Evaluate OB/GYN Opportunities Without Getting Lost in the Brochure",
-      meta: "A physician-first checklist for evaluating OB/GYN jobs: schedule reality, call burden, income structure, and when to talk to a guide like AMP before deciding.",
+      meta: "A physician-first checklist for evaluating OB/GYN jobs: schedule reality, call burden, income structure, and when to talk to a recruiter like AMP before deciding.",
       tags: ["OB/GYN", "Physicians", "Career"],
       mins: 8
     },
@@ -1935,7 +1935,7 @@ window.AMP_CONTENT = {
     {
       slug: "midwest-lifestyle-for-physicians",
       title: "What Does Midwest Lifestyle for Physicians Usually Leave Out?",
-      meta: "What does Midwest physician lifestyle marketing usually leave out? Commute reality, schools, weekday endings, and how to pressure-test community roles with a dedicated guide.",
+      meta: "What does Midwest physician lifestyle marketing usually leave out? Commute reality, schools, weekday endings, and how to pressure-test community roles with a dedicated recruiter.",
       tags: ["Midwest", "Lifestyle", "Physicians"],
       mins: 8
     },

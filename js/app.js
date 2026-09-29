@@ -47,23 +47,23 @@
   var AGREEMENT_META = {
     "summit-clear": {
       tag: "Hiring consult",
-      title: "Talk with a hiring guide",
-      blurb: "A hiring guide owns the next step."
+      title: "Talk with a consultant",
+      blurb: "A consultant owns the next step."
     },
     "shared-ascent": {
       tag: "Hiring consult",
-      title: "Talk with a hiring guide",
-      blurb: "A hiring guide owns the next step."
+      title: "Talk with a consultant",
+      blurb: "A consultant owns the next step."
     },
     "mpc": {
       tag: "MPC · tailored search",
       title: "MPC tailor-search",
-      blurb: "When nothing posted fits, a recruiting guide opens a tailored search with you."
+      blurb: "When nothing posted fits, a recruiter opens a tailored search with you."
     },
     "market-analysis": {
       tag: "Hiring consult",
-      title: "Talk with a hiring guide",
-      blurb: "Leave a short note. Your hiring guide will follow up."
+      title: "Talk with a consultant",
+      blurb: "Leave a short note. Your consultant will follow up."
     }
   };
 
@@ -2018,7 +2018,7 @@
       if (route === "confirm-mess") {
         var m = document.getElementById("mess-response-mock");
         /* Default markup already says "Captured" — use "When" row as freshness signal */
-        if (m && m.innerHTML.indexOf("When") === -1) stampMess("physician", "Ask a guide / contact interest");
+        if (m && m.innerHTML.indexOf("When") === -1) stampMess("physician", "Ask AMP / contact interest");
       }
       if (route === "confirm-client") {
         try { paintConfirmClientDiscuss(); } catch (err) {}
@@ -2782,7 +2782,7 @@
 
 
 
-  /* #4 Hiring guide by territory (Randy lock). Mike CC on ALL BD leads.
+  /* #4 Consultant by territory (Randy lock). Mike CC on ALL BD leads.
      Aaron TX+CA · Brenton GA/AL/TN/KY · Zach IL/MO/IA/KS/NE · unassigned → Randy (not Kelley). */
   var BD_AARON_STATES = { TX:1, CA:1 };
   var BD_BRENTON_STATES = { GA:1, AL:1, TN:1, KY:1 };
@@ -2799,9 +2799,9 @@
     { name: "David Fontenot", email: "david@adaptivemedicalpartners.com" }
   ];
   var BD_OWNER_META = {
-    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Hiring guide", blurb: "Texas hiring guide who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a hiring guide at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
-    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Hiring guide", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the search from both sides of the table.", fullHtml: "<p>Zach Hamann is a hiring guide and Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the work again because the guide culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear brief.</p><p>Zach partners with healthcare organizations to set the brief: clearer requirements, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
-    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Hiring guide", blurb: "Client-first guide for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a hiring guide at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
+    aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg", role: "Business Development Consultant", blurb: "Texas consultant who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a Business Development Consultant at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
+    zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg", role: "Senior Business Development Consultant", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the search from both sides of the table.", fullHtml: "<p>Zach Hamann is a Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the work again because the team culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear brief.</p><p>Zach partners with healthcare organizations to set the brief: clearer requirements, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg", role: "Senior Business Development Consultant", blurb: "Client-first consultant for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a Senior Business Development Consultant at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
     randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring-guide lead so the high camp stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
   /* Exact Tell-us-where-to-start need cards — reused on post-submit discuss. */
@@ -3006,7 +3006,7 @@
     try {
       stampMess(
         "client",
-        (owner && owner.name ? owner.name : "Hiring guide") +
+        (owner && owner.name ? owner.name : "Consultant") +
           " · meeting request · topics · " + topicsLine
       );
     } catch (err) {}
@@ -3040,16 +3040,16 @@
     var routeNote = $("#confirm-bd-route-note");
     if (title) title.textContent = first ? (first + " has your meeting request.") : "You’re on the list";
     if (lede && owner) {
-      lede.innerHTML = "A <strong>hiring guide</strong> owns the next step. You wait; AMP works.";
+      lede.innerHTML = "A <strong>consultant</strong> owns the next step. You wait; AMP works.";
     }
     if (ownerChip) {
       ownerChip.innerHTML = owner && owner.label
-        ? ('<span class="dot"></span> hiring guide · ' + owner.label)
-        : '<span class="dot"></span> Your hiring guide';
+        ? ('<span class="dot"></span> consultant · ' + owner.label)
+        : '<span class="dot"></span> Your consultant';
     }
     if (routeNote) {
       routeNote.textContent = st && owner && owner.name
-        ? (st + " · hiring guide " + owner.name)
+        ? (st + " · consultant " + owner.name)
         : "";
     }
     if (discussTitle) {
@@ -3082,14 +3082,14 @@
     var owner = resolveBdOwner(sel.value);
     if (!owner) {
       chip.innerHTML = '<span class="dot"></span> Pick a state';
-      if (note) note.textContent = "We will connect you with the right hiring guide for your state.";
+      if (note) note.textContent = "We will connect you with the right consultant for your state.";
       return;
     }
     chip.innerHTML = '<span class="dot"></span> ' + owner.label;
     if (note) {
       note.textContent = owner.id === "randy"
-        ? "We'll connect you with a hiring guide for this state."
-        : "A named hiring guide will stay with you from the first conversation.";
+        ? "We'll connect you with a consultant for this state."
+        : "A named consultant will stay with you from the first conversation.";
     }
     if (state.clientMeetingStateTouched || !state.clientBd) {
       rememberHiringGuide(owner, sel.value);
@@ -3288,12 +3288,12 @@
       img.alt = owner.name;
     }
     if (nameEl) nameEl.textContent = owner.name;
-    if (roleEl) roleEl.textContent = owner.role || "Hiring guide";
+    if (roleEl) roleEl.textContent = owner.role || "Consultant";
     if (terr) terr.textContent = owner.territory || "";
     if (blurb) blurb.textContent = owner.blurb || "";
     if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
     if (fullDet) fullDet.open = false;
-    if (note) note.textContent = "Your hiring guide stays with you from the first conversation.";
+    if (note) note.textContent = "Your consultant stays with you from the first conversation.";
     try { syncClientRidgeCtas(); } catch (e) {}
     state.clientMeetingStateTouched = false;
     rememberHiringGuide(owner, stateCode);
@@ -3543,7 +3543,7 @@
     body: "We carry the work from the first profile through the close. Hover a number — click to pin."
   };
   var CLIMB_STATIONS = {
-    "1": { title: "On-site profile", body: "We walk the clinic week and the culture before anyone is briefed. Your guide learns the call schedule, patient mix, team, and community, so the search is built around the real seat and the people most likely to stay in it." },
+    "1": { title: "On-site profile", body: "We walk the clinic week and the culture before anyone is briefed. Your recruiter learns the call schedule, patient mix, team, and community, so the search is built around the real seat and the people most likely to stay in it." },
     "2": { title: "Opportunity creation", body: "We write a story candidates can trust — not a blast list. Practice, schedule, and life in your community become one honest opportunity profile we take directly to physicians and APPs who fit the region and the role." },
     "3": { title: "Screen & present", body: "Only prepared people reach your leadership table. We screen for clinical fit, family and community fit, and real intent to stay — the retention-first vetting behind 87% still there at three years." },
     "4": { title: "Dossier + CV packet", body: "A clean dossier and CV packet, ready for the committee." },
@@ -3972,25 +3972,25 @@
   var GUIDE_BY_NAME = {
     "Amy Myers": {
       photo: "assets/team/amy-myers.jpg",
-      role: "Recruiting guide",
+      role: "Physician Recruiter",
       blurb: "Turns a job preview into a focused, personal conversation — durable matches over rapid placements.",
       tag: "amy"
     },
     "Nate Smith": {
       photo: "assets/team/nate-smith.jpg",
-      role: "Recruiting guide",
+      role: "Physician Recruiter",
       blurb: "Helps candidates compare practice, place, and the life between shifts — relationship-first, high standards.",
       tag: "nate"
     },
     "Stephanie Youngblood": {
       photo: "assets/team/stephanie-youngblood.jpg",
-      role: "Recruiting guide",
+      role: "Sr. Recruiting Specialist",
       blurb: "Listens first, then builds a clear path — administrator-minded recruiting with a thoughtful pace.",
       tag: "stephanie"
     },
     "Hadley Herrera": {
       photo: "assets/team/hadley-herrera.jpg",
-      role: "Recruiting guide",
+      role: "Physician Recruiter",
       blurb: "Finds the signal in a crowded search and keeps the candidate experience warm.",
       tag: "hadley"
     },
@@ -4007,9 +4007,9 @@
     if (name === "Michael Freeman") name = "Mike Freeman";
     var hit = GUIDE_BY_NAME[name] || null;
     return {
-      name: name || "Your guide",
+      name: name || "Your recruiter",
       photo: hit ? hit.photo : null,
-      role: hit ? hit.role : "Recruiting guide",
+      role: hit ? hit.role : "Recruiter",
       blurb: hit ? hit.blurb : "",
       tag: hit ? hit.tag : recruiterTagFromName(name)
     };
@@ -4033,7 +4033,7 @@
   }
 
   function guidePathStamp() {
-    /* Job context wins — Concierge / Ask-a-guide trail carries specialty · code · guide */
+    /* Job context wins — Concierge / Ask AMP trail carries specialty · code · guide */
     if (state.jobId) {
       var j = jobById(state.jobId);
       if (j) {
@@ -4329,7 +4329,7 @@
       ? '<p class="job-guide-role muted">' + profile.role + '</p>'
       : '';
     return '<aside class="panel job-guide-aside">' +
-      '<h3 style="margin:0 0 12px">Your guide</h3>' +
+      '<h3 style="margin:0 0 12px">Your recruiter</h3>' +
       '<div class="job-guide-card">' +
         avatarHtml +
         '<div class="job-guide-body">' +
@@ -4338,7 +4338,7 @@
           blurbHtml +
         '</div>' +
       '</div>' +
-      '<p class="muted" style="margin:12px 0;font-size:13px">Your guide for ' + j.code + '</p>' +
+      '<p class="muted" style="margin:12px 0;font-size:13px">Your recruiter for ' + j.code + '</p>' +
       '<a class="btn btn-primary" style="width:100%;margin-bottom:8px" href="tel:+1' + j.recruiter.phone.replace(/-/g, "") + '">Call ' + j.recruiter.phone + '</a>' +
       '<button class="btn btn-dark" type="button" style="width:100%;margin-bottom:8px" data-chat="text">Text ' + recruiterFirstName(j.recruiter) + '</button>' +
       '<a class="btn btn-ghost" style="width:100%" href="mailto:' + j.recruiter.email + '?cc=' + encodeURIComponent(j.recruiter.cc) + '&subject=' + encodeURIComponent("Interest in " + j.code) + '">Email · CC inquire@</a>' +
@@ -4360,12 +4360,12 @@
   }
 
   function jobsSoftBench() {
-    return "<aside class=\"jobs-soft-bench\" aria-label=\"More ways to find a fit\"><span class=\"tag\">More than the job board</span><h3 class=\"jobs-soft-bench-title\">Posted roles are only part of the path.</h3><p><strong>These are roles we can show publicly.</strong> Guides also know of openings that never appear here. If nothing listed feels right, talk with a guide — we’ll keep looking with you.</p><button type=\"button\" class=\"btn btn-ghost jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a guide <span aria-hidden=\"true\">→</span></button></aside>";
+    return "<aside class=\"jobs-soft-bench\" aria-label=\"More ways to find a fit\"><span class=\"tag\">More than the job board</span><h3 class=\"jobs-soft-bench-title\">Posted roles are only part of the path.</h3><p><strong>These are roles we can show publicly.</strong> Our recruiters also know of openings that never appear here. If nothing listed feels right, talk with a recruiter — we’ll keep looking with you.</p><button type=\"button\" class=\"btn btn-ghost jobs-soft-bench-cta\" data-guide-whisper=\"1\">Talk to a recruiter <span aria-hidden=\"true\">→</span></button></aside>";
   }
 
   function jobsMpcEmpty() {
     var path = guidePathStamp();
-    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · tailored search</span><h3>Nothing posted for this cut — tailor a search.</h3><p>When nothing posted fits, a recruiting guide opens a tailored search with you.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a guide</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a guide</button></div></article>";
+    return "<article class=\"jobs-mpc-empty panel panel-glow\" aria-live=\"polite\"><span class=\"tag\">MPC · tailored search</span><h3>Nothing posted for this cut — tailor a search.</h3><p>When nothing posted fits, a recruiter opens a tailored search with you.</p><p class=\"jobs-path-stamp\">Your path: " + path + "</p><div class=\"btn-row\"><button type=\"button\" class=\"btn btn-primary\" data-go=\"mpc\">Tailor a search with a recruiter</button><button type=\"button\" class=\"btn btn-ghost\" data-guide-whisper=\"1\">Talk to a recruiter</button><button type=\"button\" class=\"btn btn-ghost\" data-chat=\"talk\">Talk with a recruiter</button></div></article>";
   }
 
   function renderJobsList() {
@@ -4412,7 +4412,7 @@
   
   function recruiterFirstName(rec) {
     var n = (rec && rec.name) ? String(rec.name).trim() : "";
-    if (!n) return "your guide";
+    if (!n) return "your recruiter";
     return n.split(/\s+/)[0];
   }
 
@@ -4437,10 +4437,10 @@
       '<article class="jobs-mpc-empty panel panel-glow job-missing" aria-live="polite">' +
         '<span class="tag">Role not found</span>' +
         '<h3>That opening isn’t posted right now.</h3>' +
-        '<p>The link may be outdated, or that role may have moved. Browse current openings, or talk with a guide about a tailored search.</p>' +
+        '<p>The link may be outdated, or that role may have moved. Browse current openings, or talk with a recruiter about a tailored search.</p>' +
         '<div class="btn-row">' +
           '<a class="btn btn-primary" href="' + jobsHref + '" data-go="physician-jobs">Browse openings</a>' +
-          '<button type="button" class="btn btn-ghost" data-guide-whisper="1">Talk with a guide</button>' +
+          '<button type="button" class="btn btn-ghost" data-guide-whisper="1">Talk with a recruiter</button>' +
         '</div>' +
       '</article>';
   }
@@ -4472,12 +4472,12 @@
             '<h2 style="margin:10px 0 6px;font-size:26px;letter-spacing:-.03em">' + j.title + '</h2>' +
             '<p class="muted" style="margin:0 0 8px">' + j.sub + '</p>' +
             '<ul class="bullets">' + bullets + '</ul>' +
-            '<p class="gate-note">Full package lives on a brief call with your guide. CME, commencement, PTO stacks, and named facility details stay for that conversation.</p>' +
+            '<p class="gate-note">Full package lives on a brief call with your recruiter. CME, commencement, PTO stacks, and named facility details stay for that conversation.</p>' +
             '<div class="btn-row">' +
               '<button class="btn btn-primary" type="button" data-go="job-contact" data-trail="1">Tap to Talk / Text / Email</button>' +
               '<button class="btn btn-dark" type="button" data-go="chat" data-trail="1">Talk with AMP</button>' +
             '</div>' +
-            '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Reaches a recruiting guide</span></div>' +
+            '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Reaches a recruiter</span></div>' +
           '</div>' +
         '</div>' +
         renderJobGuideAside(j) +
@@ -4497,7 +4497,7 @@
         missingPhone.setAttribute("data-go", "physician-jobs");
       }
       var missingSms = $("#contact-job-sms");
-      if (missingSms) { missingSms.removeAttribute("data-chat"); missingSms.textContent = "Talk with a guide"; missingSms.setAttribute("data-guide-whisper", "1"); }
+      if (missingSms) { missingSms.removeAttribute("data-chat"); missingSms.textContent = "Talk with a recruiter"; missingSms.setAttribute("data-guide-whisper", "1"); }
       var missingMail = $("#contact-job-mail");
       if (missingMail) { missingMail.removeAttribute("href"); missingMail.setAttribute("data-go", "physician-jobs"); missingMail.textContent = "Browse openings"; }
       var missingRet = $("#confirm-return-job");
@@ -4715,7 +4715,7 @@
         '<button type="button" class="btn btn-primary" data-mpc-intro="1">Request intro</button>' +
         '<button type="button" class="btn btn-dark" data-mpc-full="1">Unlock full access</button>' +
       '</div>' +
-      '<p class="muted proof-note" id="mpc-drawer-toast">Sample actions — a guide would follow up. No PII shown.</p>';
+      '<p class="muted proof-note" id="mpc-drawer-toast">Sample actions — a recruiter would follow up. No PII shown.</p>';
     drawer.hidden = false;
     drawer.setAttribute("aria-hidden", "false");
     document.body.classList.add("mpc-drawer-open");
@@ -5125,18 +5125,18 @@
       var needsLine = clientNeedsStamp() || "Hiring conversation";
       var regionLine = (state.clientState || "") + (state.clientBd && state.clientBd.ownerName ? " · " + state.clientBd.ownerName : "");
       el.innerHTML =
-        '<div class="row"><span>Status</span><span class="ok">Received · guide assigned</span></div>' +
+        '<div class="row"><span>Status</span><span class="ok">Received · consultant assigned</span></div>' +
         '<div class="row"><span>When</span><span>' + when + '</span></div>' +
         '<div class="row"><span>Focus</span><span class="ok">' + needsLine + '</span></div>' +
-        (regionLine ? '<div class="row"><span>Region / guide</span><span class="ok">' + regionLine + '</span></div>' : "") +
+        (regionLine ? '<div class="row"><span>Region / consultant</span><span class="ok">' + regionLine + '</span></div>' : "") +
         '<div class="row"><span>Summary</span><span>' + (payload || "Client interest") + '</span></div>' +
-        '<p class="muted" style="margin:10px 0 0;font-size:11px;line-height:1.35">Your hiring guide has what they need to follow up.</p>';
+        '<p class="muted" style="margin:10px 0 0;font-size:11px;line-height:1.35">Your consultant has what they need to follow up.</p>';
     } else {
       el.innerHTML =
-        '<div class="row"><span>Status</span><span class="ok">Received · guide notified</span></div>' +
+        '<div class="row"><span>Status</span><span class="ok">Received · recruiter notified</span></div>' +
         '<div class="row"><span>When</span><span>' + when + '</span></div>' +
         '<div class="row"><span>Summary</span><span>' + (payload || "Interest") + '</span></div>' +
-        '<p class="muted" style="margin:10px 0 0;font-size:11px;line-height:1.35">A recruiting guide will follow up — no public package dump.</p>';
+        '<p class="muted" style="margin:10px 0 0;font-size:11px;line-height:1.35">A recruiter will follow up — no public package dump.</p>';
     }
   }
 
@@ -5625,7 +5625,7 @@ function syncGuideRoute(route) {
       var intro = raw.closest("[data-mpc-intro]");
       if (intro) {
         var toast = $("#mpc-drawer-toast");
-        if (toast) toast.textContent = "Intro requested — the AMP guide team would connect you. No message sent.";
+        if (toast) toast.textContent = "Intro requested — the AMP team would connect you. No message sent.";
         return;
       }
       var full = raw.closest("[data-mpc-full]");
@@ -5760,7 +5760,7 @@ function syncGuideRoute(route) {
           setFormBusy(clientForm, false);
           stampMess(
             "client",
-            (payload.name || "Client") + " · " + stCode + " · " + owner.name + " · " + needsLabel + " → a hiring guide"
+            (payload.name || "Client") + " · " + stCode + " · " + owner.name + " · " + needsLabel + " → a consultant"
           );
           go("confirm-client", { trail: true });
         });
@@ -5855,10 +5855,10 @@ function syncGuideRoute(route) {
         postLeadHandoff(payload).then(function () {
           setFormBusy(contactForm, false);
           if (isClient) {
-            stampMess("client", who + " · general contact → a hiring guide");
+            stampMess("client", who + " · general contact → a consultant");
             go("confirm-client", { trail: true });
           } else {
-            stampMess("physician", who + " · general contact → a recruiting guide");
+            stampMess("physician", who + " · general contact → a recruiter");
             go("confirm-mess", { trail: true });
           }
         });
@@ -6090,7 +6090,7 @@ function syncGuideRoute(route) {
   }
 
   function chatFunnelOpenCopy() {
-    return "Hi — I'm here to help you find the right guide. First: which path are you on?";
+    return "Hi — I'm here to help you find the right person. First: which path are you on?";
   }
 
   function paintChatFunnel() {
@@ -6139,10 +6139,10 @@ function syncGuideRoute(route) {
       setLog(
         chatBubble("bot", chatFunnelOpenCopy()) +
         chatBubble("me", me) +
-        chatBubble("bot", earn + " Want a named guide for the next step?")
+        chatBubble("bot", earn + " Want a named recruiter for the next step?")
       );
       setActions(
-        '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="earn-continue">Yes — connect me with a guide</button>' +
+        '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="earn-continue">Yes — connect me with a recruiter</button>' +
         (chatFunnel.path === "client"
           ? '<button type="button" class="btn btn-ghost amp-guide-action" data-chat="earn-explore" data-go="client">Explore the client path</button>'
           : '<button type="button" class="btn btn-ghost amp-guide-action" data-chat="earn-explore" data-go="physician">Explore the candidate path</button>'),
@@ -6159,9 +6159,9 @@ function syncGuideRoute(route) {
       setLog(
         chatBubble("bot", chatFunnelOpenCopy()) +
         chatBubble("me", me2) +
-        chatBubble("bot", earn2 + " Want a named guide for the next step?") +
-        chatBubble("me", "Yes — connect me with a guide") +
-        chatBubble("bot", "Great. How should we reach you? No package dumps — just a clear next step with a recruiting guide.")
+        chatBubble("bot", earn2 + " Want a named recruiter for the next step?") +
+        chatBubble("me", "Yes — connect me with a recruiter") +
+        chatBubble("bot", "Great. How should we reach you? No package dumps — just a clear next step with a recruiter.")
       );
       setActions(
         '<button type="button" class="btn btn-primary amp-guide-action is-primary" data-chat="talk">Talk</button>' +
@@ -6221,13 +6221,13 @@ function syncGuideRoute(route) {
     var log = $("#chat-log");
     var dockLog = $("#amp-guide-log");
     var labels = {
-      talk: state.guidePathText ? "I want to talk to a guide about " + state.guidePathText : "I’d like to talk with a guide",
+      talk: state.guidePathText ? "I want to talk to a recruiter about " + state.guidePathText : "I’d like to talk with a recruiter",
       text: "Text me",
       email: "Email is better for me",
       other: "I have a different question"
     };
     var meHtml = chatBubble("me", labels[opt] || opt);
-    var botHtml = chatBubble("bot", "Got it. Routing your interest to <strong>a recruiting guide</strong>. Prefer a form? Use Tap to Talk — same destination.");
+    var botHtml = chatBubble("bot", "Got it. Routing your interest to <strong>a recruiter</strong>. Prefer a form? Use Tap to Talk — same destination.");
     if (log) {
       log.innerHTML += meHtml;
       setTimeout(function () {
@@ -6451,13 +6451,13 @@ function syncGuideRoute(route) {
     },
     contact: {
       title: "Contact Us" + BRAND_SUFFIX,
-      description: "Contact Adaptive Medical Partners in Irving, Texas. Talk with a recruiting guide or a hiring guide — inquire@adaptivemedicalpartners.com · (972) 441-2750.",
+      description: "Contact Adaptive Medical Partners in Irving, Texas. Talk with a recruiter or a consultant — inquire@adaptivemedicalpartners.com · (972) 441-2750.",
       robots: "index,follow",
       h1: "Ready to Start a Conversation?"
     },
     "physician-jobs": {
       title: "Physician & Healthcare Jobs" + BRAND_SUFFIX,
-      description: "Physician and healthcare jobs with Adaptive Medical Partners. Practice-first previews — talk with a named guide about opportunities that fit your goals.",
+      description: "Physician and healthcare jobs with Adaptive Medical Partners. Practice-first previews — talk with a named recruiter about opportunities that fit your goals.",
       robots: "index,follow",
       h1: "Opportunities That Actually Fit Your Goals"
     },
@@ -6469,7 +6469,7 @@ function syncGuideRoute(route) {
     },
     "for-physicians": {
       title: "Recruiting Services for Physicians" + BRAND_SUFFIX,
-      description: "Recruiting services for physicians from Adaptive Medical Partners. Specialty and region filters, practice-first previews, and a named guide — not a blast.",
+      description: "Recruiting services for physicians from Adaptive Medical Partners. Specialty and region filters, practice-first previews, and a named recruiter — not a blast.",
       robots: "index,follow",
       h1: "For Physicians"
     },
@@ -6499,13 +6499,13 @@ function syncGuideRoute(route) {
     },
     "mi-lite": {
       title: "Market Intelligence — Specialty × State Market Read" + BRAND_SUFFIX,
-      description: "Market Intelligence from Adaptive Medical Partners: specialty × state market depth before a search. Public proof — 87% retention at 3 years, 1.7 interviews per hire, 700+ rural/FQHC/CAH partners, 16 years since 2010. Canonical hub for hiring orgs and physician guides.",
+      description: "Market Intelligence from Adaptive Medical Partners: specialty × state market depth before a search. Public proof — 87% retention at 3 years, 1.7 interviews per hire, 700+ rural/FQHC/CAH partners, 16 years since 2010. Canonical hub for hiring orgs and physicians.",
       robots: "index,follow",
       h1: "See the market before you choose a path."
     },
     physician: {
       title: "For Physicians" + BRAND_SUFFIX,
-      description: "Start the physician path with Adaptive Medical Partners. Choose your specialty and see practice-first roles with a recruiting guide.",
+      description: "Start the physician path with Adaptive Medical Partners. Choose your specialty and see practice-first roles with a recruiter.",
       robots: "index,follow"
     },
     client: {
@@ -6525,8 +6525,8 @@ function syncGuideRoute(route) {
       robots: "index,follow"
     },
     guides: {
-      title: "Meet Your Guides" + BRAND_SUFFIX,
-      description: "Meet the Adaptive Medical Partners guides — recruiting and hiring practitioners who stay until the hiring meeting is prepared.",
+      title: "Meet the Team" + BRAND_SUFFIX,
+      description: "Meet the Adaptive Medical Partners team — recruiting and hiring practitioners who stay until the hiring meeting is prepared.",
       robots: "index,follow"
     },
     search: {
@@ -6547,7 +6547,7 @@ function syncGuideRoute(route) {
     "physician-rank": { title: "What Matters Most" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "physician-region": { title: "Choose Your Region" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "job-contact": { title: "Tap to Talk" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
-    chat: { title: "Ask a Guide" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
+    chat: { title: "Ask AMP" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "confirm-mess": { title: "Interest Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "confirm-client": { title: "Meeting Request Captured" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
     "client-specialty": { title: "Hiring Specialty" + BRAND_SUFFIX, description: SEO_DEFAULT.description, robots: SEO_NOINDEX },
@@ -6592,7 +6592,7 @@ function syncGuideRoute(route) {
     if (excerpt) return excerpt;
     var spec = j.specialtyLabel || "Physician";
     var city = jobPlace(j);
-    return spec + (city ? " in " + city : "") + " — practice-first preview from Adaptive Medical Partners. Full package on a confidential call with your guide.";
+    return spec + (city ? " in " + city : "") + " — practice-first preview from Adaptive Medical Partners. Full package on a confidential call with your recruiter.";
   }
 
   function setMetaTag(name, content) {
@@ -6909,7 +6909,7 @@ function syncGuideRoute(route) {
         guides.setAttribute("data-path", path);
         var title = guides.querySelector("[data-guides-title]");
         var lede = guides.querySelector("[data-guides-lede]");
-        if (title) title.textContent = path === "client" ? "Your hiring guides" : "Your recruiting guides";
+        if (title) title.textContent = path === "client" ? "Your consultants" : "Your recruiters";
         if (lede) lede.textContent = path === "client"
           ? "Tap one — they help you set the brief and own the next step."
           : "Tap one — they turn a preview into a real next step.";
@@ -7032,4 +7032,4 @@ function syncGuideRoute(route) {
   }
 })();
 
-/* amp-build:2042-home-guides-path — climb toggle flips recruiting vs hiring guides */
+/* amp-build:2042-home-guides-path — climb toggle flips recruiters vs consultants */
