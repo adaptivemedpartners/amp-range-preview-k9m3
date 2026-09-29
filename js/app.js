@@ -3088,9 +3088,7 @@
     }
     chip.innerHTML = '<span class="dot"></span> ' + owner.label;
     if (note) {
-      note.textContent = owner.id === "randy"
-        ? "We'll connect you with a consultant for this state."
-        : "A named consultant will stay with you from the first conversation.";
+      note.textContent = "We'll connect you with a consultant for this state.";
     }
     if (state.clientMeetingStateTouched || !state.clientBd) {
       rememberHiringGuide(owner, sel.value);
