@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /version.json
 
 Sitemap: https://www.adaptivemedicalpartners.com/sitemap.xml
