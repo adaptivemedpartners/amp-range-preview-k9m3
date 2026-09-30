@@ -2066,6 +2066,33 @@ window.AMP_CONTENT = {
       slug: "kentucky-otolaryngology-oto-8371",
     },
     {
+      id: "p-5896",
+      code: "P-5896",
+      specialty: "psych",
+      specialtyLabel: "Psychiatry",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$295,000 + $42,000/yr Housing, No Call: Outpatient Psychiatry on California's Central Coast",
+      sub: "Psychiatry · P-5896 · California",
+      bullets: [
+        { k: "Practice", v: "Outpatient psychiatry at a large community health network: 5 days a week, 8 to 5, no in-house call, 15 to 18 patients a day with 30-minute med checks and 1-hour initial evaluations, about an 800-patient panel, 6 to 7 MAs per clinic" },
+        { k: "Setting", v: "California · Salinas, the \"Salad Bowl of the World,\" 30 minutes from Monterey, Carmel and Pebble Beach" },
+        { k: "Package", v: "$295,000 salary for a new graduate, $42,000/yr housing allowance, per-encounter production incentive, NHSC loan forgiveness eligible, up to $7,500 relocation, 21 days PTO plus 11 holidays and 5 CME days, $1,500 CME, insurance premiums fully paid, $25,000 employer 457(b) contribution over 3 years, malpractice covered through FTCA, licensure fees reimbursed — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 9, location: 9, income: 7 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-psychiatry-p-5896",
+      slug: "california-psychiatry-p-5896",
+    },
+    {
       id: "p-8191",
       code: "P-8191",
       specialty: "psych",
