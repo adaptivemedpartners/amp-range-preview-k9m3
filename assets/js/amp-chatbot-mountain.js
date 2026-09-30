@@ -306,7 +306,7 @@
     composerEl.appendChild(wrap);
     var hint = document.createElement("p");
     hint.className = "amp-composer-hint";
-    hint.textContent = "Chips = fast path · a recruiter follows up on next steps";
+    hint.textContent = "Tap an option to start · a recruiter or consultant follows up";
     composerEl.appendChild(hint);
   }
 
@@ -464,16 +464,17 @@
   }
 
   /* ---------- Entry fork ---------- */
+  /* amp-build:2248-chatbot-plain-language — mountain wording removed */
   /* amp-build:2059-welcome-dedupe — one welcome; askAudience skips “Welcome to the range” */
   function askAudience() {
     return addBot(
-      "Are you searching for the peak, or holding it for your organization?",
+      "Are you looking for your next role, or hiring for your organization?",
       500
     ).then(function () {
       showChips(
         [
-          { label: "Candidate path", value: "candidate" },
-          { label: "Client path", value: "client" }
+          { label: "I’m looking for a role", value: "candidate" },
+          { label: "I’m hiring", value: "client" }
         ],
         function (value, label) {
           addUser(label);
