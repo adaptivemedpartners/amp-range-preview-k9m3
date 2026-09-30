@@ -426,7 +426,7 @@ window.AMP_CONTENT = {
       region: "southwest",
       state: "Texas",
       stateAbbr: "TX",
-      title: "Up to $170,000 Base + NHSC Loan Forgiveness: General Dentistry in the Texas Hill Country",
+      title: "$227,500 First-Year Package + NHSC Loan Forgiveness: General Dentistry in the Texas Hill Country",
       sub: "General Dentistry · DDS-8418 · Texas",
       bullets: [
         { k: "Practice", v: "$12,000 Sign-On Bonus • Up to $10,000 in Annual Incentives • Four 10s or Five 8s • No Late Nights or Saturdays" },
@@ -1074,7 +1074,7 @@ window.AMP_CONTENT = {
       region: "southwest",
       state: "Texas",
       stateAbbr: "TX",
-      title: "Up to $375,000 Base + wRVU Bonus: Outpatient Neurology in West Texas (Midland Area)",
+      title: "$518,750 First-Year Package: Outpatient Neurology in West Texas (Midland Area)",
       sub: "Neurology · N-8411 · Texas",
       bullets: [
         { k: "Practice", v: "4.5-Day Week • Fridays End at Noon • 100% Outpatient • Minimal Call" },
@@ -1695,7 +1695,7 @@ window.AMP_CONTENT = {
       region: "southwest",
       state: "Texas",
       stateAbbr: "TX",
-      title: "Up to $750,000 Base + Paid Call + Future ASC Buy-In: Urology in West Texas",
+      title: "$925,000 First-Year Package + Future ASC Buy-In: Urology in West Texas",
       sub: "Urology · U-8410 · Texas",
       bullets: [
         { k: "Practice", v: "Robotics + Aquablation • 1–2 OR Days/Week • No State Income Tax • $30K Sign-On + $15K Relocation" },
