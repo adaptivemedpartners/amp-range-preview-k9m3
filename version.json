@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2273",
-  "label": "2273-pa8395-new",
-  "deployed": "2026-09-30 2:02 PM CT",
+  "build": "2274",
+  "label": "2274-pt8396-new",
+  "deployed": "2026-09-30 2:04 PM CT",
   "changes": [
-    "New listing PA-8395 Orthopedic walk-in PA/NP, Oklahoma City OK (Hadley) from presentation"
+    "New listing PT-8396 Physical Therapist, Ardmore OK (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2272",
+    "build": "2273",
     "changes": [
-      "New listings MO-8434 and MO-8435 Medical Oncology, Concord/Laconia NH (Hadley) from presentation"
+      "New listing PA-8395 Orthopedic walk-in PA/NP, Oklahoma City OK (Hadley) from presentation"
     ]
   }
 }

@@ -1904,6 +1904,33 @@ window.AMP_CONTENT = {
       slug: "alabama-pulmonology-pud-8348",
     },
     {
+      id: "pt-8396",
+      code: "PT-8396",
+      specialty: "other",
+      specialtyLabel: "Physical Therapy",
+      region: "southwest",
+      state: "Oklahoma",
+      stateAbbr: "OK",
+      title: "$80,000 Physical Therapist: Brand-New Walk-In Orthopedic Clinic, Monday to Friday, in Southern Oklahoma",
+      sub: "Physical Therapy · PT-8396 · Oklahoma",
+      bullets: [
+        { k: "Practice", v: "Physical therapist in a brand-new walk-in orthopedic clinic with onsite MRI and full-time PAs: Monday to Friday 8 to 5 with a lunch hour, 15–20 patients a day from newborns to seniors, PT assistants and an onsite manager, Athena EMR" },
+        { k: "Setting", v: "Oklahoma · Ardmore, a south-central hub on I-35 about 90 minutes from Oklahoma City and near Lake Murray State Park" },
+        { k: "Package", v: "$80,000 base salary, 2 weeks PTO plus 6 holidays, health, dental, vision, and life, licensure and malpractice covered — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 6, income: 5 },
+      url: "https://www.adaptivemedicalpartners.com/job/oklahoma-physical-therapy-pt-8396",
+      slug: "oklahoma-physical-therapy-pt-8396",
+    },
+    {
       id: "rad-8256",
       code: "RAD-8256",
       specialty: "rad",
