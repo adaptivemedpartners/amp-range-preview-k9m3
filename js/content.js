@@ -1499,6 +1499,33 @@ window.AMP_CONTENT = {
       slug: "midwest-licensed-clinical-social-worker-lcsw-8451",
     },
     {
+      id: "lpc-8442",
+      code: "LPC-8442",
+      specialty: "licensed_clinical_social_worker",
+      specialtyLabel: "Licensed Clinical Social Worker",
+      region: "southwest",
+      state: "Oklahoma",
+      stateAbbr: "OK",
+      title: "$70,000+ LCSW or LPC: Substance Use Counseling with Half-Day Fridays in South Central Oklahoma",
+      sub: "Licensed Clinical Social Worker · LPC-8442 · Oklahoma",
+      bullets: [
+        { k: "Practice", v: "LCSW or LPC focused on substance use at a nonprofit community health center: addiction and co-occurring mental health care, relapse prevention and long-term recovery, MAT coordination, no more than 8 patients a day (school-age to seniors) with 30- to 60-minute visits and a ramp-up period, Monday to Thursday 8 to 5 and Friday until 1 with admin time, Athena EMR" },
+        { k: "Setting", v: "Oklahoma · Chickasha, a Grady County town about 45 minutes southwest of Oklahoma City, with living costs 15–20% below the national average" },
+        { k: "Package", v: "$70,000 base (more with experience), 15 days PTO plus 9 holidays, 12 sick days and 4 other days, 3 CME days and $1,500 CME, health coverage 100% paid for you, 401(k) with 3% match, NHSC-eligible site (HPSA 21) or Oklahoma loan repayment, PSLF eligible, licensure and dues paid, malpractice through FTCA — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 9, location: 7, income: 5 },
+      url: "https://www.adaptivemedicalpartners.com/job/oklahoma-licensed-professional-counselor-lpc-8442",
+      slug: "oklahoma-licensed-professional-counselor-lpc-8442",
+    },
+    {
       id: "md-8459",
       code: "MD-8459",
       specialty: "fm",

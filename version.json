@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2291",
-  "label": "2291-pnp7004-pnp7036-new",
-  "deployed": "2026-09-30 2:58 PM CT",
+  "build": "2292",
+  "label": "2292-lpc8442-new",
+  "deployed": "2026-09-30 3:02 PM CT",
   "changes": [
-    "New listings PNP-7004 and PNP-7036 Psychiatric NP, Tucson AZ (Mike) from presentation"
+    "New listing LPC-8442 LCSW/LPC substance use, Chickasha OK (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2290",
+    "build": "2291",
     "changes": [
-      "New listing PA-8228 Physician Assistant, Salinas CA (Mike) from presentation"
+      "New listings PNP-7004 and PNP-7036 Psychiatric NP, Tucson AZ (Mike) from presentation"
     ]
   }
 }
