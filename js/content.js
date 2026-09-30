@@ -435,9 +435,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Hadley Herrera",
-        phone: "972-532-0465",
-        email: "hherrera@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -836,7 +836,7 @@ window.AMP_CONTENT = {
       bullets: [
         { k: "Practice", v: "Full-scope outpatient family medicine at a nonprofit community health center with sites across the East Texas–Arkansas border: all ages, 17–23 patients on a full clinic day with a production incentive above a 17.5-a-day average, flexible 4- or 5-day week (clinic 8 to 6), call 1 in 10 weekdays with weekends on a separate rotation, eClinicalWorks" },
         { k: "Setting", v: "Texas · Texarkana, a twin city on the Arkansas line about 3 hours from Dallas, with homes around $170,000–$210,000 and no state income tax" },
-        { k: "Package", v: "$200,000–$250,000 base salary, production incentive, sign-on bonus, relocation, $50,000 a year student loan repayment with a 2-year commitment — full details on a short call with your recruiter" },
+        { k: "Package", v: "$200,000 base salary, production incentive, sign-on bonus, relocation, $50,000 a year student loan repayment with a 2-year commitment — full details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
@@ -1563,7 +1563,7 @@ window.AMP_CONTENT = {
       title: "$425,000 Base + $40,000 Sign-On + $100,000 Loan Forgiveness: Teaching Hematology/Oncology in Northeast Tennessee",
       sub: "Hematology / Oncology · MO-8338 · Tennessee",
       bullets: [
-        { k: "Practice", v: "Academic hematology/oncology with a teaching focus: supervise 3–5 fellows and residents at a time with bedside teaching, about 18 patients a day (60% heme, 40% onc), Monday to Friday 8 to 5 with no weekend clinic, fellows handle night and weekend call, Friday off after call week, 312-bed hospital, full infusion and specialty pharmacy support, Epic" },
+        { k: "Practice", v: "Academic hematology/oncology with a teaching focus: supervise 3–5 fellows and residents at a time with bedside teaching, about 18 patients a day (60% heme, 40% onc), Monday to Friday 8 to 5 with no weekend clinic, 1:4 call with fellows handling nights and weekends, Friday off after call week, 312-bed hospital, full infusion and specialty pharmacy support, Epic" },
         { k: "Setting", v: "Tennessee · the Johnson City and Tri-Cities area in the Appalachian foothills, with low living costs and no state income tax" },
         { k: "Package", v: "$425,000 base salary, productivity bonus negotiable up to $50,000, $40,000 sign-on, $100,000 student loan forgiveness over 5 years, $10,000 relocation, 26 days PTO, $4,000 CME, 403(b) match up to 6%, malpractice paid — full details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },

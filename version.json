@@ -1,15 +1,17 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2288",
-  "label": "2288-p5896-new",
-  "deployed": "2026-09-30 2:44 PM CT",
+  "build": "2289",
+  "label": "2289-fixes-fp8416-mo8338-cd8439",
+  "deployed": "2026-09-30 2:48 PM CT",
   "changes": [
-    "New listing P-5896 Psychiatry, Salinas CA (Mike) from presentation + Mike's housing note"
+    "FP-8416 base set to $200,000 per Mike",
+    "MO-8338 adds 1:4 call per Mike",
+    "CD-8439 recruiter changed to Mike Freeman"
   ],
   "previous": {
-    "build": "2287",
+    "build": "2288",
     "changes": [
-      "New listing OD-8333 Optometrist, Salinas CA (Mike) from presentation"
+      "New listing P-5896 Psychiatry, Salinas CA (Mike) from presentation + Mike's housing note"
     ]
   }
 }
