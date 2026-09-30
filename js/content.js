@@ -500,6 +500,33 @@ window.AMP_CONTENT = {
       slug: "washington-dermatology-d-8244",
     },
     {
+      id: "dds-8144",
+      code: "DDS-8144",
+      specialty: "dental",
+      specialtyLabel: "Dentist",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$172,000 Base + $42,000 a Year Housing Allowance: Full-Scope General Dentistry in California's Salinas Valley",
+      sub: "Dentist · DDS-8144 · California",
+      bullets: [
+        { k: "Practice", v: "Full-scope general dentist at a community health center with 14 dentists across 13 sites: Monday to Friday 8 to 5, 3 operatories with 1 front office admin and 2 DAs/RDAs, 24–30 patients a day (restorative, oral surgery, fixed and removable prosthodontics, endo, pediatrics), 30–45 minute exams and 1-hour procedures, NextGen EMR" },
+        { k: "Setting", v: "California · Salinas, the farm-rich heart of the Salinas Valley about 20 minutes from Monterey and the Pacific coast" },
+        { k: "Package", v: "$172,000 base (0–2 years' experience), $42,000 a year housing allowance, $12.50 per visit above 20 a day, $700 per extra day and evening premium, up to $7,500 relocation, 21 PTO days plus 11 holidays, premiums fully paid, $25,000 employer retirement over 3 years, FTCA malpractice — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 8, income: 7 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-general-dentistry-dds-8144",
+      slug: "california-general-dentistry-dds-8144",
+    },
+    {
       id: "dds-8391",
       code: "DDS-8391",
       specialty: "dental",

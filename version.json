@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2282",
-  "label": "2282-cd8439-new",
-  "deployed": "2026-09-30 2:24 PM CT",
+  "build": "2283",
+  "label": "2283-dds8144-new",
+  "deployed": "2026-09-30 2:26 PM CT",
   "changes": [
-    "New listing CD-8439 Noninvasive Cardiology, Concord NH (Hadley) — twin of CD-8438 per Mike"
+    "New listing DDS-8144 General Dentistry, Salinas CA (Mike) from presentation + $42k/yr housing allowance per Mike"
   ],
   "previous": {
-    "build": "2281",
+    "build": "2282",
     "changes": [
-      "New listing FP-8416 Family Medicine, Texarkana TX (Nate) from presentation"
+      "New listing CD-8439 Noninvasive Cardiology, Concord NH (Hadley) — twin of CD-8438 per Mike"
     ]
   }
 }
