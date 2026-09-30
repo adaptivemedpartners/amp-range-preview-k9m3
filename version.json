@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2292",
-  "label": "2292-lpc8442-new",
-  "deployed": "2026-09-30 3:02 PM CT",
+  "build": "2293",
+  "label": "2293-lpc8443-new",
+  "deployed": "2026-09-30 2:25 PM CT",
   "changes": [
-    "New listing LPC-8442 LCSW/LPC substance use, Chickasha OK (Hadley) from presentation"
+    "New listing LPC-8443 LCSW/LPC outpatient therapy, Pauls Valley OK (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2291",
+    "build": "2292",
     "changes": [
-      "New listings PNP-7004 and PNP-7036 Psychiatric NP, Tucson AZ (Mike) from presentation"
+      "New listing LPC-8442 LCSW/LPC substance use, Chickasha OK (Hadley) from presentation"
     ]
   }
 }
