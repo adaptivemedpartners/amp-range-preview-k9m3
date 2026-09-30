@@ -1823,6 +1823,33 @@ window.AMP_CONTENT = {
       slug: "texas-rheumatology-rhu-8457",
     },
     {
+      id: "rtech-8343",
+      code: "RTECH-8343",
+      specialty: "rad",
+      specialtyLabel: "MRI Technologist",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "MRI Technologist: $45–$60 an Hour, Weekday Days with No Call in West Texas",
+      sub: "MRI Technologist · RTECH-8343 · Texas",
+      bullets: [
+        { k: "Practice", v: "Top 100 critical access hospital and Level IV trauma center: Monday–Friday 8–4:30 with no call, about 50 MRIs a month (75% outpatient), a team of 6 full-time technologists; ARRT, Texas licensure, BLS, and 2 years' experience required" },
+        { k: "Setting", v: "Texas · Pecos, a small West Texas town known as the birthplace of rodeo, with one of the lowest living costs in the state" },
+        { k: "Package", v: "$45–$60 an hour depending on experience and modalities, 13 PTO days plus 9 holidays, BCBS health, dental, and vision, county retirement plan with up to a 250% match — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-mri-technologist-rtech-8343",
+      slug: "texas-mri-technologist-rtech-8343",
+    },
+    {
       id: "rtech-8447",
       code: "RTECH-8447",
       specialty: "rad",
