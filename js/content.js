@@ -797,6 +797,33 @@ window.AMP_CONTENT = {
       slug: "alabama-family-medicine-ob-residency-program-director-fpob-8462",
     },
     {
+      id: "ge-6081",
+      code: "GE-6081",
+      specialty: "gi",
+      specialtyLabel: "Gastroenterology",
+      region: "midwest",
+      state: "Missouri",
+      stateAbbr: "MO",
+      title: "$750,000 Salary + $100,000 Bonus: GI Hospitalist on 2 Weeks On, 2 Weeks Off in Missouri",
+      sub: "Gastroenterology · GE-6081 · Missouri",
+      bullets: [
+        { k: "Practice", v: "GI Hospitalist joining a 5-physician GI group as counterpart to the current hospitalist: 2 weeks on, 2 weeks off, taking call from home, about 17 cases a week and 10–12 inpatients a day, ERCP and EUS available by credentials, Epic, no inpatient GI competition" },
+        { k: "Setting", v: "Missouri · Cape Girardeau, a Mississippi River town 90 miles south of St. Louis where the median home lists around $220,000" },
+        { k: "Package", v: "$750,000 annual salary, $100,000 commencement bonus, $15,000 relocation, up to $420,000 student loan forgiveness, pension plan, $5,000 CME, malpractice with tail — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 8, location: 6, income: 9 },
+      url: "https://www.adaptivemedicalpartners.com/job/missouri-gastroenterology-ge-6081",
+      slug: "missouri-gastroenterology-ge-6081",
+    },
+    {
       id: "ge-8325",
       code: "GE-8325",
       specialty: "gi",
