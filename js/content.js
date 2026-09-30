@@ -959,6 +959,33 @@ window.AMP_CONTENT = {
       slug: "kentucky-hematology-oncology-ho-8370",
     },
     {
+      id: "ho-8458",
+      code: "HO-8458",
+      specialty: "hemeonc",
+      specialtyLabel: "Hematology / Oncology",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "$725,000+ First-Year Salary + $75,000 Sign-On: Hematology/Oncology in West Texas",
+      sub: "Hematology / Oncology · HO-8458 · Texas",
+      bullets: [
+        { k: "Practice", v: "General adult hem/onc inside the hospital cancer center, with radiation, lab, and infusion on site: clinic Monday–Thursday with Friday mostly administrative, 15–18 patients a day, call about 1 week a month, 4 CMAs and 7 RNs including a navigator" },
+        { k: "Setting", v: "Texas · Abilene, a West Texas regional hub about 2.5 hours from Dallas–Fort Worth, with no state income tax" },
+        { k: "Package", v: "At least $725,000 salary the first year plus production incentive, $75,000 sign-on including relocation, 30 days PTO, loan program eligibility, retirement, $2,000 Texas license reimbursement — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 6, location: 6, income: 8 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-hematology-oncology-ho-8458",
+      slug: "texas-hematology-oncology-ho-8458",
+    },
+    {
       id: "ivc-8349",
       code: "IVC-8349",
       specialty: "cards",
