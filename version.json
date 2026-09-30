@@ -1,15 +1,17 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2249",
-  "label": "2249-nav-pinned-blog",
-  "deployed": "2026-09-30 5:58 AM CT",
+  "build": "2250",
+  "label": "2250-seo-redirects-llms-speed",
+  "deployed": "2026-09-30 12:20 PM CT",
   "changes": [
-    "Header stays pinned while scrolling on blog articles and other plain pages (mobile)"
+    "Six forwarding pages for dead URLs: /contact to /contact-us; five retired form pages to /forms (noindex, canonical)",
+    "llms.txt refreshed (Sep 30): real page links, sitemap line, jobs/search/residents/team pages",
+    "Mobile speed: team headshots lazy-load, Caveat font no longer render-blocking, oversized partner logos resized"
   ],
   "previous": {
-    "build": "2248",
+    "build": "2249",
     "changes": [
-      "Chatbot: mountain wording replaced with plain language (opening question, path buttons, hint)"
+      "Header stays pinned while scrolling on blog articles and other plain pages (mobile)"
     ]
   }
 }
