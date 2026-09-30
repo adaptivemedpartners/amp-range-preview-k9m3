@@ -1,18 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2256",
-  "label": "2256-np8229-washington",
-  "deployed": "2026-09-30 1:40 PM CT",
+  "build": "2257",
+  "label": "2257-rhu8345-northeast-al",
+  "deployed": "2026-09-30 1:42 PM CT",
   "changes": [
-    "NP-8229 moved to Washington / West (was California); new address /job/washington-nurse-practitioner-np-8229, old California address forwards to it"
+    "RHU-8345 title now says Northeast Alabama (was Southeast)"
   ],
   "previous": {
-    "build": "2255",
+    "build": "2256",
     "changes": [
-      "HO-8194 title and bullets rebuilt from Stephanie's updated Columbus, IN presentation ($889,600 first-year package, $100,000 sign-on)",
-      "D-8244 title now shows the approved Up to $612,500",
-      "GE-8325 filed under Texas / Southwest (was Arkansas / Southeast)",
-      "GE-8409 moved to South Carolina; new address /job/south-carolina-gastroenterology-ge-8409, old North Carolina address forwards to it"
+      "NP-8229 moved to Washington / West (was California); new address /job/washington-nurse-practitioner-np-8229, old California address forwards to it"
     ]
   }
 }

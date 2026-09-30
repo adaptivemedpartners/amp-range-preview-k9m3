@@ -1533,7 +1533,7 @@ window.AMP_CONTENT = {
       region: "southeast",
       state: "Alabama",
       stateAbbr: "AL",
-      title: "$389,750 First Year Package in Scenic Southeast Alabama",
+      title: "$389,750 First Year Package in Scenic Northeast Alabama",
       sub: "Rheumatology · RHU-8345 · Alabama",
       bullets: [
         { k: "Practice", v: "Four-day work week, no competition, and immediate patient demand." },
