@@ -2343,7 +2343,7 @@ window.AMP_CONTENT = {
       region: "southwest",
       state: "Arizona",
       stateAbbr: "AZ",
-      title: "$115,000+ Base, Weekdays Only: Outpatient Psychiatric NP in Tucson",
+      title: "$115,000+ Base, Weekdays Only: Second Outpatient Psychiatric NP Opening in Tucson",
       sub: "Psychiatric Nurse Practitioner · PNP-7036 · Arizona",
       bullets: [
         { k: "Practice", v: "Outpatient psychiatric nurse practitioner at a long-established nonprofit offering behavioral health and primary care: Monday to Friday, five 8-hour days, 15 to 18 adult patients a day with 15-minute follow-ups and 30-minute new visits, 6 to 7 MAs per clinic" },

@@ -1,15 +1,17 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2294",
-  "label": "2294-specialty-remap",
-  "deployed": "2026-09-30 2:55 PM CT",
+  "build": "2295",
+  "label": "2295-seo-jobdates-faq",
+  "deployed": "2026-09-30 3:10 PM CT",
   "changes": [
-    "Remap 44 listings from short specialty ids to picker ids so the specialty filter finds them (per Mike)"
+    "JobPosting: add datePosted (first git add), employmentType FULL_TIME, rolling 90-day validThrough on all job pages",
+    "Merge the two FAQPage schema blocks into one site-wide FAQ",
+    "PNP-7036 title made distinct from PNP-7004 (second opening)"
   ],
   "previous": {
-    "build": "2293",
+    "build": "2294",
     "changes": [
-      "New listing LPC-8443 LCSW/LPC outpatient therapy, Pauls Valley OK (Hadley) from presentation"
+      "Remap 44 listings from short specialty ids to picker ids so the specialty filter finds them (per Mike)"
     ]
   }
 }
