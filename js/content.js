@@ -1634,6 +1634,33 @@ window.AMP_CONTENT = {
       slug: "texas-pediatrics-pd-8403",
     },
     {
+      id: "pd-8448",
+      code: "PD-8448",
+      specialty: "peds",
+      specialtyLabel: "Pediatrics",
+      region: "southeast",
+      state: "Louisiana",
+      stateAbbr: "LA",
+      title: "$225,000 + $15,000 Sign-On + Loan Forgiveness: Outpatient Pediatrics with No Call in Central Louisiana",
+      sub: "Pediatrics · PD-8448 · Louisiana",
+      bullets: [
+        { k: "Practice", v: "Growing FQHC with 7 clinics and 40 school-based sites: Monday–Friday 8–5, about 20 patients a day, all outpatient with no call, nights, or weekends, malpractice covered through FTCA" },
+        { k: "Setting", v: "Louisiana · Winnfield, a small historic town about an hour from Alexandria, with living costs about 32% below the national average" },
+        { k: "Package", v: "$225,000 base, $15,000 sign-on, $10,000 relocation, NHSC and State of Louisiana loan forgiveness eligibility, about 28 days off including holidays and CME, 401(k) with 4% match — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/louisiana-pediatrics-pd-8448",
+      slug: "louisiana-pediatrics-pd-8448",
+    },
+    {
       id: "pt-8387",
       code: "PT-8387",
       specialty: "other",
