@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2286",
-  "label": "2286-np8227-new",
-  "deployed": "2026-09-30 2:36 PM CT",
+  "build": "2287",
+  "label": "2287-od8333-new",
+  "deployed": "2026-09-30 2:40 PM CT",
   "changes": [
-    "New listing NP-8227 Family Nurse Practitioner, Salinas CA (Mike) from presentation"
+    "New listing OD-8333 Optometrist, Salinas CA (Mike) from presentation"
   ],
   "previous": {
-    "build": "2285",
+    "build": "2286",
     "changes": [
-      "New listing FP-8436 Family Medicine, San Jose CA (Mike) from presentation"
+      "New listing NP-8227 Family Nurse Practitioner, Salinas CA (Mike) from presentation"
     ]
   }
 }

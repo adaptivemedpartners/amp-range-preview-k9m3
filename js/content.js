@@ -1985,6 +1985,33 @@ window.AMP_CONTENT = {
       slug: "texas-obstetrics-and-gynecology-obg-8455",
     },
     {
+      id: "od-8333",
+      code: "OD-8333",
+      specialty: "optometrist",
+      specialtyLabel: "Optometrist",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$145,375+ Base + $42,000/yr Housing: Optometrist on California's Central Coast",
+      sub: "Optometrist · OD-8333 · California",
+      bullets: [
+        { k: "Practice", v: "General optometry at a large community health network: Monday to Friday, 8 to 5, about 19 patients a day across all ages, family eye care, glasses and contacts, glaucoma detection, diabetic retinal exams and field testing, with an optician and support staff, NextGen EMR" },
+        { k: "Setting", v: "California · Salinas, the \"Salad Bowl of the World,\" 30 minutes from Monterey, Carmel and Pebble Beach" },
+        { k: "Package", v: "$145,375 base for new grads (more with experience), $20,000 sign-on, $42,000/yr housing allowance for 3 years, $12.50 per encounter over 21 a day paid quarterly, up to $7,500 relocation, NHSC and PSLF eligible, 21 days PTO plus 11 holidays, 40 hours and $1,500 CME, health coverage 100% paid for you and family, $15,000 457(b) contribution over 3 years — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 9, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-optometrist-od-8333",
+      slug: "california-optometrist-od-8333",
+    },
+    {
       id: "ot-8388",
       code: "OT-8388",
       specialty: "ot",
