@@ -1796,6 +1796,33 @@ window.AMP_CONTENT = {
       slug: "louisiana-rheumatology-rhu-8365",
     },
     {
+      id: "rhu-8457",
+      code: "RHU-8457",
+      specialty: "rheum",
+      specialtyLabel: "Rheumatology",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "$302,174+ First-Year Salary + $45,000 Sign-On: Rheumatology with No Call or Rounding in West Texas",
+      sub: "Rheumatology · RHU-8457 · Texas",
+      bullets: [
+        { k: "Practice", v: "Outpatient adult and geriatric rheumatology on the hospital campus: no call and no routine inpatient rounding, clinic Monday–Thursday plus Friday mornings, 15–18 patients a day, 2 APPs, 4 CMAs and 4 RNs" },
+        { k: "Setting", v: "Texas · Abilene, a West Texas regional hub about 2.5 hours from Dallas–Fort Worth, with no state income tax" },
+        { k: "Package", v: "At least $302,174 salary the first year plus production incentive, $45,000 sign-on including relocation, 30 days PTO, loan program eligibility, retirement, $2,000 Texas license reimbursement — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-rheumatology-rhu-8457",
+      slug: "texas-rheumatology-rhu-8457",
+    },
+    {
       id: "rtech-8447",
       code: "RTECH-8447",
       specialty: "rad",
