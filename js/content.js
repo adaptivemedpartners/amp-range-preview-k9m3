@@ -1769,6 +1769,33 @@ window.AMP_CONTENT = {
       slug: "california-physician-assistant-pa-8226",
     },
     {
+      id: "pa-8395",
+      code: "PA-8395",
+      specialty: "pa",
+      specialtyLabel: "Physician Assistant",
+      region: "southwest",
+      state: "Oklahoma",
+      stateAbbr: "OK",
+      title: "$130,000+ PA or NP: Walk-In Orthopedic Clinic, Monday to Friday, in Oklahoma City",
+      sub: "Physician Assistant · PA-8395 · Oklahoma",
+      bullets: [
+        { k: "Practice", v: "PA or NP at a walk-in, same-day orthopedic clinic: Monday to Friday 8 to 5 with a lunch hour, 20–25 patients a day from newborns to seniors, onsite MRI, X-ray, casting, and full-time physical therapy, medical assistants and an onsite manager, Athena EMR" },
+        { k: "Setting", v: "Oklahoma · South Oklahoma City, minutes from downtown and the airport, where living costs run about 18% below the national average" },
+        { k: "Package", v: "$130,000 base salary, higher with experience, 2 weeks PTO plus 6 holidays, health, dental, vision, and life, licensure and malpractice covered, OAPA conference time — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 7, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/oklahoma-physician-assistant-pa-8395",
+      slug: "oklahoma-physician-assistant-pa-8395",
+    },
+    {
       id: "pd-8403",
       code: "PD-8403",
       specialty: "peds",

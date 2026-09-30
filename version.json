@@ -1,16 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2272",
-  "label": "2272-mo8434-mo8435-new",
-  "deployed": "2026-09-30 2:00 PM CT",
+  "build": "2273",
+  "label": "2273-pa8395-new",
+  "deployed": "2026-09-30 2:02 PM CT",
   "changes": [
-    "New listings MO-8434 and MO-8435 Medical Oncology, Concord/Laconia NH (Hadley) from presentation"
+    "New listing PA-8395 Orthopedic walk-in PA/NP, Oklahoma City OK (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2271",
+    "build": "2272",
     "changes": [
-      "New listing FP-8463 Family Medicine, Centreville AL (Nate) from presentation",
-      "New listing GS-8437 General Surgery, Gadsden AL (Hadley) from presentation"
+      "New listings MO-8434 and MO-8435 Medical Oncology, Concord/Laconia NH (Hadley) from presentation"
     ]
   }
 }
