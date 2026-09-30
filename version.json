@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2276",
-  "label": "2276-ccm8412-new",
-  "deployed": "2026-09-30 2:07 PM CT",
+  "build": "2277",
+  "label": "2277-ge8108-new",
+  "deployed": "2026-09-30 2:12 PM CT",
   "changes": [
-    "New listing CCM-8412 Critical Care, Midland TX (Stephanie) from presentation"
+    "New listing GE-8108 Gastroenterology, Columbus IN (Stephanie) from comp summary; location from Stephanie's board"
   ],
   "previous": {
-    "build": "2275",
+    "build": "2276",
     "changes": [
-      "New listing RAD-8354 Diagnostic Radiology, Valdosta GA (Hadley) from presentation"
+      "New listing CCM-8412 Critical Care, Midland TX (Stephanie) from presentation"
     ]
   }
 }

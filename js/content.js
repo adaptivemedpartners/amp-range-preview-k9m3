@@ -878,6 +878,33 @@ window.AMP_CONTENT = {
       slug: "missouri-gastroenterology-ge-6081",
     },
     {
+      id: "ge-8108",
+      code: "GE-8108",
+      specialty: "gi",
+      specialtyLabel: "Gastroenterology",
+      region: "midwest",
+      state: "Indiana",
+      stateAbbr: "IN",
+      title: "$556,000 Guarantee + $150,000 Recruitment Incentive: Gastroenterology Partner Track in Indiana",
+      sub: "Gastroenterology · GE-8108 · Indiana",
+      bullets: [
+        { k: "Practice", v: "Gastroenterology with a busy established group averaging 10,000–11,000 wRVUs per physician, a one-year guarantee, then full partner compensation based on wRVU productivity, with paid 24-hour call shifts" },
+        { k: "Setting", v: "Indiana · Columbus, a small city known for its modern architecture, about 45 minutes south of Indianapolis" },
+        { k: "Package", v: "$556,000 guaranteed first year, call paid at $830 per 24-hour shift (about $101,000 a year), $150,000 recruitment incentive with a 5-year commitment, about $687,000 total first-year cash — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 6, location: 6, income: 8 },
+      url: "https://www.adaptivemedicalpartners.com/job/indiana-gastroenterology-ge-8108",
+      slug: "indiana-gastroenterology-ge-8108",
+    },
+    {
       id: "ge-8325",
       code: "GE-8325",
       specialty: "gi",
