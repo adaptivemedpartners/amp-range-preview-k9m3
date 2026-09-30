@@ -743,6 +743,33 @@ window.AMP_CONTENT = {
       slug: "washington-family-medicine-fp-8306",
     },
     {
+      id: "fp-8416",
+      code: "FP-8416",
+      specialty: "fm",
+      specialtyLabel: "Family Medicine",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "$50,000 a Year Loan Repayment + Sign-On: Full-Scope Family Medicine with a 4-Day Week Option in Texarkana",
+      sub: "Family Medicine · FP-8416 · Texas",
+      bullets: [
+        { k: "Practice", v: "Full-scope outpatient family medicine at a nonprofit community health center with sites across the East Texas–Arkansas border: all ages, 17–23 patients on a full clinic day with a production incentive above a 17.5-a-day average, flexible 4- or 5-day week (clinic 8 to 6), call 1 in 10 weekdays with weekends on a separate rotation, eClinicalWorks" },
+        { k: "Setting", v: "Texas · Texarkana, a twin city on the Arkansas line about 3 hours from Dallas, with homes around $170,000–$210,000 and no state income tax" },
+        { k: "Package", v: "$200,000–$250,000 base salary, production incentive, sign-on bonus, relocation, $50,000 a year student loan repayment with a 2-year commitment — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 6, income: 7 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-family-medicine-fp-8416",
+      slug: "texas-family-medicine-fp-8416",
+    },
+    {
       id: "fp-8450",
       code: "FP-8450",
       specialty: "fm",
