@@ -2147,6 +2147,33 @@ window.AMP_CONTENT = {
       slug: "california-physician-assistant-pa-8226",
     },
     {
+      id: "pa-8228",
+      code: "PA-8228",
+      specialty: "pa",
+      specialtyLabel: "Physician Assistant",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$140,000+ Base + $42,000/yr Housing: Primary Care PA on California's Central Coast",
+      sub: "Physician Assistant · PA-8228 · California",
+      bullets: [
+        { k: "Practice", v: "Primary care physician assistant at a large community health network with several clinic sites: Monday to Friday, 8 to 5, 15 to 25 patients a day depending on site, newborns to seniors, strong autonomy with MD supervision, 2 MAs per provider, NextGen EMR; optional Saturdays paid at $1,000 a day" },
+        { k: "Setting", v: "California · Salinas, the \"Salad Bowl of the World,\" 30 minutes from Monterey, Carmel and Pebble Beach" },
+        { k: "Package", v: "$140,000 base for new grads (more with experience), $20,000 sign-on, $42,000/yr housing allowance for 3 years, $12.50 per encounter production incentive, up to $7,500 relocation, NHSC and PSLF eligible, 21 days PTO plus 11 holidays, 40 hours and $1,500 CME, health coverage 100% paid for you and family, $15,000 457(b) contribution over 3 years, 20% base increase at the King City site — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 9, income: 7 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-physician-assistant-pa-8228",
+      slug: "california-physician-assistant-pa-8228",
+    },
+    {
       id: "pa-8395",
       code: "PA-8395",
       specialty: "pa",
