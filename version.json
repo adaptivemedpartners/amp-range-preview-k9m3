@@ -1,15 +1,16 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2270",
-  "label": "2270-ge6081-new",
-  "deployed": "2026-09-30 1:55 PM CT",
+  "build": "2271",
+  "label": "2271-fp8463-gs8437-new",
+  "deployed": "2026-09-30 1:58 PM CT",
   "changes": [
-    "New listing GE-6081 GI Hospitalist, Cape Girardeau MO (Hadley) from presentation"
+    "New listing FP-8463 Family Medicine, Centreville AL (Nate) from presentation",
+    "New listing GS-8437 General Surgery, Gadsden AL (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2269",
+    "build": "2270",
     "changes": [
-      "New listing CD-8438 Noninvasive Cardiology, Concord NH (Hadley) from presentation"
+      "New listing GE-6081 GI Hospitalist, Cape Girardeau MO (Hadley) from presentation"
     ]
   }
 }
