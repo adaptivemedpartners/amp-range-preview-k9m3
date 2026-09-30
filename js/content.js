@@ -1983,7 +1983,34 @@ window.AMP_CONTENT = {
       summit: { practice: 8, life: 6, location: 6, income: 6 },
       url: "https://www.adaptivemedicalpartners.com/job/texas-urology-u-8410",
       slug: "texas-urology-u-8410",
-    }
+    },
+    {
+      id: "u-8452",
+      code: "U-8452",
+      specialty: "uro",
+      specialtyLabel: "Urology",
+      region: "midwest",
+      state: "Kansas",
+      stateAbbr: "KS",
+      title: "Up to $475,000 + wRVU Incentive: Robotic Urology 25 Minutes from Wichita",
+      sub: "Urology · U-8452 · Kansas",
+      bullets: [
+        { k: "Practice", v: "Full-scope general urology with da Vinci robotics at a 99-bed, multiple-time Top 100 rural and community hospital: 2.5 clinic days and 2 OR days a week, Friday afternoons off, call 10 days a month, 1,500+ clinic visits a year" },
+        { k: "Setting", v: "Kansas · Newton, a family-friendly town about 25 minutes north of Wichita with home values well below the national median" },
+        { k: "Package", v: "$450,000–$475,000 base plus production incentive above 8,500 wRVUs, $15,000 sign-on paid on day one, up to $10,000 relocation, 30 days PTO, $3,500 CME, malpractice covered, 401(k) with immediate vesting — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 6, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/kansas-urology-u-8452",
+      slug: "kansas-urology-u-8452",
+    },
   ],
   posts: [
     { slug: "first-job-shortfalls-residents-fellows", title: "First-Job Shortfalls Residents and Fellows Should Spot Before They Sign", meta: "A practical first-job checklist for residents and fellows: schedule, support, contract literacy, and the questions that protect the first role.", byline: "Mike Freeman", tags: ["Residents", "Fellows", "Career"], mins: 8 },
