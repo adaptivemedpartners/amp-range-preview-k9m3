@@ -419,6 +419,33 @@ window.AMP_CONTENT = {
       slug: "new-hampshire-noninvasive-cardiology-cd-8438",
     },
     {
+      id: "cd-8439",
+      code: "CD-8439",
+      specialty: "cards",
+      specialtyLabel: "Cardiology - Noninvasive",
+      region: "northeast",
+      state: "New Hampshire",
+      stateAbbr: "NH",
+      title: "$466,957 Guaranteed Base, 4-Day Week: Second Noninvasive Cardiologist for a New Hampshire Heart Program",
+      sub: "Cardiology - Noninvasive · CD-8439 · New Hampshire",
+      bullets: [
+        { k: "Practice", v: "General noninvasive cardiology in a 20-physician heart program with about 20 APPs: 4 ten-hour days a week, about 14 patients a day with 30-minute visits, call 3–4 weeknights and about one shared weekend a month, cardiac CT, MRI, and PET for imaging-trained physicians" },
+        { k: "Setting", v: "New Hampshire · Concord, the historic state capital about an hour from Boston, with no state income or sales tax" },
+        { k: "Package", v: "$466,957 base guaranteed for 2 years, $61 per wRVU above 7,405, 10% group incentive, $40,000 retention bonus, $10,000 relocation, 5 weeks PTO, $4,000 CME, malpractice with tail — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/new-hampshire-noninvasive-cardiology-cd-8439",
+      slug: "new-hampshire-noninvasive-cardiology-cd-8439",
+    },
+    {
       id: "cvs-8454",
       code: "CVS-8454",
       specialty: "surg",

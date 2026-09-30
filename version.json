@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2281",
-  "label": "2281-fp8416-new",
-  "deployed": "2026-09-30 2:22 PM CT",
+  "build": "2282",
+  "label": "2282-cd8439-new",
+  "deployed": "2026-09-30 2:24 PM CT",
   "changes": [
-    "New listing FP-8416 Family Medicine, Texarkana TX (Nate) from presentation"
+    "New listing CD-8439 Noninvasive Cardiology, Concord NH (Hadley) — twin of CD-8438 per Mike"
   ],
   "previous": {
-    "build": "2280",
+    "build": "2281",
     "changes": [
-      "New listing LCSW-8445 school-based LCSW/LPC, Pauls Valley OK (Hadley) from presentation"
+      "New listing FP-8416 Family Medicine, Texarkana TX (Nate) from presentation"
     ]
   }
 }
