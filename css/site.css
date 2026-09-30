@@ -14817,3 +14817,14 @@ html,
 body {
   overscroll-behavior-y: auto;
 }
+
+/* ========== amp-build:2249-nav-pinned-blog — keep header pinned on scroll on blog/plain pages (iOS lost sticky under body overflow clip) ========== */
+.site-nav:not(.is-home) {
+  position: fixed !important;
+  left: 0; right: 0; top: 0;
+  z-index: 300 !important;
+}
+body:has(> .site-nav:not(.is-home)) > main { padding-top: 64px; }
+@media (max-width: 900px) {
+  body:has(> .site-nav:not(.is-home)) > main { padding-top: 61px; }
+}
