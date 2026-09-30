@@ -1,16 +1,18 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2253",
-  "label": "2253-full-first-year-package",
-  "deployed": "2026-09-30 1:12 PM CT",
+  "build": "2255",
+  "label": "2255-ho8194-d8244-ge-locations",
+  "deployed": "2026-09-30 1:35 PM CT",
   "changes": [
-    "N-8411, U-8410 and DDS-8418 titles now show the full first-year package ($518,750, $925,000, $227,500) instead of base pay"
+    "HO-8194 title and bullets rebuilt from Stephanie's updated Columbus, IN presentation ($889,600 first-year package, $100,000 sign-on)",
+    "D-8244 title now shows the approved Up to $612,500",
+    "GE-8325 filed under Texas / Southwest (was Arkansas / Southeast)",
+    "GE-8409 moved to South Carolina; new address /job/south-carolina-gastroenterology-ge-8409, old North Carolina address forwards to it"
   ],
   "previous": {
-    "build": "2252",
+    "build": "2253",
     "changes": [
-      "Removed six closed site-only listings (CD-7069, FP-8309, FP-8429, OD-8364, PUD-8355, RTECH-8273) from the jobs board, page metadata and sitemap",
-      "Their old /job/ addresses now forward to /jobs (noindex, canonical)"
+      "N-8411, U-8410 and DDS-8418 titles now show the full first-year package ($518,750, $925,000, $227,500) instead of base pay"
     ]
   }
 }
