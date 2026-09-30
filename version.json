@@ -1,16 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2260",
-  "label": "2260-end8456-new",
-  "deployed": "2026-09-30 1:50 PM CT",
+  "build": "2261",
+  "label": "2261-fp8146-new",
+  "deployed": "2026-09-30 1:55 PM CT",
   "changes": [
-    "New listing END-8456 Endocrinology, Abilene TX (Nate) from presentation"
+    "New listing FP-8146 Family Medicine, Walla Walla WA (Nate) from presentation"
   ],
   "previous": {
-    "build": "2259",
+    "build": "2260",
     "changes": [
-      "New listing CVS-8454 Cardiovascular Surgery, Abilene TX (Nate) from presentation",
-      "New listing EM-8446 Emergency Medicine, Centreville AL (Nate) from presentation"
+      "New listing END-8456 Endocrinology, Abilene TX (Nate) from presentation"
     ]
   }
 }

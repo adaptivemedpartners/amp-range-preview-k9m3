@@ -635,6 +635,33 @@ window.AMP_CONTENT = {
       slug: "california-family-medicine-fp8110",
     },
     {
+      id: "fp-8146",
+      code: "FP-8146",
+      specialty: "fm",
+      specialtyLabel: "Family Medicine",
+      region: "west",
+      state: "Washington",
+      stateAbbr: "WA",
+      title: "$250,000 Base + Up to $40,000 Sign-On: Family Medicine in Washington Wine Country",
+      sub: "Family Medicine · FP-8146 · Washington",
+      bullets: [
+        { k: "Practice", v: "Established multispecialty clinic since 1936 with 60+ providers: Monday–Friday 8:30–5, about 18 patients a day, routine outpatient procedures, a path to partnership with no out-of-pocket buy-in" },
+        { k: "Setting", v: "Washington · Walla Walla, a valley town with 100+ wineries and skiing nearby, about 3 hours from Spokane" },
+        { k: "Package", v: "$250,000 base, $25,000 sign-on (up to $40,000 with a 4-year commitment), up to $10,000 relocation, 6 weeks PTO, plus ancillaries after partnership that average another $20,000–$30,000 a year — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 8, location: 8, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/washington-family-medicine-fp-8146",
+      slug: "washington-family-medicine-fp-8146",
+    },
+    {
       id: "fp-8306",
       code: "FP-8306",
       specialty: "fm",
