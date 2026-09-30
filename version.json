@@ -1,18 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2246",
-  "label": "2246-job-lead-recruiter",
-  "deployed": "2026-09-29 5:48 PM CT",
+  "build": "2247",
+  "label": "2247-about-retention-led",
+  "deployed": "2026-09-29 9:52 PM CT",
   "changes": [
-    "Job page interest form now routes the lead to that job's recruiter (was always Mike)"
+    "About: Who we are rewritten retention-led; MPC reduced to one mention"
   ],
   "previous": {
-    "build": "2245",
+    "build": "2246",
     "changes": [
-      "Added this version file (kept out of search via robots.txt)",
-      "Fixed stale in-script build label (was 2207)",
-      "Team headshots resized and recompressed",
-      "Typeform script now loads only on the two form pages"
+      "Job page interest form now routes the lead to that job's recruiter (was always Mike)"
     ]
   }
 }
