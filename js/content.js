@@ -581,6 +581,33 @@ window.AMP_CONTENT = {
       slug: "washington-endocrinology-end-8359",
     },
     {
+      id: "end-8456",
+      code: "END-8456",
+      specialty: "endo",
+      specialtyLabel: "Endocrinology",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "$303,900+ First-Year Salary + $45,000 Sign-On: Endocrinology with No Call in West Texas",
+      sub: "Endocrinology · END-8456 · Texas",
+      bullets: [
+        { k: "Practice", v: "Outpatient adult and geriatric endocrinology with a strong diabetes focus: Monday–Thursday 8–5 plus Friday mornings for admin, no traditional after-hours call, 15–18 patients a day, 2 APPs, and an on-site diabetes education and CGM program" },
+        { k: "Setting", v: "Texas · Abilene, a West Texas regional hub about 2.5 hours from Dallas–Fort Worth, with no state income tax" },
+        { k: "Package", v: "At least $303,900 salary the first year plus production incentive, $45,000 sign-on including relocation, 30 days PTO, loan program eligibility, retirement, $2,000 Texas license reimbursement — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 8, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-endocrinology-end-8456",
+      slug: "texas-endocrinology-end-8456",
+    },
+    {
       id: "fp-8110",
       code: "FP-8110",
       specialty: "fm",

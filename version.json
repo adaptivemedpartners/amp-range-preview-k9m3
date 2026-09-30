@@ -1,17 +1,16 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2259",
-  "label": "2259-cvs8454-em8446-new",
-  "deployed": "2026-09-30 1:45 PM CT",
+  "build": "2260",
+  "label": "2260-end8456-new",
+  "deployed": "2026-09-30 1:50 PM CT",
   "changes": [
-    "New listing CVS-8454 Cardiovascular Surgery, Abilene TX (Nate) from presentation",
-    "New listing EM-8446 Emergency Medicine, Centreville AL (Nate) from presentation"
+    "New listing END-8456 Endocrinology, Abilene TX (Nate) from presentation"
   ],
   "previous": {
-    "build": "2258",
+    "build": "2259",
     "changes": [
-      "NP-8229 recruiter is now Stephanie Youngblood (was Nate Smith)",
-      "HFC-8399 specialty is now Cardiology - Heart Failure (was Interventional); new address /job/texas-heart-failure-cardiology-hfc-8399, old address forwards"
+      "New listing CVS-8454 Cardiovascular Surgery, Abilene TX (Nate) from presentation",
+      "New listing EM-8446 Emergency Medicine, Centreville AL (Nate) from presentation"
     ]
   }
 }
