@@ -1742,6 +1742,33 @@ window.AMP_CONTENT = {
       slug: "california-nurse-practitioner-np-8224",
     },
     {
+      id: "np-8227",
+      code: "NP-8227",
+      specialty: "np",
+      specialtyLabel: "Nurse Practitioner",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$150,000+ Base + $42,000/yr Housing: Family NP on California's Central Coast",
+      sub: "Nurse Practitioner · NP-8227 · California",
+      bullets: [
+        { k: "Practice", v: "Family nurse practitioner at a large community health network with several clinic sites: Monday to Friday, 8 to 5, 15 to 25 patients a day depending on site, newborns to seniors, strong autonomy with MD supervision, 2 MAs per provider, NextGen EMR; optional Saturdays paid at $1,000 a day" },
+        { k: "Setting", v: "California · Salinas, the \"Salad Bowl of the World,\" 30 minutes from Monterey, Carmel and Pebble Beach" },
+        { k: "Package", v: "$150,000 base for new grads (more with experience), $20,000 sign-on, $42,000/yr housing allowance for 3 years, $12.50 per encounter production incentive, up to $7,500 relocation, NHSC and PSLF eligible, 21 days PTO plus 11 holidays, 40 hours and $1,500 CME, health coverage 100% paid for you and family, $15,000 457(b) contribution over 3 years, 20% base increase at the King City site — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 9, income: 7 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-nurse-practitioner-np-8227",
+      slug: "california-nurse-practitioner-np-8227",
+    },
+    {
       id: "np-8229",
       code: "NP-8229",
       specialty: "np",
