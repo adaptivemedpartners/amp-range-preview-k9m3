@@ -746,12 +746,12 @@ window.AMP_CONTENT = {
       id: "hfc-8399",
       code: "HFC-8399",
       specialty: "cards",
-      specialtyLabel: "Cardiology - Interventional",
+      specialtyLabel: "Cardiology - Heart Failure",
       region: "southwest",
       state: "Texas",
       stateAbbr: "TX",
       title: "Up to $600,000 Financial Package + Main Hospital Focus: Heart Failure Opportunity in Dallas",
-      sub: "Cardiology - Interventional · HFC-8399 · Texas",
+      sub: "Cardiology - Heart Failure · HFC-8399 · Texas",
       bullets: [
         { k: "Practice", v: "Main Hospital Only • Inpatient HF Program Growth • Advanced Therapies Exposure • No State Income Tax" },
         { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
@@ -766,8 +766,8 @@ window.AMP_CONTENT = {
       },
       hero: "",
       summit: { practice: 6, life: 6, location: 6, income: 8 },
-      url: "https://www.adaptivemedicalpartners.com/job/texas-interventional-cardiology-hfc-8399",
-      slug: "texas-interventional-cardiology-hfc-8399",
+      url: "https://www.adaptivemedicalpartners.com/job/texas-heart-failure-cardiology-hfc-8399",
+      slug: "texas-heart-failure-cardiology-hfc-8399",
     },
     {
       id: "ho-8194",
@@ -1137,9 +1137,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
