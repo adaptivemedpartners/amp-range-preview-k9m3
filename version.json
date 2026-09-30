@@ -1,16 +1,16 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2271",
-  "label": "2271-fp8463-gs8437-new",
-  "deployed": "2026-09-30 1:58 PM CT",
+  "build": "2272",
+  "label": "2272-mo8434-mo8435-new",
+  "deployed": "2026-09-30 2:00 PM CT",
   "changes": [
-    "New listing FP-8463 Family Medicine, Centreville AL (Nate) from presentation",
-    "New listing GS-8437 General Surgery, Gadsden AL (Hadley) from presentation"
+    "New listings MO-8434 and MO-8435 Medical Oncology, Concord/Laconia NH (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2270",
+    "build": "2271",
     "changes": [
-      "New listing GE-6081 GI Hospitalist, Cape Girardeau MO (Hadley) from presentation"
+      "New listing FP-8463 Family Medicine, Centreville AL (Nate) from presentation",
+      "New listing GS-8437 General Surgery, Gadsden AL (Hadley) from presentation"
     ]
   }
 }
