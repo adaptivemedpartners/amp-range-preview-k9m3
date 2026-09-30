@@ -770,6 +770,33 @@ window.AMP_CONTENT = {
       slug: "washington-family-medicine-fp-8146",
     },
     {
+      id: "fp-8205",
+      code: "FP-8205",
+      specialty: "fm",
+      specialtyLabel: "Family Medicine",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$250,000 Base + $50,000 Sign-On: Nearly Call-Free Family Medicine in California's Redwood Country",
+      sub: "Family Medicine · FP-8205 · California",
+      bullets: [
+        { k: "Practice", v: "Mostly outpatient family medicine at a rural community health district: Monday to Friday with a half day for admin, about 15 patients a day from newborns to seniors, only your own patients in the hospital (usually under 2 at a time), call covered only when a colleague is out of town" },
+        { k: "Setting", v: "California · Garberville, a small Humboldt County mountain town among the redwoods, an hour from Eureka and near the Lost Coast" },
+        { k: "Package", v: "$250,000 base salary, $50,000 sign-on, up to $10,000 relocation, 25 days PTO plus 5 CME days, $3,000 CME, 401(k) with 5% match, malpractice covered — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 10, location: 7, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-family-medicine-fp-8205",
+      slug: "california-family-medicine-fp-8205",
+    },
+    {
       id: "fp-8306",
       code: "FP-8306",
       specialty: "fm",
