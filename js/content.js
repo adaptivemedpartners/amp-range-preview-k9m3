@@ -1310,6 +1310,33 @@ window.AMP_CONTENT = {
       slug: "texas-interventional-cardiology-ivc-8404",
     },
     {
+      id: "lcsw-8445",
+      code: "LCSW-8445",
+      specialty: "licensed_clinical_social_worker",
+      specialtyLabel: "Licensed Clinical Social Worker",
+      region: "southwest",
+      state: "Oklahoma",
+      stateAbbr: "OK",
+      title: "$70,000+ School-Based LCSW or LPC: Adolescent Therapy with Fridays Half-Day in South Central Oklahoma",
+      sub: "Licensed Clinical Social Worker · LCSW-8445 · Oklahoma",
+      bullets: [
+        { k: "Practice", v: "School-based LCSW or LPC with a nonprofit community health center: therapy, assessments, family counseling, and crisis support for kids 5–18 (mostly 8–16) in partner schools, up to 16 patients a day with 20–40 minute visits and a ramp-up period, Monday to Thursday 8 to 5 and Friday until 1 with admin time, Athena EMR" },
+        { k: "Setting", v: "Oklahoma · Pauls Valley and the I-35 corridor about 45 minutes south of Oklahoma City, with living costs 15–20% below the national average" },
+        { k: "Package", v: "$70,000 base salary, higher with experience, 15 days PTO plus 9 holidays and 12 sick days, employee health coverage paid 100%, 401(k) with 3% match, $1,500 CME, licensure paid, NHSC (HPSA 21), Oklahoma repayment, and PSLF eligible — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 9, location: 6, income: 5 },
+      url: "https://www.adaptivemedicalpartners.com/job/oklahoma-licensed-clinical-social-worker-lcsw-8445",
+      slug: "oklahoma-licensed-clinical-social-worker-lcsw-8445",
+    },
+    {
       id: "lcsw-8451",
       code: "LCSW-8451",
       specialty: "licensed_clinical_social_worker",
