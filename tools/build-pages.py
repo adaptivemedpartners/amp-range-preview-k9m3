@@ -17,6 +17,9 @@ for path, m in meta.items():
     out = re.sub(r'<meta name="description" content="[^"]*" />', '<meta name="description" content="' + esc(m["desc"]) + '" />', out, count=1)
     out = re.sub(r'<meta name="robots" content="[^"]*" />', '<meta name="robots" content="' + esc(m["robots"] or "index,follow") + '" />', out, count=1)
     out = re.sub(r'<link rel="canonical" id="amp-canonical" href="[^"]*" />', '<link rel="canonical" id="amp-canonical" href="' + esc(m["canon"]) + '" />', out, count=1)
+    # amp-build:2251 scripts load after first paint, so sub-pages must not paint the home view first (no flash);
+    # app.js turns on the right view for this address as soon as it runs.
+    out = out.replace('<section class="view on home-stage', '<section class="view home-stage', 1)
     if m.get("jobld"):
         ld = m["jobld"].replace("</", "<\\/")
         out = out.replace("</head>", '<script type="application/ld+json" id="job-jsonld">' + ld + "</script>\n</head>", 1)

@@ -6907,7 +6907,8 @@ function syncGuideRoute(route) {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  /* amp-build:2251 scripts may load after DOMContentLoaded (post-paint loader) — run now if the DOM is ready */
+  (function (fn) { if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn); else fn(); })(function () {
     try {
       var chip = document.getElementById("amp-build-chip");
       if (chip && window.__AMP_BUILD) chip.textContent = "amp-build " + window.__AMP_BUILD;

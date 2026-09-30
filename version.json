@@ -1,17 +1,20 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2250",
-  "label": "2250-seo-redirects-llms-speed",
-  "deployed": "2026-09-30 12:20 PM CT",
+  "build": "2251",
+  "label": "2251-mobile-speed-2",
+  "deployed": "2026-09-30 12:26 PM CT",
   "changes": [
-    "Six forwarding pages for dead URLs: /contact to /contact-us; five retired form pages to /forms (noindex, canonical)",
-    "llms.txt refreshed (Sep 30): real page links, sitemap line, jobs/search/residents/team pages",
-    "Mobile speed: team headshots lazy-load, Caveat font no longer render-blocking, oversized partner logos resized"
+    "Site scripts load right after the first paint (same order) so the hero headline shows without waiting on ~290 KB of JS",
+    "Sub-pages no longer paint the home view before switching to their own page",
+    "Photos recompressed (hero wallpaper, story, path images) and nav logos/mark resized: about 300 KB lighter",
+    "Added a real favicon.ico (was downloading the 69 KB 404 page on every visit)"
   ],
   "previous": {
-    "build": "2249",
+    "build": "2250",
     "changes": [
-      "Header stays pinned while scrolling on blog articles and other plain pages (mobile)"
+      "Six forwarding pages for dead URLs: /contact to /contact-us; five retired form pages to /forms (noindex, canonical)",
+      "llms.txt refreshed (Sep 30): real page links, sitemap line, jobs/search/residents/team pages",
+      "Mobile speed: team headshots lazy-load, Caveat font no longer render-blocking, oversized partner logos resized"
     ]
   }
 }
