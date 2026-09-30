@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2274",
-  "label": "2274-pt8396-new",
-  "deployed": "2026-09-30 2:04 PM CT",
+  "build": "2275",
+  "label": "2275-rad8354-new",
+  "deployed": "2026-09-30 2:05 PM CT",
   "changes": [
-    "New listing PT-8396 Physical Therapist, Ardmore OK (Hadley) from presentation"
+    "New listing RAD-8354 Diagnostic Radiology, Valdosta GA (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2273",
+    "build": "2274",
     "changes": [
-      "New listing PA-8395 Orthopedic walk-in PA/NP, Oklahoma City OK (Hadley) from presentation"
+      "New listing PT-8396 Physical Therapist, Ardmore OK (Hadley) from presentation"
     ]
   }
 }

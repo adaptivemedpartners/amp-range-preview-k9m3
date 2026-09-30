@@ -1958,6 +1958,33 @@ window.AMP_CONTENT = {
       slug: "california-radiology-rad-8256",
     },
     {
+      id: "rad-8354",
+      code: "RAD-8354",
+      specialty: "rad",
+      specialtyLabel: "Radiology",
+      region: "southeast",
+      state: "Georgia",
+      stateAbbr: "GA",
+      title: "About $800,000 Average Earnings + $50,000 Sign-On + 12 Weeks PTO: Diagnostic Radiology in South Georgia",
+      sub: "Radiology · RAD-8354 · Georgia",
+      bullets: [
+        { k: "Practice", v: "General diagnostic radiology with a stable 6-radiologist onsite group at a 418-bed regional referral center (Level III trauma, primary stroke): Monday to Friday with flexible shifts, weekend call 8a–4p that can be read remotely, about 60–70 RVUs a day, CT, MRI, PET/CT, mammography, ultrasound, and nuclear medicine, Epic" },
+        { k: "Setting", v: "Georgia · Valdosta, the “Azalea City” 15 miles from Florida with mild winters and median homes around $167,000" },
+        { k: "Package", v: "Group earns about $800,000 per physician on average under a shared wRVU pool ($54 per wRVU), $50,000 sign-on forgiven over 2 years, 12 weeks PTO, 1099 contractor with own malpractice — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 9, location: 6, income: 9 },
+      url: "https://www.adaptivemedicalpartners.com/job/georgia-radiology-rad-8354",
+      slug: "georgia-radiology-rad-8354",
+    },
+    {
       id: "rhu-8345",
       code: "RHU-8345",
       specialty: "rheum",
