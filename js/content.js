@@ -313,7 +313,7 @@ window.AMP_CONTENT = {
     {
       id: "aca-8368",
       code: "ACA-8368",
-      specialty: "anes",
+      specialty: "anesthesiology_cardiology",
       specialtyLabel: "Anesthesiology - Cardiac",
       region: "southeast",
       state: "Kentucky",
@@ -340,7 +340,7 @@ window.AMP_CONTENT = {
     {
       id: "apm-8271",
       code: "APM-8271",
-      specialty: "anes",
+      specialty: "anesthesiology_pain_management",
       specialtyLabel: "Anesthesia Pain Management",
       region: "mountain",
       state: "Nevada",
@@ -367,7 +367,7 @@ window.AMP_CONTENT = {
     {
       id: "ccm-8412",
       code: "CCM-8412",
-      specialty: "pulm",
+      specialty: "critical_care_intensivist",
       specialtyLabel: "Critical Care",
       region: "southwest",
       state: "Texas",
@@ -448,7 +448,7 @@ window.AMP_CONTENT = {
     {
       id: "cvs-8454",
       code: "CVS-8454",
-      specialty: "surg",
+      specialty: "surgery_cardiovascular",
       specialtyLabel: "Surgery: Cardiovascular",
       region: "southwest",
       state: "Texas",
@@ -475,7 +475,7 @@ window.AMP_CONTENT = {
     {
       id: "d-8244",
       code: "D-8244",
-      specialty: "derm",
+      specialty: "dermatology",
       specialtyLabel: "Dermatology",
       region: "west",
       state: "Washington",
@@ -583,7 +583,7 @@ window.AMP_CONTENT = {
     {
       id: "em-8433",
       code: "EM-8433",
-      specialty: "em",
+      specialty: "emergency_medicine",
       specialtyLabel: "Emergency Medicine",
       region: "midwest",
       state: "Kansas",
@@ -610,7 +610,7 @@ window.AMP_CONTENT = {
     {
       id: "em-8446",
       code: "EM-8446",
-      specialty: "em",
+      specialty: "emergency_medicine",
       specialtyLabel: "Emergency Medicine",
       region: "southeast",
       state: "Alabama",
@@ -637,7 +637,7 @@ window.AMP_CONTENT = {
     {
       id: "end-8356",
       code: "END-8356",
-      specialty: "endo",
+      specialty: "endocrinology_metabolism",
       specialtyLabel: "Endocrinology",
       region: "southeast",
       state: "Georgia",
@@ -664,7 +664,7 @@ window.AMP_CONTENT = {
     {
       id: "end-8359",
       code: "END-8359",
-      specialty: "endo",
+      specialty: "endocrinology_metabolism",
       specialtyLabel: "Endocrinology",
       region: "west",
       state: "Washington",
@@ -691,7 +691,7 @@ window.AMP_CONTENT = {
     {
       id: "end-8456",
       code: "END-8456",
-      specialty: "endo",
+      specialty: "endocrinology_metabolism",
       specialtyLabel: "Endocrinology",
       region: "southwest",
       state: "Texas",
@@ -1150,7 +1150,7 @@ window.AMP_CONTENT = {
     {
       id: "gs-8437",
       code: "GS-8437",
-      specialty: "surg",
+      specialty: "surgery_general",
       specialtyLabel: "General Surgery",
       region: "southeast",
       state: "Alabama",
@@ -1177,7 +1177,7 @@ window.AMP_CONTENT = {
     {
       id: "gs-8453",
       code: "GS-8453",
-      specialty: "surg",
+      specialty: "surgery_general",
       specialtyLabel: "General Surgery",
       region: "midwest",
       state: "Kansas",
@@ -1258,7 +1258,7 @@ window.AMP_CONTENT = {
     {
       id: "ho-8194",
       code: "HO-8194",
-      specialty: "hemeonc",
+      specialty: "hematology_oncology",
       specialtyLabel: "Hematology / Oncology",
       region: "midwest",
       state: "Indiana",
@@ -1285,7 +1285,7 @@ window.AMP_CONTENT = {
     {
       id: "ho-8370",
       code: "HO-8370",
-      specialty: "hemeonc",
+      specialty: "hematology_oncology",
       specialtyLabel: "Hematology / Oncology",
       region: "southeast",
       state: "Kentucky",
@@ -1312,7 +1312,7 @@ window.AMP_CONTENT = {
     {
       id: "ho-8458",
       code: "HO-8458",
-      specialty: "hemeonc",
+      specialty: "hematology_oncology",
       specialtyLabel: "Hematology / Oncology",
       region: "southwest",
       state: "Texas",
@@ -1609,7 +1609,7 @@ window.AMP_CONTENT = {
     {
       id: "mo-8338",
       code: "MO-8338",
-      specialty: "hemeonc",
+      specialty: "hematology_oncology",
       specialtyLabel: "Hematology / Oncology",
       region: "southeast",
       state: "Tennessee",
@@ -1636,7 +1636,7 @@ window.AMP_CONTENT = {
     {
       id: "mo-8434",
       code: "MO-8434",
-      specialty: "hemeonc",
+      specialty: "hematology_oncology_oncology_only",
       specialtyLabel: "Medical Oncology",
       region: "northeast",
       state: "New Hampshire",
@@ -1663,7 +1663,7 @@ window.AMP_CONTENT = {
     {
       id: "mo-8435",
       code: "MO-8435",
-      specialty: "hemeonc",
+      specialty: "hematology_oncology_oncology_only",
       specialtyLabel: "Medical Oncology",
       region: "northeast",
       state: "New Hampshire",
@@ -1771,7 +1771,7 @@ window.AMP_CONTENT = {
     {
       id: "np-8224",
       code: "NP-8224",
-      specialty: "np",
+      specialty: "nurse_practitioner_primary_care",
       specialtyLabel: "Nurse Practitioner",
       region: "west",
       state: "California",
@@ -1798,7 +1798,7 @@ window.AMP_CONTENT = {
     {
       id: "np-8227",
       code: "NP-8227",
-      specialty: "np",
+      specialty: "nurse_practitioner_family_medicine_without_ob",
       specialtyLabel: "Nurse Practitioner",
       region: "west",
       state: "California",
@@ -1825,7 +1825,7 @@ window.AMP_CONTENT = {
     {
       id: "np-8229",
       code: "NP-8229",
-      specialty: "np",
+      specialty: "nurse_practitioner_primary_care",
       specialtyLabel: "Nurse Practitioner",
       region: "west",
       state: "Washington",
@@ -1852,7 +1852,7 @@ window.AMP_CONTENT = {
     {
       id: "np-8250",
       code: "NP-8250",
-      specialty: "np",
+      specialty: "nurse_practitioner_primary_care",
       specialtyLabel: "Nurse Practitioner",
       region: "west",
       state: "California",
@@ -2068,7 +2068,7 @@ window.AMP_CONTENT = {
     {
       id: "ot-8388",
       code: "OT-8388",
-      specialty: "ot",
+      specialty: "occupational_therapist",
       specialtyLabel: "Occupational Therapy",
       region: "west",
       state: "Oregon",
@@ -2095,7 +2095,7 @@ window.AMP_CONTENT = {
     {
       id: "oto-8371",
       code: "OTO-8371",
-      specialty: "surg",
+      specialty: "otorhinolaryngology",
       specialtyLabel: "Otolaryngology",
       region: "southeast",
       state: "Kentucky",
@@ -2122,7 +2122,7 @@ window.AMP_CONTENT = {
     {
       id: "p-5896",
       code: "P-5896",
-      specialty: "psych",
+      specialty: "psychiatry_general",
       specialtyLabel: "Psychiatry",
       region: "west",
       state: "California",
@@ -2149,7 +2149,7 @@ window.AMP_CONTENT = {
     {
       id: "p-8191",
       code: "P-8191",
-      specialty: "psych",
+      specialty: "psychiatry_forensic",
       specialtyLabel: "Psychiatry",
       region: "mountain",
       state: "Arizona",
@@ -2176,7 +2176,7 @@ window.AMP_CONTENT = {
     {
       id: "pa-8226",
       code: "PA-8226",
-      specialty: "pa",
+      specialty: "physician_assistant_primary_care",
       specialtyLabel: "Physician Assistant",
       region: "west",
       state: "California",
@@ -2203,7 +2203,7 @@ window.AMP_CONTENT = {
     {
       id: "pa-8228",
       code: "PA-8228",
-      specialty: "pa",
+      specialty: "physician_assistant_primary_care",
       specialtyLabel: "Physician Assistant",
       region: "west",
       state: "California",
@@ -2230,7 +2230,7 @@ window.AMP_CONTENT = {
     {
       id: "pa-8395",
       code: "PA-8395",
-      specialty: "pa",
+      specialty: "physician_assistant_orthopedics_surgical",
       specialtyLabel: "Physician Assistant",
       region: "southwest",
       state: "Oklahoma",
@@ -2257,7 +2257,7 @@ window.AMP_CONTENT = {
     {
       id: "pd-8403",
       code: "PD-8403",
-      specialty: "peds",
+      specialty: "pediatrics_general",
       specialtyLabel: "Pediatrics",
       region: "southwest",
       state: "Texas",
@@ -2284,7 +2284,7 @@ window.AMP_CONTENT = {
     {
       id: "pd-8448",
       code: "PD-8448",
-      specialty: "peds",
+      specialty: "pediatrics_general",
       specialtyLabel: "Pediatrics",
       region: "southeast",
       state: "Louisiana",
@@ -2311,7 +2311,7 @@ window.AMP_CONTENT = {
     {
       id: "pnp-7004",
       code: "PNP-7004",
-      specialty: "np",
+      specialty: "nurse_practitioner_psychiatry",
       specialtyLabel: "Psychiatric Nurse Practitioner",
       region: "southwest",
       state: "Arizona",
@@ -2338,7 +2338,7 @@ window.AMP_CONTENT = {
     {
       id: "pnp-7036",
       code: "PNP-7036",
-      specialty: "np",
+      specialty: "nurse_practitioner_psychiatry",
       specialtyLabel: "Psychiatric Nurse Practitioner",
       region: "southwest",
       state: "Arizona",
@@ -2392,7 +2392,7 @@ window.AMP_CONTENT = {
     {
       id: "pud-8348",
       code: "PUD-8348",
-      specialty: "pulm",
+      specialty: "pulmonary_medicine_general",
       specialtyLabel: "Pulmonology",
       region: "southeast",
       state: "Alabama",
@@ -2446,7 +2446,7 @@ window.AMP_CONTENT = {
     {
       id: "rad-8256",
       code: "RAD-8256",
-      specialty: "rad",
+      specialty: "radiology_diagnostic",
       specialtyLabel: "Radiology",
       region: "west",
       state: "California",
@@ -2473,7 +2473,7 @@ window.AMP_CONTENT = {
     {
       id: "rad-8354",
       code: "RAD-8354",
-      specialty: "rad",
+      specialty: "radiology_diagnostic",
       specialtyLabel: "Radiology",
       region: "southeast",
       state: "Georgia",
@@ -2500,7 +2500,7 @@ window.AMP_CONTENT = {
     {
       id: "rhu-8345",
       code: "RHU-8345",
-      specialty: "rheum",
+      specialty: "rheumatology",
       specialtyLabel: "Rheumatology",
       region: "southeast",
       state: "Alabama",
@@ -2527,7 +2527,7 @@ window.AMP_CONTENT = {
     {
       id: "rhu-8365",
       code: "RHU-8365",
-      specialty: "rheum",
+      specialty: "rheumatology",
       specialtyLabel: "Rheumatology",
       region: "southeast",
       state: "Louisiana",
@@ -2554,7 +2554,7 @@ window.AMP_CONTENT = {
     {
       id: "rhu-8457",
       code: "RHU-8457",
-      specialty: "rheum",
+      specialty: "rheumatology",
       specialtyLabel: "Rheumatology",
       region: "southwest",
       state: "Texas",
@@ -2581,7 +2581,7 @@ window.AMP_CONTENT = {
     {
       id: "rtech-8343",
       code: "RTECH-8343",
-      specialty: "rad",
+      specialty: "mri_technologist",
       specialtyLabel: "MRI Technologist",
       region: "southwest",
       state: "Texas",
@@ -2608,7 +2608,7 @@ window.AMP_CONTENT = {
     {
       id: "rtech-8447",
       code: "RTECH-8447",
-      specialty: "rad",
+      specialty: "ct_technologist",
       specialtyLabel: "RTECH: Radiology Technician",
       region: "mountain",
       state: "Arizona",
@@ -2689,7 +2689,7 @@ window.AMP_CONTENT = {
     {
       id: "u-8357",
       code: "U-8357",
-      specialty: "uro",
+      specialty: "urology",
       specialtyLabel: "Urology",
       region: "southeast",
       state: "Georgia",
@@ -2716,7 +2716,7 @@ window.AMP_CONTENT = {
     {
       id: "u-8410",
       code: "U-8410",
-      specialty: "uro",
+      specialty: "urology",
       specialtyLabel: "Urology",
       region: "southwest",
       state: "Texas",
@@ -2743,7 +2743,7 @@ window.AMP_CONTENT = {
     {
       id: "u-8452",
       code: "U-8452",
-      specialty: "uro",
+      specialty: "urology",
       specialtyLabel: "Urology",
       region: "midwest",
       state: "Kansas",
