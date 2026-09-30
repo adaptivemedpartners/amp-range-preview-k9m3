@@ -1,16 +1,16 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2278",
-  "label": "2278-fp8460-ge8339-new",
-  "deployed": "2026-09-30 2:15 PM CT",
+  "build": "2279",
+  "label": "2279-mo8338-new",
+  "deployed": "2026-09-30 2:18 PM CT",
   "changes": [
-    "New listing FP-8460 Family Medicine, Tishomingo OK (Stephanie) from presentation",
-    "New listing GE-8339 Gastroenterology, Greeneville TN (Stephanie) from presentation"
+    "New listing MO-8338 academic Hematology/Oncology, Johnson City TN area (Stephanie) from presentation"
   ],
   "previous": {
-    "build": "2277",
+    "build": "2278",
     "changes": [
-      "New listing GE-8108 Gastroenterology, Columbus IN (Stephanie) from comp summary; location from Stephanie's board"
+      "New listing FP-8460 Family Medicine, Tishomingo OK (Stephanie) from presentation",
+      "New listing GE-8339 Gastroenterology, Greeneville TN (Stephanie) from presentation"
     ]
   }
 }

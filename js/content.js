@@ -1391,6 +1391,33 @@ window.AMP_CONTENT = {
       slug: "alabama-mfm-8461",
     },
     {
+      id: "mo-8338",
+      code: "MO-8338",
+      specialty: "hemeonc",
+      specialtyLabel: "Hematology / Oncology",
+      region: "southeast",
+      state: "Tennessee",
+      stateAbbr: "TN",
+      title: "$425,000 Base + $40,000 Sign-On + $100,000 Loan Forgiveness: Teaching Hematology/Oncology in Northeast Tennessee",
+      sub: "Hematology / Oncology · MO-8338 · Tennessee",
+      bullets: [
+        { k: "Practice", v: "Academic hematology/oncology with a teaching focus: supervise 3–5 fellows and residents at a time with bedside teaching, about 18 patients a day (60% heme, 40% onc), Monday to Friday 8 to 5 with no weekend clinic, fellows handle night and weekend call, Friday off after call week, 312-bed hospital, full infusion and specialty pharmacy support, Epic" },
+        { k: "Setting", v: "Tennessee · the Johnson City and Tri-Cities area in the Appalachian foothills, with low living costs and no state income tax" },
+        { k: "Package", v: "$425,000 base salary, productivity bonus negotiable up to $50,000, $40,000 sign-on, $100,000 student loan forgiveness over 5 years, $10,000 relocation, 26 days PTO, $4,000 CME, 403(b) match up to 6%, malpractice paid — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 7, location: 7, income: 7 },
+      url: "https://www.adaptivemedicalpartners.com/job/tennessee-hematology-oncology-mo-8338",
+      slug: "tennessee-hematology-oncology-mo-8338",
+    },
+    {
       id: "mo-8434",
       code: "MO-8434",
       specialty: "hemeonc",
