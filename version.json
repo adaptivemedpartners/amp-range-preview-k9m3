@@ -1,17 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2290",
-  "label": "2290-pa8228-new",
-  "deployed": "2026-09-30 2:52 PM CT",
+  "build": "2291",
+  "label": "2291-pnp7004-pnp7036-new",
+  "deployed": "2026-09-30 2:58 PM CT",
   "changes": [
-    "New listing PA-8228 Physician Assistant, Salinas CA (Mike) from presentation"
+    "New listings PNP-7004 and PNP-7036 Psychiatric NP, Tucson AZ (Mike) from presentation"
   ],
   "previous": {
-    "build": "2289",
+    "build": "2290",
     "changes": [
-      "FP-8416 base set to $200,000 per Mike",
-      "MO-8338 adds 1:4 call per Mike",
-      "CD-8439 recruiter changed to Mike Freeman"
+      "New listing PA-8228 Physician Assistant, Salinas CA (Mike) from presentation"
     ]
   }
 }
