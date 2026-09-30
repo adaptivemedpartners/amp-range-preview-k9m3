@@ -322,7 +322,7 @@ window.AMP_CONTENT = {
       sub: "Anesthesiology - Cardiac · ACA-8368 · Kentucky",
       bullets: [
         { k: "Practice", v: "Practice your cardiac anesthesia expertise in a high-volume program where Monday-Friday predictability meets exceptional compensation." },
-        { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Kentucky · a thriving regional community with a high-volume cardiac program and Monday-to-Friday predictability" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -349,7 +349,7 @@ window.AMP_CONTENT = {
       sub: "Anesthesia Pain Management · APM-8271 · Nevada",
       bullets: [
         { k: "Practice", v: "Build your career with stability, lifestyle, and income few physicians will ever experience." },
-        { k: "Setting", v: "Nevada · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Nevada · Las Vegas, with no state income tax, year-round sun, and Red Rock Canyon and Lake Mead close by" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -484,7 +484,7 @@ window.AMP_CONTENT = {
       sub: "Dermatology · D-8244 · Washington",
       bullets: [
         { k: "Practice", v: "Eight months of patients already waiting — step into instant success." },
-        { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Washington · the Pacific Northwest, with no state income tax and mountains, rivers and wine country within reach" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -538,7 +538,7 @@ window.AMP_CONTENT = {
       sub: "Dentist · DDS-8391 · Louisiana",
       bullets: [
         { k: "Practice", v: "Ready to practice meaningful dentistry in a state-of-the-art facility while making a real difference in underserved communities?" },
-        { k: "Setting", v: "Louisiana · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Louisiana · a close-knit community served by a brand-new clinic, with Louisiana food, music and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -565,7 +565,7 @@ window.AMP_CONTENT = {
       sub: "General Dentistry · DDS-8418 · Texas",
       bullets: [
         { k: "Practice", v: "$12,000 Sign-On Bonus • Up to $10,000 in Annual Incentives • Four 10s or Five 8s • No Late Nights or Saturdays" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · the Texas Hill Country, with rolling hills, rivers and small-town living, and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -592,7 +592,7 @@ window.AMP_CONTENT = {
       sub: "Emergency Medicine · EM-8433 · Kansas",
       bullets: [
         { k: "Practice", v: "Three 12-Hour Shifts Weekly • APP & Nursing Support • Metro Access Near Wichita • Malpractice Covered" },
-        { k: "Setting", v: "Kansas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Kansas · Central Kansas with easy access to the Wichita metro, short commutes and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -646,7 +646,7 @@ window.AMP_CONTENT = {
       sub: "Endocrinology · END-8356 · Georgia",
       bullets: [
         { k: "Practice", v: "A rare hospital-employed Endocrinology role where work-life balance, income, and lifestyle all line up." },
-        { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Georgia · a charming Southern community with an easy pace of life and an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -673,7 +673,7 @@ window.AMP_CONTENT = {
       sub: "Endocrinology · END-8359 · Washington",
       bullets: [
         { k: "Practice", v: "Thrive in a respected multispecialty clinic with true work–life balance and a fast-growing patient base." },
-        { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Washington · Washington's wine country, with sunny days, outdoor recreation and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -727,7 +727,7 @@ window.AMP_CONTENT = {
       sub: "Family Medicine · FP-8110 · California",
       bullets: [
         { k: "Practice", v: "4-Day Feel, 5-Day Week • 100% Employer-Paid Insurance • PSLF-Eligible Nonprofit" },
-        { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "California · the Monterey Bay region, with coastline, farm country and Monterey and Carmel close by" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -808,7 +808,7 @@ window.AMP_CONTENT = {
       sub: "Family Medicine · FP-8306 · Washington",
       bullets: [
         { k: "Practice", v: "4-Day Workweek • 7 Weeks PTO • No State Income Tax" },
-        { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Washington · the heart of Central Washington, with sunshine, rivers and orchards, and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -889,7 +889,7 @@ window.AMP_CONTENT = {
       sub: "Family Medicine · FP-8450 · Missouri",
       bullets: [
         { k: "Practice", v: "First-year package from $374,500 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Missouri · the Midwest heartland, with friendly small-town living and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -970,7 +970,7 @@ window.AMP_CONTENT = {
       sub: "Family Medicine - Obstetrics · FPOB-8385 · Oregon",
       bullets: [
         { k: "Practice", v: "4-Day Workweek • Sign-On + Relocation • NHSC Loan Repayment Eligible • Established FPOB Need" },
-        { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oregon · mountain country with four seasons, outdoor recreation and a close community feel" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -997,7 +997,7 @@ window.AMP_CONTENT = {
       sub: "Family Medicine (with OB) & Residency Program Director · FPOB-8462 · Alabama",
       bullets: [
         { k: "Practice", v: "First-year package from $415,000 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · a Southern community with an affordable cost of living, plus the chance to lead a residency program" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1078,7 +1078,7 @@ window.AMP_CONTENT = {
       sub: "Gastroenterology · GE-8325 · Texas",
       bullets: [
         { k: "Practice", v: "What if you could earn nearly $900K your first year while maintaining excellent work-life balance and buying a home for under $200K?" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · East Texas piney woods and lakes, where homes can run under $200K, and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1132,7 +1132,7 @@ window.AMP_CONTENT = {
       sub: "Gastroenterology · GE-8409 · South Carolina",
       bullets: [
         { k: "Practice", v: "4.5-Day Workweek • Extremely Light Call • Established Patient Base • Coastal Carolina Lifestyle" },
-        { k: "Setting", v: "South Carolina · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "South Carolina · the coastal Southeast, with beaches, marshes and a relaxed Carolina lifestyle" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1213,7 +1213,7 @@ window.AMP_CONTENT = {
       sub: "Cardiology · HFC-8398 · Texas",
       bullets: [
         { k: "Practice", v: "1:7 Call with APP First-Call • Protected Consult Weeks • Predictable 8:30–4:00 Schedule • 28 Days PTO" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · North Texas, with big-city amenities, a major airport hub nearby, and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1240,7 +1240,7 @@ window.AMP_CONTENT = {
       sub: "Cardiology - Heart Failure · HFC-8399 · Texas",
       bullets: [
         { k: "Practice", v: "Main Hospital Only • Inpatient HF Program Growth • Advanced Therapies Exposure • No State Income Tax" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · Dallas, with major-metro culture, sports and dining, and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1294,7 +1294,7 @@ window.AMP_CONTENT = {
       sub: "Hematology / Oncology · HO-8370 · Kentucky",
       bullets: [
         { k: "Practice", v: "4-Day Workweek • Outpatient-Focused Practice • Epic EMR • Minimal Call (2–3 Weeks/Year) • $25K Annual Loan Repayment • Strong APP and Infusion Support" },
-        { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Kentucky · a friendly regional community with rolling countryside and an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1348,7 +1348,7 @@ window.AMP_CONTENT = {
       sub: "Cardiology - Interventional · IVC-8349 · Alabama",
       bullets: [
         { k: "Practice", v: "Rare chance to join a highly supported, accredited Cath Lab with a flexible schedule in a beautiful, affordable community." },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · a beautiful, affordable Southeastern community with a relaxed pace of life" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1375,7 +1375,7 @@ window.AMP_CONTENT = {
       sub: "Cardiology - Interventional · IVC-8369 · Kentucky",
       bullets: [
         { k: "Practice", v: "Break the seven-figure barrier in your first year while practicing cutting-edge interventional cardiology in state-of-the-art facilities." },
-        { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Kentucky · a regional hub with an 8-cath-lab program and an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1402,7 +1402,7 @@ window.AMP_CONTENT = {
       sub: "Cardiology - Interventional · IVC-8397 · New Mexico",
       bullets: [
         { k: "Practice", v: "3-Day Clinic • 2-Day ASC • Established Procedural Volume • Partnership Culture" },
-        { k: "Setting", v: "New Mexico · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "New Mexico · the Mountain West, with high-desert views, big skies and year-round outdoor recreation" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1429,7 +1429,7 @@ window.AMP_CONTENT = {
       sub: "Cardiology - Interventional · IVC-8404 · Texas",
       bullets: [
         { k: "Practice", v: "High Demand • New Cath Lab • Rapid Ramp-Up • Private Practice–Aligned Model" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · East Texas piney woods and lakes, with small-town living and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1483,7 +1483,7 @@ window.AMP_CONTENT = {
       sub: "Licensed Clinical Social Worker · LCSW-8451 · Missouri",
       bullets: [
         { k: "Practice", v: "First-year package from $108,625 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Missouri · the Midwest heartland, with friendly small-town living and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1564,7 +1564,7 @@ window.AMP_CONTENT = {
       sub: "Medical Director / Primary Care Physician · MD-8459 · Oregon",
       bullets: [
         { k: "Practice", v: "First-year package from $329,720 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oregon · a community with Oregon's forests, rivers and mountains close by" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1591,7 +1591,7 @@ window.AMP_CONTENT = {
       sub: "Maternal-Fetal Medicine · MFM-8461 · Alabama",
       bullets: [
         { k: "Practice", v: "First-year package up to $665,000 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · a growing Southern region with an affordable cost of living and a warm climate" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1699,7 +1699,7 @@ window.AMP_CONTENT = {
       sub: "Neurology · N-8347 · Alabama",
       bullets: [
         { k: "Practice", v: "Four-Day Work Week + Scenic Riverfront Community Living" },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · a scenic riverfront community with an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1726,7 +1726,7 @@ window.AMP_CONTENT = {
       sub: "Neurology · N-8358 · Georgia",
       bullets: [
         { k: "Practice", v: "Imagine practicing neurology with no hospital call, high procedure volume, and your clinic closing by noon every Friday." },
-        { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Georgia · a welcoming Southeastern community with an easy pace of life and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1753,7 +1753,7 @@ window.AMP_CONTENT = {
       sub: "Neurology · N-8411 · Texas",
       bullets: [
         { k: "Practice", v: "4.5-Day Week • Fridays End at Noon • 100% Outpatient • Minimal Call" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · the Midland area of West Texas, with big skies, short commutes and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1780,7 +1780,7 @@ window.AMP_CONTENT = {
       sub: "Nurse Practitioner · NP-8224 · California",
       bullets: [
         { k: "Practice", v: "Live minutes from Monterey, Pebble Beach, and Carmel while making a true community impact!" },
-        { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "California · Central California, minutes from Monterey, Pebble Beach and Carmel" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1834,7 +1834,7 @@ window.AMP_CONTENT = {
       sub: "Nurse Practitioner · NP-8229 · Washington",
       bullets: [
         { k: "Practice", v: "Thrive in a supportive, team-based Primary Care practice while enjoying the lifestyle you deserve." },
-        { k: "Setting", v: "Washington · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Washington · Central Washington, with sunshine, rivers and outdoor living, and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1861,7 +1861,7 @@ window.AMP_CONTENT = {
       sub: "Nurse Practitioner · NP-8250 · West Coast",
       bullets: [
         { k: "Practice", v: "First-year package from $225,000 — full details on a brief call with your recruiter" },
-        { k: "Setting", v: "West Coast · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "California · the West Coast, with mild weather and California's coast and mountains within reach" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1888,7 +1888,7 @@ window.AMP_CONTENT = {
       sub: "Obstetrics and Gynecology · OBG-8180 · Indiana",
       bullets: [
         { k: "Practice", v: "Flexible schedule, robotic access, and an award-winning birthing center await." },
-        { k: "Setting", v: "Indiana · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Indiana · a lakeside community with an affordable Midwest cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1915,7 +1915,7 @@ window.AMP_CONTENT = {
       sub: "Obstetrics and Gynecology · OBG-8316 · Oklahoma",
       bullets: [
         { k: "Practice", v: "Practice medicine without production pressure in a community that values your expertise." },
-        { k: "Setting", v: "Oklahoma · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oklahoma · scenic Oklahoma, with a close-knit community and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1942,7 +1942,7 @@ window.AMP_CONTENT = {
       sub: "Obstetrics and Gynecology · OBG-8321 · Texas",
       bullets: [
         { k: "Practice", v: "1:4 Call • 28 Days PTO • Da Vinci XI • Only OB Group in the Region" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · Central Texas about 90 minutes from DFW, with small-city living and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1969,7 +1969,7 @@ window.AMP_CONTENT = {
       sub: "Obstetrics and Gynecology · OBG-8422 · Alabama",
       bullets: [
         { k: "Practice", v: "$500,000 Guaranteed Base • $30,000 Sign-On Bonus • Robotics Available • 29 Days PTO + CME" },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · North Alabama, with the Tennessee River, lakes and mountains nearby and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1996,7 +1996,7 @@ window.AMP_CONTENT = {
       sub: "Obstetrics and Gynecology · OBG-8449 · Missouri",
       bullets: [
         { k: "Practice", v: "Monday–Friday 7:30 am–4:00 pm" },
-        { k: "Setting", v: "Missouri · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Missouri · the Midwest, with friendly communities and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2077,7 +2077,7 @@ window.AMP_CONTENT = {
       sub: "Occupational Therapy · OT-8388 · Oregon",
       bullets: [
         { k: "Practice", v: "1:1 Patient Care • 45–60 Minute Sessions • $2K CME + 5% Match • Affordable Mountain Living" },
-        { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oregon · Eastern Oregon's Blue Mountain region, with affordable mountain living and outdoor recreation" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2104,7 +2104,7 @@ window.AMP_CONTENT = {
       sub: "Otolaryngology · OTO-8371 · Kentucky",
       bullets: [
         { k: "Practice", v: "High-volume ENT practice meets exceptional work-life balance—finally, a role where you can excel professionally without sacrificing your personal life." },
-        { k: "Setting", v: "Kentucky · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Kentucky · a tri-state region with rolling hills, rivers and an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2158,7 +2158,7 @@ window.AMP_CONTENT = {
       sub: "Psychiatry · P-8191 · Arizona",
       bullets: [
         { k: "Practice", v: "Tired of the same outpatient cases? Ready for intellectually stimulating forensic work with exceptional benefits?" },
-        { k: "Setting", v: "Arizona · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Arizona · Tucson, with Sonoran Desert scenery, mountain trails and more than 300 days of sun" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2185,7 +2185,7 @@ window.AMP_CONTENT = {
       sub: "Physician Assistant · PA-8226 · California",
       bullets: [
         { k: "Practice", v: "Make a lasting impact while living the coastal California lifestyle you’ve always dreamed of." },
-        { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "California · Monterey County, with the coastline, Carmel and Big Sur close by" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2266,7 +2266,7 @@ window.AMP_CONTENT = {
       sub: "Pediatrics · PD-8403 · Texas",
       bullets: [
         { k: "Practice", v: "4–5 Day Workweek Options • Predictable Call • FQHC Loan Repayment up to $50,000/Year" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · Northeast Texas lakes and piney woods, with small-town living and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2374,7 +2374,7 @@ window.AMP_CONTENT = {
       sub: "Physical Therapy · PT-8387 · Oregon",
       bullets: [
         { k: "Practice", v: "Four-Day Workweek Available • 100% One-on-One Care • 5 Paid Admin Hours Weekly • $2,000 CE + Education Time • Interdisciplinary Team • Relocation Support" },
-        { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oregon · an Eastern Oregon mountain valley, with affordable living and year-round outdoor recreation" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2401,7 +2401,7 @@ window.AMP_CONTENT = {
       sub: "Pulmonology · PUD-8348 · Alabama",
       bullets: [
         { k: "Practice", v: "Rare lifestyle-friendly pulmonology opportunity with immediate volume, procedures, and a supportive, well-funded team." },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · the heart of the Southeast, with warm weather and an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2455,7 +2455,7 @@ window.AMP_CONTENT = {
       sub: "Radiology · RAD-8256 · California",
       bullets: [
         { k: "Practice", v: "A rare chance to join a thriving radiology group offering partnership after just one year!" },
-        { k: "Setting", v: "California · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "California · just minutes from Southern California's coast, cities and sunshine" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2509,7 +2509,7 @@ window.AMP_CONTENT = {
       sub: "Rheumatology · RHU-8345 · Alabama",
       bullets: [
         { k: "Practice", v: "Four-day work week, no competition, and immediate patient demand." },
-        { k: "Setting", v: "Alabama · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Alabama · scenic Northeast Alabama, with mountains, lakes and a low cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2536,7 +2536,7 @@ window.AMP_CONTENT = {
       sub: "Rheumatology · RHU-8365 · Louisiana",
       bullets: [
         { k: "Practice", v: "Be the only rheumatologist serving six Louisiana parishes—with zero competition, built-in referrals, and modern facilities waiting for you." },
-        { k: "Setting", v: "Louisiana · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Louisiana · a region serving six parishes, with Louisiana food, culture and an affordable cost of living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2617,7 +2617,7 @@ window.AMP_CONTENT = {
       sub: "RTECH: Radiology Technician · RTECH-8447 · Arizona",
       bullets: [
         { k: "Practice", v: "Practice: Established and Well-Funded Organization" },
-        { k: "Setting", v: "Arizona · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Arizona · sunny Arizona, with desert and mountain scenery and year-round outdoor living" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2644,7 +2644,7 @@ window.AMP_CONTENT = {
       sub: "Speech Therapy · ST-8313 · Oklahoma",
       bullets: [
         { k: "Practice", v: "Enjoy flexibility, support, and growth in a uniquely rewarding practice." },
-        { k: "Setting", v: "Oklahoma · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oklahoma · an Oklahoma community with a hybrid schedule that leaves plenty of time at home" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2671,7 +2671,7 @@ window.AMP_CONTENT = {
       sub: "Speech Language Pathology · ST-8389 · Oregon",
       bullets: [
         { k: "Practice", v: "4-Day Workweek • 5 Hours Paid Admin Time Weekly • Family-Like Rehab Team • No Competition in the Area" },
-        { k: "Setting", v: "Oregon · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Oregon · Eastern Oregon, with affordable mountain living and a close-knit community" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2698,7 +2698,7 @@ window.AMP_CONTENT = {
       sub: "Urology · U-8357 · Georgia",
       bullets: [
         { k: "Practice", v: "Rare urology role with blockbuster bonuses, robotic support, and true lifestyle flexibility in a thriving Southern community." },
-        { k: "Setting", v: "Georgia · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Georgia · a thriving Southern community with a modern health system and an easy pace of life" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -2725,7 +2725,7 @@ window.AMP_CONTENT = {
       sub: "Urology · U-8410 · Texas",
       bullets: [
         { k: "Practice", v: "Robotics + Aquablation • 1–2 OR Days/Week • No State Income Tax • $30K Sign-On + $15K Relocation" },
-        { k: "Setting", v: "Texas · location sprinkle, not the whole pitch" },
+        { k: "Setting", v: "Texas · West Texas, with big skies, short commutes and no state income tax" },
         { k: "Package", v: "Full compensation details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
