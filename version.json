@@ -1,15 +1,16 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2277",
-  "label": "2277-ge8108-new",
-  "deployed": "2026-09-30 2:12 PM CT",
+  "build": "2278",
+  "label": "2278-fp8460-ge8339-new",
+  "deployed": "2026-09-30 2:15 PM CT",
   "changes": [
-    "New listing GE-8108 Gastroenterology, Columbus IN (Stephanie) from comp summary; location from Stephanie's board"
+    "New listing FP-8460 Family Medicine, Tishomingo OK (Stephanie) from presentation",
+    "New listing GE-8339 Gastroenterology, Greeneville TN (Stephanie) from presentation"
   ],
   "previous": {
-    "build": "2276",
+    "build": "2277",
     "changes": [
-      "New listing CCM-8412 Critical Care, Midland TX (Stephanie) from presentation"
+      "New listing GE-8108 Gastroenterology, Columbus IN (Stephanie) from comp summary; location from Stephanie's board"
     ]
   }
 }
