@@ -1472,6 +1472,33 @@ window.AMP_CONTENT = {
       slug: "midwest-obstetrics-and-gynecology-obg-8449",
     },
     {
+      id: "obg-8455",
+      code: "OBG-8455",
+      specialty: "obg",
+      specialtyLabel: "Obstetrics and Gynecology",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "$500,000 Salary + Up to $150,000 Sign-On: OB/GYN with 24/7 Laborists in West Texas",
+      sub: "Obstetrics and Gynecology · OBG-8455 · Texas",
+      bullets: [
+        { k: "Practice", v: "Full-scope OB/GYN, about 50/50 OB and GYN, with strong unmet demand: 24/7 in-house laborists and a dedicated OB ED, call about 1 day in 7, robotic surgery available, clinic Monday–Thursday plus Friday mornings" },
+        { k: "Setting", v: "Texas · Abilene, a West Texas regional hub about 2.5 hours from Dallas–Fort Worth, with no state income tax" },
+        { k: "Package", v: "$500,000 salary plus production incentive, up to $150,000 sign-on including relocation, 30 days PTO, loan program eligibility, retirement, $2,000 Texas license reimbursement — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 8, location: 6, income: 8 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-obstetrics-and-gynecology-obg-8455",
+      slug: "texas-obstetrics-and-gynecology-obg-8455",
+    },
+    {
       id: "ot-8388",
       code: "OT-8388",
       specialty: "ot",
