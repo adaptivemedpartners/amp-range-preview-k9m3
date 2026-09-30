@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2261",
-  "label": "2261-fp8146-new",
-  "deployed": "2026-09-30 1:55 PM CT",
+  "build": "2262",
+  "label": "2262-gs8453-new",
+  "deployed": "2026-09-30 1:45 PM CT",
   "changes": [
-    "New listing FP-8146 Family Medicine, Walla Walla WA (Nate) from presentation"
+    "New listing GS-8453 General Surgery, Newton KS (Nate) from presentation"
   ],
   "previous": {
-    "build": "2260",
+    "build": "2261",
     "changes": [
-      "New listing END-8456 Endocrinology, Abilene TX (Nate) from presentation"
+      "New listing FP-8146 Family Medicine, Walla Walla WA (Nate) from presentation"
     ]
   }
 }

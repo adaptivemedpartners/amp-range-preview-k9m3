@@ -824,6 +824,33 @@ window.AMP_CONTENT = {
       slug: "south-carolina-gastroenterology-ge-8409",
     },
     {
+      id: "gs-8453",
+      code: "GS-8453",
+      specialty: "surg",
+      specialtyLabel: "General Surgery",
+      region: "midwest",
+      state: "Kansas",
+      stateAbbr: "KS",
+      title: "Up to $420,000 + wRVU Incentive: General Surgery 25 Minutes from Wichita",
+      sub: "General Surgery · GS-8453 · Kansas",
+      bullets: [
+        { k: "Practice", v: "General surgery at a 99-bed, multiple-time Top 100 rural and community hospital with its own surgery center: 2.5 clinic days and 2 OR days a week, shared call rotation, Meditech Expanse" },
+        { k: "Setting", v: "Kansas · Newton, a family-friendly town about 25 minutes north of Wichita with home values well below the national median" },
+        { k: "Package", v: "$400,000–$420,000 base plus production incentive above 8,500 wRVUs, sign-on bonus, relocation may be available, 30 days PTO, $3,500 CME, 401(k) with immediate vesting — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Nate Smith",
+        phone: "214-929-9555",
+        email: "nsmith@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 6, life: 6, location: 6, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/kansas-general-surgery-gs-8453",
+      slug: "kansas-general-surgery-gs-8453",
+    },
+    {
       id: "hfc-8398",
       code: "HFC-8398",
       specialty: "cards",
