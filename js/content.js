@@ -365,6 +365,33 @@ window.AMP_CONTENT = {
       slug: "nevada-anesthesia-pain-management-apm-8271",
     },
     {
+      id: "ccm-8412",
+      code: "CCM-8412",
+      specialty: "pulm",
+      specialtyLabel: "Critical Care",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "$525,000 Days or $617,000 Nights: Critical Care with 182 Shifts and Zero Call in West Texas",
+      sub: "Critical Care · CCM-8412 · Texas",
+      bullets: [
+        { k: "Practice", v: "Hospital-employed intensivist, 100% inpatient with no clinic: 12-hour ICU shifts (7a–7p days or 7p–7a nights), 182 shifts a year, zero call, 12–24 patients a shift, resident support at night, full volume from day one, Epic" },
+        { k: "Setting", v: "Texas · Midland, the “Tall City” of the Permian Basin with no state income tax and its own international airport" },
+        { k: "Package", v: "$2,884.62 per shift (about $525,000 a year on days), about $617,643 on nights with a $509.05 per-shift differential, $40,000 sign-on, $15,000 relocation, 182 days off a year, dollar-for-dollar 401(k) match, malpractice with tail, licensure and dues reimbursed — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 8, life: 9, location: 5, income: 9 },
+      url: "https://www.adaptivemedicalpartners.com/job/texas-critical-care-ccm-8412",
+      slug: "texas-critical-care-ccm-8412",
+    },
+    {
       id: "cd-8438",
       code: "CD-8438",
       specialty: "cards",

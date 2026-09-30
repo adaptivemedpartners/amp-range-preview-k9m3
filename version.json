@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2275",
-  "label": "2275-rad8354-new",
-  "deployed": "2026-09-30 2:05 PM CT",
+  "build": "2276",
+  "label": "2276-ccm8412-new",
+  "deployed": "2026-09-30 2:07 PM CT",
   "changes": [
-    "New listing RAD-8354 Diagnostic Radiology, Valdosta GA (Hadley) from presentation"
+    "New listing CCM-8412 Critical Care, Midland TX (Stephanie) from presentation"
   ],
   "previous": {
-    "build": "2274",
+    "build": "2275",
     "changes": [
-      "New listing PT-8396 Physical Therapist, Ardmore OK (Hadley) from presentation"
+      "New listing RAD-8354 Diagnostic Radiology, Valdosta GA (Hadley) from presentation"
     ]
   }
 }
