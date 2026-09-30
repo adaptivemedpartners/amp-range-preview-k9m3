@@ -851,6 +851,33 @@ window.AMP_CONTENT = {
       slug: "texas-family-medicine-fp-8416",
     },
     {
+      id: "fp-8436",
+      code: "FP-8436",
+      specialty: "fm",
+      specialtyLabel: "Family Medicine",
+      region: "west",
+      state: "California",
+      stateAbbr: "CA",
+      title: "$250,000 Base, No Call Listed: Weekday Family Medicine in Silicon Valley",
+      sub: "Family Medicine · FP-8436 · California",
+      bullets: [
+        { k: "Practice", v: "Outpatient family medicine at a long-running community health center: Monday to Friday, 8 to 5, 16 to 20 patients on a full clinic day, all ages, Epic EMR" },
+        { k: "Setting", v: "California · San Jose, the heart of Silicon Valley, about an hour to San Francisco with three international airports close by" },
+        { k: "Package", v: "$250,000 base salary, $5,000 sign-on/relocation, student loan repayment program, $1,500 CME, 20 days PTO plus 14 paid holidays and 5 CME days, 401(k) with 3% match, licensure paid, malpractice covered through FTCA — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      summit: { practice: 7, life: 8, location: 9, income: 6 },
+      url: "https://www.adaptivemedicalpartners.com/job/california-family-medicine-fp-8436",
+      slug: "california-family-medicine-fp-8436",
+    },
+    {
       id: "fp-8450",
       code: "FP-8450",
       specialty: "fm",
