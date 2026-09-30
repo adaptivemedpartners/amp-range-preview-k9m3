@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2268",
-  "label": "2268-u8452-new",
-  "deployed": "2026-09-30 2:02 PM CT",
+  "build": "2269",
+  "label": "2269-cd8438-new",
+  "deployed": "2026-09-30 2:05 PM CT",
   "changes": [
-    "New listing U-8452 Urology, Newton KS (Nate) from presentation"
+    "New listing CD-8438 Noninvasive Cardiology, Concord NH (Hadley) from presentation"
   ],
   "previous": {
-    "build": "2267",
+    "build": "2268",
     "changes": [
-      "New listing RTECH-8343 MRI Technologist, Pecos TX (Nate) from presentation"
+      "New listing U-8452 Urology, Newton KS (Nate) from presentation"
     ]
   }
 }
