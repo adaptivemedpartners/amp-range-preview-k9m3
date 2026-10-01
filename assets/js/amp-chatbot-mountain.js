@@ -8,7 +8,7 @@
  * Recruiter tag (accept either): recruiter OR recruiterTag → normalized to one field.
  *   window.AMP_CHATBOT.recruiter / .recruiterTag
  *   data-amp-recruiter / data-amp-recruiter-tag
- *   ?recruiter=amy|nate|stephanie|hadley|mike (aliases OK)
+ *   ?recruiter=amy|stephanie|hadley|mike (aliases OK)
  * Untagged/general candidate pages → Mike (recruiterTag=mike / owner=mfreeman).
  * Job CMS pages should set owning recruiterTag today (payload ready for Overnight).
  * Client path unchanged → amp_chatbot_client_leads + routeTo bd_hub_randy (BD Hub).
@@ -63,22 +63,19 @@
   var handoffUrl = (cfg.handoffUrl || fromScriptData("handoff-url") || "").trim();
 
   /* Recruiter tagging (Mike lock 2026-09-02) — candidate → recruiting_responses */
-  var RECRUITER_CANON = ["amy", "nate", "stephanie", "hadley", "mike"];
+  var RECRUITER_CANON = ["amy", "stephanie", "hadley", "mike"];
   var RECRUITER_ALIASES = {
     amy: "amy",
-    nate: "nate",
     stephanie: "stephanie",
     hadley: "hadley",
     mike: "mike",
     amyers: "amy",
-    nsmith: "nate",
     syoungblood: "stephanie",
     hherrera: "hadley",
     mfreeman: "mike"
   };
   var RECRUITER_OWNER = {
     amy: "amyers",
-    nate: "nsmith",
     stephanie: "syoungblood",
     hadley: "hherrera",
     mike: "mfreeman"

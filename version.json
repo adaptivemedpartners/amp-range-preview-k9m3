@@ -1,17 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2296",
-  "label": "2296-setting-notes",
-  "deployed": "2026-09-30 3:15 PM CT",
+  "build": "2298",
+  "label": "2298-team-contact-update",
+  "deployed": "2026-10-01 CT",
   "changes": [
-    "Replace placeholder Setting line with real location notes on 51 listings (per Mike)"
+    "Team roster update: departed recruiter's card, bio, photo and chatbot routing removed; Mike Freeman is now the contact on every posting that listed him"
   ],
   "previous": {
-    "build": "2295",
+    "build": "2297",
     "changes": [
-      "JobPosting: add datePosted (first git add), employmentType FULL_TIME, rolling 90-day validThrough on all job pages",
-      "Merge the two FAQPage schema blocks into one site-wide FAQ",
-      "PNP-7036 title made distinct from PNP-7004 (second opening)"
+      "Discreet Team login footer link to hub.adaptivemedicalpartners.com"
     ]
   }
 }

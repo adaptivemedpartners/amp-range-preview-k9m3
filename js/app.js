@@ -3974,12 +3974,6 @@
       blurb: "Turns a job preview into a focused, personal conversation — durable matches over rapid placements.",
       tag: "amy"
     },
-    "Nate Smith": {
-      photo: "assets/team/nate-smith.jpg?v=2245",
-      role: "Physician Recruiter",
-      blurb: "Helps candidates compare practice, place, and the life between shifts — relationship-first, high standards.",
-      tag: "nate"
-    },
     "Stephanie Youngblood": {
       photo: "assets/team/stephanie-youngblood.jpg?v=2245",
       role: "Sr. Recruiting Specialist",
@@ -4017,7 +4011,6 @@
     var n = String(name || "").trim().toLowerCase();
     if (!n) return "mike";
     if (n.indexOf("amy") === 0) return "amy";
-    if (n.indexOf("nate") === 0) return "nate";
     if (n.indexOf("stephanie") === 0) return "stephanie";
     if (n.indexOf("hadley") === 0) return "hadley";
     if (n.indexOf("mike") === 0 || n.indexOf("michael") === 0) return "mike";

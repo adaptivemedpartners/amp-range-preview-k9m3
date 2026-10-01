@@ -462,9 +462,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -489,9 +489,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -543,9 +543,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -597,9 +597,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -624,9 +624,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -678,9 +678,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -705,9 +705,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -759,9 +759,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -840,9 +840,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -948,9 +948,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -1191,9 +1191,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -1326,9 +1326,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -1866,9 +1866,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -1920,9 +1920,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2028,9 +2028,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2271,9 +2271,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2298,9 +2298,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2541,9 +2541,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2568,9 +2568,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2595,9 +2595,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2757,9 +2757,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Nate Smith",
-        phone: "214-929-9555",
-        email: "nsmith@adaptivemedicalpartners.com",
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
