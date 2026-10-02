@@ -1,15 +1,15 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2298",
-  "label": "2298-team-contact-update",
+  "build": "2299",
+  "label": "2299-sms-consent",
   "deployed": "2026-10-01 CT",
   "changes": [
-    "Team roster update: departed recruiter's card, bio, photo and chatbot routing removed; Mike Freeman is now the contact on every posting that listed him"
+    "New /sms-consent page: internal SMS lead-alert verbal consent script, sample message, STOP/HELP and privacy (for Twilio toll-free verification)"
   ],
   "previous": {
-    "build": "2297",
+    "build": "2298",
     "changes": [
-      "Discreet Team login footer link to hub.adaptivemedicalpartners.com"
+      "Team roster update: departed recruiter's card, bio, photo and chatbot routing removed; Mike Freeman is now the contact on every posting that listed him"
     ]
   }
 }
