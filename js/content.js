@@ -2791,7 +2791,7 @@ window.AMP_CONTENT = {
     {
       slug: "rural-fqhc-critical-access-recruiting",
       title: "How Do You Recruit for Rural, FQHC & Critical Access Roles?",
-      meta: "How should hospitals approach rural, FQHC, and critical access physician recruiting? AMP cites 700+ community partnerships — a practical guide without invented town names.",
+      meta: "How should hospitals approach rural, FQHC, and critical access physician recruiting? AMP cites 700+ community partnerships. A practical look at community hiring.",
       tags: ["Rural", "FQHC", "Critical access"],
       mins: 11
     },

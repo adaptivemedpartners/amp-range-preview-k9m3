@@ -622,7 +622,7 @@
         return {
           tag: "Your $99 report",
           title: specLabel(seat.demoSpecialty) + " × " + stateLabel(seat.demoState),
-          body: "Every layer is open for this market: all four pay bands, Place draw, cost of living, supply, Day load, Support, CAH and FQHC."
+          body: "Every layer is open for this market: all four compensation bands, Place draw, cost of living, supply, Day load, Support, CAH and FQHC."
         };
       }
       return {
@@ -647,7 +647,7 @@
     return {
       tag: "Poll package · " + lim + " polls",
       title: left + " of " + lim + " polls left",
-      body: "A poll opens one specialty in one state, any state, with every layer: pay bands, Place draw, cost of living and Aspects. Revisiting is free. Extra polls are $15 each once your package is used."
+      body: "A poll opens one specialty in one state, any state, with every layer: compensation bands, Place draw, cost of living and Aspects. Revisiting is free. Extra polls are $15 each once your package is used."
     };
   }
 

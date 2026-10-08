@@ -140,7 +140,7 @@
     if (id === "raw") {
       var amp = getAmpBands(s);
       if (amp && amp.competitive != null) bits.push("Data: YOUR Baseline (Competitive) " + fmtMoney(amp.competitive));
-      else bits.push("Data: AMP bands pending — no invented $");
+      else bits.push("Data: AMP bands pending");
       } else if (id === "place_draw") {
       bits.push("Read · " + selectionNames() + " only — neighboring regions stay outside this lens");
       var pd = placeDrawApi();
@@ -201,9 +201,9 @@
           " — triangulation only, not Baseline $");
       } else bits.push("Data: CMS context not mapped for this label");
     } else if (id === "day_load") {
-      bits.push("Read: patients/day and schedule shift effective cash vs headline package — qualitative v1, no invented $");
+      bits.push("Read: patients/day and schedule shift effective cash vs headline package — qualitative read");
     } else if (id === "support") {
-      bits.push("Read: culture / admin burden / unspoken value — qualitative v1, no invented $");
+      bits.push("Read: culture / admin burden / unspoken value — qualitative read");
     } else if (id === "cah") {
       var cahN = hpsaPressureCodes().length;
       bits.push("Overlay pending: no public CAH pin file in this surface. " +
@@ -236,7 +236,7 @@
       if (def.weight) html += '<div class="as-pending">' + def.weight + "</div>";
       html += "</div>";
     });
-    html += '<div class="note" style="margin-top:8px">Aspects shape the consult story. They do not invent Baseline dollars. AMP guides are never replaced by this panel. Medicaid Aspect = later.</div>';
+    html += '<div class="note" style="margin-top:8px">Aspects shape the consult story. They do not change Baseline dollars. AMP recruiters are never replaced by this panel.</div>';
     html += "</div>";
     return html;
   }
@@ -579,7 +579,7 @@
   function $(id) { return document.getElementById(id); }
   function data() { return w.AMPRidgeMI || {}; }
   function specialties() { return (data().SPECIALTIES || []); }
-  /* 2225: public menus list only specialties with AMP pay bands (unbanded stay internal). */
+  /* 2225: public menus list only specialties with AMP compensation bands (unbanded stay internal). */
   function menuSpecialties() { return specialties().filter(function (s) { return !!(s.ampBands && s.ampBands.competitive != null); }); }
   function stateNames() { return data().STATE_NAMES || {}; }
   function statePop() { return data().STATE_POP || {}; }
@@ -995,7 +995,7 @@
     /* Row 1: AMP market bands only on public (Competitive = YOUR Baseline). Pending if gap. */
     var rawOn = isAspectOn("raw");
     html += '<div class="bench-card comp bench-featured' + (rawOn ? " raw-aspect-on" : "") + '">';
-    html += '<div class="title">' + (rawOn ? "AMP cash bands (YOUR Baseline)" : "AMP cash bands (market read)") + "</div>";
+    html += '<div class="title">' + (rawOn ? "AMP compensation bands (YOUR Baseline)" : "AMP compensation bands (market read)") + "</div>";
     if (amp && amp.competitive != null) {
       html += '<div class="hero">' + show(fmtMoney(amp.competitive), "n/a") +
         "<small>" + (rawOn ? "YOUR Baseline · Competitive" : "Competitive") + "</small></div>";
@@ -1163,7 +1163,7 @@
     } else if (id === "cms") {
       legend.low = "Pending";
       legend.high = "Pending";
-      legend.note = "CMS is a national triangulation for this specialty. No per-state map file — nothing invented.";
+      legend.note = "CMS is a national triangulation for this specialty. No per-state map is available.";
       var cms = aspectHooksForSpecialty(s).cms;
       if (cms && cms.avgAllowed != null) {
         numbers.push({ label: "Avg allowed / provider", value: fmtMoney(cms.avgAllowed) });
@@ -1266,12 +1266,12 @@
 
     if (s && (s.ampBands || s.totalComp || getAmpBands(s))) {
       var sideAmp = getAmpBands(s);
-      html += '<div class="section-title">' + (isAspectOn("raw") ? "AMP cash bands (YOUR Baseline)" : "AMP cash bands (market read)") + "</div>";
+      html += '<div class="section-title">' + (isAspectOn("raw") ? "AMP compensation bands (YOUR Baseline)" : "AMP compensation bands (market read)") + "</div>";
       html += ampBandsHtml(sideAmp, { className: "ridge-bars", mean: true, meanRow: true, meanSuffix: "" });
       if (isAspectOn("raw")) {
         html += sideAmp && sideAmp.competitive != null
-          ? '<div class="note raw-cash-note">Raw on · YOUR Baseline (Competitive) ' + fmtMoney(sideAmp.competitive) + " — AMP bands, not invented $</div>"
-          : '<div class="note raw-cash-note">Raw on · AMP bands pending — no invented $</div>';
+          ? '<div class="note raw-cash-note">Raw on · YOUR Baseline (Competitive) ' + fmtMoney(sideAmp.competitive) + " — AMP bands</div>"
+          : '<div class="note raw-cash-note">Raw on · AMP bands pending</div>';
       }
       if (isAspectOn("cms")) {
         html += '<div class="note cms-tri-note">CMS is triangulation only — not Baseline $</div>';
@@ -1694,7 +1694,7 @@
     if (isAspectOn("raw")) {
       bits.push(amp && amp.competitive != null
         ? ("Raw · YOUR Baseline " + fmtMoney(amp.competitive) + " (Competitive)")
-        : "Raw · AMP bands pending — no invented $");
+        : "Raw · AMP bands pending");
     }
     if (isAspectOn("place_draw")) bits.push("Place draw · " + selectionNames() + " · heat inside selection · border only");
     if (isAspectOn("day_load")) bits.push("Day load · schedule / patients-per-day framing (qualitative v1)");

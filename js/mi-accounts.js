@@ -167,7 +167,7 @@
     if (view === "signup") {
       get.innerHTML = "";
       var g1 = d.createElement("strong"); g1.textContent = "You're getting: Free Verified sample";
-      var g2 = d.createElement("span"); g2.textContent = sampleText(localSample()) + ". Real pay bands, no card needed.";
+      var g2 = d.createElement("span"); g2.textContent = sampleText(localSample()) + ". Real compensation bands, no card needed.";
       get.appendChild(g1); get.appendChild(g2);
     }
     var form = modal.querySelector("form");
@@ -323,7 +323,7 @@
     var get = wrap.querySelector(".mi-acct-get");
     var g1 = d.createElement("strong"); g1.textContent = "Your free sample";
     var g2 = d.createElement("span"); g2.textContent = sampleText(smp) + ".";
-    var g3 = d.createElement("span"); g3.textContent = "You see the real Red alert and Competitive pay bands. Free, no card needed.";
+    var g3 = d.createElement("span"); g3.textContent = "You see the real Red alert and Competitive compensation bands. Free, no card needed.";
     get.appendChild(g1); get.appendChild(g2); get.appendChild(g3);
     var go = wrap.querySelector(".mi-welcome-go");
     go.textContent = smp ? "Open my free sample" : "Pick my free sample";

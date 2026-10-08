@@ -1254,6 +1254,7 @@
   }
 
   function applyRidgeSimulatePay(sku) {
+    if (isAmpProductionHost()) return;
     var api = ridgeAccess();
     if (!api) return;
     sku = String(sku || "pack15").replace(/^ridge_/, "");
@@ -1318,7 +1319,9 @@
     if (simVerify) simVerify.hidden = isAmpProductionHost() || !(seat && seat.tier === "demo" && api && api.isDemoCommitted && api.isDemoCommitted(seat));
     if (simVerify && isAmpProductionHost()) simVerify.style.display = "none";
     var simPay = $("#ridge-sim-pay");
-    if (simPay) simPay.hidden = false;
+    /* amp-build:2300 — "Simulate N polls" are preview/test controls; never show them on production. */
+    if (simPay) simPay.hidden = isAmpProductionHost();
+    if (simPay && isAmpProductionHost()) simPay.style.display = "none";
     var tasteHint = $("#ridge-taste-hint");
     if (tasteHint) {
       if (seat && seat.tier === "verified" && api) {
@@ -2803,7 +2806,7 @@
   var BD_OWNER_META = {
     aaron: { id: "aaron", name: "Aaron Wagner", label: "Aaron Wagner · TX + CA", territory: "Territory · TX · CA", photo: "assets/team/aaron-wagner.jpg?v=2245", role: "Business Development Consultant", blurb: "Texas consultant who partners with hospital and practice leaders \u2014 clear process, flexible solutions.", fullHtml: "<p>Aaron Wagner is a Business Development Consultant at Adaptive Medical Partners, partnering with hospital and practice executives across Texas and beyond. His background spans healthcare recruiting and business development\u2014including earlier chapters at Rhino Medical Services and Republic Health Resources\u2014plus client-service leadership at AMP. He focuses on simplifying the recruiting process and listening first so solutions fit the organization, not a template.</p><p>Aaron\u2019s BD territory is Texas and California \u2014 hospital and practice leaders across both states.</p><p>Aaron works closely with rural and community healthcare leaders who need a clearer path to durable hires\u2014fewer wasted interviews, stronger fit, and a partner who stays in the conversation.</p><p>Aaron is married and has kids. Outside work, time with family, going out to eat, and enjoying life together are what recharge him.</p>" },
     zach: { id: "zach", name: "Zach Hamann", label: "Zach Hamann · IL/MO/IA/KS/NE", territory: "Territory · IL · MO · IA · KS · NE", photo: "assets/team/zach-hamann.jpg?v=2245", role: "Senior Business Development Consultant", blurb: "Came back to AMP on purpose \u2014 Senior BD who knows the search from both sides of the table.", fullHtml: "<p>Zach Hamann is a Senior Business Development Consultant at Adaptive Medical Partners, based in Fort Worth. He first served AMP earlier in his career (Client Services), then built experience at other firms\u2014including The Medicus Firm\u2014and in another industry chapter at Umano Medical. Seeing the positive shift at Adaptive, he returned as a strong re-addition to the team\u2014someone who chose the work again because the team culture and client craft had moved forward.</p><p>Zach\u2019s BD territory is Illinois, Missouri, Iowa, Kansas, and Nebraska \u2014 Midwest partners who need a clear brief.</p><p>Zach partners with healthcare organizations to set the brief: clearer requirements, better process, and searches that respect both the facility and the candidates who will live the week.</p><p>Zach is married and has children. Family is central outside work.</p>" },
-    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg?v=2245", role: "Senior Business Development Consultant", blurb: "Client-first consultant for the Southeast \u2014 listens hard, delivers solutions, and keeps the high camp ready.", fullHtml: "<p>Brenton McMahan is a Senior Business Development Consultant at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
+    brenton: { id: "brenton", name: "Brenton McMahan", label: "Brenton McMahan · GA/AL/TN/KY", territory: "Territory · GA · AL · TN · KY", photo: "assets/team/brenton-mcmahan.jpg?v=2245", role: "Senior Business Development Consultant", blurb: "Client-first consultant for the Southeast \u2014 listens hard, delivers solutions, and keeps every search organized and moving.", fullHtml: "<p>Brenton McMahan is a Senior Business Development Consultant at Adaptive Medical Partners and serves as Senior Client Success Manager. He has been with AMP for several years and was promoted in 2025 after building trust with partners across the Southeast. His rise is rooted in a simple rule: put the client first\u2014listen, respond, and deliver real solutions that move a hard search forward.</p><p>Brenton\u2019s BD territory is Georgia, Alabama, Tennessee, and Kentucky \u2014 the Southeast corridor he covers day to day.</p><p>Before AMP, Brenton\u2019s path included client-facing and business-development work (including Aston Carter and Fusion 4 Branding), which sharpened an entrepreneurial, practical style. He brings that same energy to rural and community healthcare partnerships.</p><p>Outside work he enjoys the outdoors, going out to eat, and the kind of strong, grounded upbringing that shows up in how he shows up for clients.</p>" },
     randy: { id: "randy", name: "Randy Keeth", label: "Randy Keeth · National BD", territory: "National BD · unassigned states", photo: "assets/team/randy-keeth.jpg?v=2245", role: "Managing Partner, Business Development", blurb: "Client-first BD for rural partners \u2014 trusted relationships, faster fills, and a brief candidates can trust.", fullHtml: "<p>Randy Keeth is Managing Partner, Business Development at Adaptive Medical Partners. He brings over twenty years of healthcare staffing leadership and numerous production awards to AMP\u2019s client partnerships. His client-first mindset helps rural healthcare organizations reduce time-to-fill while building trusted, lasting relationships.</p><p>Randy partners across AMP\u2019s BD territories and is copied on every hiring lead so the team stays coordinated.</p><p>A University of Texas at Arlington graduate, Randy\u2019s strategic approach and relationship-building have made him widely recognized in the industry. He joined AMP in 2011, a year after the firm was founded, and has held senior leadership roles across the company\u2019s growth. Based in Arlington, Texas, he enjoys working out and home projects when he is not serving AMP\u2019s clients.</p><p>Randy is married and has a teenage son.</p>" }
   };
   /* Exact Tell-us-where-to-start need cards — reused on post-submit discuss. */
@@ -2868,7 +2871,7 @@
       "Please send a Market Intelligence report / market analysis for " + spec + " in " + place + ".\n\n" +
       "Thank you."
     );
-    /* Public NAP inbox — individual hiring-guide emails are not on the mountain. */
+    /* Public NAP inbox — individual recruiter emails are not listed publicly. */
     return "mailto:inquire@adaptivemedicalpartners.com" +
       "?subject=" + encodeURIComponent(subject) +
       "&body=" + encodeURIComponent(body);
@@ -6029,6 +6032,12 @@ function syncGuideRoute(route) {
       simVerifyLogin.style.display = "none";
       var simOr = simVerifyLogin.previousElementSibling;
       if (simOr && simOr.classList && simOr.classList.contains("mi-login-or")) { simOr.hidden = true; simOr.style.display = "none"; }
+    }
+    /* amp-build:2300 — "Simulate N polls" row ships hidden in markup; show it only off production (localhost / preview). */
+    var simPayRow = $("#ridge-sim-pay");
+    if (simPayRow) {
+      simPayRow.hidden = isAmpProductionHost();
+      if (isAmpProductionHost()) simPayRow.style.display = "none";
     }
     if (simVerifyLogin && !simVerifyLogin._ampWired) {
       simVerifyLogin._ampWired = true;

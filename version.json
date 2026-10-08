@@ -2,11 +2,14 @@
   "site": "adaptivemedicalpartners.com",
   "build": "2300",
   "label": "2300-mi-copy-cleanup",
-  "deployed": "STAGED 2026-10-08 CT — not deployed (awaiting Mike sign-off)",
+  "deployed": "2026-10-08",
   "changes": [
-    "Removed internal notes showing as public text (proof page E-E-A-T / generative-engine / source-discipline lines, Randy bio wording, MI verify-panel preview note)",
-    "MI copy: 'blurred until unlock' -> free sample real compensation bands; no 'real-time' claim; FAQ leads with compensation; 'real pay bands' -> 'real compensation bands'",
-    "'Simulate verified sample' control hidden on the production host"
+    "Removed internal notes showing as public text (proof page / FAQ / JSON-LD / articles / MI workbench / llms.txt source-discipline lines, Randy bio wording, MI verify-panel preview note)",
+    "MI copy: free sample shows real compensation bands; FAQ leads with compensation; all pay/cash band wording -> 'compensation bands'",
+    "Homepage keeps 'Real-time compensation data for every specialty × state' (Mike 2026-10-08)",
+    "Brenton bio: 'keeps every search organized and moving'; Kelley/Randy bios: 'hiring team' / 'hiring lead'",
+    "'FREE GATED SAMPLE' -> 'FREE SAMPLE'",
+    "'Simulate verified sample' and 'Simulate N polls' test controls hidden (and disabled) on the production host"
   ],
   "previous": {
     "build": "2299",
