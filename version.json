@@ -1,20 +1,23 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2300",
-  "label": "2300-mi-copy-cleanup",
+  "build": "2301",
+  "label": "2301-no-retained-urls",
   "deployed": "2026-10-08",
   "changes": [
-    "Removed internal notes showing as public text (proof page / FAQ / JSON-LD / articles / MI workbench / llms.txt source-discipline lines, Randy bio wording, MI verify-panel preview note)",
-    "MI copy: free sample shows real compensation bands; FAQ leads with compensation; all pay/cash band wording -> 'compensation bands'",
-    "Homepage keeps 'Real-time compensation data for every specialty × state' (Mike 2026-10-08)",
-    "Brenton bio: 'keeps every search organized and moving'; Kelley/Randy bios: 'hiring team' / 'hiring lead'",
-    "'FREE GATED SAMPLE' -> 'FREE SAMPLE'",
-    "'Simulate verified sample' and 'Simulate N polls' test controls hidden (and disabled) on the production host"
+    "Blog slugs renamed: /blog-posts/dedicated-vs-contingent-physician-search and /blog-posts/what-hospitals-should-ask-dedicated-physician-search-firm (internal links, sitemap, llms.txt, canonicals, articles updated)",
+    "Old blog URLs and the old client route path now forward (meta refresh 0 + location.replace + canonical + noindex); old #hash links remap in app.js",
+    "Removed the empty legacy client alias section from page HTML; dead CSS selectors renamed/removed",
+    "app.js / content.js / articles.js cache-busters -> ?v=2301"
   ],
   "previous": {
-    "build": "2299",
+    "build": "2300",
     "changes": [
-      "New /sms-consent page: internal SMS lead-alert verbal consent script, sample message, STOP/HELP and privacy (for Twilio toll-free verification)"
+      "Removed internal notes showing as public text (proof page / FAQ / JSON-LD / articles / MI workbench / llms.txt source-discipline lines, Randy bio wording, MI verify-panel preview note)",
+      "MI copy: free sample shows real compensation bands; FAQ leads with compensation; all pay/cash band wording -> 'compensation bands'",
+      "Homepage keeps 'Real-time compensation data for every specialty × state' (Mike 2026-10-08)",
+      "Brenton bio: 'keeps every search organized and moving'; Kelley/Randy bios: 'hiring team' / 'hiring lead'",
+      "'FREE GATED SAMPLE' -> 'FREE SAMPLE'",
+      "'Simulate verified sample' and 'Simulate N polls' test controls hidden (and disabled) on the production host"
     ]
   }
 }

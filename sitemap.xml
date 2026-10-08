@@ -14,7 +14,7 @@
   Excluded on purpose (do not invent; do not re-add without map change):
   - SEO_MAP noindex mid-funnel doors: physician-rank, physician-region,
     job-contact, chat, confirm-mess, confirm-client, client-specialty,
-    client-region, client-retained, client-meeting, mpc, mpc-portal,
+    client-region, client-meeting, mpc, mpc-portal,
     mpc-browse, mi-lite-portal, mi-lite-login, mi-lite-app, amp-score
   - AmpScore product (getampscore.com outbound; /amp-score is noindex)
   - Retired form URLs (List 1 #10 301s): /most-placeable-candidate-request,
@@ -505,8 +505,8 @@
     <lastmod>2026-09-18T18:35:54-05:00</lastmod>
   </url>
   <url>
-    <loc>https://www.adaptivemedicalpartners.com/blog-posts/retained-vs-contingent-physician-search</loc>
-    <lastmod>2026-09-18T18:35:54-05:00</lastmod>
+    <loc>https://www.adaptivemedicalpartners.com/blog-posts/dedicated-vs-contingent-physician-search</loc>
+    <lastmod>2026-10-08T08:00:00-05:00</lastmod>
   </url>
   <url>
     <loc>https://www.adaptivemedicalpartners.com/blog-posts/evaluate-obgyn-opportunities</loc>
@@ -521,8 +521,8 @@
     <lastmod>2026-09-15T20:31:53Z</lastmod>
   </url>
   <url>
-    <loc>https://www.adaptivemedicalpartners.com/blog-posts/what-hospitals-should-ask-retained-firm</loc>
-    <lastmod>2026-09-18T18:35:54-05:00</lastmod>
+    <loc>https://www.adaptivemedicalpartners.com/blog-posts/what-hospitals-should-ask-dedicated-physician-search-firm</loc>
+    <lastmod>2026-10-08T08:00:00-05:00</lastmod>
   </url>
   <url>
     <loc>https://www.adaptivemedicalpartners.com/blog-posts/candidate-interview-prep-without-leaks</loc>

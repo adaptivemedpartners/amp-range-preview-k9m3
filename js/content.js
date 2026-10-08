@@ -2803,7 +2803,7 @@ window.AMP_CONTENT = {
       mins: 7
     },
     {
-      slug: "retained-vs-contingent-physician-search",
+      slug: "dedicated-vs-contingent-physician-search",
       title: "Dedicated investment or contingent Physician Search: Which Model Should Hospitals Choose?",
       meta: "Which physician search model fits — dedicated investment or contingent? Compare accountability, marketing, and how Adaptive Medical Partners guides both sides of the search.",
       tags: ["Dedicated investment search", "Hospitals", "Education"],
@@ -2831,7 +2831,7 @@ window.AMP_CONTENT = {
       mins: 8
     },
     {
-      slug: "what-hospitals-should-ask-retained-firm",
+      slug: "what-hospitals-should-ask-dedicated-physician-search-firm",
       title: "What Hospitals Should Ask a Dedicated Physician Search Firm Before Signing",
       meta: "Twelve questions hospitals and medical groups should ask any dedicated search firm — including AMP — about process, marketing, candidate quality, and hiring meeting readiness.",
       tags: ["Organizations", "Dedicated", "BD"],

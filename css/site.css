@@ -433,7 +433,7 @@ button, input, select, textarea { font: inherit; }
 .view.funnel[data-route="client"] > .shot img.still { filter: brightness(1.00) saturate(1.04); } /* match physician trailhead */
 .view.funnel[data-route="client-specialty"] > .shot img.still { filter: brightness(1.14) saturate(1.06); }
 .view.funnel[data-route="client-region"] > .shot img.still,
-.view.funnel[data-route="client-retained"] > .shot img.still { filter: brightness(1.20) saturate(1.07); }
+.view.funnel[data-route="client-legacy"] > .shot img.still { filter: brightness(1.20) saturate(1.07); }
 .view.funnel[data-route="client-meeting"] > .shot img.still,
 .view.funnel[data-route="confirm-client"] > .shot img.still { filter: brightness(1.24) saturate(1.08); }
 
@@ -1145,7 +1145,6 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
 .mpc-panel.wild .mpc-icon { background: rgba(101,163,13,.12); border-color: rgba(101,163,13,.3); }
 .mpc-panel.scope { border-color: rgba(56,189,248,.35); }
 .mpc-panel.scope .mpc-icon { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.3); }
-.mpc-panel.retained { border-color: rgba(13,148,136,.45); box-shadow: 0 0 0 1px rgba(13,148,136,.12), 0 10px 28px rgba(13,148,136,.12); }
 .view.funnel[data-route="mpc"] > .shot img.still { filter: brightness(1.12) saturate(1.05); }
 
 
@@ -1421,7 +1420,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   background: linear-gradient(135deg, #f0fdfa, #fff);
 }
 .picked-agreement .tag { margin-bottom: 8px; }
-.view.funnel[data-route="client-retained"] > .shot img.still {
+.view.funnel[data-route="client-legacy"] > .shot img.still {
   filter: brightness(1.16) saturate(1.08);
 }
 
@@ -4315,7 +4314,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 }
 
 /* David UX lock: SAME scroll/gate come-up for candidate + client funnels
-   (match hiring portal Shared Ascent / client-retained sheet). */
+   (match hiring portal Shared Ascent / client sheet). */
 @keyframes ampFunnelSheetUp {
   from { transform: translateY(32px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
@@ -4328,7 +4327,7 @@ body.amp-live-trailhead .view.trailhead.on .trailhead-top .crumb button {
 .view.funnel[data-route="physician-region"].on .funnel-panel,
 .view.funnel[data-route="physician-jobs"].on .funnel-panel,
 .view.funnel[data-route="client-specialty"].on .funnel-panel,
-.view.funnel[data-route="client-retained"].on .funnel-panel,
+.view.funnel[data-route="client-legacy"].on .funnel-panel,
 .view.funnel[data-route="client-meeting"].on .funnel-panel {
   border-radius: 18px 18px 0 0;
 }
@@ -4665,35 +4664,35 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 
 
 /* amp-build:1978-agree-cards-fullwidth — agreement chooser full width (rail column removed from HTML) */
-.view.funnel[data-route="client-retained"] .agreement-layout {
+.view.funnel[data-route="client-legacy"] .agreement-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) !important;
   gap: 20px;
   width: 100%;
   max-width: none;
 }
-.view.funnel[data-route="client-retained"] .agreement-main {
+.view.funnel[data-route="client-legacy"] .agreement-main {
   width: 100%;
   min-width: 0;
   max-width: none;
 }
-.view.funnel[data-route="client-retained"] .agreement-chooser {
+.view.funnel[data-route="client-legacy"] .agreement-chooser {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 16px;
   width: 100%;
 }
-.view.funnel[data-route="client-retained"] .agree-card {
+.view.funnel[data-route="client-legacy"] .agree-card {
   width: 100%;
   min-width: 0;
   max-width: none;
 }
-.view.funnel[data-route="client-retained"] .agreement-stage.funnel-panel {
+.view.funnel[data-route="client-legacy"] .agreement-stage.funnel-panel {
   width: 100%;
   max-width: none;
 }
 @media (max-width: 760px) {
-  .view.funnel[data-route="client-retained"] .agreement-chooser {
+  .view.funnel[data-route="client-legacy"] .agreement-chooser {
     grid-template-columns: 1fr !important;
   }
 }
@@ -7569,7 +7568,7 @@ body.amp-live-trailhead .view.trailhead.live-video-bg > .shot {
 }
 
 /* amp-build:2112-client-bd-consult — education + need cards (no fee chooser) */
-.view.funnel[data-route="client-retained"] .client-offers-stage {
+.view.funnel[data-route="client-legacy"] .client-offers-stage {
   max-width: 920px;
   margin-left: auto;
   margin-right: auto;

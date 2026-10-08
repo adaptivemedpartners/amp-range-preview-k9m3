@@ -1861,10 +1861,11 @@
 
   /* Shared walk-forward for physician AND client funnel hops (Physician Path SoT).
      David UX lock 2026-09-09: BOTH candidate + client paths use the SAME scroll/gate
-     come-up as hiring portal Shared Ascent (client-retained second option) — funnel sheet. */
+     come-up as hiring portal Shared Ascent (client second option) — funnel sheet. */
   function go(route, opts) {
     opts = opts || {};
     if (route === "residents-fellows") route = "residents";
+    route = legacyBlogRoute(route);
     if (route === "client-retained") route = "client-region";
     /* moving lock removed — it was freezing all clicks after a stuck approach */
     state.moving = false;
@@ -6436,7 +6437,19 @@ function syncGuideRoute(route) {
     return "";
   }
 
+  /* amp-build:2301 — renamed blog slugs; old #blog/ and /blog-posts/ links land on the new article. */
+  function legacyBlogRoute(key) {
+    var LEGACY = {
+      "retained-vs-contingent-physician-search": "dedicated-vs-contingent-physician-search",
+      "what-hospitals-should-ask-retained-firm": "what-hospitals-should-ask-dedicated-physician-search-firm"
+    };
+    var m = /^(blog|blog-posts)\/(.+)$/.exec(String(key || ""));
+    if (m && LEGACY.hasOwnProperty(m[2])) return m[1] + "/" + LEGACY[m[2]];
+    return key;
+  }
+
   function normalizeRouteAlias(key) {
+    key = legacyBlogRoute(key);
     if (key === "residents-fellows") return "residents";
     if (key === "market-intelligence" || key === "mi" || key === "ridge") return "mi-lite";
     if (key === "market-intelligence/login" || key === "ridge/login" || key === "mi-lite-login") return "mi-lite-login";
@@ -6475,8 +6488,8 @@ function syncGuideRoute(route) {
     if (p.charAt(0) === "/") p = p.slice(1);
 
     if (p.indexOf("job/") === 0) return p;
-    if (p.indexOf("blog-posts/") === 0) return "blog/" + p.slice("blog-posts/".length);
-    if (p.indexOf("blog/") === 0) return p;
+    if (p.indexOf("blog-posts/") === 0) return legacyBlogRoute("blog/" + p.slice("blog-posts/".length));
+    if (p.indexOf("blog/") === 0) return legacyBlogRoute(p);
 
     if (PATH_TO_ROUTE.hasOwnProperty(p)) return PATH_TO_ROUTE[p];
 
