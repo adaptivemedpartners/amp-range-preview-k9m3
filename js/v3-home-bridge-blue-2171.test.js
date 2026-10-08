@@ -79,9 +79,7 @@ assert(home.indexOf(">01<") !== -1 && home.indexOf(">02<") !== -1 && home.indexO
 var row = sliceBetween(html, 'class="v3-stats-parent"', 'class="home-partners', "row2");
 assert(row.indexOf("mi-enrich cw-c") !== -1, "colorway C class");
 assert(row.indexOf('href="/market-intelligence"') !== -1, "MI href");
-/* amp-build:2300 — MI line reworded (no "real-time" claim); pending Mike sign-off */
-assert(row.indexOf("Compensation bands for every") !== -1, "locked MI line");
-assert(row.indexOf("Real-time compensation") === -1, "real-time claim gone");
+assert(row.indexOf("Real-time compensation data for every") !== -1, "locked MI line");
 assert(row.indexOf("specialty × state") !== -1, "multiplication sign on specialty × state");
 assert(row.indexOf("mi-spec-state") !== -1, "nowrap hook so the unit does not crush");
 assert(row.indexOf("See demand signals") === -1, "old MI headline gone");
