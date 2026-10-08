@@ -1,15 +1,17 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2299",
-  "label": "2299-sms-consent",
-  "deployed": "2026-10-01 CT",
+  "build": "2300",
+  "label": "2300-mi-copy-cleanup",
+  "deployed": "STAGED 2026-10-08 CT — not deployed (awaiting Mike sign-off)",
   "changes": [
-    "New /sms-consent page: internal SMS lead-alert verbal consent script, sample message, STOP/HELP and privacy (for Twilio toll-free verification)"
+    "Removed internal notes showing as public text (proof page E-E-A-T / generative-engine / source-discipline lines, Randy bio wording, MI verify-panel preview note)",
+    "MI copy: 'blurred until unlock' -> free sample real compensation bands; no 'real-time' claim; FAQ leads with compensation; 'real pay bands' -> 'real compensation bands'",
+    "'Simulate verified sample' control hidden on the production host"
   ],
   "previous": {
-    "build": "2298",
+    "build": "2299",
     "changes": [
-      "Team roster update: departed recruiter's card, bio, photo and chatbot routing removed; Mike Freeman is now the contact on every posting that listed him"
+      "New /sms-consent page: internal SMS lead-alert verbal consent script, sample message, STOP/HELP and privacy (for Twilio toll-free verification)"
     ]
   }
 }
