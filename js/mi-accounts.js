@@ -1,5 +1,7 @@
 /* MI customer accounts: create account, sign in, forgot/reset password, server-verified purchases and polls.
-   Loads supabase-js only when js/mi-accounts-config.js has a url. */
+   Loads supabase-js only when js/mi-accounts-config.js has a url.
+   2302: a new account also saves the tagged link that brought the person (utm_* + landing URL) on mi_customers and in
+   the sign-up metadata, so sign-ups can be counted by person and platform. */
 (function (w, d) {
   "use strict";
   var cfg = w.AMP_MI_ACCOUNTS || {};
@@ -202,6 +204,7 @@
         var prof = { full_name: val(form, "full_name"), organization: val(form, "organization"), phone: val(form, "phone"),
           free_level: "verified", sample_specialty: smp ? smp.spec : "", sample_state: smp ? smp.st : "",
           sample_label: "Free Verified sample: " + sampleText(smp) };
+        withTags(prof, attribution());
         if (!prof.full_name || !prof.organization || !email) { msg("Please fill in name, organization and work email.", true); return done(); }
         if (w.AMPRidgeAccess && AMPRidgeAccess.isWorkEmail && !AMPRidgeAccess.isWorkEmail(email)) { msg("Please use your work email, not a personal one.", true); return done(); }
         if (pw.length < 8) { msg("Password needs at least 8 characters.", true); return done(); }
@@ -239,9 +242,24 @@
     }).catch(function () { done(); msg("Something went wrong. Please try again.", true); });
   }
 
+  /* 2302: sign-up source. Tags from the tagged link that brought this person (js/visit-track.js keeps them, 90 days). */
+  var TAGS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "landing_url", "landed_at"];
+  function attribution() {
+    try { var a = w.AMPAttribution && w.AMPAttribution.get ? w.AMPAttribution.get() : null; if (a && a.source) return a; } catch (e) {}
+    return null;
+  }
+  function withTags(o, a) {
+    if (!a || !a.source) return o;
+    o.utm_source = String(a.source).slice(0, 100); o.utm_medium = String(a.medium || "").slice(0, 100); o.utm_campaign = String(a.campaign || "").slice(0, 100);
+    o.utm_content = String(a.content || "").slice(0, 150); o.utm_term = String(a.term || "").slice(0, 100); o.landing_url = String(a.landing || "").slice(0, 600); o.landed_at = a.at || "";
+    return o;
+  }
   function saveProfile(prof, email) {
-    return sb.from("mi_customers").upsert({ user_id: user.id, full_name: prof.full_name, organization: prof.organization, phone: prof.phone || null, work_email: email,
-      free_level: prof.free_level || "verified", sample_specialty: prof.sample_specialty || null, sample_state: prof.sample_state || null });
+    var row = { user_id: user.id, full_name: prof.full_name, organization: prof.organization, phone: prof.phone || null, work_email: email,
+      free_level: prof.free_level || "verified", sample_specialty: prof.sample_specialty || null, sample_state: prof.sample_state || null };
+    if (!prof.utm_source) withTags(prof, attribution());
+    if (prof.utm_source) TAGS.forEach(function (k) { row[k] = prof[k] ? prof[k] : null; });
+    return sb.from("mi_customers").upsert(row);
   }
   /* First sign-in after email confirmation: write the profile captured at sign-up. */
   function ensureProfile(u) {
@@ -249,8 +267,10 @@
     return sb.from("mi_customers").select("user_id").eq("user_id", u.id).maybeSingle().then(function (r) {
       if (r.data) return;
       var meta = u.user_metadata || {};
-      return saveProfile({ full_name: meta.full_name || "", organization: meta.organization || "", phone: meta.phone || "",
-        free_level: meta.free_level || "verified", sample_specialty: meta.sample_specialty || "", sample_state: meta.sample_state || "" }, u.email);
+      var p = { full_name: meta.full_name || "", organization: meta.organization || "", phone: meta.phone || "",
+        free_level: meta.free_level || "verified", sample_specialty: meta.sample_specialty || "", sample_state: meta.sample_state || "" };
+      if (meta.utm_source) TAGS.forEach(function (k) { p[k] = meta[k] || ""; });
+      return saveProfile(p, u.email);
     });
   }
   function finish() {

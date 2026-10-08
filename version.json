@@ -1,23 +1,21 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2301",
-  "label": "2301-no-retained-urls",
+  "build": "2302",
+  "label": "2302-social-attribution",
   "deployed": "2026-10-08",
   "changes": [
-    "Blog slugs renamed: /blog-posts/dedicated-vs-contingent-physician-search and /blog-posts/what-hospitals-should-ask-dedicated-physician-search-firm (internal links, sitemap, llms.txt, canonicals, articles updated)",
-    "Old blog URLs and the old client route path now forward (meta refresh 0 + location.replace + canonical + noindex); old #hash links remap in app.js",
-    "Removed the empty legacy client alias section from page HTML; dead CSS selectors renamed/removed",
-    "app.js / content.js / articles.js cache-busters -> ?v=2301"
+    "AMP Social click + sign-up attribution (Mike approved Oct 8 2026 3:40 PM CT): js/visit-track.js sends utm_* tags + tagged landing URL + is_entry with each visit and remembers the last tagged link (localStorage amp_utm, 90 days)",
+    "js/mi-accounts.js saves the tags on new Market Intelligence accounts (mi_customers utm_* / landing_url / landed_at, and sign-up metadata)",
+    "visit-track.js / mi-accounts.js cache-busters -> ?v=2302 (131 pages). No visible page changes.",
+    "Revert: git revert this commit and push (or reset branch to d5e3b45)"
   ],
   "previous": {
-    "build": "2300",
+    "build": "2301",
     "changes": [
-      "Removed internal notes showing as public text (proof page / FAQ / JSON-LD / articles / MI workbench / llms.txt source-discipline lines, Randy bio wording, MI verify-panel preview note)",
-      "MI copy: free sample shows real compensation bands; FAQ leads with compensation; all pay/cash band wording -> 'compensation bands'",
-      "Homepage keeps 'Real-time compensation data for every specialty × state' (Mike 2026-10-08)",
-      "Brenton bio: 'keeps every search organized and moving'; Kelley/Randy bios: 'hiring team' / 'hiring lead'",
-      "'FREE GATED SAMPLE' -> 'FREE SAMPLE'",
-      "'Simulate verified sample' and 'Simulate N polls' test controls hidden (and disabled) on the production host"
+      "Blog slugs renamed: /blog-posts/dedicated-vs-contingent-physician-search and /blog-posts/what-hospitals-should-ask-dedicated-physician-search-firm (internal links, sitemap, llms.txt, canonicals, articles updated)",
+      "Old blog URLs and the old client route path now forward (meta refresh 0 + location.replace + canonical + noindex); old #hash links remap in app.js",
+      "Removed the empty legacy client alias section from page HTML; dead CSS selectors renamed/removed",
+      "app.js / content.js / articles.js cache-busters -> ?v=2301"
     ]
   }
 }

@@ -1,3 +1,6 @@
+// 2302: also stores AMP Social / campaign tags (utm_source, utm_medium, utm_campaign, utm_content, utm_term), the tagged
+// landing URL (only utm_* kept in its query) and is_entry (first page of a tagged arrival = the click). Old pages that send
+// no tags keep working exactly as before. Revert = redeploy track-visit.v3.index.ts.
 // 2220: in-house website visitor log. Free version: matches IPs to organizations using the
 // public internet address ownership records (RDAP via rdap.org). No paid lookup service.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
@@ -47,6 +50,33 @@ async function lookup(ip: string) {
   return { org, netname, kind };
 }
 
+// Tags: from body.utm {source,medium,campaign,content,term}, else parsed from body.landing. Only utm_* survive.
+const TAG = /^[\w .@:+\/-]*$/;
+function tagVal(v: unknown, n: number): string | null {
+  const s = String(v ?? "").trim().slice(0, n);
+  return s && TAG.test(s) ? s : null;
+}
+function utmTags(body: any): Record<string, unknown> {
+  let u: any = body && typeof body.utm === "object" && body.utm ? body.utm : null;
+  let landing = "";
+  try {
+    if (body && body.landing) {
+      const url = new URL(String(body.landing).slice(0, 1000));
+      const keep = new URLSearchParams();
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach((k) => { const v = url.searchParams.get(k); if (v) keep.set(k, v); });
+      const q = keep.toString();
+      landing = (url.origin + url.pathname + (q ? "?" + q : "")).slice(0, 600);
+      if (!u && q) u = { source: keep.get("utm_source"), medium: keep.get("utm_medium"), campaign: keep.get("utm_campaign"), content: keep.get("utm_content"), term: keep.get("utm_term") };
+    }
+  } catch (_) { landing = ""; }
+  const src = u ? tagVal(u.source, 100) : null;
+  if (!src) return {};
+  return {
+    utm_source: src.toLowerCase(), utm_medium: tagVal(u.medium, 100), utm_campaign: tagVal(u.campaign, 100),
+    utm_content: tagVal(u.content, 150), utm_term: tagVal(u.term, 100), landing_url: landing || null, is_entry: body.entry === true,
+  };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return new Response("method", { status: 405, headers: CORS });
@@ -58,9 +88,11 @@ Deno.serve(async (req) => {
   try { body = JSON.parse(await req.text() || "{}"); } catch (_) {}
   const clip = (s: unknown, n: number) => String(s || "").slice(0, n);
   const info = await lookup(ip);
+  const tags = utmTags(body);
   await admin.from("site_visits").insert({
     ip, path: clip(body.path, 300) || "/", title: clip(body.title, 200), referrer: clip(body.ref, 500),
     user_agent: clip(ua, 400), site: clip(body.site, 120), org: info.org || info.netname || null, kind: info.kind,
+    ...tags,
   });
   return new Response(JSON.stringify({ ok: true }), { headers: { ...CORS, "Content-Type": "application/json" } });
 });
