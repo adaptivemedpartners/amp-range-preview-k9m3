@@ -880,7 +880,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   border-radius: 18px; overflow: hidden; position: relative;
   min-height: 240px; background: #0f172a;
 }
-.job-hero img { width: 100%; height: 260px; object-fit: cover; }
+.job-hero img { display: block; width: 100%; height: 260px; object-fit: cover; }
 .job-hero .badge {
   position: absolute; left: 12px; bottom: 12px;
   background: rgba(15,23,42,.8); color: #fff;
@@ -14827,3 +14827,20 @@ body:has(> .site-nav:not(.is-home)) > main { padding-top: 64px; }
 @media (max-width: 900px) {
   body:has(> .site-nav:not(.is-home)) > main { padding-top: 61px; }
 }
+
+/* 2303: automatic job photos (header + list thumbnails), see js/job-photos.js */
+.job-card.has-thumb { padding-top: 0; overflow: hidden; display: flex; flex-direction: column; }
+.job-card .card-thumb {
+  display: block; margin: 0 -18px 14px; aspect-ratio: 8 / 5; overflow: hidden;
+  background: #1a3a4e; border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+}
+.job-card .card-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.job-card:hover .card-thumb img, .job-card:focus-visible .card-thumb img { transform: scale(1.04); }
+.job-card.has-thumb .tag { align-self: flex-start; }
+.job-card.has-thumb .meta { margin-top: auto; padding-top: 12px; }
+@media (max-width: 640px) {
+  .job-hero:not(.job-hero-pro) { min-height: 0; }
+  .job-hero img { height: 200px; }
+  .job-card .card-thumb { aspect-ratio: 2 / 1; }
+}
+@media (prefers-reduced-motion: reduce) { .job-card .card-thumb img { transition: none; } }

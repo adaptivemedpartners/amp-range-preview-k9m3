@@ -1,21 +1,23 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2302",
-  "label": "2302-social-attribution",
-  "deployed": "2026-10-08",
+  "build": "2303",
+  "label": "2303-job-photos",
+  "deployed": "(staged 2026-10-10, not yet deployed)",
   "changes": [
-    "AMP Social click + sign-up attribution (Mike approved Oct 8 2026 3:40 PM CT): js/visit-track.js sends utm_* tags + tagged landing URL + is_entry with each visit and remembers the last tagged link (localStorage amp_utm, 90 days)",
-    "js/mi-accounts.js saves the tags on new Market Intelligence accounts (mi_customers utm_* / landing_url / landed_at, and sign-up metadata)",
-    "visit-track.js / mi-accounts.js cache-busters -> ?v=2302 (131 pages). No visible page changes.",
-    "Revert: git revert this commit and push (or reset branch to d5e3b45)"
+    "Job photos (Mike approved Oct 10 2026: header + list thumbnails, automatic, no recruiter upload): new js/job-photos.js picks a scene per job from its state + place words in title/sub (e.g. West Texas, Silicon Valley, Eastern Oregon); fallback = 'default' country-road photo",
+    "31 public-domain / CC0 landscape photos (no people) in assets/job-photos/ as WebP: {key}.webp (<=1400x700), {key}-800.webp, {key}-thumb.webp (480x300); credits + source links in assets/job-photos/credits.json and CREDITS.md",
+    "js/app.js: job page header uses the photo (srcset, alt text, 'Area scenery · State' badge); jobs list cards get a lazy-loaded thumbnail. css/site.css: .job-card thumbnails + 200px mobile header",
+    "Cache-busters: app.js ?v=2303, site.css ?v=2303, job-photos.js added to the script loader on all 131 pages. No URL, redirect, or JSON-LD changes",
+    "Overrides: job.hero (image URL) or job.photo (scene key) in js/content.js",
+    "Revert: git revert this commit and push (or reset branch to 8096957)"
   ],
   "previous": {
-    "build": "2301",
+    "build": "2302",
     "changes": [
-      "Blog slugs renamed: /blog-posts/dedicated-vs-contingent-physician-search and /blog-posts/what-hospitals-should-ask-dedicated-physician-search-firm (internal links, sitemap, llms.txt, canonicals, articles updated)",
-      "Old blog URLs and the old client route path now forward (meta refresh 0 + location.replace + canonical + noindex); old #hash links remap in app.js",
-      "Removed the empty legacy client alias section from page HTML; dead CSS selectors renamed/removed",
-      "app.js / content.js / articles.js cache-busters -> ?v=2301"
+      "AMP Social click + sign-up attribution (Mike approved Oct 8 2026 3:40 PM CT): js/visit-track.js sends utm_* tags + tagged landing URL + is_entry with each visit and remembers the last tagged link (localStorage amp_utm, 90 days)",
+      "js/mi-accounts.js saves the tags on new Market Intelligence accounts (mi_customers utm_* / landing_url / landed_at, and sign-up metadata)",
+      "visit-track.js / mi-accounts.js cache-busters -> ?v=2302 (131 pages). No visible page changes.",
+      "Revert: git revert this commit and push (or reset branch to d5e3b45)"
     ]
   }
 }

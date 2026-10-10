@@ -1,0 +1,560 @@
+{
+ "tx-west": {
+  "file": "/assets/job-photos/tx-west.webp",
+  "thumb": "/assets/job-photos/tx-west-thumb.webp",
+  "mid": "/assets/job-photos/tx-west-800.webp",
+  "alt": "Guadalupe Mountains rising above the West Texas desert",
+  "title": "File:Guadalupe Mountains National Park GUMO3339.jpg",
+  "creator": "National Park Service Digital Image Archives",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Guadalupe_Mountains_National_Park_GUMO3339.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3072,
+   2048
+  ]
+ },
+ "tx-west-2": {
+  "file": "/assets/job-photos/tx-west-2.webp",
+  "thumb": "/assets/job-photos/tx-west-2-thumb.webp",
+  "mid": "/assets/job-photos/tx-west-2-800.webp",
+  "alt": "Gomez Peak in the Davis Mountains of West Texas",
+  "title": "File:Gomez Peak, Davis Mountains, Texas.jpg",
+  "creator": "Z3lvs",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Gomez_Peak,_Davis_Mountains,_Texas.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3993,
+   2995
+  ]
+ },
+ "tx-hill": {
+  "file": "/assets/job-photos/tx-hill.webp",
+  "thumb": "/assets/job-photos/tx-hill-thumb.webp",
+  "mid": "/assets/job-photos/tx-hill-800.webp",
+  "alt": "Bluebonnets and live oaks in the Texas Hill Country",
+  "title": "File:A luxurient field of bluebonnets, the state flower, near Marble Falls in the Texas Hill Country LCCN2014633107.tif",
+  "creator": "Carol M. Highsmith",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:A_luxurient_field_of_bluebonnets,_the_state_flower,_near_Marble_Falls_in_the_Texas_Hill_Country_LCCN2014633107.tif",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   7360,
+   4912
+  ]
+ },
+ "tx-dfw": {
+  "file": "/assets/job-photos/tx-dfw.webp",
+  "thumb": "/assets/job-photos/tx-dfw-thumb.webp",
+  "mid": "/assets/job-photos/tx-dfw-800.webp",
+  "alt": "Dallas skyline on a clear day",
+  "title": "File:Dallas Texas skyline from Reunion Tower September 2025.png",
+  "creator": "IcedCowboyCoffee",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Dallas_Texas_skyline_from_Reunion_Tower_September_2025.png",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   7286,
+   3058
+  ]
+ },
+ "tx-east": {
+  "file": "/assets/job-photos/tx-east.webp",
+  "thumb": "/assets/job-photos/tx-east-thumb.webp",
+  "mid": "/assets/job-photos/tx-east-800.webp",
+  "alt": "Cypress trees in still water at Big Thicket National Preserve, East Texas",
+  "title": "File:Trees at Big Thicket National Preserve.jpg",
+  "creator": "USDA photo by Larry Rana",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Trees_at_Big_Thicket_National_Preserve.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3442,
+   2207
+  ]
+ },
+ "ca-bay": {
+  "file": "/assets/job-photos/ca-bay.webp",
+  "thumb": "/assets/job-photos/ca-bay-thumb.webp",
+  "mid": "/assets/job-photos/ca-bay-800.webp",
+  "alt": "Santa Clara Valley and the South Bay seen from Mount Hamilton",
+  "title": "File:San Jose viewed from Mount Hamilton Aug 2019.jpg",
+  "creator": "Thomson200",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:San_Jose_viewed_from_Mount_Hamilton_Aug_2019.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   5184,
+   3456
+  ]
+ },
+ "ca-coast": {
+  "file": "/assets/job-photos/ca-coast.webp",
+  "thumb": "/assets/job-photos/ca-coast-thumb.webp",
+  "mid": "/assets/job-photos/ca-coast-800.webp",
+  "alt": "Wildflowers above a rocky cove on the California coast",
+  "title": "Beautiful California Coast - Big",
+  "creator": "Unknown",
+  "license": "CC0 1.0",
+  "source": "https://www.rawpixel.com/image/5965303/photo-image-public-domain-plant-nature",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   4813,
+   2929
+  ]
+ },
+ "ca-valley": {
+  "file": "/assets/job-photos/ca-valley.webp",
+  "thumb": "/assets/job-photos/ca-valley-thumb.webp",
+  "mid": "/assets/job-photos/ca-valley-800.webp",
+  "alt": "Rows of crops in California's Salinas Valley",
+  "title": "File:Crops in Salinas Valley, Aug 2019.jpg",
+  "creator": "Thomson200",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Crops_in_Salinas_Valley,_Aug_2019.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3456,
+   2304
+  ]
+ },
+ "ca-redwoods": {
+  "file": "/assets/job-photos/ca-redwoods.webp",
+  "thumb": "/assets/job-photos/ca-redwoods-thumb.webp",
+  "mid": "/assets/job-photos/ca-redwoods-800.webp",
+  "alt": "Looking up into a grove of coast redwoods",
+  "title": "Bolling Grove",
+  "creator": "sarahstierch",
+  "license": "CC0 1.0",
+  "source": "https://www.flickr.com/photos/7633518@N08/54187065977",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   768
+  ]
+ },
+ "ca-south": {
+  "file": "/assets/job-photos/ca-south.webp",
+  "thumb": "/assets/job-photos/ca-south-thumb.webp",
+  "mid": "/assets/job-photos/ca-south-800.webp",
+  "alt": "Sandstone cliffs above the Pacific in Southern California",
+  "title": "Pacific Coast Cliffs in San Diego",
+  "creator": "Jennifer Bourn",
+  "license": "CC0 1.0",
+  "source": "https://wordpress.org/photos/photo/88661f598b/",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   2048,
+   1308
+  ]
+ },
+ "wa-wine": {
+  "file": "/assets/job-photos/wa-wine.webp",
+  "thumb": "/assets/job-photos/wa-wine-thumb.webp",
+  "mid": "/assets/job-photos/wa-wine-800.webp",
+  "alt": "Vineyard rows below Rattlesnake Mountain in Washington wine country",
+  "title": "File:Rattlesnake Mountain as seen across Chandler Reach vineyard - 1.JPG",
+  "creator": "Williamborg 00:21, 18 May 2007 (UTC)",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Rattlesnake_Mountain_as_seen_across_Chandler_Reach_vineyard_-_1.JPG",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   1973,
+   1057
+  ]
+ },
+ "wa-nw": {
+  "file": "/assets/job-photos/wa-nw.webp",
+  "thumb": "/assets/job-photos/wa-nw-thumb.webp",
+  "mid": "/assets/job-photos/wa-nw-800.webp",
+  "alt": "Mountain meadow and ponds with Mount Rainier behind",
+  "title": "Meadow and Ponds With Mount Rainier In The Background",
+  "creator": "Jennifer Bourn",
+  "license": "CC0 1.0",
+  "source": "https://wordpress.org/photos/photo/65761f6b67/",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   2048,
+   1423
+  ]
+ },
+ "or-east": {
+  "file": "/assets/job-photos/or-east.webp",
+  "thumb": "/assets/job-photos/or-east-thumb.webp",
+  "mid": "/assets/job-photos/or-east-800.webp",
+  "alt": "Mann Lake and snow-capped mountains in eastern Oregon",
+  "title": "Mann Lake, eastern Oregon",
+  "creator": "Bonnie Moreland (free images)",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/66741228@N05/54565958468",
+  "hero_px": [
+   1023,
+   511
+  ],
+  "orig_px": [
+   1024,
+   676
+  ]
+ },
+ "or": {
+  "file": "/assets/job-photos/or.webp",
+  "thumb": "/assets/job-photos/or-thumb.webp",
+  "mid": "/assets/job-photos/or-800.webp",
+  "alt": "Mount Hood reflected in Mirror Lake, Oregon",
+  "title": "Mount Hood reflected Mirror Lake",
+  "creator": "Unknown",
+  "license": "CC0 1.0",
+  "source": "https://www.rawpixel.com/image/3340518/free-photo-image-nature-abies-cc0",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   2048,
+   1626
+  ]
+ },
+ "az-tucson": {
+  "file": "/assets/job-photos/az-tucson.webp",
+  "thumb": "/assets/job-photos/az-tucson-thumb.webp",
+  "mid": "/assets/job-photos/az-tucson-800.webp",
+  "alt": "Saguaro cactus on a desert hillside at Saguaro National Park near Tucson",
+  "title": "Saguaro NP in AZ",
+  "creator": "jhvanwa",
+  "license": "CC0 1.0",
+  "source": "https://www.flickr.com/photos/184765059@N02/51830353107",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   768
+  ]
+ },
+ "az": {
+  "file": "/assets/job-photos/az.webp",
+  "thumb": "/assets/job-photos/az-thumb.webp",
+  "mid": "/assets/job-photos/az-800.webp",
+  "alt": "Red rock formations and juniper near Sedona, Arizona",
+  "title": "Sedona landscape. Arizona.",
+  "creator": "Bernard Spragg",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/88123769@N02/51419313414",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   683
+  ]
+ },
+ "nv": {
+  "file": "/assets/job-photos/nv.webp",
+  "thumb": "/assets/job-photos/nv-thumb.webp",
+  "mid": "/assets/job-photos/nv-800.webp",
+  "alt": "Red Rock Canyon near Las Vegas, Nevada",
+  "title": "Red Rock Canyon in NV",
+  "creator": "jhvanwa",
+  "license": "CC0 1.0",
+  "source": "https://www.flickr.com/photos/184765059@N02/53625326517",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   768
+  ]
+ },
+ "nm": {
+  "file": "/assets/job-photos/nm.webp",
+  "thumb": "/assets/job-photos/nm-thumb.webp",
+  "mid": "/assets/job-photos/nm-800.webp",
+  "alt": "The Organ Mountains of southern New Mexico",
+  "title": "File:Organ Mountains WSA (9472329148).jpg",
+  "creator": "Bureau  of Land Management",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Organ_Mountains_WSA_(9472329148).jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   5180,
+   3454
+  ]
+ },
+ "nh": {
+  "file": "/assets/job-photos/nh.webp",
+  "thumb": "/assets/job-photos/nh-thumb.webp",
+  "mid": "/assets/job-photos/nh-800.webp",
+  "alt": "Red boathouses on Lake Sunapee, New Hampshire",
+  "title": "Lake Sunapee, New Hampshire-Front",
+  "creator": "Familypapers",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/168023024@N05/51858879743",
+  "hero_px": [
+   1023,
+   511
+  ],
+  "orig_px": [
+   1024,
+   657
+  ]
+ },
+ "ok": {
+  "file": "/assets/job-photos/ok.webp",
+  "thumb": "/assets/job-photos/ok-thumb.webp",
+  "mid": "/assets/job-photos/ok-800.webp",
+  "alt": "Lake and granite hills in the Wichita Mountains of southwest Oklahoma",
+  "title": "Wichita Mountains NWR",
+  "creator": "U.S. Fish & Wildlife Service Southwest Region",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/51896441@N04/52927257077",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   683
+  ]
+ },
+ "ks": {
+  "file": "/assets/job-photos/ks.webp",
+  "thumb": "/assets/job-photos/ks-thumb.webp",
+  "mid": "/assets/job-photos/ks-800.webp",
+  "alt": "Rolling tallgrass prairie in the Kansas Flint Hills",
+  "title": "File:Flint Hills Scenic Byway - The Vast Tallgrass Prairie in the Flint Hills - NARA - 7718391.jpg",
+  "creator": "Unknown authorUnknown author or not provided",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Flint_Hills_Scenic_Byway_-_The_Vast_Tallgrass_Prairie_in_the_Flint_Hills_-_NARA_-_7718391.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3082,
+   2048
+  ]
+ },
+ "mo": {
+  "file": "/assets/job-photos/mo.webp",
+  "thumb": "/assets/job-photos/mo-thumb.webp",
+  "mid": "/assets/job-photos/mo-800.webp",
+  "alt": "Lakeshore at Big Bay Recreation Area in the Missouri Ozarks",
+  "title": "Big Bay Recreation Area - Mark Twain National Forest",
+  "creator": "SlapTheWorld",
+  "license": "CC0 1.0",
+  "source": "https://www.flickr.com/photos/196446665@N03/52920192315",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   768
+  ]
+ },
+ "in": {
+  "file": "/assets/job-photos/in.webp",
+  "thumb": "/assets/job-photos/in-thumb.webp",
+  "mid": "/assets/job-photos/in-800.webp",
+  "alt": "Autumn hills at Brown County State Park, Indiana",
+  "title": "File:HesitationPoint1.JPG",
+  "creator": "MrGreenBean (talk)",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:HesitationPoint1.JPG",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   4000,
+   3000
+  ]
+ },
+ "ky": {
+  "file": "/assets/job-photos/ky.webp",
+  "thumb": "/assets/job-photos/ky-thumb.webp",
+  "mid": "/assets/job-photos/ky-800.webp",
+  "alt": "Fall color along a river crossing in the Southern forest",
+  "title": "20221122-FS-BC-009",
+  "creator": "US Forest Service - Southern Region",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/125599739@N06/53196829681",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   791
+  ]
+ },
+ "tn": {
+  "file": "/assets/job-photos/tn.webp",
+  "thumb": "/assets/job-photos/tn-thumb.webp",
+  "mid": "/assets/job-photos/tn-800.webp",
+  "alt": "Great Smoky Mountains ridgelines seen from Clingmans Dome",
+  "title": "Clingman's Dome Great Smoky Mountains National Park",
+  "creator": "blcope",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/26190392@N02/52446390747",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   683
+  ]
+ },
+ "al": {
+  "file": "/assets/job-photos/al.webp",
+  "thumb": "/assets/job-photos/al-thumb.webp",
+  "mid": "/assets/job-photos/al-800.webp",
+  "alt": "Little River Canyon from Wolf Creek Overlook in northeast Alabama",
+  "title": "File:Little River Canyon from Wolf Creek Overlook, April 2018 1.jpg",
+  "creator": "Thomson200",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Little_River_Canyon_from_Wolf_Creek_Overlook,_April_2018_1.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3456,
+   2304
+  ]
+ },
+ "al-2": {
+  "file": "/assets/job-photos/al-2.webp",
+  "thumb": "/assets/job-photos/al-2-thumb.webp",
+  "mid": "/assets/job-photos/al-2-800.webp",
+  "alt": "Little River Falls in northeast Alabama",
+  "title": "File:The 45 ft 13.7 m Little River Falls is one of the main attractions at Little River Canyon. As Little River is almost solely (f0535418-91f1-485f-bb96-0f3af547409f).jpg",
+  "creator": "NPS",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:The_45_ft_13.7_m_Little_River_Falls_is_one_of_the_main_attractions_at_Little_River_Canyon._As_Little_River_is_almost_solely_(f0535418-91f1-485f-bb96-0f3af547409f).jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   4000,
+   3000
+  ]
+ },
+ "ga": {
+  "file": "/assets/job-photos/ga.webp",
+  "thumb": "/assets/job-photos/ga-thumb.webp",
+  "mid": "/assets/job-photos/ga-800.webp",
+  "alt": "North Georgia mountains from Black Rock Mountain State Park",
+  "title": "File:Nantahala Overlook, Black Rock Mountain State Park.jpg",
+  "creator": "Thomson200",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Nantahala_Overlook,_Black_Rock_Mountain_State_Park.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   3456,
+   2304
+  ]
+ },
+ "sc": {
+  "file": "/assets/job-photos/sc.webp",
+  "thumb": "/assets/job-photos/sc-thumb.webp",
+  "mid": "/assets/job-photos/sc-800.webp",
+  "alt": "Tidal creek and salt marsh on the South Carolina coast",
+  "title": "File:Tibwin creek south carolina.jpg",
+  "creator": "Bill Lea",
+  "license": "Public Domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Tibwin_creek_south_carolina.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   4115,
+   2700
+  ]
+ },
+ "la": {
+  "file": "/assets/job-photos/la.webp",
+  "thumb": "/assets/job-photos/la-thumb.webp",
+  "mid": "/assets/job-photos/la-800.webp",
+  "alt": "Cypress trees and Spanish moss along a Louisiana bayou",
+  "title": "Louisiana Bayou",
+  "creator": "Gary Lee Todd, Ph.D.",
+  "license": "Public Domain",
+  "source": "https://www.flickr.com/photos/101561334@N08/53154525595",
+  "hero_px": [
+   1024,
+   512
+  ],
+  "orig_px": [
+   1024,
+   768
+  ]
+ },
+ "default": {
+  "file": "/assets/job-photos/default.webp",
+  "thumb": "/assets/job-photos/default-thumb.webp",
+  "mid": "/assets/job-photos/default-800.webp",
+  "alt": "Open farmland along a quiet country road",
+  "title": "File:View down country road in May.jpg",
+  "creator": "B137",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:View_down_country_road_in_May.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   2592,
+   1944
+  ]
+ }
+}

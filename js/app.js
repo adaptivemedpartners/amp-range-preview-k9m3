@@ -4398,7 +4398,9 @@
     }
     root.innerHTML = jobs.map(function (j) {
       var jobKey = "job/" + (j.slug || j.id);
-      return '<a class="card" href="' + routeToHref(jobKey) + '" data-go="' + jobKey + '" data-job="' + j.id + '">' +
+      var ph = (window.AMP_JOB_PHOTOS && AMP_JOB_PHOTOS.photoFor) ? AMP_JOB_PHOTOS.photoFor(j) : null;
+      var thumb = ph ? '<span class="card-thumb"><img src="' + ph.thumb + '" alt="' + escapeAttr(ph.alt) + '" width="480" height="300" loading="lazy" decoding="async" style="object-position:' + ph.pos + '"></span>' : '';
+      return '<a class="card job-card' + (ph ? ' has-thumb' : '') + '" href="' + routeToHref(jobKey) + '" data-go="' + jobKey + '" data-job="' + j.id + '">' + thumb +
         '<span class="tag">' + j.code + '</span><h3>' + j.title + '</h3><p>' + j.sub + '</p>' +
         '<div class="meta">View preview →</div></a>';
     }).join("") + (jobs.length < 8 ? jobsSoftBench() : "");
@@ -4456,8 +4458,9 @@
     }).join("");
     injectJobJsonLd(buildJobPostingJsonLd(j));
     stampJobConcierge(j);
-    var heroBlock = j.hero
-      ? '<div class="job-hero"><img src="' + j.hero + '" alt="' + escapeAttr(jobHeroAlt(j)) + '"><div class="badge">Practice preview · not a facility dump</div></div>'
+    var ph = (window.AMP_JOB_PHOTOS && AMP_JOB_PHOTOS.photoFor) ? AMP_JOB_PHOTOS.photoFor(j) : null;
+    var heroBlock = ph
+      ? '<div class="job-hero"><img src="' + ph.src + '"' + (ph.custom ? '' : ' srcset="' + ph.mid + ' 800w, ' + ph.src + ' ' + ph.w + 'w" sizes="(max-width: 900px) 100vw, 600px"') + ' width="1400" height="700" alt="' + escapeAttr(ph.alt || jobHeroAlt(j)) + '" style="object-position:' + ph.pos + '" decoding="async" fetchpriority="high"><div class="badge">' + (ph.custom ? 'Practice preview' : 'Area scenery · ' + escapeAttr(j.state || "")) + '</div></div>'
       : '<div class="job-hero job-hero-pro" role="img" aria-label="Practice preview"><div class="badge">Practice preview · not a facility dump</div></div>';
     root.innerHTML =
       '<div class="job-layout">' +
