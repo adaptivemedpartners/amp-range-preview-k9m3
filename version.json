@@ -1,15 +1,14 @@
 {
   "site": "adaptivemedicalpartners.com",
   "build": "2303",
-  "label": "2303-job-photos",
-  "deployed": "(staged 2026-10-10, not yet deployed)",
+  "label": "2303-job-photos (rev 2: city photos)",
+  "deployed": "2026-10-10 (Mike approved 11:10 AM CT)",
   "changes": [
-    "Job photos (Mike approved Oct 10 2026: header + list thumbnails, automatic, no recruiter upload): new js/job-photos.js picks a scene per job from its state + place words in title/sub (e.g. West Texas, Silicon Valley, Eastern Oregon); fallback = 'default' country-road photo",
-    "31 public-domain / CC0 landscape photos (no people) in assets/job-photos/ as WebP: {key}.webp (<=1400x700), {key}-800.webp, {key}-thumb.webp (480x300); credits + source links in assets/job-photos/credits.json and CREDITS.md",
-    "js/app.js: job page header uses the photo (srcset, alt text, 'Area scenery · State' badge); jobs list cards get a lazy-loaded thumbnail. css/site.css: .job-card thumbnails + 200px mobile header",
-    "Cache-busters: app.js ?v=2303, site.css ?v=2303, job-photos.js added to the script loader on all 131 pages. No URL, redirect, or JSON-LD changes",
-    "Overrides: job.hero (image URL) or job.photo (scene key) in js/content.js",
-    "Revert: git revert this commit and push (or reset branch to 8096957)"
+    "Job photos rev 2 (Mike feedback Oct 10 2026 10:18 AM CT): header + list thumbnail = real photo of the job's city from the Setting line (28 city photos, Wikimedia Commons, PD/CC0/CC BY/CC BY-SA, no people as focus) labeled 'Downtown X, ST' or 'Nearby: X, ST'; second image below the job panel = area scenic photo",
+    "Auto-assignment in js/job-photos.js: job.hero override -> city named in Setting -> nearest notable city ('Nearby:') -> state/region scenic -> generic. City data/credits in assets/job-photos/city/credits.json; CC-licensed photos show an on-photo credit link; all credits at /assets/job-photos/credits.html (noindex) and CREDITS.md",
+    "Coverage: 42 jobs true city photo, 6 nearby-city, 43 state/region scenic (no town named publicly), 0 generic",
+    "Cache-busters ?v=2303 on all pages. No URL, redirect, or JSON-LD changes",
+    "Revert: reset live branch to tag backup-pre-2303 (8096957) and push, or git revert the 2303 commits"
   ],
   "previous": {
     "build": "2302",

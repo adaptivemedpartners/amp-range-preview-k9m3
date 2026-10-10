@@ -4399,12 +4399,18 @@
     root.innerHTML = jobs.map(function (j) {
       var jobKey = "job/" + (j.slug || j.id);
       var ph = (window.AMP_JOB_PHOTOS && AMP_JOB_PHOTOS.photoFor) ? AMP_JOB_PHOTOS.photoFor(j) : null;
-      var thumb = ph ? '<span class="card-thumb"><img src="' + ph.thumb + '" alt="' + escapeAttr(ph.alt) + '" width="480" height="300" loading="lazy" decoding="async" style="object-position:' + ph.pos + '"></span>' : '';
+      var thumb = ph ? '<span class="card-thumb"><img src="' + ph.thumb + '" alt="' + escapeAttr(ph.alt) + '" width="480" height="300" loading="lazy" decoding="async" style="object-position:' + ph.pos + '">' + (ph.label && !ph.custom ? '<span class="thumb-label">' + escapeAttr(ph.label) + '</span>' : '') + '</span>' : '';
       return '<a class="card job-card' + (ph ? ' has-thumb' : '') + '" href="' + routeToHref(jobKey) + '" data-go="' + jobKey + '" data-job="' + j.id + '">' + thumb +
         '<span class="tag">' + j.code + '</span><h3>' + j.title + '</h3><p>' + j.sub + '</p>' +
         '<div class="meta">View preview →</div></a>';
     }).join("") + (jobs.length < 8 ? jobsSoftBench() : "");
     if (jobs.length < 8 || state.jobViews >= 2) whisperJobsGuide();
+    if (window.AMP_JOB_PHOTOS && !document.getElementById("jobs-photo-credits")) {
+      var pc = document.createElement("p");
+      pc.id = "jobs-photo-credits"; pc.className = "photo-credits-note";
+      pc.innerHTML = 'Photos show each job’s city (or the nearest city, marked “Nearby”) and area scenery, not the facility. <a href="/assets/job-photos/credits.html" target="_blank" rel="noopener">Photo credits &amp; licenses</a>';
+      root.parentNode.insertBefore(pc, root.nextSibling);
+    }
   }
 
   
@@ -4443,6 +4449,11 @@
       '</article>';
   }
 
+  function jobPhotoCredit(c) {
+    if (!c) return "";
+    return '<a class="photo-credit" href="' + escapeAttr(c.src) + '" target="_blank" rel="noopener" title="Photo: ' + escapeAttr(c.by) + ' · ' + escapeAttr(c.lic) + ' (source)">Photo: ' + escapeAttr(c.by) + ' · ' + escapeAttr(c.lic) + '</a>';
+  }
+
   function renderJob(id) {
     state.jobViews = (state.jobViews || 0) + 1;
     state.jobId = id;
@@ -4460,8 +4471,12 @@
     stampJobConcierge(j);
     var ph = (window.AMP_JOB_PHOTOS && AMP_JOB_PHOTOS.photoFor) ? AMP_JOB_PHOTOS.photoFor(j) : null;
     var heroBlock = ph
-      ? '<div class="job-hero"><img src="' + ph.src + '"' + (ph.custom ? '' : ' srcset="' + ph.mid + ' 800w, ' + ph.src + ' ' + ph.w + 'w" sizes="(max-width: 900px) 100vw, 600px"') + ' width="1400" height="700" alt="' + escapeAttr(ph.alt || jobHeroAlt(j)) + '" style="object-position:' + ph.pos + '" decoding="async" fetchpriority="high"><div class="badge">' + (ph.custom ? 'Practice preview' : 'Area scenery · ' + escapeAttr(j.state || "")) + '</div></div>'
+      ? '<div class="job-hero job-hero-' + (ph.kind || "scenic") + '"><img src="' + ph.src + '"' + (ph.custom ? '' : ' srcset="' + ph.mid + ' 800w, ' + ph.src + ' ' + ph.w + 'w" sizes="(max-width: 900px) 100vw, 600px"') + ' width="1400" height="700" alt="' + escapeAttr(ph.alt || jobHeroAlt(j)) + '" style="object-position:' + ph.pos + '" decoding="async" fetchpriority="high"><div class="badge">' + escapeAttr(ph.label || "") + '</div>' + jobPhotoCredit(ph.credit) + '</div>'
       : '<div class="job-hero job-hero-pro" role="img" aria-label="Practice preview"><div class="badge">Practice preview · not a facility dump</div></div>';
+    var sc = ph && ph.scenic;
+    var scenicBlock = sc
+      ? '<figure class="job-scenic mt-16"><img src="' + sc.mid + '" srcset="' + sc.mid + ' 800w, ' + sc.src + ' ' + sc.w + 'w" sizes="(max-width: 900px) 100vw, 600px" width="1400" height="700" alt="' + escapeAttr(sc.alt) + '" style="object-position:' + sc.pos + '" loading="lazy" decoding="async"><figcaption><strong>' + escapeAttr(sc.label) + '</strong> · ' + escapeAttr(sc.alt) + '</figcaption></figure>'
+      : '';
     root.innerHTML =
       '<div class="job-layout">' +
         '<div>' +
@@ -4478,6 +4493,7 @@
             '</div>' +
             '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Reaches a recruiter</span></div>' +
           '</div>' +
+          scenicBlock +
         '</div>' +
         renderJobGuideAside(j) +
       '</div>';

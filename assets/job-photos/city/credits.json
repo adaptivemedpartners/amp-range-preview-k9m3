@@ -1,0 +1,506 @@
+{
+ "midland-tx": {
+  "state": "TX",
+  "label": "Downtown Midland, TX",
+  "alt": "Downtown Midland, Texas skyline under a blue sky",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Midland, TX skyline.jpg",
+  "creator": "Quintin Soloviev",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Midland,_TX_skyline.jpg",
+  "orig_px": [
+   11301,
+   7064
+  ]
+ },
+ "abilene-tx": {
+  "state": "TX",
+  "label": "Downtown Abilene, TX",
+  "alt": "Historic buildings in downtown Abilene, Texas",
+  "pos": "50% 35%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:DowntownAbilene.JPG",
+  "creator": "Keithimus",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:DowntownAbilene.JPG",
+  "orig_px": [
+   3072,
+   2304
+  ]
+ },
+ "las-vegas-nv": {
+  "state": "NV",
+  "label": "The Las Vegas Strip, NV",
+  "alt": "The Las Vegas Strip at night, with the Bellagio fountain lake in front",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Bellagio Las Vegas December 2013 panorama.jpg",
+  "creator": "King of Hearts",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bellagio_Las_Vegas_December_2013_panorama.jpg",
+  "orig_px": [
+   8000,
+   3200
+  ]
+ },
+ "concord-nh": {
+  "state": "NH",
+  "label": "Downtown Concord, NH",
+  "alt": "New Hampshire State House on Main Street in downtown Concord",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Concord NH state house.png",
+  "creator": "Bpp88520",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Concord_NH_state_house.png",
+  "orig_px": [
+   3817,
+   2863
+  ]
+ },
+ "salinas-ca": {
+  "state": "CA",
+  "label": "Main Street, Salinas, CA",
+  "alt": "Historic storefronts along Main Street in Oldtown Salinas, California",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Main Street, Salinas crop.jpg",
+  "creator": "Naotake Murayama; cropped by Beyond My Ken",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Main_Street,_Salinas_crop.jpg",
+  "orig_px": [
+   2363,
+   1514
+  ]
+ },
+ "tuscaloosa-al": {
+  "state": "AL",
+  "label": "Downtown Tuscaloosa, AL",
+  "alt": "The Bama Theatre in downtown Tuscaloosa, Alabama, with fall color",
+  "pos": "50% 45%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Bama Theatre Tuscaloosa Alabama 2009.jpg",
+  "creator": "Paul Kilgo",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Bama_Theatre_Tuscaloosa_Alabama_2009.jpg",
+  "orig_px": [
+   3456,
+   2304
+  ]
+ },
+ "walla-walla-wa": {
+  "state": "WA",
+  "label": "Downtown Walla Walla, WA",
+  "alt": "Historic buildings in downtown Walla Walla, Washington",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Walla Walla Downtown HD NRHP 100006868 Walla Walla County, WA.jpg",
+  "creator": "Jon Roanhaus",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Walla_Walla_Downtown_HD_NRHP_100006868_Walla_Walla_County,_WA.jpg",
+  "orig_px": [
+   2016,
+   1512
+  ]
+ },
+ "garberville-ca": {
+  "state": "CA",
+  "label": "Garberville, CA",
+  "alt": "The South Fork Eel River valley seen from Garberville, California",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:South Fork Eel River viewed from Garberville, California.jpg",
+  "creator": "Z3lvs",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:South_Fork_Eel_River_viewed_from_Garberville,_California.jpg",
+  "orig_px": [
+   8064,
+   6048
+  ]
+ },
+ "texarkana-tx": {
+  "state": "TX",
+  "label": "Texarkana, TX",
+  "alt": "Texarkana, Texas municipal building with flags out front",
+  "pos": "50% 60%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Municipal building, Texarkana, TX IMG 6411.jpg",
+  "creator": "Billy Hathorn",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Municipal_building,_Texarkana,_TX_IMG_6411.jpg",
+  "orig_px": [
+   4320,
+   3240
+  ]
+ },
+ "san-jose-ca": {
+  "state": "CA",
+  "label": "Downtown San Jose, CA",
+  "alt": "Downtown San Jose, California skyline with the hills behind",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:SAN JOSE CALIFORNIA BAYAREA01 (cropped2).jpg",
+  "creator": "Adam Schultz",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:SAN_JOSE_CALIFORNIA_BAYAREA01_(cropped2).jpg",
+  "orig_px": [
+   4620,
+   2052
+  ]
+ },
+ "tishomingo-ok": {
+  "state": "OK",
+  "label": "Tishomingo, OK",
+  "alt": "The historic Chickasaw Nation Capitol building in Tishomingo, Oklahoma",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Chickasaw Nation Capitol building.jpg",
+  "creator": "Interim81",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chickasaw_Nation_Capitol_building.jpg",
+  "orig_px": [
+   2100,
+   1535
+  ]
+ },
+ "cape-girardeau-mo": {
+  "state": "MO",
+  "label": "Downtown Cape Girardeau, MO",
+  "alt": "Downtown Cape Girardeau, Missouri, looking toward City Hall",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Cape Girardeau dec29-07 (23).jpg",
+  "creator": "Drowzy",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Cape_Girardeau_dec29-07_(23).jpg",
+  "orig_px": [
+   3264,
+   2448
+  ]
+ },
+ "columbus-in": {
+  "state": "IN",
+  "label": "Downtown Columbus, IN",
+  "alt": "Bartholomew County Courthouse in downtown Columbus, Indiana",
+  "pos": "50% 45%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Bartholomew County Courthouse, southwestern angle.jpg",
+  "creator": "Nyttend",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Bartholomew_County_Courthouse,_southwestern_angle.jpg",
+  "orig_px": [
+   2816,
+   2112
+  ]
+ },
+ "greeneville-tn": {
+  "state": "TN",
+  "label": "Downtown Greeneville, TN",
+  "alt": "Main Street and the historic General Morgan Inn in downtown Greeneville, Tennessee",
+  "pos": "50% 60%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:General Morgan Inn and Main Street - Greeneville.jpg",
+  "creator": "AppalachianCentrist",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:General_Morgan_Inn_and_Main_Street_-_Greeneville.jpg",
+  "orig_px": [
+   4006,
+   2672
+  ]
+ },
+ "gadsden-al": {
+  "state": "AL",
+  "label": "Downtown Gadsden, AL",
+  "alt": "Historic storefronts on Broad Street in downtown Gadsden, Alabama",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Historic downtown Gadsden, Alabama LCCN2010640495.tif",
+  "creator": "Carol M. Highsmith",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Historic_downtown_Gadsden,_Alabama_LCCN2010640495.tif",
+  "orig_px": [
+   5016,
+   3512
+  ]
+ },
+ "newton-ks": {
+  "state": "KS",
+  "label": "Downtown Newton, KS",
+  "alt": "The historic Railroad Savings and Loan building in downtown Newton, Kansas",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Newton, Kansas Railroad Savings and Loan Building.jpg",
+  "creator": "Matthew Zisi",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Newton,_Kansas_Railroad_Savings_and_Loan_Building.jpg",
+  "orig_px": [
+   4000,
+   3000
+  ]
+ },
+ "dallas-tx": {
+  "state": "TX",
+  "label": "Downtown Dallas, TX",
+  "alt": "Downtown Dallas, Texas skyline seen across the Trinity River levee",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Dallas, Texas Skyline 2005.jpg",
+  "creator": "drumguy8800 (xvisionx.com)",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Dallas,_Texas_Skyline_2005.jpg",
+  "orig_px": [
+   2200,
+   1100
+  ]
+ },
+ "pauls-valley-ok": {
+  "state": "OK",
+  "label": "Pauls Valley, OK",
+  "alt": "The restored Santa Fe depot in Pauls Valley, Oklahoma",
+  "pos": "50% 60%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Pauls Valley Santa Fe Depot.jpg",
+  "creator": "Matthew Zisi",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pauls_Valley_Santa_Fe_Depot.jpg",
+  "orig_px": [
+   4000,
+   3000
+  ]
+ },
+ "chickasha-ok": {
+  "state": "OK",
+  "label": "Downtown Chickasha, OK",
+  "alt": "Historic storefronts in the Chickasha Downtown Historic District, Oklahoma",
+  "pos": "50% 60%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Chickasha Downtown Historic District.jpg",
+  "creator": "Crimsonedge34",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chickasha_Downtown_Historic_District.jpg",
+  "orig_px": [
+   2939,
+   2235
+  ]
+ },
+ "johnson-city-tn": {
+  "state": "TN",
+  "label": "Downtown Johnson City, TN",
+  "alt": "Downtown Johnson City, Tennessee, with Buffalo Mountain behind",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Johnson City.jpg",
+  "creator": "Mrgriffter",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Johnson_City.jpg",
+  "orig_px": [
+   4032,
+   2266
+  ]
+ },
+ "tucson-az": {
+  "state": "AZ",
+  "label": "Downtown Tucson, AZ",
+  "alt": "Downtown Tucson, Arizona skyline under a blue sky",
+  "pos": "50% 85%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Tucson skyline.JPG",
+  "creator": "Sahmeditor",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tucson_skyline.JPG",
+  "orig_px": [
+   3296,
+   2472
+  ]
+ },
+ "oklahoma-city-ok": {
+  "state": "OK",
+  "label": "Downtown Oklahoma City, OK",
+  "alt": "Downtown Oklahoma City skyline above the river",
+  "pos": "50% 45%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Oklahoma City downtown skyline May 2024 (cropped).jpg",
+  "creator": "Kerwin Moore",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Oklahoma_City_downtown_skyline_May_2024_(cropped).jpg",
+  "orig_px": [
+   1963,
+   1178
+  ]
+ },
+ "winnfield-la": {
+  "state": "LA",
+  "label": "Downtown Winnfield, LA",
+  "alt": "Downtown Winnfield, Louisiana",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Downtown Winnfield 2021.jpg",
+  "creator": "Wikilester 3",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Downtown_Winnfield_2021.jpg",
+  "orig_px": [
+   4000,
+   3000
+  ]
+ },
+ "ardmore-ok": {
+  "state": "OK",
+  "label": "Downtown Ardmore, OK",
+  "alt": "Historic brick storefronts on Main Street in downtown Ardmore, Oklahoma",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Ardmore, Oklahoma - 54971739809.jpg",
+  "creator": "Ken Lund",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ardmore,_Oklahoma_-_54971739809.jpg",
+  "orig_px": [
+   4032,
+   3024
+  ]
+ },
+ "valdosta-ga": {
+  "state": "GA",
+  "label": "Downtown Valdosta, GA",
+  "alt": "A restored historic brick building in downtown Valdosta, Georgia",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Downtown Social, Valdosta.jpg",
+  "creator": "Mjrmtg",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Downtown_Social,_Valdosta.jpg",
+  "orig_px": [
+   5184,
+   3456
+  ]
+ },
+ "pecos-tx": {
+  "state": "TX",
+  "label": "Pecos, TX",
+  "alt": "Pecos, Texas welcome sign: Home of the World's First Rodeo",
+  "pos": "50% 15%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Pecos texas.jpg",
+  "creator": "Jadecolour",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pecos_texas.jpg",
+  "orig_px": [
+   1600,
+   1200
+  ]
+ },
+ "wichita-ks": {
+  "state": "KS",
+  "label": "Downtown Wichita, KS",
+  "alt": "Aerial view of downtown Wichita, Kansas, along the Arkansas River",
+  "pos": "50% 50%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Wichita, Kansas skyline aerial view.jpg",
+  "creator": "Quintin Soloviev",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Wichita,_Kansas_skyline_aerial_view.jpg",
+  "orig_px": [
+   4930,
+   3278
+  ]
+ },
+ "monterey-ca": {
+  "state": "CA",
+  "label": "Monterey Harbor, CA",
+  "alt": "Boats in the harbor at Monterey, California",
+  "pos": "50% 55%",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "title": "File:Harbor, Monterey, California LCCN2011630971.tif",
+  "creator": "Carol M. Highsmith",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Harbor,_Monterey,_California_LCCN2011630971.tif",
+  "orig_px": [
+   4284,
+   3240
+  ]
+ }
+}
