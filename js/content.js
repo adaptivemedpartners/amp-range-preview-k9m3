@@ -1202,6 +1202,32 @@ window.AMP_CONTENT = {
       slug: "kansas-general-surgery-gs-8453",
     },
     {
+      id: "gyn-8499",
+      code: "GYN-8499",
+      specialty: "ob_gyn_gynecology_only",
+      specialtyLabel: "OB/GYN: Gynecology (Only)",
+      region: "northeast",
+      state: "Massachusetts",
+      stateAbbr: "MA",
+      title: "Up to $325,000: OB/GYN: Gynecology (Only) in Southern Massachusetts",
+      sub: "OB/GYN: Gynecology (Only) · GYN-8499 · Massachusetts",
+      bullets: [
+        { k: "Practice", v: "MWF: 7:15-4:15pm in office, patients 7:30-4:00pm; T/TH: 7:15-5:15pm in office, patients 7:30-5:00pm" },
+        { k: "Setting", v: "Massachusetts · Agricultural country — with easy access to Cape Cod" },
+        { k: "Package", v: "First-year package from $325,000 — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "",
+      url: "https://www.adaptivemedicalpartners.com/job/massachusetts-ob-gyn-gynecology-only-gyn-8499",
+      slug: "massachusetts-ob-gyn-gynecology-only-gyn-8499",
+    },
+    {
       id: "hfc-8398",
       code: "HFC-8398",
       specialty: "cards",
