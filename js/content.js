@@ -1202,8 +1202,8 @@ window.AMP_CONTENT = {
       slug: "kansas-general-surgery-gs-8453",
     },
     {
-      id: "gyn-8499",
-      code: "GYN-8499",
+      id: "gyn-8268",
+      code: "GYN-8268",
       specialty: "ob_gyn_gynecology_only",
       alsoSpecialties: ["obg"],
       specialtyLabel: "OB/GYN: Gynecology (Only)",
@@ -1211,7 +1211,7 @@ window.AMP_CONTENT = {
       state: "Massachusetts",
       stateAbbr: "MA",
       title: "Up to $325,000: OB/GYN: Gynecology (Only) in Southern Massachusetts",
-      sub: "OB/GYN: Gynecology (Only) · GYN-8499 · Massachusetts",
+      sub: "OB/GYN: Gynecology (Only) · GYN-8268 · Massachusetts",
       bullets: [
         { k: "Practice", v: "MWF: 7:15-4:15pm in office, patients 7:30-4:00pm; T/TH: 7:15-5:15pm in office, patients 7:30-5:00pm" },
         { k: "Setting", v: "Massachusetts · Agricultural country — with easy access to Cape Cod" },
@@ -1225,8 +1225,8 @@ window.AMP_CONTENT = {
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
-      url: "https://www.adaptivemedicalpartners.com/job/massachusetts-ob-gyn-gynecology-only-gyn-8499",
-      slug: "massachusetts-ob-gyn-gynecology-only-gyn-8499",
+      url: "https://www.adaptivemedicalpartners.com/job/massachusetts-ob-gyn-gynecology-only-gyn-8268",
+      slug: "massachusetts-ob-gyn-gynecology-only-gyn-8268",
     },
     {
       id: "hfc-8398",
