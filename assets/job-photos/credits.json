@@ -556,5 +556,23 @@
    2592,
    1944
   ]
+ },
+ "ma-cape-cod": {
+  "file": "/assets/job-photos/ma-cape-cod.webp",
+  "thumb": "/assets/job-photos/ma-cape-cod-thumb.webp",
+  "mid": "/assets/job-photos/ma-cape-cod-800.webp",
+  "alt": "Marconi Beach and dune grass on the Cape Cod National Seashore, Wellfleet, Massachusetts",
+  "title": "File:Marconi Beach in Wellfleet, August 2026, south view.jpg",
+  "creator": "Reddeleon",
+  "license": "CC0 1.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Marconi_Beach_in_Wellfleet,_August_2026,_south_view.jpg",
+  "hero_px": [
+   1400,
+   700
+  ],
+  "orig_px": [
+   5712,
+   4284
+  ]
  }
 }

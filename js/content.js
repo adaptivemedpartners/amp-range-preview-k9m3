@@ -1214,7 +1214,7 @@ window.AMP_CONTENT = {
       sub: "OB/GYN: Gynecology (Only) · GYN-8268 · Massachusetts",
       bullets: [
         { k: "Practice", v: "MWF: 7:15-4:15pm in office, patients 7:30-4:00pm; T/TH: 7:15-5:15pm in office, patients 7:30-5:00pm" },
-        { k: "Setting", v: "Massachusetts · Agricultural country — with easy access to Cape Cod" },
+        { k: "Setting", v: "Massachusetts · Easy access to all major metros in the Northeast and just a 20 minute drive to the coast!" },
         { k: "Package", v: "First-year package from $325,000 — full details on a short call with your recruiter" },
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
@@ -1224,6 +1224,7 @@ window.AMP_CONTENT = {
         email: "mfreeman@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
+      photo: "ma-cape-cod", // per-job scenery override (Mike 2026-10-12: Cape Cod, not farmland)
       hero: "",
       url: "https://www.adaptivemedicalpartners.com/job/massachusetts-ob-gyn-gynecology-only-gyn-8268",
       slug: "massachusetts-ob-gyn-gynecology-only-gyn-8268",

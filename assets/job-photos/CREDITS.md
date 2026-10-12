@@ -71,3 +71,4 @@ All photos are public domain or CC0 (free for commercial use, no attribution req
 | winnfield-la | Downtown Winnfield, LA | [Downtown Winnfield 2021.jpg](https://commons.wikimedia.org/wiki/File:Downtown_Winnfield_2021.jpg) | Wikilester 3 | CC BY-SA 4.0 |
 
 All images were cropped, resized and converted to WebP. CC BY / CC BY-SA photos are credited on the job page header and on /assets/job-photos/credits.html.
+| ma-cape-cod | Marconi Beach and dune grass on the Cape Cod National Seashore, Wellfleet, Massachusetts | Marconi Beach in Wellfleet, August 2026, south view.jpg | Reddeleon | CC0 1.0 | https://commons.wikimedia.org/wiki/File:Marconi_Beach_in_Wellfleet,_August_2026,_south_view.jpg |

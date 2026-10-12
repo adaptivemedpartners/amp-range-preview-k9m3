@@ -96,6 +96,11 @@
   "pos": "50% 50%",
   "w": 1024
  },
+ "ma-cape-cod": {
+  "alt": "Marconi Beach and dune grass on the Cape Cod National Seashore, Wellfleet, Massachusetts",
+  "pos": "50% 55%",
+  "w": 1400
+ },
  "az": {
   "alt": "Red rock formations and juniper near Sedona, Arizona",
   "pos": "50% 50%",
