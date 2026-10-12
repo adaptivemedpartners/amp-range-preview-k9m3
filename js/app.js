@@ -4369,7 +4369,7 @@
     if (!root) return;
     var regions = normalizeRegionState();
     var jobs = AMP_CONTENT.jobs.filter(function (j) {
-      if (state.specialty && state.specialty !== "other" && j.specialty !== state.specialty) return false;
+      if (state.specialty && state.specialty !== "other" && j.specialty !== state.specialty && (j.alsoSpecialties || []).indexOf(state.specialty) === -1) return false;
       if (regions.length && regions.indexOf("open") === -1 && regions.indexOf(j.region) === -1) return false;
       return true;
     }).slice();

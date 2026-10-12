@@ -1205,6 +1205,7 @@ window.AMP_CONTENT = {
       id: "gyn-8499",
       code: "GYN-8499",
       specialty: "ob_gyn_gynecology_only",
+      alsoSpecialties: ["obg"],
       specialtyLabel: "OB/GYN: Gynecology (Only)",
       region: "northeast",
       state: "Massachusetts",
