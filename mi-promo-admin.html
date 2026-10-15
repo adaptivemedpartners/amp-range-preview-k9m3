@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>MI promo codes · AMP admin</title>
+<style>
+body{font-family:Inter,system-ui,sans-serif;margin:0;background:#f4f7fa;color:#0b2a44}
+main{max-width:1100px;margin:0 auto;padding:24px}h1{margin:0 0 4px;font-size:24px}.sub{color:#556;margin:0 0 18px}
+.card{background:#fff;border:1px solid #d9e2ea;border-radius:12px;padding:18px;margin-bottom:18px}
+label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}input,select{padding:9px;border:1px solid #cfd6dd;border-radius:8px;font-size:15px;box-sizing:border-box}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}.row>div{flex:1;min-width:160px}.row input,.row select{width:100%}
+button{padding:10px 16px;border:0;border-radius:8px;background:#0f2a3d;color:#fff;font-weight:600;font-size:14px;cursor:pointer}
+button.sec{background:#e6edf3;color:#0b2a44}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px;border-bottom:1px solid #e3e9ef;vertical-align:top}
+th{background:#f0f4f8}.st{padding:2px 8px;border-radius:999px;font-weight:600;font-size:12px}.st-active{background:#d8f5e6}.st-unused{background:#e3eefb}.st-used{background:#fde8c8}.st-expired,.st-revoked{background:#f3d6d6}
+.msg{min-height:1.2em;margin:10px 0 0}.err{color:#b3261e}.new{background:#e7f7ef;border:1px solid #6BE0AD;border-radius:10px;padding:12px;margin-top:12px;font-size:15px}
+code{font:600 16px/1.2 ui-monospace,monospace}
+</style></head><body><main>
+<h1>Market Intelligence promo codes</h1>
+<p class="sub">Free sample polls, no card. Only Mike, Randy and David can create codes. Sign in with your AMP email (your Market Intelligence account).</p>
+<section class="card" id="signin" hidden><h2 style="margin-top:0;font-size:18px">Sign in</h2>
+<form id="f-in" class="row"><div><label>AMP email</label><input name="email" type="email" required></div><div><label>Password</label><input name="password" type="password" required></div><div style="flex:0"><button>Sign in</button></div></form>
+<p class="msg" id="m-in"></p><p style="font-size:13px;color:#556">No account yet? Create one on the <a href="market-intelligence.html?account=signup">Market Intelligence page</a> with your AMP email, confirm it, then come back.</p></section>
+<section id="app" hidden>
+<p>Signed in as <strong id="who"></strong> · <a href="#" id="out">Sign out</a></p>
+<div class="card"><h2 style="margin-top:0;font-size:18px">Create a code</h2>
+<form id="f-new" class="row">
+<div style="flex:2"><label>Recipient email (only this email can redeem)</label><input name="email" type="email" required></div>
+<div><label>Free polls</label><select name="allowance"><option value="5" selected>5</option><option value="7">7</option><option value="9">9</option></select></div>
+<div><label>Expires (optional)</label><input name="expires" type="date"></div>
+<div style="flex:2"><label>Note (optional)</label><input name="note" maxlength="200" placeholder="e.g. met at conference"></div>
+<div style="flex:0"><button>Create code</button></div></form>
+<p class="msg" id="m-new"></p><div id="newcode"></div></div>
+<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:0;font-size:18px">Codes</h2><button class="sec" id="reload" type="button">Refresh</button></div>
+<table><thead><tr><th>Code</th><th>Email</th><th>Status</th><th>Used</th><th>State</th><th>Specialties opened</th><th>Expires</th><th>Created</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+<section class="card" id="denied" hidden><strong>This account can't create promo codes.</strong> Only Mike, Randy and David can. <a href="#" id="out2">Sign out</a></section>
+</main>
+<script src="js/mi-accounts-config.js?v=2208"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+var cfg=window.AMP_MI_ACCOUNTS,sb=supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true}});
+var $=function(i){return document.getElementById(i)};
+function show(id){["signin","app","denied"].forEach(function(s){$(s).hidden=s!==id})}
+function call(body){return sb.auth.getSession().then(function(r){var t=r.data.session&&r.data.session.access_token;
+ return fetch(cfg.url+"/functions/v1/mi-promo",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+t,apikey:cfg.anonKey},body:JSON.stringify(body)}).then(function(x){return x.json()})})}
+function fmt(t){return t?new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"—"}
+function td(tr,txt,html){var c=document.createElement("td");if(html)c.appendChild(html);else c.textContent=txt;tr.appendChild(c);return c}
+function load(){return call({action:"list"}).then(function(r){
+ if(r.error==="not_allowed"){show("denied");return}
+ if(r.error){$("m-new").textContent="Couldn't load codes.";return}
+ show("app");var tb=$("rows");tb.innerHTML="";
+ r.codes.forEach(function(c){var tr=document.createElement("tr");
+  var code=document.createElement("code");code.textContent=c.code;td(tr,"",code);td(tr,c.email);
+  var s=document.createElement("span");s.className="st st-"+c.status.split(" ")[0];s.textContent=c.status;td(tr,"",s);
+  td(tr,c.used+" / "+c.allowance);td(tr,(c.state||"—").toUpperCase());td(tr,c.specialties.join(", ")||"—");
+  td(tr,fmt(c.expires_at));td(tr,fmt(c.created_at)+" · "+String(c.created_by).replace(/\s*<.*$/,""));
+  var cell=td(tr,"");if(c.status!=="revoked"){var b=document.createElement("button");b.className="sec";b.textContent="Revoke";
+   b.onclick=function(){if(confirm("Revoke "+c.code+"?"))call({action:"revoke",id:c.id}).then(load)};cell.appendChild(b)}
+  tb.appendChild(tr)})})}
+function start(){sb.auth.getSession().then(function(r){var u=r.data.session&&r.data.session.user;
+ if(!u){show("signin");return}$("who").textContent=u.email;load()})}
+$("f-in").onsubmit=function(e){e.preventDefault();var f=e.target;$("m-in").textContent="Signing in…";
+ sb.auth.signInWithPassword({email:f.email.value.trim(),password:f.password.value}).then(function(r){
+  if(r.error){$("m-in").className="msg err";$("m-in").textContent="That email and password didn't match.";return}$("m-in").textContent="";start()})};
+$("f-new").onsubmit=function(e){e.preventDefault();var f=e.target;$("m-new").className="msg";$("m-new").textContent="Creating…";$("newcode").innerHTML="";
+ var exp=f.expires.value?f.expires.value+"T23:59:59-05:00":null;
+ call({action:"create",email:f.email.value.trim(),allowance:Number(f.allowance.value),expires_at:exp,note:f.note.value.trim()}).then(function(r){
+  if(r.error){$("m-new").className="msg err";$("m-new").textContent=r.error==="bad_email"?"Please enter a valid email.":r.error==="not_allowed"?"This account can't create codes.":"Couldn't create the code.";return}
+  $("m-new").textContent="";var c=r.code,link=location.origin+location.pathname.replace(/mi-promo-admin\.html$/,"")+"market-intelligence.html?promo="+c.code;
+  var box=document.createElement("div");box.className="new";
+  box.innerHTML='<div>Code for <strong></strong> · <span></span> free polls:</div><div style="margin:8px 0"><code></code></div><div style="font-size:13px">Send them this link (they sign up with that same email): <a target="_blank"></a></div>';
+  box.querySelector("strong").textContent=c.email;box.querySelector("span").textContent=c.allowance;box.querySelector("code").textContent=c.code;
+  var a=box.querySelector("a");a.href=link;a.textContent=link;$("newcode").appendChild(box);f.reset();load()})};
+$("reload").onclick=load;
+[$("out"),$("out2")].forEach(function(a){a.onclick=function(e){e.preventDefault();sb.auth.signOut().then(start)}});
+start();
+})();
+</script></body></html>

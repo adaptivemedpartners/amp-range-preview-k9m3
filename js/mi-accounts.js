@@ -80,10 +80,10 @@
     syncing = true;
     return ensureProfile(user).catch(function () {}).then(function () { return Promise.all([
       sb.from("mi_purchases").select("sku,polls_granted,specialty,state,created_at"),
-      sb.from("mi_polls").select("specialty,state,created_at"),
+      sb.from("mi_polls").select("specialty,state,created_at,promo_code_id"),
       sb.from("mi_customers").select("full_name,free_level,sample_specialty,sample_state").eq("user_id", user.id).maybeSingle()
     ]).then(function (rs) {
-      var purchases = rs[0].data || [], polls = rs[1].data || [], profile = rs[2].data || null;
+      var purchases = rs[0].data || [], polls = (rs[1].data || []).filter(function (u) { return !u.promo_code_id; }) /* 2311: free promo polls are not paid polls */, profile = rs[2].data || null;
       lastSeat = { purchases: purchases, polls: polls, profile: profile };
       var api = w.AMPRidgeAccess, out = null;
       if (api && api.applyServerSeat) out = api.applyServerSeat({ purchases: purchases, polls: polls });
@@ -371,12 +371,16 @@
       return { name: PACK_LABEL[big.sku] || "Poll package", detail: left + " of " + granted + " polls left. Each poll opens one specialty in one state, every layer.", paid: true };
     }
     var reports = ps.filter(function (p) { return p.sku === "oneoff"; }).length;
+    var pr = w.AMPMiPromo && w.AMPMiPromo.get ? w.AMPMiPromo.get() : null; /* 2311 */
+    if (pr && !pr.expired && !pr.revoked) return { name: "Promo code: " + pr.allowance + " free polls" + (reports ? " + " + reports + " full report" + (reports > 1 ? "s" : "") : ""),
+      detail: "One state: " + stateLabel(pr.state) + ". Each poll opens one specialty there.", paid: false };
     return { name: "Free Verified sample" + (reports ? " + " + reports + " full report" + (reports > 1 ? "s" : "") : ""), detail: sampleText(accountSample()) + ".", paid: false };
   }
 
   w.AMPMiAccounts = {
     enabled: enabled, init: init, user: function () { return user; }, requireAccount: requireAccount,
     open: openModal, signOut: signOut, verifyCheckout: verifyCheckout, usePoll: usePoll, syncSeat: syncSeat,
+    promo: function (body) { return init().then(function () { return user ? call("mi-promo", body) : { error: "sign_in_required" }; }); }, /* 2311 */
     onChange: function (f) { listeners.push(f); }
   };
   /* Visible account bar on the MI page + ?account=signin|signup deep link (2209). */

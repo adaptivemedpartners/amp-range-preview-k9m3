@@ -218,8 +218,11 @@
     var key = pollKey(spec, st);
     return (seat.oneOffs || []).some(function (p) { return pollKey(p.specialty, p.state) === key; });
   }
+  /* 2311: a redeemed promo code raises the free cap to its allowance (5, 7 or 9) in its one state; server counts are the truth. */
+  function tasteCap(seat) { seat = seat || load(); return seat.promoCap > 0 ? seat.promoCap : VERIFIED_TASTE_CAP; }
   function tasteSpecialties(seat) {
     seat = seat || load();
+    if (seat.promoCap > 0) return (seat.promoUsed || []).slice();
     var seen = [];
     (seat.tastes || []).forEach(function (t) {
       if (t && t.specialty && seen.indexOf(t.specialty) === -1) seen.push(t.specialty);
@@ -268,7 +271,7 @@
     if (seat.tier === "verified") {
       var specs = tasteSpecialties(seat);
       if (specs.indexOf(key) !== -1) return true;
-      return specs.length < VERIFIED_TASTE_CAP;
+      return specs.length < tasteCap(seat);
     }
     return false;
   }
@@ -288,7 +291,7 @@
       if (st !== normState(seat.demoState)) return false;
       var specs = tasteSpecialties(seat);
       if (specs.indexOf(spec) !== -1) return true;
-      return specs.length < VERIFIED_TASTE_CAP;
+      return specs.length < tasteCap(seat);
     }
     return false;
   }
@@ -348,10 +351,18 @@
     }
     if (seat.tier === "verified") {
       var specs = tasteSpecialties(seat);
-      if (specs.indexOf(key) === -1 && specs.length >= VERIFIED_TASTE_CAP) {
+      if (specs.indexOf(key) === -1 && specs.length >= tasteCap(seat)) {
         return deny("paywall", { specialty: key, state: seat.demoState });
       }
       ensureTaste(seat, key, seat.demoState);
+      if (seat.promoCap > 0 && (seat.promoUsed || []).indexOf(key) === -1) {
+        seat.promoUsed = (seat.promoUsed || []).concat([key]);
+        if (accountsOn() && w.AMPMiAccounts.promo) {
+          w.AMPMiAccounts.promo({ action: "use", specialty: key, state: normState(seat.demoState) }).then(function (r) {
+            if (r && r.promo && w.AMPMiPromo) w.AMPMiPromo.apply(r.promo); /* snap to the server's numbers */
+          });
+        }
+      }
       save(seat);
       return { ok: true, seat: seat };
     }
@@ -557,6 +568,24 @@
     return save(seat);
   }
 
+  /* 2311: mirror a server promo status { allowance, state, specialties, left, expired, revoked } into this browser. */
+  function applyPromo(p) {
+    var seat = load();
+    if (isPaid(seat)) return seat;
+    if (!p || p.expired || p.revoked || !p.state) {
+      if (seat.promoCap) { delete seat.promoCap; delete seat.promoUsed; return save(seat); }
+      return seat;
+    }
+    seat.tier = "verified";
+    seat.demoState = normState(p.state);
+    seat.demoCommitted = true;
+    seat.promoCap = Number(p.allowance) || 5;
+    seat.promoUsed = (p.specialties || []).slice();
+    if (seat.promoUsed.length) seat.demoSpecialty = seat.promoUsed[0];
+    seat.tastes = seat.promoUsed.map(function (k) { return { specialty: k, state: normState(p.state), at: "" }; });
+    return save(seat);
+  }
+
   function consumeCheckoutQuery() {
     if (accountsOn()) return null; /* mi-accounts.js verifies the Stripe session on the server instead */
     try {
@@ -633,7 +662,14 @@
     }
     if (seat.tier === "verified") {
       var used = tasteSpecialties(seat).length;
-      var leftTastes = Math.max(0, VERIFIED_TASTE_CAP - used);
+      var cap = tasteCap(seat);
+      var leftTastes = Math.max(0, cap - used);
+      if (seat.promoCap > 0) return {
+        tag: "Promo code · free",
+        title: used + " of " + cap + " free polls used",
+        body: leftTastes ? ("Pick " + leftTastes + " more specialty" + (leftTastes === 1 ? "" : "s") + " in " + stateLabel(seat.demoState) + ". Same state only.")
+          : "Your free polls are used. Buy a poll package, or a $99 one-off report."
+      };
       return {
         tag: "Verified sample · free",
         title: used + " of " + VERIFIED_TASTE_CAP + " specialty tastes",
@@ -692,6 +728,8 @@
     applyPaid: applyPaid,
     applyServerSeat: applyServerSeat,
     applyFreeLevel: applyFreeLevel,
+    applyPromo: applyPromo,
+    tasteCap: tasteCap,
     consumeCheckoutQuery: consumeCheckoutQuery,
     specLabel: specLabel,
     stateLabel: stateLabel,

@@ -45,7 +45,7 @@ export const SKUS: Record<string, { sku: string; polls: number }> = {
 export async function balance(userId: string) {
   const [{ data: p }, { count }] = await Promise.all([
     admin.from("mi_purchases").select("sku,polls_granted,specialty,state,created_at").eq("user_id", userId),
-    admin.from("mi_polls").select("id", { count: "exact", head: true }).eq("user_id", userId),
+    admin.from("mi_polls").select("id", { count: "exact", head: true }).eq("user_id", userId).is("promo_code_id", null), // 2311: free promo polls never spend paid polls
   ]);
   const purchases = p || [];
   const granted = purchases.reduce((s, r) => s + (r.polls_granted || 0), 0);
