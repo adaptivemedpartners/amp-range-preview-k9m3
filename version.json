@@ -1,21 +1,22 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2305",
-  "label": "2305-gyn-8268 Cape Cod scenery + new Setting",
-  "deployed": "2026-10-12 (Mike approved listing 1:41 PM CT)",
+  "build": "2307",
+  "label": "2307-mi-redi-by-state",
+  "deployed": "2026-10-15 (Mike asked: Redi by-state counts live in Market Intelligence)",
   "changes": [
-    "GYN-8268: Area scenery = Cape Cod (Marconi Beach, Wellfleet; CC0, Reddeleon/Wikimedia Commons) via job.photo \"ma-cape-cod\"; Setting text updated (Mike 2026-10-12); other MA jobs unchanged; content.js/job-photos.js ?v=2305",
-    "GYN-8499 renumbered to GYN-8268 (Mike 2026-10-12); old URL forwards to /job/massachusetts-ob-gyn-gynecology-only-gyn-8268",
-    "New listing GYN-8499 also appears under the Obstetrics & Gynecology (obg) filter via alsoSpecialties; jobs filter honors alsoSpecialties",
-    "Cache-busters content.js/app.js ?v=2304 so the new listing loads"
+    "js/ridge-mi-data.js: physByState + physNational replaced with RediCounts (AMA specialty) state counts for 75 specialties (was all-physician placeholder totals); no other fields changed",
+    "ridge-mi-data.js cache-buster ?v=2216 -> ?v=2307",
+    "Revert: git revert this commit and push"
   ],
   "previous": {
-    "build": "2302",
+    "build": "2305",
+    "label": "2305-gyn-8268 Cape Cod scenery + new Setting",
+    "deployed": "2026-10-12 (Mike approved listing 1:41 PM CT)",
     "changes": [
-      "AMP Social click + sign-up attribution (Mike approved Oct 8 2026 3:40 PM CT): js/visit-track.js sends utm_* tags + tagged landing URL + is_entry with each visit and remembers the last tagged link (localStorage amp_utm, 90 days)",
-      "js/mi-accounts.js saves the tags on new Market Intelligence accounts (mi_customers utm_* / landing_url / landed_at, and sign-up metadata)",
-      "visit-track.js / mi-accounts.js cache-busters -> ?v=2302 (131 pages). No visible page changes.",
-      "Revert: git revert this commit and push (or reset branch to d5e3b45)"
+      "GYN-8268: Area scenery = Cape Cod (Marconi Beach, Wellfleet; CC0, Reddeleon/Wikimedia Commons) via job.photo \"ma-cape-cod\"; Setting text updated (Mike 2026-10-12); other MA jobs unchanged; content.js/job-photos.js ?v=2305",
+      "GYN-8499 renumbered to GYN-8268 (Mike 2026-10-12); old URL forwards to /job/massachusetts-ob-gyn-gynecology-only-gyn-8268",
+      "New listing GYN-8499 also appears under the Obstetrics & Gynecology (obg) filter via alsoSpecialties; jobs filter honors alsoSpecialties",
+      "Cache-busters content.js/app.js ?v=2304 so the new listing loads"
     ]
   }
 }
