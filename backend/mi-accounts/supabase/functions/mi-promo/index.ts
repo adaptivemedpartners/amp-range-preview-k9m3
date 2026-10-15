@@ -1,6 +1,6 @@
 // 2311: Promo codes for free MI sample polls (no card).
 // Admin actions (Mike, Randy, David only: confirmed email in mi_promo_admins): create, list, revoke.
-// Customer actions: status, redeem (locks one state), use (spend one free specialty poll in that state).
+// Customer actions: status, redeem, use (spend one free poll on ANY specialty + state; 2312: no single-state lock).
 import { admin, cors, currentUser, json } from "../_shared.ts";
 
 const ALPH = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // no 0/O/1/I/L
@@ -28,8 +28,9 @@ async function myCode(userId: string) {
 async function statusFor(row: any) {
   if (!row) return { promo: null };
   const used = await usage(row.id);
-  return { promo: { code: row.code, allowance: row.allowance, state: row.state, used: used.length,
+  return { promo: { code: row.code, allowance: row.allowance, used: used.length,
     left: Math.max(0, row.allowance - used.length), specialties: used.map((u) => u.specialty),
+    opened: used.map((u) => ({ specialty: u.specialty, state: u.state })),
     expires_at: row.expires_at, expired: expired(row), revoked: !!row.revoked_at } };
 }
 
@@ -67,12 +68,12 @@ Deno.serve(async (req) => {
       return json(req, error ? 500 : 200, error ? { error: "revoke_failed" } : { ok: true });
     }
     const { data: rows } = await admin.from("mi_promo_codes").select("*").order("created_at", { ascending: false }).limit(500);
-    const { data: polls } = await admin.from("mi_polls").select("promo_code_id,specialty").not("promo_code_id", "is", null);
+    const { data: polls } = await admin.from("mi_polls").select("promo_code_id,specialty,state").not("promo_code_id", "is", null);
     const out = (rows || []).map((r: any) => {
       const used = (polls || []).filter((p: any) => p.promo_code_id === r.id);
       const status = r.revoked_at ? "revoked" : expired(r) && !r.redeemed_at ? "expired" : !r.redeemed_at ? "unused"
         : used.length >= r.allowance ? "used up" : expired(r) ? "expired" : "active";
-      return { ...r, used: used.length, specialties: used.map((p: any) => p.specialty), status };
+      return { ...r, used: used.length, specialties: used.map((p: any) => p.specialty + " " + String(p.state || "").toUpperCase()), status };
     });
     return json(req, 200, { ok: true, admin: who, codes: out });
   }
@@ -81,9 +82,7 @@ Deno.serve(async (req) => {
 
   if (action === "redeem") {
     const n = normCode(b.code);
-    const state = String(b.state || "").toLowerCase();
     if (n.length !== 12) return json(req, 400, { error: "bad_code" });
-    if (!/^[a-z]{2}$/.test(state)) return json(req, 400, { error: "pick_state" });
     const mine = await myCode(user.id);
     if (mine && mine.code !== fmt(n)) return json(req, 409, { error: "already_has_promo", ...(await statusFor(mine)) });
     const { data: row } = await admin.from("mi_promo_codes").select("*").eq("code", fmt(n)).maybeSingle();
@@ -93,7 +92,7 @@ Deno.serve(async (req) => {
     if (expired(row)) return json(req, 410, { error: "code_expired" });
     if (row.redeemed_by && row.redeemed_by !== user.id) return json(req, 409, { error: "code_already_used" });
     if (!row.redeemed_by) {
-      const { error } = await admin.from("mi_promo_codes").update({ redeemed_by: user.id, redeemed_at: new Date().toISOString(), state })
+      const { error } = await admin.from("mi_promo_codes").update({ redeemed_by: user.id, redeemed_at: new Date().toISOString() })
         .eq("id", row.id).is("redeemed_by", null);
       if (error) return json(req, 500, { error: "redeem_failed" });
     }
@@ -106,9 +105,11 @@ Deno.serve(async (req) => {
     if (row.revoked_at || expired(row)) return json(req, 410, { error: "promo_ended", ...(await statusFor(row)) });
     const specialty = String(b.specialty || "").slice(0, 60);
     const state = String(b.state || "").toLowerCase().slice(0, 2);
-    if (!specialty || state !== row.state) return json(req, 403, { error: "wrong_state", ...(await statusFor(row)) });
+    if (!specialty || !/^[a-z]{2}$/.test(state)) return json(req, 400, { error: "bad_poll" });
     const used = await usage(row.id);
-    if (used.some((u) => u.specialty === specialty)) return json(req, 200, { ok: true, already: true, ...(await statusFor(row)) });
+    // Re-opening a specialty + state this account already opened (promo or paid) never costs a free poll.
+    const { data: dupe } = await admin.from("mi_polls").select("id").eq("user_id", user.id).eq("specialty", specialty).eq("state", state).maybeSingle();
+    if (dupe || used.some((u) => u.specialty === specialty && u.state === state)) return json(req, 200, { ok: true, already: true, ...(await statusFor(row)) });
     if (used.length >= row.allowance) return json(req, 402, { error: "promo_used_up", ...(await statusFor(row)) });
     const { error } = await admin.from("mi_polls").insert({ user_id: user.id, specialty, state, promo_code_id: row.id });
     if (error && !/duplicate/i.test(error.message)) return json(req, 500, { error: "record_failed" });

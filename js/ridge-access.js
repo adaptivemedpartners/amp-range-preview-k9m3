@@ -173,6 +173,7 @@
   function oneStateUnit(seat) {
     seat = seat || load();
     if (isPaid(seat)) return "";
+    if (seat.promoCap > 0) return ""; /* 2312: promo polls work in any state */
     if ((seat.tier === "demo" || seat.tier === "verified") && isDemoCommitted(seat) && seat.demoState) {
       return normState(seat.demoState);
     }
@@ -218,7 +219,10 @@
     var key = pollKey(spec, st);
     return (seat.oneOffs || []).some(function (p) { return pollKey(p.specialty, p.state) === key; });
   }
-  /* 2311: a redeemed promo code raises the free cap to its allowance (5, 7 or 9) in its one state; server counts are the truth. */
+  /* 2311/2312: a redeemed promo code gives 5, 7 or 9 free polls; each poll = one specialty + one state, any combo.
+     seat.promoUsed holds "specialty|state" keys. Server counts are the truth. */
+  function promoHas(seat, spec, st) { return (seat.promoUsed || []).indexOf(pollKey(spec, st)) !== -1; }
+  function promoRoom(seat) { return (seat.promoUsed || []).length < seat.promoCap; }
   function tasteCap(seat) { seat = seat || load(); return seat.promoCap > 0 ? seat.promoCap : VERIFIED_TASTE_CAP; }
   function tasteSpecialties(seat) {
     seat = seat || load();
@@ -234,6 +238,7 @@
   function allowedStates(seat) {
     seat = seat || load();
     if (isPaid(seat)) return null;
+    if (seat.promoCap > 0) return null; /* 2312: any state */
     if (seat.tier === "demo" && !isDemoCommitted(seat)) return [];
     return seat.demoState ? [normState(seat.demoState)] : [];
   }
@@ -269,6 +274,7 @@
       return key === seat.demoSpecialty;
     }
     if (seat.tier === "verified") {
+      if (seat.promoCap > 0) return promoRoom(seat) || (seat.promoUsed || []).some(function (k) { return k.split("|")[0] === key; });
       var specs = tasteSpecialties(seat);
       if (specs.indexOf(key) !== -1) return true;
       return specs.length < tasteCap(seat);
@@ -288,6 +294,7 @@
       return spec === seat.demoSpecialty && st === normState(seat.demoState);
     }
     if (seat.tier === "verified") {
+      if (seat.promoCap > 0) return promoHas(seat, spec, st) || promoRoom(seat);
       if (st !== normState(seat.demoState)) return false;
       var specs = tasteSpecialties(seat);
       if (specs.indexOf(spec) !== -1) return true;
@@ -349,23 +356,38 @@
     if (seat.tier === "demo" && key !== seat.demoSpecialty) {
       return deny("verify", { specialty: key, state: seat.demoState });
     }
+    if (seat.tier === "verified" && seat.promoCap > 0) {
+      var pst = normState(currentSelectedState(seat) || seat.demoState);
+      if (!pst) { seat.demoSpecialty = key; save(seat); return { ok: true, seat: seat }; }
+      return usePromo(seat, key, pst);
+    }
     if (seat.tier === "verified") {
       var specs = tasteSpecialties(seat);
       if (specs.indexOf(key) === -1 && specs.length >= tasteCap(seat)) {
         return deny("paywall", { specialty: key, state: seat.demoState });
       }
       ensureTaste(seat, key, seat.demoState);
-      if (seat.promoCap > 0 && (seat.promoUsed || []).indexOf(key) === -1) {
-        seat.promoUsed = (seat.promoUsed || []).concat([key]);
-        if (accountsOn() && w.AMPMiAccounts.promo) {
-          w.AMPMiAccounts.promo({ action: "use", specialty: key, state: normState(seat.demoState) }).then(function (r) {
-            if (r && r.promo && w.AMPMiPromo) w.AMPMiPromo.apply(r.promo); /* snap to the server's numbers */
-          });
-        }
-      }
       save(seat);
       return { ok: true, seat: seat };
     }
+    return { ok: true, seat: seat };
+  }
+
+  /* 2312: spend (or re-open for free) one promo poll on spec × st. */
+  function usePromo(seat, spec, st) {
+    st = normState(st);
+    if (!promoHas(seat, spec, st)) {
+      if (!promoRoom(seat)) return deny("paywall", { specialty: spec, state: st });
+      seat.promoUsed = (seat.promoUsed || []).concat([pollKey(spec, st)]);
+      if (accountsOn() && w.AMPMiAccounts.promo) {
+        w.AMPMiAccounts.promo({ action: "use", specialty: spec, state: st }).then(function (r) {
+          if (r && r.promo && w.AMPMiPromo) w.AMPMiPromo.apply(r.promo); /* snap to the server's numbers */
+        });
+      }
+    }
+    seat.demoSpecialty = spec; seat.demoState = st;
+    ensureTaste(seat, spec, st);
+    save(seat);
     return { ok: true, seat: seat };
   }
 
@@ -396,6 +418,7 @@
       }
       return deny("geo", { specialty: spec, state: st });
     }
+    if (seat.tier === "verified" && seat.promoCap > 0 && !isPaid(seat)) return spec ? usePromo(seat, spec, st) : { ok: true, seat: seat };
     if (isPaid(seat)) {
       if (!canCombo(spec, st, seat)) return deny("polls", { specialty: spec, state: st });
       var used = consumePaidPoll(seat, spec, st);
@@ -572,17 +595,17 @@
   function applyPromo(p) {
     var seat = load();
     if (isPaid(seat)) return seat;
-    if (!p || p.expired || p.revoked || !p.state) {
+    if (!p || p.expired || p.revoked) {
       if (seat.promoCap) { delete seat.promoCap; delete seat.promoUsed; return save(seat); }
       return seat;
     }
     seat.tier = "verified";
-    seat.demoState = normState(p.state);
     seat.demoCommitted = true;
     seat.promoCap = Number(p.allowance) || 5;
-    seat.promoUsed = (p.specialties || []).slice();
-    if (seat.promoUsed.length) seat.demoSpecialty = seat.promoUsed[0];
-    seat.tastes = seat.promoUsed.map(function (k) { return { specialty: k, state: normState(p.state), at: "" }; });
+    var opened = (p.opened || []).filter(function (o) { return o && o.specialty && o.state; });
+    seat.promoUsed = opened.map(function (o) { return pollKey(o.specialty, o.state); });
+    if (opened.length) { var last = opened[opened.length - 1]; seat.demoSpecialty = last.specialty; seat.demoState = normState(last.state); }
+    seat.tastes = opened.map(function (o) { return { specialty: o.specialty, state: normState(o.state), at: "" }; });
     return save(seat);
   }
 
@@ -667,7 +690,7 @@
       if (seat.promoCap > 0) return {
         tag: "Promo code · free",
         title: used + " of " + cap + " free polls used",
-        body: leftTastes ? ("Pick " + leftTastes + " more specialty" + (leftTastes === 1 ? "" : "s") + " in " + stateLabel(seat.demoState) + ". Same state only.")
+        body: leftTastes ? (leftTastes + " free poll" + (leftTastes === 1 ? "" : "s") + " left. Each poll opens any specialty in any state. Re-opening one you already opened is free.")
           : "Your free polls are used. Buy a poll package, or a $99 one-off report."
       };
       return {

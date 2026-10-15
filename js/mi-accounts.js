@@ -372,8 +372,8 @@
     }
     var reports = ps.filter(function (p) { return p.sku === "oneoff"; }).length;
     var pr = w.AMPMiPromo && w.AMPMiPromo.get ? w.AMPMiPromo.get() : null; /* 2311 */
-    if (pr && !pr.expired && !pr.revoked) return { name: "Promo code: " + pr.allowance + " free polls" + (reports ? " + " + reports + " full report" + (reports > 1 ? "s" : "") : ""),
-      detail: "One state: " + stateLabel(pr.state) + ". Each poll opens one specialty there.", paid: false };
+    if (pr && !pr.expired && !pr.revoked) return { name: "Promo code: " + pr.left + " of " + pr.allowance + " free polls left" + (reports ? " + " + reports + " full report" + (reports > 1 ? "s" : "") : ""),
+      detail: "Each poll opens one specialty in one state, any combination. Re-opening one you already opened is free.", paid: false };
     return { name: "Free Verified sample" + (reports ? " + " + reports + " full report" + (reports > 1 ? "s" : "") : ""), detail: sampleText(accountSample()) + ".", paid: false };
   }
 

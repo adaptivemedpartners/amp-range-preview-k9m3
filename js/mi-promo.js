@@ -1,6 +1,6 @@
 /* 2311: Market Intelligence promo codes (free sample polls, no card).
-   Recipient: signs in with the email the code was issued to, enters the code, picks ONE state.
-   They then get 5, 7 or 9 free specialty polls in that state. Counts live on the server (mi-promo function). */
+   Recipient: signs in with the email the code was issued to and enters the code.
+   2312: they get 5, 7 or 9 free polls; each poll opens any specialty in any state. Counts live on the server (mi-promo function). */
 (function (w, d) {
   "use strict";
   var promo = null;
@@ -43,9 +43,9 @@
     var a = acc();
     if (promo && !promo.expired && !promo.revoked) {
       var s = d.createElement("strong");
-      s.textContent = "Promo code: " + promo.left + " of " + promo.allowance + " free polls left in " + stLabel(promo.state) + ".";
+      s.textContent = "Promo code: " + promo.left + " of " + promo.allowance + " free polls left.";
       el.appendChild(s);
-      el.appendChild(d.createTextNode(promo.left ? " Each poll opens one specialty in " + stLabel(promo.state) + "." : " Your free polls are used. "));
+      el.appendChild(d.createTextNode(promo.left ? "" : " Your free polls are used. "));
       if (!promo.left) { var b = d.createElement("a"); b.href = "#"; b.textContent = "Buy polls or a $99 report"; b.style.cssText = "text-decoration:underline;color:inherit;font-weight:600";
         b.onclick = function (e) { e.preventDefault(); go("mi-lite-portal"); }; el.appendChild(b); }
       return;
@@ -65,16 +65,12 @@
     var old = d.getElementById("mi-promo-modal"); if (old) old.remove();
     var wrap = d.createElement("div"); wrap.id = "mi-promo-modal"; wrap.className = "mi-acct-modal"; wrap.setAttribute("role", "dialog"); wrap.setAttribute("aria-modal", "true");
     wrap.innerHTML = '<div class="mi-acct-card"><button type="button" class="mi-acct-x" aria-label="Close">×</button><h2>Redeem your promo code</h2>' +
-      '<p class="mi-acct-sub">Free polls, no card needed. Pick the one state you want. Each poll opens one specialty in that state.</p>' +
+      '<p class="mi-acct-sub">Free polls, no card needed. Each poll opens one specialty in one state, any combination you like.</p>' +
       '<form novalidate><label for="mi-promo-code">Promo code</label><input id="mi-promo-code" autocomplete="off" placeholder="AMP-XXXX-XXXX-XXXX" required>' +
-      '<label for="mi-promo-state">State</label><select id="mi-promo-state" required style="width:100%;padding:10px;border:1px solid #cfd6dd;border-radius:8px;font-size:15px"></select>' +
       '<button type="submit">Redeem code</button></form><p class="mi-acct-msg" role="status"></p>' +
       '<p class="mi-acct-sub" style="margin-top:10px;font-size:13px">Signed in as <span id="mi-promo-email"></span>. The code only works for the email it was sent to.</p></div>';
     d.body.appendChild(wrap);
     wrap.querySelector("#mi-promo-email").textContent = (acc().user() || {}).email || "";
-    var sel = wrap.querySelector("#mi-promo-state");
-    sel.innerHTML = '<option value="">Choose a state</option>';
-    STATES.forEach(function (st) { var o = d.createElement("option"); o.value = st[0].toLowerCase(); o.textContent = st[1]; sel.appendChild(o); });
     var code = wrap.querySelector("#mi-promo-code"); code.value = prefill || "";
     var msg = wrap.querySelector(".mi-acct-msg");
     var close = function () { wrap.remove(); };
@@ -83,14 +79,14 @@
     wrap.querySelector("form").onsubmit = function (e) {
       e.preventDefault();
       var btn = wrap.querySelector("button[type=submit]"); btn.disabled = true; msg.className = "mi-acct-msg"; msg.textContent = "Checking…";
-      acc().promo({ action: "redeem", code: code.value, state: sel.value }).then(function (r) {
+      acc().promo({ action: "redeem", code: code.value }).then(function (r) {
         btn.disabled = false;
         if (!r || r.error) { msg.className = "mi-acct-msg err"; msg.textContent = ERR[r && r.error] || "That didn't work. Please try again."; if (r && r.promo) apply(r.promo); return; }
         apply(r.promo); close();
-        toast("Code redeemed: " + r.promo.allowance + " free polls in " + stLabel(r.promo.state) + ".");
+        toast("Code redeemed: " + r.promo.allowance + " free polls. Use them on any specialty in any state.");
       });
     };
-    (prefill ? sel : code).focus();
+    code.focus();
   }
 
   w.AMPMiPromo = { apply: apply, open: open, refresh: refresh, get: function () { return promo; } };

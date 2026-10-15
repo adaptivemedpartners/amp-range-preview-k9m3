@@ -29,7 +29,7 @@ code{font:600 16px/1.2 ui-monospace,monospace}
 <div style="flex:0"><button>Create code</button></div></form>
 <p class="msg" id="m-new"></p><div id="newcode"></div></div>
 <div class="card"><div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:0;font-size:18px">Codes</h2><button class="sec" id="reload" type="button">Refresh</button></div>
-<table><thead><tr><th>Code</th><th>Email</th><th>Status</th><th>Used</th><th>State</th><th>Specialties opened</th><th>Expires</th><th>Created</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<table><thead><tr><th>Code</th><th>Email</th><th>Status</th><th>Used</th><th>Polls opened (specialty + state)</th><th>Expires</th><th>Created</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
 </section>
 <section class="card" id="denied" hidden><strong>This account can't create promo codes.</strong> Only Mike, Randy and David can. <a href="#" id="out2">Sign out</a></section>
 </main>
@@ -51,7 +51,7 @@ function load(){return call({action:"list"}).then(function(r){
  r.codes.forEach(function(c){var tr=document.createElement("tr");
   var code=document.createElement("code");code.textContent=c.code;td(tr,"",code);td(tr,c.email);
   var s=document.createElement("span");s.className="st st-"+c.status.split(" ")[0];s.textContent=c.status;td(tr,"",s);
-  td(tr,c.used+" / "+c.allowance);td(tr,(c.state||"—").toUpperCase());td(tr,c.specialties.join(", ")||"—");
+  td(tr,c.used+" / "+c.allowance);td(tr,c.specialties.join(", ")||"—");
   td(tr,fmt(c.expires_at));td(tr,fmt(c.created_at)+" · "+String(c.created_by).replace(/\s*<.*$/,""));
   var cell=td(tr,"");if(c.status!=="revoked"){var b=document.createElement("button");b.className="sec";b.textContent="Revoke";
    b.onclick=function(){if(confirm("Revoke "+c.code+"?"))call({action:"revoke",id:c.id}).then(load)};cell.appendChild(b)}
