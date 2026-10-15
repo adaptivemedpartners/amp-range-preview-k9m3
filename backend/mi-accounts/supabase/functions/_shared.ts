@@ -1,9 +1,11 @@
 // Shared helpers for MI account functions (Deno / Supabase Edge Functions).
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
-export const ALLOWED_ORIGINS = (Deno.env.get("MI_ALLOWED_ORIGINS") ||
-  "https://adaptivemedpartners.github.io,https://adaptivemedicalpartners.com,https://www.adaptivemedicalpartners.com")
-  .split(",").map((s) => s.trim());
+// 2311: always include the live domain + preview, plus anything in MI_ALLOWED_ORIGINS (the secret had only the preview).
+export const ALLOWED_ORIGINS = Array.from(new Set([
+  "https://www.adaptivemedicalpartners.com", "https://adaptivemedicalpartners.com", "https://adaptivemedpartners.github.io",
+  ...(Deno.env.get("MI_ALLOWED_ORIGINS") || "").split(",").map((s) => s.trim()).filter(Boolean),
+]));
 
 export function cors(req: Request): Record<string, string> {
   const o = req.headers.get("origin") || "";
