@@ -14869,3 +14869,6 @@ body:has(> .site-nav:not(.is-home)) > main { padding-top: 64px; }
   .job-hero .photo-credit { font-size: 9.5px; bottom: 13px; right: 8px; }
   .job-hero:not(.job-hero-pro) .badge { max-width: 54%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+/* 2308: team group label (Executive Team / Core Leadership) */
+.guide-group{display:block;margin-top:3px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#64748b}
