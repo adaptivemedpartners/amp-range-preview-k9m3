@@ -3294,7 +3294,7 @@
     if (nameEl) nameEl.textContent = owner.name;
     if (roleEl) roleEl.textContent = owner.role || "Consultant";
     if (terr) terr.textContent = owner.territory || "";
-    if (blurb) blurb.textContent = owner.blurb || "";
+    if (blurb) { blurb.textContent = ""; blurb.hidden = true; } /* 2309: team taglines removed (Randy/Mike 2026-10-15) */
     if (fullBody) fullBody.innerHTML = owner.fullHtml || ("<p>" + (owner.blurb || "") + "</p>");
     if (fullDet) fullDet.open = false;
     try { syncClientRidgeCtas(); } catch (e) {}
@@ -4318,7 +4318,7 @@
     } else {
       avatarHtml = '<span class="guide-avatar job-guide-avatar" aria-hidden="true">' + guideInitials(name) + '</span>';
     }
-    var blurbHtml = profile.blurb
+    var blurbHtml = false /* 2309: team taglines removed */ && profile.blurb
       ? '<p class="job-guide-blurb muted">' + profile.blurb + '</p>'
       : '';
     var roleHtml = profile.role

@@ -1,11 +1,12 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2308",
-  "label": "2308-team-executive-core-leadership",
+  "build": "2309",
+  "label": "2309-team-groups-no-taglines",
   "deployed": "2026-10-15 (Mike asked by voice: Executive Team + Core Leadership groups on team page)",
   "changes": [
     "Team roster group labels only: Leadership -> Executive Team (David Fontenot, Mike Freeman, Randy Keeth); Recruiters -> Core Leadership · Recruiting; Consultants -> Core Leadership · Business Development. No people, titles, photos or bios changed; 132 pages share the template",
     "Meet your team strip (homepage bottom; shared template on 132 pages): small group label under each title — Executive Team (Mike Freeman, Randy Keeth) / Core Leadership (Stephanie Youngblood, Hadley Herrera, Amy Myers, Brenton McMahan, Aaron Wagner, Zach Hamann, Kelley Lobona); .guide-group CSS; site.css ?v=2303 -> ?v=2308",
+    "Removed short tagline (guide-blurb) under each team member on team roster (all 132 pages) and in app.js recruiter/consultant cards on job pages + client guide card; names, titles, Full story bios untouched; app.js ?v=2309",
     "Revert: git revert this commit and push"
   ],
   "previous": {
