@@ -1,21 +1,21 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2309",
-  "label": "2309-team-groups-no-taglines",
-  "deployed": "2026-10-15 (Mike asked by voice: Executive Team + Core Leadership groups on team page)",
+  "build": "2310",
+  "label": "2310-mi-counts-redi-plus-npi",
+  "deployed": "2026-10-15 (Mike: Market Intelligence counts = Redi where on file + NPI for the rest)",
   "changes": [
-    "Team roster group labels only: Leadership -> Executive Team (David Fontenot, Mike Freeman, Randy Keeth); Recruiters -> Core Leadership · Recruiting; Consultants -> Core Leadership · Business Development. No people, titles, photos or bios changed; 132 pages share the template",
-    "Meet your team strip (homepage bottom; shared template on 132 pages): small group label under each title — Executive Team (Mike Freeman, Randy Keeth) / Core Leadership (Stephanie Youngblood, Hadley Herrera, Amy Myers, Brenton McMahan, Aaron Wagner, Zach Hamann, Kelley Lobona); .guide-group CSS; site.css ?v=2303 -> ?v=2308",
-    "Removed short tagline (guide-blurb) under each team member on team roster (all 132 pages) and in app.js recruiter/consultant cards on job pages + client guide card; names, titles, Full story bios untouched; app.js ?v=2309",
+    "js/ridge-mi-data.js: physByState/physNational/densityByState for all 190 specialties. 61 from RediCounts AMA state matrices on file (pulled Sep 17 2026); 129 from NPPES NPI counts (89 exact NUCC code, 40 parent-code proxy, labeled). New supplySource label per specialty shown under the Active physicians card. No other fields changed",
+    "ridge-mi-data.js cache-buster ?v=2307 -> ?v=2310",
     "Revert: git revert this commit and push"
   ],
   "previous": {
-    "build": "2307",
-    "label": "2307-mi-redi-by-state",
-    "deployed": "2026-10-15 (Mike asked: Redi by-state counts live in Market Intelligence)",
+    "build": "2309",
+    "label": "2309-team-groups-no-taglines",
+    "deployed": "2026-10-15 (Mike asked by voice: Executive Team + Core Leadership groups on team page)",
     "changes": [
-      "js/ridge-mi-data.js: physByState + physNational replaced with RediCounts (AMA specialty) state counts for 75 specialties (was all-physician placeholder totals); no other fields changed",
-      "ridge-mi-data.js cache-buster ?v=2216 -> ?v=2307",
+      "Team roster group labels only: Leadership -> Executive Team (David Fontenot, Mike Freeman, Randy Keeth); Recruiters -> Core Leadership \u00b7 Recruiting; Consultants -> Core Leadership \u00b7 Business Development. No people, titles, photos or bios changed; 132 pages share the template",
+      "Meet your team strip (homepage bottom; shared template on 132 pages): small group label under each title \u2014 Executive Team (Mike Freeman, Randy Keeth) / Core Leadership (Stephanie Youngblood, Hadley Herrera, Amy Myers, Brenton McMahan, Aaron Wagner, Zach Hamann, Kelley Lobona); .guide-group CSS; site.css ?v=2303 -> ?v=2308",
+      "Removed short tagline (guide-blurb) under each team member on team roster (all 132 pages) and in app.js recruiter/consultant cards on job pages + client guide card; names, titles, Full story bios untouched; app.js ?v=2309",
       "Revert: git revert this commit and push"
     ]
   }
