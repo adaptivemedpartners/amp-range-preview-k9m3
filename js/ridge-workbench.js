@@ -1574,6 +1574,28 @@
     }
     maybeFitSelection(true);
     syncAspectRead();
+    syncTopState();
+  }
+
+  /* 2316: top State dropdown beside Specialty (workspace). Same logic as map clicks and the bottom picker (pickOnlyState);
+     re-synced after every geo change so map, dropdown and the other pickers always agree. */
+  function syncTopState() {
+    var d0 = w.document;
+    var sel = $("mi-app-state"); if (!sel) return;
+    var names = stateNames();
+    if (sel.options.length < 2) {
+      Object.keys(names).filter(function (c) { return /^[a-z]{2}$/.test(c); })
+        .sort(function (a, b) { return String(names[a]).localeCompare(String(names[b])); })
+        .forEach(function (c) { var o = d0.createElement("option"); o.value = c; o.textContent = names[c]; sel.appendChild(o); });
+    }
+    if (!sel.getAttribute("data-bound")) {
+      sel.setAttribute("data-bound", "1");
+      sel.addEventListener("change", function () { pickOnlyState(sel.value); syncTopState(); });
+    }
+    var picks = selectedCodes();
+    var cur = picks.length ? ((state.focus && state.selected[state.focus]) ? state.focus : picks[0]) : "";
+    sel.value = cur || "";
+    sel.title = picks.length > 1 ? picks.length + " states selected on the map" : "";
   }
 
   function showTooltip(evt, code) {
@@ -2251,6 +2273,7 @@
     }
     maybeFitSelection(false);
     syncAspectRead();
+    syncTopState();
   }
 
   function bindChrome() {
@@ -2577,6 +2600,8 @@
     isAspectOn: isAspectOn,
     applyAspectLayers: applyAspectLayers,
     selectState: function (code, additive) { toggleState(code, additive); },
+    pickOnlyState: function (code) { pickOnlyState(code); },
+    syncTopState: syncTopState,
     ensureUnitSelection: function () {
       ensureForcedSelection();
       refresh();
