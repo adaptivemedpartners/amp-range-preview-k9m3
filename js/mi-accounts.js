@@ -234,6 +234,10 @@
           else {
             try { localStorage.setItem("amp_mi_pending_profile", JSON.stringify({ email: email, prof: prof })); } catch (e) {}
             msg("Almost done. Check your email and tap the confirmation link. It brings you right back here with your free sample ready.");
+            var m = modal.querySelector(".mi-acct-msg"), rb = document.createElement("button");
+            rb.type = "button"; rb.textContent = "Resend confirmation email"; rb.style.cssText = "display:block;margin-top:8px;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;padding:0";
+            rb.onclick = function () { rb.disabled = true; sb.auth.resend({ type: "signup", email: email, options: { emailRedirectTo: redirect + "?welcome=1" } }).then(function (x) { rb.textContent = x.error ? "Couldn't resend: " + x.error.message : "Sent again. Check inbox and spam."; setTimeout(function () { rb.disabled = false; }, 60000); }); };
+            m.appendChild(rb);
           }
         });
       }
