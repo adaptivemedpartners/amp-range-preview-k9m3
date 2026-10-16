@@ -1,4 +1,4 @@
-/* 2203: Day load worksheet + Support layer wired into Aspects rail */
+/* 2203: Comp per Patient Worksheet + Support layer wired into Aspects rail */
 const fs = require("fs"); const assert = require("assert");
 const idx = fs.readFileSync(__dirname + "/../index.html", "utf8");
 const sel = fs.readFileSync(__dirname + "/mi-aspects-selector.js", "utf8");

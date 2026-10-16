@@ -1,4 +1,4 @@
-/* AMP Market Intelligence — Day load worksheet + Support input layer (v1, 2026-09-25)
+/* AMP Market Intelligence — Comp per Patient Worksheet + Support input layer (v1, 2026-09-25)
  * Shared by the internal MI file and the public preview. Host calls:
  *   AmpMiWorksheets.sync({ host: Element, dayLoad: bool, support: bool, spec: {key,label,ampBands} })
  * No invented data: the only market number used is the specialty's AMP band (40 hr/week full-time baseline).
@@ -60,7 +60,7 @@
     var d = dl(); var b = spec && spec.ampBands;
     var comp = b && b.competitive != null ? b.competitive : null;
     return '<div class="mi-ws-card" id="mi-ws-day">' +
-      '<h4>Day load worksheet</h4>' +
+      '<h4>Comp per Patient Worksheet</h4>' +
       '<p class="mi-ws-sub">' + esc(spec ? spec.label : "Pick a specialty") + ' · Competitive band ' + (comp != null ? money(comp) : "not set") +
       ' at a 40-hour week. Enter your schedule and volume to see the real rate.</p>' +
       '<div class="mi-ws-grid">' +
