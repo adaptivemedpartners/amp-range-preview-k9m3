@@ -404,7 +404,9 @@
     enabled: enabled, init: init, user: function () { return user; }, requireAccount: requireAccount,
     open: openModal, backdropClose: backdropClose, signOut: signOut, verifyCheckout: verifyCheckout, usePoll: usePoll, syncSeat: syncSeat,
     promo: function (body) { return init().then(function () { return user ? call("mi-promo", body) : { error: "sign_in_required" }; }); }, /* 2311 */
-    onChange: function (f) { listeners.push(f); }
+    onChange: function (f) { listeners.push(f); },
+    /* 2315: small per-user flags (e.g. onboarding tour seen) on the auth user's metadata. */
+    setMeta: function (o) { return init().then(function () { return user && sb ? sb.auth.updateUser({ data: o }).then(function (r) { if (r && r.data && r.data.user) user = r.data.user; return r; }) : null; }); }
   };
   /* Visible account bar on the MI page + ?account=signin|signup deep link (2209). */
   function optLabel(id, v) {
