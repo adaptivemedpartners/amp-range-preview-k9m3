@@ -6510,6 +6510,7 @@ function syncGuideRoute(route) {
     if (p.indexOf("blog-posts/") === 0) return legacyBlogRoute("blog/" + p.slice("blog-posts/".length));
     if (p.indexOf("blog/") === 0) return legacyBlogRoute(p);
 
+    if (p === "market-intelligence.html") p = "market-intelligence"; /* 2317: old .html link lands on MI, not home */
     if (PATH_TO_ROUTE.hasOwnProperty(p)) return PATH_TO_ROUTE[p];
 
     var top = p.split("/")[0];

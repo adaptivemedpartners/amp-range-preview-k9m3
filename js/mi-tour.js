@@ -3,6 +3,8 @@
    Replay: "Take the tour" link in the account bar, or ?tour=1. */
 (function (w, d) {
   "use strict";
+  /* 2317: capture the landing URL before the router rewrites it (it drops ?tour=1 / #tour on canonicalization). */
+  var LAND_Q = w.location.search || "", LAND_H = w.location.hash || "";
   var STEPS = [
     { sel: ["#mi-app-specialty", "#ridge-app-walk-specialty", "#ridge-demo-specialty"], title: "Pick a specialty", advance: "change",
       text: "Start here. Choose the specialty you're hiring for (filter by All, Physicians, Dentistry and more)." },
@@ -58,7 +60,7 @@
   }
   function visible(el) { if (!el) return false; var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== "hidden"; }
   function target(st) { for (var k = 0; k < st.sel.length; k++) { var e = d.querySelector(st.sel[k]); if (visible(e)) return e; } return null; }
-  function go(route) { var a = d.createElement("a"); a.setAttribute("data-go", route); a.href = "#"; a.style.display = "none"; d.body.appendChild(a); a.click(); a.remove(); }
+  function go(route) { var a = d.createElement("a"); a.setAttribute("data-go", route); a.href = "#"; a.style.display = "none"; a.addEventListener("click", function (e) { e.preventDefault(); }); d.body.appendChild(a); a.click(); a.remove(); }
   function css() {
     if (d.getElementById("mi-tour-css")) return;
     var s = d.createElement("style"); s.id = "mi-tour-css";
@@ -180,14 +182,14 @@
       var b = d.createElement("button"); b.type = "button"; b.id = x[1]; b.className = "mi-tour-replay";
       b.innerHTML = '<span aria-hidden="true" style="font-size:16px;line-height:1">\u21bb</span> Replay tour';
       b.style.cssText = "display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1px solid #78C4E5;background:#fff;color:#0b2a44;font:600 13px/1 Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap";
-      b.onclick = function (e) { e.preventDefault(); start(); };
+      b.onclick = function (e) { e.preventDefault(); e.stopPropagation(); if (root) end(); forceStart(); };
       host.appendChild(b);
     });
   }
   var tried = false;
   function maybe(u) {
     if (!u || tried || !onMiPage()) return;
-    var force = new URLSearchParams(w.location.search || "").get("tour") === "1";
+    var force = wantsTour();
     if (!force && done(u)) return;
     tried = true;
     var wait = 0, t = setInterval(function () {
@@ -197,9 +199,40 @@
       clearInterval(t); start();
     }, 500);
   }
-  w.AMPMiTour = { start: start, reset: function () { var a = acc(), u = a && a.user(); try { localStorage.removeItem(lsKey(u)); } catch (e) {} return a && a.setMeta ? a.setMeta({ mi_tour_done: null }) : null; } };
+  /* 2317: backward-compatible entry points for the old tour link. ?tour=1|true|yes|start, #tour / #take-tour / #mi-tour,
+     old "Take the tour" anchors (#mi-tour-link, .mi-tour-link, [data-tour], [data-mi-tour], a[href="#tour"]) and old
+     function names all start the new tour, signed in or not, on any MI page (incl. market-intelligence.html). */
+  function wantsTour() {
+    var q = new URLSearchParams(LAND_Q).get("tour"), q2 = new URLSearchParams(w.location.search || "").get("tour");
+    if (q === null) q = q2;
+    return (q !== null && /^(1|true|yes|start|on|)$/i.test(q)) || /^#(tour|take-tour|mi-tour|start-tour)$/i.test(LAND_H || w.location.hash || "");
+  }
+  var forced = false;
+  function forceStart() {
+    if (root) return;
+    tried = true;
+    if (d.readyState !== "complete") { w.addEventListener("load", function () { setTimeout(forceStart, 300); }, { once: true }); return; }
+    if (!visibleMi()) go("mi-lite");
+    var n = 0, t = setInterval(function () {
+      n++;
+      if (d.querySelector(".mi-acct-modal:not([hidden])") && n < 40) return;
+      if (!target(BASE[0]) && n < 12) { if (n === 4 && !visibleMi()) go("mi-lite"); return; }
+      clearInterval(t); start();
+    }, 400);
+  }
+  function visibleMi() { var v = d.querySelector('.view[data-route^="mi-lite"]'); return v && visible(v); }
+  function checkForced() { if (!forced && wantsTour()) { forced = true; forceStart(); } }
+  d.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest && e.target.closest('#mi-tour-link, .mi-tour-link, [data-tour], [data-mi-tour], a[href="#tour"], a[href="#take-tour"], a[href$="?tour=1"]');
+    if (!a || a.closest("#mi-tour")) return;
+    if (a.tagName === "A" && /\?tour=1$/.test(a.getAttribute("href") || "") && a.host && a.host !== w.location.host) return;
+    e.preventDefault(); forceStart();
+  }, true);
+  w.addEventListener("hashchange", function () { if (/^#(tour|take-tour|mi-tour|start-tour)$/i.test(w.location.hash || "")) forceStart(); });
+  w.startMiTour = w.startTour = w.miTourStart = function () { forceStart(); };
+  w.AMPMiTour = { start: start, replay: forceStart, open: forceStart, reset: function () { var a = acc(), u = a && a.user(); try { localStorage.removeItem(lsKey(u)); } catch (e) {} return a && a.setMeta ? a.setMeta({ mi_tour_done: null }) : null; } };
   function boot() {
-    replayBtns();
+    replayBtns(); checkForced();
     var a = acc(); if (!a) { setInterval(replayBtns, 1500); return; }
     a.onChange(function (u) { setTimeout(link, 50); maybe(u); });
     a.init().then(function (u) { link(); maybe(u); });
