@@ -117,7 +117,7 @@
       '<p class="mi-acct-msg" role="status"></p><p class="mi-acct-links"></p></div></div>');
     d.body.appendChild(modal);
     modal.querySelector(".mi-acct-x").addEventListener("click", closeModal);
-    modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+    backdropClose(modal, closeModal); /* 2313: only a click that starts AND ends on the backdrop closes */
     var css = d.createElement("style");
     css.textContent =
       ".mi-acct-modal{position:fixed;inset:0;background:rgba(10,20,30,.55);display:flex;align-items:center;justify-content:center;z-index:9999}" +
@@ -132,21 +132,34 @@
     return modal;
   }
 
+  /* 2313: a click whose press started inside the card (e.g. selecting text in an input, then releasing outside)
+     must not close the modal. Close only when mousedown and click both land on the backdrop itself. */
+  function backdropClose(wrap, close) {
+    var downOnBackdrop = false;
+    wrap.addEventListener("mousedown", function (e) { downOnBackdrop = e.target === wrap; });
+    wrap.addEventListener("touchstart", function (e) { downOnBackdrop = e.target === wrap; }, { passive: true });
+    wrap.addEventListener("click", function (e) { if (e.target === wrap && downOnBackdrop) close(); downOnBackdrop = false; });
+  }
+  /* 2313: keep partial entries (never the password) in sessionStorage so an accidental close loses nothing. */
+  var DRAFT_KEY = "amp_mi_acct_draft";
+  function draftGet() { try { return JSON.parse(sessionStorage.getItem(DRAFT_KEY) || "{}") || {}; } catch (e) { return {}; } }
+  function draftSet(n, v) { if (/password/i.test(n)) return; try { var o = draftGet(); o[n] = v; sessionStorage.setItem(DRAFT_KEY, JSON.stringify(o)); } catch (e) {} }
+  function draftClear() { try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {} }
   var VIEWS = {
     signup: {
       title: "Create your free account", sub: "Your free sample, purchases and polls stay on this account, on any device.",
       fields: [["full_name", "Full name", "text", "name"], ["organization", "Organization", "text", "organization"],
-        ["email", "Work email", "email", "email"], ["phone", "Phone", "tel", "tel"], ["password", "Password (8+ characters)", "password", "new-password"]],
+        ["email", "Work email (preferred)", "email", "email"], ["phone", "Phone", "tel", "tel"], ["password", "Password (8+ characters)", "password", "new-password"]],
       cta: "Create account", links: [["signin", "I already have an account"]]
     },
     signin: {
       title: "Sign in", sub: "Sign in to see your polls and reports.",
-      fields: [["email", "Work email", "email", "email"], ["password", "Password", "password", "current-password"]],
+      fields: [["email", "Email", "email", "email"], ["password", "Password", "password", "current-password"]],
       cta: "Sign in", links: [["signup", "Create an account"], ["forgot", "Forgot password?"]]
     },
     forgot: {
       title: "Reset your password", sub: "We'll email you a link to set a new password.",
-      fields: [["email", "Work email", "email", "email"]], cta: "Send reset link", links: [["signin", "Back to sign in"]]
+      fields: [["email", "Email", "email", "email"]], cta: "Send reset link", links: [["signin", "Back to sign in"]]
     },
     reset: {
       title: "Set a new password", sub: "Choose a new password for your account.",
@@ -157,7 +170,7 @@
 
   function msg(t, err) { var m = modal.querySelector(".mi-acct-msg"); m.textContent = t || ""; m.className = "mi-acct-msg" + (err ? " err" : ""); }
 
-  function openModal(view, after) {
+  function openModal(view, after, note) {
     buildModal();
     if (after) pendingAfter = after;
     var v = VIEWS[view];
@@ -183,7 +196,13 @@
       a.addEventListener("click", function () { openModal(l[0]); });
       links.appendChild(a);
     });
-    msg("");
+    var dr = draftGet();
+    Array.prototype.forEach.call(form.querySelectorAll("input"), function (inp) {
+      if (inp.type === "password") return;
+      if (dr[inp.name] && !inp.value) inp.value = dr[inp.name];
+      inp.addEventListener("input", function () { draftSet(inp.name, inp.value); });
+    });
+    msg(note || "");
     form.onsubmit = function (e) { e.preventDefault(); submit(view, form); };
     modal.hidden = false;
     var first = form.querySelector("input"); if (first) first.focus();
@@ -205,12 +224,12 @@
           free_level: "verified", sample_specialty: smp ? smp.spec : "", sample_state: smp ? smp.st : "",
           sample_label: "Free Verified sample: " + sampleText(smp) };
         withTags(prof, attribution());
-        if (!prof.full_name || !prof.organization || !email) { msg("Please fill in name, organization and work email.", true); return done(); }
-        if (w.AMPRidgeAccess && AMPRidgeAccess.isWorkEmail && !AMPRidgeAccess.isWorkEmail(email)) { msg("Please use your work email, not a personal one.", true); return done(); }
+        if (!prof.full_name || !prof.organization || !email) { msg("Please fill in name, organization and email.", true); return done(); }
         if (pw.length < 8) { msg("Password needs at least 8 characters.", true); return done(); }
         return sb.auth.signUp({ email: email, password: pw, options: { data: prof, emailRedirectTo: redirect + "?welcome=1" } }).then(function (r) {
           done();
           if (r.error) return msg(r.error.message, true);
+          draftClear();
           if (r.data.session) { saveProfile(prof, email).then(finish); }
           else {
             try { localStorage.setItem("amp_mi_pending_profile", JSON.stringify({ email: email, prof: prof })); } catch (e) {}
@@ -222,7 +241,7 @@
         return sb.auth.signInWithPassword({ email: val(form, "email"), password: val(form, "password") }).then(function (r) {
           done();
           if (r.error) return msg(/confirm/i.test(r.error.message) ? "Please confirm your email first (check your inbox)." : "That email and password didn't match.", true);
-          ensureProfile(r.data.user).then(finish);
+          draftClear(); ensureProfile(r.data.user).then(finish);
         });
       }
       if (view === "forgot") {
@@ -355,7 +374,7 @@
     more.appendChild(see);
     var close = function () { wrap.remove(); };
     wrap.querySelector(".mi-acct-x").onclick = close;
-    wrap.addEventListener("click", function (e) { if (e.target === wrap) close(); });
+    backdropClose(wrap, close);
     go.onclick = function () { close(); if (smp) openOwned(smp.spec, smp.st); else { goRoute("mi-lite"); setTimeout(function () { var dr = d.getElementById("ridge-demo-door"); if (dr) dr.scrollIntoView({ behavior: "smooth", block: "center" }); }, 350); } };
     see.onclick = function (e) { e.preventDefault(); close(); goRoute("mi-lite-portal"); };
     d.body.appendChild(wrap);
@@ -379,7 +398,7 @@
 
   w.AMPMiAccounts = {
     enabled: enabled, init: init, user: function () { return user; }, requireAccount: requireAccount,
-    open: openModal, signOut: signOut, verifyCheckout: verifyCheckout, usePoll: usePoll, syncSeat: syncSeat,
+    open: openModal, backdropClose: backdropClose, signOut: signOut, verifyCheckout: verifyCheckout, usePoll: usePoll, syncSeat: syncSeat,
     promo: function (body) { return init().then(function () { return user ? call("mi-promo", body) : { error: "sign_in_required" }; }); }, /* 2311 */
     onChange: function (f) { listeners.push(f); }
   };

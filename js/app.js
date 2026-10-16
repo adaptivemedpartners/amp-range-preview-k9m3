@@ -6036,8 +6036,8 @@ function syncGuideRoute(route) {
         if (err) {
           err.hidden = false;
           err.textContent = result.reason === "work_email"
-            ? "Use a verified work / org email — consumer inboxes (gmail, yahoo, outlook, icloud) stay locked."
-            : "Name, org, work email, and phone are required.";
+            ? "Please enter a valid email address."
+            : "Name, org, email, and phone are required.";
         }
         return;
       }

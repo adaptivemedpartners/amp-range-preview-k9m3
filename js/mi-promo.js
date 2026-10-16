@@ -19,7 +19,8 @@
     code_expired: "That code has expired. Contact us for a new one.", code_revoked: "That code is no longer active. Contact us for a new one.",
     code_already_used: "That code was already used.", already_has_promo: "This account already has a promo code.",
     bad_code: "Please check the code. It looks like AMP-XXXX-XXXX-XXXX.", pick_state: "Please pick the state for your free polls.",
-    confirm_email_first: "Please confirm your email first (check your inbox)."
+    confirm_email_first: "Please confirm your email first (check your inbox), then enter your code.",
+    redeem_failed: "We couldn't save that redemption. Please try again in a minute.", bad_response: "We couldn't reach the server. Please try again in a minute."
   };
 
   function apply(p) {
@@ -57,9 +58,19 @@
     if (!a || !a.user()) el.appendChild(d.createTextNode(" Create an account with the email the code was sent to, then enter it."));
   }
 
+  /* 2313: no account / not signed in -> say so and open Create account; keep the code and reopen Redeem after sign-up. */
+  var NO_ACCT = "Looks like you haven't created an account yet. Create one with the email your code was sent to, then enter your code.";
+  var CODE_KEY = "amp_mi_promo_code";
+  function keep(c) { try { if (c) sessionStorage.setItem(CODE_KEY, c); else sessionStorage.removeItem(CODE_KEY); } catch (e) {} }
+  function kept() { try { return sessionStorage.getItem(CODE_KEY) || ""; } catch (e) { return ""; } }
+  function toSignup(code) {
+    var a = acc(); if (!a) return;
+    keep(code);
+    a.open("signup", function () { dialog(code || kept()); }, NO_ACCT);
+  }
   function open(prefill) {
     var a = acc(); if (!a) return;
-    a.requireAccount(function () { dialog(prefill); });
+    a.init().then(function (u) { if (u) dialog(prefill); else toSignup(prefill); });
   }
   function dialog(prefill) {
     var old = d.getElementById("mi-promo-modal"); if (old) old.remove();
@@ -75,17 +86,19 @@
     var msg = wrap.querySelector(".mi-acct-msg");
     var close = function () { wrap.remove(); };
     wrap.querySelector(".mi-acct-x").onclick = close;
-    wrap.addEventListener("click", function (e) { if (e.target === wrap) close(); });
+    if (acc().backdropClose) acc().backdropClose(wrap, close); else wrap.addEventListener("click", function (e) { if (e.target === wrap) close(); });
     wrap.querySelector("form").onsubmit = function (e) {
       e.preventDefault();
       var btn = wrap.querySelector("button[type=submit]"); btn.disabled = true; msg.className = "mi-acct-msg"; msg.textContent = "Checking…";
       acc().promo({ action: "redeem", code: code.value }).then(function (r) {
         btn.disabled = false;
+        if (r && r.error === "sign_in_required") { var c0 = code.value; close(); toSignup(c0); return; }
         if (!r || r.error) { msg.className = "mi-acct-msg err"; msg.textContent = ERR[r && r.error] || "That didn't work. Please try again."; if (r && r.promo) apply(r.promo); return; }
-        apply(r.promo); close();
+        keep(""); apply(r.promo); close();
         toast("Code redeemed: " + r.promo.allowance + " free polls. Use them on any specialty in any state.");
       });
     };
+    code.addEventListener("input", function () { keep(code.value); });
     code.focus();
   }
 
@@ -96,7 +109,8 @@
     a.init().then(function () {
       refresh();
       var p = new URLSearchParams(w.location.search || "").get("promo");
-      if (p) open(p);
+      var k = !p && a.user() ? kept() : "";
+      if (p || k) open(p || k); /* 2313: back from the confirmation email with a code still pending */
     });
     setInterval(function () { if (!d.getElementById("mi-promo-line")) bar(); }, 1500);
   }

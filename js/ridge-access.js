@@ -455,7 +455,8 @@
     if (!fields.name || !fields.org || !fields.phone || !email) {
       return { ok: false, reason: "required" };
     }
-    if (!isWorkEmail(email)) {
+    /* 2313: personal emails (gmail, yahoo, ...) are allowed. */
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return { ok: false, reason: "work_email" };
     }
     var seat = load();
