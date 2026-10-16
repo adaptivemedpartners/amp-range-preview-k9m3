@@ -40,8 +40,15 @@ code{font:600 16px/1.2 ui-monospace,monospace}
 var cfg=window.AMP_MI_ACCOUNTS,sb=supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true}});
 var $=function(i){return document.getElementById(i)};
 function show(id){["signin","app","denied"].forEach(function(s){$(s).hidden=s!==id})}
+function post(t,body){return fetch(cfg.url+"/functions/v1/mi-promo",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(t||""),apikey:cfg.anonKey},body:JSON.stringify(body)}).then(function(x){return x.json().catch(function(){return{error:"bad_response"}})},function(){return{error:"network"}})}
+/* 2314: the sign-in is shared with the Market Intelligence page (same site), so signing out or switching accounts there ends it here.
+   On sign_in_required, refresh the session once and retry; if it's really gone, send them back to Sign in with a clear message. */
 function call(body){return sb.auth.getSession().then(function(r){var t=r.data.session&&r.data.session.access_token;
- return fetch(cfg.url+"/functions/v1/mi-promo",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+t,apikey:cfg.anonKey},body:JSON.stringify(body)}).then(function(x){return x.json()})})}
+ return post(t,body).then(function(res){if(!res||res.error!=="sign_in_required")return res;
+  return sb.auth.refreshSession().then(function(rr){var t2=rr.data&&rr.data.session&&rr.data.session.access_token;if(!t2)return res;return post(t2,body)},function(){return res}).then(function(res2){
+   if(res2&&res2.error==="sign_in_required"){show("signin");$("m-in").className="msg err";$("m-in").textContent="Your sign-in ended (signing out on the Market Intelligence page signs you out here too). Please sign in again; your form entries are kept."}
+   return res2})})})}
+var ERRS={bad_email:"Please enter a valid email.",not_allowed:"This account can't create codes.",sign_in_required:"Your sign-in ended. Please sign in again, then click Create.",bad_expiry:"Please pick a valid expiry date.",confirm_email_first:"Please confirm this account's email first.",network:"Couldn't reach the server. Check your connection and try again."};
 function fmt(t){return t?new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"—"}
 function td(tr,txt,html){var c=document.createElement("td");if(html)c.appendChild(html);else c.textContent=txt;tr.appendChild(c);return c}
 function load(){return call({action:"list"}).then(function(r){
@@ -64,7 +71,7 @@ $("f-in").onsubmit=function(e){e.preventDefault();var f=e.target;$("m-in").textC
 $("f-new").onsubmit=function(e){e.preventDefault();var f=e.target;$("m-new").className="msg";$("m-new").textContent="Creating…";$("newcode").innerHTML="";
  var exp=f.expires.value?f.expires.value+"T23:59:59-05:00":null;
  call({action:"create",email:f.email.value.trim(),allowance:Number(f.allowance.value),expires_at:exp,note:f.note.value.trim()}).then(function(r){
-  if(r.error){$("m-new").className="msg err";$("m-new").textContent=r.error==="bad_email"?"Please enter a valid email.":r.error==="not_allowed"?"This account can't create codes.":"Couldn't create the code.";return}
+  if(r.error){$("m-new").className="msg err";$("m-new").textContent=ERRS[r.error]||("Couldn't create the code ("+r.error+").");return}
   $("m-new").textContent="";var c=r.code,link=location.origin+location.pathname.replace(/mi-promo-admin\.html$/,"")+"market-intelligence.html?promo="+c.code;
   var box=document.createElement("div");box.className="new";
   box.innerHTML='<div>Code for <strong></strong> · <span></span> free polls:</div><div style="margin:8px 0"><code></code></div><div style="font-size:13px">Send them this link (they sign up with that same email): <a target="_blank"></a></div>';
