@@ -45,3 +45,6 @@ for path, m in meta.items():
     open(dest, "w", encoding="utf-8").write(out)
     n += 1
 print("wrote", n, "page files")
+try:  # amp-build:2318 keep /jobs-feed.xml in step with page-meta.json (never blocks the page build)
+    import runpy; runpy.run_path(os.path.join(ROOT, "tools", "build-job-feed.py"), run_name="__main__")
+except Exception as e: print("job feed skipped:", e)
