@@ -1423,7 +1423,7 @@
       blank.textContent = "Select a specialty…";
       sel.appendChild(blank);
     }
-    AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return !!(s.ampBands && s.ampBands.competitive != null); }).forEach(function (s) {
+    AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return !!(s.ampBands && s.ampBands.competitive != null); }).slice().sort(function (a, b) { return String(a.label).localeCompare(String(b.label)); }) /* 2320 A-Z */.forEach(function (s) {
       var opt = document.createElement("option");
       opt.value = s.key;
       opt.textContent = s.label;
@@ -1671,7 +1671,7 @@
     }
     if (specPick) {
       if (!specPick.options.length && window.AMPRidgeMI && AMPRidgeMI.SPECIALTIES) {
-        AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return !!(s.ampBands && s.ampBands.competitive != null); }).forEach(function (s) {
+        AMPRidgeMI.SPECIALTIES.filter(function (s, i) { return !!(s.ampBands && s.ampBands.competitive != null); }).slice().sort(function (a, b) { return String(a.label).localeCompare(String(b.label)); }) /* 2320 A-Z */.forEach(function (s) {
           var opt = document.createElement("option");
           opt.value = s.key;
           opt.textContent = s.label;
