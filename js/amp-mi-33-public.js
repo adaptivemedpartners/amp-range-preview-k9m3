@@ -350,7 +350,6 @@
     podiatry_general: { redAlert: 207249, competitive: 248699, magnet: 300926, destination: 364120 },
     podiatry_surgery: { redAlert: 287688, competitive: 345225, magnet: 417722, destination: 505444 },
     psychiatry_addiction_medicine: { redAlert: 279316, competitive: 321213, magnet: 404728, destination: 509958 },
-    psychiatry_behavioral_medicine: { redAlert: 112797, competitive: 135356, magnet: 163167, destination: 196692 },
     psychiatry_child_and_adolescent: { redAlert: 284460, competitive: 330816, magnet: 412541, destination: 514455 },
     psychologist: { redAlert: 110490, competitive: 132588, magnet: 160431, destination: 194122 },
     pulmonary_medicine_critical_care: { redAlert: 405659, competitive: 486791, magnet: 587127, destination: 708144 },
@@ -404,5 +403,11 @@
     var b = CORE[s.key];
     if (b && !(s.ampBands && s.ampBands.competitive != null)) { s.ampBands = b; s.ampBandsNote = "AMP bands from internal MI (same method)"; }
   });
+  /* 2319: no physician-style "Behavioral Medicine" row on public MI (Mike 2026-10-20). Only NP / PA behavioral medicine rows stay.
+     Guard runs on every load so a future copy from internal MI cannot bring it back; also clears a stale free-sample pick. */
+  function badBM(k) { k = String(k || ""); return /behavioral_medicine/.test(k) && !/^(nurse_practitioner|physician_assistant)_/.test(k); }
+  for (var bi = list.length - 1; bi >= 0; bi--) if (badBM(list[bi].key)) list.splice(bi, 1);
+  try { ["amp_ridge_seat_v3", "amp_ridge_seat_v2"].forEach(function (sk) { var sv = JSON.parse(w.localStorage.getItem(sk) || "null");
+    if (sv && badBM(sv.demoSpecialty)) { sv.demoSpecialty = ""; sv.demoState = ""; sv.demoCommitted = false; w.localStorage.setItem(sk, JSON.stringify(sv)); } }); } catch (e) {}
   MI.AMP33 = { added: added, updated: updated, keys: Object.keys(COMP) };
 })(window);

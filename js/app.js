@@ -1578,7 +1578,7 @@
     if (!api || !seat) return;
     var title = $("#rds-title"), bandsEl = $("#rds-bands"), tour = $("#rds-tour"), detail = $("#rds-tour-detail");
     var spec = seat.demoSpecialty, st = seat.demoState;
-    if (title) title.textContent = api.specLabel(spec) + " · " + api.stateLabel(st);
+    if (title) title.textContent = api.specLabel(spec) + " · " + api.stateLabel(st) + " · national pay band";
     var got = window.AMPRidgeBandsForKey ? window.AMPRidgeBandsForKey(spec) : null;
     var b = got && got.bands;
     function row(cls, name, val, locked, note) {

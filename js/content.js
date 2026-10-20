@@ -139,7 +139,6 @@ window.AMP_CONTENT = {
     { id: "podiatry_general", label: "Podiatry: General" },
     { id: "podiatry_surgery", label: "Podiatry: Surgery" },
     { id: "psychiatry_addiction_medicine", label: "Psychiatry: Addiction Medicine" },
-    { id: "psychiatry_behavioral_medicine", label: "Psychiatry: Behavioral Medicine" },
     { id: "psychiatry_chemical_dependency", label: "Psychiatry: Chemical Dependency" },
     { id: "psychiatry_child_and_adolescent", label: "Psychiatry: Child and Adolescent" },
     { id: "psychiatry_forensic", label: "Psychiatry: Forensic" },
