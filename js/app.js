@@ -4338,6 +4338,7 @@
       '<a class="btn btn-primary" style="width:100%;margin-bottom:8px" href="tel:+1' + j.recruiter.phone.replace(/-/g, "") + '">Call ' + j.recruiter.phone + '</a>' +
       '<button class="btn btn-dark" type="button" style="width:100%;margin-bottom:8px" data-chat="text">Text ' + recruiterFirstName(j.recruiter) + '</button>' +
       '<a class="btn btn-ghost" style="width:100%" href="mailto:' + j.recruiter.email + '?cc=' + encodeURIComponent(j.recruiter.cc) + '&subject=' + encodeURIComponent("Interest in " + j.code) + '">Email · CC inquire@</a>' +
+      '<button class="btn btn-dark" type="button" style="width:100%;margin-top:8px" data-go="job-contact" data-trail="1" data-one-pager="1">Request the one-pager</button>' +
       '<p class="muted mt-16" style="font-size:12px">CC always includes inquire@adaptivemedicalpartners.com so capture is never a dead end.</p>' +
     '</aside>';
   }
@@ -4489,7 +4490,8 @@
             '<p class="gate-note">Full package lives on a brief call with your recruiter. CME, commencement, PTO stacks, and named facility details stay for that conversation.</p>' +
             '<div class="btn-row">' +
               '<button class="btn btn-primary" type="button" data-go="job-contact" data-trail="1">Tap to Talk / Text / Email</button>' +
-              '<button class="btn btn-dark" type="button" data-go="chat" data-trail="1">Talk with AMP</button>' +
+              '<button class="btn btn-dark" type="button" data-go="job-contact" data-trail="1" data-one-pager="1">Request the one-pager</button>' +
+              '<button class="btn btn-ghost" type="button" data-go="chat" data-trail="1">Talk with AMP</button>' +
             '</div>' +
             '<div class="dest-row"><span class="dest-chip mess"><span class="dot"></span> Reaches a recruiter</span></div>' +
           '</div>' +
@@ -4554,6 +4556,7 @@
       ret.setAttribute("data-go", retKey);
       if (ret.tagName === "A") ret.setAttribute("href", routeToHref(retKey));
     }
+    syncJobInterestChrome(j);
   }
 
   
@@ -5124,21 +5127,158 @@
       credentials: "omit"
     }).then(function (res) {
       console.log("[AMP forms] Handoff POST status:", res.status);
-      return { ok: res.ok, status: res.status, persisted: true };
+      return res.json().catch(function () { return null; }).then(function (body) {
+        var bodyOk = !body || body.ok !== false;
+        return { ok: !!res.ok && bodyOk, status: res.status, persisted: true, body: body };
+      });
     }).catch(function (err) {
       console.warn("[AMP forms] Handoff POST failed (localStorage still OK):", err);
       return { ok: false, error: String(err), persisted: true };
     });
   }
 
-  function setFormBusy(form, busy) {
+  /* amp-build:2323 — success UI only after the handoff response is actually ok */
+  function handoffSendOk(result) {
+    return !!(result && result.ok === true);
+  }
+
+  var JOB_LEAD_INQUIRE_EMAIL = "inquire@adaptivemedicalpartners.com";
+  var JOB_LEAD_PUBLIC_PHONE = "(972) 441-2750";
+
+  function jobLeadPhone(job) {
+    var phone = job && job.recruiter && job.recruiter.phone ? String(job.recruiter.phone).trim() : "";
+    return phone || JOB_LEAD_PUBLIC_PHONE;
+  }
+
+  function clearJobLeadError(form) {
     if (!form) return;
-    var btn = form.querySelector('button[type="submit"]');
-    if (btn) {
-      if (busy && !btn.getAttribute("data-idle-label")) btn.setAttribute("data-idle-label", btn.textContent);
-      btn.disabled = !!busy;
-      btn.textContent = busy ? "Sending…" : (btn.getAttribute("data-idle-label") || btn.textContent);
+    var box = form.querySelector("[data-lead-error]");
+    if (!box) return;
+    box.hidden = true;
+    box.textContent = "";
+  }
+
+  function showJobLeadError(form, job) {
+    if (!form) return;
+    ensureJobOnePagerButton(form);
+    var box = form.querySelector("[data-lead-error]");
+    if (!box) return;
+    var phone = jobLeadPhone(job);
+    var digits = phone.replace(/\D/g, "");
+    if (digits.length === 10) digits = "1" + digits;
+    box.textContent = "";
+    box.appendChild(document.createTextNode("Didn't go through — call or text "));
+    var tel = document.createElement("a");
+    tel.href = "tel:+" + digits;
+    tel.textContent = phone;
+    tel.style.color = "inherit";
+    tel.style.fontWeight = "700";
+    box.appendChild(tel);
+    box.appendChild(document.createTextNode(" or email "));
+    var mail = document.createElement("a");
+    mail.href = "mailto:" + JOB_LEAD_INQUIRE_EMAIL;
+    mail.textContent = JOB_LEAD_INQUIRE_EMAIL;
+    mail.style.color = "inherit";
+    mail.style.fontWeight = "700";
+    box.appendChild(mail);
+    box.appendChild(document.createTextNode("."));
+    box.hidden = false;
+  }
+
+  function paintCandidateConfirm(mode) {
+    var root = document.querySelector('[data-route="confirm-mess"]');
+    if (!root) return;
+    var h1 = root.querySelector("h1");
+    var lede = root.querySelector(".confirm-lede");
+    var kicker = root.querySelector(".confirm-kicker");
+    if (mode === "one_pager") {
+      if (kicker) kicker.textContent = "One-pager request sent";
+      if (h1) h1.textContent = "Request received";
+      if (lede) lede.textContent = "Your recruiter has the one-pager request for this role and will follow up. Nothing was emailed to you automatically.";
+      return;
     }
+    if (kicker) kicker.textContent = "Interest signal locked";
+    if (h1) h1.textContent = "Interest captured";
+    if (lede) lede.textContent = "Your recruiter owns the next step. No dead ends.";
+  }
+
+  function ensureJobOnePagerButton(form) {
+    if (!form || form.querySelector("[data-request-one-pager]")) return;
+    var talk = form.querySelector('button[type="submit"]');
+    var row = document.createElement("div");
+    row.className = "btn-row";
+    row.style.marginTop = "16px";
+    var one = document.createElement("button");
+    one.type = "submit";
+    one.className = "btn btn-dark btn-lg";
+    one.setAttribute("data-request-one-pager", "1");
+    one.setAttribute("data-idle-label", "Request the one-pager");
+    one.textContent = "Request the one-pager";
+    if (talk) {
+      talk.classList.remove("mt-16");
+      if (!talk.getAttribute("data-idle-label")) talk.setAttribute("data-idle-label", (talk.textContent || "Talk with a recruiter").trim());
+      row.appendChild(talk);
+    }
+    row.appendChild(one);
+    form.appendChild(row);
+    var hint = document.createElement("p");
+    hint.className = "muted";
+    hint.setAttribute("data-one-pager-hint", "1");
+    hint.hidden = true;
+    hint.style.cssText = "font-size:13px;margin:8px 0 0";
+    form.appendChild(hint);
+    var err = document.createElement("p");
+    err.setAttribute("data-lead-error", "1");
+    err.setAttribute("role", "alert");
+    err.hidden = true;
+    err.style.cssText = "margin:12px 0 0;padding:12px 14px;border-radius:10px;background:#fef2f2;color:#7f1d1d;border:1px solid #fecaca;font-size:14px;line-height:1.45";
+    form.appendChild(err);
+  }
+
+  function syncJobInterestChrome(job) {
+    var form = $("#job-interest-form");
+    if (!form) return;
+    ensureJobOnePagerButton(form);
+    var asking = state.jobLeadIntent === "one_pager" && !!job;
+    var hint = form.querySelector("[data-one-pager-hint]");
+    if (hint) {
+      hint.hidden = !asking;
+      hint.textContent = asking
+        ? ("Request the one-pager for " + job.code + ". Your recruiter is notified — the PDF is not emailed automatically.")
+        : "";
+    }
+    var title = form.querySelector("h3");
+    if (title && !title.getAttribute("data-default-title")) title.setAttribute("data-default-title", title.textContent);
+    if (title) {
+      title.textContent = asking
+        ? ("Request the one-pager · " + job.code)
+        : (title.getAttribute("data-default-title") || "Or send interest here");
+    }
+    var specInput = form.querySelector('[name="specialty"]');
+    if (specInput && job && !String(specInput.value || "").trim()) {
+      specInput.value = job.specialtyLabel || job.specialty || "";
+    }
+    if (asking) {
+      window.setTimeout(function () {
+        try { form.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (eScroll) {}
+        var name = form.querySelector('[name="name"]');
+        if (name) name.focus();
+      }, 40);
+    }
+  }
+
+  function setFormBusy(form, busy, activeBtn) {
+    if (!form) return;
+    var buttons = form.querySelectorAll('button[type="submit"]');
+    if (!buttons.length) return;
+    var active = activeBtn || buttons[0];
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      if (!btn.getAttribute("data-idle-label")) btn.setAttribute("data-idle-label", btn.textContent);
+      btn.disabled = !!busy;
+      if (!busy) btn.textContent = btn.getAttribute("data-idle-label") || btn.textContent;
+    }
+    if (busy && active) active.textContent = "Sending…";
   }
 
   function stampMess(kind, payload) {
@@ -5492,6 +5632,9 @@ function syncGuideRoute(route) {
         }
         if (t.closest("#mobile-nav-drawer")) closeMobileNav();
         var route = t.getAttribute("data-go");
+        if (route === "job-contact") {
+          state.jobLeadIntent = t.hasAttribute("data-one-pager") ? "one_pager" : "";
+        }
         var trail = t.getAttribute("data-trail") === "1";
         var approach = t.getAttribute("data-approach") === "1";
         var dataHash = t.getAttribute("data-hash") || null;
@@ -5732,50 +5875,80 @@ function syncGuideRoute(route) {
 
     var jobForm = $("#job-interest-form");
     if (jobForm) {
+      ensureJobOnePagerButton(jobForm);
       jobForm.addEventListener("submit", function (e) {
         e.preventDefault();
+        var submitter = e.submitter || null;
+        var onePager = !!(submitter && submitter.hasAttribute("data-request-one-pager"));
         var fd = new FormData(jobForm);
-        var spec = String(fd.get("specialty") || state.specialty || "OB/GYN");
+        var jobForLead = null;
+        try { jobForLead = state.jobId ? jobById(state.jobId) : null; } catch (eJob) { jobForLead = null; }
+        var spec = String(fd.get("specialty") || (jobForLead && (jobForLead.specialtyLabel || jobForLead.specialty)) || state.specialty || "").trim();
+        var note = String(fd.get("note") || "").trim();
+        var code = (jobForLead && jobForLead.code) ? jobForLead.code : (state.jobId || "");
+        var jobUrl = (jobForLead && jobForLead.url) ? jobForLead.url : window.location.href;
         var payload = {
           name: String(fd.get("name") || "").trim(),
           phone: String(fd.get("phone") || "").trim(),
           email: String(fd.get("email") || "").trim() || null,
-          specialty: spec,
-          region: state.region || (state.regions && state.regions[0]) || null,
-          jobLabel: state.jobId || null,
+          specialty: spec || null,
+          region: (jobForLead && jobForLead.region) || state.region || (state.regions && state.regions[0]) || null,
+          jobLabel: onePager
+            ? ("ONE-PAGER REQUEST · " + (code || "job"))
+            : (code || state.jobId || null),
+          jobCode: code || null,
           org: null,
-          interest: spec + (fd.get("note") ? " · " + fd.get("note") : ""),
-          note: String(fd.get("note") || ""),
+          interest: onePager
+            ? ("ONE-PAGER REQUEST · " + (code || "job") + " · " + jobUrl + (note ? " · " + note : ""))
+            : ((spec || "Interest") + (note ? " · " + note : "")),
+          note: note,
+          request_type: onePager ? "one_pager" : "interest",
+          intent: onePager ? "one_pager" : "interest",
           source: "AMP website",
-          pageUrl: window.location.href,
+          pageUrl: jobUrl,
           timestamp: new Date().toISOString(),
           audience: "candidate",
-          channel: "amp_job_interest_form",
+          channel: onePager ? "amp_job_one_pager_request" : "amp_job_interest_form",
           routeTo: "recruiting_responses",
           responsesFeedReady: true,
           recruiterTag: "mike",
           recruiter: "mike",
           owner: "mfreeman",
-          formId: "job-interest-form"
+          formId: onePager ? "job-one-pager-request" : "job-interest-form"
         };
         /* amp-build:2246-job-lead-recruiter — a job page lead goes to that job's recruiter (was always Mike). */
         try {
-          var jobForLead = state.jobId ? jobById(state.jobId) : null;
           if (jobForLead && jobForLead.recruiter) {
             var recTag = (guideProfileForRecruiter(jobForLead.recruiter) || {}).tag;
             if (recTag) {
               payload.recruiterTag = recTag;
               payload.recruiter = recTag;
               payload.owner = "";
-              payload.jobLabel = jobForLead.code || payload.jobLabel;
+              if (!onePager) payload.jobLabel = jobForLead.code || payload.jobLabel;
             }
           }
         } catch (eRec) {}
-        setFormBusy(jobForm, true);
-        postLeadHandoff(payload).then(function () {
-          setFormBusy(jobForm, false);
-          stampMess("physician", (payload.name || "Physician") + " · " + spec);
+        clearJobLeadError(jobForm);
+        setFormBusy(jobForm, true, submitter);
+        postLeadHandoff(payload).then(function (result) {
+          setFormBusy(jobForm, false, submitter);
+          /* amp-build:2323 — never show Interest captured unless the handoff send succeeded */
+          if (!handoffSendOk(result)) {
+            showJobLeadError(jobForm, jobForLead);
+            return;
+          }
+          paintCandidateConfirm(onePager ? "one_pager" : "interest");
+          stampMess(
+            "physician",
+            onePager
+              ? ((payload.name || "Physician") + " · one-pager · " + (code || spec || "role"))
+              : ((payload.name || "Physician") + " · " + (spec || "interest"))
+          );
+          state.jobLeadIntent = "";
           go("confirm-mess", { trail: true });
+        }).catch(function () {
+          setFormBusy(jobForm, false, submitter);
+          showJobLeadError(jobForm, jobForLead);
         });
       });
     }
