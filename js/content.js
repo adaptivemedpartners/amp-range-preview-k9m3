@@ -461,9 +461,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -542,9 +542,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Amy Myers",
+        phone: "972-301-2261",
+        email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -596,9 +596,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -704,9 +704,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -1190,9 +1190,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -1353,9 +1353,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2107,9 +2107,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2377,9 +2377,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Amy Myers",
+        phone: "972-301-2261",
+        email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2620,9 +2620,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Amy Myers",
+        phone: "972-301-2261",
+        email: "amyers@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2647,9 +2647,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Hadley Herrera",
+        phone: "972-532-0465",
+        email: "hherrera@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
@@ -2836,9 +2836,9 @@ window.AMP_CONTENT = {
         { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
       ],
       recruiter: {
-        name: "Mike Freeman",
-        phone: "972-532-0355",
-        email: "mfreeman@adaptivemedicalpartners.com",
+        name: "Stephanie Youngblood",
+        phone: "469-354-0386",
+        email: "syoungblood@adaptivemedicalpartners.com",
         cc: "inquire@adaptivemedicalpartners.com"
       },
       hero: "",
