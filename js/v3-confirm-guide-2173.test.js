@@ -1,5 +1,5 @@
 /* Node smoke: 2173 confirmation uses the selected hiring guide.
-   Brenton territory must not fall through to a hardcoded Aaron.
+   GA/AL/TN/KY must fall through to Randy, not a hardcoded Aaron.
    2172 title-clear / funnel locks stay.
    Run: node js/v3-confirm-guide-2173.test.js */
 var fs = require("fs");
