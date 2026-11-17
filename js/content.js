@@ -1848,6 +1848,33 @@ window.AMP_CONTENT = {
       slug: "texas-neurologist-n-8465",
     },
     {
+      id: "fp-8323",
+      code: "FP-8323",
+      specialty: "fm",
+      specialtyLabel: "Family Medicine",
+      region: "southwest",
+      state: "Texas",
+      stateAbbr: "TX",
+      title: "Up to $409,500: Family Medicine in Southwest",
+      sub: "Family Medicine · FP-8323 · Texas",
+      bullets: [
+        { k: "Practice", v: "Outpatient, no weekends, no call, with max quality of life" },
+        { k: "Setting", v: "Minutes from Fort Worth - All amenities within minutes" },
+        { k: "Package", v: "First-year package from $409,500 — full details on a short call with your recruiter" },
+        { k: "Next", v: "Tap to Talk / Text / Email — AMP routes you to the right recruiter" },
+      ],
+      recruiter: {
+        name: "Mike Freeman",
+        phone: "972-532-0355",
+        email: "mfreeman@adaptivemedicalpartners.com",
+        cc: "inquire@adaptivemedicalpartners.com"
+      },
+      hero: "https://www.glenrosetexas.org/sites/g/files/vyhlif8961/files/styles/cp_fed_home_background_rotator/public/media/home-page-redesign-2025/image/856/paluxy_music_festival_2.jpg?itok=tnX7uS5J",
+      url: "https://www.adaptivemedicalpartners.com/job/southwest-family-medicine-fp-8323",
+      slug: "southwest-family-medicine-fp-8323",
+    },
+
+    {
       id: "np-8224",
       code: "NP-8224",
       specialty: "nurse_practitioner_primary_care",
