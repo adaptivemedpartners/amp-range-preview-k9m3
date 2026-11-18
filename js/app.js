@@ -5384,7 +5384,7 @@
       return;
     }
     if (accept && !accept.checked) {
-      setAchStatus("Please accept the terms to authorize payment.", true);
+      setAchStatus("Please accept the terms to continue.", true);
       accept.focus();
       return;
     }
@@ -5405,7 +5405,7 @@
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.setAttribute("data-label", submitBtn.textContent);
-      submitBtn.textContent = "Opening secure payment setup…";
+      submitBtn.textContent = "Opening Stripe checkout…";
     }
     setAchStatus("", false);
     fetch(ACH_SETUP_URL, {
@@ -5419,10 +5419,10 @@
     }).then(function (j) {
       location.href = j.url;
     }).catch(function () {
-      setAchStatus("We couldn’t open the secure payment setup. Please try again, or contact us and we’ll help.", true);
+      setAchStatus("We couldn’t open Stripe checkout. Please try again, or contact us and we’ll help.", true);
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Continue to secure payment setup";
+        submitBtn.textContent = submitBtn.getAttribute("data-label") || "Continue to invoice payment setup";
       }
     });
   }
@@ -6781,10 +6781,10 @@ function syncGuideRoute(route) {
       h1: "Interview Expense Form"
     },
     "form-easy-pay": {
-      title: "Easy Pay Authorization" + BRAND_SUFFIX,
-      description: "Secure payment authorization for Adaptive Medical Partners organizations, by bank account (ACH) or card through Stripe.",
+      title: "Client Invoice Payment Setup" + BRAND_SUFFIX,
+      description: "Set up invoice payments for an existing Adaptive Medical Partners client agreement. Bank or card details are entered on Stripe’s checkout, not on this site.",
       robots: "index,follow",
-      h1: "Easy Pay Authorization"
+      h1: "Client invoice payment setup"
     },
     "pay-invoice": {
       title: "Pay an Invoice" + BRAND_SUFFIX,

@@ -1,24 +1,23 @@
 {
   "site": "adaptivemedicalpartners.com",
-  "build": "2325",
-  "label": "2325-bd-guide-scrub",
-  "deployed": "2026-11-13 CT",
+  "build": "2327",
+  "label": "2327-easypay-reword",
+  "deployed": "2026-11-18 CT",
   "changes": [
-    "One Business Development guide card, bio, and photo removed from the public roster.",
-    "GA/AL/TN/KY client meeting leads now route to Randy Keeth (default fallback).",
-    "app.js cache-buster ?v=2323 -> ?v=2325.",
-    "Revert: git revert this commit and push to cursor/ridge-access-lead-handoff-d3c6; restore the team photo from the offboard backup if needed."
+    "Easy Pay page wording only: existing-client header, AMP contact already on the site, Stripe checkout called out up top, plain-English invoice debit terms (no demand-draft phrasing).",
+    "Title/button renamed to Client invoice payment setup. Form fields, Stripe handoff URL, and other routes unchanged.",
+    "app.js cache-buster ?v=2325 -> ?v=2327 for the SEO/button copy change.",
+    "Revert: run /workspace/website-easypay-reword-20261118/REVERT.sh"
   ],
   "previous": {
-    "build": "2324",
-    "label": "2324-recruiter-swap-hendrick-nmc-winn",
-    "deployed": "2026-11-05 (Mike: switch Hendrick/NMC/Winn jobs from Mike to new recruiters)",
+    "build": "2325",
+    "label": "2325-bd-guide-scrub",
+    "deployed": "2026-11-13 CT",
     "changes": [
-      "Hendrick (Abilene) CVS-8454, END-8456, HO-8458, OBG-8455, RHU-8457 -> Hadley Herrera",
-      "NMC Health (Newton KS) EM-8433, GS-8453, U-8452 -> Stephanie Youngblood",
-      "Winn Community (Winnfield LA) DDS-8391, PD-8448, RHU-8365 -> Amy Myers",
-      "content.js ?v=2319 -> ?v=2324",
-      "Revert: git revert this commit and push"
+      "One Business Development guide card, bio, and photo removed from the public roster.",
+      "GA/AL/TN/KY client meeting leads now route to Randy Keeth (default fallback).",
+      "app.js cache-buster ?v=2323 -> ?v=2325.",
+      "Revert: git revert this commit and push to cursor/ridge-access-lead-handoff-d3c6; restore the team photo from the offboard backup if needed."
     ]
   }
 }

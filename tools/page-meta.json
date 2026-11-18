@@ -63,8 +63,8 @@
   "jobld": null
  },
  "/easy-pay-authorization": {
-  "title": "Easy Pay Authorization | Adaptive Medical Partners",
-  "desc": "Secure payment authorization for Adaptive Medical Partners organizations, by bank account (ACH) or card through Stripe.",
+  "title": "Client Invoice Payment Setup | Adaptive Medical Partners",
+  "desc": "Set up invoice payments for an existing Adaptive Medical Partners client agreement. Bank or card details are entered on Stripe’s checkout, not on this site.",
   "robots": "index,follow",
   "canon": "https://www.adaptivemedicalpartners.com/easy-pay-authorization",
   "jobld": null
